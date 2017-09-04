@@ -78,6 +78,7 @@
     <Reference Include="Syncfusion.Tools.WPF, Version=15.2460.0.40, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Printing" />
@@ -152,6 +153,10 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\MPTagThat.Core\MPTagThat.Core.csproj">
+      <Project>{d66c1d7a-a9d8-4f02-9fa4-891a673d2c68}</Project>
+      <Name>MPTagThat.Core</Name>
+    </ProjectReference>
     <ProjectReference Include="..\MPTagThat.Services\MPTagThat.Services.csproj">
       <Project>{a7ee52a4-95c4-46b3-9c32-49eb50121138}</Project>
       <Name>MPTagThat.Services</Name>
