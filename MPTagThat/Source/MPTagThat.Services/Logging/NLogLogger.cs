@@ -19,17 +19,11 @@
 #region
 
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Net.Mime;
-using System.Text;
-using System.Windows;
 using NLog;
 using NLog.Config;
 using NLog.Filters;
 using NLog.Targets;
-using Prism.Logging;
 
 #endregion
 
@@ -38,14 +32,13 @@ namespace MPTagThat.Services.Logging
   /// <summary>
   /// Logging class to be used within the product
   /// </summary>
-  public class NLogLogger : ILoggerFacade
+  public class NLogLogger : ILogger
   {
     #region Variables
 
-    private readonly string fileName; //holds the file to write to.
-    private LogLevel level; //holds the treshold for the log level.
-    private Logger _logger = null;
-    private const int MAXARCHIVES = 10;
+    private LogLevel _level; //holds the treshold for the log level.
+    private readonly Logger _logger;
+    private const int Maxarchives = 10;
 
     #endregion
 
@@ -62,17 +55,14 @@ namespace MPTagThat.Services.Logging
       if (!Directory.Exists(logPath))
         Directory.CreateDirectory(logPath);
 
-      this.fileName = $@"{logPath}\{fileName}";
-
-      var ext = Path.GetExtension(this.fileName);
-      var fileNamePattern = Path.ChangeExtension(this.fileName, ".{#}" + ext);
-      this.level = level;
+      var fullFileName = $@"{logPath}\{fileName}";
+      _level = level;
 
       // Now configure the NLOG File Target looger
       var config = new LoggingConfiguration();
       var fileTarget = new FileTarget();
-      fileTarget.FileName = this.fileName;
-      fileTarget.MaxArchiveFiles = MAXARCHIVES;
+      fileTarget.FileName = fullFileName;
+      fileTarget.MaxArchiveFiles = Maxarchives;
       fileTarget.ArchiveFileName = $@"{logPath}\Archive\{Path.GetFileNameWithoutExtension(fileName)}.log";
       fileTarget.ArchiveNumbering = ArchiveNumberingMode.Rolling;
       fileTarget.ArchiveOldFileOnStartup = true;
@@ -106,24 +96,46 @@ namespace MPTagThat.Services.Logging
 
     #endregion
 
-    #region ILoggerFacade implementation
+    #region ILogger Implementation
 
-    public void Log(string message, Category category, Priority priority)
+    /// <summary>
+    /// Returns the defined Logger
+    /// </summary>
+    public Logger GetLogger => _logger;
+
+    /// <summary>
+    ///   Gets or sets the log level.
+    /// </summary>
+    /// <value>A <see cref = "LogLevel" /> value that indicates the minimum level messages must have to be 
+    ///   written to the file.</value>
+    public LogLevel Level
     {
-      switch (category)
+      get { return _level; }
+      set
       {
-        case Category.Debug:
-          _logger.Debug(message);
-          break;
-        case Category.Exception:
-          _logger.Error(message);
-          break;
-        case Category.Info:
-          _logger.Info(message);
-          break;
-        case Category.Warn:
-          _logger.Error(message);
-          break;
+        _level = value;
+        LoggingConfiguration config = LogManager.Configuration;
+        for (int i = 0; i < 6; ++i)
+        {
+          if (LogLevel.FromOrdinal(i) < _level)
+          {
+            config.LoggingRules[0].DisableLoggingForLevel(LogLevel.FromOrdinal(i));
+          }
+          else
+          {
+            config.LoggingRules[0].EnableLoggingForLevel(LogLevel.FromOrdinal(i));
+          }
+        }
+
+        //TODO: Add RavenDebug, once the options are set
+        /*
+        if (Options.StartupSettings.RavenDebug && config.LoggingRules[0].Filters.Count > 0)
+        {
+          config.LoggingRules[0].Filters.RemoveAt(0);
+        }
+        */
+
+        LogManager.Configuration = config;
       }
     }
 
