@@ -22,9 +22,11 @@ using System.Windows;
 using Microsoft.Practices.ServiceLocation;
 using Microsoft.Practices.Unity;
 using MPTagThat.Services.Logging;
-using Prism.Logging;
+using NLog;
 using Prism.Unity;
 using Prism.Modularity;
+using ILogger = MPTagThat.Services.Logging.ILogger;
+using MPTagThat.Services.Settings;
 
 #endregion
 
@@ -49,17 +51,20 @@ namespace MPTagThat
     /// </summary>
     protected override void InitializeShell()
     {
-      var logger = (ILoggerFacade)ServiceLocator.Current.GetInstance(typeof(ILoggerFacade));
+      var log = Container.Resolve<ILogger>().GetLogger;
+      var settings = Container.Resolve<ISettingsManager>("SettingsManager");
       Application.Current.MainWindow.Show();
     }
 
     /// <summary>
-    /// Implement custom Logger based on NLog
+    /// Configure the Services
     /// </summary>
-    /// <returns></returns>
-    protected override ILoggerFacade CreateLogger()
+    protected override void ConfigureContainer()
     {
-      return new NLogLogger("MPTagThat.log", NLog.LogLevel.Debug, 0);
+      var logger = new NLogLogger("MPTagThat.log", LogLevel.Debug, 0);
+      Container.RegisterInstance<ILogger>(logger);
+      Container.RegisterType<ISettingsManager, SettingsManager>("SettingsManager");
+      base.ConfigureContainer();
     }
 
     /// <summary>

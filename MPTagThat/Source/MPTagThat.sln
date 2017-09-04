@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MPTagThat", "MPTagThat\MPTa
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MPTagThat.Services", "MPTagThat.Services\MPTagThat.Services.csproj", "{A7EE52A4-95C4-46B3-9C32-49EB50121138}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MPTagThat.Core", "MPTagThat.Core\MPTagThat.Core.csproj", "{D66C1D7A-A9D8-4F02-9FA4-891A673D2C68}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -19,6 +21,10 @@ Global
 		{A7EE52A4-95C4-46B3-9C32-49EB50121138}.Debug|Any CPU.ActiveCfg = Debug|x86
 		{A7EE52A4-95C4-46B3-9C32-49EB50121138}.Debug|Any CPU.Build.0 = Debug|x86
 		{A7EE52A4-95C4-46B3-9C32-49EB50121138}.Release|Any CPU.ActiveCfg = Release|x86
+		{D66C1D7A-A9D8-4F02-9FA4-891A673D2C68}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D66C1D7A-A9D8-4F02-9FA4-891A673D2C68}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D66C1D7A-A9D8-4F02-9FA4-891A673D2C68}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D66C1D7A-A9D8-4F02-9FA4-891A673D2C68}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
