@@ -19,7 +19,10 @@
 #region 
 
 using System.Windows;
+using Microsoft.Practices.ServiceLocation;
 using Microsoft.Practices.Unity;
+using MPTagThat.Services.Logging;
+using Prism.Logging;
 using Prism.Unity;
 using Prism.Modularity;
 
@@ -46,7 +49,17 @@ namespace MPTagThat
     /// </summary>
     protected override void InitializeShell()
     {
+      var logger = (ILoggerFacade)ServiceLocator.Current.GetInstance(typeof(ILoggerFacade));
       Application.Current.MainWindow.Show();
+    }
+
+    /// <summary>
+    /// Implement custom Logger based on NLog
+    /// </summary>
+    /// <returns></returns>
+    protected override ILoggerFacade CreateLogger()
+    {
+      return new NLogLogger("MPTagThat.log", NLog.LogLevel.Debug, 0);
     }
 
     /// <summary>

@@ -5,16 +5,20 @@ VisualStudioVersion = 14.0.25123.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MPTagThat", "MPTagThat\MPTagThat.csproj", "{A9C5C373-1662-4E1E-BF04-B1007D815D42}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MPTagThat.Services", "MPTagThat.Services\MPTagThat.Services.csproj", "{A7EE52A4-95C4-46B3-9C32-49EB50121138}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{A9C5C373-1662-4E1E-BF04-B1007D815D42}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A9C5C373-1662-4E1E-BF04-B1007D815D42}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A9C5C373-1662-4E1E-BF04-B1007D815D42}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A9C5C373-1662-4E1E-BF04-B1007D815D42}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A9C5C373-1662-4E1E-BF04-B1007D815D42}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{A9C5C373-1662-4E1E-BF04-B1007D815D42}.Debug|Any CPU.Build.0 = Debug|x86
+		{A9C5C373-1662-4E1E-BF04-B1007D815D42}.Release|Any CPU.ActiveCfg = Release|x86
+		{A7EE52A4-95C4-46B3-9C32-49EB50121138}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{A7EE52A4-95C4-46B3-9C32-49EB50121138}.Debug|Any CPU.Build.0 = Debug|x86
+		{A7EE52A4-95C4-46B3-9C32-49EB50121138}.Release|Any CPU.ActiveCfg = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
