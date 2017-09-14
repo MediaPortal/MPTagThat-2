@@ -25,6 +25,7 @@ using System.Text;
 using System.Threading;
 using System.Windows;
 using System.Xml;
+using Microsoft.Practices.ServiceLocation;
 using Microsoft.Practices.Unity;
 using MPTagThat.Core.Settings;
 using MPTagThat.Services.Logging;
@@ -78,7 +79,7 @@ namespace MPTagThat
     protected override void InitializeShell()
     {
       var log = Container.Resolve<ILogger>().GetLogger;
-      var settings = Container.Resolve<ISettingsManager>("SettingsManager");
+      var settings = Container.Resolve<ISettingsManager>();
 
       _portable = 0;
       _startupFolder = "";
@@ -149,9 +150,11 @@ namespace MPTagThat
     /// </summary>
     protected override void ConfigureContainer()
     {
+      ServiceLocator.SetLocatorProvider(() => new UnityServiceLocatorAdapter(Container));
       var logger = new NLogLogger("MPTagThat.log", LogLevel.Debug, 0);
       Container.RegisterInstance<ILogger>(logger);
-      Container.RegisterType<ISettingsManager, SettingsManager>("SettingsManager");
+      var settings = new SettingsManager();
+      Container.RegisterInstance<ISettingsManager>(settings);
       base.ConfigureContainer();
     }
 
