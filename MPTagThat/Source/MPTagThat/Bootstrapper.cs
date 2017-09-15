@@ -34,6 +34,8 @@ using Prism.Unity;
 using Prism.Modularity;
 using ILogger = MPTagThat.Services.Logging.ILogger;
 using MPTagThat.Services.Settings;
+using Prism.Regions;
+using Syncfusion.Windows.Tools.Controls;
 
 #endregion
 
@@ -156,6 +158,20 @@ namespace MPTagThat
       var settings = new SettingsManager();
       Container.RegisterInstance<ISettingsManager>(settings);
       base.ConfigureContainer();
+    }
+
+    /// <summary>
+    /// Override the Region adapter mappings to make use of our DockingManager Region Adapater
+    /// </summary>
+    /// <returns></returns>
+    protected override RegionAdapterMappings ConfigureRegionAdapterMappings()
+    {
+      RegionAdapterMappings regionAdapterMappings = base.ConfigureRegionAdapterMappings();
+      if (regionAdapterMappings != null)
+      {
+        regionAdapterMappings.RegisterMapping(typeof(DockingManager), Container.Resolve<DockingManagerRegionAdapter>());
+      }
+      return regionAdapterMappings;
     }
 
     /// <summary>

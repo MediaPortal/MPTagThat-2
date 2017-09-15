@@ -4,14 +4,13 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:prism="http://prismlibrary.com/"
+        xmlns:syncfusion="http://schemas.syncfusion.com/wpf"
         xmlns:lex="http://wpflocalizeextension.codeplex.com"
         lex:LocalizeDictionary.DesignCulture="en"
         lex:ResxLocalizationProvider.DefaultAssembly="MPTagThat"
         lex:ResxLocalizationProvider.DefaultDictionary="Strings"
         xmlns:local="clr-namespace:MPTagThat"
         mc:Ignorable="d"
-        Title="{lex:Loc ApplicationName}" Height="300" Width="300">
-    <Grid>
-        
-    </Grid>
+        Title="{lex:Loc ApplicationName}" Height="768" Width="1024">
+  <syncfusion:DockingManager prism:RegionManager.RegionName="MainRegion" UseDocumentContainer="True" DockFill="True" DockFillDocumentMode="Normal"/>
 </Window>
