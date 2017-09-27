@@ -1,0 +1,245 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="ApplicationName" xml:space="preserve">
+    <value>MPTagThat the MediaPortal Tag Editor</value>
+    <comment>Name of the Application</comment>
+  </data>
+  <data name="ribbon_TagTab" xml:space="preserve">
+    <value>Tags</value>
+    <comment>Ribbon Tags Tab</comment>
+  </data>
+  <data name="ribbon_TagFromFile" xml:space="preserve">
+    <value>Tag from Filename</value>
+    <comment>Button: Tag from File </comment>
+  </data>
+  <data name="ribbon_RenameFile" xml:space="preserve">
+    <value>Rename File</value>
+    <comment> </comment>
+  </data>
+  <data name="ribbon_RenameFileMenu" xml:space="preserve">
+    <value>Rename File</value>
+    <comment> </comment>
+  </data>
+  <data name="ribbon_RenameFileOptions" xml:space="preserve">
+    <value>Rename File Options</value>
+    <comment> </comment>
+  </data>
+  <data name="ribbon_IdentifyFile" xml:space="preserve">
+    <value>Identify File</value>
+    <comment> </comment>
+  </data>
+  <data name="ribbon_TagFromInternet" xml:space="preserve">
+    <value>Tag from Internet</value>
+    <comment>Button: Tag from Internet</comment>
+  </data>
+  <data name="ribbon_SingleTagEdit" xml:space="preserve">
+    <value>Single Tag Edit</value>
+    <comment> </comment>
+  </data>
+  <data name="ribbon_MultiTagEdit" xml:space="preserve">
+    <value>Multiple Tag Edit</value>
+    <comment> </comment>
+  </data>
+  <data name="ribbon_GetCoverArt" xml:space="preserve">
+    <value>Get Cover Art</value>
+    <comment> </comment>
+  </data>
+  <data name="ribbon_GetLyrics" xml:space="preserve">
+    <value>Get Lyrics</value>
+    <comment>Button: Get Lyrics</comment>
+  </data>
+  <data name="ribbon_AutoNumber" xml:space="preserve">
+    <value>Auto Number</value>
+    
+  </data>
+  <data name="ribbon_NumberOnClick" xml:space="preserve">
+    <value>Number on Click</value>
+    <comment> </comment>
+  </data>
+  <data name="ribbon_Find" xml:space="preserve">
+    <value>Find</value>
+    <comment>Button: Find</comment>
+  </data>
+  <data name="ribbon_Replace" xml:space="preserve">
+    <value>Replace</value>
+    <comment>Button: Replace</comment>
+  </data>
+  <data name="ribbon_ValidateSong" xml:space="preserve">
+    <value>Validate MP3</value>
+    <comment>Button: Validate Song</comment>
+  </data>
+  <data name="ribbon_FixSong" xml:space="preserve">
+    <value>Fix MP3</value>
+    <comment>Button: Fix Song</comment>
+  </data>
+  <data name="ribbon_ReplayGain" xml:space="preserve">
+    <value>Replay Gain</value>
+    <comment> </comment>
+  </data>
+  <data name="ribbon_BPM" xml:space="preserve">
+    <value>BPM Detect</value>
+    <comment> </comment>
+  </data>
+  <data name="ribbon_RemoveCommentPicture" xml:space="preserve">
+    <value>Remove:</value>
+    <comment> </comment>
+  </data>
+  <data name="ribbon_RemoveComments" xml:space="preserve">
+    <value>Remove all comments</value>
+    <comment>Button: Remove All Comments</comment>
+  </data>
+  <data name="ribbon_RemovePictures" xml:space="preserve">
+    <value>Remove all pictures</value>
+    <comment> </comment>
+  </data>
+  <data name="ribbon_CaseConversion" xml:space="preserve">
+    <value>Case Conversion</value>
+    <comment> </comment>
+  </data>
+  <data name="ribbon_CaseConversionMenu" xml:space="preserve">
+    <value>Case Conversion</value>
+    <comment>Button: Case Conversion</comment>
+  </data>
+  <data name="ribbon_CaseConversionOption" xml:space="preserve">
+    <value>Case Conversion Options</value>
+    <comment>Button: SubItem of Case Conversion</comment>
+  </data>
+  <data name="ribbon_DeleteTags" xml:space="preserve">
+    <value>Delete Tags</value>
+    <comment>Button: Delete Tags</comment>
+  </data>
+  <data name="ribbon_DeleteAllTags" xml:space="preserve">
+    <value>Delete All Tags</value>
+    <comment>Button: Delete All Tags</comment>
+  </data>
+  <data name="ribbon_DeleteID3V1Tags" xml:space="preserve">
+    <value>Delete ID3 V1 Tags only</value>
+    <comment>Button: Delete Id3 V1</comment>
+  </data>
+  <data name="ribbon_DeleteID3V2Tags" xml:space="preserve">
+    <value>Delete ID3 V2 Tags only</value>
+    <comment>Button: Delete ID3 V2</comment>
+  </data>
+  <data name="ribbon_EditTags" xml:space="preserve">
+    <value>Edit Tags</value>
+    <comment>The second Ribbon Bar</comment>
+  </data>
+  <data name="ribbon_RetrieveTags" xml:space="preserve">
+    <value>Retrieve Tags</value>
+    <comment>The first Ribon Bar</comment>
+  </data>
+  <data name="ribbon_OrganiseFiles" xml:space="preserve">
+    <value>Organise</value>
+    <comment> </comment>
+  </data>
+  <data name="ribbon_SaveFolderThumb" xml:space="preserve">
+    <value>Save as Folder Thumb</value>
+    <comment> </comment>
+  </data>
+  <data name="ribbon_ExecuteScript" xml:space="preserve">
+    <value>Execute Script</value>
+    <comment> </comment>
+  </data>
+  <data name="ribbon_Picture" xml:space="preserve">
+    <value>Coverart</value>
+    <comment>The Third Ribbon Bar</comment>
+  </data>
+  <data name="ribbon_Organise" xml:space="preserve">
+    <value>Organise Files</value>
+    <comment> </comment>
+  </data>
+  <data name="ribbon_AddBurner" xml:space="preserve">
+    <value>Add to Burner</value>
+    <comment> </comment>
+  </data>
+  <data name="ribbon_AddConvert" xml:space="preserve">
+    <value>Add to Conversion</value>
+    <comment> </comment>
+  </data>
+  <data name="ribbon_AddPlaylist" xml:space="preserve">
+    <value>Add to Playlist</value>
+    <comment> </comment>
+  </data>
+  <data name="ribbon_Other" xml:space="preserve">
+    <value>Other</value>
+    <comment> </comment>
+  </data>
+  <data name="ribbon_DatabaseTab" xml:space="preserve">
+    <value>Database</value>
+    <comment>Ribbon Database Tab</comment>
+  </data>
+  <data name="ribbon_DatabaseContextualTab" xml:space="preserve">
+    <value>Database</value>
+    <comment>Ribbon Database Contextual Tab</comment>
+  </data>
+  <data name="ribbon_BurnTab" xml:space="preserve">
+    <value>Burn</value>
+     <comment>Ribbon Burn Tab</comment>
+  </data>
+  <data name="ribbon_ConvertTab" xml:space="preserve">
+    <value>Convert</value>
+    <comment>Ribbon Convert Tab</comment>
+  </data>
+  <data name="ribbon_RipTab" xml:space="preserve">
+    <value>Rip</value>
+    <comment>Ribbon Rip Tab</comment>
+  </data>
+</root>
