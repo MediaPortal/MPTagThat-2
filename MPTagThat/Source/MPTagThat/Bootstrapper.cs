@@ -180,7 +180,9 @@ namespace MPTagThat
     protected override void ConfigureModuleCatalog()
     {
       ModuleCatalog catalog = (ModuleCatalog)ModuleCatalog;
-      // Need to add the module catalogs here
+      catalog.AddModule(typeof(Ribbon.RibbonModule));
+      catalog.AddModule(typeof(Treeview.TreeviewModule));
+      catalog.AddModule(typeof(SongGrid.SongGridModule));
     }
 
     #endregion

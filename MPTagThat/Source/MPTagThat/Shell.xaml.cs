@@ -1,4 +1,4 @@
-﻿using System.Windows;
+﻿using Syncfusion.Windows.Tools.Controls;
 
 
 namespace MPTagThat
@@ -6,7 +6,7 @@ namespace MPTagThat
   /// <summary>
   /// Interaction logic for Shell.xaml
   /// </summary>
-  public partial class Shell : Window
+  public partial class Shell : RibbonWindow
   {
     public Shell()
     {

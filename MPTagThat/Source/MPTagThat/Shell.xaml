@@ -1,4 +1,4 @@
-﻿<Window x:Class="MPTagThat.Shell"
+﻿<syncfusion:RibbonWindow x:Class="MPTagThat.Shell"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -11,6 +11,16 @@
         lex:ResxLocalizationProvider.DefaultDictionary="Strings"
         xmlns:local="clr-namespace:MPTagThat"
         mc:Ignorable="d"
+        syncfusion:SkinStorage.VisualStyle="Office2010Blue"
+        Office2010Icon="Resources/Images/MPTagThat_mepo.png"
+        Icon="Resources/Images/MPTagThat_mepo.png"
         Title="{lex:Loc ApplicationName}" Height="768" Width="1024">
-  <syncfusion:DockingManager prism:RegionManager.RegionName="MainRegion" UseDocumentContainer="True" DockFill="True" DockFillDocumentMode="Normal"/>
-</Window>
+  <Grid>
+    <Grid.RowDefinitions>
+      <RowDefinition Height="Auto"/>
+      <RowDefinition Height="*"/>
+    </Grid.RowDefinitions>
+    <ContentControl prism:RegionManager.RegionName="RibbonRegion" />
+    <syncfusion:DockingManager Grid.Row="1" prism:RegionManager.RegionName="MainRegion" UseDocumentContainer="True" DockFill="True" DockFillDocumentMode="Normal"/>
+  </Grid>
+</syncfusion:RibbonWindow>

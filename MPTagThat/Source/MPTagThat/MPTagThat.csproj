@@ -74,6 +74,9 @@
     <Reference Include="Syncfusion.Grid.WPF, Version=15.2460.0.40, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL" />
     <Reference Include="Syncfusion.GridCommon.Wpf, Version=15.2460.0.40, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL" />
     <Reference Include="Syncfusion.Linq.Base, Version=15.2460.0.40, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL" />
+    <Reference Include="Syncfusion.RichTextBoxAdv.WPF, Version=15.2460.0.40, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL" />
+    <Reference Include="Syncfusion.SfInput.WPF, Version=15.2460.0.40, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL" />
+    <Reference Include="Syncfusion.SfShared.Wpf, Version=15.2460.0.40, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL" />
     <Reference Include="Syncfusion.Shared.Base, Version=15.2460.0.40, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
       <HintPath>..\packages\Syncfusion.Shared.WPF.15.2460.40\lib\net46\Syncfusion.Shared.Base.dll</HintPath>
       <Private>True</Private>
@@ -141,7 +144,7 @@
     </Compile>
     <Compile Include="Bootstrapper.cs" />
     <Compile Include="DockingManagerRegionAdapter.cs" />
-    <Compile Include="Resources\Strings.Designer.cs">
+    <Compile Include="Resources\Localization\Strings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Strings.resx</DependentUpon>
@@ -168,7 +171,7 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Resources\Strings.resx">
+    <EmbeddedResource Include="Resources\Localization\Strings.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Strings.Designer.cs</LastGenOutput>
     </EmbeddedResource>
@@ -197,6 +200,22 @@
       <Project>{a7ee52a4-95c4-46b3-9c32-49eb50121138}</Project>
       <Name>MPTagThat.Services</Name>
     </ProjectReference>
+    <ProjectReference Include="..\UI\MPTagThat.Ribbon\MPTagThat.Ribbon.csproj">
+      <Project>{25cddf0b-6b18-4a1d-834b-987a4bb26f05}</Project>
+      <Name>MPTagThat.Ribbon</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\UI\MPTagThat.SongGrid\MPTagThat.SongGrid.csproj">
+      <Project>{2d3154af-53c8-40fa-991a-6ab019078915}</Project>
+      <Name>MPTagThat.SongGrid</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\UI\MPTagThat.Treeview\MPTagThat.Treeview.csproj">
+      <Project>{0696a5a6-974e-48cb-8506-c10d7fffabf4}</Project>
+      <Name>MPTagThat.Treeview</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Resources\Images\MPTagThat_mepo.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
