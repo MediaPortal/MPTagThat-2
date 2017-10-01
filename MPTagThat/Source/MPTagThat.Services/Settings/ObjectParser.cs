@@ -52,7 +52,7 @@ namespace MPTagThat.Services.Settings
         fileName = obj + ".xml";
       }
       var log = (ServiceLocator.Current.GetInstance(typeof(ILogger)) as ILogger).GetLogger;
-      log.Trace("Serialize({0},{1})", obj.ToString(), fileName);
+      log.Trace($"Serialize({ obj},{fileName})");
       var globalSettingsList = new Dictionary<string, string>();
       var userSettingsList = new Dictionary<string, string>();
       var xmlWriter = new XmlSettingsProvider(fileName);
@@ -185,7 +185,7 @@ namespace MPTagThat.Services.Settings
       }
       XmlSettingsProvider xmlreader = new XmlSettingsProvider(fileName);
       var log = (ServiceLocator.Current.GetInstance(typeof(ILogger)) as ILogger).GetLogger;
-      log.Trace("Deserialize({0},{1})", obj.ToString(), fileName);
+      log.Trace($"Deserialize({obj},{fileName})");
       // if xml file doesn't exist yet then create it
       string fullFileName = String.Format(@"{0}\{1}", Options.ConfigDir, fileName);
       ;

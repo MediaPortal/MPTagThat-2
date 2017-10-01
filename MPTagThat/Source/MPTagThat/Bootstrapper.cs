@@ -29,10 +29,8 @@ using Microsoft.Practices.ServiceLocation;
 using Microsoft.Practices.Unity;
 using MPTagThat.Core.Settings;
 using MPTagThat.Services.Logging;
-using NLog;
 using Prism.Unity;
 using Prism.Modularity;
-using ILogger = MPTagThat.Services.Logging.ILogger;
 using MPTagThat.Services.Settings;
 using Prism.Regions;
 using Syncfusion.Windows.Tools.Controls;
@@ -153,7 +151,7 @@ namespace MPTagThat
     protected override void ConfigureContainer()
     {
       ServiceLocator.SetLocatorProvider(() => new UnityServiceLocatorAdapter(Container));
-      var logger = new NLogLogger("MPTagThat.log", LogLevel.Debug, 0);
+      var logger = new NLogLogger("MPTagThat.log", Services.Logging.LogLevel.Debug, 0);
       Container.RegisterInstance<ILogger>(logger);
       var settings = new SettingsManager();
       Container.RegisterInstance<ISettingsManager>(settings);

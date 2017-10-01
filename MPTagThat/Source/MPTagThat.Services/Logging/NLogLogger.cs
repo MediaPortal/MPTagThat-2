@@ -29,6 +29,15 @@ using NLog.Targets;
 
 namespace MPTagThat.Services.Logging
 {
+  public enum LogLevel
+  {
+    Trace,
+    Debug,
+    Info,
+    Warn,
+    Error,
+  }
+
   /// <summary>
   /// Logging class to be used within the product
   /// </summary>
@@ -80,7 +89,7 @@ namespace MPTagThat.Services.Logging
 
       level = LogLevel.Debug;
 
-      var rule = new LoggingRule("*", level, fileTarget);
+      var rule = new LoggingRule("*", ConvertLogLevel(level), fileTarget);
 
       // Create a filter to disable Raven Database Debugging
       var filter = new ConditionBasedFilter { Action = FilterResult.Ignore, Condition = "starts-with('${logger}','Raven')" };
@@ -101,7 +110,7 @@ namespace MPTagThat.Services.Logging
     /// <summary>
     /// Returns the defined Logger
     /// </summary>
-    public Logger GetLogger => _logger;
+    public NLogLogger GetLogger => this;
 
     /// <summary>
     ///   Gets or sets the log level.
@@ -114,16 +123,18 @@ namespace MPTagThat.Services.Logging
       set
       {
         _level = value;
+        NLog.LogLevel internalLevel = ConvertLogLevel(_level);
+        
         LoggingConfiguration config = LogManager.Configuration;
         for (int i = 0; i < 6; ++i)
         {
-          if (LogLevel.FromOrdinal(i) < _level)
+          if (NLog.LogLevel.FromOrdinal(i) < internalLevel)
           {
-            config.LoggingRules[0].DisableLoggingForLevel(LogLevel.FromOrdinal(i));
+            config.LoggingRules[0].DisableLoggingForLevel(NLog.LogLevel.FromOrdinal(i));
           }
           else
           {
-            config.LoggingRules[0].EnableLoggingForLevel(LogLevel.FromOrdinal(i));
+            config.LoggingRules[0].EnableLoggingForLevel(NLog.LogLevel.FromOrdinal(i));
           }
         }
 
@@ -137,6 +148,158 @@ namespace MPTagThat.Services.Logging
 
         LogManager.Configuration = config;
       }
+    }
+
+    /// <summary>
+    /// Write a Trace Log Message
+    /// </summary>
+    /// <param name="msg"></param>
+    public void Trace(string msg)
+    {
+      WriteLog(NLog.LogLevel.Trace, msg);
+    }
+
+    /// <summary>
+    /// Write a Trace Log Message
+    /// </summary>
+    /// <param name="msg"></param>
+    /// <param name="args"></param>
+    public void Trace(string msg, object[] args)
+    {
+      WriteLog(NLog.LogLevel.Trace, msg, args);
+    }
+
+    /// <summary>
+    /// Write a Debug Log Message
+    /// </summary>
+    /// <param name="msg"></param>
+    public void Debug(string msg)
+    {
+      WriteLog(NLog.LogLevel.Debug, msg);
+    }
+    /// <summary>
+    /// Write a Debug Log Message
+    /// </summary>
+    /// <param name="msg"></param>
+    /// <param name="args"></param>
+    public void Debug(string msg, object[] args)
+    {
+      WriteLog(NLog.LogLevel.Debug, msg, args);
+    }
+    /// <summary>
+    /// Write a Info Log Message
+    /// </summary>
+    /// <param name="msg"></param>
+    public void Info(string msg)
+    {
+      WriteLog(NLog.LogLevel.Info, msg);
+    }
+    /// <summary>
+    /// Write a Info Log Message
+    /// </summary>
+    /// <param name="msg"></param>
+    /// <param name="args"></param>
+    public void Info(string msg, object[] args)
+    {
+      WriteLog(NLog.LogLevel.Info, msg, args);
+    }
+
+    /// <summary>
+    /// Write a Warn Log Message
+    /// </summary>
+    /// <param name="msg"></param>
+    public void Warn(string msg)
+    {
+      WriteLog(NLog.LogLevel.Warn, msg);
+    }
+
+    /// <summary>
+    /// Write a Warn Log Message
+    /// </summary>
+    /// <param name="msg"></param>
+    /// <param name="args"></param>
+    public void Warn(string msg, object[] args)
+    {
+      WriteLog(NLog.LogLevel.Warn, msg, args);
+    }
+
+    /// <summary>
+    /// Write a Error Log Message
+    /// </summary>
+    /// <param name="msg"></param>
+    public void Error(string msg)
+    {
+      WriteLog(NLog.LogLevel.Error, msg);
+    }
+
+    /// <summary>
+    /// Write a Error Log Message
+    /// </summary>
+    /// <param name="msg"></param>
+    /// <param name="args"></param>
+    public void Error(string msg, object[] args)
+    {
+      WriteLog(NLog.LogLevel.Error, msg, args);
+    }
+
+    #endregion
+
+    #region Private Methods
+
+    /// <summary>
+    /// Write the actual message to Nlog Logger
+    /// </summary>
+    /// <param name="level"></param>
+    /// <param name="message"></param>
+    private void WriteLog(NLog.LogLevel level, string message)
+    {
+      _logger.Log(level, message);
+    }
+
+    /// <summary>
+    /// Write the actual message to Nlog Logger
+    /// </summary>
+    /// <param name="level"></param>
+    /// <param name="message"></param>
+    /// <param name="args"></param>
+    private void WriteLog(NLog.LogLevel level, string message, object[] args)
+    {
+      _logger.Log(level, message, args);
+    }
+
+    /// <summary>
+    /// Convert the Log Level from the internal MPTagThat Loglevel to NLog
+    /// </summary>
+    /// <param name="level"></param>
+    /// <returns></returns>
+    private NLog.LogLevel ConvertLogLevel(LogLevel level)
+    {
+      NLog.LogLevel nlogLogLevel = NLog.LogLevel.Debug;
+
+      switch (level)
+      {
+        case LogLevel.Debug:
+          nlogLogLevel = NLog.LogLevel.Debug;
+          break;
+
+        case LogLevel.Error:
+          nlogLogLevel = NLog.LogLevel.Error;
+          break;
+
+        case LogLevel.Info:
+          nlogLogLevel = NLog.LogLevel.Info;
+          break;
+
+        case LogLevel.Warn:
+          nlogLogLevel = NLog.LogLevel.Warn;
+          break;
+
+        case LogLevel.Trace:
+          nlogLogLevel = NLog.LogLevel.Trace;
+          break;
+      }
+
+      return nlogLogLevel;
     }
 
     #endregion

@@ -80,13 +80,13 @@ namespace MPTagThat.Services.Settings
     public void Save()
     {
       var log = (ServiceLocator.Current.GetInstance(typeof(ILogger)) as ILogger).GetLogger;
-      log.Trace("Saving({0},{1})", _filename, _modified.ToString());
+      log.Trace($"Saving({_filename},{_modified})");
       if (!_modified) return;
       if (!Directory.Exists(Options.ConfigDir))
         Directory.CreateDirectory(Options.ConfigDir);
 
       var fullFilename = $@"{Options.ConfigDir}\{_filename}";
-      log.Trace("Saving {0}", fullFilename);
+      log.Trace($"Saving {fullFilename}");
       if (_document?.DocumentElement == null) return;
       if (_document.ChildNodes.Count == 0) return;
       try

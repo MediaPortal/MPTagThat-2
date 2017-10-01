@@ -20,13 +20,81 @@ namespace MPTagThat.Services.Logging
 {
   public interface ILogger
   {
-    NLog.Logger GetLogger { get; }
+    /// <summary>
+    /// Returns the Instance of the Logger
+    /// </summary>
+    NLogLogger GetLogger { get; }
 
     /// <summary>
     ///   Gets or sets the log level.
     /// </summary>
     /// <value>A <see cref = "NLog.LogLevel" /> value that indicates the minimum level messages must have to be 
     ///   written to the file.</value>
-    NLog.LogLevel Level { get; set; }
+    LogLevel Level { get; set; }
+
+    /// <summary>
+    /// Write a Trace Log Message
+    /// </summary>
+    /// <param name="msg"></param>
+    void Trace(string msg);
+
+    /// <summary>
+    /// Write a Trace Log Message
+    /// </summary>
+    /// <param name="msg"></param>
+    /// <param name="args"></param>
+    void Trace(string msg, object[] args);
+
+    /// <summary>
+    /// Write a Debug Log Message
+    /// </summary>
+    /// <param name="msg"></param>
+    void Debug(string msg);
+
+    /// <summary>
+    /// Write a Debug Log Message
+    /// </summary>
+    /// <param name="msg"></param>
+    /// <param name="args"></param>
+    void Debug(string msg, object[] args);
+
+    /// <summary>
+    /// Write a Info Log Message
+    /// </summary>
+    /// <param name="msg"></param>
+    void Info(string msg);
+
+    /// <summary>
+    /// Write a Info Log Message
+    /// </summary>
+    /// <param name="msg"></param>
+    /// <param name="args"></param>
+    void Info(string msg, object[] args);
+
+    /// <summary>
+    /// Write a Warn Log Message
+    /// </summary>
+    /// <param name="msg"></param>
+    void Warn(string msg);
+
+    /// <summary>
+    /// Write a Warn Log Message
+    /// </summary>
+    /// <param name="msg"></param>
+    /// <param name="args"></param>
+    void Warn(string msg, object[] args);
+
+    /// <summary>
+    /// Write a Error Log Message
+    /// </summary>
+    /// <param name="msg"></param>
+    void Error(string msg);
+
+    /// <summary>
+    /// Write a Error Log Message
+    /// </summary>
+    /// <param name="msg"></param>
+    /// <param name="args"></param>
+    void Error(string msg, object[] args);
   }
 }
