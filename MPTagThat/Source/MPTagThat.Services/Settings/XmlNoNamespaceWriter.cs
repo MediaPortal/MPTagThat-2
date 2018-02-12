@@ -18,7 +18,6 @@
 
 #region
 
-using System;
 using System.IO;
 using System.Xml;
 
@@ -59,7 +58,7 @@ namespace MPTagThat.Services.Settings
     /// <exception cref = "T:System.InvalidOperationException">The writer is closed. </exception>
     public override void WriteStartElement(string prefix, string localName, string ns)
     {
-      base.WriteStartElement(localName);
+      base.WriteStartElement(null, localName, null);
     }
 
     /// <summary>
@@ -72,14 +71,14 @@ namespace MPTagThat.Services.Settings
     public override void WriteStartAttribute(string prefix, string localName, string ns)
     {
       //If the prefix or localname are "xmlns", don't write it.
-      if (String.Compare(prefix, "xmlns", StringComparison.Ordinal) == 0 ||
-          String.Compare(localName, "xmlns", StringComparison.Ordinal) == 0)
+      if ((prefix != null && prefix.CompareTo("xmlns") == 0) ||
+          (localName != null && localName.CompareTo("xmlns") == 0))
       {
         _skipAttribute = true;
       }
       else
       {
-        base.WriteStartAttribute(localName);
+        base.WriteStartAttribute(null, localName, null);
       }
     }
 
