@@ -58,6 +58,8 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -74,6 +76,15 @@
     <Compile Include="Settings\ObjectParser.cs" />
     <Compile Include="Settings\SettingAttribute.cs" />
     <Compile Include="Settings\SettingsManager.cs" />
+    <Compile Include="Settings\Setting\CaseConversionSettings.cs" />
+    <Compile Include="Settings\Setting\FileNameToTagFormatSettings.cs" />
+    <Compile Include="Settings\Setting\MPTagThatSettings.cs" />
+    <Compile Include="Settings\Setting\Options.cs" />
+    <Compile Include="Settings\Setting\OrganiseFormatSettings.cs" />
+    <Compile Include="Settings\Setting\ParameterFormat.cs" />
+    <Compile Include="Settings\Setting\StartupSettings.cs" />
+    <Compile Include="Settings\Setting\TagToFileNameFormatSettings.cs" />
+    <Compile Include="Settings\Setting\TreeViewFilterSettings.cs" />
     <Compile Include="Settings\XmlNoNamespaceWriter.cs" />
     <Compile Include="Settings\XmlSettingsProvider.cs" />
   </ItemGroup>

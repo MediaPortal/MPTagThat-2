@@ -15,31 +15,34 @@
 // You should have received a copy of the GNU General Public License
 // along with MPTagThat. If not, see <http://www.gnu.org/licenses/>.
 #endregion
+#region
+
+using System.Collections.Generic;
+
+#endregion
 
 namespace MPTagThat.Services.Settings
 {
-  public interface ISettingsManager
+  public class ParameterFormat
   {
-    /// <summary>
-    ///   Retrieves an object's public properties from a given Xml file
-    /// </summary>
-    /// <param name = "settingsObject">Object's instance</param>
-    void Load(object settingsObject);
+    #region Variables
 
-    /// <summary>
-    ///   Stores an object's public properties to a given Xml file
-    /// </summary>
-    /// <param name = "settingsObject">Object's instance</param>
-    void Save(object settingsObject);
+    private List<string> _formatValues = new List<string>();
 
-    /// <summary>
-    /// Getter for Options
-    /// </summary>
-    Options GetOptions { get; set; }
+    #endregion
 
-    /// <summary>
-    /// Getter / Setter for Startup Settings
-    /// </summary>
-    StartupSettings StartupSettings { get; set; }
+    #region Properties
+
+    [Setting(SettingScope.User, "")]
+    public List<string> FormatValues
+    {
+      get { return _formatValues; }
+      set { _formatValues = value; }
+    }
+
+    [Setting(SettingScope.User, "-1")]
+    public int LastUsedFormat { get; set; }
+
+    #endregion
   }
 }

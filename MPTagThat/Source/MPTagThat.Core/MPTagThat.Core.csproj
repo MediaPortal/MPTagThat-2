@@ -83,6 +83,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Common\GridViewColumn.cs" />
+    <Compile Include="Common\Item.cs" />
     <Compile Include="Common\Song\Comment.cs" />
     <Compile Include="Common\Song\Frame.cs" />
     <Compile Include="Common\Song\Lyric.cs" />
@@ -90,8 +91,6 @@
     <Compile Include="Common\Song\PopmFrame.cs" />
     <Compile Include="Common\Song\SongData.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Settings\Options.cs" />
-    <Compile Include="Settings\StartupSettings.cs" />
     <Compile Include="Utils\Util.cs" />
   </ItemGroup>
   <ItemGroup>

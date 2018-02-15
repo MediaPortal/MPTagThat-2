@@ -27,7 +27,6 @@ using System.Windows;
 using System.Xml;
 using Microsoft.Practices.ServiceLocation;
 using Microsoft.Practices.Unity;
-using MPTagThat.Core.Settings;
 using MPTagThat.Services.Logging;
 using Prism.Unity;
 using Prism.Modularity;
@@ -81,6 +80,8 @@ namespace MPTagThat
       var log = Container.Resolve<ILogger>().GetLogger;
       var settings = Container.Resolve<ISettingsManager>();
 
+      settings.GetOptions = new Options();
+      
       _portable = 0;
       _startupFolder = "";
       // Process Command line Arguments
@@ -132,7 +133,8 @@ namespace MPTagThat
       // Read the Config file
       ReadConfig();
 
-      settings.StartSettings = _startupSettings;
+      settings.StartupSettings = _startupSettings;
+      settings.GetOptions.InitOptions();
 
       // Move Init of Services, which we don't need immediately to a separate thread to increase startup performance
       Thread initService = new Thread(() => DoInitService(Container))
@@ -224,11 +226,11 @@ namespace MPTagThat
     /// </summary>
     private static void ReadConfig()
     {
+      _startupSettings = new StartupSettings();
       string configFile = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Config.xml");
       if (!File.Exists(configFile))
         return;
 
-      _startupSettings = new StartupSettings();
       try
       {
         XmlDocument doc = new XmlDocument();

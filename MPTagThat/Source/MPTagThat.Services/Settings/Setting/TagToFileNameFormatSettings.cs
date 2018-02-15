@@ -1,4 +1,4 @@
-﻿#region Copyright (C) 2017 Team MediaPortal
+#region Copyright (C) 2017 Team MediaPortal
 // Copyright (C) 2017 Team MediaPortal
 // http://www.team-mediaportal.com
 // 
@@ -15,31 +15,17 @@
 // You should have received a copy of the GNU General Public License
 // along with MPTagThat. If not, see <http://www.gnu.org/licenses/>.
 #endregion
-
 namespace MPTagThat.Services.Settings
 {
-  public interface ISettingsManager
+  public class TagToFileNameFormatSettings : ParameterFormat
   {
-    /// <summary>
-    ///   Retrieves an object's public properties from a given Xml file
-    /// </summary>
-    /// <param name = "settingsObject">Object's instance</param>
-    void Load(object settingsObject);
+    #region Public Methods
 
-    /// <summary>
-    ///   Stores an object's public properties to a given Xml file
-    /// </summary>
-    /// <param name = "settingsObject">Object's instance</param>
-    void Save(object settingsObject);
+    public void Save()
+    {
+      (Microsoft.Practices.ServiceLocation.ServiceLocator.Current.GetInstance(typeof(ISettingsManager)) as ISettingsManager).Save(this);
+    }
 
-    /// <summary>
-    /// Getter for Options
-    /// </summary>
-    Options GetOptions { get; set; }
-
-    /// <summary>
-    /// Getter / Setter for Startup Settings
-    /// </summary>
-    StartupSettings StartupSettings { get; set; }
+    #endregion
   }
 }

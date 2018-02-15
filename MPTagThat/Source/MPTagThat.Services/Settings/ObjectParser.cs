@@ -26,7 +26,6 @@ using System.Text;
 using System.Xml;
 using System.Xml.Serialization;
 using Microsoft.Practices.ServiceLocation;
-using MPTagThat.Core.Settings;
 using MPTagThat.Services.Logging;
 
 #endregion
@@ -51,12 +50,14 @@ namespace MPTagThat.Services.Settings
       {
         fileName = obj + ".xml";
       }
+
+      var options = (ServiceLocator.Current.GetInstance(typeof(ISettingsManager)) as ISettingsManager).GetOptions;
       var log = (ServiceLocator.Current.GetInstance(typeof(ILogger)) as ILogger).GetLogger;
       log.Trace($"Serialize({ obj},{fileName})");
       var globalSettingsList = new Dictionary<string, string>();
       var userSettingsList = new Dictionary<string, string>();
       var xmlWriter = new XmlSettingsProvider(fileName);
-      var fullFileName = $@"{Options.ConfigDir}\{fileName}";
+      var fullFileName = $@"{options.ConfigDir}\{fileName}";
 
       bool isFirstSave = (!File.Exists(fullFileName));
       foreach (var property in obj.GetType().GetProperties())
@@ -184,10 +185,11 @@ namespace MPTagThat.Services.Settings
         fileName = obj + ".xml";
       }
       XmlSettingsProvider xmlreader = new XmlSettingsProvider(fileName);
+      var options = (ServiceLocator.Current.GetInstance(typeof(ISettingsManager)) as ISettingsManager).GetOptions;
       var log = (ServiceLocator.Current.GetInstance(typeof(ILogger)) as ILogger).GetLogger;
       log.Trace($"Deserialize({obj},{fileName})");
       // if xml file doesn't exist yet then create it
-      string fullFileName = String.Format(@"{0}\{1}", Options.ConfigDir, fileName);
+      string fullFileName = String.Format(@"{0}\{1}", options.ConfigDir, fileName);
       ;
       if (!File.Exists(fullFileName)) Serialize(obj);
 

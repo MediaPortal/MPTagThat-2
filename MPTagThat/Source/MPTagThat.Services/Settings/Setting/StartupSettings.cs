@@ -18,28 +18,14 @@
 
 namespace MPTagThat.Services.Settings
 {
-  public interface ISettingsManager
+  public class StartupSettings
   {
-    /// <summary>
-    ///   Retrieves an object's public properties from a given Xml file
-    /// </summary>
-    /// <param name = "settingsObject">Object's instance</param>
-    void Load(object settingsObject);
-
-    /// <summary>
-    ///   Stores an object's public properties to a given Xml file
-    /// </summary>
-    /// <param name = "settingsObject">Object's instance</param>
-    void Save(object settingsObject);
-
-    /// <summary>
-    /// Getter for Options
-    /// </summary>
-    Options GetOptions { get; set; }
-
-    /// <summary>
-    /// Getter / Setter for Startup Settings
-    /// </summary>
-    StartupSettings StartupSettings { get; set; }
+    public bool Portable { get; set; }
+    public int MaxSongs { get; set; }
+    public bool RavenDebug { get; set; }
+    public bool RavenStudio { get; set; }
+    public int RavenStudioPort { get; set; }
+    public string DatabaseFolder { get; set; }
+    public string CoverArtFolder { get; set; }
   }
 }

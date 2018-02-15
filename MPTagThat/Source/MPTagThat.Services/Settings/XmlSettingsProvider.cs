@@ -22,7 +22,6 @@ using System;
 using System.IO;
 using System.Xml;
 using Microsoft.Practices.ServiceLocation;
-using MPTagThat.Core.Settings;
 using MPTagThat.Services.Logging;
 
 #endregion
@@ -42,7 +41,8 @@ namespace MPTagThat.Services.Settings
     public XmlSettingsProvider(string xmlfilename)
     {
       _filename = xmlfilename;
-      var fullFileName = $@"{Options.ConfigDir}\{xmlfilename}";
+      var options = (ServiceLocator.Current.GetInstance(typeof(ISettingsManager)) as ISettingsManager).GetOptions;
+      var fullFileName = $@"{options.ConfigDir}\{xmlfilename}";
       
       _document = new XmlDocument();
       if (File.Exists(fullFileName))
@@ -79,13 +79,14 @@ namespace MPTagThat.Services.Settings
 
     public void Save()
     {
+      var options = (ServiceLocator.Current.GetInstance(typeof(ISettingsManager)) as ISettingsManager).GetOptions;
       var log = (ServiceLocator.Current.GetInstance(typeof(ILogger)) as ILogger).GetLogger;
       log.Trace($"Saving({_filename},{_modified})");
       if (!_modified) return;
-      if (!Directory.Exists(Options.ConfigDir))
-        Directory.CreateDirectory(Options.ConfigDir);
+      if (!Directory.Exists(options.ConfigDir))
+        Directory.CreateDirectory(options.ConfigDir);
 
-      var fullFilename = $@"{Options.ConfigDir}\{_filename}";
+      var fullFilename = $@"{options.ConfigDir}\{_filename}";
       log.Trace($"Saving {fullFilename}");
       if (_document?.DocumentElement == null) return;
       if (_document.ChildNodes.Count == 0) return;

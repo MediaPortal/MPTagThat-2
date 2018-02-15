@@ -16,12 +16,6 @@
 // along with MPTagThat. If not, see <http://www.gnu.org/licenses/>.
 #endregion
 
-#region
-
-using MPTagThat.Core.Settings;
-
-#endregion
-
 namespace MPTagThat.Services.Settings
 {
   /// <summary>
@@ -49,7 +43,15 @@ namespace MPTagThat.Services.Settings
       ObjectParser.Serialize(settingsObject);
     }
 
-    public StartupSettings StartSettings { get; set; }
+    /// <summary>
+    /// Return the Options object, which holds global config values
+    /// </summary>
+    public Options GetOptions { get; set; }
+
+    /// <summary>
+    /// Getter for Startup Settings
+    /// </summary>
+    public StartupSettings StartupSettings { get; set; }
 
     #endregion
   }
