@@ -20,7 +20,7 @@
 
 using System.Collections.ObjectModel;
 using MPTagThat.Core.Common;
-using MPTagThat.Services.Settings;
+using MPTagThat.Core.Services.Settings;
 
 #endregion
 

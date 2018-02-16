@@ -118,10 +118,6 @@
       <Project>{d66c1d7a-a9d8-4f02-9fa4-891a673d2c68}</Project>
       <Name>MPTagThat.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\MPTagThat.Services\MPTagThat.Services.csproj">
-      <Project>{a7ee52a4-95c4-46b3-9c32-49eb50121138}</Project>
-      <Name>MPTagThat.Services</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

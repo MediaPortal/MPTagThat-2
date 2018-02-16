@@ -22,7 +22,7 @@ using System.Drawing;
 
 #endregion
 
-namespace MPTagThat.Services.Settings
+namespace MPTagThat.Core.Services.Settings.Setting
 {
   public class MPTagThatSettings
   {

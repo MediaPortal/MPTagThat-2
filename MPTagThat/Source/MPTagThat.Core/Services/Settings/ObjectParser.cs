@@ -16,7 +16,7 @@
 // along with MPTagThat. If not, see <http://www.gnu.org/licenses/>.
 #endregion
 
-#region 
+#region
 
 using System;
 using System.Collections.Generic;
@@ -26,11 +26,11 @@ using System.Text;
 using System.Xml;
 using System.Xml.Serialization;
 using Microsoft.Practices.ServiceLocation;
-using MPTagThat.Services.Logging;
+using MPTagThat.Core.Services.Logging;
 
 #endregion
 
-namespace MPTagThat.Services.Settings
+namespace MPTagThat.Core.Services.Settings
 {
   public class ObjectParser
   {

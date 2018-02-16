@@ -40,7 +40,19 @@
       <HintPath>..\packages\CommonServiceLocator.1.3\lib\portable-net4+sl5+netcore45+wpa81+wp8\Microsoft.Practices.ServiceLocation.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
+      <HintPath>..\packages\NLog.4.4.12\lib\net45\NLog.dll</HintPath>
+    </Reference>
     <Reference Include="PresentationFramework" />
+    <Reference Include="Raven.Abstractions, Version=3.5.5.0, Culture=neutral, PublicKeyToken=37f41c7f99471593, processorArchitecture=MSIL">
+      <HintPath>..\packages\RavenDB.Database.3.5.5\lib\net45\Raven.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Raven.Client.Lightweight, Version=3.5.5.0, Culture=neutral, PublicKeyToken=37f41c7f99471593, processorArchitecture=MSIL">
+      <HintPath>..\packages\RavenDB.Client.3.5.5\lib\net45\Raven.Client.Lightweight.dll</HintPath>
+    </Reference>
+    <Reference Include="Raven.Database, Version=3.5.5.0, Culture=neutral, PublicKeyToken=37f41c7f99471593, processorArchitecture=MSIL">
+      <HintPath>..\packages\RavenDB.Database.3.5.5\lib\net45\Raven.Database.dll</HintPath>
+    </Reference>
     <Reference Include="Syncfusion.Data.WPF, Version=15.4460.0.20, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
       <HintPath>..\packages\Syncfusion.Data.WPF46.15.4.0.20\lib\net46\Syncfusion.Data.WPF.dll</HintPath>
     </Reference>
@@ -57,6 +69,7 @@
       <HintPath>..\packages\Syncfusion.Tools.WPF46.15.4.0.20\lib\net46\Syncfusion.Tools.Wpf.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows" />
@@ -90,10 +103,33 @@
     <Compile Include="Common\Song\Picture.cs" />
     <Compile Include="Common\Song\PopmFrame.cs" />
     <Compile Include="Common\Song\SongData.cs" />
+    <Compile Include="Common\Song\SongList.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\Logging\ILogger.cs" />
+    <Compile Include="Services\Logging\NLogLogger.cs" />
+    <Compile Include="Services\Settings\INamedSettings.cs" />
+    <Compile Include="Services\Settings\ISettingsManager.cs" />
+    <Compile Include="Services\Settings\ObjectParser.cs" />
+    <Compile Include="Services\Settings\SettingAttribute.cs" />
+    <Compile Include="Services\Settings\SettingsManager.cs" />
+    <Compile Include="Services\Settings\Setting\CaseConversionSettings.cs" />
+    <Compile Include="Services\Settings\Setting\FileNameToTagFormatSettings.cs" />
+    <Compile Include="Services\Settings\Setting\MPTagThatSettings.cs" />
+    <Compile Include="Services\Settings\Setting\Options.cs" />
+    <Compile Include="Services\Settings\Setting\OrganiseFormatSettings.cs" />
+    <Compile Include="Services\Settings\Setting\ParameterFormat.cs" />
+    <Compile Include="Services\Settings\Setting\StartupSettings.cs" />
+    <Compile Include="Services\Settings\Setting\TagToFileNameFormatSettings.cs" />
+    <Compile Include="Services\Settings\Setting\TreeViewFilterSettings.cs" />
+    <Compile Include="Services\Settings\XmlNoNamespaceWriter.cs" />
+    <Compile Include="Services\Settings\XmlSettingsProvider.cs" />
     <Compile Include="Utils\Util.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\packages\RavenDB.Database.3.5.5\tools\Raven.Studio.Html5.zip">
+      <Link>Raven.Studio.Html5.zip</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

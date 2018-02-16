@@ -16,7 +16,7 @@
 // along with MPTagThat. If not, see <http://www.gnu.org/licenses/>.
 #endregion
 
-namespace MPTagThat.Services.Settings
+namespace MPTagThat.Core.Services.Settings
 {
   public interface INamedSettings
   {

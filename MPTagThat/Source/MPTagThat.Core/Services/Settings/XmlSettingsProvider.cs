@@ -16,17 +16,17 @@
 // along with MPTagThat. If not, see <http://www.gnu.org/licenses/>.
 #endregion
 
-#region 
+#region
 
 using System;
 using System.IO;
 using System.Xml;
 using Microsoft.Practices.ServiceLocation;
-using MPTagThat.Services.Logging;
+using MPTagThat.Core.Services.Logging;
 
 #endregion
 
-namespace MPTagThat.Services.Settings
+namespace MPTagThat.Core.Services.Settings
 {
   public class XmlSettingsProvider
   {

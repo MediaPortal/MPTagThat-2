@@ -27,7 +27,7 @@ using NLog.Targets;
 
 #endregion
 
-namespace MPTagThat.Services.Logging
+namespace MPTagThat.Core.Services.Logging
 {
   public enum LogLevel
   {

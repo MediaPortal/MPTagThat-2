@@ -23,7 +23,7 @@ using System.Xml;
 
 #endregion
 
-namespace MPTagThat.Services.Settings
+namespace MPTagThat.Core.Services.Settings
 {
   /// <summary>
   ///   Xml Writer that doesn't write the Namespace attributes when they are standard.

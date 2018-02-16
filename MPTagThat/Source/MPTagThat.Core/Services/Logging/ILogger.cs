@@ -16,7 +16,7 @@
 // along with MPTagThat. If not, see <http://www.gnu.org/licenses/>.
 #endregion
 
-namespace MPTagThat.Services.Logging
+namespace MPTagThat.Core.Services.Logging
 {
   public interface ILogger
   {
@@ -96,5 +96,6 @@ namespace MPTagThat.Services.Logging
     /// <param name="msg"></param>
     /// <param name="args"></param>
     void Error(string msg, object[] args);
+    void Error(string v, string message);
   }
 }

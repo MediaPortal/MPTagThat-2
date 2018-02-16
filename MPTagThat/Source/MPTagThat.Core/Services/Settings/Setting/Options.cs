@@ -21,12 +21,13 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Windows.Forms;
+using Microsoft.Practices.ServiceLocation;
 using MPTagThat.Core.Common;
 using MPTagThat.Core.Common.Song;
-using Microsoft.Practices.ServiceLocation;
+
 #endregion
 
-namespace MPTagThat.Services.Settings
+namespace MPTagThat.Core.Services.Settings.Setting
 { 
   public class Options
   {

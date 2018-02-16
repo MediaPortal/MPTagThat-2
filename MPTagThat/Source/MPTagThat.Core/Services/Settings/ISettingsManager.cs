@@ -16,41 +16,32 @@
 // along with MPTagThat. If not, see <http://www.gnu.org/licenses/>.
 #endregion
 
-using System;
+using MPTagThat.Core.Services.Settings.Setting;
 
-namespace MPTagThat.Services.Settings
+namespace MPTagThat.Core.Services.Settings
 {
-  /// <summary>
-  ///   Enumerator for a setting's scope
-  /// </summary>
-  public enum SettingScope
-  {
-    Global = 1, // global setting, doesn't allow per user/per plugin override
-    User = 2 // per user setting : allows per user storage
-  }
-
-  [AttributeUsage(AttributeTargets.Property, AllowMultiple = false)]
-  public class SettingAttribute : Attribute
+  public interface ISettingsManager
   {
     /// <summary>
-    ///   Constructor
+    ///   Retrieves an object's public properties from a given Xml file
     /// </summary>
-    /// <param name = "settingScope">Setting's scope</param>
-    /// <param name = "defaultValue">Default value</param>
-    public SettingAttribute(SettingScope settingScope, string defaultValue)
-    {
-      SettingScope = settingScope;
-      DefaultValue = defaultValue;
-    }
+    /// <param name = "settingsObject">Object's instance</param>
+    void Load(object settingsObject);
 
     /// <summary>
-    ///   Get/Set setting's scope (User/Global)
+    ///   Stores an object's public properties to a given Xml file
     /// </summary>
-    public SettingScope SettingScope { get; set; }
+    /// <param name = "settingsObject">Object's instance</param>
+    void Save(object settingsObject);
 
     /// <summary>
-    ///   Get/Set the default value
+    /// Getter for Options
     /// </summary>
-    public string DefaultValue { get; set; }
+    Options GetOptions { get; set; }
+
+    /// <summary>
+    /// Getter / Setter for Startup Settings
+    /// </summary>
+    StartupSettings StartupSettings { get; set; }
   }
 }

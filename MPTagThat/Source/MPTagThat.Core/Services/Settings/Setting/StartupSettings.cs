@@ -1,4 +1,4 @@
-#region Copyright (C) 2017 Team MediaPortal
+﻿#region Copyright (C) 2017 Team MediaPortal
 // Copyright (C) 2017 Team MediaPortal
 // http://www.team-mediaportal.com
 // 
@@ -15,17 +15,17 @@
 // You should have received a copy of the GNU General Public License
 // along with MPTagThat. If not, see <http://www.gnu.org/licenses/>.
 #endregion
-namespace MPTagThat.Services.Settings
+
+namespace MPTagThat.Core.Services.Settings.Setting
 {
-  public class TagToFileNameFormatSettings : ParameterFormat
+  public class StartupSettings
   {
-    #region Public Methods
-
-    public void Save()
-    {
-      (Microsoft.Practices.ServiceLocation.ServiceLocator.Current.GetInstance(typeof(ISettingsManager)) as ISettingsManager).Save(this);
-    }
-
-    #endregion
+    public bool Portable { get; set; }
+    public int MaxSongs { get; set; }
+    public bool RavenDebug { get; set; }
+    public bool RavenStudio { get; set; }
+    public int RavenStudioPort { get; set; }
+    public string DatabaseFolder { get; set; }
+    public string CoverArtFolder { get; set; }
   }
 }

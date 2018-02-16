@@ -15,9 +15,10 @@
 // You should have received a copy of the GNU General Public License
 // along with MPTagThat. If not, see <http://www.gnu.org/licenses/>.
 #endregion
-namespace MPTagThat.Services.Settings
+
+namespace MPTagThat.Core.Services.Settings.Setting
 {
-  public class FileNameToTagFormatSettings : ParameterFormat
+  public class TagToFileNameFormatSettings : ParameterFormat
   {
     #region Public Methods
 

@@ -16,7 +16,9 @@
 // along with MPTagThat. If not, see <http://www.gnu.org/licenses/>.
 #endregion
 
-namespace MPTagThat.Services.Settings
+using MPTagThat.Core.Services.Settings.Setting;
+
+namespace MPTagThat.Core.Services.Settings
 {
   /// <summary>
   ///   Main Config Service

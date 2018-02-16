@@ -21,7 +21,7 @@
 using System.Collections.Generic;
 using Microsoft.Practices.ServiceLocation;
 using MPTagThat.Core.Common;
-using MPTagThat.Services.Settings;
+using MPTagThat.Core.Services.Settings;
 
 #endregion
 
