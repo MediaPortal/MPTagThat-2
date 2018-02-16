@@ -18,14 +18,19 @@
 
 #region
 
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Windows.Controls;
 using System.Windows.Forms;
 using Microsoft.Practices.ServiceLocation;
 using MPTagThat.Core.Common.Song;
 using MPTagThat.Core.Services.Logging;
+using MPTagThat.Core.Services.Settings;
+using MPTagThat.Core.Services.Settings.Setting;
 using MPTagThat.Core.Utils;
 using Prism.Mvvm;
+using Syncfusion.Data.Extensions;
 using GridViewColumn = MPTagThat.Core.Common.GridViewColumn;
 using Syncfusion.UI.Xaml.Grid;
 
@@ -36,43 +41,30 @@ namespace MPTagThat.SongGrid.ViewModels
   class SongGridViewModel : BindableBase
   {
     private readonly NLogLogger log;
+    private Options _options;
     private readonly SongGridViewColumns _gridColumns;
-    private ObservableCollection<SongData> _songs;
 
     public SongGridViewModel()
     {
       log = (ServiceLocator.Current.GetInstance(typeof(ILogger)) as ILogger).GetLogger;
-      
+      _options = (ServiceLocator.Current.GetInstance(typeof(ISettingsManager)) as ISettingsManager).GetOptions;
+
       // Load the Settings
       _gridColumns = new SongGridViewColumns();
       CreateColumns();
 
-      _songs = new ObservableCollection<SongData>();
       Folderscan();
     }
-
 
     public Columns DataGridColumns
     {
       get; set;
     }
 
-    public ObservableCollection<SongData> Songs
+    public IEnumerable<SongData> Songs
     {
-      get
-      {
-        if (_songs == null)
-          _songs = new ObservableCollection<SongData>();
-
-        return _songs;
-      }
-      set
-      {
-        _songs = value;
-        RaisePropertyChanged("Songs");
-      }
+      get { return _options.Songlist.ToList<SongData>(); }
     }
-
     #region Private Methods
 
     /// <summary>
@@ -105,7 +97,7 @@ namespace MPTagThat.SongGrid.ViewModels
       file = TagLib.File.Create(@"d:\Music\Eagles, The\Long Road Out Of Eden\0107 - Waiting In The Weeds.mp3");
       song.AlbumArtist = file.Tag.AlbumArtists[0];
       song.Album = file.Tag.Album;
-      Songs.Add(song);
+      _options.Songlist.Add(song);
     }
 
     #endregion

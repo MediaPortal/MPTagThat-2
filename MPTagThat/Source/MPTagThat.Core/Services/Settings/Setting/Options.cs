@@ -233,7 +233,7 @@ namespace MPTagThat.Core.Services.Settings.Setting
 
     public int ReadOnlyFileHandling { get; set; }
 
-    //public static SongList Songlist { get; set; }
+    public SongList<SongData> Songlist { get; set; }
 
     public StartupSettings StartupSettings { get; set; }
 
@@ -376,7 +376,7 @@ namespace MPTagThat.Core.Services.Settings.Setting
 
       ReadOnlyFileHandling = 2; // Don't change attribute as a default.
 
-      //Songlist = new SongList();
+      Songlist = new SongList<SongData>();
     }
 
     #endregion

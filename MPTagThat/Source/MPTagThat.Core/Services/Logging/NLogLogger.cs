@@ -242,6 +242,16 @@ namespace MPTagThat.Core.Services.Logging
       WriteLog(NLog.LogLevel.Error, msg, args);
     }
 
+    public void Error(string v, string message)
+    {
+      WriteLog(NLog.LogLevel.Error, v, new object[]{ message});
+    }
+
+    public void Error(string v, string folderName, string message)
+    {
+      WriteLog(NLog.LogLevel.Error, v, new object[] { folderName, message });
+    }
+
     #endregion
 
     #region Private Methods

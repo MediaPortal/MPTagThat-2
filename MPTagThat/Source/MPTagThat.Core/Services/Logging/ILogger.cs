@@ -97,5 +97,6 @@ namespace MPTagThat.Core.Services.Logging
     /// <param name="args"></param>
     void Error(string msg, object[] args);
     void Error(string v, string message);
+    void Error(string v, string folderName, string message);
   }
 }

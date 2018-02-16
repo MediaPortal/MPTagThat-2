@@ -18,9 +18,13 @@
 
 #region
 
+using System;
 using System.Drawing;
+using System.IO;
 using System.Windows.Forms;
+using Microsoft.Practices.ServiceLocation;
 using MPTagThat.Core.Common;
+using MPTagThat.Core.Services.Logging;
 using Syncfusion.UI.Xaml.Grid;
 
 #endregion
@@ -37,6 +41,23 @@ namespace MPTagThat.Core.Utils
       Fixable = 1,
       NonFixable = 2,
       Fixed = 3
+    }
+
+    #endregion
+
+    #region Variables
+
+    private static Util instance = new Util();
+    private static ILogger log;
+    private static readonly object padlock = new object();
+
+    #endregion
+
+    #region ctor
+
+    private Util()
+    {
+      log = (ServiceLocator.Current.GetInstance(typeof(ILogger)) as ILogger).GetLogger;
     }
 
     #endregion
@@ -104,5 +125,29 @@ namespace MPTagThat.Core.Utils
 
     #endregion
 
+    #region Folder related methods
+
+    /// <summary>
+    /// Deletes folder, setting the attributes before to allow deletion
+    /// </summary>
+    /// <param name="folderName"></param>
+    public static void DeleteFolder(string folderName)
+    {
+      try
+      {
+        if (Directory.Exists(folderName))
+        {
+          var dirInfo = new DirectoryInfo(folderName);
+          dirInfo.Attributes = dirInfo.Attributes & ~FileAttributes.ReadOnly;
+          Directory.Delete(folderName, true);
+        }
+      }
+      catch (Exception ex)
+      {
+        log.Error("Exception deleting folder: {0} {1}", folderName, ex.Message);
+      }
+    }
+
+    #endregion
   }
 }
