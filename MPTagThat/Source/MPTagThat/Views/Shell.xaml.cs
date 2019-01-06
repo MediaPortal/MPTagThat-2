@@ -1,7 +1,7 @@
-﻿using Syncfusion.Windows.Tools.Controls;
+﻿using MPTagThat.ViewModels;
+using Syncfusion.Windows.Tools.Controls;
 
-
-namespace MPTagThat
+namespace MPTagThat.Views
 {
   /// <summary>
   /// Interaction logic for Shell.xaml

@@ -20,6 +20,6 @@
     <syncfusion:SfDataGrid x:Name="SongDataGrid" ItemsSource="{Binding Songs}" 
                            Columns="{Binding DataGridColumns, Mode=TwoWay}" FrozenColumnCount="3"
                            ColumnSizer="AutoWithLastColumnFill" AllowResizingColumns="True" AllowDraggingColumns="True" ShowRowHeader="False" 
-                           AllowEditing="True" AutoGenerateColumns="False" SelectionMode="Multiple" />
+                           AllowEditing="True" AutoGenerateColumns="False" SelectionMode="Multiple" EnableDataVirtualization="True" ShowBusyIndicator="True" />
   </Grid>
 </UserControl>

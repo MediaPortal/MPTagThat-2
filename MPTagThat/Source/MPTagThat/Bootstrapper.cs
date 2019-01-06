@@ -70,7 +70,7 @@ namespace MPTagThat
     /// <returns></returns>
     protected override DependencyObject CreateShell()
     {
-      return Container.Resolve<Shell>();
+      return Container.Resolve<Views.Shell>();
     }
 
     /// <summary>

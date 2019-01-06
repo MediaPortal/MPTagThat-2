@@ -19,7 +19,7 @@ namespace MPTagThat.Resources.Localization {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class Strings {
@@ -66,6 +66,78 @@ namespace MPTagThat.Resources.Localization {
         public static string ApplicationName {
             get {
                 return ResourceManager.GetString("ApplicationName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Corrupt File.
+        /// </summary>
+        public static string message_CorruptFile {
+            get {
+                return ResourceManager.GetString("message_CorruptFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Error.
+        /// </summary>
+        public static string message_Error_Title {
+            get {
+                return ResourceManager.GetString("message_Error_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Error reading file: {0}.
+        /// </summary>
+        public static string message_ErrorReadingFile {
+            get {
+                return ResourceManager.GetString("message_ErrorReadingFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Can&apos;t reset readonly attribute.
+        /// </summary>
+        public static string message_ErrorResetAttr {
+            get {
+                return ResourceManager.GetString("message_ErrorResetAttr", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Error saving file: {0}.
+        /// </summary>
+        public static string message_ErrorSave {
+            get {
+                return ResourceManager.GetString("message_ErrorSave", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to File no longer existing!.
+        /// </summary>
+        public static string message_NonExistingFile {
+            get {
+                return ResourceManager.GetString("message_NonExistingFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Too many files scanned. Running out of Memory.\r\nAborting Scan..
+        /// </summary>
+        public static string message_OutOfMemory {
+            get {
+                return ResourceManager.GetString("message_OutOfMemory", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unsupported Format.
+        /// </summary>
+        public static string message_UnsupportedFormat {
+            get {
+                return ResourceManager.GetString("message_UnsupportedFormat", resourceCulture);
             }
         }
         
@@ -471,6 +543,42 @@ namespace MPTagThat.Resources.Localization {
         public static string ribbon_ValidateSong {
             get {
                 return ResourceManager.GetString("ribbon_ValidateSong", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tagfilter: Active.
+        /// </summary>
+        public static string statusBar_FilterActive {
+            get {
+                return ResourceManager.GetString("statusBar_FilterActive", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tagfilter: Inactive.
+        /// </summary>
+        public static string statusBar_FilterInactive {
+            get {
+                return ResourceManager.GetString("statusBar_FilterInactive", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Files: {0}.
+        /// </summary>
+        public static string statusBar_NumberOfFiles {
+            get {
+                return ResourceManager.GetString("statusBar_NumberOfFiles", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to (Selected: {0}).
+        /// </summary>
+        public static string statusBar_NumberOfSelectedFiles {
+            get {
+                return ResourceManager.GetString("statusBar_NumberOfSelectedFiles", resourceCulture);
             }
         }
     }

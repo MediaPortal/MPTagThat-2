@@ -136,10 +136,10 @@ namespace MPTagThat.Core.Services.Settings.Setting
     public int ID3Version { get; set; }
 
     [Setting(SettingScope.User, "false")]
-    public bool RemoveID3V1 { get; set; }
+    public bool RemoveID3V1 { get; set; } 
 
     [Setting(SettingScope.User, "false")]
-    public bool RemoveID3V2 { get; set; }
+    public bool RemoveID3V2 { get; set; } 
 
     [Setting(SettingScope.User, "false")]
     public bool CopyArtist { get; set; }

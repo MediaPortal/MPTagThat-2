@@ -18,31 +18,48 @@
 
 #region
 
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.IO;
 using System.Windows.Controls;
 using System.Windows.Forms;
+using System.Windows.Threading;
 using Microsoft.Practices.ServiceLocation;
+using MPTagThat.Core;
+using MPTagThat.Core.Common;
 using MPTagThat.Core.Common.Song;
 using MPTagThat.Core.Services.Logging;
 using MPTagThat.Core.Services.Settings;
 using MPTagThat.Core.Services.Settings.Setting;
 using MPTagThat.Core.Utils;
+using MPTagThat.Core.Events;
 using Prism.Mvvm;
 using Syncfusion.Data.Extensions;
 using GridViewColumn = MPTagThat.Core.Common.GridViewColumn;
 using Syncfusion.UI.Xaml.Grid;
+using WPFLocalizeExtension.Engine;
 
 #endregion
 
 namespace MPTagThat.SongGrid.ViewModels
 {
-  class SongGridViewModel : BindableBase
+  class SongGridViewModel : BindableBase, INotifyPropertyChanged
   {
+    #region Variables
+
     private readonly NLogLogger log;
     private Options _options;
     private readonly SongGridViewColumns _gridColumns;
+
+    private string[] _filterFileExtensions;
+    private string _filterFileMask = "*.*";
+
+    private List<FileInfo> _nonMusicFiles = new List<FileInfo>();
+    private bool _progressCancelled = false;
+
+    #endregion
 
     public SongGridViewModel()
     {
@@ -53,19 +70,43 @@ namespace MPTagThat.SongGrid.ViewModels
       _gridColumns = new SongGridViewColumns();
       CreateColumns();
 
+      Songs = _options.Songlist;
+      ItemsSourceDataCommand = new RelayCommand(SetItemsSource);
+
       Folderscan();
     }
 
-    public Columns DataGridColumns
+    public RelayCommand ItemsSourceDataCommand { get; set; }
+
+    public Columns DataGridColumns { get; set; }
+
+    public BindingList<SongData> Songs
     {
-      get; set;
+      get => _options.Songlist;
+      set
+      { 
+        _options.Songlist = (SongList)value;
+        OnPropertyChanged("Songs");
+      }
     }
 
-    public IEnumerable<SongData> Songs
+    #region INotifyPropertyChanged Members
+
+    public event PropertyChangedEventHandler PropertyChanged;
+
+    private void OnPropertyChanged(string propertyName)
     {
-      get { return _options.Songlist.ToList<SongData>(); }
+      PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }
+
+    #endregion
+
     #region Private Methods
+
+    public void SetItemsSource(object grid)
+    {
+      if (grid is SfDataGrid dataGrid) dataGrid.ItemsSource = Songs;
+    }
 
     /// <summary>
     ///   Create the Columns of the Grid based on the users setting
@@ -90,14 +131,193 @@ namespace MPTagThat.SongGrid.ViewModels
 
     public void Folderscan()
     {
-      SongData song = new SongData();
-      TagLib.File file = null;
+      log.Trace(">>>");
+      //tracksGrid.Rows.Clear();
+      Songs.Clear();
+      //_nonMusicFiles = new List<FileInfo>();
+      //_main.MiscInfoPanel.ClearNonMusicFiles();
+      //_main.MiscInfoPanel.ActivateNonMusicTab();
+      GC.Collect();
 
-      TagLib.ByteVector.UseBrokenLatin1Behavior = true;
-      file = TagLib.File.Create(@"d:\Music\Eagles, The\Long Road Out Of Eden\0107 - Waiting In The Weeds.mp3");
-      song.AlbumArtist = file.Tag.AlbumArtists[0];
-      song.Album = file.Tag.Album;
-      _options.Songlist.Add(song);
+      //string selectedFolder = _main.CurrentDirectory;
+      string selectedFolder = @"d:\Music\Top 100\";
+      _options.ScanFolderRecursive = false;
+      if (!Directory.Exists(selectedFolder))
+        return;
+
+      //_main.FolderScanning = true;
+
+      // Get File Filter Settings
+      _filterFileExtensions = new string[] { "*.*" };
+      //_filterFileExtensions = _main.TreeView.ActiveFilter.FileFilter.Split('|');
+      //_filterFileMask = _main.TreeView.ActiveFilter.FileMask.Trim() == ""
+      //                    ? " * "
+      //                    : _main.TreeView.ActiveFilter.FileMask.Trim();
+
+      //SetProgressBar(1);
+
+      // Change the style to Marquee, since we really don't know how much files we will get
+      //_main.progressBar1.Style = ProgressBarStyle.Marquee;
+      //_main.progressBar1.MarqueeAnimationSpeed = 10;
+
+      int count = 1;
+      int nonMusicCount = 0;
+      StatusBarEvent msg = new StatusBarEvent {CurrentFolder = selectedFolder, CurrentProgress = -1 };
+
+      try
+      {
+        foreach (FileInfo fi in GetFiles(new DirectoryInfo(selectedFolder), _options.ScanFolderRecursive))
+        {
+          Application.DoEvents();
+
+          if (_progressCancelled)
+          {
+            break;
+          }
+          try
+          {
+            if (Util.IsAudio(fi.FullName))
+            {
+              msg.CurrentFile = fi.FullName;
+              log.Trace($"Retrieving file: {fi.FullName}");
+              // Read the Tag
+              SongData track = Song.Create(fi.FullName);
+              if (track != null)
+              {
+                //if (ApplyTagFilter(track))
+                //{
+                  Songs.Add(track);
+                  count++;
+                  msg.NumberOfFiles = count;
+                  EventSystem.Publish(msg);
+                //}
+              }
+            }
+            else
+            {
+              _nonMusicFiles.Add(fi);
+              nonMusicCount++;
+            }
+          }
+          catch (PathTooLongException)
+          {
+            log.Warn($"FolderScan: Ignoring track {fi.FullName} - path too long!");
+            continue;
+          }
+          catch (System.UnauthorizedAccessException exUna)
+          {
+            log.Warn($"Could not access file or folder: {exUna.Message}. {fi.FullName}");
+          }
+          catch (Exception ex)
+          {
+            log.Error($"Caught error processing files: {ex.Message} {fi.FullName}");
+          }
+        }
+      }
+      catch (OutOfMemoryException)
+      {
+        GC.Collect();
+        MessageBox.Show(LocalizeDictionary.Instance.GetLocalizedObject("MPTagThat", "Strings", "message_OutOfMemory", 
+            LocalizeDictionary.Instance.Culture).ToString(),
+          LocalizeDictionary.Instance.GetLocalizedObject("MPTagThat", "Strings", "message_ErrorTitle",
+            LocalizeDictionary.Instance.Culture).ToString(),
+                        MessageBoxButtons.OK);
+        log.Error("Folderscan: Running out of memory. Scanning aborted.");
+      }
+
+      // Commit changes to SongTemp, in case we have switched to DB Mode
+      _options.Songlist.CommitDatabaseChanges();
+
+      msg.CurrentProgress = 100;
+      EventSystem.Publish(msg);
+      log.Info($"FolderScan: Scanned {nonMusicCount + count} files. Found {count} audio files");
+
+      //_main.MiscInfoPanel.AddNonMusicFiles(_nonMusicFiles);
+
+      //_main.ToolStripStatusScan.Text = "";
+
+
+      //ResetProgressBar();
+      //_main.progressBar1.Style = ProgressBarStyle.Continuous;
+
+      // Display Status Information
+      try
+      {
+        //_main.ToolStripStatusFiles.Text = string.Format(localisation.ToString("main", "toolStripLabelFiles"), count, 0);
+      }
+      catch (InvalidOperationException) { }
+
+      /*
+      // unselect the first row, which would be selected automatically by the grid
+      // And set the background color of the rating cell, as it isn't reset by the grid
+      try
+      {
+        if (tracksGrid.Rows.Count > 0)
+        {
+          _main.TagEditForm.ClearForm();
+          tracksGrid.Rows[0].Selected = false;
+        }
+      }
+      catch (ArgumentOutOfRangeException) { }
+
+      // If MP3 Validation is turned on, set the color
+      if (Options.MainSettings.MP3Validate)
+      {
+        ChangeErrorRowColor();
+      }
+      
+      _main.FolderScanning = false;
+      */
+    log.Trace("<<<");
+  }
+
+    /// <summary>
+    ///   Read a Folder and return the files
+    /// </summary>
+    /// <param name = "folder"></param>
+    /// <param name = "foundFiles"></param>
+    private IEnumerable<FileInfo> GetFiles(DirectoryInfo dirInfo, bool recursive)
+    {
+      Queue<DirectoryInfo> directories = new Queue<DirectoryInfo>();
+      directories.Enqueue(dirInfo);
+      Queue<FileInfo> files = new Queue<FileInfo>();
+      while (files.Count > 0 || directories.Count > 0)
+      {
+        if (files.Count > 0)
+        {
+          yield return files.Dequeue();
+        }
+        try
+        {
+          if (directories.Count > 0)
+          {
+            DirectoryInfo dir = directories.Dequeue();
+
+            if (recursive)
+            {
+              DirectoryInfo[] newDirectories = dir.GetDirectories();
+              foreach (DirectoryInfo di in newDirectories)
+              {
+                directories.Enqueue(di);
+              }
+            }
+
+            foreach (string extension in _filterFileExtensions)
+            {
+              string searchFilter = string.Format("{0}.{1}", _filterFileMask, extension);
+              FileInfo[] newFiles = dir.GetFiles(searchFilter);
+              foreach (FileInfo file in newFiles)
+              {
+                files.Enqueue(file);
+              }
+            }
+          }
+        }
+        catch (UnauthorizedAccessException ex)
+        {
+          log.Error($"{ex.Message}, {ex}");
+        }
+      }
     }
 
     #endregion

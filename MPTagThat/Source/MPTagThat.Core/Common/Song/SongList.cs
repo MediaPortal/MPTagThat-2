@@ -29,11 +29,13 @@ using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
 using System.IO;
+using System.Runtime.CompilerServices;
 using MPTagThat.Core.Common;
 //using MPTagThat.Core.Services.MusicDatabase;
 using Raven.Abstractions.Data;
 using Raven.Client.Connection;
 using Microsoft.Practices.ServiceLocation;
+using MPTagThat.Core.Annotations;
 using MPTagThat.Core.Services.Logging;
 using MPTagThat.Core.Services.Settings;
 using MPTagThat.Core.Services.Settings.Setting;
@@ -48,7 +50,7 @@ namespace MPTagThat.Core.Common.Song
   /// Based on the amount of songs reatrieved, it either stores them in a BindingList or uses
   /// a temporary db4o database created on the fly to prevent Out of Memory issues, when processing a large collection of songs.
   /// </summary>
-  public class SongList<T> : CollectionBase, IBindingList, IDisposable
+  public class SongList : BindingList<SongData>, IDisposable
   {
     #region Variables
 
@@ -60,8 +62,8 @@ namespace MPTagThat.Core.Common.Song
     private IDocumentStore _store;
     private IDocumentSession _session;
     private List<string> _dbIdList = new List<string>();
+    private BindingList<SongData> _songList = new BindingList<SongData>();
     private int _trackId = 0;
-    private int _count = 0;
 
     private int _lastRetrievedTrackIndex = -1;
     private SongData _lastRetrievedTrack = null;
@@ -79,7 +81,6 @@ namespace MPTagThat.Core.Common.Song
       settings = (ServiceLocator.Current.GetInstance(typeof(ISettingsManager)) as ISettingsManager);
       _databaseModeEnabled = false;
       _databaseFolder = $"{settings.GetOptions.StartupSettings.DatabaseFolder}{_databaseName}";
-      _count = 0;
     }
 
     #endregion
@@ -103,7 +104,7 @@ namespace MPTagThat.Core.Common.Song
           return _countCache;
         }
 
-        return _count;
+        return _songList.Count;
       }
     }
 
@@ -116,7 +117,7 @@ namespace MPTagThat.Core.Common.Song
     /// </summary>
     /// <param name="i"></param>
     /// <returns></returns>
-    public SongData this[int i]
+    public new object this[int i]
     {
       get
       {
@@ -135,7 +136,7 @@ namespace MPTagThat.Core.Common.Song
           return _lastRetrievedTrack;
         }
 
-        return (SongData)List[i];
+        return _songList[i];
       }
       set
       {
@@ -144,13 +145,13 @@ namespace MPTagThat.Core.Common.Song
           var result = _session.Load<SongData>(_dbIdList[i]);
 
           var track = result;
-          track = value;
+          track = (SongData)value;
           _session.Store(track);
           _session.SaveChanges();
         }
         else
         {
-          List[i] = value;
+          _songList[i] = (SongData)value;
         }
       }
     }
@@ -163,24 +164,25 @@ namespace MPTagThat.Core.Common.Song
     /// Adding of new songs to the list
     /// </summary>
     /// <param name="track"></param>
-    public void Add(SongData track)
+    public int Add(object track)
     {
-      if (!_databaseModeEnabled && _count > settings.GetOptions.StartupSettings.MaxSongs )
+      if (!_databaseModeEnabled && _songList.Count > settings.GetOptions.StartupSettings.MaxSongs)
       {
-        CopyLIstToDatabase();  
+        CopyLIstToDatabase();
       }
 
       if (_databaseModeEnabled)
       {
-        track.Id = $"SongDatas/{_trackId++.ToString()}";
+        (track as SongData).Id = $"SongDatas/{_trackId++.ToString()}";
         _session.Store(track);
-        _dbIdList.Add(track.Id);
+        _dbIdList.Add((track as SongData).Id);
       }
       else
       {
-        List.Add(track);
-        _count++;
+        _songList.Add((SongData)track);
       }
+
+      return 1;
     }
 
 
@@ -207,9 +209,13 @@ namespace MPTagThat.Core.Common.Song
       }
       else
       {
-        List.RemoveAt(index);
-        _count--;
+        _songList.RemoveAt(index);
       }
+    }
+
+    public bool Contains(object value)
+    {
+      throw new NotImplementedException();
     }
 
     /// <summary>
@@ -230,8 +236,7 @@ namespace MPTagThat.Core.Common.Song
       }
       else
       {
-        List.Clear();
-        _count = 0;
+        _songList.Clear();
       }
     }
 
@@ -324,7 +329,7 @@ namespace MPTagThat.Core.Common.Song
 
       using (BulkInsertOperation bulkInsert = _store.BulkInsert(null, bulkInsertOptions))
       {
-        foreach (SongData track in List)
+        foreach (SongData track in _songList)
         {
           track.Id = $"SongDatas/{_trackId++.ToString()}";
           bulkInsert.Store(track);
@@ -332,7 +337,7 @@ namespace MPTagThat.Core.Common.Song
         }
       }
 
-      List.Clear();
+      _songList.Clear();
       _databaseModeEnabled = true;
       log.Debug("Finished enabling database mode.");
     }
@@ -371,45 +376,7 @@ namespace MPTagThat.Core.Common.Song
 
     #endregion
 
-    public object AddNew()
-    {
-      throw new NotImplementedException();
-    }
-
-    public void AddIndex(PropertyDescriptor property)
-    {
-      throw new NotImplementedException();
-    }
-
-    public void ApplySort(PropertyDescriptor property, ListSortDirection direction)
-    {
-      throw new NotImplementedException();
-    }
-
-    public int Find(PropertyDescriptor property, object key)
-    {
-      throw new NotImplementedException();
-    }
-
-    public void RemoveIndex(PropertyDescriptor property)
-    {
-      throw new NotImplementedException();
-    }
-
-    public void RemoveSort()
-    {
-      throw new NotImplementedException();
-    }
-
-    public bool AllowNew { get; }
-    public bool AllowEdit { get; }
-    public bool AllowRemove { get; }
-    public bool SupportsChangeNotification { get; }
-    public bool SupportsSearching { get; }
-    public bool SupportsSorting { get; }
-    public bool IsSorted { get; }
     public PropertyDescriptor SortProperty { get; }
     public ListSortDirection SortDirection { get; }
-    public event ListChangedEventHandler ListChanged;
   }
 }

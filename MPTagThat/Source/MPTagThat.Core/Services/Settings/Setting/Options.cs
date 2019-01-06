@@ -20,6 +20,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Windows.Forms;
 using Microsoft.Practices.ServiceLocation;
 using MPTagThat.Core.Common;
@@ -167,65 +168,29 @@ namespace MPTagThat.Core.Services.Settings.Setting
 
     #region Properties
 
-    public string ConfigDir
-    {
-      get { return _configDir; }
-    }
+    public string ConfigDir => _configDir;
 
-    public string[] Themes
-    {
-      get { return availableThemes; }
-    }
+    public string[] Themes => availableThemes;
 
-    public MPTagThatSettings MainSettings
-    {
-      get { return _MPTagThatSettings; }
-    }
+    public MPTagThatSettings MainSettings => _MPTagThatSettings;
 
-    public CaseConversionSettings ConversionSettings
-    {
-      get { return _caseConversionSettings; }
-    }
+    public CaseConversionSettings ConversionSettings => _caseConversionSettings;
 
-    public FileNameToTagFormatSettings FileNameToTagSettings
-    {
-      get { return _fileNameToTagSettings; }
-    }
+    public FileNameToTagFormatSettings FileNameToTagSettings => _fileNameToTagSettings;
 
-    public List<string> FileNameToTagSettingsTemp
-    {
-      get { return _fileNameToTagSettingsTemp; }
-    }
+    public List<string> FileNameToTagSettingsTemp => _fileNameToTagSettingsTemp;
 
-    public TagToFileNameFormatSettings TagToFileNameSettings
-    {
-      get { return _tagToFileNameSettings; }
-    }
+    public TagToFileNameFormatSettings TagToFileNameSettings => _tagToFileNameSettings;
 
-    public List<string> TagToFileNameSettingsTemp
-    {
-      get { return _tagToFileNameSettingsTemp; }
-    }
+    public List<string> TagToFileNameSettingsTemp => _tagToFileNameSettingsTemp;
 
-    public OrganiseFormatSettings OrganiseSettings
-    {
-      get { return _organiseSettings; }
-    }
+    public OrganiseFormatSettings OrganiseSettings => _organiseSettings;
 
-    public List<string> OrganiseSettingsTemp
-    {
-      get { return _organiseSettingsTemp; }
-    }
+    public List<string> OrganiseSettingsTemp => _organiseSettingsTemp;
 
-    public TreeViewFilterSettings TreeViewSettings
-    {
-      get { return _treeViewFilterSettings; }
-    }
+    public TreeViewFilterSettings TreeViewSettings => _treeViewFilterSettings;
 
-    public List<SongData> CopyPasteBuffer
-    {
-      get { return _copyPasteBuffer; }
-    }
+    public List<SongData> CopyPasteBuffer => _copyPasteBuffer;
 
     public ArrayList FindBuffer { get; set; }
 
@@ -233,10 +198,11 @@ namespace MPTagThat.Core.Services.Settings.Setting
 
     public int ReadOnlyFileHandling { get; set; }
 
-    public SongList<SongData> Songlist { get; set; }
+    public SongList Songlist { get; set; }
 
     public StartupSettings StartupSettings { get; set; }
 
+    public bool ScanFolderRecursive { get; set; } = false;
     #endregion
 
     #region ctor
@@ -376,7 +342,7 @@ namespace MPTagThat.Core.Services.Settings.Setting
 
       ReadOnlyFileHandling = 2; // Don't change attribute as a default.
 
-      Songlist = new SongList<SongData>();
+      Songlist = new SongList();
     }
 
     #endregion

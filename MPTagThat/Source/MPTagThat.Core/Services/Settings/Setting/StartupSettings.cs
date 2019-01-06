@@ -20,11 +20,11 @@ namespace MPTagThat.Core.Services.Settings.Setting
 {
   public class StartupSettings
   {
-    public bool Portable { get; set; }
-    public int MaxSongs { get; set; }
-    public bool RavenDebug { get; set; }
-    public bool RavenStudio { get; set; }
-    public int RavenStudioPort { get; set; }
+    public bool Portable { get; set; } = false;
+    public int MaxSongs { get; set; } = 500;
+    public bool RavenDebug { get; set; } = false;
+    public bool RavenStudio { get; set; } = false;
+    public int RavenStudioPort { get; set; } = 8080;
     public string DatabaseFolder { get; set; }
     public string CoverArtFolder { get; set; }
   }
