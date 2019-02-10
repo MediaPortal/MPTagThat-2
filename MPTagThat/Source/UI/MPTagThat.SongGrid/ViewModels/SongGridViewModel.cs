@@ -53,11 +53,13 @@ namespace MPTagThat.SongGrid.ViewModels
     private Options _options;
     private readonly SongGridViewColumns _gridColumns;
 
+    private string _selectedFolder;
     private string[] _filterFileExtensions;
     private string _filterFileMask = "*.*";
 
     private List<FileInfo> _nonMusicFiles = new List<FileInfo>();
     private bool _progressCancelled = false;
+    private bool _folderScanInProgress = false;
 
     #endregion
 
@@ -73,7 +75,7 @@ namespace MPTagThat.SongGrid.ViewModels
       Songs = _options.Songlist;
       ItemsSourceDataCommand = new RelayCommand(SetItemsSource);
 
-      Folderscan();
+      EventSystem.Subscribe<GenericEvent>(OnMessageReceived);
     }
 
     public RelayCommand ItemsSourceDataCommand { get; set; }
@@ -132,6 +134,16 @@ namespace MPTagThat.SongGrid.ViewModels
     public void Folderscan()
     {
       log.Trace(">>>");
+      if (_folderScanInProgress)
+      {
+        return;
+      }
+      if (String.IsNullOrEmpty(_selectedFolder))
+      {
+        log.Info("FolderScan: No folder selected");
+        return;
+      }
+      _folderScanInProgress = true;
       //tracksGrid.Rows.Clear();
       Songs.Clear();
       //_nonMusicFiles = new List<FileInfo>();
@@ -139,10 +151,8 @@ namespace MPTagThat.SongGrid.ViewModels
       //_main.MiscInfoPanel.ActivateNonMusicTab();
       GC.Collect();
 
-      //string selectedFolder = _main.CurrentDirectory;
-      string selectedFolder = @"d:\Music\Top 100\";
       _options.ScanFolderRecursive = false;
-      if (!Directory.Exists(selectedFolder))
+      if (!Directory.Exists(_selectedFolder))
         return;
 
       //_main.FolderScanning = true;
@@ -162,14 +172,12 @@ namespace MPTagThat.SongGrid.ViewModels
 
       int count = 1;
       int nonMusicCount = 0;
-      StatusBarEvent msg = new StatusBarEvent {CurrentFolder = selectedFolder, CurrentProgress = -1 };
+      StatusBarEvent msg = new StatusBarEvent {CurrentFolder = _selectedFolder, CurrentProgress = -1 };
 
       try
       {
-        foreach (FileInfo fi in GetFiles(new DirectoryInfo(selectedFolder), _options.ScanFolderRecursive))
+        foreach (FileInfo fi in GetFiles(new DirectoryInfo(_selectedFolder), _options.ScanFolderRecursive))
         {
-          Application.DoEvents();
-
           if (_progressCancelled)
           {
             break;
@@ -206,11 +214,11 @@ namespace MPTagThat.SongGrid.ViewModels
           }
           catch (System.UnauthorizedAccessException exUna)
           {
-            log.Warn($"Could not access file or folder: {exUna.Message}. {fi.FullName}");
+            log.Warn($"FolderScan: Could not access file or folder: {exUna.Message}. {fi.FullName}");
           }
           catch (Exception ex)
           {
-            log.Error($"Caught error processing files: {ex.Message} {fi.FullName}");
+            log.Error($"FolderScan: Caught error processing files: {ex.Message} {fi.FullName}");
           }
         }
       }
@@ -268,6 +276,7 @@ namespace MPTagThat.SongGrid.ViewModels
       
       _main.FolderScanning = false;
       */
+    _folderScanInProgress = false;
     log.Trace("<<<");
   }
 
@@ -320,6 +329,24 @@ namespace MPTagThat.SongGrid.ViewModels
       }
     }
 
+    #endregion
+
+    #region Event Handling
+
+    private void OnMessageReceived(GenericEvent msg)
+    {
+      switch (msg.Action.ToLower())
+      {
+        case "selectedfolderchanged":
+          if (msg.MessageData.ContainsKey("folder"))
+          {
+            _selectedFolder = (string)msg.MessageData["folder"];
+            Folderscan();
+          }
+          break;
+      }
+    }
+    
     #endregion
   }
 }

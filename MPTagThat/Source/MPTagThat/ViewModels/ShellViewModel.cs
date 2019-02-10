@@ -19,6 +19,8 @@ namespace MPTagThat.ViewModels
     IRegionManager _regionManager;
 
     private string _numberOfFiles = "0";
+    private string _currentFolder = "";
+    private string _currentFile = "";
     private string _filterActive = "false";
     private bool _progressBarIsIndeterminate = false;
 
@@ -60,6 +62,38 @@ namespace MPTagThat.ViewModels
       }
     }
 
+    /// <summary>
+    /// Property to show the current Folder
+    /// </summary>
+    public string CurrentFolder
+    {
+      get => _currentFolder;
+      set
+      {
+        if (value == _currentFolder)
+          return;
+
+        _currentFolder = value;
+        RaisePropertyChanged();
+      }
+    }
+
+    /// <summary>
+    /// Property to show the current File
+    /// </summary>
+    public string CurrentFile
+    {
+      get => _currentFile;
+      set
+      {
+        if (value == _currentFile)
+          return;
+
+        _currentFile = value;
+        RaisePropertyChanged();
+      }
+    }
+    
     /// <summary>
     /// Property to indicate if a TagFilter is active
     /// </summary>
@@ -106,6 +140,8 @@ namespace MPTagThat.ViewModels
     {
       NumberOfFiles = msg.NumberOfFiles.ToString();
       ProgressBarIsIndeterminate = msg.CurrentProgress == -1;
+      CurrentFolder = msg.CurrentFolder;
+      CurrentFile = msg.CurrentFile;
     }
 
     #endregion

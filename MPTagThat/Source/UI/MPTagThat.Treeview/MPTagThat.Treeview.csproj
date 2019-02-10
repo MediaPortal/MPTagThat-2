@@ -46,11 +46,20 @@
       <HintPath>..\..\packages\Prism.Wpf.6.3.0\lib\net45\Prism.Wpf.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Syncfusion.PropertyGrid.Wpf, Version=16.1460.0.26, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Syncfusion.PropertyGrid.WPF46.16.1.0.26\lib\net46\Syncfusion.PropertyGrid.Wpf.dll</HintPath>
+    </Reference>
     <Reference Include="Syncfusion.SfShared.Wpf, Version=16.1460.0.26, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Syncfusion.SfShared.WPF46.16.1.0.26\lib\net46\Syncfusion.SfShared.Wpf.dll</HintPath>
     </Reference>
+    <Reference Include="Syncfusion.Shared.MVVM.WPF, Version=16.1460.0.26, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Syncfusion.Shared.MVVM.WPF46.16.1.0.26\lib\net46\Syncfusion.Shared.MVVM.WPF.dll</HintPath>
+    </Reference>
     <Reference Include="Syncfusion.Shared.Wpf, Version=16.1460.0.26, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Syncfusion.Shared.WPF46.16.1.0.26\lib\net46\Syncfusion.Shared.Wpf.dll</HintPath>
+    </Reference>
+    <Reference Include="Syncfusion.Tools.MVVM.WPF, Version=16.1460.0.26, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Syncfusion.Tools.MVVM.WPF46.16.1.0.26\lib\net46\Syncfusion.Tools.MVVM.WPF.dll</HintPath>
     </Reference>
     <Reference Include="Syncfusion.Tools.Wpf, Version=16.1460.0.26, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Syncfusion.Tools.WPF46.16.1.0.26\lib\net46\Syncfusion.Tools.Wpf.dll</HintPath>
@@ -79,8 +88,13 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Actions\OnDemandLoading.cs" />
+    <Compile Include="Model\Directory.cs" />
+    <Compile Include="Model\IItem.cs" />
+    <Compile Include="Model\Item.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TreeviewModule.cs" />
+    <Compile Include="ViewModels\TreeviewViewModel.cs" />
     <Compile Include="Views\TreeviewView.xaml.cs">
       <DependentUpon>TreeviewView.xaml</DependentUpon>
     </Compile>
@@ -93,6 +107,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\MPTagThat.Core\MPTagThat.Core.csproj">
+      <Project>{d66c1d7a-a9d8-4f02-9fa4-891a673d2c68}</Project>
+      <Name>MPTagThat.Core</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

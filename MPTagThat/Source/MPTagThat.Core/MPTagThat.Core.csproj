@@ -115,6 +115,7 @@
     <Compile Include="Common\Song\SongData.cs" />
     <Compile Include="Common\Song\SongList.cs" />
     <Compile Include="Events\EventSystem.cs" />
+    <Compile Include="Events\GenericEvent.cs" />
     <Compile Include="Events\StatusBarEvent.cs" />
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

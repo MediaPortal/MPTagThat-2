@@ -40,7 +40,7 @@
         </WrapPanel>
         <WrapPanel Grid.Column="1">
           <Border BorderThickness="1,0,0,0" Width="3" Margin="5,0,0,0" BorderBrush="#FFC5C5C5"/>
-          <TextBlock Text="C.\Music\huhu" Margin="10,0,0,0"/>
+          <TextBlock Text="{Binding CurrentFolder}" Margin="10,0,0,0"/>
         </WrapPanel>
         <WrapPanel Grid.Column="2" HorizontalAlignment="Right">
           <Border BorderThickness="1,0,0,0" Width="3" Margin="5,0,0,0" BorderBrush="#FFC5C5C5"/>

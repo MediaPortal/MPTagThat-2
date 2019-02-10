@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:prism="http://prismlibrary.com/"
+             prism:ViewModelLocator.AutoWireViewModel="True"
              xmlns:syncfusion="http://schemas.syncfusion.com/wpf"
              xmlns:lex="http://wpflocalizeextension.codeplex.com"
              lex:LocalizeDictionary.DesignCulture="en"
@@ -14,11 +15,49 @@
              syncfusion:DockingManager.DesiredWidthInDockedMode="30"
              syncfusion:DockingManager.Header="TreeView"
              xmlns:local="clr-namespace:MPTagThat.Treeview.Views"
+             xmlns:viewModels="clr-namespace:MPTagThat.Treeview.ViewModels"
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             xmlns:actions="clr-namespace:MPTagThat.Treeview.Actions"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
+    <UserControl.Resources>         
+      <HierarchicalDataTemplate ItemsSource="{Binding Files}" x:Key="template">
+        <TextBlock Text="{Binding Name}"/>
+      </HierarchicalDataTemplate>
+          
+      <Style TargetType="syncfusion:TreeViewItemAdv" x:Key="itemstyle">
+        <Setter Property="IsLoadOnDemand" Value="True"/>
+        <Setter Property="ToolTip" Value="{Binding Name}"/>
+        <Setter Property="ImageHeight" Value="16"/>
+        <Setter Property="ImageWidth" Value="16"/>
+        <Setter Property="IsSelected" Value="{Binding IsSelected, Mode=OneTime}"/>
+      </Style>
+          
+    </UserControl.Resources>
     <Grid>
-    <syncfusion:TreeViewAdv HorizontalAlignment="Left" VerticalAlignment="Top">
-      <syncfusion:TreeViewItemAdv EditedItemTemplate="{x:Null}" EditedItemTemplateSelector="{x:Null}" ExpanderStyle="{x:Null}" FakeItemTemplate="{x:Null}" FakeItemTemplateSelector="{x:Null}" Header="New TreeViewItem" IsImageSourceFreeze="False"/>
+    <syncfusion:TreeViewAdv HorizontalAlignment="Left" VerticalAlignment="Top"
+                            AllowMultiSelect="False"                              
+                            syncfusion:TreeViewAdvSelectedItemChangedCommand.Command="{Binding  SelectedItemChangedCommand}"
+                            syncfusion:TreeViewAdvSelectedItemChangedCommand.CommandParameter="{Binding Path=SelectedItem, RelativeSource={RelativeSource Self}}"                               
+                            x:Name="Explorer"
+                            ShowRootLines="False"
+                            BorderThickness="0 0 1 0" 
+                            IsScrollOnExpand="False"
+                            ScrollViewer.VerticalScrollBarVisibility="Visible">
+      <i:Interaction.Triggers>
+        <i:EventTrigger EventName="LoadOnDemand">
+          <actions:OnDemandLoading TargetObject="{Binding ElementName=Explorer}"/>
+        </i:EventTrigger>
+      </i:Interaction.Triggers>
+      <syncfusion:TreeViewItemAdv 
+        Header="Computer"
+        ItemsSource="{Binding Items}"
+        IsExpanded="True"
+        IsSelected="True"
+        ItemTemplate="{StaticResource template}"
+        ItemContainerStyle="{StaticResource itemstyle}" 
+        x:Name="computer"
+        IsImageSourceFreeze="False"/>
     </syncfusion:TreeViewAdv>
 
   </Grid>
