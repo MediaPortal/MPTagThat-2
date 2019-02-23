@@ -40,7 +40,7 @@ namespace MPTagThat.Treeview
 
     public void Initialize()
     {
-      _regionManager.RegisterViewWithRegion("MainRegion", typeof(TreeviewView));
+      _regionManager.RegisterViewWithRegion("TreeviewTab", typeof(TreeviewView));
     }
   }
 

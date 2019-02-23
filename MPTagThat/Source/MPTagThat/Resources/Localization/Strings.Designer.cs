@@ -142,6 +142,15 @@ namespace MPTagThat.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Misc Files.
+        /// </summary>
+        public static string miscFiles_Header {
+            get {
+                return ResourceManager.GetString("miscFiles_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Add to Burner.
         /// </summary>
         public static string ribbon_AddBurner {
@@ -579,6 +588,15 @@ namespace MPTagThat.Resources.Localization {
         public static string statusBar_NumberOfSelectedFiles {
             get {
                 return ResourceManager.GetString("statusBar_NumberOfSelectedFiles", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Treeview.
+        /// </summary>
+        public static string treeview_Header {
+            get {
+                return ResourceManager.GetString("treeview_Header", resourceCulture);
             }
         }
     }

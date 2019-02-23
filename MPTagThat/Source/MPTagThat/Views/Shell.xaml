@@ -22,7 +22,17 @@
       <RowDefinition Height="*"/>
     </Grid.RowDefinitions>
     <ContentControl prism:RegionManager.RegionName="RibbonRegion" />
-    <syncfusion:DockingManager Grid.Row="1" prism:RegionManager.RegionName="MainRegion" UseDocumentContainer="True" DockFill="True" DockFillDocumentMode="Normal"/>
+    <syncfusion:DockingManager Grid.Row="1" prism:RegionManager.RegionName="MainRegion" UseDocumentContainer="True" DockFill="True" DockFillDocumentMode="Normal">
+      <ContentControl syncfusion:DockingManager.Header="{lex:Loc treeview_Header}" x:Name="Treeview" 
+                      syncfusion:DockingManager.DesiredWidthInDockedMode="30" 
+                      syncfusion:DockingManager.DesiredWidthInFloatingMode="30" 
+                      syncfusion:DockingManager.CanClose="False" 
+                      prism:RegionManager.RegionName="TreeviewTab" />  
+
+      <ContentControl syncfusion:DockingManager.Header="{lex:Loc miscFiles_Header}" x:Name="MiscFiles"
+                      syncfusion:DockingManager.SideInDockedMode="Tabbed"
+                      syncfusion:DockingManager.TargetNameInDockedMode="Treeview"/>  
+    </syncfusion:DockingManager>
   </Grid>
   <syncfusion:RibbonWindow.StatusBar>
     <syncfusion:RibbonStatusBar>

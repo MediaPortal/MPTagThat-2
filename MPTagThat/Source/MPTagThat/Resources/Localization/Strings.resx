@@ -319,4 +319,12 @@
     <value>(Selected: {0})</value>
     <comment>Number of Songs selected</comment>
   </data>
+  <data name="miscFiles_Header" xml:space="preserve">
+    <value>Misc Files</value>
+    <comment>The Header of the Misc Files Control</comment>
+  </data>
+  <data name="treeview_Header" xml:space="preserve">
+    <value>Treeview</value>
+    <comment>The Header of the Treeview Control</comment>
+  </data>
 </root>
