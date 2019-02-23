@@ -104,8 +104,6 @@ namespace MPTagThat.Treeview.ViewModels
           Directory directory = new Directory();
           directory.Name = "Local Disk " + info.Name;
           directory.Info = info;
-          BitmapImage bmp = new BitmapImage(new Uri("CD_Drive.png", UriKind.RelativeOrAbsolute));
-          directory.Icon = bmp;
           if (count == 0)
           {
             directory.IsSelected = true;
@@ -148,11 +146,14 @@ namespace MPTagThat.Treeview.ViewModels
               var infos = info.GetDirectories().OrderBy(x => x.Name);
               foreach (DirectoryInfo directory in infos)
               {
+                // ignore Recycle Bin
+                if (directory.Name.ToLower().Equals("$recycle.bin") || directory.Name.Equals("Config.Msi") || directory.Name.Equals("System Volume Information"))
+                {
+                  continue;
+                }
                 Directory _file = new Directory();
                 _file.Name = directory.Name;
                 _file.Info = directory;
-                //BitmapImage image = new BitmapImage(new Uri("folder.png", UriKind.RelativeOrAbsolute));
-                //_file.Icon = image;
                 ((Directory)file).Files.Add(_file);
                 ((Directory)file).Items.Add(_file);
               }

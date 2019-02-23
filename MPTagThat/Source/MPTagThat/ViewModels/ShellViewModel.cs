@@ -8,6 +8,7 @@ using MPTagThat.Core;
 using MPTagThat.Core.Events;
 using Prism.Mvvm;
 using Prism.Regions;
+using Syncfusion.SfSkinManager;
 using WPFLocalizeExtension.Engine;
 using WPFLocalizeExtension.Extensions;
 
@@ -130,7 +131,7 @@ namespace MPTagThat.ViewModels
     {
       _regionManager = regionManager;
       EventSystem.Subscribe<StatusBarEvent>(UpdateStatusBar);
-
+      SfSkinManager.ApplyStylesOnApplication = true;
     }
     #endregion
 

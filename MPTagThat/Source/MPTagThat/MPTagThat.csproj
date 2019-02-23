@@ -75,6 +75,9 @@
     <Reference Include="Syncfusion.SfShared.Wpf, Version=16.1460.0.26, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
       <HintPath>..\packages\Syncfusion.SfShared.WPF46.16.1.0.26\lib\net46\Syncfusion.SfShared.Wpf.dll</HintPath>
     </Reference>
+    <Reference Include="Syncfusion.SfSkinManager.WPF, Version=16.1460.0.26, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <HintPath>..\packages\Syncfusion.SfSkinManager.WPF46.16.1.0.26\lib\net46\Syncfusion.SfSkinManager.WPF.dll</HintPath>
+    </Reference>
     <Reference Include="Syncfusion.Shared.Wpf, Version=16.1460.0.26, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
       <HintPath>..\packages\Syncfusion.Shared.WPF46.16.1.0.26\lib\net46\Syncfusion.Shared.Wpf.dll</HintPath>
     </Reference>

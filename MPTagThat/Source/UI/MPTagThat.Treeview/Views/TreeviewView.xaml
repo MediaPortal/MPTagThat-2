@@ -20,20 +20,23 @@
              xmlns:actions="clr-namespace:MPTagThat.Treeview.Actions"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
-    <UserControl.Resources>         
-      <HierarchicalDataTemplate ItemsSource="{Binding Files}" x:Key="template">
+    <UserControl.Resources>
+      <local:ImageConverter x:Key="Converter"/>        
+
+      <HierarchicalDataTemplate ItemsSource="{Binding Items}" x:Key="template">
         <TextBlock Text="{Binding Name}"/>
       </HierarchicalDataTemplate>
           
       <Style TargetType="syncfusion:TreeViewItemAdv" x:Key="itemstyle">
         <Setter Property="IsLoadOnDemand" Value="True"/>
+        <Setter Property="LeftImageSource" Value="{Binding Path=Info, Converter={StaticResource Converter}}"/>
         <Setter Property="ToolTip" Value="{Binding Name}"/>
         <Setter Property="ImageHeight" Value="16"/>
         <Setter Property="ImageWidth" Value="16"/>
         <Setter Property="IsSelected" Value="{Binding IsSelected, Mode=OneTime}"/>
       </Style>
-          
     </UserControl.Resources>
+
     <Grid>
     <syncfusion:TreeViewAdv HorizontalAlignment="Left" VerticalAlignment="Top"
                             AllowMultiSelect="False"                              

@@ -20,7 +20,6 @@ namespace MPTagThat.Treeview.Model
       
       public string Name { get; set; }
       public object Info { get; set; }
-      public ImageSource Icon { get; set; }
       
       public bool IsSelected
       {
