@@ -25,6 +25,12 @@ namespace MPTagThat.Core.Services.Settings
   /// </summary>
   public class SettingsManager : ISettingsManager
   {
+    public SettingsManager()
+    {
+      GetOptions = new Options();
+      StartupSettings = new StartupSettings();
+    }
+
     #region ISettingsManager Members
 
     /// <summary>

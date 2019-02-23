@@ -25,15 +25,16 @@ using System.Text;
 using System.Threading;
 using System.Windows;
 using System.Xml;
-using Microsoft.Practices.ServiceLocation;
-using Microsoft.Practices.Unity;
+using CommonServiceLocator;
 using MPTagThat.Core.Services.Logging;
 using MPTagThat.Core.Services.Settings;
 using MPTagThat.Core.Services.Settings.Setting;
+using Prism.Ioc;
 using Prism.Unity;
 using Prism.Modularity;
 using Prism.Regions;
 using Syncfusion.Windows.Tools.Controls;
+using Unity;
 
 #endregion
 
@@ -42,7 +43,7 @@ namespace MPTagThat
   /// <summary>
   /// PRTSM Bootstrapper class
   /// </summary>
-  public class Bootstrapper : UnityBootstrapper
+  public class Bootstrapper : PrismApplication
   {
     #region Variables
 
@@ -68,7 +69,7 @@ namespace MPTagThat
     /// Resolve our main Shell Winndow
     /// </summary>
     /// <returns></returns>
-    protected override DependencyObject CreateShell()
+    protected override Window CreateShell()
     {
       return Container.Resolve<Views.Shell>();
     }
@@ -76,7 +77,7 @@ namespace MPTagThat
     /// <summary>
     /// Initialize the Shell and show the Main Window
     /// </summary>
-    protected override void InitializeShell()
+    public override void Initialize()
     {
       var log = Container.Resolve<ILogger>().GetLogger;
       var settings = Container.Resolve<ISettingsManager>();
@@ -138,53 +139,46 @@ namespace MPTagThat
       settings.GetOptions.InitOptions();
 
       // Move Init of Services, which we don't need immediately to a separate thread to increase startup performance
-      Thread initService = new Thread(() => DoInitService(Container))
+      Thread initService = new Thread(() => DoInitService(Container.GetContainer()))
       {
         IsBackground = true,
         Name = "InitService"
       };
       initService.Start();
 
-      Application.Current.MainWindow.Show();
+      Current.MainWindow.Show();
     }
 
     /// <summary>
     /// Configure the Services
     /// </summary>
-    protected override void ConfigureContainer()
+    protected override void RegisterTypes(IContainerRegistry containerRegistry)
     {
-      ServiceLocator.SetLocatorProvider(() => new UnityServiceLocatorAdapter(Container));
       var logger = new NLogLogger("MPTagThat.log", LogLevel.Debug, 0);
-      Container.RegisterInstance<ILogger>(logger);
+      containerRegistry.RegisterInstance<ILogger>(logger);
       var settings = new SettingsManager();
-      Container.RegisterInstance<ISettingsManager>(settings);
-      base.ConfigureContainer();
+      containerRegistry.RegisterInstance<ISettingsManager>(settings);
     }
 
     /// <summary>
     /// Override the Region adapter mappings to make use of our DockingManager Region Adapater
     /// </summary>
     /// <returns></returns>
-    protected override RegionAdapterMappings ConfigureRegionAdapterMappings()
+    protected override void ConfigureRegionAdapterMappings(RegionAdapterMappings regionAdapterMappings)
     {
-      RegionAdapterMappings regionAdapterMappings = base.ConfigureRegionAdapterMappings();
-      if (regionAdapterMappings != null)
-      {
-        regionAdapterMappings.RegisterMapping(typeof(DockingManager), Container.Resolve<DockingManagerRegionAdapter>());
-      }
-      return regionAdapterMappings;
+      base.ConfigureRegionAdapterMappings(regionAdapterMappings);
+      regionAdapterMappings.RegisterMapping(typeof(DockingManager), Container.Resolve<DockingManagerRegionAdapter>());
     }
 
     /// <summary>
     /// Module Catalog to hold all the modules, which are referenced from the Main Project
     /// </summary>
-    protected override void ConfigureModuleCatalog()
+    protected override void ConfigureModuleCatalog(IModuleCatalog moduleCatalog)
     {
-      ModuleCatalog catalog = (ModuleCatalog)ModuleCatalog;
-      catalog.AddModule(typeof(Ribbon.RibbonModule));
-      catalog.AddModule(typeof(Treeview.TreeviewModule));
-      catalog.AddModule(typeof(SongGrid.SongGridModule));
-      catalog.AddModule(typeof(MiscFiles.MiscFilesModule));
+      moduleCatalog.AddModule(typeof(Ribbon.RibbonModule));
+      moduleCatalog.AddModule(typeof(Treeview.TreeviewModule));
+      moduleCatalog.AddModule(typeof(SongGrid.SongGridModule));
+      moduleCatalog.AddModule(typeof(MiscFiles.MiscFilesModule));
     }
 
     #endregion

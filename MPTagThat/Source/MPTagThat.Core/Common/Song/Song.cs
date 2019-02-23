@@ -5,7 +5,7 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
-using Microsoft.Practices.ServiceLocation;
+using CommonServiceLocator;
 using MPTagThat.Core.Common;
 using MPTagThat.Core.Services.Logging;
 using MPTagThat.Core.Services.Settings;

@@ -26,7 +26,7 @@ using System.IO;
 using System.Windows.Controls;
 using System.Windows.Forms;
 using System.Windows.Threading;
-using Microsoft.Practices.ServiceLocation;
+using CommonServiceLocator;
 using MPTagThat.Core;
 using MPTagThat.Core.Common;
 using MPTagThat.Core.Common.Song;

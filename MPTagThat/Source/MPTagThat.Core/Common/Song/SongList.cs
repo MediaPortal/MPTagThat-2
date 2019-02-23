@@ -34,7 +34,7 @@ using MPTagThat.Core.Common;
 //using MPTagThat.Core.Services.MusicDatabase;
 using Raven.Abstractions.Data;
 using Raven.Client.Connection;
-using Microsoft.Practices.ServiceLocation;
+using CommonServiceLocator;
 using MPTagThat.Core.Annotations;
 using MPTagThat.Core.Services.Logging;
 using MPTagThat.Core.Services.Settings;

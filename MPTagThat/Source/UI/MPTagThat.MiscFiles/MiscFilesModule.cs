@@ -19,6 +19,7 @@
 #region
 
 using MPTagThat.MiscFiles.Views;
+using Prism.Ioc;
 using Prism.Modularity;
 using Prism.Regions;
 
@@ -31,16 +32,14 @@ namespace MPTagThat.MiscFiles
   /// </summary>
   public class MiscFilesModule : IModule
   {
-    private readonly IRegionManager _regionManager;
-
-    public MiscFilesModule(IRegionManager regionManager)
+    public void RegisterTypes(IContainerRegistry containerRegistry)
     {
-      _regionManager = regionManager;
     }
 
-    public void Initialize()
+    public void OnInitialized(IContainerProvider containerProvider)
     {
-      _regionManager.RegisterViewWithRegion("MiscFilesTab", typeof(MiscFilesView));
+      var regionManager = containerProvider.Resolve<IRegionManager>();
+      regionManager.RegisterViewWithRegion("MiscFilesTab", typeof(MiscFilesView));
     }
   }
 }

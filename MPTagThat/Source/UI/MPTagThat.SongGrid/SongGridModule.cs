@@ -21,6 +21,7 @@
 using Prism.Modularity;
 using Prism.Regions;
 using MPTagThat.SongGrid.Views;
+using Prism.Ioc;
 
 #endregion
 
@@ -31,16 +32,14 @@ namespace MPTagThat.SongGrid
   /// </summary>
   public class SongGridModule : IModule
   {
-    private readonly IRegionManager _regionManager;
-
-    public SongGridModule(IRegionManager regionManager)
+    public void RegisterTypes(IContainerRegistry containerRegistry)
     {
-      _regionManager = regionManager;
     }
 
-    public void Initialize()
+    public void OnInitialized(IContainerProvider containerProvider)
     {
-      _regionManager.RegisterViewWithRegion("MainRegion", typeof(SongGridView));
+      var regionManager = containerProvider.Resolve<IRegionManager>();
+      regionManager.RegisterViewWithRegion("MainRegion", typeof(SongGridView));
     }
   }
 }

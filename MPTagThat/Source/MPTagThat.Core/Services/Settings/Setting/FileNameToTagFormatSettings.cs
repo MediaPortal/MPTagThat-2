@@ -24,7 +24,7 @@ namespace MPTagThat.Core.Services.Settings.Setting
 
     public void Save()
     {
-      (Microsoft.Practices.ServiceLocation.ServiceLocator.Current.GetInstance(typeof(ISettingsManager)) as ISettingsManager).Save(this);
+      (CommonServiceLocator.ServiceLocator.Current.GetInstance(typeof(ISettingsManager)) as ISettingsManager).Save(this);
     }
 
     #endregion

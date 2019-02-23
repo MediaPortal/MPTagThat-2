@@ -21,6 +21,7 @@
 using Prism.Modularity;
 using Prism.Regions;
 using MPTagThat.Treeview.Views;
+using Prism.Ioc;
 
 #endregion
 
@@ -31,16 +32,14 @@ namespace MPTagThat.Treeview
   /// </summary>
   public class TreeviewModule : IModule
   {
-    private readonly IRegionManager _regionManager;
-
-    public TreeviewModule(IRegionManager regionManager)
+    public void RegisterTypes(IContainerRegistry containerRegistry)
     {
-      _regionManager = regionManager;
     }
 
-    public void Initialize()
+    public void OnInitialized(IContainerProvider containerProvider)
     {
-      _regionManager.RegisterViewWithRegion("TreeviewTab", typeof(TreeviewView));
+      var regionManager = containerProvider.Resolve<IRegionManager>();
+      regionManager.RegisterViewWithRegion("TreeviewTab", typeof(TreeviewView));
     }
   }
 

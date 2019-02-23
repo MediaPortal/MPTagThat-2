@@ -22,7 +22,7 @@ using System;
 using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
-using Microsoft.Practices.ServiceLocation;
+using CommonServiceLocator;
 using MPTagThat.Core.Common;
 using MPTagThat.Core.Services.Logging;
 using MPTagThat.Core.Services.Settings;

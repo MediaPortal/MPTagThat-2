@@ -25,7 +25,7 @@ using System.Reflection;
 using System.Text;
 using System.Xml;
 using System.Xml.Serialization;
-using Microsoft.Practices.ServiceLocation;
+using CommonServiceLocator;
 using MPTagThat.Core.Services.Logging;
 
 #endregion

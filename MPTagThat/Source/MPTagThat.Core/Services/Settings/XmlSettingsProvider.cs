@@ -21,7 +21,7 @@
 using System;
 using System.IO;
 using System.Xml;
-using Microsoft.Practices.ServiceLocation;
+using CommonServiceLocator;
 using MPTagThat.Core.Services.Logging;
 
 #endregion
