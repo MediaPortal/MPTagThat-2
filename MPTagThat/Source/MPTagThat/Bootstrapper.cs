@@ -184,6 +184,7 @@ namespace MPTagThat
       catalog.AddModule(typeof(Ribbon.RibbonModule));
       catalog.AddModule(typeof(Treeview.TreeviewModule));
       catalog.AddModule(typeof(SongGrid.SongGridModule));
+      catalog.AddModule(typeof(MiscFiles.MiscFilesModule));
     }
 
     #endregion
