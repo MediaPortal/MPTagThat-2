@@ -30,6 +30,12 @@ namespace MPTagThat
     private static int _portable;
     private static string _startupFolder;
 
+    public App()
+    {
+      //Register Syncfusion license
+      Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("NzIzMjJAMzEzNjJlMzQyZTMwaFBNUzNxR285QU5QeW1Uamw1L3JxazRza3NXdThtL0toR2syVkdURFdiST0=");
+    }
+
     #endregion
 
     #region Interfaces
