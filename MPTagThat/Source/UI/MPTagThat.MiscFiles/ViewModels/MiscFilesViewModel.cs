@@ -20,18 +20,72 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Collections.ObjectModel;
+using System.IO;
+using System.Windows.Media.Imaging;
+using MPTagThat.Core;
+using MPTagThat.Core.Events;
+using Prism.Events;
+using Syncfusion.Windows.Shared;
 
 #endregion
 
 namespace MPTagThat.MiscFiles.ViewModels
 {
-  public class MiscFilesViewModel
+  public class MiscFilesViewModel : NotificationObject
   {
+    private ObservableCollection<MiscFile> _miscFiles;
+
+    public ObservableCollection<MiscFile> MiscFiles
+    {
+      get => _miscFiles;
+      set
+      {
+        _miscFiles = value;
+        this.RaisePropertyChanged(() => this.MiscFiles);
+      }
+    }
+
     public MiscFilesViewModel()
     {
+      _miscFiles = new ObservableCollection<MiscFile>();
+      EventSystem.Subscribe<GenericEvent>(OnMessageReceived,ThreadOption.UIThread);
+    }
+
+    private void OnMessageReceived(GenericEvent msg)
+    {
+      switch (msg.Action.ToLower())
+      {
+        case "miscfileschanged":
+          if (msg.MessageData.ContainsKey("files"))
+          {
+            var files = (List<FileInfo>)msg.MessageData["files"];
+            MiscFiles.Clear();
+            foreach (var file in files)
+            {
+              if (file == null)
+              {
+                return;
+              }
+              var f = new MiscFile
+              {
+                FileName = file.Name,
+              };
+
+              try
+              {
+                f.ImageData = new BitmapImage(new Uri(file.FullName));
+                f.Size = $"({f.ImageData.Width} x {f.ImageData.Height})";
+              }
+              catch (Exception)
+              {
+                // We might get an Exception on specific files
+              }
+              MiscFiles.Add(f);
+            }
+          }
+          break;
+      }
     }
   }
 }

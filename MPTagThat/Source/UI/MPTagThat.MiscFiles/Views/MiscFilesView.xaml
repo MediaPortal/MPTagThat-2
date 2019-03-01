@@ -7,19 +7,39 @@
              prism:ViewModelLocator.AutoWireViewModel="True"
              xmlns:syncfusion="http://schemas.syncfusion.com/wpf"
              xmlns:local="clr-namespace:MPTagThat.MiscFiles.Views"
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
-      <syncfusion:GroupBar Name="groupBar"> 
-        <!-- Adding GroupBarItem --> 
-        <syncfusion:GroupBarItem Name="groupBarItem1"  Header="General">  
-          <!-- Adding content for GroupBar item using GroupView -->  
-          <syncfusion:GroupView Name="groupView" IsListViewMode="True"> 
-            <syncfusion:GroupViewItem Text="List View"/>  
-            <syncfusion:GroupViewItem Text="Show ContextMenu"/>   
-            <syncfusion:GroupViewItem Text="Show ToolTip"/>  
-          </syncfusion:GroupView>
-        </syncfusion:GroupBarItem>
-      </syncfusion:GroupBar>
+  
+  <UserControl.Resources>
+    <ResourceDictionary>
+      <DataTemplate x:Key="ContentTemplate">
+        <StackPanel Orientation="Vertical" HorizontalAlignment="Stretch">
+          <Image Source="{Binding ImageData}" HorizontalAlignment="Center" VerticalAlignment="Top" Height="100" Width="100" />
+          <TextBlock Text="{Binding Size}" HorizontalAlignment="Center"/> 
+        </StackPanel>
+      </DataTemplate>
+    </ResourceDictionary>
+  </UserControl.Resources>
+
+  <Grid>   
+      <syncfusion:GroupBar x:Name="MiscFilesGroupBar" ItemHeaderHeight="25" VisualMode="MultipleExpansion" ItemsSource="{Binding MiscFiles}">
+      <syncfusion:GroupBar.ItemContainerStyle>
+            <Style TargetType="{x:Type syncfusion:GroupBarItem}">
+              <Setter Property="Header" Value="{Binding}"/>
+              <Setter Property="HeaderTemplate"> 
+                <Setter.Value> 
+                  <DataTemplate> 
+                    <StackPanel Orientation="Horizontal"> 
+                      <TextBlock Text="{Binding FileName}" FontWeight="Bold" Margin="3" VerticalAlignment="Center"/> 
+                    </StackPanel> 
+                  </DataTemplate> 
+                </Setter.Value> 
+              </Setter>
+              <Setter Property="ContentTemplate" Value="{StaticResource ContentTemplate}"/>
+              <Setter Property="IsExpanded" Value="True"/> 
+            </Style>
+          </syncfusion:GroupBar.ItemContainerStyle>
+        </syncfusion:GroupBar>
     </Grid>
 </UserControl>
