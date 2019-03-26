@@ -29,6 +29,7 @@ namespace MPTagThat.MiscFiles.ViewModels
   {
     public BitmapImage ImageData { get; set; }
     public string FileName { get; set; }
+    public string FullFileName { get; set; }
     public string Size { get; set; }
 
     public void OnPropertyChanged(string propertyname)

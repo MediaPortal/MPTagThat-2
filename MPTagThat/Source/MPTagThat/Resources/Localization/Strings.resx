@@ -327,4 +327,12 @@
     <value>Treeview</value>
     <comment>The Header of the Treeview Control</comment>
   </data>
+  <data name="miscFiles_Menu_DeleteFiles" xml:space="preserve">
+    <value>Delete selected file(s)</value>
+    <comment>Deletes the selected files</comment>
+  </data>
+  <data name="miscFiles_Menu_Rename" xml:space="preserve">
+    <value>Rename to "folder.jpg"</value>
+    <comment>Renames the selected file to folder.jpg</comment>
+  </data>
 </root>

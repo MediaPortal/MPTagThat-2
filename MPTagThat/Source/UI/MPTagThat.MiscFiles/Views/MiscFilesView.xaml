@@ -5,41 +5,47 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:prism="http://prismlibrary.com/"
              prism:ViewModelLocator.AutoWireViewModel="True"
-             xmlns:syncfusion="http://schemas.syncfusion.com/wpf"
-             xmlns:local="clr-namespace:MPTagThat.MiscFiles.Views"
+             xmlns:lex="http://wpflocalizeextension.codeplex.com"
+             xmlns:viewModels="clr-namespace:MPTagThat.MiscFiles.ViewModels"
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             lex:LocalizeDictionary.DesignCulture="en"
+             lex:ResxLocalizationProvider.DefaultAssembly="MPTagThat"
+             lex:ResxLocalizationProvider.DefaultDictionary="Strings"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
-  
-  <UserControl.Resources>
-    <ResourceDictionary>
-      <DataTemplate x:Key="ContentTemplate">
-        <StackPanel Orientation="Vertical" HorizontalAlignment="Stretch">
-          <Image Source="{Binding ImageData}" HorizontalAlignment="Center" VerticalAlignment="Top" Height="100" Width="100" />
-          <TextBlock Text="{Binding Size}" HorizontalAlignment="Center"/> 
-        </StackPanel>
-      </DataTemplate>
-    </ResourceDictionary>
-  </UserControl.Resources>
-
+             d:DesignHeight="450" d:DesignWidth="800"
+             >
   <Grid>   
-      <syncfusion:GroupBar x:Name="MiscFilesGroupBar" ItemHeaderHeight="25" VisualMode="MultipleExpansion" ItemsSource="{Binding MiscFiles}">
-      <syncfusion:GroupBar.ItemContainerStyle>
-            <Style TargetType="{x:Type syncfusion:GroupBarItem}">
-              <Setter Property="Header" Value="{Binding}"/>
-              <Setter Property="HeaderTemplate"> 
-                <Setter.Value> 
-                  <DataTemplate> 
-                    <StackPanel Orientation="Horizontal"> 
-                      <TextBlock Text="{Binding FileName}" FontWeight="Bold" Margin="3" VerticalAlignment="Center"/> 
-                    </StackPanel> 
-                  </DataTemplate> 
-                </Setter.Value> 
-              </Setter>
-              <Setter Property="ContentTemplate" Value="{StaticResource ContentTemplate}"/>
-              <Setter Property="IsExpanded" Value="True"/> 
-            </Style>
-          </syncfusion:GroupBar.ItemContainerStyle>
-        </syncfusion:GroupBar>
-    </Grid>
+    <ListView x:Name="MiscFilesListView" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ItemsSource="{Binding MiscFiles}">
+      <i:Interaction.Triggers>
+        <i:EventTrigger EventName="SelectionChanged">
+          <i:InvokeCommandAction Command="{Binding SelectionChangedCommand}" CommandParameter="{Binding SelectedItems, ElementName=MiscFilesListView}" />
+        </i:EventTrigger>
+      </i:Interaction.Triggers>
+      <ListView.ContextMenu>
+        <ContextMenu>
+          <MenuItem Header="{lex:Loc miscFiles_Menu_Rename}" 
+                    IsEnabled="{Binding ContextMenuRenameEnabled}"
+                    Command="{Binding RenameFileCommand}"
+                    CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.SelectedItem}" />
+          <MenuItem Header="{lex:Loc miscFiles_Menu_DeleteFiles}"
+                    Command="{Binding DeleteFileCommand}"
+                    CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.SelectedItems}" />
+          </ContextMenu>
+      </ListView.ContextMenu>
+      <ItemsControl.ItemsPanel>
+        <ItemsPanelTemplate>
+          <UniformGrid Columns="1" HorizontalAlignment="Stretch"/>
+        </ItemsPanelTemplate>
+      </ItemsControl.ItemsPanel>
+      <ListView.ItemTemplate>      
+        <DataTemplate>
+          <StackPanel Orientation="Vertical" VerticalAlignment="Top" HorizontalAlignment="Stretch">
+            <Image Source="{Binding ImageData}" HorizontalAlignment="Center" VerticalAlignment="Top" Height="100" Width="100" />
+            <TextBlock Text="{Binding FileName}" HorizontalAlignment="Center" VerticalAlignment="Bottom" />
+            <TextBlock Text="{Binding Size}" HorizontalAlignment="Center" VerticalAlignment="Bottom" />
+          </StackPanel>
+        </DataTemplate>
+      </ListView.ItemTemplate>
+    </ListView>
+  </Grid>
 </UserControl>

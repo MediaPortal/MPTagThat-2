@@ -102,7 +102,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Common\Command.cs" />
+    <Compile Include="Common\BaseCommand.cs" />
     <Compile Include="Common\GridViewColumn.cs" />
     <Compile Include="Common\Item.cs" />
     <Compile Include="Common\Song\Comment.cs" />

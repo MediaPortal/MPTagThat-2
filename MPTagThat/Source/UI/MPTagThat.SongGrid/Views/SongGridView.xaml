@@ -8,8 +8,6 @@
              prism:ViewModelLocator.AutoWireViewModel="True"
              xmlns:syncfusion="http://schemas.syncfusion.com/wpf" x:Class="MPTagThat.SongGrid.Views.SongGridView"
              xmlns:lex="http://wpflocalizeextension.codeplex.com"
-             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
-             xmlns:viewModels="clr-namespace:MPTagThat.SongGrid.ViewModels"
              lex:LocalizeDictionary.DesignCulture="en"
              lex:ResxLocalizationProvider.DefaultAssembly="MPTagThat"
              lex:ResxLocalizationProvider.DefaultDictionary="Strings"

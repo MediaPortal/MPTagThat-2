@@ -151,6 +151,24 @@ namespace MPTagThat.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Delete selected file(s).
+        /// </summary>
+        public static string miscFiles_Menu_DeleteFiles {
+            get {
+                return ResourceManager.GetString("miscFiles_Menu_DeleteFiles", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Rename to &quot;folder.jpg&quot;.
+        /// </summary>
+        public static string miscFiles_Menu_Rename {
+            get {
+                return ResourceManager.GetString("miscFiles_Menu_Rename", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Add to Burner.
         /// </summary>
         public static string ribbon_AddBurner {

@@ -71,12 +71,12 @@ namespace MPTagThat.SongGrid.ViewModels
       CreateColumns();
 
       Songs = _options.Songlist;
-      ItemsSourceDataCommand = new RelayCommand(SetItemsSource);
+      ItemsSourceDataCommand = new BaseCommand(SetItemsSource);
 
       EventSystem.Subscribe<GenericEvent>(OnMessageReceived, ThreadOption.UIThread);
     }
 
-    public RelayCommand ItemsSourceDataCommand { get; set; }
+    public BaseCommand ItemsSourceDataCommand { get; set; }
 
     public Columns DataGridColumns { get; set; }
 
