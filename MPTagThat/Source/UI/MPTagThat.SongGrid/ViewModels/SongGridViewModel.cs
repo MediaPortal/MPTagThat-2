@@ -20,10 +20,13 @@
 
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Windows.Input;
 using CommonServiceLocator;
 using MPTagThat.Core;
 using MPTagThat.Core.Common;
@@ -35,6 +38,7 @@ using MPTagThat.Core.Utils;
 using MPTagThat.Core.Events;
 using Prism.Events;
 using Prism.Mvvm;
+using Prism.Regions;
 using GridViewColumn = MPTagThat.Core.Common.GridViewColumn;
 using Syncfusion.UI.Xaml.Grid;
 using WPFLocalizeExtension.Engine;
@@ -47,6 +51,7 @@ namespace MPTagThat.SongGrid.ViewModels
   {
     #region Variables
 
+    private IRegionManager _regionManager;
     private readonly NLogLogger log;
     private Options _options;
     private readonly SongGridViewColumns _gridColumns;
@@ -61,8 +66,11 @@ namespace MPTagThat.SongGrid.ViewModels
 
     #endregion
 
-    public SongGridViewModel()
+    #region ctor
+
+    public SongGridViewModel(IRegionManager regionManager)
     {
+      _regionManager = regionManager;
       log = (ServiceLocator.Current.GetInstance(typeof(ILogger)) as ILogger).GetLogger;
       _options = (ServiceLocator.Current.GetInstance(typeof(ISettingsManager)) as ISettingsManager).GetOptions;
 
@@ -72,12 +80,15 @@ namespace MPTagThat.SongGrid.ViewModels
 
       Songs = _options.Songlist;
       ItemsSourceDataCommand = new BaseCommand(SetItemsSource);
-
+      _selectionChangedCommand = new BaseCommand(SelectionChanged);
+      
       EventSystem.Subscribe<GenericEvent>(OnMessageReceived, ThreadOption.UIThread);
     }
 
-    public BaseCommand ItemsSourceDataCommand { get; set; }
+    #endregion
 
+    #region Properties
+    
     public Columns DataGridColumns { get; set; }
 
     public BindingList<SongData> Songs
@@ -90,6 +101,28 @@ namespace MPTagThat.SongGrid.ViewModels
       }
     }
 
+    #endregion
+
+    #region Commands
+
+    public BaseCommand ItemsSourceDataCommand { get; set; }
+
+    private ICommand _selectionChangedCommand;
+    public ICommand SelectionChangedCommand => _selectionChangedCommand;
+
+    private void SelectionChanged(object param)
+    {
+      if (param != null)
+      {
+        var songs = (param as ObservableCollection<object>).Cast<SongData>().ToList();
+        var parameters = new NavigationParameters();
+        parameters.Add("songs", songs);
+        _regionManager.RequestNavigate("TagEdit", "TagEditView", parameters);
+      }
+    }
+
+    #endregion
+    
     #region INotifyPropertyChanged Members
 
     public event PropertyChangedEventHandler PropertyChanged;

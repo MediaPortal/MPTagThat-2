@@ -18,42 +18,25 @@
 
 #region
 
-using System.ComponentModel;
-using System.Windows.Media.Imaging;
+using MPTagThat.TagEdit.Views;
+using Prism.Ioc;
+using Prism.Modularity;
+using Prism.Regions;
 
 #endregion
 
-namespace MPTagThat.MiscFiles.ViewModels
+namespace MPTagThat.TagEdit
 {
-  public class MiscFile : INotifyPropertyChanged
-  {
-    private string _filename;
-
-    public BitmapImage ImageData { get; set; }
-    public string FullFileName { get; set; }
-    public string Size { get; set; }
-
-    public string FileName
+    public class TagEditModule : IModule
     {
-      get
+      public void RegisterTypes(IContainerRegistry containerRegistry)
       {
-        return _filename;
       }
-      set
+
+      public void OnInitialized(IContainerProvider containerProvider)
       {
-        if (_filename != value)
-        {
-          _filename = value;
-          OnPropertyChanged(nameof(FileName));
-        }
+        var regionManager = containerProvider.Resolve<IRegionManager>();
+        regionManager.RegisterViewWithRegion("TagEdit", typeof(TagEditView));
       }
     }
-
-    public void OnPropertyChanged(string propertyname)
-    {
-      PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyname));
-    }
-
-    public event PropertyChangedEventHandler PropertyChanged;
-  }
 }

@@ -41,7 +41,7 @@
         <DataTemplate>
           <StackPanel Orientation="Vertical" VerticalAlignment="Top" HorizontalAlignment="Stretch">
             <Image Source="{Binding ImageData}" HorizontalAlignment="Center" VerticalAlignment="Top" Height="100" Width="100" />
-            <TextBlock Text="{Binding FileName}" HorizontalAlignment="Center" VerticalAlignment="Bottom" />
+            <TextBox Text="{Binding FileName}" HorizontalAlignment="Center" VerticalAlignment="Bottom" />
             <TextBlock Text="{Binding Size}" HorizontalAlignment="Center" VerticalAlignment="Bottom" />
           </StackPanel>
         </DataTemplate>

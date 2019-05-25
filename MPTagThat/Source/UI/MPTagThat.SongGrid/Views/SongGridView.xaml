@@ -8,6 +8,7 @@
              prism:ViewModelLocator.AutoWireViewModel="True"
              xmlns:syncfusion="http://schemas.syncfusion.com/wpf" x:Class="MPTagThat.SongGrid.Views.SongGridView"
              xmlns:lex="http://wpflocalizeextension.codeplex.com"
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              lex:LocalizeDictionary.DesignCulture="en"
              lex:ResxLocalizationProvider.DefaultAssembly="MPTagThat"
              lex:ResxLocalizationProvider.DefaultDictionary="Strings"
@@ -18,6 +19,12 @@
     <syncfusion:SfDataGrid x:Name="SongDataGrid" ItemsSource="{Binding Songs}" 
                            Columns="{Binding DataGridColumns, Mode=TwoWay}" FrozenColumnCount="3"
                            ColumnSizer="AutoWithLastColumnFill" AllowResizingColumns="True" AllowDraggingColumns="True" ShowRowHeader="False" 
-                           AllowEditing="True" AutoGenerateColumns="False" SelectionMode="Multiple" EnableDataVirtualization="True" ShowBusyIndicator="True" />
+                           AllowEditing="True" AutoGenerateColumns="False" SelectionMode="Multiple" EnableDataVirtualization="True" ShowBusyIndicator="True" >
+      <i:Interaction.Triggers>
+        <i:EventTrigger EventName="SelectionChanged">
+          <i:InvokeCommandAction Command="{Binding SelectionChangedCommand}" CommandParameter="{Binding SelectedItems, ElementName=SongDataGrid}" />
+        </i:EventTrigger>
+      </i:Interaction.Triggers>
+    </syncfusion:SfDataGrid>
   </Grid>
 </UserControl>

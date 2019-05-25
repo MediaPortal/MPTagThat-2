@@ -33,7 +33,7 @@ namespace MPTagThat
     public App()
     {
       //Register Syncfusion license
-      Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("NzIzMjJAMzEzNjJlMzQyZTMwaFBNUzNxR285QU5QeW1Uamw1L3JxazRza3NXdThtL0toR2syVkdURFdiST0=");
+      Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("MTA0NjI1QDMxMzcyZTMxMmUzMEM5V0hIUmdQUTNUT21MOGFLeEs5K1BjNDY5OGc4MnBFQU41ZzRoM3QvRGs9");
     }
 
     #endregion
@@ -85,6 +85,7 @@ namespace MPTagThat
       moduleCatalog.AddModule(typeof(Treeview.TreeviewModule));
       moduleCatalog.AddModule(typeof(SongGrid.SongGridModule));
       moduleCatalog.AddModule(typeof(MiscFiles.MiscFilesModule));
+      moduleCatalog.AddModule(typeof(TagEdit.TagEditModule));
     }
 
     /// <summary>

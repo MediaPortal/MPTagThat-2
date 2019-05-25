@@ -8,8 +8,11 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
 using System.Windows.Threading;
+using CommonServiceLocator;
 using MPTagThat.Core;
 using MPTagThat.Core.Events;
+using MPTagThat.Core.Services.Settings;
+using MPTagThat.Core.Services.Settings.Setting;
 using MPTagThat.Treeview.Model;
 using Syncfusion.Windows.Shared;
 using Syncfusion.Windows.Tools.Controls;
@@ -20,6 +23,8 @@ namespace MPTagThat.Treeview.ViewModels
     public class TreeviewViewModel : NotificationObject
     {
       #region Variables
+
+      private Options _options;
 
       private IItem _currentItem;
       private TreeViewItemAdv _treeItem;
@@ -64,6 +69,8 @@ namespace MPTagThat.Treeview.ViewModels
             }
           }
 
+          _options.MainSettings.LastFolderUsed = selecteditem;
+
           GenericEvent evt = new GenericEvent();
           evt.Action = "selectedfolderchanged";
           evt.MessageData.Add("folder", selecteditem);
@@ -94,7 +101,9 @@ namespace MPTagThat.Treeview.ViewModels
       #region ctor
 
       public TreeviewViewModel()
-      {           
+      {
+        _options = (ServiceLocator.Current.GetInstance(typeof(ISettingsManager)) as ISettingsManager).GetOptions;
+
         _items = new ObservableCollection<IItem>();
         DriveInfo[] drives = DriveInfo.GetDrives();
         int count = 0;

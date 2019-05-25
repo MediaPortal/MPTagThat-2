@@ -21,19 +21,19 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
+using FreeImageAPI;
 using System.IO;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
+using CommonServiceLocator;
 using MPTagThat.Core;
-using MPTagThat.Core.Annotations;
 using MPTagThat.Core.Common;
 using MPTagThat.Core.Events;
+using MPTagThat.Core.Services.Logging;
+using MPTagThat.Core.Utils;
 using Prism.Events;
 using Prism.Mvvm;
-using Syncfusion.Windows.Shared;
 
 #endregion
 
@@ -116,12 +116,16 @@ namespace MPTagThat.MiscFiles.ViewModels
       if (param != null)
       {
         var item = (MiscFile) param;
-        var newFile = $"{Path.GetDirectoryName(item.FullFileName)}\\folder.{Path.GetExtension(item.FullFileName)}";
+        var newFile = $"{Path.GetDirectoryName(item.FullFileName)}\\folder{Path.GetExtension(item.FullFileName)}";
         if (!File.Exists(newFile))
         {
           try
           {
             File.Move(item.FullFileName, newFile);
+            MiscFiles.Remove(item);
+            item.FullFileName = newFile;
+            item.FileName = Path.GetFileName(newFile);
+            MiscFiles.Add(item);
           }
           catch (Exception e)
           {
@@ -146,7 +150,7 @@ namespace MPTagThat.MiscFiles.ViewModels
             File.Delete(item.FullFileName);
             MiscFiles.Remove(item);
           }
-          catch (Exception e)
+          catch (Exception)
           {
             // ignored
           }
@@ -173,28 +177,39 @@ namespace MPTagThat.MiscFiles.ViewModels
               {
                 return;
               }
-              var f = new MiscFile
-              {
-                FileName = file.Name,
-                FullFileName = file.FullName
-              };
 
-              try
+              var imgFailure = false;
+              var nonPicFile = true;
+              if (Util.IsPicture(file.Name))
               {
-                // avoid locking of the file
-                var bmi = new BitmapImage();
-                bmi.BeginInit();
-                bmi.CacheOption = BitmapCacheOption.OnLoad;
-                bmi.UriSource = new Uri(file.FullName, UriKind.Absolute);
-                bmi.EndInit();
-                f.ImageData = bmi;
-                f.Size = $"({Math.Round(f.ImageData.Width)} x {Math.Round(f.ImageData.Height)})";
+                nonPicFile = false;
+                var f = new MiscFile
+                {
+                  FileName = file.Name,
+                  FullFileName = file.FullName
+                };
+
+                try
+                {
+                  var bmi = GetImageFromFile(file.FullName, out var size);
+                  if (bmi != null)
+                  {
+                    f.ImageData = bmi;
+                    f.Size = size;
+                    MiscFiles.Add(f);
+                  }
+                  else
+                  {
+                    imgFailure = true;
+                  }
+                }
+                catch (Exception)
+                {
+                  imgFailure = true;
+                }
+
+                
               }
-              catch (Exception)
-              {
-                // We might get an Exception on specific files
-              }
-              MiscFiles.Add(f);
             }
           }
           break;
@@ -203,5 +218,58 @@ namespace MPTagThat.MiscFiles.ViewModels
 
     #endregion
 
+    #region Private Methods
+
+    /// <summary>
+    ///   Return an image from a given filename
+    /// </summary>
+    /// <param name = "fileName"></param>
+    /// <param name = "size"></param>
+    /// <returns></returns>
+    private BitmapImage GetImageFromFile(string fileName, out string size)
+    {
+      FreeImageBitmap img = null;
+      size = "";
+      try
+      {
+        using (FileStream fs = new FileStream(fileName, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
+        {
+          img = new FreeImageBitmap(fs);
+          fs.Close();
+        }
+
+        size = $"{img.Width} x {img.Height}";
+
+        // convert Image Size to 64 x 64 for display in the Imagelist
+        img.Rescale(64, 64, FREE_IMAGE_FILTER.FILTER_BOX);
+      }
+      catch (Exception ex)
+      {
+        (ServiceLocator.Current.GetInstance(typeof(ILogger)) as ILogger).GetLogger.Error("File has invalid Picture: {0} {1}", fileName, ex.Message);
+      }
+
+      if (img != null)
+      {
+        using (var memory = new MemoryStream())
+        {
+          img.Save(memory, FREE_IMAGE_FORMAT.FIF_PNG);
+          memory.Position = 0;
+
+          var bitmapImage = new BitmapImage();
+          bitmapImage.BeginInit();
+          bitmapImage.StreamSource = memory;
+          bitmapImage.CacheOption = BitmapCacheOption.OnLoad;
+          //bitmapImage.CreateOptions = BitmapCreateOptions.IgnoreImageCache;
+          bitmapImage.EndInit();
+
+          return bitmapImage;
+        }
+      }
+
+      return null;
+    }
+
+
+    #endregion
   }
 }
