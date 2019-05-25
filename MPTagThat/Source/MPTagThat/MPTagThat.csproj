@@ -51,22 +51,19 @@
       <HintPath>..\packages\Prism.Wpf.7.1.0.431\lib\net45\Prism.Wpf.dll</HintPath>
     </Reference>
     <Reference Include="ReachFramework" />
-    <Reference Include="Syncfusion.Grid.WPF, Version=15.2460.0.40, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL" />
-    <Reference Include="Syncfusion.GridCommon.Wpf, Version=15.2460.0.40, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL" />
-    <Reference Include="Syncfusion.Licensing, Version=16.4460.0.52, Culture=neutral, PublicKeyToken=632609b4d040f6b4, processorArchitecture=MSIL">
-      <HintPath>..\packages\Syncfusion.Licensing.16.4.0.52\lib\net46\Syncfusion.Licensing.dll</HintPath>
+    <Reference Include="Syncfusion.Data.WPF, Version=17.1460.0.38, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL" />
+    <Reference Include="Syncfusion.Licensing, Version=17.1460.0.48, Culture=neutral, PublicKeyToken=632609b4d040f6b4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Syncfusion.Licensing.17.1.0.48\lib\net46\Syncfusion.Licensing.dll</HintPath>
     </Reference>
-    <Reference Include="Syncfusion.Linq.Base, Version=15.2460.0.40, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL" />
-    <Reference Include="Syncfusion.RichTextBoxAdv.WPF, Version=15.2460.0.40, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL" />
-    <Reference Include="Syncfusion.SfInput.WPF, Version=15.2460.0.40, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL" />
-    <Reference Include="Syncfusion.SfSkinManager.WPF, Version=16.4460.0.52, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
-      <HintPath>..\packages\Syncfusion.SfSkinManager.WPF.16.4.0.52\lib\net46\Syncfusion.SfSkinManager.WPF.dll</HintPath>
+    <Reference Include="Syncfusion.SfGrid.WPF, Version=17.1460.0.38, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL" />
+    <Reference Include="Syncfusion.SfSkinManager.WPF, Version=17.1460.0.48, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <HintPath>..\packages\Syncfusion.SfSkinManager.WPF.17.1.0.48\lib\net46\Syncfusion.SfSkinManager.WPF.dll</HintPath>
     </Reference>
-    <Reference Include="Syncfusion.Shared.WPF, Version=16.4460.0.52, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
-      <HintPath>..\packages\Syncfusion.Shared.WPF.16.4.0.52\lib\net46\Syncfusion.Shared.WPF.dll</HintPath>
+    <Reference Include="Syncfusion.Shared.WPF, Version=17.1460.0.48, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <HintPath>..\packages\Syncfusion.Shared.WPF.17.1.0.48\lib\net46\Syncfusion.Shared.WPF.dll</HintPath>
     </Reference>
-    <Reference Include="Syncfusion.Tools.WPF, Version=16.4460.0.52, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
-      <HintPath>..\packages\Syncfusion.Tools.WPF.16.4.0.52\lib\net46\Syncfusion.Tools.WPF.dll</HintPath>
+    <Reference Include="Syncfusion.Tools.WPF, Version=17.1460.0.48, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <HintPath>..\packages\Syncfusion.Tools.WPF.17.1.0.48\lib\net46\Syncfusion.Tools.WPF.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
@@ -79,6 +76,7 @@
       <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.4.5.2\lib\netstandard2.0\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.ValueTuple.4.5.0\lib\net461\System.ValueTuple.dll</HintPath>
       <Private>True</Private>
@@ -190,6 +188,10 @@
     <ProjectReference Include="..\UI\MPTagThat.SongGrid\MPTagThat.SongGrid.csproj">
       <Project>{2d3154af-53c8-40fa-991a-6ab019078915}</Project>
       <Name>MPTagThat.SongGrid</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\UI\MPTagThat.TagEdit\MPTagThat.TagEdit.csproj">
+      <Project>{43451793-3565-4c80-91a4-c75dae1b98cd}</Project>
+      <Name>MPTagThat.TagEdit</Name>
     </ProjectReference>
     <ProjectReference Include="..\UI\MPTagThat.Treeview\MPTagThat.Treeview.csproj">
       <Project>{0696a5a6-974e-48cb-8506-c10d7fffabf4}</Project>
