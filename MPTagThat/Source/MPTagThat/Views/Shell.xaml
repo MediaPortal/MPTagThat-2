@@ -11,36 +11,55 @@
         lex:ResxLocalizationProvider.DefaultAssembly="MPTagThat"
         lex:ResxLocalizationProvider.DefaultDictionary="Strings"
         xmlns:local="clr-namespace:MPTagThat"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         mc:Ignorable="d"
         syncfusion:SkinStorage.VisualStyle="Office2010Blue"
         Office2010Icon="../Resources/Images/MPTagThat_mepo.png"
         Icon="../Resources/Images/MPTagThat_mepo.png"
-        Title="{lex:Loc ApplicationName}" Height="768" Width="1024">
+        Title="{lex:Loc ApplicationName}" 
+        Height ="{Binding WindowHeight, Mode=TwoWay}" 
+        Width="{Binding WindowWidth, Mode=TwoWay}" 
+        Left="{Binding WindowLeft, Mode=TwoWay}" 
+        Top="{Binding WindowTop, Mode=TwoWay}" 
+        d:DesignWidth="3599.059" d:DesignHeight="2055.941">
+
+  <!-- Handle the Close of the Window -->
+  <i:Interaction.Triggers>
+    <i:EventTrigger EventName="Closing">
+      <i:InvokeCommandAction  Command="{Binding WindowCloseCommand}" />
+    </i:EventTrigger>
+  </i:Interaction.Triggers>
+
+
   <Grid>
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition Width="151*"/>
+      <ColumnDefinition Width="357*"/>
+    </Grid.ColumnDefinitions>
     <Grid.RowDefinitions>
       <RowDefinition Height="Auto"/>
       <RowDefinition Height="*"/>
     </Grid.RowDefinitions>
-    <ContentControl prism:RegionManager.RegionName="RibbonRegion" />
-    <syncfusion:DockingManager Grid.Row="1" prism:RegionManager.RegionName="MainRegion" UseDocumentContainer="True" DockFill="True" DockFillDocumentMode="Normal">
+    <ContentControl prism:RegionManager.RegionName="RibbonRegion" Grid.ColumnSpan="2" Margin="0,0,0,737" Grid.RowSpan="2" />
+    <syncfusion:DockingManager Grid.Row="1" prism:RegionManager.RegionName="MainRegion" UseDocumentContainer="True" DockFill="True" DockFillDocumentMode="Normal" Grid.ColumnSpan="2">
       <ContentControl syncfusion:DockingManager.Header="{lex:Loc treeview_Header}" x:Name="Treeview" 
-                      syncfusion:DockingManager.DesiredWidthInDockedMode="30" 
-                      syncfusion:DockingManager.DesiredWidthInFloatingMode="30" 
+                      syncfusion:DockingManager.DesiredWidthInDockedMode="150" 
+                      syncfusion:DockingManager.DesiredWidthInFloatingMode="150" 
                       syncfusion:DockingManager.CanClose="False" 
-                      prism:RegionManager.RegionName="TreeviewTab" />  
+                      prism:RegionManager.RegionName="TreeviewTab" />
 
       <ContentControl syncfusion:DockingManager.Header="{lex:Loc miscFiles_Header}" x:Name="MiscFiles"
                       syncfusion:DockingManager.SideInDockedMode="Tabbed"
                       syncfusion:DockingManager.TargetNameInDockedMode="Treeview"
-                      prism:RegionManager.RegionName="MiscFilesTab" /> 
-      
+                      prism:RegionManager.RegionName="MiscFilesTab" />
+
       <ContentControl syncfusion:DockingManager.Header="SongGrid" x:Name="SongGrid"
                       syncfusion:DockingManager.SideInDockedMode="Top"
-                      prism:RegionManager.RegionName="SongGrid" /> 
+                      prism:RegionManager.RegionName="SongGrid" />
 
       <ContentControl syncfusion:DockingManager.Header="TagEdit" x:Name="TagEdit"
                       syncfusion:DockingManager.SideInDockedMode="Bottom"
-                      prism:RegionManager.RegionName="TagEdit" /> 
+                      prism:RegionManager.RegionName="TagEdit" />
 
     </syncfusion:DockingManager>
   </Grid>

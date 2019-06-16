@@ -1,11 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using System.Windows.Navigation;
+using CommonServiceLocator;
 using MPTagThat.Core;
+using MPTagThat.Core.Common;
+using MPTagThat.Core.Common.Song;
 using MPTagThat.Core.Events;
+using MPTagThat.Core.Services.Settings;
 using Prism.Mvvm;
 using Prism.Regions;
 using Syncfusion.SfSkinManager;
@@ -28,6 +34,75 @@ namespace MPTagThat.ViewModels
     #endregion
 
     #region Properties
+
+    /// <summary>
+    /// The Window Height
+    /// </summary>
+    private int _windowHeight;
+    public int WindowHeight
+    {
+      get => _windowHeight;
+      set
+      {
+        if (!_windowHeight.Equals(value))
+        {
+          _windowHeight = value;
+          RaisePropertyChanged("WindowHeight");
+        }
+      }
+    }
+
+    /// <summary>
+    /// The Window Width
+    /// </summary>
+    private int _windowWidth;
+    public int WindowWidth
+    {
+      get => _windowWidth;
+      set
+      {
+        if (!_windowWidth.Equals(value))
+        {
+          _windowWidth = value;
+          RaisePropertyChanged("WindowWidth");
+        }
+      }
+    }
+
+    /// <summary>
+    /// The Window Position Left
+    /// </summary>
+    private int _windowLeft;
+    public int WindowLeft
+    {
+      get => _windowLeft;
+      set
+      {
+        if (!_windowLeft.Equals(value))
+        {
+          _windowLeft = value;
+          RaisePropertyChanged("WindowLeft");
+        }
+      }
+    }
+
+    /// <summary>
+    /// The Window Position Top
+    /// </summary>
+    private int _windowTop;
+    public int WindowTop
+    {
+      get => _windowTop;
+      set
+      {
+        if (!_windowTop.Equals(value))
+        {
+          _windowTop = value;
+          RaisePropertyChanged("WindowTop");
+        }
+      }
+    }
+
 
     /// <summary>
     /// Property to have the Progressbar show infinite
@@ -132,7 +207,34 @@ namespace MPTagThat.ViewModels
       _regionManager = regionManager;
       EventSystem.Subscribe<StatusBarEvent>(UpdateStatusBar);
       SfSkinManager.ApplyStylesOnApplication = true;
+
+      _windowCloseCommand = new BaseCommand(WindowClose);
+
+      var options = (ServiceLocator.Current.GetInstance(typeof(ISettingsManager)) as ISettingsManager).GetOptions;
+
+      // Set Initial Window Size and Location
+      WindowWidth = options.MainSettings.FormSize.Width;
+      WindowHeight = options.MainSettings.FormSize.Height;
+      WindowLeft = options.MainSettings.FormLocation.X;
+      WindowTop = options.MainSettings.FormLocation.Y;
+
     }
+    #endregion
+
+    #region Commands
+
+    private ICommand _windowCloseCommand;
+    public ICommand WindowCloseCommand => _windowCloseCommand;
+
+    private void WindowClose(object param)
+    {
+      var options = (ServiceLocator.Current.GetInstance(typeof(ISettingsManager)) as ISettingsManager).GetOptions;
+      options.MainSettings.FormSize = new Size(WindowWidth, WindowHeight);
+      options.MainSettings.FormLocation = new Point(WindowLeft, WindowTop);
+
+      options.SaveAllSettings();
+    }
+
     #endregion
 
     #region Private Methods
