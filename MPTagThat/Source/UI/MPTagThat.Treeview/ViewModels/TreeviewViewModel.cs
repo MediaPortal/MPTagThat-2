@@ -13,6 +13,7 @@ using MPTagThat.Core;
 using MPTagThat.Core.Events;
 using MPTagThat.Core.Services.Settings;
 using MPTagThat.Core.Services.Settings.Setting;
+using MPTagThat.Core.Utils;
 using MPTagThat.Treeview.Model;
 using Syncfusion.Windows.Shared;
 using Syncfusion.Windows.Tools.Controls;
@@ -86,13 +87,13 @@ namespace MPTagThat.Treeview.ViewModels
         }
       }
 
-      public void OnDemandLoad(TreeViewItemAdv treeitem)
+      public ICommand LoadFolderOnDemandCommand { get; set; }
+      private void LoadFolderOnDemand(object parameter)
       {
+        TreeViewItemAdv treeitem = (parameter as LoadonDemandEventArgs).TreeViewItem;
         if (treeitem != null)
         {
-          this._treeItem = treeitem as TreeViewItemAdv;
-          this._currentItem = _treeItem.DataContext as IItem;
-          BuildDirectoryTree(_treeItem, _currentItem);
+          BuildDirectoryTree(treeitem, treeitem.DataContext as IItem);
         }
       }
 
@@ -122,11 +123,32 @@ namespace MPTagThat.Treeview.ViewModels
         }
 
         SelectedItemChangedCommand = new DelegateCommand<object>(SelectedItemChanged);
+        LoadFolderOnDemandCommand = new DelegateCommand<object>(LoadFolderOnDemand);
+
+        SetCurrentFolder(_options.MainSettings.LastFolderUsed);
       }
 
       #endregion
 
       #region Private Methods
+
+      private void SetCurrentFolder(string folderName)
+      {
+        if (!System.IO.Directory.Exists(folderName))
+        {
+          return;
+        }
+
+        var folderstructure = Util.SplitPath(folderName);
+        foreach (var item in Items)
+        {
+          if (item.Info.ToString().Trim('\\') == folderstructure[0])
+          {
+
+          }
+        }
+      }
+
 
       private void BuildDirectoryTree(TreeViewItemAdv item,IItem file)
       {

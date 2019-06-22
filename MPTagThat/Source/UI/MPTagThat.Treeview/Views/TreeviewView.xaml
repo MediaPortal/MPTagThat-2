@@ -44,7 +44,7 @@
                             ScrollViewer.VerticalScrollBarVisibility="Visible">
       <i:Interaction.Triggers>
         <i:EventTrigger EventName="LoadOnDemand">
-          <actions:OnDemandLoading TargetObject="{Binding ElementName=Explorer}"/>
+          <prism:InvokeCommandAction Command="{Binding LoadFolderOnDemandCommand}" />
         </i:EventTrigger>
       </i:Interaction.Triggers>
       <syncfusion:TreeViewItemAdv 
