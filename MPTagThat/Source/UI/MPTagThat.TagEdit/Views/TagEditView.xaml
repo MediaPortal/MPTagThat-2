@@ -11,8 +11,17 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
   <Grid>
-    <TextBox HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="{Binding SongEdit.Artist}" VerticalAlignment="Top" Width="120"/>
-    <syncfusion:PercentTextBox HorizontalAlignment="Left" Height="23" Margin="105,225,0,0" TextWrapping="Wrap" Text="PercentTextBox" VerticalAlignment="Top" Width="120"/>
-
+    
+    <syncfusion:TabControlExt HorizontalAlignment="Left" Height="370" Margin="20,47,0,0" VerticalAlignment="Top" Width="706" CloseButtonType="Hide">
+      <TabItem Header="TabItem">
+        <Grid Background="#FFE5E5E5">
+          <TextBox HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="{Binding SongEdit.Artist}" VerticalAlignment="Top" Width="120"/>      
+        </Grid>
+      </TabItem>
+      <syncfusion:TabItemExt Header="New TabItemExt" IsNewTab="False" MinWidth="150" MinHeight="20"/>
+    </syncfusion:TabControlExt>
+    <Button Content="Button" HorizontalAlignment="Left" Margin="27,10,0,0" VerticalAlignment="Top" Width="75" 
+            Command="{Binding ApplyEditCommand}"
+            CommandParameter="{Binding SongEdit}" />
   </Grid>
 </UserControl>

@@ -15,7 +15,7 @@
     <Grid.ColumnDefinitions>
       <ColumnDefinition Width="*"/>
     </Grid.ColumnDefinitions>
-    <syncfusion:Ribbon x:Name="Ribbon" Margin="0" Grid.ColumnSpan="2" BackStageHeader=" " >
+    <syncfusion:Ribbon x:Name="Ribbon" Margin="0" Grid.ColumnSpan="2" BackStageHeader=" " RibbonState="Normal">
       <syncfusion:RibbonTab x:Name="TabTag" Caption="{lex:Loc ribbon_TagTab}"  IsChecked="True">
         <syncfusion:RibbonBar Name="RibbonBarRetrieveTags" Header="{lex:Loc ribbon_RetrieveTags}">
           <syncfusion:RibbonButton x:Name="ButtonTagFromFile" SizeForm="Large" Label="{lex:Loc ribbon_TagFromFile}" LargeIcon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_TagFromFile_32x.png" SmallIcon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_TagFromFile_16x.png" />

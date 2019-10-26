@@ -21,72 +21,72 @@
         Width="{Binding WindowWidth, Mode=TwoWay}" 
         Left="{Binding WindowLeft, Mode=TwoWay}" 
         Top="{Binding WindowTop, Mode=TwoWay}" 
-        d:DesignWidth="3599.059" d:DesignHeight="2055.941">
+        >
 
-  <!-- Handle the Close of the Window -->
-  <i:Interaction.Triggers>
-    <i:EventTrigger EventName="Closing">
-      <i:InvokeCommandAction  Command="{Binding WindowCloseCommand}" />
-    </i:EventTrigger>
-  </i:Interaction.Triggers>
+    <!-- Handle the Close of the Window -->
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Closing">
+            <i:InvokeCommandAction  Command="{Binding WindowCloseCommand}" />
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
 
 
-  <Grid>
-    <Grid.ColumnDefinitions>
-      <ColumnDefinition Width="151*"/>
-      <ColumnDefinition Width="357*"/>
-    </Grid.ColumnDefinitions>
-    <Grid.RowDefinitions>
-      <RowDefinition Height="Auto"/>
-      <RowDefinition Height="*"/>
-    </Grid.RowDefinitions>
-    <ContentControl prism:RegionManager.RegionName="RibbonRegion" Grid.ColumnSpan="2" Margin="0,0,0,737" Grid.RowSpan="2" />
-    <syncfusion:DockingManager Grid.Row="1" prism:RegionManager.RegionName="MainRegion" UseDocumentContainer="True" DockFill="True" DockFillDocumentMode="Normal" Grid.ColumnSpan="2">
-      <ContentControl syncfusion:DockingManager.Header="{lex:Loc treeview_Header}" x:Name="Treeview" 
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="151*"/>
+            <ColumnDefinition Width="357*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="92"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <ContentControl prism:RegionManager.RegionName="RibbonRegion" Grid.ColumnSpan="2" Grid.RowSpan="2" />
+        <syncfusion:DockingManager prism:RegionManager.RegionName="MainRegion" DockFill="True" DockFillDocumentMode="Normal" Grid.ColumnSpan="2" Grid.Row="1">
+            <ContentControl syncfusion:DockingManager.Header="{lex:Loc treeview_Header}" x:Name="Treeview" 
                       syncfusion:DockingManager.DesiredWidthInDockedMode="150" 
                       syncfusion:DockingManager.DesiredWidthInFloatingMode="150" 
                       syncfusion:DockingManager.CanClose="False" 
                       prism:RegionManager.RegionName="TreeviewTab" />
 
-      <ContentControl syncfusion:DockingManager.Header="{lex:Loc miscFiles_Header}" x:Name="MiscFiles"
+            <ContentControl syncfusion:DockingManager.Header="{lex:Loc miscFiles_Header}" x:Name="MiscFiles"
                       syncfusion:DockingManager.SideInDockedMode="Tabbed"
                       syncfusion:DockingManager.TargetNameInDockedMode="Treeview"
                       prism:RegionManager.RegionName="MiscFilesTab" />
 
-      <ContentControl syncfusion:DockingManager.Header="SongGrid" x:Name="SongGrid"
+            <ContentControl syncfusion:DockingManager.Header="SongGrid" x:Name="SongGrid"
                       syncfusion:DockingManager.SideInDockedMode="Top"
                       prism:RegionManager.RegionName="SongGrid" />
 
-      <ContentControl syncfusion:DockingManager.Header="TagEdit" x:Name="TagEdit"
+            <ContentControl syncfusion:DockingManager.Header="TagEdit" x:Name="TagEdit"
                       syncfusion:DockingManager.SideInDockedMode="Bottom"
                       prism:RegionManager.RegionName="TagEdit" />
 
-    </syncfusion:DockingManager>
-  </Grid>
-  <syncfusion:RibbonWindow.StatusBar>
-    <syncfusion:RibbonStatusBar>
-      <Grid>
-        <Grid.ColumnDefinitions>
-          <ColumnDefinition Width="2*"/>
-          <ColumnDefinition Width="2*"/>
-          <ColumnDefinition Width="2*"/>
-        </Grid.ColumnDefinitions>
+        </syncfusion:DockingManager>
+    </Grid>
+    <syncfusion:RibbonWindow.StatusBar>
+        <syncfusion:RibbonStatusBar>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition Width="2*"/>
+                </Grid.ColumnDefinitions>
 
-        <WrapPanel Grid.Column="0" >
-          <TextBlock Text="{Binding NumberOfFiles}" Margin="10,0,0,0" />
-          <Border BorderThickness="1,0,0,0" Width="3" Margin="5,0,0,0" BorderBrush="#FFC5C5C5"/>
-          <TextBlock Text="{Binding FilterActive}" Margin="10,0,0,0"/>
-        </WrapPanel>
-        <WrapPanel Grid.Column="1">
-          <Border BorderThickness="1,0,0,0" Width="3" Margin="5,0,0,0" BorderBrush="#FFC5C5C5"/>
-          <TextBlock Text="{Binding CurrentFolder}" Margin="10,0,0,0"/>
-        </WrapPanel>
-        <WrapPanel Grid.Column="2" HorizontalAlignment="Right">
-          <Border BorderThickness="1,0,0,0" Width="3" Margin="5,0,0,0" BorderBrush="#FFC5C5C5"/>
-          <ProgressBar Width="200" Margin="10,2,2,2" Height="15" IsIndeterminate="{Binding ProgressBarIsIndeterminate}"/>
-          <Button x:Name="StatusBarButtonCancel" Margin="0,2,5,2" Width="20"></Button>
-        </WrapPanel>
-      </Grid>
-    </syncfusion:RibbonStatusBar>
-  </syncfusion:RibbonWindow.StatusBar>
+                <WrapPanel Grid.Column="0" >
+                    <TextBlock Text="{Binding NumberOfFiles}" Margin="10,0,0,0" />
+                    <Border BorderThickness="1,0,0,0" Width="3" Margin="5,0,0,0" BorderBrush="#FFC5C5C5"/>
+                    <TextBlock Text="{Binding FilterActive}" Margin="10,0,0,0"/>
+                </WrapPanel>
+                <WrapPanel Grid.Column="1">
+                    <Border BorderThickness="1,0,0,0" Width="3" Margin="5,0,0,0" BorderBrush="#FFC5C5C5"/>
+                    <TextBlock Text="{Binding CurrentFolder}" Margin="10,0,0,0"/>
+                </WrapPanel>
+                <WrapPanel Grid.Column="2" HorizontalAlignment="Right">
+                    <Border BorderThickness="1,0,0,0" Width="3" Margin="5,0,0,0" BorderBrush="#FFC5C5C5"/>
+                    <ProgressBar Width="200" Margin="10,2,2,2" Height="15" IsIndeterminate="{Binding ProgressBarIsIndeterminate}"/>
+                    <Button x:Name="StatusBarButtonCancel" Margin="0,2,5,2" Width="20"></Button>
+                </WrapPanel>
+            </Grid>
+        </syncfusion:RibbonStatusBar>
+    </syncfusion:RibbonWindow.StatusBar>
 </syncfusion:RibbonWindow>

@@ -3,7 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
+using MPTagThat.Core;
+using MPTagThat.Core.Common;
 using MPTagThat.Core.Common.Song;
+using MPTagThat.Core.Events;
 using Prism.Mvvm;
 using Prism.Regions;
 
@@ -30,7 +34,24 @@ namespace MPTagThat.TagEdit.ViewModels
 
     public TagEditViewModel()
     {
+      _applyEditCommand = new BaseCommand(ApplyEdit);
+    }
 
+    #endregion
+
+    #region Commands
+
+    private ICommand _applyEditCommand;
+    public ICommand ApplyEditCommand => _applyEditCommand;
+
+    private void ApplyEdit(object param)
+    {
+      var evt = new GenericEvent
+      {
+        Action = "applytagedit"
+      };
+      evt.MessageData.Add("tags", (SongData)param);
+      EventSystem.Publish(evt);
     }
 
     #endregion

@@ -348,6 +348,15 @@ namespace MPTagThat.SongGrid.ViewModels
 
     #endregion
 
+    #region Apply Edits
+
+    private void ApplyTagEdit(SongData songedit)
+    {
+
+    }
+
+    #endregion
+
     #region Event Handling
 
     private void OnMessageReceived(GenericEvent msg)
@@ -360,6 +369,14 @@ namespace MPTagThat.SongGrid.ViewModels
             _selectedFolder = (string)msg.MessageData["folder"];
             FolderScan();
           }
+          break;
+
+        case "applytagedit":
+          if (msg.MessageData.ContainsKey("tags"))
+          {
+            ApplyTagEdit((SongData)msg.MessageData["tags"]);
+          }
+
           break;
       }
     }
