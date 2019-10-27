@@ -140,6 +140,7 @@
   </data>
   <data name="ribbon_IdentifyFile" xml:space="preserve">
     <value>Identify File</value>
+    <comment>Button Identify File</comment>
   </data>
   <data name="ribbon_TagFromInternet" xml:space="preserve">
     <value>Tag from Internet</value>
@@ -334,5 +335,11 @@
   <data name="miscFiles_Menu_Rename" xml:space="preserve">
     <value>Rename to "folder.jpg"</value>
     <comment>Renames the selected file to folder.jpg</comment>
+  </data>
+  <data name="ribbon_DeleteLayout" xml:space="preserve">
+    <value>Delete Layout</value>
+  </data>
+  <data name="ribbon_ResetLayout" xml:space="preserve">
+    <value>Reset Layout</value>
   </data>
 </root>

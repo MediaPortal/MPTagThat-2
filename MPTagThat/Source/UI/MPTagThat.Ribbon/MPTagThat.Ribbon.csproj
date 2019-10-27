@@ -83,6 +83,7 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RibbonModule.cs" />
+    <Compile Include="ViewModels\RibbonViewModel.cs" />
     <Compile Include="Views\RibbonView.xaml.cs">
       <DependentUpon>RibbonView.xaml</DependentUpon>
     </Compile>
@@ -164,6 +165,20 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Images\ribbon_Save_16x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\ribbon_ResetLayout_16x.png" />
+    <Resource Include="Resources\Images\ribbon_ResetLayout_32x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\MPTagThat.Core\MPTagThat.Core.csproj">
+      <Project>{D66C1D7A-A9D8-4F02-9FA4-891A673D2C68}</Project>
+      <Name>MPTagThat.Core</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\ribbon_DeleteLayout_16x.png" />
+    <Resource Include="Resources\Images\ribbon_DeleteLayout_32x.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

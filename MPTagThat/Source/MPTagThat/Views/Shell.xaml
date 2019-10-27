@@ -20,7 +20,7 @@
         Height ="{Binding WindowHeight, Mode=TwoWay}" 
         Width="{Binding WindowWidth, Mode=TwoWay}" 
         Left="{Binding WindowLeft, Mode=TwoWay}" 
-        Top="{Binding WindowTop, Mode=TwoWay}" 
+        Top="{Binding WindowTop, Mode=TwoWay}" Closing="Window_Closing" 
         >
 
     <!-- Handle the Close of the Window -->
@@ -41,7 +41,7 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <ContentControl prism:RegionManager.RegionName="RibbonRegion" Grid.ColumnSpan="2" Grid.RowSpan="2" />
-        <syncfusion:DockingManager prism:RegionManager.RegionName="MainRegion" DockFill="True" DockFillDocumentMode="Normal" Grid.ColumnSpan="2" Grid.Row="1">
+    <syncfusion:DockingManager prism:RegionManager.RegionName="MainRegion" Name="MainDockingManager" DockFill="True" DockFillDocumentMode="Normal" Grid.ColumnSpan="2" Grid.Row="1">
             <ContentControl syncfusion:DockingManager.Header="{lex:Loc treeview_Header}" x:Name="Treeview" 
                       syncfusion:DockingManager.DesiredWidthInDockedMode="150" 
                       syncfusion:DockingManager.DesiredWidthInFloatingMode="150" 

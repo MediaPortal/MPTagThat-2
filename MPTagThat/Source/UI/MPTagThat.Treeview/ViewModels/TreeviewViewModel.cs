@@ -78,8 +78,10 @@ namespace MPTagThat.Treeview.ViewModels
         {
           _options.MainSettings.LastFolderUsed = selecteditem;
 
-          GenericEvent evt = new GenericEvent();
-          evt.Action = "selectedfolderchanged";
+          GenericEvent evt = new GenericEvent
+          {
+            Action = "selectedfolderchanged"
+          };
           evt.MessageData.Add("folder", selecteditem);
           EventSystem.Publish(evt);
         }

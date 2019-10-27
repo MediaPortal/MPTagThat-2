@@ -30,6 +30,7 @@ namespace MPTagThat.ViewModels
     private string _currentFile = "";
     private string _filterActive = "false";
     private bool _progressBarIsIndeterminate = false;
+    private bool _persistLayout = true;
 
     #endregion
 
@@ -196,8 +197,6 @@ namespace MPTagThat.ViewModels
       }
     }
 
-
-
     #endregion
 
     #region ctor
@@ -237,7 +236,7 @@ namespace MPTagThat.ViewModels
 
     #endregion
 
-    #region Private Methods
+    #region Event Handling
 
     private void UpdateStatusBar(StatusBarEvent msg)
     {
