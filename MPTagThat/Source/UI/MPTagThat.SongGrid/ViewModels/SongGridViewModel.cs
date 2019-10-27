@@ -42,6 +42,8 @@ using Prism.Regions;
 using GridViewColumn = MPTagThat.Core.Common.GridViewColumn;
 using Syncfusion.UI.Xaml.Grid;
 using WPFLocalizeExtension.Engine;
+using System.Windows.Threading;
+using System.Threading;
 
 #endregion
 
@@ -81,14 +83,14 @@ namespace MPTagThat.SongGrid.ViewModels
       Songs = _options.Songlist;
       ItemsSourceDataCommand = new BaseCommand(SetItemsSource);
       _selectionChangedCommand = new BaseCommand(SelectionChanged);
-      
+
       EventSystem.Subscribe<GenericEvent>(OnMessageReceived, ThreadOption.UIThread);
     }
 
     #endregion
 
     #region Properties
-    
+
     public Columns DataGridColumns { get; set; }
 
     public BindingList<SongData> Songs
@@ -166,134 +168,139 @@ namespace MPTagThat.SongGrid.ViewModels
     {
       await Task.Run(() =>
       {
-        log.Trace(">>>");
-        if (String.IsNullOrEmpty(_selectedFolder))
+        System.Windows.Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Background, (SendOrPostCallback)delegate
         {
-          log.Info("FolderScan: No folder selected");
-          return;
-        }
 
-        _folderScanInProgress = true;
-        Songs.Clear();
-        _nonMusicFiles = new List<FileInfo>();
-        GC.Collect();
-
-        _options.ScanFolderRecursive = false;
-        if (!Directory.Exists(_selectedFolder))
-          return;
-
-        // Get File Filter Settings
-        _filterFileExtensions = new string[] {"*.*"};
-        //_filterFileExtensions = _main.TreeView.ActiveFilter.FileFilter.Split('|');
-        //_filterFileMask = _main.TreeView.ActiveFilter.FileMask.Trim() == ""
-        //                    ? " * "
-        //                    : _main.TreeView.ActiveFilter.FileMask.Trim();
-
-        int count = 1;
-        int nonMusicCount = 0;
-        StatusBarEvent msg = new StatusBarEvent {CurrentFolder = _selectedFolder, CurrentProgress = -1};
-
-        try
-        {
-          foreach (FileInfo fi in GetFiles(new DirectoryInfo(_selectedFolder), _options.ScanFolderRecursive))
+          log.Trace(">>>");
+          if (String.IsNullOrEmpty(_selectedFolder))
           {
-            if (_progressCancelled)
-            {
-              break;
-            }
+            log.Info("FolderScan: No folder selected");
+            return;
+          }
 
-            try
+          _folderScanInProgress = true;
+          Songs.Clear();
+          _nonMusicFiles = new List<FileInfo>();
+          GC.Collect();
+
+          _options.ScanFolderRecursive = false;
+          if (!Directory.Exists(_selectedFolder))
+            return;
+
+          // Get File Filter Settings
+          _filterFileExtensions = new string[] { "*.*" };
+          //_filterFileExtensions = _main.TreeView.ActiveFilter.FileFilter.Split('|');
+          //_filterFileMask = _main.TreeView.ActiveFilter.FileMask.Trim() == ""
+          //                    ? " * "
+          //                    : _main.TreeView.ActiveFilter.FileMask.Trim();
+
+          int count = 1;
+          int nonMusicCount = 0;
+          StatusBarEvent msg = new StatusBarEvent { CurrentFolder = _selectedFolder, CurrentProgress = -1 };
+
+          try
+          {
+            foreach (FileInfo fi in GetFiles(new DirectoryInfo(_selectedFolder), _options.ScanFolderRecursive))
             {
-              if (Util.IsAudio(fi.FullName))
+              if (_progressCancelled)
               {
-                msg.CurrentFile = fi.FullName;
-                log.Trace($"Retrieving file: {fi.FullName}");
-                // Read the Tag
-                SongData track = Song.Create(fi.FullName);
-                if (track != null)
+                break;
+              }
+
+              try
+              {
+                if (Util.IsAudio(fi.FullName))
                 {
-                  //if (ApplyTagFilter(track))
-                  //{
-                  Songs.Add(track);
-                  count++;
-                  msg.NumberOfFiles = count;
-                  EventSystem.Publish(msg);
-                  //}
+                  msg.CurrentFile = fi.FullName;
+                  log.Trace($"Retrieving file: {fi.FullName}");
+                  // Read the Tag
+                  SongData track = Song.Create(fi.FullName);
+                  if (track != null)
+                  {
+                    //if (ApplyTagFilter(track))
+                    //{
+                    Songs.Add(track);
+                    count++;
+                    msg.NumberOfFiles = count;
+                    EventSystem.Publish(msg);
+                    //}
+                  }
+                }
+                else
+                {
+                  _nonMusicFiles.Add(fi);
+                  nonMusicCount++;
                 }
               }
-              else
+              catch (PathTooLongException)
               {
-                _nonMusicFiles.Add(fi);
-                nonMusicCount++;
+                log.Warn($"FolderScan: Ignoring track {fi.FullName} - path too long!");
+                continue;
+              }
+              catch (System.UnauthorizedAccessException exUna)
+              {
+                log.Warn($"FolderScan: Could not access file or folder: {exUna.Message}. {fi.FullName}");
+              }
+              catch (Exception ex)
+              {
+                log.Error($"FolderScan: Caught error processing files: {ex.Message} {fi.FullName}");
               }
             }
-            catch (PathTooLongException)
-            {
-              log.Warn($"FolderScan: Ignoring track {fi.FullName} - path too long!");
-              continue;
-            }
-            catch (System.UnauthorizedAccessException exUna)
-            {
-              log.Warn($"FolderScan: Could not access file or folder: {exUna.Message}. {fi.FullName}");
-            }
-            catch (Exception ex)
-            {
-              log.Error($"FolderScan: Caught error processing files: {ex.Message} {fi.FullName}");
-            }
           }
-        }
-        catch (OutOfMemoryException)
-        {
-          GC.Collect();
-          MessageBox.Show(LocalizeDictionary.Instance.GetLocalizedObject("MPTagThat", "Strings", "message_OutOfMemory",
-              LocalizeDictionary.Instance.Culture).ToString(),
-            LocalizeDictionary.Instance.GetLocalizedObject("MPTagThat", "Strings", "message_ErrorTitle",
-              LocalizeDictionary.Instance.Culture).ToString(),
-            MessageBoxButtons.OK);
-          log.Error("Folderscan: Running out of memory. Scanning aborted.");
-        }
+          catch (OutOfMemoryException)
+          {
+            GC.Collect();
+            MessageBox.Show(LocalizeDictionary.Instance.GetLocalizedObject("MPTagThat", "Strings", "message_OutOfMemory",
+                LocalizeDictionary.Instance.Culture).ToString(),
+              LocalizeDictionary.Instance.GetLocalizedObject("MPTagThat", "Strings", "message_ErrorTitle",
+                LocalizeDictionary.Instance.Culture).ToString(),
+              MessageBoxButtons.OK);
+            log.Error("Folderscan: Running out of memory. Scanning aborted.");
+          }
 
-        // Commit changes to SongTemp, in case we have switched to DB Mode
-        _options.Songlist.CommitDatabaseChanges();
+          // Commit changes to SongTemp, in case we have switched to DB Mode
+          _options.Songlist.CommitDatabaseChanges();
 
-        msg.CurrentProgress = 100;
-        EventSystem.Publish(msg);
-        log.Info($"FolderScan: Scanned {nonMusicCount + count} files. Found {count} audio files");
+          msg.CurrentProgress = 100;
+          EventSystem.Publish(msg);
+          log.Info($"FolderScan: Scanned {nonMusicCount + count} files. Found {count} audio files");
 
-        var evt = new GenericEvent
-        {
-          Action = "miscfileschanged"
-        };
-        evt.MessageData.Add("files", _nonMusicFiles);
-        EventSystem.Publish(evt);
+          var evt = new GenericEvent
+          {
+            Action = "miscfileschanged"
+          };
+          evt.MessageData.Add("files", _nonMusicFiles);
+          EventSystem.Publish(evt);
 
-        //_main.ToolStripStatusScan.Text = "";
+          //_main.ToolStripStatusScan.Text = "";
 
 
-        //ResetProgressBar();
-        //_main.progressBar1.Style = ProgressBarStyle.Continuous;
+          //ResetProgressBar();
+          //_main.progressBar1.Style = ProgressBarStyle.Continuous;
 
-        // Display Status Information
-        try
-        {
-          //_main.ToolStripStatusFiles.Text = string.Format(localisation.ToString("main", "toolStripLabelFiles"), count, 0);
-        }
-        catch (InvalidOperationException)
-        {
-        }
+          // Display Status Information
+          try
+          {
+            //_main.ToolStripStatusFiles.Text = string.Format(localisation.ToString("main", "toolStripLabelFiles"), count, 0);
+          }
+          catch (InvalidOperationException)
+          {
+          }
 
-        /*
-  
-        // If MP3 Validation is turned on, set the color
-        if (Options.MainSettings.MP3Validate)
-        {
-          ChangeErrorRowColor();
-        }
-        
-        _main.FolderScanning = false;
-        */
-        _folderScanInProgress = false;
-        log.Trace("<<<");
+          /*
+
+          // If MP3 Validation is turned on, set the color
+          if (Options.MainSettings.MP3Validate)
+          {
+            ChangeErrorRowColor();
+          }
+
+          _main.FolderScanning = false;
+          */
+          _folderScanInProgress = false;
+          log.Trace("<<<");
+
+        }, null);
       });
     }
 
