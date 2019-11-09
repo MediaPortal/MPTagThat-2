@@ -724,7 +724,7 @@ namespace MPTagThat.Core.Common.Song
 
               if (frame.Id == "TXXX")
               {
-                id3v2tag.SetUserTextAsString(frame.Description, "");
+                //id3v2tag.SetUserTextAsString(frame.Description, "");
               }
               else
               {
@@ -746,7 +746,7 @@ namespace MPTagThat.Core.Common.Song
 
               if (frame.Id == "TXXX")
               {
-                id3v2tag.SetUserTextAsString(frame.Description, "");
+                //id3v2tag.SetUserTextAsString(frame.Description, "");
               }
               else
               {
@@ -766,8 +766,8 @@ namespace MPTagThat.Core.Common.Song
             {
               if (frame.Description != "")
               {
-                id3v2tag.SetUserTextAsString(frame.Description, "");
-                id3v2tag.SetUserTextAsString(frame.Description, frame.Value);
+                //id3v2tag.SetUserTextAsString(frame.Description, "");
+                //id3v2tag.SetUserTextAsString(frame.Description, frame.Value);
               }
             }
             else
