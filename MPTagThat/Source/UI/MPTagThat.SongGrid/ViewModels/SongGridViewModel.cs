@@ -57,6 +57,8 @@ namespace MPTagThat.SongGrid.ViewModels
     private readonly NLogLogger log;
     private Options _options;
     private readonly SongGridViewColumns _gridColumns;
+    private ObservableCollection<object> _selectedItems;
+
 
     private string _selectedFolder;
     private string[] _filterFileExtensions;
@@ -97,9 +99,9 @@ namespace MPTagThat.SongGrid.ViewModels
     {
       get => _options.Songlist;
       set
-      { 
+      {
         _options.Songlist = (SongList)value;
-        OnPropertyChanged("Songs");
+        RaisePropertyChanged("Songs");
       }
     }
 
@@ -116,6 +118,7 @@ namespace MPTagThat.SongGrid.ViewModels
     {
       if (param != null)
       {
+        _selectedItems = (ObservableCollection<object>)param;
         var songs = (param as ObservableCollection<object>).Cast<SongData>().ToList();
         var parameters = new NavigationParameters();
         parameters.Add("songs", songs);
@@ -125,17 +128,6 @@ namespace MPTagThat.SongGrid.ViewModels
 
     #endregion
     
-    #region INotifyPropertyChanged Members
-
-    public event PropertyChangedEventHandler PropertyChanged;
-
-    private void OnPropertyChanged(string propertyName)
-    {
-      PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-    }
-
-    #endregion
-
     #region Private Methods
 
     public void SetItemsSource(object grid)
@@ -359,7 +351,16 @@ namespace MPTagThat.SongGrid.ViewModels
 
     private void ApplyTagEdit(SongData songedit)
     {
+      if (_selectedItems == null)
+      {
+        return;
+      }
 
+      foreach (SongData song in _selectedItems)
+      {
+        song.Changed = true;
+        song.Artist = songedit.Artist;
+      }
     }
 
     #endregion

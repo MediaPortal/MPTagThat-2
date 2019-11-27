@@ -4,9 +4,11 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:MPTagThat.SongGrid.Views"
+             xmlns:model="clr-namespace:MPTagThat.SongGrid.ViewModels"
              xmlns:prism="http://prismlibrary.com/"
              prism:ViewModelLocator.AutoWireViewModel="True"
-             xmlns:syncfusion="http://schemas.syncfusion.com/wpf" x:Class="MPTagThat.SongGrid.Views.SongGridView"
+             xmlns:syncfusion="http://schemas.syncfusion.com/wpf" 
+             x:Class="MPTagThat.SongGrid.Views.SongGridView"
              xmlns:lex="http://wpflocalizeextension.codeplex.com"
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              lex:LocalizeDictionary.DesignCulture="en"
@@ -15,11 +17,29 @@
              syncfusion:DockingManager.SideInDockedMode= "Right"
              syncfusion:DockingManager.NoHeader="True"
              mc:Ignorable="d" d:DesignWidth="300" d:DesignHeight="300" >
+
+  <UserControl.Resources>
+
+    <model:RowChangedColorConverter x:Key="changedRowStyleSelector" />
+    <model:AlternateRowChangedColorConverter x:Key="changedAlternateRowStyleSelector" />
+
+    <Style TargetType="syncfusion:VirtualizingCellsControl" x:Key="alternatingRowStyle">
+      <Setter Property="Background" Value="{Binding Path=Changed,UpdateSourceTrigger=PropertyChanged,Converter={StaticResource changedAlternateRowStyleSelector}}"/>
+    </Style>
+
+    <Style TargetType="syncfusion:VirtualizingCellsControl" x:Key="changedRowStyle">
+      <Setter Property="Background" Value="{Binding Path=Changed,UpdateSourceTrigger=PropertyChanged,Converter={StaticResource changedRowStyleSelector}}"/>
+    </Style>
+  </UserControl.Resources>
+
   <Grid>
-    <syncfusion:SfDataGrid x:Name="SongDataGrid" ItemsSource="{Binding Songs}" 
+    <syncfusion:SfDataGrid x:Name="SongDataGrid" ItemsSource="{Binding Songs, Mode=TwoWay}"
                            Columns="{Binding DataGridColumns, Mode=TwoWay}" FrozenColumnCount="3"
                            ColumnSizer="AutoWithLastColumnFill" AllowResizingColumns="True" AllowDraggingColumns="True" ShowRowHeader="False" 
-                           AllowEditing="True" AutoGenerateColumns="False" SelectionMode="Multiple" EnableDataVirtualization="True" ShowBusyIndicator="True" >
+                           AllowEditing="True" AutoGenerateColumns="False" SelectionMode="Multiple" EnableDataVirtualization="True" ShowBusyIndicator="True" 
+                           AlternatingRowStyle="{StaticResource alternatingRowStyle}" 
+                           RowStyle="{StaticResource changedRowStyle}" >
+      
       <i:Interaction.Triggers>
         <i:EventTrigger EventName="SelectionChanged">
           <i:InvokeCommandAction Command="{Binding SelectionChangedCommand}" CommandParameter="{Binding SelectedItems, ElementName=SongDataGrid}" />
