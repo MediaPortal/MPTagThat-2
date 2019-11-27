@@ -21,6 +21,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using MPTagThat.Core.Utils;
+using Prism.Mvvm;
 using TagLib;
 using Picture = MPTagThat.Core.Common.Song.Picture;
 
@@ -29,7 +30,7 @@ using Picture = MPTagThat.Core.Common.Song.Picture;
 namespace MPTagThat.Core.Common.Song
 {
   [Serializable]
-  public class SongData
+  public class SongData : BindableBase
   {
     #region Variables
 
@@ -118,7 +119,12 @@ namespace MPTagThat.Core.Common.Song
     /// <summary>
     /// Has the Track been changed
     /// </summary>
-    public bool Changed { get; set; } = false;
+    private bool _changed =false;
+    public bool Changed 
+    {
+      get => _changed; 
+      set { SetProperty(ref _changed, value); } 
+    }
 
     /// <summary>
     /// Indicates, if the Tags have been removed
@@ -207,7 +213,7 @@ namespace MPTagThat.Core.Common.Song
     public string Artist
     {
       get { return _artist; }
-      set { _artist = value ?? ""; }
+      set { SetProperty(ref _artist, value ?? ""); }
     }
 
     /// <summary>

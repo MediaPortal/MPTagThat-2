@@ -10,18 +10,82 @@
              xmlns:lex="http://wpflocalizeextension.codeplex.com"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-  <Grid>
-    
-    <syncfusion:TabControlExt HorizontalAlignment="Left" Height="370" Margin="20,47,0,0" VerticalAlignment="Top" Width="706" CloseButtonType="Hide">
-      <TabItem Header="TabItem">
-        <Grid Background="#FFE5E5E5">
-          <TextBox HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="{Binding SongEdit.Artist}" VerticalAlignment="Top" Width="120"/>      
-        </Grid>
-      </TabItem>
-      <syncfusion:TabItemExt Header="New TabItemExt" IsNewTab="False" MinWidth="150" MinHeight="20"/>
-    </syncfusion:TabControlExt>
-    <Button Content="Button" HorizontalAlignment="Left" Margin="27,10,0,0" VerticalAlignment="Top" Width="75" 
+
+  <UserControl.Resources>
+    <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+  </UserControl.Resources>
+
+  <DockPanel LastChildFill="True">
+    <Grid DockPanel.Dock="Top" Margin="10,10,0,10">
+      <syncfusion:ButtonAdv Label="Button" HorizontalAlignment="Left"  Width="75" SmallIcon="pack://application:,,,/MPTagThat.TagEdit;component/Resources/Images/Apply_Changes_16x.png" 
             Command="{Binding ApplyEditCommand}"
             CommandParameter="{Binding SongEdit}" />
-  </Grid>
+    </Grid>
+    <syncfusion:TabNavigationControl x:Name="tabNavigation" TabStripVisibility="Visible" >
+      <syncfusion:TabNavigationItem Header="Main">
+        <syncfusion:TabNavigationItem.Content>
+          <StackPanel>
+            <!-- Track and Disc -->
+            <Grid Margin="5" >
+              <Grid.ColumnDefinitions>
+                <ColumnDefinition Width = "100" />
+                <ColumnDefinition Width = "Auto" />
+                <ColumnDefinition Width = "15" />
+                <ColumnDefinition Width = "Auto" />
+                <ColumnDefinition Width = "20" />
+                <ColumnDefinition />
+                <ColumnDefinition Width = "Auto" />
+                <ColumnDefinition Width = "Auto" />
+                <ColumnDefinition Width = "15" />
+                <ColumnDefinition Width = "Auto" />
+                <ColumnDefinition Width = "20" />
+              </Grid.ColumnDefinitions>
+              <Label Content="Track: " />
+              <TextBox Grid.Column="1" Text="{Binding SongEdit.TrackNumber, StringFormat=0;;#}" HorizontalAlignment="Left" Width="40" />
+              <Label Grid.Column="2" Content="/" HorizontalAlignment="Left" VerticalAlignment="Top" />
+              <TextBox Grid.Column="3" Text="{Binding SongEdit.TrackCount, StringFormat=0;;#}" HorizontalAlignment="Left" Width="40" />
+              <CheckBox Grid.Column="4" VerticalAlignment="Center" Margin="2,0,0,0" IsChecked="{Binding CkTrackIsChecked}" Visibility="{Binding MultiCheckBoxVisibility, Converter={StaticResource BooleanToVisibilityConverter}}" />
+
+              <Label Content="Disc: " Grid.Column="6" />
+              <TextBox Grid.Column="7" Text="{Binding SongEdit.DiscNumber, StringFormat=0;;#}" HorizontalAlignment="Left" Width="40" />
+              <Label Grid.Column="8" Content="/" HorizontalAlignment="Left" VerticalAlignment="Top" />
+              <TextBox Grid.Column="9" Text="{Binding SongEdit.DiscCount, StringFormat=0;;#}" HorizontalAlignment="Left" Width="40" />
+              <CheckBox Grid.Column="10" VerticalAlignment="Center" Margin="2,0,0,0" IsChecked="{Binding CkDiscIsChecked}" Visibility="{Binding MultiCheckBoxVisibility, Converter={StaticResource BooleanToVisibilityConverter}}" />
+            </Grid>
+
+            <!-- Artist -->
+            <Grid Margin="5">
+              <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="100"/>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="20"/>
+              </Grid.ColumnDefinitions>
+              <Label Grid.Column="0" Content="Artist: " />
+              <TextBox Grid.Column="1" Text="{Binding SongEdit.Artist, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+              <CheckBox Grid.Column="2" VerticalAlignment="Center" Margin="2,0,0,0" IsChecked="{Binding CkArtistIsChecked}" Visibility="{Binding MultiCheckBoxVisibility, Converter={StaticResource BooleanToVisibilityConverter}}" />
+            </Grid>
+
+            <!-- AlbumArtist -->
+            <Grid Margin="5">
+              <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="100"/>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="20"/>
+              </Grid.ColumnDefinitions>
+              <Label Grid.Column="0" Content="Album Artist: " />
+              <TextBox Grid.Column="1" Text="{Binding SongEdit.AlbumArtist}" />
+              <CheckBox Grid.Column="2" VerticalAlignment="Center" Margin="2,0,0,0" IsChecked="{Binding CkAlbumArtistIsChecked}" Visibility="{Binding MultiCheckBoxVisibility, Converter={StaticResource BooleanToVisibilityConverter}}" />
+            </Grid>
+          </StackPanel>
+        </syncfusion:TabNavigationItem.Content>
+      </syncfusion:TabNavigationItem>
+      <syncfusion:TabNavigationItem Header="Additional">
+        <syncfusion:TabNavigationItem.Content>
+          <Grid>
+
+          </Grid>
+        </syncfusion:TabNavigationItem.Content>
+      </syncfusion:TabNavigationItem>
+    </syncfusion:TabNavigationControl>
+  </DockPanel>
 </UserControl>
