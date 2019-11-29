@@ -72,7 +72,7 @@ namespace MPTagThat.MiscFiles.ViewModels
       _renameFileCommand = new BaseCommand(RenameFile);
       _deleteFileCommand = new BaseCommand(DeleteFile);
       _selectionChangedCommand = new BaseCommand(SelectionChanged);
-      EventSystem.Subscribe<GenericEvent>(OnMessageReceived,ThreadOption.UIThread);
+      EventSystem.Subscribe<GenericEvent>(OnMessageReceived,ThreadOption.PublisherThread);
     }
 
     #endregion
@@ -169,7 +169,7 @@ namespace MPTagThat.MiscFiles.ViewModels
         case "miscfileschanged":
           if (msg.MessageData.ContainsKey("files"))
           {
-            var files = (List<FileInfo>)msg.MessageData["files"];
+            var files = (List<string>)msg.MessageData["files"];
             MiscFiles.Clear();
             foreach (var file in files)
             {
@@ -180,18 +180,18 @@ namespace MPTagThat.MiscFiles.ViewModels
 
               var imgFailure = false;
               var nonPicFile = true;
-              if (Util.IsPicture(file.Name))
+              if (Util.IsPicture(Path.GetFileName(file)))
               {
                 nonPicFile = false;
                 var f = new MiscFile
                 {
-                  FileName = file.Name,
-                  FullFileName = file.FullName
+                  FileName = Path.GetFileName(file),
+                  FullFileName = file
                 };
 
                 try
                 {
-                  var bmi = GetImageFromFile(file.FullName, out var size);
+                  var bmi = GetImageFromFile(file, out var size);
                   if (bmi != null)
                   {
                     f.ImageData = bmi;
@@ -232,16 +232,10 @@ namespace MPTagThat.MiscFiles.ViewModels
       size = "";
       try
       {
-        using (FileStream fs = new FileStream(fileName, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
+        using (FileStream fs = new FileStream(fileName, FileMode.Open, FileAccess.Read, FileShare.Read))
         {
           img = new FreeImageBitmap(fs);
-          fs.Close();
         }
-
-        size = $"{img.Width} x {img.Height}";
-
-        // convert Image Size to 64 x 64 for display in the Imagelist
-        img.Rescale(64, 64, FREE_IMAGE_FILTER.FILTER_BOX);
       }
       catch (Exception ex)
       {
@@ -250,22 +244,27 @@ namespace MPTagThat.MiscFiles.ViewModels
 
       if (img != null)
       {
+        size = $"{img.Width} x {img.Height}";
+
+        // convert Image Size to 64 x 64 for display in the Imagelist
+        img.Rescale(64, 64, FREE_IMAGE_FILTER.FILTER_BOX);
+
+        var bitmapImage = new BitmapImage();
         using (var memory = new MemoryStream())
         {
           img.Save(memory, FREE_IMAGE_FORMAT.FIF_PNG);
           memory.Position = 0;
 
-          var bitmapImage = new BitmapImage();
+          
           bitmapImage.BeginInit();
           bitmapImage.StreamSource = memory;
           bitmapImage.CacheOption = BitmapCacheOption.OnLoad;
-          //bitmapImage.CreateOptions = BitmapCreateOptions.IgnoreImageCache;
           bitmapImage.EndInit();
-
-          return bitmapImage;
+          bitmapImage.Freeze();
+          img.Dispose();
         }
+        return bitmapImage;
       }
-
       return null;
     }
 

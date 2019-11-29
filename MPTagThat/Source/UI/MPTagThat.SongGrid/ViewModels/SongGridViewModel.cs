@@ -64,7 +64,7 @@ namespace MPTagThat.SongGrid.ViewModels
     private string[] _filterFileExtensions;
     private string _filterFileMask = "*.*";
 
-    private List<FileInfo> _nonMusicFiles = new List<FileInfo>();
+    private List<string> _nonMusicFiles = new List<string>();
     private bool _progressCancelled = false;
     private bool _folderScanInProgress = false;
 
@@ -172,7 +172,7 @@ namespace MPTagThat.SongGrid.ViewModels
 
           _folderScanInProgress = true;
           Songs.Clear();
-          _nonMusicFiles = new List<FileInfo>();
+          _nonMusicFiles = new List<string>();
           GC.Collect();
 
           _options.ScanFolderRecursive = false;
@@ -220,7 +220,7 @@ namespace MPTagThat.SongGrid.ViewModels
                 }
                 else
                 {
-                  _nonMusicFiles.Add(fi);
+                  _nonMusicFiles.Add(fi.FullName);
                   nonMusicCount++;
                 }
               }
