@@ -46,7 +46,12 @@ namespace MPTagThat.Treeview.Views
             .Where(s => s.ToLower().EndsWith("folder.jpg") ||  s.ToLower().EndsWith("folder.png") ||  s.ToLower().EndsWith("albumartsmall.jpg")).ToList();
           if (folderIcons.Count > 0)
           {
-            return new BitmapImage(new Uri(folderIcons.First(), UriKind.Absolute));
+            var bitmap = new BitmapImage();
+            bitmap.BeginInit();
+            bitmap.UriSource = new Uri(folderIcons.First());
+            bitmap.CacheOption = BitmapCacheOption.OnLoad;
+            bitmap.EndInit();
+            return bitmap;
           }
         }
         catch
