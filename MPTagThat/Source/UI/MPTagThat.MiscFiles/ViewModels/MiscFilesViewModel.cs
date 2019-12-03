@@ -44,6 +44,7 @@ namespace MPTagThat.MiscFiles.ViewModels
     #region Variables
 
     private ObservableCollection<MiscFile> _miscFiles;
+    private MiscFile _currentItem;
     private bool _isContextMenuRenameEnabled;
 
     #endregion
@@ -72,6 +73,7 @@ namespace MPTagThat.MiscFiles.ViewModels
       _renameFileCommand = new BaseCommand(RenameFile);
       _deleteFileCommand = new BaseCommand(DeleteFile);
       _selectionChangedCommand = new BaseCommand(SelectionChanged);
+      _enterKeyPressedCommand = new BaseCommand(EnterKeypressed);
       EventSystem.Subscribe<GenericEvent>(OnMessageReceived,ThreadOption.PublisherThread);
     }
 
@@ -96,6 +98,7 @@ namespace MPTagThat.MiscFiles.ViewModels
         {
           // More than one file selected.
           ContextMenuRenameEnabled = false;
+          _currentItem = null;
           return;
         }
 
@@ -103,6 +106,36 @@ namespace MPTagThat.MiscFiles.ViewModels
         if (_miscFiles.Any(item => item.FileName.StartsWith("folder.")))
         {
           ContextMenuRenameEnabled = false;
+        }
+
+        items[0].IsTextBoxEnabled = true;
+        _currentItem = items[0];
+      }
+    }
+
+    private ICommand _enterKeyPressedCommand;
+    public ICommand EnterKeyPressedCommand => _enterKeyPressedCommand;
+    private void EnterKeypressed(object param)
+    {
+      if (_currentItem == null || param == null)
+      {
+        return;
+      }
+
+      var item = _currentItem;
+      var newFile = $"{Path.GetDirectoryName(_currentItem.FullFileName)}\\{(string)param}";
+      if (!File.Exists(newFile))
+      {
+        try
+        {
+          File.Move(_currentItem.FullFileName, newFile);
+          item.FullFileName = newFile;
+          item.FileName = Path.GetFileName(newFile);
+          MiscFiles.Add(item);
+        }
+        catch (Exception e)
+        {
+          // ignored
         }
       }
     }
@@ -122,10 +155,8 @@ namespace MPTagThat.MiscFiles.ViewModels
           try
           {
             File.Move(item.FullFileName, newFile);
-            MiscFiles.Remove(item);
             item.FullFileName = newFile;
             item.FileName = Path.GetFileName(newFile);
-            MiscFiles.Add(item);
           }
           catch (Exception e)
           {

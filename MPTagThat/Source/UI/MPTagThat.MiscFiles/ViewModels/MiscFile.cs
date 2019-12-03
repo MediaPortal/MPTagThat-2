@@ -18,6 +18,7 @@
 
 #region
 
+using Prism.Mvvm;
 using System.ComponentModel;
 using System.Windows.Media.Imaging;
 
@@ -25,9 +26,10 @@ using System.Windows.Media.Imaging;
 
 namespace MPTagThat.MiscFiles.ViewModels
 {
-  public class MiscFile : INotifyPropertyChanged
+  public class MiscFile : BindableBase
   {
     private string _filename;
+    private bool _isTextBoxEnabled;
 
     public BitmapImage ImageData { get; set; }
     public string FullFileName { get; set; }
@@ -35,25 +37,13 @@ namespace MPTagThat.MiscFiles.ViewModels
 
     public string FileName
     {
-      get
-      {
-        return _filename;
-      }
-      set
-      {
-        if (_filename != value)
-        {
-          _filename = value;
-          OnPropertyChanged(nameof(FileName));
-        }
-      }
+      get => _filename;
+      set { SetProperty(ref _filename, value); }
     }
 
-    public void OnPropertyChanged(string propertyname)
-    {
-      PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyname));
+    public bool IsTextBoxEnabled 
+    { get => _isTextBoxEnabled; 
+      set { SetProperty(ref _isTextBoxEnabled, value); } 
     }
-
-    public event PropertyChangedEventHandler PropertyChanged;
   }
 }

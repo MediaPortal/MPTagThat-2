@@ -41,7 +41,13 @@
         <DataTemplate>
           <StackPanel Orientation="Vertical" VerticalAlignment="Top" HorizontalAlignment="Stretch">
             <Image Source="{Binding ImageData}" HorizontalAlignment="Center" VerticalAlignment="Top" Height="100" Width="100" />
-            <TextBox Text="{Binding FileName}" HorizontalAlignment="Center" VerticalAlignment="Bottom" />
+            <TextBox Name="tbFileName" Text="{Binding FileName}" HorizontalAlignment="Center" VerticalAlignment="Bottom" 
+                     IsEnabled="{Binding IsTextBoxEnabled}" >
+              <TextBox.InputBindings>
+                <KeyBinding Key="Return" Command="{Binding DataContext.EnterKeyPressedCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
+                            CommandParameter="{Binding Text, ElementName=tbFileName}" />
+              </TextBox.InputBindings>
+            </TextBox>
             <TextBlock Text="{Binding Size}" HorizontalAlignment="Center" VerticalAlignment="Bottom" />
           </StackPanel>
         </DataTemplate>
