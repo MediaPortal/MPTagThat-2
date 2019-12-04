@@ -33,7 +33,7 @@ namespace MPTagThat
     public App()
     {
       //Register Syncfusion license
-      Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("MTA0NjI1QDMxMzcyZTMxMmUzMEM5V0hIUmdQUTNUT21MOGFLeEs5K1BjNDY5OGc4MnBFQU41ZzRoM3QvRGs9");
+      Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("MTc4Nzc1QDMxMzcyZTMzMmUzMFJjYXNNWCtlb1JFSXhjWi9BRXdvTVdwOUZzalFsYkU4WkF1T2dJYkVseDQ9");
     }
 
     #endregion
