@@ -1,22 +1,27 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using System.Windows.Navigation;
+using System.Xml;
 using CommonServiceLocator;
 using MPTagThat.Core;
 using MPTagThat.Core.Common;
 using MPTagThat.Core.Common.Song;
 using MPTagThat.Core.Events;
+using MPTagThat.Core.Services.Logging;
 using MPTagThat.Core.Services.Settings;
+using MPTagThat.Core.Services.Settings.Setting;
 using Prism.Mvvm;
 using Prism.Regions;
 using Syncfusion.SfSkinManager;
 using WPFLocalizeExtension.Engine;
 using WPFLocalizeExtension.Extensions;
+using Action = MPTagThat.Core.Common.Action;
 
 namespace MPTagThat.ViewModels
 {
@@ -32,9 +37,17 @@ namespace MPTagThat.ViewModels
     private bool _progressBarIsIndeterminate = false;
     private bool _persistLayout = true;
 
+    private readonly NLogLogger log;
+    private Options _options;
+
     #endregion
 
     #region Properties
+
+    /// <summary>
+    /// The Binding for handling the Keypress
+    /// </summary>
+    public List<InputBinding> InputBindings { get; } = new List<InputBinding>();
 
     /// <summary>
     /// The Window Height
@@ -43,14 +56,7 @@ namespace MPTagThat.ViewModels
     public int WindowHeight
     {
       get => _windowHeight;
-      set
-      {
-        if (!_windowHeight.Equals(value))
-        {
-          _windowHeight = value;
-          RaisePropertyChanged("WindowHeight");
-        }
-      }
+      set => SetProperty(ref _windowHeight, value);
     }
 
     /// <summary>
@@ -60,14 +66,7 @@ namespace MPTagThat.ViewModels
     public int WindowWidth
     {
       get => _windowWidth;
-      set
-      {
-        if (!_windowWidth.Equals(value))
-        {
-          _windowWidth = value;
-          RaisePropertyChanged("WindowWidth");
-        }
-      }
+      set => SetProperty(ref _windowWidth, value);
     }
 
     /// <summary>
@@ -77,14 +76,7 @@ namespace MPTagThat.ViewModels
     public int WindowLeft
     {
       get => _windowLeft;
-      set
-      {
-        if (!_windowLeft.Equals(value))
-        {
-          _windowLeft = value;
-          RaisePropertyChanged("WindowLeft");
-        }
-      }
+      set => SetProperty(ref _windowLeft, value);
     }
 
     /// <summary>
@@ -94,14 +86,7 @@ namespace MPTagThat.ViewModels
     public int WindowTop
     {
       get => _windowTop;
-      set
-      {
-        if (!_windowTop.Equals(value))
-        {
-          _windowTop = value;
-          RaisePropertyChanged("WindowTop");
-        }
-      }
+      set => SetProperty(ref _windowTop, value);
     }
 
 
@@ -111,14 +96,7 @@ namespace MPTagThat.ViewModels
     public bool ProgressBarIsIndeterminate
     {
       get => _progressBarIsIndeterminate;
-      set
-      {
-        if (value == _progressBarIsIndeterminate)
-          return;
-
-        _progressBarIsIndeterminate = value;
-        RaisePropertyChanged();
-      }
+      set => SetProperty(ref _progressBarIsIndeterminate, value);
     }
 
 
@@ -129,14 +107,7 @@ namespace MPTagThat.ViewModels
     {
       get => string.Format(LocalizeDictionary.Instance.GetLocalizedObject("MPTagThat", "Strings", "statusBar_NumberOfFiles",
         LocalizeDictionary.Instance.Culture).ToString(), _numberOfFiles);
-      set
-      {
-        if (value == _numberOfFiles)
-          return;
-
-        _numberOfFiles = value;
-        RaisePropertyChanged();
-      }
+      set => SetProperty(ref _numberOfFiles, value);
     }
 
     /// <summary>
@@ -145,14 +116,7 @@ namespace MPTagThat.ViewModels
     public string CurrentFolder
     {
       get => _currentFolder;
-      set
-      {
-        if (value == _currentFolder)
-          return;
-
-        _currentFolder = value;
-        RaisePropertyChanged();
-      }
+      set => SetProperty(ref _currentFolder, value);
     }
 
     /// <summary>
@@ -161,16 +125,9 @@ namespace MPTagThat.ViewModels
     public string CurrentFile
     {
       get => _currentFile;
-      set
-      {
-        if (value == _currentFile)
-          return;
-
-        _currentFile = value;
-        RaisePropertyChanged();
-      }
+      set => SetProperty(ref _currentFile, value);
     }
-    
+
     /// <summary>
     /// Property to indicate if a TagFilter is active
     /// </summary>
@@ -187,14 +144,7 @@ namespace MPTagThat.ViewModels
         return LocalizeDictionary.Instance.GetLocalizedObject("MPTagThat", "Strings", "statusBar_FilterInActive",
           LocalizeDictionary.Instance.Culture).ToString();
       }
-      set
-      {
-        if (value == _filterActive)
-          return;
-
-        _filterActive = value;
-        RaisePropertyChanged();
-      }
+      set => SetProperty(ref _filterActive, value);
     }
 
     #endregion
@@ -204,34 +154,160 @@ namespace MPTagThat.ViewModels
     public ShellViewModel(IRegionManager regionManager)
     {
       _regionManager = regionManager;
+      log = (ServiceLocator.Current.GetInstance(typeof(ILogger)) as ILogger).GetLogger;
+
       EventSystem.Subscribe<StatusBarEvent>(UpdateStatusBar);
       SfSkinManager.ApplyStylesOnApplication = true;
 
       _windowCloseCommand = new BaseCommand(WindowClose);
+      _keyPressedCommand = new BaseCommand(Keypressed);
 
-      var options = (ServiceLocator.Current.GetInstance(typeof(ISettingsManager)) as ISettingsManager).GetOptions;
+      _options = (ServiceLocator.Current.GetInstance(typeof(ISettingsManager)) as ISettingsManager).GetOptions;
+
+      LoadKeyMap();
 
       // Set Initial Window Size and Location
-      WindowWidth = options.MainSettings.FormSize.Width;
-      WindowHeight = options.MainSettings.FormSize.Height;
-      WindowLeft = options.MainSettings.FormLocation.X;
-      WindowTop = options.MainSettings.FormLocation.Y;
+      WindowWidth = _options.MainSettings.FormSize.Width;
+      WindowHeight = _options.MainSettings.FormSize.Height;
+      WindowLeft = _options.MainSettings.FormLocation.X;
+      WindowTop = _options.MainSettings.FormLocation.Y;
 
     }
     #endregion
 
     #region Commands
 
+    /// <summary>
+    /// Handle the Close of the Window
+    /// </summary>
     private ICommand _windowCloseCommand;
     public ICommand WindowCloseCommand => _windowCloseCommand;
 
     private void WindowClose(object param)
     {
-      var options = (ServiceLocator.Current.GetInstance(typeof(ISettingsManager)) as ISettingsManager).GetOptions;
-      options.MainSettings.FormSize = new Size(WindowWidth, WindowHeight);
-      options.MainSettings.FormLocation = new Point(WindowLeft, WindowTop);
+      _options.MainSettings.FormSize = new Size(WindowWidth, WindowHeight);
+      _options.MainSettings.FormLocation = new Point(WindowLeft, WindowTop);
 
-      options.SaveAllSettings();
+      _options.SaveAllSettings();
+    }
+
+    private ICommand _keyPressedCommand;
+    public ICommand KeyPressedCommand => _keyPressedCommand;
+    private void Keypressed(object param)
+    {
+      // Send out the Event with the action
+      var evt = new GenericEvent
+      {
+        Action = "Command"
+      };
+      evt.MessageData.Add("command", (Action.ActionType)param);
+      EventSystem.Publish(evt);
+    }
+
+    #endregion
+
+    #region Private Methods
+
+    /// <summary>
+    ///   Loads the keymap file and creates the mapping.
+    /// </summary>
+    /// <returns>True if the load was successfull, false if it failed.</returns>
+    private void LoadKeyMap()
+    {
+      var strFilename = $@"{_options.ConfigDir}\\keymap.xml";
+      if (!File.Exists(strFilename))
+      {
+        strFilename = $@"{AppDomain.CurrentDomain.BaseDirectory}\bin\keymap.xml";
+      }
+      log.Info($"Load key mapping from {strFilename}");
+      try
+      {
+        // Load the XML file
+        var doc = new XmlDocument();
+        doc.Load(strFilename);
+        // Check if it is a keymap
+        if (doc.DocumentElement == null)
+        {
+          log.Error($"Exception loading keymap. No Root Element found");
+          return;
+        }
+        var strRoot = doc.DocumentElement.Name;
+        if (strRoot != "keymap")
+        {
+          log.Error($"Exception loading keymap. Root Element is not a Keymap");
+          return;
+        }
+
+        // For each window
+        XmlNodeList listWindows = doc.DocumentElement.SelectNodes("/keymap/window");
+        foreach (XmlNode nodeWindow in listWindows)
+        {
+          var windowId = nodeWindow.SelectSingleNode("id");
+          if (windowId != null && windowId.InnerText == "0")
+          {          
+            var actionNodes = nodeWindow.SelectNodes("action");
+            // Create a list of key/actiontype mappings
+            foreach (XmlNode node in actionNodes)
+            {
+              var nodeActionId = node.SelectSingleNode("id");
+              var nodeKey = node.SelectSingleNode("key");
+              var nodeRibbonKey = node.SelectSingleNode("ribbon");
+              MapAction(nodeActionId, nodeKey, nodeRibbonKey);
+            }
+          }
+        }
+      }
+      catch (Exception ex)
+      {
+        log.Error($"Exception loading keymap {strFilename} err:{ex.Message} stack:{ex.StackTrace}");
+      }
+    }
+
+    /// <summary>
+    ///   Map an action in a windowmap based on the id and key xml nodes.
+    /// </summary>
+    /// <param name = "nodeId">The id of the action</param>
+    /// <param name = "nodeKey">The key corresponding to the mapping.</param>
+    private void MapAction(XmlNode nodeId, XmlNode nodeKey, XmlNode nodeRibbonKey)
+    {
+      if (nodeId == null) return;
+      var kb = new KeyBinding();
+      kb.Command = KeyPressedCommand;
+      kb.CommandParameter = (Action.ActionType)Int32.Parse(nodeId.InnerText);
+
+      if (nodeRibbonKey != null)
+      {
+        // Define later
+      }
+
+      if (nodeKey != null)
+      {
+        var keys = nodeKey.InnerText.Split('-');
+        for (int i = 0; i < keys.Length - 1; i++)
+        {
+          if (keys[i] == "Alt")
+            kb.Modifiers |= ModifierKeys.Alt;
+          else if (keys[i] == "Ctrl")
+            kb.Modifiers |= ModifierKeys.Control;
+          else if (keys[i] == "Shift")
+            kb.Modifiers |= ModifierKeys.Shift;
+        }
+
+        var key = keys[keys.Length - 1];
+
+        try
+        {
+          if (key != "")
+          {
+            kb.Key = (Key)Enum.Parse(typeof(Key), key);
+            InputBindings.Add(kb);
+          }
+        }
+        catch (ArgumentException)
+        {
+          log.Error($"Invalid buttons for action {nodeId.InnerText}");
+        }
+      }
     }
 
     #endregion

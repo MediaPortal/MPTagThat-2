@@ -1,21 +1,37 @@
-﻿using System;
+﻿#region Copyright (C) 2017 Team MediaPortal
+// Copyright (C) 2017 Team MediaPortal
+// http://www.team-mediaportal.com
+// 
+// MPTagThat is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 2 of the License, or
+// (at your option) any later version.
+// 
+// MPTagThat is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+// GNU General Public License for more details.
+// 
+// You should have received a copy of the GNU General Public License
+// along with MPTagThat. If not, see <http://www.gnu.org/licenses/>.
+#endregion
+
+#region
+
+using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.IO;
 using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
 using FreeImageAPI;
-using MPTagThat.Core;
 using MPTagThat.Core.Common;
 using MPTagThat.Core.Common.Song;
-using MPTagThat.Core.Events;
 using Prism.Mvvm;
 using Prism.Regions;
+
+#endregion
 
 namespace MPTagThat.TagEdit.ViewModels
 {
@@ -29,6 +45,9 @@ namespace MPTagThat.TagEdit.ViewModels
 
     #region Properties
 
+    /// <summary>
+    /// The Songdata object holding the Values edited
+    /// </summary>
     private SongData _songEdit;
     public SongData SongEdit
     {
@@ -36,6 +55,9 @@ namespace MPTagThat.TagEdit.ViewModels
       set => SetProperty(ref _songEdit, value);
     }
 
+    /// <summary>
+    /// Indicates if the checkboxes for Multiline edit should be shown
+    /// </summary>
     private bool _multiCheckBoxVisibility;
     public bool MultiCheckBoxVisibility
     {
@@ -43,6 +65,9 @@ namespace MPTagThat.TagEdit.ViewModels
       set => SetProperty(ref _multiCheckBoxVisibility, value);
     }
 
+    /// <summary>
+    /// The Binding for the Front Cover Picture
+    /// </summary>
     private BitmapImage _frontCover;
     public BitmapImage FrontCover
     {
@@ -189,9 +214,12 @@ namespace MPTagThat.TagEdit.ViewModels
     #region Commands
 
     private ICommand _textChangedCommand;
-
     public ICommand TextChangedCommand => _textChangedCommand;
 
+    /// <summary>
+    /// Callback from the View when a Text is changed, it should check the checkbox
+    /// </summary>
+    /// <param name="param"></param>
     private void TextChaged(object param)
     {
       if (!MultiCheckBoxVisibility)
@@ -209,7 +237,10 @@ namespace MPTagThat.TagEdit.ViewModels
 
     }
 
-
+    /// <summary>
+    /// Invoked by the Apply Changes button in the View
+    /// Loop through the the selected songs and apply the changes.
+    /// </summary>
     private ICommand _applyEditCommand;
     public ICommand ApplyEditCommand => _applyEditCommand;
 
@@ -227,16 +258,6 @@ namespace MPTagThat.TagEdit.ViewModels
         song.Changed = true;
         song.Artist = songEdit.Artist;
       }
-
-
-      /*
-      var evt = new GenericEvent
-      {
-        Action = "applytagedit"
-      };
-      evt.MessageData.Add("tags", (SongData)param);
-      EventSystem.Publish(evt);
-      */
     }
 
     #endregion
@@ -251,6 +272,7 @@ namespace MPTagThat.TagEdit.ViewModels
     {
       if (songs.Count == 1)
       {
+        UncheckCheckboxes();
         SongEdit = songs[0];
         GetFrontCover(SongEdit);
         return;
@@ -292,6 +314,10 @@ namespace MPTagThat.TagEdit.ViewModels
       MultiCheckBoxVisibility = true;
     }
 
+    /// <summary>
+    /// Get the Picture out of the file and set the FrontCover property for the Binding in the View
+    /// </summary>
+    /// <param name="song"></param>
     private void GetFrontCover(SongData song)
     {
       if (song.Pictures.Count > 0)
@@ -326,11 +352,65 @@ namespace MPTagThat.TagEdit.ViewModels
       }
     }
 
+    /// <summary>
+    /// Changes the Checkboxes behind the input fields to visible / Invisble
+    /// </summary>
+    /// <param name="visible"></param>
+    private void UncheckCheckboxes()
+    {
+      CkTrackIsChecked = false;
+      CkDiscIsChecked = false;
+      CkArtistIsChecked = false;
+      CkAlbumArtistIsChecked = false;
+      CkGenreIsChecked = false;
+      CkAlbumIsChecked = false;
+      CkTitleIsChecked = false;
+      CkYearIsChecked = false;
+      CkBPMIsChecked = false;
+      CkConductorIsChecked = false;
+      CkComposerIsChecked = false;
+      CkInterpretedByIsChecked = false;
+      CkTextWriterIsChecked = false;
+      CkPublisherIsChecked = false;
+      CkEncodedByIsChecked = false;
+      CkCopyrightIsChecked = false;
+      CkContentGroupIsChecked = false;
+      CkSubTitleIsChecked = false;
+      CkArtistSortIsChecked = false;
+      CkAlbumSortIsChecked = false;
+      CkAlbumSortIsChecked = false;
+      CkTitleSortIsChecked = false;
+      CkOriginalAlbumIsChecked = false;
+      CkOriginalArtistIsChecked = false;
+      CkOriginalFileNameIsChecked = false;
+      CkOriginalLyricsWriterIsChecked = false;
+      CkOriginalOwnerIsChecked = false;
+      CkOriginalReleaseIsChecked = false;
+      CkCopyrightUrlIsChecked = false;
+      CkOfficialAudioFileUrlIsChecked = false;
+      CkOfficialArtistUrlIsChecked = false;
+      CkOfficialAudioSourceUrlIsChecked = false;
+      CkOfficialInternetRadioUrlIsChecked = false;
+      CkOfficialPaymentUrlIsChecked = false;
+      CkCommercialInformationUrlIsChecked = false;
+      CkOfficialPublisherUrlIsChecked = false;
+      CkInvolvedPersonIsChecked = false;
+      CkInvolvedMusicianIsChecked = false;
+      CkRemoveExistingRatingsIsChecked = false;
+      CkRemoveLyricsIsChecked = false;
+      CkMediaTypeIsChecked = false;
+      CkTrackLengthIsChecked = false;
+    }
+
     #endregion
 
 
     #region Interface
 
+    /// <summary>
+    /// This metzhod is invoked, if a song is selected in the Songgrid
+    /// </summary>
+    /// <param name="navigationContext"></param>
     public void OnNavigatedTo(NavigationContext navigationContext)
     {
       MultiCheckBoxVisibility = false;
@@ -338,7 +418,7 @@ namespace MPTagThat.TagEdit.ViewModels
 
       if (_songs.Count > 0)
       {
-        SetFormBindings(ref _songs);
+        SetFormBindings(ref _songs); //Set the bindings so that the data is displayed in the View
       }
     }
 

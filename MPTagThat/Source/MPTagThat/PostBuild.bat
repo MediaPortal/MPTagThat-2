@@ -3,12 +3,14 @@ REM %2 = $(ConfigurationName) Debug/Release
 
 echo off
 
-REM Copy All new files from base
-REM xcopy %1\MPTagThat.Base\*.* . /E /R /Y /D
 
 set TARGETPATH="%1%..\Bin"
 
-REM Copy MPTagThat Base Files
+REM Copy All new files from base
+xcopy %1\MPTagThat.Base\*.* %TARGETPATH% /E /R /Y /D
+
+
+REM Copy Main Program
 xcopy /y %1\MPTagThat\bin\%2\MPTagThat.exe %TARGETPATH%
 xcopy /y %1\MPTagThat\bin\%2\MPTagThat.exe.* %TARGETPATH%
 xcopy /y %1\MPTagThat\bin\%2\Prism.* %TARGETPATH%\Bin\

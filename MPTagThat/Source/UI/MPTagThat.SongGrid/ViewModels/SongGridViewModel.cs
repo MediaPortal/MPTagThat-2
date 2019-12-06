@@ -44,6 +44,7 @@ using Syncfusion.UI.Xaml.Grid;
 using WPFLocalizeExtension.Engine;
 using System.Windows.Threading;
 using System.Threading;
+using Action = MPTagThat.Core.Common.Action;
 
 #endregion
 
@@ -347,24 +348,6 @@ namespace MPTagThat.SongGrid.ViewModels
 
     #endregion
 
-    #region Apply Edits
-
-    private void ApplyTagEdit(SongData songedit)
-    {
-      if (_selectedItems == null)
-      {
-        return;
-      }
-
-      foreach (SongData song in _selectedItems)
-      {
-        song.Changed = true;
-        song.Artist = songedit.Artist;
-      }
-    }
-
-    #endregion
-
     #region Event Handling
 
     private void OnMessageReceived(GenericEvent msg)
@@ -379,10 +362,10 @@ namespace MPTagThat.SongGrid.ViewModels
           }
           break;
 
-        case "applytagedit":
-          if (msg.MessageData.ContainsKey("tags"))
+        case "command":
+          if ((Action.ActionType)msg.MessageData["command"] == Action.ActionType.ACTION_SAVE)
           {
-            ApplyTagEdit((SongData)msg.MessageData["tags"]);
+
           }
 
           break;
