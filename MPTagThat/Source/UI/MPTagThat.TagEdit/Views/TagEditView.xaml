@@ -7,6 +7,7 @@
              xmlns:prism="http://prismlibrary.com/"
              prism:ViewModelLocator.AutoWireViewModel="True"
              xmlns:syncfusion="http://schemas.syncfusion.com/wpf" 
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              xmlns:lex="http://wpflocalizeextension.codeplex.com"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
@@ -41,15 +42,39 @@
                 <ColumnDefinition Width = "20" />
               </Grid.ColumnDefinitions>
               <Label Content="Track: " />
-              <TextBox Grid.Column="1" Text="{Binding SongEdit.TrackNumber, StringFormat=0;;#}" HorizontalAlignment="Left" Width="40" />
+              <TextBox Grid.Column="1" Name="TrackNumber" Text="{Binding SongEdit.TrackNumber, StringFormat=0;;#}" HorizontalAlignment="Left" Width="40">
+                <i:Interaction.Triggers>
+                  <i:EventTrigger EventName="TextChanged">
+                    <prism:InvokeCommandAction Command="{Binding TextChangedCommand}"/>
+                  </i:EventTrigger>
+                </i:Interaction.Triggers>
+              </TextBox>
               <Label Grid.Column="2" Content="/" HorizontalAlignment="Left" VerticalAlignment="Top" />
-              <TextBox Grid.Column="3" Text="{Binding SongEdit.TrackCount, StringFormat=0;;#}" HorizontalAlignment="Left" Width="40" />
+              <TextBox Grid.Column="3" Name="TrackCount" Text="{Binding SongEdit.TrackCount, StringFormat=0;;#}" HorizontalAlignment="Left" Width="40" >
+                <i:Interaction.Triggers>
+                  <i:EventTrigger EventName="TextChanged">
+                    <prism:InvokeCommandAction Command="{Binding TextChangedCommand}"/>
+                  </i:EventTrigger>
+                </i:Interaction.Triggers>
+              </TextBox>
               <CheckBox Grid.Column="4" VerticalAlignment="Center" Margin="2,0,0,0" IsChecked="{Binding CkTrackIsChecked}" Visibility="{Binding MultiCheckBoxVisibility, Converter={StaticResource BooleanToVisibilityConverter}}" />
 
               <Label Content="Disc: " Grid.Column="6" />
-              <TextBox Grid.Column="7" Text="{Binding SongEdit.DiscNumber, StringFormat=0;;#}" HorizontalAlignment="Left" Width="40" />
+              <TextBox Grid.Column="7" Name="DiscNumber"  Text="{Binding SongEdit.DiscNumber, StringFormat=0;;#}" HorizontalAlignment="Left" Width="40" >
+                <i:Interaction.Triggers>
+                  <i:EventTrigger EventName="TextChanged">
+                    <prism:InvokeCommandAction Command="{Binding TextChangedCommand}"/>
+                  </i:EventTrigger>
+                </i:Interaction.Triggers>
+              </TextBox>
               <Label Grid.Column="8" Content="/" HorizontalAlignment="Left" VerticalAlignment="Top" />
-              <TextBox Grid.Column="9" Text="{Binding SongEdit.DiscCount, StringFormat=0;;#}" HorizontalAlignment="Left" Width="40" />
+              <TextBox Grid.Column="9" Name="DiscCount" Text="{Binding SongEdit.DiscCount, StringFormat=0;;#}" HorizontalAlignment="Left" Width="40" >
+                <i:Interaction.Triggers>
+                  <i:EventTrigger EventName="TextChanged">
+                    <prism:InvokeCommandAction Command="{Binding TextChangedCommand}"/>
+                  </i:EventTrigger>
+                </i:Interaction.Triggers>
+              </TextBox>
               <CheckBox Grid.Column="10" VerticalAlignment="Center" Margin="2,0,0,0" IsChecked="{Binding CkDiscIsChecked}" Visibility="{Binding MultiCheckBoxVisibility, Converter={StaticResource BooleanToVisibilityConverter}}" />
             </Grid>
 
@@ -61,8 +86,14 @@
                 <ColumnDefinition Width="20"/>
               </Grid.ColumnDefinitions>
               <Label Grid.Column="0" Content="Artist: " />
-              <TextBox Grid.Column="1" Text="{Binding SongEdit.Artist, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-              <CheckBox Grid.Column="2" VerticalAlignment="Center" Margin="2,0,0,0" IsChecked="{Binding CkArtistIsChecked}" Visibility="{Binding MultiCheckBoxVisibility, Converter={StaticResource BooleanToVisibilityConverter}}" />
+              <TextBox Grid.Column="1" Name="Artist" Text="{Binding SongEdit.Artist, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" >
+                <i:Interaction.Triggers>
+                  <i:EventTrigger EventName="TextChanged">
+                    <prism:InvokeCommandAction Command="{Binding TextChangedCommand}"/>
+                  </i:EventTrigger>
+                </i:Interaction.Triggers>
+              </TextBox>
+              <CheckBox Grid.Column="2" VerticalAlignment="Center" Margin="2,0,0,0" IsChecked="{Binding CkArtistIsChecked, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged }" Visibility="{Binding MultiCheckBoxVisibility, Converter={StaticResource BooleanToVisibilityConverter}}" />
             </Grid>
 
             <!-- AlbumArtist -->
@@ -73,7 +104,26 @@
                 <ColumnDefinition Width="20"/>
               </Grid.ColumnDefinitions>
               <Label Grid.Column="0" Content="Album Artist: " />
-              <TextBox Grid.Column="1" Text="{Binding SongEdit.AlbumArtist}" />
+              <TextBox Grid.Column="1" Name="AlbumArtist" Text="{Binding SongEdit.AlbumArtist}" >
+                <i:Interaction.Triggers>
+                  <i:EventTrigger EventName="TextChanged">
+                    <prism:InvokeCommandAction Command="{Binding TextChangedCommand}"/>
+                  </i:EventTrigger>
+                </i:Interaction.Triggers>
+              </TextBox>
+              <CheckBox Grid.Column="2" VerticalAlignment="Center" Margin="2,0,0,0" IsChecked="{Binding CkAlbumArtistIsChecked}" Visibility="{Binding MultiCheckBoxVisibility, Converter={StaticResource BooleanToVisibilityConverter}}" />
+            </Grid>
+
+            <!-- Picture -->
+            <Grid Margin="5">
+              <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="100"/>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="20"/>
+              </Grid.ColumnDefinitions>
+              <Label Grid.Column="0" Content="Front Cover: " />
+              <Image Grid.Column="1" Name="FrontCover" Source="{Binding SongEdit.Pictures[0]}" >
+              </Image>
               <CheckBox Grid.Column="2" VerticalAlignment="Center" Margin="2,0,0,0" IsChecked="{Binding CkAlbumArtistIsChecked}" Visibility="{Binding MultiCheckBoxVisibility, Converter={StaticResource BooleanToVisibilityConverter}}" />
             </Grid>
           </StackPanel>
