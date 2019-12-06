@@ -12,6 +12,8 @@
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -33,6 +35,9 @@
   <ItemGroup>
     <Reference Include="CommonServiceLocator, Version=2.0.4.0, Culture=neutral, PublicKeyToken=489b6accfaf20ef0, processorArchitecture=MSIL">
       <HintPath>..\..\packages\CommonServiceLocator.2.0.4\lib\net46\CommonServiceLocator.dll</HintPath>
+    </Reference>
+    <Reference Include="FreeImageNET, Version=3.15.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\MediaPortal.FreeImageNET.3.18.3\lib\net45\FreeImageNET.dll</HintPath>
     </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
@@ -103,5 +108,18 @@
     <Resource Include="Resources\Images\Apply_Changes_16x.png" />
     <Resource Include="Resources\Images\Apply_Changes_32x.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\RemovePictures_32x.png" />
+    <Resource Include="Resources\Images\RemovePictures_16x.png" />
+    <Content Include="x64\FreeImage.dll" />
+    <Content Include="x86\FreeImage.dll" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="..\..\packages\MediaPortal.FreeImageNET.3.18.3\build\MediaPortal.FreeImageNET.targets" Condition="Exists('..\..\packages\MediaPortal.FreeImageNET.3.18.3\build\MediaPortal.FreeImageNET.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\..\packages\MediaPortal.FreeImageNET.3.18.3\build\MediaPortal.FreeImageNET.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\MediaPortal.FreeImageNET.3.18.3\build\MediaPortal.FreeImageNET.targets'))" />
+  </Target>
 </Project>

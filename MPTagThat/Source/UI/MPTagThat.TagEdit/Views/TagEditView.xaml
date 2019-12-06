@@ -118,13 +118,15 @@
             <Grid Margin="5">
               <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="100"/>
+                <ColumnDefinition Width="40"/>
                 <ColumnDefinition/>
                 <ColumnDefinition Width="20"/>
               </Grid.ColumnDefinitions>
               <Label Grid.Column="0" Content="Front Cover: " />
-              <Image Grid.Column="1" Name="FrontCover" Source="{Binding SongEdit.Pictures[0]}" >
-              </Image>
-              <CheckBox Grid.Column="2" VerticalAlignment="Center" Margin="2,0,0,0" IsChecked="{Binding CkAlbumArtistIsChecked}" Visibility="{Binding MultiCheckBoxVisibility, Converter={StaticResource BooleanToVisibilityConverter}}" />
+              <syncfusion:ButtonAdv  Grid.Column="1" Label="" Width="30" Height="30" VerticalAlignment="Top" HorizontalAlignment="Left" SmallIcon="pack://application:,,,/MPTagThat.TagEdit;component/Resources/Images/RemovePictures_32x.png" />
+              <Border Grid.Column="2" BorderThickness="1" BorderBrush="#FF000000" VerticalAlignment="Top" HorizontalAlignment="Left" Width="131" Height="131" >
+                <Image  Name="FrontCover" Source="{Binding FrontCover}"  Width="128" Height="128" />
+              </Border>
             </Grid>
           </StackPanel>
         </syncfusion:TabNavigationItem.Content>

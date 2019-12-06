@@ -1,12 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media.Imaging;
+using FreeImageAPI;
 using MPTagThat.Core;
 using MPTagThat.Core.Common;
 using MPTagThat.Core.Common.Song;
@@ -38,6 +41,13 @@ namespace MPTagThat.TagEdit.ViewModels
     {
       get => _multiCheckBoxVisibility;
       set => SetProperty(ref _multiCheckBoxVisibility, value);
+    }
+
+    private BitmapImage _frontCover;
+    public BitmapImage FrontCover
+    {
+      get => _frontCover;
+      set => SetProperty(ref _frontCover, value);
     }
 
     // Check Box Checked properties
@@ -242,18 +252,37 @@ namespace MPTagThat.TagEdit.ViewModels
       if (songs.Count == 1)
       {
         SongEdit = songs[0];
-        GetFrontCover();
+        GetFrontCover(SongEdit);
         return;
       }
 
       SongEdit = new SongData();
       var i = 0;
+      FrontCover = null;
+      byte[] picData = new byte[] { };
       foreach (var song in songs)
       {
         if (SongEdit.Artist != song.Artist)
         {
           SongEdit.Artist = i == 0 ? song.Artist : "";
         }
+
+        if (song.Pictures.Count > 0)
+        {
+          if (!song.Pictures[0].Data.SequenceEqual(picData))
+          {
+            if (i == 0)
+            {
+              GetFrontCover(song);
+              picData = song.Pictures[0].Data;
+            }
+            else
+            {
+              FrontCover = null;
+            }
+          }
+        }
+
 
         i++;
       }
@@ -263,10 +292,37 @@ namespace MPTagThat.TagEdit.ViewModels
       MultiCheckBoxVisibility = true;
     }
 
-    private void GetFrontCover()
+    private void GetFrontCover(SongData song)
     {
-      if (_songEdit.Pictures.Count > 0)
+      if (song.Pictures.Count > 0)
       {
+        var data = song.Pictures[0].Data;
+        FreeImageBitmap img = null;
+        try
+        {
+          MemoryStream ms = new MemoryStream(data);
+          img = new FreeImageBitmap(ms);
+          
+          var bitmapImage = new BitmapImage();
+          using (var memory = new MemoryStream())
+          {
+            img.Save(memory, FREE_IMAGE_FORMAT.FIF_PNG);
+            memory.Position = 0;
+
+
+            bitmapImage.BeginInit();
+            bitmapImage.StreamSource = memory;
+            bitmapImage.CacheOption = BitmapCacheOption.OnLoad;
+            bitmapImage.EndInit();
+            bitmapImage.Freeze();
+            img.Dispose();
+            FrontCover = bitmapImage;
+          }
+
+        }
+        catch (Exception)
+        {
+        }
       }
     }
 
