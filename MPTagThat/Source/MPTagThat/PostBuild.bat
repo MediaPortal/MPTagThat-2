@@ -15,6 +15,7 @@ xcopy /y %1\MPTagThat\bin\%2\MPTagThat.exe %TARGETPATH%
 xcopy /y %1\MPTagThat\bin\%2\MPTagThat.exe.* %TARGETPATH%
 xcopy /y %1\MPTagThat\bin\%2\Prism.* %TARGETPATH%\Bin\
 xcopy /y %1\MPTagThat\bin\%2\Syncfusion.* %TARGETPATH%\Bin\
+xcopy /y %1\MPTagThat\bin\%2\System.* %TARGETPATH%\Bin\
 xcopy /y %1\MPTagThat\bin\%2\Unity.* %TARGETPATH%\Bin\
 if "%2" == "Debug" (
   xcopy /y %1MPTagThat\bin\%2\MPTagThat.pdb %TARGETPATH%
