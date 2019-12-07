@@ -1,5 +1,5 @@
-﻿#region Copyright (C) 2017 Team MediaPortal
-// Copyright (C) 2017 Team MediaPortal
+﻿#region Copyright (C) 2020 Team MediaPortal
+// Copyright (C) 2020 Team MediaPortal
 // http://www.team-mediaportal.com
 // 
 // MPTagThat is free software: you can redistribute it and/or modify
