@@ -70,6 +70,7 @@
           <ColumnDefinition Width="2*"/>
           <ColumnDefinition Width="2*"/>
           <ColumnDefinition Width="2*"/>
+          <ColumnDefinition Width="2*"/>
         </Grid.ColumnDefinitions>
 
         <WrapPanel Grid.Column="0" >
@@ -81,9 +82,13 @@
           <Border BorderThickness="1,0,0,0" Width="3" Margin="5,0,0,0" BorderBrush="#FFC5C5C5"/>
           <TextBlock Text="{Binding CurrentFolder}" Margin="10,0,0,0"/>
         </WrapPanel>
-        <WrapPanel Grid.Column="2" HorizontalAlignment="Right">
+        <WrapPanel Grid.Column="2">
           <Border BorderThickness="1,0,0,0" Width="3" Margin="5,0,0,0" BorderBrush="#FFC5C5C5"/>
-          <ProgressBar Width="200" Margin="10,2,2,2" Height="15" IsIndeterminate="{Binding ProgressBarIsIndeterminate}"/>
+          <TextBlock Text="{Binding CurrentFile}" Margin="10,0,0,0"/>
+        </WrapPanel>
+        <WrapPanel Grid.Column="3" HorizontalAlignment="Right">
+          <Border BorderThickness="1,0,0,0" Width="3" Margin="5,0,0,0" BorderBrush="#FFC5C5C5"/>
+          <ProgressBar Width="200" Margin="10,2,2,2" Height="15" Value="{Binding ProgressBarValue}"  Minimum="{Binding ProgressBarMinimum}" Maximum="{Binding ProgressBarMaximum}" IsIndeterminate="{Binding ProgressBarIsIndeterminate}"/>
           <Button x:Name="StatusBarButtonCancel" Margin="0,2,5,2" Width="20"></Button>
         </WrapPanel>
       </Grid>

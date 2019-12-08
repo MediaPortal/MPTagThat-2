@@ -29,14 +29,7 @@ namespace MPTagThat.ViewModels
   {
     #region Variables
     IRegionManager _regionManager;
-
-    private string _numberOfFiles = "0";
-    private string _currentFolder = "";
-    private string _currentFile = "";
-    private string _filterActive = "false";
-    private bool _progressBarIsIndeterminate = false;
-    private bool _persistLayout = true;
-
+   
     private readonly NLogLogger log;
     private Options _options;
 
@@ -89,20 +82,50 @@ namespace MPTagThat.ViewModels
       set => SetProperty(ref _windowTop, value);
     }
 
-
     /// <summary>
     /// Property to have the Progressbar show infinite
     /// </summary>
+    private bool _progressBarIsIndeterminate = false;
     public bool ProgressBarIsIndeterminate
     {
       get => _progressBarIsIndeterminate;
       set => SetProperty(ref _progressBarIsIndeterminate, value);
     }
 
+    /// <summary>
+    /// Property for the Minimum value of the ProgressBar
+    /// </summary>
+    private int _progressBarMinium;
+    public int ProgressBarMinimum
+    {
+      get => _progressBarMinium;
+      set => SetProperty(ref _progressBarMinium, value);
+    }
+
+    /// <summary>
+    /// Property for the Maximum value of the ProgressBar
+    /// </summary>
+    private int _progressBarMaximum;
+    public int ProgressBarMaximum
+    {
+      get => _progressBarMaximum;
+      set => SetProperty(ref _progressBarMaximum, value);
+    }
+
+    /// <summary>
+    /// Property for the Current value of the ProgressBar
+    /// </summary>
+    private int _progressBarValue;
+    public int ProgressBarValue
+    {
+      get => _progressBarValue;
+      set => SetProperty(ref _progressBarValue, value);
+    }
 
     /// <summary>
     /// Property to show the number of files
     /// </summary>
+    private string _numberOfFiles = "0";
     public string NumberOfFiles
     {
       get => string.Format(LocalizeDictionary.Instance.GetLocalizedObject("MPTagThat", "Strings", "statusBar_NumberOfFiles",
@@ -113,6 +136,7 @@ namespace MPTagThat.ViewModels
     /// <summary>
     /// Property to show the current Folder
     /// </summary>
+    private string _currentFolder = "";
     public string CurrentFolder
     {
       get => _currentFolder;
@@ -122,6 +146,7 @@ namespace MPTagThat.ViewModels
     /// <summary>
     /// Property to show the current File
     /// </summary>
+    private string _currentFile = "";
     public string CurrentFile
     {
       get => _currentFile;
@@ -131,6 +156,7 @@ namespace MPTagThat.ViewModels
     /// <summary>
     /// Property to indicate if a TagFilter is active
     /// </summary>
+    private string _filterActive = "false";
     public string FilterActive
     {
       get
@@ -157,6 +183,7 @@ namespace MPTagThat.ViewModels
       log = (ServiceLocator.Current.GetInstance(typeof(ILogger)) as ILogger).GetLogger;
 
       EventSystem.Subscribe<StatusBarEvent>(UpdateStatusBar);
+      EventSystem.Subscribe<ProgressBarEvent>(UpdateProgressBar);
       SfSkinManager.ApplyStylesOnApplication = true;
 
       _windowCloseCommand = new BaseCommand(WindowClose);
@@ -322,8 +349,21 @@ namespace MPTagThat.ViewModels
       CurrentFile = msg.CurrentFile;
     }
 
+    private void UpdateProgressBar(ProgressBarEvent msg)
+    {
+      ProgressBarIsIndeterminate = false;
+      if (msg.CurrentProgress == -1)
+      {
+        ProgressBarIsIndeterminate = true;
+      }
+      else
+      {
+        ProgressBarValue = msg.CurrentProgress;
+      }
+      ProgressBarMinimum = msg.MinValue;
+      ProgressBarMaximum = msg.MaxValue;
+    }
+
     #endregion
   }
-
-
 }

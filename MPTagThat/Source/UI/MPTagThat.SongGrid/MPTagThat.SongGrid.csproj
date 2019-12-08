@@ -92,9 +92,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Commands\CmdSave.cs" />
+    <Compile Include="Commands\Command.cs" />
+    <Compile Include="Commands\CommandTypes.cs" />
+    <Compile Include="Commands\SupportedCommandType.cs" />
     <Compile Include="ViewModels\RowChangedColorConverter.cs" />
     <Compile Include="ViewModels\SongGridViewColumnSettings.cs" />
-    <Compile Include="Properties\Annotations.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SongGridModule.cs" />
     <Compile Include="ViewModels\SongGridViewColumns.cs" />

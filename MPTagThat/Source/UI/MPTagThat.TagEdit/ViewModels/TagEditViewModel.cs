@@ -26,8 +26,11 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
 using FreeImageAPI;
+using MPTagThat.Core;
 using MPTagThat.Core.Common;
 using MPTagThat.Core.Common.Song;
+using MPTagThat.Core.Events;
+using Prism.Events;
 using Prism.Mvvm;
 using Prism.Regions;
 
@@ -207,6 +210,8 @@ namespace MPTagThat.TagEdit.ViewModels
     {
       _applyEditCommand = new BaseCommand(ApplyEdit);
       _textChangedCommand = new BaseCommand(TextChaged);
+
+      EventSystem.Subscribe<GenericEvent>(OnMessageReceived, ThreadOption.UIThread);
     }
 
     #endregion
@@ -270,6 +275,8 @@ namespace MPTagThat.TagEdit.ViewModels
     /// <param name="songs"></param>
     private void SetFormBindings(ref List<SongData> songs)
     {
+      FrontCover = null;
+
       if (songs.Count == 1)
       {
         UncheckCheckboxes();
@@ -280,7 +287,6 @@ namespace MPTagThat.TagEdit.ViewModels
 
       SongEdit = new SongData();
       var i = 0;
-      FrontCover = null;
       byte[] picData = new byte[] { };
       foreach (var song in songs)
       {
@@ -404,7 +410,6 @@ namespace MPTagThat.TagEdit.ViewModels
 
     #endregion
 
-
     #region Interface
 
     /// <summary>
@@ -430,6 +435,22 @@ namespace MPTagThat.TagEdit.ViewModels
     public void OnNavigatedFrom(NavigationContext navigationContext)
     {
       // Clear the view
+    }
+
+    #endregion
+
+    #region Event Handling
+
+    private void OnMessageReceived(GenericEvent msg)
+    {
+      switch (msg.Action.ToLower())
+      {
+        // Clear the Tagedit Panel on Folder change
+        case "selectedfolderchanged":
+          SongEdit = new SongData();
+          FrontCover = null;
+          break;
+      }
     }
 
     #endregion

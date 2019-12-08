@@ -69,6 +69,11 @@ namespace MPTagThat.SongGrid.ViewModels
     private bool _progressCancelled = false;
     private bool _folderScanInProgress = false;
 
+    private BackgroundWorker _bgWorker;
+
+    public delegate void CommandThreadEnd(object sender, EventArgs args);
+    public event CommandThreadEnd CommandThreadEnded;
+
     #endregion
 
     #region ctor
@@ -106,6 +111,11 @@ namespace MPTagThat.SongGrid.ViewModels
       }
     }
 
+    /// <summary>
+    ///   Do we have any changes pending?
+    /// </summary>
+    public bool ChangesPending { get; set; }
+
     #endregion
 
     #region Commands
@@ -128,7 +138,7 @@ namespace MPTagThat.SongGrid.ViewModels
     }
 
     #endregion
-    
+
     #region Private Methods
 
     public void SetItemsSource(object grid)
@@ -254,7 +264,8 @@ namespace MPTagThat.SongGrid.ViewModels
           // Commit changes to SongTemp, in case we have switched to DB Mode
           _options.Songlist.CommitDatabaseChanges();
 
-          msg.CurrentProgress = 100;
+          msg.CurrentProgress = 0;
+          msg.CurrentFile = "";
           EventSystem.Publish(msg);
           log.Info($"FolderScan: Scanned {nonMusicCount + count} files. Found {count} audio files");
 
@@ -348,6 +359,139 @@ namespace MPTagThat.SongGrid.ViewModels
 
     #endregion
 
+    #region Command Execution
+
+    public void ExecuteCommand(string command)
+    {
+      object[] parameter = { };
+      ExecuteCommand(command, parameter, true);
+    }
+
+    public void ExecuteCommand(string command, object parameters, bool runAsync)
+    {
+      log.Trace(">>>");
+      log.Debug($"Invoking Command: {command}");
+
+      object[] parameter = { command, parameters };
+
+      if (runAsync)
+      {
+        if (_bgWorker == null)
+        {
+          _bgWorker = new BackgroundWorker();
+          _bgWorker.DoWork += ExecuteCommandThread;
+        }
+
+        if (!_bgWorker.IsBusy)
+        {
+          _bgWorker.RunWorkerAsync(parameter);
+        }
+      }
+      else
+      {
+        ExecuteCommandThread(this, new DoWorkEventArgs(parameter));
+      }
+      log.Trace("<<<");
+    }
+
+    private void ExecuteCommandThread(object sender, DoWorkEventArgs e)
+    {
+      log.Trace(">>>");
+
+      // Get the command object
+      object[] parameters = e.Argument as object[];
+      Commands.Command commandObj = Commands.Command.Create(parameters);
+      if (commandObj == null)
+      {
+        return;
+      }
+
+      // Extract the command name, since we might need it for specific selections afterwards
+      var command = (string)parameters[0];
+
+      var commandParmObj = (object[])parameters[1];
+      var commandParm = commandParmObj.GetLength(0) > 0 ? (string)commandParmObj[0] : "";
+
+      int count = 0;
+      var msg = new ProgressBarEvent { CurrentProgress = 0, MinValue = 0, MaxValue = _selectedItems.Count };
+      EventSystem.Publish(msg);
+
+      var songs = (_selectedItems as ObservableCollection<object>).Cast<SongData>().ToList();
+
+      // If the command needs Preprocessing, then first loop over all tracks
+      if (commandObj.NeedsPreprocessing)
+      {
+        foreach (var song in songs)
+        {
+          commandObj.PreProcess(song);
+        }
+      }
+
+      foreach (var song in songs)
+      {
+        count++;
+        try
+        {
+          Application.DoEvents();
+
+          song.Status = -1;
+          if (command != "SaveAll" || commandParm == "true")
+          {
+            msg.CurrentFile = song.FileName;
+            msg.CurrentProgress = count;
+            EventSystem.Publish(msg);
+            if (_progressCancelled)
+            {
+              commandObj.ProgressCancelled = true;
+              msg.MinValue = 0;
+              msg.MaxValue = 0;
+              msg.CurrentProgress = 0;
+              msg.CurrentFile = "";
+              EventSystem.Publish(msg);
+              return;
+            }
+          }
+
+          if (command == "SaveAll")
+          {
+            song.Status = -1;
+          }
+
+          if (commandObj.Execute(song))
+          {
+            ChangesPending = true;
+          }
+          if (commandObj.ProgressCancelled)
+          {
+            break;
+          }
+        }
+        catch (Exception ex)
+        {
+          song.Status = 2;
+          //AddErrorMessage(row, ex.Message);
+        }
+      }
+
+      // Do Command Post Processing
+      ChangesPending = commandObj.PostProcess();
+      if (CommandThreadEnded != null && commandObj.NeedsCallback)
+      {
+        CommandThreadEnded(this, new EventArgs());
+      }
+
+      msg.MinValue = 0;
+      msg.MaxValue = 0;
+      msg.CurrentProgress = 0;
+      msg.CurrentFile = "";
+      EventSystem.Publish(msg);
+
+      commandObj.Dispose();
+      log.Trace("<<<");
+    }
+
+    #endregion
+
     #region Event Handling
 
     private void OnMessageReceived(GenericEvent msg)
@@ -365,13 +509,13 @@ namespace MPTagThat.SongGrid.ViewModels
         case "command":
           if ((Action.ActionType)msg.MessageData["command"] == Action.ActionType.ACTION_SAVE)
           {
-
+            ExecuteCommand(Action.ActionToCommand((Action.ActionType)msg.MessageData["command"]));
           }
 
           break;
       }
     }
-    
+
     #endregion
   }
 }
