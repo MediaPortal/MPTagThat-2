@@ -47,14 +47,14 @@
     <Reference Include="Syncfusion.Data.WPF, Version=17.3460.0.33, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Syncfusion.Data.WPF.17.3.0.33\lib\net46\Syncfusion.Data.WPF.dll</HintPath>
     </Reference>
-    <Reference Include="Syncfusion.Licensing, Version=17.3460.0.33, Culture=neutral, PublicKeyToken=632609b4d040f6b4, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Syncfusion.Licensing.17.3.0.33\lib\net46\Syncfusion.Licensing.dll</HintPath>
+    <Reference Include="Syncfusion.Licensing, Version=17.3460.0.34, Culture=neutral, PublicKeyToken=632609b4d040f6b4, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Syncfusion.Licensing.17.3.0.34\lib\net46\Syncfusion.Licensing.dll</HintPath>
     </Reference>
     <Reference Include="Syncfusion.SfGrid.WPF, Version=17.3460.0.33, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Syncfusion.SfGrid.WPF.17.3.0.33\lib\net46\Syncfusion.SfGrid.WPF.dll</HintPath>
     </Reference>
-    <Reference Include="Syncfusion.Shared.WPF, Version=17.3460.0.33, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Syncfusion.Shared.WPF.17.3.0.33\lib\net46\Syncfusion.Shared.WPF.dll</HintPath>
+    <Reference Include="Syncfusion.Shared.WPF, Version=17.3460.0.34, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Syncfusion.Shared.WPF.17.3.0.34\lib\net46\Syncfusion.Shared.WPF.dll</HintPath>
     </Reference>
     <Reference Include="Syncfusion.Tools.WPF, Version=17.3460.0.33, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Syncfusion.Tools.WPF.17.3.0.33\lib\net46\Syncfusion.Tools.WPF.dll</HintPath>
@@ -120,6 +120,10 @@
     <ProjectReference Include="..\..\MPTagThat.Core\MPTagThat.Core.csproj">
       <Project>{d66c1d7a-a9d8-4f02-9fa4-891a673d2c68}</Project>
       <Name>MPTagThat.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MPTagThat.Dialogs\MPTagThat.Dialogs.csproj">
+      <Project>{a4d5a1cc-39cf-4ebb-8c2a-494b34eb0989}</Project>
+      <Name>MPTagThat.Dialogs</Name>
     </ProjectReference>
     <ProjectReference Include="..\MPTagThat.TagEdit\MPTagThat.TagEdit.csproj">
       <Project>{43451793-3565-4c80-91a4-c75dae1b98cd}</Project>

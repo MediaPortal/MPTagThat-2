@@ -23,6 +23,8 @@ using Prism.Regions;
 using MPTagThat.SongGrid.Views;
 using MPTagThat.TagEdit.Views;
 using Prism.Ioc;
+using MPTagThat.Dialogs.Views;
+using MPTagThat.Dialogs.ViewModels;
 
 #endregion
 
@@ -36,6 +38,7 @@ namespace MPTagThat.SongGrid
     public void RegisterTypes(IContainerRegistry containerRegistry)
     {
       containerRegistry.RegisterForNavigation<TagEditView>();
+      containerRegistry.RegisterDialog<FileName2TagView, FileName2TagViewModel>();
     }
 
     public void OnInitialized(IContainerProvider containerProvider)

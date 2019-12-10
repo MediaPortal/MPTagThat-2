@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27130.2027
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29519.181
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MPTagThat", "MPTagThat\MPTagThat.csproj", "{A9C5C373-1662-4E1E-BF04-B1007D815D42}"
 EndProject
@@ -18,6 +18,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MPTagThat.MiscFiles", "UI\MPTagThat.MiscFiles\MPTagThat.MiscFiles.csproj", "{C01E53E4-98AB-4313-8EBC-6DD7F6BE20BB}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MPTagThat.TagEdit", "UI\MPTagThat.TagEdit\MPTagThat.TagEdit.csproj", "{43451793-3565-4C80-91A4-C75DAE1B98CD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MPTagThat.Dialogs", "UI\MPTagThat.Dialogs\MPTagThat.Dialogs.csproj", "{A4D5A1CC-39CF-4EBB-8C2A-494B34EB0989}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -78,6 +80,14 @@ Global
 		{43451793-3565-4C80-91A4-C75DAE1B98CD}.Release|Any CPU.Build.0 = Release|Any CPU
 		{43451793-3565-4C80-91A4-C75DAE1B98CD}.Release|x86.ActiveCfg = Release|Any CPU
 		{43451793-3565-4C80-91A4-C75DAE1B98CD}.Release|x86.Build.0 = Release|Any CPU
+		{A4D5A1CC-39CF-4EBB-8C2A-494B34EB0989}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A4D5A1CC-39CF-4EBB-8C2A-494B34EB0989}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A4D5A1CC-39CF-4EBB-8C2A-494B34EB0989}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{A4D5A1CC-39CF-4EBB-8C2A-494B34EB0989}.Debug|x86.Build.0 = Debug|Any CPU
+		{A4D5A1CC-39CF-4EBB-8C2A-494B34EB0989}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A4D5A1CC-39CF-4EBB-8C2A-494B34EB0989}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A4D5A1CC-39CF-4EBB-8C2A-494B34EB0989}.Release|x86.ActiveCfg = Release|Any CPU
+		{A4D5A1CC-39CF-4EBB-8C2A-494B34EB0989}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -88,6 +98,7 @@ Global
 		{2D3154AF-53C8-40FA-991A-6AB019078915} = {DB7C3A80-665F-4B4F-A3EA-36D539C37912}
 		{C01E53E4-98AB-4313-8EBC-6DD7F6BE20BB} = {DB7C3A80-665F-4B4F-A3EA-36D539C37912}
 		{43451793-3565-4C80-91A4-C75DAE1B98CD} = {DB7C3A80-665F-4B4F-A3EA-36D539C37912}
+		{A4D5A1CC-39CF-4EBB-8C2A-494B34EB0989} = {DB7C3A80-665F-4B4F-A3EA-36D539C37912}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {A885E3F7-B2DD-4902-B3C3-41326E432708}

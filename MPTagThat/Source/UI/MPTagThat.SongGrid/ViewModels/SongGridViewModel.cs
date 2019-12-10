@@ -45,6 +45,7 @@ using WPFLocalizeExtension.Engine;
 using System.Windows.Threading;
 using System.Threading;
 using Action = MPTagThat.Core.Common.Action;
+using Prism.Services.Dialogs;
 
 #endregion
 
@@ -55,6 +56,7 @@ namespace MPTagThat.SongGrid.ViewModels
     #region Variables
 
     private IRegionManager _regionManager;
+    private IDialogService _dialogService;
     private readonly NLogLogger log;
     private Options _options;
     private readonly SongGridViewColumns _gridColumns;
@@ -78,9 +80,10 @@ namespace MPTagThat.SongGrid.ViewModels
 
     #region ctor
 
-    public SongGridViewModel(IRegionManager regionManager)
+    public SongGridViewModel(IRegionManager regionManager, IDialogService dialogService)
     {
       _regionManager = regionManager;
+      _dialogService = dialogService;
       log = (ServiceLocator.Current.GetInstance(typeof(ILogger)) as ILogger).GetLogger;
       _options = (ServiceLocator.Current.GetInstance(typeof(ISettingsManager)) as ISettingsManager).GetOptions;
 
@@ -205,6 +208,7 @@ namespace MPTagThat.SongGrid.ViewModels
           {
             foreach (FileInfo fi in GetFiles(new DirectoryInfo(_selectedFolder), _options.ScanFolderRecursive))
             {
+              Application.DoEvents();
               if (_progressCancelled)
               {
                 break;
@@ -510,6 +514,13 @@ namespace MPTagThat.SongGrid.ViewModels
           if ((Action.ActionType)msg.MessageData["command"] == Action.ActionType.ACTION_SAVE)
           {
             ExecuteCommand(Action.ActionToCommand((Action.ActionType)msg.MessageData["command"]));
+          }
+          if ((Action.ActionType)msg.MessageData["command"] == Action.ActionType.ACTION_FILENAME2TAG)
+          {
+            _dialogService.ShowDialog("FileName2TagView", new DialogParameters($"message=Huhu"), r =>
+            {
+             
+            });
           }
 
           break;

@@ -60,14 +60,14 @@
     <Reference Include="Syncfusion.Data.WPF, Version=17.3460.0.33, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
       <HintPath>..\packages\Syncfusion.Data.WPF.17.3.0.33\lib\net46\Syncfusion.Data.WPF.dll</HintPath>
     </Reference>
-    <Reference Include="Syncfusion.Licensing, Version=17.3460.0.33, Culture=neutral, PublicKeyToken=632609b4d040f6b4, processorArchitecture=MSIL">
-      <HintPath>..\packages\Syncfusion.Licensing.17.3.0.33\lib\net46\Syncfusion.Licensing.dll</HintPath>
+    <Reference Include="Syncfusion.Licensing, Version=17.3460.0.34, Culture=neutral, PublicKeyToken=632609b4d040f6b4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Syncfusion.Licensing.17.3.0.34\lib\net46\Syncfusion.Licensing.dll</HintPath>
     </Reference>
     <Reference Include="Syncfusion.SfGrid.WPF, Version=17.3460.0.33, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
       <HintPath>..\packages\Syncfusion.SfGrid.WPF.17.3.0.33\lib\net46\Syncfusion.SfGrid.WPF.dll</HintPath>
     </Reference>
-    <Reference Include="Syncfusion.Shared.WPF, Version=17.3460.0.33, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
-      <HintPath>..\packages\Syncfusion.Shared.WPF.17.3.0.33\lib\net46\Syncfusion.Shared.WPF.dll</HintPath>
+    <Reference Include="Syncfusion.Shared.WPF, Version=17.3460.0.34, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <HintPath>..\packages\Syncfusion.Shared.WPF.17.3.0.34\lib\net46\Syncfusion.Shared.WPF.dll</HintPath>
     </Reference>
     <Reference Include="Syncfusion.Tools.WPF, Version=17.3460.0.33, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
       <HintPath>..\packages\Syncfusion.Tools.WPF.17.3.0.33\lib\net46\Syncfusion.Tools.WPF.dll</HintPath>
@@ -150,6 +150,7 @@
       <Link>Raven.Studio.Html5.zip</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
