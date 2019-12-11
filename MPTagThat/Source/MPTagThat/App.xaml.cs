@@ -86,6 +86,7 @@ namespace MPTagThat
       moduleCatalog.AddModule(typeof(SongGrid.SongGridModule));
       moduleCatalog.AddModule(typeof(MiscFiles.MiscFilesModule));
       moduleCatalog.AddModule(typeof(TagEdit.TagEditModule));
+      moduleCatalog.AddModule(typeof(Dialogs.DialogModule));
     }
 
     /// <summary>
