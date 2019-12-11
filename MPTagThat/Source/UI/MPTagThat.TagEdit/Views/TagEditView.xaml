@@ -9,6 +9,9 @@
              xmlns:syncfusion="http://schemas.syncfusion.com/wpf" 
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              xmlns:lex="http://wpflocalizeextension.codeplex.com"
+             lex:LocalizeDictionary.DesignCulture="en"
+             lex:ResxLocalizationProvider.DefaultAssembly="MPTagThat"
+             lex:ResxLocalizationProvider.DefaultDictionary="Strings"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
 
@@ -18,9 +21,17 @@
 
   <DockPanel LastChildFill="True">
     <Grid DockPanel.Dock="Top" Margin="10,10,0,10">
-      <syncfusion:ButtonAdv Label="Button" HorizontalAlignment="Left"  Width="75" SmallIcon="pack://application:,,,/MPTagThat.TagEdit;component/Resources/Images/Apply_Changes_16x.png" 
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width = "90" />
+        <ColumnDefinition Width = "90" />
+        <ColumnDefinition Width = "Auto" />
+      </Grid.ColumnDefinitions>
+      <syncfusion:ButtonAdv Grid.Column="0" Label="{lex:Loc tagEdit_Apply}" HorizontalAlignment="Left"  Width="75" SmallIcon="pack://application:,,,/MPTagThat.TagEdit;component/Resources/Images/Apply_Changes_16x.png" 
             Command="{Binding ApplyEditCommand}"
             CommandParameter="{Binding SongEdit}" />
+
+      <syncfusion:ButtonAdv Grid.Column="1" Label="{lex:Loc tagEdit_Cancel}" HorizontalAlignment="Left"  Width="75" SmallIcon="pack://application:,,,/MPTagThat.TagEdit;component/Resources/Images/Apply_Changes_16x.png" 
+            Command="{Binding CancelEditCommand}" />
     </Grid>
     <syncfusion:TabNavigationControl x:Name="tabNavigation" TabStripVisibility="Visible" >
       <syncfusion:TabNavigationItem Header="Main">
@@ -41,7 +52,9 @@
                 <ColumnDefinition Width = "Auto" />
                 <ColumnDefinition Width = "20" />
               </Grid.ColumnDefinitions>
-              <Label Content="Track: " />
+              
+              <!-- Track -->
+              <Label Content="{lex:Loc tagEdit_Track}" />
               <TextBox Grid.Column="1" Name="TrackNumber" Text="{Binding SongEdit.TrackNumber, StringFormat=0;;#}" HorizontalAlignment="Left" Width="40">
                 <i:Interaction.Triggers>
                   <i:EventTrigger EventName="TextChanged">
@@ -59,7 +72,8 @@
               </TextBox>
               <CheckBox Grid.Column="4" VerticalAlignment="Center" Margin="2,0,0,0" IsChecked="{Binding CkTrackIsChecked}" Visibility="{Binding MultiCheckBoxVisibility, Converter={StaticResource BooleanToVisibilityConverter}}" />
 
-              <Label Content="Disc: " Grid.Column="6" />
+              <!-- Disc -->
+              <Label Content="{lex:Loc tagEdit_Disc}" Grid.Column="6" />
               <TextBox Grid.Column="7" Name="DiscNumber"  Text="{Binding SongEdit.DiscNumber, StringFormat=0;;#}" HorizontalAlignment="Left" Width="40" >
                 <i:Interaction.Triggers>
                   <i:EventTrigger EventName="TextChanged">
@@ -85,7 +99,7 @@
                 <ColumnDefinition/>
                 <ColumnDefinition Width="20"/>
               </Grid.ColumnDefinitions>
-              <Label Grid.Column="0" Content="Artist: " />
+              <Label Grid.Column="0" Content="{lex:Loc tagEdit_Artist}" />
               <TextBox Grid.Column="1" Name="Artist" Text="{Binding SongEdit.Artist, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" >
                 <i:Interaction.Triggers>
                   <i:EventTrigger EventName="TextChanged">
@@ -103,7 +117,7 @@
                 <ColumnDefinition/>
                 <ColumnDefinition Width="20"/>
               </Grid.ColumnDefinitions>
-              <Label Grid.Column="0" Content="Album Artist: " />
+              <Label Grid.Column="0" Content="{lex:Loc tagEdit_AlbumArtist}" />
               <TextBox Grid.Column="1" Name="AlbumArtist" Text="{Binding SongEdit.AlbumArtist}" >
                 <i:Interaction.Triggers>
                   <i:EventTrigger EventName="TextChanged">
@@ -122,7 +136,7 @@
                 <ColumnDefinition/>
                 <ColumnDefinition Width="20"/>
               </Grid.ColumnDefinitions>
-              <Label Grid.Column="0" Content="Front Cover: " />
+              <Label Grid.Column="0" Content="{lex:Loc tagEdit_FrontCover}" />
               <syncfusion:ButtonAdv  Grid.Column="1" Label="" Width="30" Height="30" VerticalAlignment="Top" HorizontalAlignment="Left" SmallIcon="pack://application:,,,/MPTagThat.TagEdit;component/Resources/Images/RemovePictures_32x.png" />
               <Border Grid.Column="2" BorderThickness="1" BorderBrush="#FF000000" VerticalAlignment="Top" HorizontalAlignment="Left" Width="131" Height="131" >
                 <Image  Name="FrontCover" Source="{Binding FrontCover}"  Width="128" Height="128" />
