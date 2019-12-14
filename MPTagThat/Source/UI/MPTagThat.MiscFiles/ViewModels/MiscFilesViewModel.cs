@@ -34,6 +34,9 @@ using MPTagThat.Core.Services.Logging;
 using MPTagThat.Core.Utils;
 using Prism.Events;
 using Prism.Mvvm;
+using Syncfusion.Windows.Shared;
+using Syncfusion.Windows.Tools.Controls;
+using System.Windows.Media;
 
 #endregion
 
@@ -42,25 +45,41 @@ namespace MPTagThat.MiscFiles.ViewModels
   public class MiscFilesViewModel : BindableBase
   {
     #region Variables
-
-    private ObservableCollection<MiscFile> _miscFiles;
+        
     private MiscFile _currentItem;
-    private bool _isContextMenuRenameEnabled;
 
     #endregion
 
     #region Properties
 
+    /// <summary>
+    /// Binding to hold the NBon-Music File
+    /// </summary>
+    private ObservableCollection<MiscFile> _miscFiles;
     public ObservableCollection<MiscFile> MiscFiles
     {
       get => _miscFiles;
       set => SetProperty(ref _miscFiles, value);
     }
 
+    /// <summary>
+    /// Binding to enable/disable the Context Menu
+    /// </summary>
+    private bool _isContextMenuRenameEnabled;
     public bool ContextMenuRenameEnabled
     {
       get => _isContextMenuRenameEnabled;
       set => SetProperty(ref _isContextMenuRenameEnabled, value);
+    }
+
+    /// <summary>
+    /// Sets the Backcolor for the objects
+    /// </summary>
+    private Brush _backColor;
+    public Brush BackColor
+    {
+      get => _backColor;
+      set => SetProperty(ref _backColor, value);
     }
 
     #endregion
@@ -115,6 +134,11 @@ namespace MPTagThat.MiscFiles.ViewModels
 
     private ICommand _enterKeyPressedCommand;
     public ICommand EnterKeyPressedCommand => _enterKeyPressedCommand;
+
+    /// <summary>
+    /// Some manual change has been done to rename a file
+    /// </summary>
+    /// <param name="param"></param>
     private void EnterKeypressed(object param)
     {
       if (_currentItem == null || param == null)
@@ -144,6 +168,10 @@ namespace MPTagThat.MiscFiles.ViewModels
     private ICommand _renameFileCommand;
     public ICommand RenameFileCommand => _renameFileCommand;
 
+    /// <summary>
+    /// Rename File to Folder.jpg
+    /// </summary>
+    /// <param name="param"></param>
     private void RenameFile(object param)
     {
       if (param != null)
@@ -158,7 +186,7 @@ namespace MPTagThat.MiscFiles.ViewModels
             item.FullFileName = newFile;
             item.FileName = Path.GetFileName(newFile);
           }
-          catch (Exception e)
+          catch (Exception)
           {
             // ignored
           }
@@ -169,6 +197,10 @@ namespace MPTagThat.MiscFiles.ViewModels
     private ICommand _deleteFileCommand;
     public ICommand DeleteFileCommand => _deleteFileCommand;
 
+    /// <summary>
+    /// Delete the selected File
+    /// </summary>
+    /// <param name="param"></param>
     private void DeleteFile(object param)
     {
       if (param != null)
@@ -193,6 +225,10 @@ namespace MPTagThat.MiscFiles.ViewModels
 
     #region Events
 
+    /// <summary>
+    /// Handle messages
+    /// </summary>
+    /// <param name="msg"></param>
     private void OnMessageReceived(GenericEvent msg)
     {
       switch (msg.Action.ToLower())
