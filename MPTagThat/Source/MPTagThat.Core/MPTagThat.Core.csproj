@@ -108,6 +108,9 @@
   <ItemGroup>
     <Compile Include="Common\Action.cs" />
     <Compile Include="Common\BaseCommand.cs" />
+    <Compile Include="Common\Converter\AlternateRowChangedColorConverter.cs" />
+    <Compile Include="Common\Converter\BusyToCursorConverter.cs" />
+    <Compile Include="Common\Converter\RowChangedColorConverter.cs" />
     <Compile Include="Common\GridViewColumn.cs" />
     <Compile Include="Common\Item.cs" />
     <Compile Include="Common\Song\Comment.cs" />

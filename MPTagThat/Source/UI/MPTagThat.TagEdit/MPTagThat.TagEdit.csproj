@@ -79,6 +79,9 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
+    <Reference Include="taglib-sharp, Version=2.1.0.5, Culture=neutral, PublicKeyToken=db62eba44689b5b0, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\MediaPortal.TagLib.2.1.0.5\lib\taglib-sharp.dll</HintPath>
+    </Reference>
     <Reference Include="UIAutomationProvider" />
     <Reference Include="UIAutomationTypes" />
     <Reference Include="WindowsBase" />
@@ -121,6 +124,9 @@
   <ItemGroup>
     <Resource Include="Resources\Images\RemovePictures_32x.png" />
     <Resource Include="Resources\Images\RemovePictures_16x.png" />
+    <Resource Include="Resources\Images\Cancel_Changes_16x.png" />
+    <Resource Include="Resources\Images\Cancel_Changes_32x.png" />
+    <Resource Include="Resources\Images\CopyToAlbumArtist_10x.png" />
     <Content Include="x64\FreeImage.dll" />
     <Content Include="x86\FreeImage.dll" />
   </ItemGroup>

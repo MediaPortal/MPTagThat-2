@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:MPTagThat.SongGrid.Views"
              xmlns:model="clr-namespace:MPTagThat.SongGrid.ViewModels"
+             xmlns:core="clr-namespace:MPTagThat.Core.Common.Converter;assembly=MPTagThat.Core"
              xmlns:prism="http://prismlibrary.com/"
              prism:ViewModelLocator.AutoWireViewModel="True"
              xmlns:syncfusion="http://schemas.syncfusion.com/wpf" 
@@ -20,8 +21,9 @@
 
   <UserControl.Resources>
 
-    <model:RowChangedColorConverter x:Key="changedRowStyleSelector" />
-    <model:AlternateRowChangedColorConverter x:Key="changedAlternateRowStyleSelector" />
+    <core:BusyToCursorConverter x:Key="busyToCursorConverter" />
+    <core:RowChangedColorConverter x:Key="changedRowStyleSelector" />
+    <core:AlternateRowChangedColorConverter x:Key="changedAlternateRowStyleSelector" />
 
     <Style TargetType="syncfusion:VirtualizingCellsControl" x:Key="alternatingRowStyle">
       <Setter Property="Background" Value="{Binding Path=Changed,UpdateSourceTrigger=PropertyChanged,Converter={StaticResource changedAlternateRowStyleSelector}}"/>
@@ -31,6 +33,10 @@
       <Setter Property="Background" Value="{Binding Path=Changed,UpdateSourceTrigger=PropertyChanged,Converter={StaticResource changedRowStyleSelector}}"/>
     </Style>
   </UserControl.Resources>
+
+  <UserControl.Cursor>
+    <Binding Path="DataContext.IsBusy" RelativeSource="{RelativeSource Self}" Converter="{StaticResource busyToCursorConverter}" />
+  </UserControl.Cursor>
 
   <Grid>
     <syncfusion:SfDataGrid x:Name="SongDataGrid" ItemsSource="{Binding Songs, Mode=TwoWay}"

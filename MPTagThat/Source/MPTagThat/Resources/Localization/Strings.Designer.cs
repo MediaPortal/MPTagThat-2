@@ -61,7 +61,7 @@ namespace MPTagThat.Resources.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to MPTagThat the MediaPortal Tag Editor.
+        ///   Looks up a localized string similar to MPTagThat - The MediaPortal Tag Editor.
         /// </summary>
         public static string ApplicationName {
             get {
@@ -624,6 +624,132 @@ namespace MPTagThat.Resources.Localization {
         public static string statusBar_NumberOfSelectedFiles {
             get {
                 return ResourceManager.GetString("statusBar_NumberOfSelectedFiles", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Album:.
+        /// </summary>
+        public static string tagEdit_Album {
+            get {
+                return ResourceManager.GetString("tagEdit_Album", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Album Artist:.
+        /// </summary>
+        public static string tagEdit_AlbumArtist {
+            get {
+                return ResourceManager.GetString("tagEdit_AlbumArtist", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Apply.
+        /// </summary>
+        public static string tagEdit_Apply {
+            get {
+                return ResourceManager.GetString("tagEdit_Apply", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Artist:.
+        /// </summary>
+        public static string tagEdit_Artist {
+            get {
+                return ResourceManager.GetString("tagEdit_Artist", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cancel.
+        /// </summary>
+        public static string tagEdit_Cancel {
+            get {
+                return ResourceManager.GetString("tagEdit_Cancel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Comment:.
+        /// </summary>
+        public static string tagEdit_Comment {
+            get {
+                return ResourceManager.GetString("tagEdit_Comment", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Disc:.
+        /// </summary>
+        public static string tagEdit_Disc {
+            get {
+                return ResourceManager.GetString("tagEdit_Disc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Front Cover:.
+        /// </summary>
+        public static string tagEdit_FrontCover {
+            get {
+                return ResourceManager.GetString("tagEdit_FrontCover", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Genre:.
+        /// </summary>
+        public static string tagEdit_Genre {
+            get {
+                return ResourceManager.GetString("tagEdit_Genre", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select Genre(s).
+        /// </summary>
+        public static string tagEdit_Genre_Watermark {
+            get {
+                return ResourceManager.GetString("tagEdit_Genre_Watermark", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Part of Compilation.
+        /// </summary>
+        public static string tagEdit_PartOfCompilation {
+            get {
+                return ResourceManager.GetString("tagEdit_PartOfCompilation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Title:.
+        /// </summary>
+        public static string tagEdit_Title {
+            get {
+                return ResourceManager.GetString("tagEdit_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Track:.
+        /// </summary>
+        public static string tagEdit_Track {
+            get {
+                return ResourceManager.GetString("tagEdit_Track", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Year:.
+        /// </summary>
+        public static string tagEdit_Year {
+            get {
+                return ResourceManager.GetString("tagEdit_Year", resourceCulture);
             }
         }
         

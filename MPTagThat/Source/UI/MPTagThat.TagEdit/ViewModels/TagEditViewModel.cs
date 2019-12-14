@@ -20,6 +20,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Windows.Controls;
@@ -43,6 +44,8 @@ namespace MPTagThat.TagEdit.ViewModels
     #region Variables
 
     private List<SongData> _songs = null;
+    private SongData _songBackup = null;
+    private bool _isInitializing = false;
 
     #endregion
 
@@ -57,7 +60,48 @@ namespace MPTagThat.TagEdit.ViewModels
       get => _songEdit;
       set => SetProperty(ref _songEdit, value);
     }
+    
+    /// <summary>
+    /// Binding for View Enablement
+    /// </summary>
+    private bool _isEnabled;
+    public bool IsEnabled
+    {
+      get => _isEnabled;
+      set => SetProperty(ref _isEnabled, value);
+    }
 
+    /// <summary>
+    /// Binding for ApplyButton Enablement
+    /// </summary>
+    private bool _isApplyButtonEnabled;
+    public bool IsApplyButtonEnabled
+    {
+      get => _isApplyButtonEnabled;
+      set => SetProperty(ref _isApplyButtonEnabled, value);
+    }
+
+
+    /// <summary>
+    /// The Binding for the Genres
+    /// </summary>
+    private ObservableCollection<string> _genres = new ObservableCollection<string>();
+    public ObservableCollection<string> Genres
+    {
+      get => _genres;
+      set => SetProperty(ref _genres, value);
+    }
+    
+    /// <summary>
+    /// The Selected Genres
+    /// </summary>
+    private ObservableCollection<string> _selectedGenres = new ObservableCollection<string>();
+    public ObservableCollection<string> SelectedGenres
+    {
+      get => _selectedGenres;
+      set => SetProperty(ref _selectedGenres, value);
+    }
+    
     /// <summary>
     /// Indicates if the checkboxes for Multiline edit should be shown
     /// </summary>
@@ -202,6 +246,12 @@ namespace MPTagThat.TagEdit.ViewModels
     private bool _ckTrackLengthIsChecked;
     public bool CkTrackLengthIsChecked { get => _ckTrackLengthIsChecked; set => SetProperty(ref _ckTrackLengthIsChecked, value); }
 
+    private bool _ckCommentIsChecked;
+    public bool CkCommentIsChecked { get => _ckCommentIsChecked; set => SetProperty(ref _ckCommentIsChecked, value); }
+
+    private bool _ckPartOfCompilationIsChecked;
+    public bool CkPartOfCompilationIsChecked { get => _ckPartOfCompilationIsChecked; set => SetProperty(ref _ckPartOfCompilationIsChecked, value); }
+
     #endregion
 
     #region ctor
@@ -209,7 +259,11 @@ namespace MPTagThat.TagEdit.ViewModels
     public TagEditViewModel()
     {
       _applyEditCommand = new BaseCommand(ApplyEdit);
-      _textChangedCommand = new BaseCommand(TextChaged);
+      _cancelEditCommand = new BaseCommand(CancelEdit);
+      _textChangedCommand = new BaseCommand(TextChanged);
+      _applyArtistToAlbumArtistCommand = new BaseCommand(ApplyArtistToAlbumArtist);
+
+      SelectedGenres.CollectionChanged += SelectedGenres_CollectionChanged;
 
       EventSystem.Subscribe<GenericEvent>(OnMessageReceived, ThreadOption.UIThread);
     }
@@ -225,8 +279,15 @@ namespace MPTagThat.TagEdit.ViewModels
     /// Callback from the View when a Text is changed, it should check the checkbox
     /// </summary>
     /// <param name="param"></param>
-    private void TextChaged(object param)
+    private void TextChanged(object param)
     {
+      IsApplyButtonEnabled = true;
+
+      if (!_isInitializing)
+      {
+        SongEdit.Changed = true;
+      }
+
       if (!MultiCheckBoxVisibility)
       {
         return;
@@ -237,9 +298,69 @@ namespace MPTagThat.TagEdit.ViewModels
       else if (tb.Name.ToLower() == "trackcount") CkTrackIsChecked = true;
       else if (tb.Name.ToLower() == "discnumber") CkDiscIsChecked = true;
       else if (tb.Name.ToLower() == "disccount") CkDiscIsChecked = true;
+      else if (tb.Name.ToLower() == "title") CkTitleIsChecked = true;
       else if (tb.Name.ToLower() == "artist") CkArtistIsChecked = true;
       else if (tb.Name.ToLower() == "albumartist") CkAlbumArtistIsChecked = true;
+      else if (tb.Name.ToLower() == "album") CkAlbumIsChecked = true;
+      else if (tb.Name.ToLower() == "year") CkYearIsChecked = true;
+      else if (tb.Name.ToLower() == "comment") CkCommentIsChecked = true;
+      
 
+    }
+
+    /// <summary>
+    /// Invoked, when the Genre collection has been changed
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    private void SelectedGenres_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+    {
+      IsApplyButtonEnabled = true;
+
+      if (!_isInitializing)
+      {
+        SongEdit.Changed = true;
+      }
+
+      if (MultiCheckBoxVisibility)
+      {
+        CkGenreIsChecked = true;
+      }
+
+      if (SongEdit != null && (_songs != null && _songs.Count == 1))
+      {
+        SongEdit.Genre = string.Join(";", SelectedGenres);
+      }
+    }
+
+    /// <summary>
+    /// Invoked by the Cancel Edit Button
+    /// </summary>
+    private ICommand _cancelEditCommand;
+    public ICommand CancelEditCommand => _cancelEditCommand;
+
+    private void CancelEdit(object param)
+    {
+      ClearForm();
+      if (_songBackup != null && _songs.Count == 1)
+      {
+        UndoSongedits(_songs[0],_songBackup);
+        _songBackup = null;
+      }
+    }
+
+    /// <summary>
+    /// Use the content of the Album Field as AlbumArtist
+    /// </summary>
+    private ICommand _applyArtistToAlbumArtistCommand;
+    public ICommand ApplyArtistToAlbumArtistCommand => _applyArtistToAlbumArtistCommand;
+
+    private void ApplyArtistToAlbumArtist(object param)
+    {
+      if (SongEdit != null)
+      {
+        SongEdit.AlbumArtist = SongEdit.Artist;
+      }
     }
 
     /// <summary>
@@ -252,16 +373,78 @@ namespace MPTagThat.TagEdit.ViewModels
     private void ApplyEdit(object param)
     {
       var songEdit = (SongData)param;
-
+      
       if (_songs == null)
       {
         return;
       }
 
+      // If we got only one song, then the changes have been applied already through binding
+      // Just indicate that the song was changed and return
+      if (_songs.Count == 1)
+      {
+        songEdit.Changed = true;
+        return;
+      }
+      
       foreach (var song in _songs)
       {
-        song.Changed = true;
-        song.Artist = songEdit.Artist;
+        if (CkTrackIsChecked)
+        {
+          song.Track = songEdit.Track;
+          song.Changed = true;
+        }
+
+        if (CkDiscIsChecked)
+        {
+          song.Disc = songEdit.Disc;
+          song.Changed = true;
+        }
+
+        if (CkTitleIsChecked)
+        {
+          song.Title = songEdit.Title;
+          song.Changed = true;
+        }
+
+        if (CkArtistIsChecked)
+        {
+          song.Artist = songEdit.Artist.Trim();
+          song.Changed = true;
+        }
+
+        if (CkAlbumArtistIsChecked)
+        {
+          song.AlbumArtist = songEdit.AlbumArtist.Trim();
+          song.Changed = true;
+        }
+
+        if (CkAlbumIsChecked)
+        {
+          song.Album = songEdit.Album;
+          song.Changed = true;
+        }
+
+        song.Compilation = CkPartOfCompilationIsChecked;
+
+        if (CkYearIsChecked)
+        {
+          song.Year = songEdit.Year;
+          song.Changed = true;
+        }
+
+        if (CkGenreIsChecked)
+        {
+          song.Genre = songEdit.Genre;
+          song.Changed = true;
+        }
+
+        if (CkCommentIsChecked)
+        {
+          song.Comment = songEdit.Comment;
+          song.Changed = true;
+        }
+
       }
     }
 
@@ -275,25 +458,116 @@ namespace MPTagThat.TagEdit.ViewModels
     /// <param name="songs"></param>
     private void SetFormBindings(ref List<SongData> songs)
     {
+      _isInitializing = true;
       FrontCover = null;
+      _genres.Clear();
+      SelectedGenres.Clear();
+      Genres.AddRange(TagLib.Genres.Audio);
 
       if (songs.Count == 1)
       {
         UncheckCheckboxes();
         SongEdit = songs[0];
+        _songBackup = SongEdit.Clone();
+        UpdateGenres(SongEdit);
+        SelectedGenres.AddRange(SongEdit.Genre.Split(';'));
         GetFrontCover(SongEdit);
+        _isInitializing = false;
         return;
       }
 
       SongEdit = new SongData();
       var i = 0;
       byte[] picData = new byte[] { };
+      var strGenreTemp = "";
       foreach (var song in songs)
       {
+        // Don't handle single track for Multitag Edit
+        if (SongEdit.TrackCount != song.TrackCount)
+        {
+          if (i == 0 && song.TrackCount != 0)
+          {
+            SongEdit.TrackCount = song.TrackCount;
+          }
+          else
+          {
+            song.TrackCount = 0;
+          }
+        }
+
+        if (SongEdit.DiscNumber != song.DiscNumber)
+        {
+          if (i == 0 && song.DiscNumber != 0)
+          {
+            SongEdit.DiscNumber = song.DiscNumber;
+          }
+          else
+          {
+            song.DiscNumber = 0;
+          }
+        }
+
+        if (SongEdit.DiscCount != song.DiscCount)
+        {
+          if (i == 0 && song.DiscCount != 0)
+          {
+            SongEdit.DiscCount = song.DiscCount;
+          }
+          else
+          {
+            song.DiscCount = 0;
+          }
+        }
+
+        if (SongEdit.Title != song.Title)
+        {
+          SongEdit.Title = i == 0 ? song.Title : "";
+        }
+
         if (SongEdit.Artist != song.Artist)
         {
           SongEdit.Artist = i == 0 ? song.Artist : "";
         }
+
+        if (SongEdit.AlbumArtist != song.AlbumArtist)
+        {
+          SongEdit.AlbumArtist = i == 0 ? song.AlbumArtist : "";
+        }
+
+        if (SongEdit.Album != song.Album)
+        {
+          SongEdit.Album = i == 0 ? song.Album : "";
+        }
+
+        if (CkPartOfCompilationIsChecked != song.Compilation)
+        {
+          SongEdit.Compilation = CkPartOfCompilationIsChecked = i == 0 && song.Compilation;
+        }
+
+        if (SongEdit.Year != song.Year)
+        {
+          SongEdit.Year = i == 0 ? song.Year : 0;
+        }
+
+        UpdateGenres(song);
+        if (strGenreTemp != song.Genre)
+        {
+          if (i == 0)
+          {
+            SelectedGenres.AddRange(song.Genre.Split(';'));
+            strGenreTemp = song.Genre;
+          }
+          else
+          {
+            SelectedGenres.Clear();
+          }
+        }
+
+        if (SongEdit.Comment != song.Comment)
+        {
+          SongEdit.Comment = i == 0 ? song.Comment : "";
+        }
+
 
         if (song.Pictures.Count > 0)
         {
@@ -314,6 +588,8 @@ namespace MPTagThat.TagEdit.ViewModels
 
         i++;
       }
+
+      _isInitializing = false;
 
       // We have multiple Songs selected, so show the Checkboxes and
       // decide if they shoud be checked.
@@ -356,6 +632,31 @@ namespace MPTagThat.TagEdit.ViewModels
         {
         }
       }
+    }
+
+    /// <summary>
+    /// Update the List of Genres
+    /// </summary>
+    /// <param name="song"></param>
+    private void UpdateGenres(SongData song)
+    {
+      var newGenres = (from g in song.Genre.Split(';')
+                       where !_genres.Contains(g)
+                       select g).ToList<string>();
+      foreach (var newGenre in newGenres)
+      {
+        Genres.Insert(0, newGenre);
+      }
+    }
+
+    private void ClearForm()
+    {
+      SongEdit = new SongData();
+      UncheckCheckboxes();
+      SelectedGenres.Clear();
+      FrontCover = null;
+      MultiCheckBoxVisibility = false;
+      IsApplyButtonEnabled = false;
     }
 
     /// <summary>
@@ -408,6 +709,67 @@ namespace MPTagThat.TagEdit.ViewModels
       CkTrackLengthIsChecked = false;
     }
 
+    /// <summary>
+    /// Undo Changes to the Song by resetting the values from the backup
+    /// </summary>
+    /// <param name="original"></param>
+    /// <param name="backup"></param>
+    private void UndoSongedits(SongData original, SongData backup)
+    {
+      original.Status = 0;
+      original.Changed = false;
+      original.FullFileName = backup.FullFileName;
+      original.FileName = backup.FileName;
+      original.Artist = backup.Artist;
+      original.ArtistSortName = backup.ArtistSortName;
+      original.AlbumArtist = backup.AlbumArtist;
+      original.AlbumArtistSortName = backup.AlbumArtistSortName;
+      original.Album = backup.Album;
+      original.AlbumSortName = backup.AlbumSortName;
+      original.BPM = backup.BPM;
+      original.Comment = backup.Comment;
+      original.CommercialInformation = backup.CommercialInformation;
+      original.Compilation = backup.Compilation;
+      original.Composer = backup.Composer;
+      original.Conductor = backup.Conductor;
+      original.Copyright = backup.Copyright;
+      original.CopyrightInformation = backup.CopyrightInformation;
+      original.Disc = backup.Disc;
+      original.EncodedBy = backup.EncodedBy;
+      original.Interpreter = backup.Interpreter;
+      original.Genre = backup.Genre;
+      original.Grouping = backup.Grouping;
+      original.InvolvedPeople = backup.InvolvedPeople;
+      original.Lyrics = backup.Lyrics;
+      original.MediaType = backup.MediaType;
+      original.MusicCreditList = backup.MusicCreditList;
+      original.OfficialAudioFileInformation = backup.OfficialAudioFileInformation;
+      original.OfficialArtistInformation = backup.OfficialArtistInformation;
+      original.OfficialAudioSourceInformation = backup.OfficialAudioSourceInformation;
+      original.OfficialInternetRadioInformation = backup.OfficialInternetRadioInformation;
+      original.OfficialPaymentInformation = backup.OfficialPaymentInformation;
+      original.OfficialPublisherInformation = backup.OfficialPublisherInformation;
+      original.OriginalAlbum = backup.OriginalAlbum;
+      original.OriginalFileName = backup.OriginalFileName;
+      original.OriginalLyricsWriter = backup.OriginalLyricsWriter;
+      original.OriginalArtist = backup.OriginalArtist;
+      original.OriginalOwner = backup.OriginalOwner;
+      original.OriginalRelease = backup.OriginalRelease;
+      original.Publisher = backup.Publisher;
+      original.Rating = backup.Rating;
+      original.ReplayGainTrack = backup.ReplayGainTrack;
+      original.ReplayGainTrackPeak = backup.ReplayGainTrackPeak;
+      original.ReplayGainAlbum = backup.ReplayGainAlbum;
+      original.ReplayGainAlbumPeak = backup.ReplayGainAlbumPeak;
+      original.SubTitle = backup.SubTitle;
+      original.TextWriter = backup.TextWriter;
+      original.Title = backup.Title;
+      original.TitleSortName = backup.TitleSortName;
+      original.Track = backup.Track;
+      original.TrackLength = backup.TrackLength;
+      original.Year = backup.Year;
+    }
+
     #endregion
 
     #region Interface
@@ -424,6 +786,13 @@ namespace MPTagThat.TagEdit.ViewModels
       if (_songs.Count > 0)
       {
         SetFormBindings(ref _songs); //Set the bindings so that the data is displayed in the View
+        IsEnabled = true;
+        IsApplyButtonEnabled = false;
+      }
+      else
+      {
+        ClearForm();
+        IsEnabled = false;
       }
     }
 
@@ -447,8 +816,8 @@ namespace MPTagThat.TagEdit.ViewModels
       {
         // Clear the Tagedit Panel on Folder change
         case "selectedfolderchanged":
-          SongEdit = new SongData();
-          FrontCover = null;
+          ClearForm();
+          IsEnabled = false;
           break;
       }
     }

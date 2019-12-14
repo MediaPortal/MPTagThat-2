@@ -119,6 +119,16 @@ namespace MPTagThat.SongGrid.ViewModels
     /// </summary>
     public bool ChangesPending { get; set; }
 
+    /// <summary>
+    /// Binding for Wait Cursor
+    /// </summary>
+    private bool _isBusy;
+    public bool IsBusy
+    {
+      get => _isBusy;
+      set => SetProperty(ref _isBusy, value);
+    }
+
     #endregion
 
     #region Commands
@@ -184,6 +194,7 @@ namespace MPTagThat.SongGrid.ViewModels
             return;
           }
 
+          IsBusy = true;
           _folderScanInProgress = true;
           Songs.Clear();
           _nonMusicFiles = new List<string>();
@@ -211,6 +222,7 @@ namespace MPTagThat.SongGrid.ViewModels
               Application.DoEvents();
               if (_progressCancelled)
               {
+                IsBusy = false;
                 break;
               }
 
@@ -280,11 +292,7 @@ namespace MPTagThat.SongGrid.ViewModels
           evt.MessageData.Add("files", _nonMusicFiles);
           EventSystem.Publish(evt);
 
-          //_main.ToolStripStatusScan.Text = "";
-
-
-          //ResetProgressBar();
-          //_main.progressBar1.Style = ProgressBarStyle.Continuous;
+          IsBusy = false;
 
           // Display Status Information
           try
@@ -303,7 +311,6 @@ namespace MPTagThat.SongGrid.ViewModels
             ChangeErrorRowColor();
           }
 
-          _main.FolderScanning = false;
           */
           _folderScanInProgress = false;
           log.Trace("<<<");
@@ -422,6 +429,8 @@ namespace MPTagThat.SongGrid.ViewModels
 
       var songs = (_selectedItems as ObservableCollection<object>).Cast<SongData>().ToList();
 
+      IsBusy = true;
+
       // If the command needs Preprocessing, then first loop over all tracks
       if (commandObj.NeedsPreprocessing)
       {
@@ -489,6 +498,8 @@ namespace MPTagThat.SongGrid.ViewModels
       msg.CurrentProgress = 0;
       msg.CurrentFile = "";
       EventSystem.Publish(msg);
+
+      IsBusy = false;
 
       commandObj.Dispose();
       log.Trace("<<<");

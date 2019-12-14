@@ -42,15 +42,35 @@ namespace MPTagThat.Core.Common.Song
     private string _albumArtistSort;
     private string _album;
     private string _albumSort;
+    private int _bpm;
+    private bool _compilation;
     private string _composer;
     private string _conductor;
     private string _copyright;
+    private UInt32 _discNumber;
+    private UInt32 _discCount;
+    private string _fileName;
+    private string _fullFileName;
     private string _genre;
     private string _grouping;
     private string _title;
     private string _titleSort;
+    private UInt32 _trackNumber;
+    private UInt32 _trackCount;
     private string _replaygainTrack;
     private string _replaygainAlbum;
+    private string _replayGainTrackPeak;
+    private string _replayGainAlbumPeak;
+    private int _year;
+
+    private TimeSpan _durationTimeSpan;
+    private string _fileSize;
+    private string _bitRate;
+    private string _sampleRate;
+    private string _channels;
+    private string _version;
+    private string _creationTime;
+    private string _lastWriteTime;
 
     private Util.MP3Error _mp3ValError;
     private string _mp3ValErrorText;
@@ -114,17 +134,14 @@ namespace MPTagThat.Core.Common.Song
     /// 3  = Broken Song
     /// 4  = Fixed Song
     /// </summary>
-    public int Status { get; set; } = -1;
+    private int _status = -1;
+    public int Status { get => _status; set => SetProperty(ref _status, value); }
 
     /// <summary>
     /// Has the Track been changed
     /// </summary>
-    private bool _changed =false;
-    public bool Changed 
-    {
-      get => _changed; 
-      set { SetProperty(ref _changed, value); } 
-    }
+    private bool _changed = false;
+    public bool Changed { get => _changed; set => SetProperty(ref _changed, value); }
 
     /// <summary>
     /// Indicates, if the Tags have been removed
@@ -149,28 +166,22 @@ namespace MPTagThat.Core.Common.Song
     /// <summary>
     /// The Full Filename including the path
     /// </summary>
-    public string FullFileName { get; set; }
+    public string FullFileName { get => _fullFileName; set => SetProperty(ref _fullFileName, value); }
 
     /// <summary>
     /// Filename without Path
     /// </summary>
-    public string FileName { get; set; }
+    public string FileName { get => _fileName; set => SetProperty(ref _fileName, value); }
 
     /// <summary>
     /// File Extension
     /// </summary>
-    public string FileExt
-    {
-      get { return Path.GetExtension(FullFileName); }
-    }
+    public string FileExt { get => Path.GetExtension(FullFileName); }
 
     /// <summary>
     /// Path of the File
     /// </summary>
-    public string FilePath
-    {
-      get { return Path.GetDirectoryName(FullFileName); }
-    }
+    public string FilePath { get => Path.GetDirectoryName(FullFileName); }
 
     /// <summary>
     /// The Tag Type
@@ -190,17 +201,9 @@ namespace MPTagThat.Core.Common.Song
     /// <summary>
     /// Has the Track fixable errors?
     /// </summary>
-    public Util.MP3Error MP3ValidationError
-    {
-      get { return _mp3ValError; }
-      set { _mp3ValError = value; }
-    }
+    public Util.MP3Error MP3ValidationError { get => _mp3ValError; set => SetProperty(ref _mp3ValError, value); }
 
-    public string MP3ValidationErrorText
-    {
-      get { return _mp3ValErrorText; }
-      set { _mp3ValErrorText = value; }
-    }
+    public string MP3ValidationErrorText { get => _mp3ValErrorText; set => SetProperty(ref _mp3ValErrorText, value); }
 
     #endregion
 
@@ -210,10 +213,10 @@ namespace MPTagThat.Core.Common.Song
     /// Artist / Performer Tag
     /// ID3: TPE1
     /// </summary>
-    public string Artist
-    {
-      get { return _artist; }
-      set { SetProperty(ref _artist, value ?? ""); }
+    public string Artist 
+    { 
+      get => _artist;
+      set => SetProperty(ref _artist, value ?? "");
     }
 
     /// <summary>
@@ -222,8 +225,8 @@ namespace MPTagThat.Core.Common.Song
     /// </summary>
     public string ArtistSortName
     {
-      get { return _artistSort; }
-      set { _artistSort = value ?? ""; }
+      get => _artistSort;
+      set => SetProperty(ref _artistSort, value ?? "");
     }
 
     /// <summary>
@@ -232,8 +235,8 @@ namespace MPTagThat.Core.Common.Song
     /// </summary>
     public string AlbumArtist
     {
-      get { return _albumArtist; }
-      set { _albumArtist = value ?? ""; }
+      get => _albumArtist;
+      set => SetProperty(ref _albumArtist, value ?? "");
     }
 
     /// <summary>
@@ -242,8 +245,8 @@ namespace MPTagThat.Core.Common.Song
     /// </summary>
     public string AlbumArtistSortName
     {
-      get { return _albumArtistSort; }
-      set { _albumArtistSort = value ?? ""; }
+      get => _albumArtistSort;
+      set => SetProperty(ref _albumArtistSort, value ?? "");
     }
 
     /// <summary>
@@ -252,8 +255,8 @@ namespace MPTagThat.Core.Common.Song
     /// </summary>
     public string Album
     {
-      get { return _album; }
-      set { _album = value ?? ""; }
+      get => _album;
+      set => SetProperty(ref _album, value ?? "");
     }
 
     /// <summary>
@@ -262,15 +265,19 @@ namespace MPTagThat.Core.Common.Song
     /// </summary>
     public string AlbumSortName
     {
-      get { return _albumSort; }
-      set { _albumSort = value ?? ""; }
+      get => _albumSort;
+      set => SetProperty(ref _albumSort, value ?? "");
     }
 
     /// <summary>
     /// Beats Per Minute Tag
     /// ID3: TBPM
     /// </summary>
-    public int BPM { get; set; }
+    public int BPM 
+    { 
+      get => _bpm;
+      set => SetProperty(ref _bpm, value);
+    }
 
     /// <summary>
     /// Comment Tag
@@ -278,19 +285,18 @@ namespace MPTagThat.Core.Common.Song
     /// </summary>
     public string Comment
     {
-      get
-      {
-        return _comments.Count > 0 ? _comments[0].Text : "";
-      }
+      get => _comments.Count > 0 ? _comments[0].Text : "";
       set
       {
         if (_comments.Count == 0)
         {
           _comments.Add(new Comment("", "", value));
+          RaisePropertyChanged("Comment");
         }
         else
         {
           _comments[0].Text = value;
+          RaisePropertyChanged("Comment");
         }
       }
     }
@@ -301,7 +307,7 @@ namespace MPTagThat.Core.Common.Song
     /// </summary>
     public List<Comment> ID3Comments
     {
-      get { return _comments; }
+      get => _comments; 
     }
 
     /// <summary>
@@ -310,11 +316,19 @@ namespace MPTagThat.Core.Common.Song
     /// </summary>
     public string CommercialInformation
     {
-      get { return GetFrame("WCOM"); }
-      set { SetText("WCOM", value); }
+      get => GetFrame("WCOM"); 
+      set 
+      { 
+        SetText("WCOM", value);
+        RaisePropertyChanged("CommercialInformation");
+      }
     }
 
-    public bool Compilation { get; set; }
+    public bool Compilation 
+    { 
+      get => _compilation; 
+      set => SetProperty(ref _compilation, value); 
+    }
 
     /// <summary>
     /// Composer Tag
@@ -322,8 +336,8 @@ namespace MPTagThat.Core.Common.Song
     /// </summary>
     public string Composer
     {
-      get { return _composer; }
-      set { _composer = value ?? ""; }
+      get => _composer;
+      set => SetProperty(ref _composer, value ?? "");
     }
 
     /// <summary>
@@ -332,8 +346,8 @@ namespace MPTagThat.Core.Common.Song
     /// </summary>
     public string Conductor
     {
-      get { return _conductor; }
-      set { _conductor = value ?? ""; }
+      get => _conductor;
+      set => SetProperty(ref _conductor, value ?? ""); 
     }
 
     /// <summary>
@@ -342,8 +356,8 @@ namespace MPTagThat.Core.Common.Song
     /// </summary>
     public string Copyright
     {
-      get { return _copyright; }
-      set { _copyright = value ?? ""; }
+      get => _copyright;
+      set => SetProperty(ref _copyright, value ?? "");
     }
 
     /// <summary>
@@ -352,8 +366,12 @@ namespace MPTagThat.Core.Common.Song
     /// </summary>
     public string CopyrightInformation
     {
-      get { return GetFrame("WCOP"); }
-      set { SetText("WCOP", value); }
+      get => GetFrame("WCOP");
+      set 
+      { 
+        SetText("WCOP", value);
+        RaisePropertyChanged("CopyrightInformation");
+      }
     }
 
     /// <summary>
@@ -387,18 +405,35 @@ namespace MPTagThat.Core.Common.Song
             DiscCount = Convert.ToUInt32(disc[1]);
         }
         catch (Exception) { }
+        RaisePropertyChanged("Disc");
       }
     }
 
     /// <summary>
     /// The Disc Number part of TPOS
     /// </summary>
-    public UInt32 DiscNumber { get; set; }
+    public UInt32 DiscNumber 
+    { 
+      get => _discNumber;
+      set
+      {
+        SetProperty(ref _discNumber, value);
+        RaisePropertyChanged("Disc");
+      }
+    }
 
     /// <summary>
     /// The Disc Count part of TPOS
     /// </summary>
-    public UInt32 DiscCount { get; set; }
+    public UInt32 DiscCount 
+    { 
+      get => _discCount;
+      set
+      {
+        SetProperty(ref _discCount, value);
+        RaisePropertyChanged("Disc");
+      }
+    }
 
     /// <summary>
     /// Encoded By
@@ -406,8 +441,11 @@ namespace MPTagThat.Core.Common.Song
     /// </summary>
     public string EncodedBy
     {
-      get { return GetFrame("TENC"); }
-      set { SetText("TENC", value); }
+      get => GetFrame("TENC");
+      set { 
+        SetText("TENC", value);
+        RaisePropertyChanged("EncodedBy");
+      }
     }
 
     /// <summary>
@@ -416,8 +454,12 @@ namespace MPTagThat.Core.Common.Song
     /// </summary>
     public string Interpreter
     {
-      get { return GetFrame("TPE4"); }
-      set { SetText("TPE4", value); }
+      get => GetFrame("TPE4");
+      set 
+      { 
+        SetText("TPE4", value);
+        RaisePropertyChanged("Interpreter");
+      }
     }
 
     /// <summary>
@@ -426,8 +468,8 @@ namespace MPTagThat.Core.Common.Song
     /// </summary>
     public string Genre
     {
-      get { return _genre; }
-      set { _genre = value ?? ""; }
+      get => _genre;
+      set => SetProperty(ref _genre, value ?? ""); 
     }
 
     /// <summary>
@@ -436,8 +478,8 @@ namespace MPTagThat.Core.Common.Song
     /// </summary>
     public string Grouping
     {
-      get { return _grouping; }
-      set { _grouping = value ?? ""; }
+      get => _grouping;
+      set => SetProperty(ref _grouping, value ?? "");
     }
 
     /// <summary>
@@ -465,6 +507,7 @@ namespace MPTagThat.Core.Common.Song
           SetText("TIPL", value);
 
         SetText("IPLS", value);
+        RaisePropertyChanged("InvolvedPeople");
       }
     }
 
@@ -488,13 +531,14 @@ namespace MPTagThat.Core.Common.Song
         {
           _lyrics[0].Text = value;
         }
+        RaisePropertyChanged("Lyrics");
       }
     }
 
 
     public List<Lyric> LyricsFrames
     {
-      get { return _lyrics; }
+      get => _lyrics;
     }
 
     /// <summary>
@@ -503,8 +547,12 @@ namespace MPTagThat.Core.Common.Song
     /// </summary>
     public string MediaType
     {
-      get { return GetFrame("TMED"); }
-      set { SetText("TMED", value); }
+      get => GetFrame("TMED");
+      set 
+      { 
+        SetText("TMED", value);
+        RaisePropertyChanged("MediaType");
+      }
     }
 
     /// <summary>
@@ -513,8 +561,12 @@ namespace MPTagThat.Core.Common.Song
     /// </summary>
     public string MusicCreditList
     {
-      get { return GetFrame("TMCL"); }
-      set { SetText("TMCL", value); }
+      get => GetFrame("TMCL");
+      set 
+      { 
+        SetText("TMCL", value);
+        RaisePropertyChanged("MusicCreditList");
+      }
     }
 
     /// <summary>
@@ -523,8 +575,12 @@ namespace MPTagThat.Core.Common.Song
     /// </summary>
     public string OfficialAudioFileInformation
     {
-      get { return GetFrame("WOAF"); }
-      set { SetText("WOAF", value); }
+      get => GetFrame("WOAF");
+      set 
+      { 
+        SetText("WOAF", value);
+        RaisePropertyChanged("OfficialAudioFileInformation");
+      }
     }
 
     /// <summary>
@@ -533,8 +589,12 @@ namespace MPTagThat.Core.Common.Song
     /// </summary>
     public string OfficialArtistInformation
     {
-      get { return GetFrame("WOAR"); }
-      set { SetText("WOAR", value); }
+      get => GetFrame("WOAR"); 
+      set 
+      { 
+        SetText("WOAR", value);
+        RaisePropertyChanged("OfficialArtistInformation");
+      }
     }
 
     /// <summary>
@@ -543,8 +603,12 @@ namespace MPTagThat.Core.Common.Song
     /// </summary>
     public string OfficialAudioSourceInformation
     {
-      get { return GetFrame("WOAS"); }
-      set { SetText("WOAS", value); }
+      get => GetFrame("WOAS");
+      set 
+      { 
+        SetText("WOAS", value);
+        RaisePropertyChanged("OfficialAudioSourceInformation");
+      }
     }
 
     /// <summary>
@@ -553,8 +617,12 @@ namespace MPTagThat.Core.Common.Song
     /// </summary>
     public string OfficialInternetRadioInformation
     {
-      get { return GetFrame("WORS"); }
-      set { SetText("WORS", value); }
+      get => GetFrame("WORS");
+      set 
+      { 
+        SetText("WORS", value);
+        RaisePropertyChanged("OfficialInternetRadioInformation");
+      }
     }
 
     /// <summary>
@@ -563,8 +631,12 @@ namespace MPTagThat.Core.Common.Song
     /// </summary>
     public string OfficialPaymentInformation
     {
-      get { return GetFrame("WPAY"); }
-      set { SetText("WPAY", value); }
+      get => GetFrame("WPAY");
+      set 
+      { 
+        SetText("WPAY", value);
+        RaisePropertyChanged("OfficialPaymentInformation");
+      }
     }
 
     /// <summary>
@@ -573,8 +645,12 @@ namespace MPTagThat.Core.Common.Song
     /// </summary>
     public string OfficialPublisherInformation
     {
-      get { return GetFrame("WPUB"); }
-      set { SetText("WPUB", value); }
+      get => GetFrame("WPUB");
+      set 
+      { 
+        SetText("WPUB", value);
+        RaisePropertyChanged("OfficialPublisherInformation");
+      }
     }
 
     /// <summary>
@@ -583,8 +659,12 @@ namespace MPTagThat.Core.Common.Song
     /// </summary>
     public string OriginalAlbum
     {
-      get { return GetFrame("TOAL"); }
-      set { SetText("TOAL", value); }
+      get => GetFrame("TOAL");
+      set 
+      { 
+        SetText("TOAL", value);
+        RaisePropertyChanged("OriginalAlbum");
+      }
     }
 
     /// <summary>
@@ -593,8 +673,12 @@ namespace MPTagThat.Core.Common.Song
     /// </summary>
     public string OriginalFileName
     {
-      get { return GetFrame("TOFN"); }
-      set { SetText("TOFN", value); }
+      get => GetFrame("TOFN");
+      set 
+      { 
+        SetText("TOFN", value);
+        RaisePropertyChanged("OriginalFileName");
+      }
     }
 
     /// <summary>
@@ -603,8 +687,12 @@ namespace MPTagThat.Core.Common.Song
     /// </summary>
     public string OriginalLyricsWriter
     {
-      get { return GetFrame("TOLY"); }
-      set { SetText("TOLY", value); }
+      get => GetFrame("TOLY");
+      set 
+      { 
+        SetText("TOLY", value);
+        RaisePropertyChanged("OriginalLyricsWriter");
+      }
     }
 
     /// <summary>
@@ -613,8 +701,12 @@ namespace MPTagThat.Core.Common.Song
     /// </summary>
     public string OriginalArtist
     {
-      get { return GetFrame("TOPE"); }
-      set { SetText("TOPE", value); }
+      get => GetFrame("TOPE");
+      set 
+      { 
+        SetText("TOPE", value);
+        RaisePropertyChanged("OriginalArtist");
+      }
     }
 
     /// <summary>
@@ -623,8 +715,12 @@ namespace MPTagThat.Core.Common.Song
     /// </summary>
     public string OriginalOwner
     {
-      get { return GetFrame("TOWN"); }
-      set { SetText("TOWN", value); }
+      get => GetFrame("TOWN");
+      set 
+      { 
+        SetText("TOWN", value);
+        RaisePropertyChanged("OriginalOwner");
+      }
     }
 
     /// <summary>
@@ -647,15 +743,16 @@ namespace MPTagThat.Core.Common.Song
           return;
 
         SetText("TDOR", value);
+        RaisePropertyChanged("OriginalRelease");
       }
     }
 
     /// <summary>
-    /// Returns the stored Coverart for the TRack
+    /// Returns the stored Coverart for the Song
     /// </summary>
     public List<Picture> Pictures
     {
-      get { return _pictures; }
+      get => _pictures; 
     }
 
     /// <summary>
@@ -669,8 +766,12 @@ namespace MPTagThat.Core.Common.Song
     /// </summary>
     public string Publisher
     {
-      get { return GetFrame("TPUB"); }
-      set { SetText("TPUB", value); }
+      get => GetFrame("TPUB");
+      set 
+      { 
+        SetText("TPUB", value);
+        RaisePropertyChanged("Publisher");
+      }
     }
 
     /// <summary>
@@ -723,17 +824,18 @@ namespace MPTagThat.Core.Common.Song
         {
           _popmframes[0].Rating = value;
         }
+        RaisePropertyChanged("Rating");
       }
     }
 
     public List<PopmFrame> Ratings
     {
-      get { return _popmframes; }
+      get => _popmframes;
     }
 
     public string ReplayGainTrack
     {
-      get { return _replaygainTrack; }
+      get => _replaygainTrack;
 
       set
       {
@@ -742,10 +844,15 @@ namespace MPTagThat.Core.Common.Song
           value += " dB";
         }
         _replaygainTrack = value;
+        RaisePropertyChanged("ReplayGainTrack");
       }
     }
 
-    public string ReplayGainTrackPeak { get; set; }
+    public string ReplayGainTrackPeak 
+    {
+      get => _replayGainTrackPeak;
+      set => SetProperty(ref _replayGainTrackPeak, value);
+    }
 
     public string ReplayGainAlbum
     {
@@ -758,10 +865,15 @@ namespace MPTagThat.Core.Common.Song
           value += " dB";
         }
         _replaygainAlbum = value;
+        RaisePropertyChanged("ReplayGainAlbum");
       }
     }
 
-    public string ReplayGainAlbumPeak { get; set; }
+    public string ReplayGainAlbumPeak 
+    {
+      get => _replayGainAlbumPeak;
+      set => SetProperty(ref _replayGainAlbumPeak, value);
+    }
 
 
     /// <summary>
@@ -770,8 +882,12 @@ namespace MPTagThat.Core.Common.Song
     /// </summary>
     public string SubTitle
     {
-      get { return GetFrame("TIT3"); }
-      set { SetText("TIT3", value); }
+      get => GetFrame("TIT3");
+      set 
+      { 
+        SetText("TIT3", value);
+        RaisePropertyChanged("SubTitle");
+      }
     }
 
     /// <summary>
@@ -780,8 +896,12 @@ namespace MPTagThat.Core.Common.Song
     /// </summary>
     public string TextWriter
     {
-      get { return GetFrame("TEXT"); }
-      set { SetText("TEXT", value); }
+      get => GetFrame("TEXT");
+      set 
+      { 
+        SetText("TEXT", value);
+        RaisePropertyChanged("TextWriter");
+      }
     }
 
     /// <summary>
@@ -790,8 +910,8 @@ namespace MPTagThat.Core.Common.Song
     /// </summary>
     public string Title
     {
-      get { return _title; }
-      set { _title = value ?? ""; }
+      get => _title;
+      set => SetProperty(ref _title, value ?? "");
     }
 
     /// <summary>
@@ -800,8 +920,8 @@ namespace MPTagThat.Core.Common.Song
     /// </summary>
     public string TitleSortName
     {
-      get { return _titleSort; }
-      set { _titleSort = value ?? ""; }
+      get => _titleSort;
+      set => SetProperty(ref _titleSort, value ?? "");
     }
 
     /// <summary>
@@ -845,18 +965,35 @@ namespace MPTagThat.Core.Common.Song
         {
           TrackCount = 0;
         }
+        RaisePropertyChanged("Track");
       }
     }
 
     /// <summary>
     /// The Track Number of the TRCK frame
     /// </summary>
-    public UInt32 TrackNumber { get; set; }
+    public UInt32 TrackNumber 
+    { 
+      get => _trackNumber;
+      set
+      {
+        SetProperty(ref _trackNumber, value);
+        RaisePropertyChanged("Track");
+      }
+    }
 
     /// <summary>
     /// The Track Count of the TRCK frame
     /// </summary>
-    public UInt32 TrackCount { get; set; }
+    public UInt32 TrackCount 
+    { 
+      get => _trackCount;
+      set
+      {
+        SetProperty(ref _trackCount, value);
+        RaisePropertyChanged("Track");
+      }
+    }
 
     /// <summary>
     /// Track Length Tag
@@ -864,15 +1001,23 @@ namespace MPTagThat.Core.Common.Song
     /// </summary>
     public string TrackLength
     {
-      get { return GetFrame("TLEN"); }
-      set { SetText("TLEN", value); }
+      get => GetFrame("TLEN");
+      set 
+      { 
+        SetText("TLEN", value);
+        RaisePropertyChanged("TrackLength");
+      }
     }
 
     /// <summary>
     /// Year Tag
     /// ID3: TYER
     /// </summary>
-    public int Year { get; set; }
+    public int Year 
+    { 
+      get => _year; 
+      set => SetProperty(ref _year, value); 
+    }
     #endregion
 
     #region Audio File Properties
@@ -892,44 +1037,53 @@ namespace MPTagThat.Core.Common.Song
     /// <summary>
     /// The Duration of the File as timespan
     /// </summary>
-    public TimeSpan DurationTimespan { get; set; }
+    public TimeSpan DurationTimespan { get => _durationTimeSpan; set => SetProperty(ref _durationTimeSpan, value); }
 
     /// <summary>
     /// The Filesize in kb
     /// </summary>
-    public string FileSize { get; set; }
+    public string FileSize { get => _fileSize; set => SetProperty(ref _fileSize, value); }
 
     /// <summary>
     /// The Bitrate
     /// </summary>
-    public string BitRate { get; set; }
+    public string BitRate { get => _bitRate; set => SetProperty(ref _bitRate, value); }
 
     /// <summary>
     /// The Sample Rate
     /// </summary>
-    public string SampleRate { get; set; }
+    public string SampleRate { get => _sampleRate; set => SetProperty(ref _sampleRate, value); }
 
     /// <summary>
     /// The number of Audio Channels
     /// </summary>
-    public string Channels { get; set; }
+    public string Channels { get => _channels; set => SetProperty(ref _channels, value); }
 
     /// <summary>
     /// Version of the file
     /// </summary>
-    public string Version { get; set; }
+    public string Version { get => _version; set => SetProperty(ref _version, value); }
 
     /// <summary>
     /// File Creation date
     /// </summary>
-    public string CreationTime { get; set; }
+    public string CreationTime { get => _creationTime; set => SetProperty(ref _creationTime, value); }
 
     /// <summary>
     /// Last Write Date
     /// </summary>
-    public string LastWriteTime { get; set; }
+    public string LastWriteTime { get => _lastWriteTime; set => SetProperty(ref _lastWriteTime, value); }
 
     #endregion
+    #endregion
+
+    #region Public Methods
+
+    public SongData Clone()
+    {
+      return (SongData)this.MemberwiseClone();
+    }
+
     #endregion
 
     #region Private Methods
