@@ -32,46 +32,38 @@ namespace MPTagThat.Dialogs.ViewModels
   /// <summary>
   /// This is the base class to support showing of Dialogs
   /// </summary>
-  public class DialogViewModelBase : BindableBase, IDialogAware, IDialogWindow
+  public class DialogViewModelBase : BindableBase, IDialogAware
   {
     private DelegateCommand<string> _closeDialogCommand;
     public DelegateCommand<string> CloseDialogCommand =>
-        _closeDialogCommand ?? (_closeDialogCommand = new DelegateCommand<string>(CloseDialog));
-
-    private string _iconSource;
-    public string IconSource
-    {
-      get { return _iconSource; }
-      set { SetProperty(ref _iconSource, value); }
-    }
+      _closeDialogCommand ?? (_closeDialogCommand = new DelegateCommand<string>(CloseDialog));
 
     private string _title;
     public string Title
     {
-      get { return _title; }
-      set { SetProperty(ref _title, value); }
+      get => _title; 
+      set => SetProperty(ref _title, value);
     }
 
-    public object Content { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-    public Window Owner { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-    public object DataContext { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-    public IDialogResult Result { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-    public Style Style { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-
     public event Action<IDialogResult> RequestClose;
-    public event RoutedEventHandler Loaded;
-    public event EventHandler Closed;
-    public event CancelEventHandler Closing;
 
     public virtual void CloseDialog(string parameter)
     {
+      ButtonResult result = ButtonResult.None;
 
+      if (parameter?.ToLower() == "true")
+        result = ButtonResult.OK;
+      else if (parameter?.ToLower() == "false")
+        result = ButtonResult.Cancel;
+
+      
     }
 
-    public virtual void RaiseRequestClose(IDialogResult dialogResult)
+    public void CloseDialogWindow(DialogResult result)
     {
-      RequestClose?.Invoke(dialogResult);
+      RequestClose?.Invoke(result);
     }
+
 
     public virtual bool CanCloseDialog()
     {
@@ -87,21 +79,5 @@ namespace MPTagThat.Dialogs.ViewModels
     {
 
     }
-
-    public void Close()
-    {
-      throw new NotImplementedException();
-    }
-
-    public void Show()
-    {
-      throw new NotImplementedException();
-    }
-
-    public bool? ShowDialog()
-    {
-      throw new NotImplementedException();
-    }
   }
-
 }

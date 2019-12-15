@@ -93,8 +93,12 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="ViewModels\DialogServiceExtensions.cs" />
     <Compile Include="ViewModels\DialogViewModelBase.cs" />
     <Compile Include="ViewModels\FileName2TagViewModel.cs" />
+    <Compile Include="Views\DialogWindowView.xaml.cs">
+      <DependentUpon>DialogWindowView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\FileName2TagView.xaml.cs">
       <DependentUpon>FileName2TagView.xaml</DependentUpon>
     </Compile>
@@ -110,6 +114,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Views\DialogWindowView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\FileName2TagView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

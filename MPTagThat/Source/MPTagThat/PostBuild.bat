@@ -54,6 +54,7 @@ xcopy /y %1\UI\MPTagThat.TagEdit\bin\%2\Syncfusion.* %TARGETPATH%\Bin\
 
 REM Copy TreeView Module
 xcopy /y %1\UI\MPTagThat.TreeView\bin\%2\MPTagThat.TreeView.* %TARGETPATH%\Bin\
+xcopy /y %1\UI\MPTagThat.TagEdit\bin\%2\Microsoft.Xaml.* %TARGETPATH%\Bin\
 xcopy /y %1\UI\MPTagThat.TreeView\bin\%2\Syncfusion.* %TARGETPATH%\Bin\
 
 REM Copy Dialogs Module

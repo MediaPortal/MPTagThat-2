@@ -50,14 +50,14 @@ namespace MPTagThat.Dialogs.ViewModels
 
     public override void CloseDialog(string parameter)
     {
-      ButtonResult result = ButtonResult.Ignore;
+      ButtonResult result = ButtonResult.None;
 
       if (parameter?.ToLower() == "true")
         result = ButtonResult.OK;
       else if (parameter?.ToLower() == "false")
-        result = ButtonResult.No;
+        result = ButtonResult.Cancel;
 
-      RaiseRequestClose(new DialogResult(result));
+      CloseDialogWindow(new DialogResult(result));
     }
   }
 }

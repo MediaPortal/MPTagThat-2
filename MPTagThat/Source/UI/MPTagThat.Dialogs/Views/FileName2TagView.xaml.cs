@@ -37,13 +37,11 @@ namespace MPTagThat.Dialogs.Views
   /// <summary>
   /// Interaction logic for FileName2TagView.xaml
   /// </summary>
-  public partial class FileName2TagView : Window, IDialogWindow
+  public partial class FileName2TagView : UserControl
   {
     public FileName2TagView()
     {
       InitializeComponent();
     }
-
-    public IDialogResult Result { get; set; }
   }
 }

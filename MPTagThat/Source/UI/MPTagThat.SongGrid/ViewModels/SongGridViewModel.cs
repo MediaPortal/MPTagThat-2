@@ -44,6 +44,7 @@ using Syncfusion.UI.Xaml.Grid;
 using WPFLocalizeExtension.Engine;
 using System.Windows.Threading;
 using System.Threading;
+using MPTagThat.Dialogs.ViewModels;
 using Action = MPTagThat.Core.Common.Action;
 using Prism.Services.Dialogs;
 
@@ -528,7 +529,7 @@ namespace MPTagThat.SongGrid.ViewModels
           }
           if ((Action.ActionType)msg.MessageData["command"] == Action.ActionType.ACTION_FILENAME2TAG)
           {
-            _dialogService.ShowDialog("FileName2TagView", new DialogParameters($"message=Huhu"), r =>
+            _dialogService.ShowNotificationInAnotherWindow("FileName2TagView", "DialogWindowView","Huhu", r =>
             {
              
             });
