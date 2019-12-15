@@ -11,7 +11,7 @@
         lex:ResxLocalizationProvider.DefaultAssembly="MPTagThat"
         lex:ResxLocalizationProvider.DefaultDictionary="Strings"
         xmlns:local="clr-namespace:MPTagThat"
-        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
         mc:Ignorable="d"
         syncfusion:SkinStorage.VisualStyle="Office2010Blue"
         Office2010Icon="../Resources/Images/MPTagThat_mepo.png"
