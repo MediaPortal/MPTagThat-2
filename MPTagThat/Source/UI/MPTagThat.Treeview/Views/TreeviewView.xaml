@@ -37,8 +37,6 @@
                               AllowMultiSelect="False"
                               ItemTemplate="{StaticResource template}"
                               ItemContainerStyle="{StaticResource itemstyle}" 
-                              syncfusion:TreeViewAdvSelectedItemChangedCommand.Command="{Binding  SelectedItemChangedCommand}"
-                              syncfusion:TreeViewAdvSelectedItemChangedCommand.CommandParameter="{Binding Path=SelectedItem, RelativeSource={RelativeSource Self}}" 
                               x:Name="Explorer"
                               ShowRootLines="False"
                               BorderThickness="0 0 1 0" 
@@ -47,6 +45,9 @@
       <i:Interaction.Triggers>
         <i:EventTrigger EventName="LoadOnDemand">
           <prism:InvokeCommandAction Command="{Binding LoadFolderOnDemandCommand}" />
+        </i:EventTrigger>
+        <i:EventTrigger EventName="SelectedItemChanged">
+          <prism:InvokeCommandAction Command="{Binding SelectedItemChangedCommand}" />
         </i:EventTrigger>
       </i:Interaction.Triggers>
       <syncfusion:TreeViewItemAdv 

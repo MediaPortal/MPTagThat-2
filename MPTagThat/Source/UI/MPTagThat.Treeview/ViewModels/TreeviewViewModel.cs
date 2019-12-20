@@ -23,6 +23,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
+using System.Windows;
 using System.Windows.Input;
 using System.Windows.Threading;
 using CommonServiceLocator;
@@ -95,7 +96,8 @@ namespace MPTagThat.Treeview.ViewModels
     /// <param name="param"></param>
     public void SelectedItemChanged(object param)
     {
-      if (param is INavTreeItem item)
+      var args = (RoutedPropertyChangedEventArgs<object>)param;
+      if (args.NewValue is INavTreeItem item)
       {
         this.SelectedItem = item;
       }
@@ -166,7 +168,7 @@ namespace MPTagThat.Treeview.ViewModels
 
       // Work around the problem with Load On Demand being called from the Constructor.
       _timer = new DispatcherTimer();
-      _timer.Interval = new TimeSpan(0, 0, 0, 0, 500);
+      _timer.Interval = new TimeSpan(0, 0, 0, 0, 300);
       _timer.Tick += new EventHandler(SetCurrentFolder);
       _timer.Tag = treeRootItem;
       _timer.Start();
@@ -213,6 +215,10 @@ namespace MPTagThat.Treeview.ViewModels
         currentDir.Add(tmpStr);
       }
       NavTreeUtils.ExpandCurrentFolder(currentDir, treeRootItem);
+      
+      // Set the Selected Item, because we will get a null value from the XAML Event
+      var item = new FolderItem { FullPathName = currentFolder };
+      SelectedItem = item;
     }
 
     #endregion
