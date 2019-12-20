@@ -19,7 +19,7 @@ namespace MPTagThat.Dialogs.Views
   /// <summary>
   /// Interaction logic for DialogWindowView.xaml
   /// </summary>
-  public partial class DialogWindowView : ChromelessWindow, IDialogWindow
+  public partial class DialogWindowView : Window, IDialogWindow
   {
     public DialogWindowView()
     {

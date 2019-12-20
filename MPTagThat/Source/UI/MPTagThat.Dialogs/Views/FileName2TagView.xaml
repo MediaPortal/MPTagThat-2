@@ -10,8 +10,7 @@
              lex:LocalizeDictionary.DesignCulture="en"
              lex:ResxLocalizationProvider.DefaultAssembly="MPTagThat"
              lex:ResxLocalizationProvider.DefaultDictionary="Strings"
-             mc:Ignorable="d" d:DesignWidth="263.506" d:DesignHeight="247.299"
-             Background="Transparent" >
+             mc:Ignorable="d" d:DesignWidth="263.506" d:DesignHeight="247.299" >
 
   <prism:Dialog.WindowStyle>
     <Style TargetType="Window">
@@ -22,18 +21,22 @@
     </Style>
   </prism:Dialog.WindowStyle>
 
-
-  <Grid x:Name="LayoutRoot" Margin="5">
+  <Border Background="Aqua" CornerRadius="5" >
+    <Grid x:Name="LayoutRoot" Margin="5">
     <Grid.RowDefinitions>
+      <RowDefinition />
       <RowDefinition />
       <RowDefinition Height="Auto" />
     </Grid.RowDefinitions>
 
-    <ContentControl HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="0" Content="{Binding Message}"/>
+    <TextBlock Text="{Binding Title}" />
 
-    <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right">
+    <ContentControl Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Content="{Binding Message}"/>
+
+    <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right">
       <Button Content="OK" Command="{Binding CloseDialogCommand}" CommandParameter="True" Width="75" Height="25" HorizontalAlignment="Right" Margin="0,10,0,0" />
       <Button Content="Cancel" Command="{Binding CloseDialogCommand}" CommandParameter="False" Width="75" Height="25" HorizontalAlignment="Right" Margin="20,10,0,0" IsDefault="True"/>
     </StackPanel>
   </Grid>
+  </Border>
 </UserControl>
