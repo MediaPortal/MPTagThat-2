@@ -29,6 +29,7 @@ xcopy /y %1\MPTagThat.Core\bin\%2\NewtonSoft.Json.dll %TARGETPATH%\Bin\
 xcopy /y %1\MPTagThat.Core\bin\%2\FreeImageNET.dll %TARGETPATH%\Bin\
 xcopy /y %1\MPTagThat.Core\bin\%2\x64\FreeImage.dll %TARGETPATH%\Bin\x64\
 xcopy /y %1\MPTagThat.Core\bin\%2\CommonServiceLocator.dll %TARGETPATH%\Bin\
+xcopy /y %1\MPTagThat.Core\bin\%2\Hqub.MusicBrainz.API.dll %TARGETPATH%\Bin\
 xcopy /y %1\MPTagThat.Core\bin\%2\Prism.* %TARGETPATH%\Bin\
 xcopy /y %1\MPTagThat.Core\bin\%2\Raven.* %TARGETPATH%\Bin\
 xcopy /y %1\MPTagThat.Core\bin\%2\Syncfusion.* %TARGETPATH%\Bin\
