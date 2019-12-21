@@ -20,7 +20,9 @@
         Height ="{Binding WindowHeight, Mode=TwoWay}" 
         Width="{Binding WindowWidth, Mode=TwoWay}" 
         Left="{Binding WindowLeft, Mode=TwoWay}" 
-        Top="{Binding WindowTop, Mode=TwoWay}" Closing="Window_Closing" 
+        Top="{Binding WindowTop, Mode=TwoWay}" 
+        Closing="Window_Closing" 
+        Loaded="Window_Loaded"
         local:InputBindingsBehavior.InputBindings="{Binding InputBindings}"
         >
 

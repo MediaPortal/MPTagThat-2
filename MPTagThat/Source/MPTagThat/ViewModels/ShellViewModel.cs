@@ -2,16 +2,11 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
-using System.Windows.Navigation;
 using System.Xml;
 using CommonServiceLocator;
 using MPTagThat.Core;
 using MPTagThat.Core.Common;
-using MPTagThat.Core.Common.Song;
 using MPTagThat.Core.Events;
 using MPTagThat.Core.Services.Logging;
 using MPTagThat.Core.Services.Settings;
@@ -20,7 +15,6 @@ using Prism.Mvvm;
 using Prism.Regions;
 using Syncfusion.SfSkinManager;
 using WPFLocalizeExtension.Engine;
-using WPFLocalizeExtension.Extensions;
 using Action = MPTagThat.Core.Common.Action;
 
 namespace MPTagThat.ViewModels
@@ -198,7 +192,6 @@ namespace MPTagThat.ViewModels
       WindowHeight = _options.MainSettings.FormSize.Height;
       WindowLeft = _options.MainSettings.FormLocation.X;
       WindowTop = _options.MainSettings.FormLocation.Y;
-
     }
     #endregion
 

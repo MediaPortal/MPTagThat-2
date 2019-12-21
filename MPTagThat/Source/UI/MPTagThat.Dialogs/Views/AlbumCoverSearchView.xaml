@@ -5,11 +5,12 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:prism="http://prismlibrary.com/"
              prism:ViewModelLocator.AutoWireViewModel="True"
+             xmlns:syncfusion="http://schemas.syncfusion.com/wpf" 
              xmlns:lex="http://wpflocalizeextension.codeplex.com"
              lex:LocalizeDictionary.DesignCulture="en"
              lex:ResxLocalizationProvider.DefaultAssembly="MPTagThat"
              lex:ResxLocalizationProvider.DefaultDictionary="Strings"
-             mc:Ignorable="d" d:DesignWidth="263.506" d:DesignHeight="247.299" >
+             mc:Ignorable="d" d:DesignWidth="647.506" d:DesignHeight="449.299" >
 
   <prism:Dialog.WindowStyle>
     <Style TargetType="Window">
@@ -20,7 +21,7 @@
     </Style>
   </prism:Dialog.WindowStyle>
 
-  <Border Background="Beige" CornerRadius="5" >
+  <Border Background="{Binding Background}"  BorderBrush="LightGray" BorderThickness="3" CornerRadius="5" >
     <Grid x:Name="LayoutRoot" Margin="5">
       <Grid.RowDefinitions>
         <RowDefinition />

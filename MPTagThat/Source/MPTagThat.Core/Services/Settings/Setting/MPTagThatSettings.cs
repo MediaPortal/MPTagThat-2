@@ -19,6 +19,8 @@
 
 using System.Collections.Generic;
 using System.Drawing;
+using System.Windows.Media;
+using Brush = System.Windows.Media.Brush;
 
 #endregion
 
@@ -28,13 +30,10 @@ namespace MPTagThat.Core.Services.Settings.Setting
   {
     #region Variables
 
-    private Size _formSize = new Size(1200, 1024);
-    private string _lastFolderUsed = "";
-
     private string _lastRipEncoderUsed;
     private int _numTrackDigits = 2;
 
-    private List<string> _albumInfoSites = new List<string>() { "Amazon", "MusicBrainz", "Discogs", "LastFM"};
+    private List<string> _albumInfoSites = new List<string>() { "MusicBrainz", "Discogs", "LastFM"};
 
     #endregion
 
@@ -42,12 +41,13 @@ namespace MPTagThat.Core.Services.Settings.Setting
 
     #region Layout
 
+    
+    [Setting(SettingScope.User, "#FFFFFF")]
+    public string BackGround { get; set; }
+
+
     [Setting(SettingScope.User, "")]
-    public string LastFolderUsed
-    {
-      get { return _lastFolderUsed; }
-      set { _lastFolderUsed = value; }
-    }
+    public string LastFolderUsed { get; set; } = "";
 
     [Setting(SettingScope.User, "false")]
     public bool ScanSubFolders { get; set; }
@@ -59,11 +59,7 @@ namespace MPTagThat.Core.Services.Settings.Setting
     public Point FormLocation { get; set; }
 
     [Setting(SettingScope.User, "")]
-    public Size FormSize
-    {
-      get { return _formSize; }
-      set { _formSize = value; }
-    }
+    public Size FormSize { get; set; } = new Size(1200, 1024);
 
     [Setting(SettingScope.User, "false")]
     public bool FormIsMaximized { get; set; }

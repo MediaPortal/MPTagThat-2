@@ -25,6 +25,8 @@ using MPTagThat.Core.Services.Settings.Setting;
 using Prism.Services.Dialogs;
 using System;
 using System.Collections.Generic;
+using System.Windows.Media;
+using Prism.Events;
 
 #endregion
 
@@ -48,6 +50,12 @@ namespace MPTagThat.Dialogs.ViewModels
     private DelegateAlbumFound _albumFound;
     private DelegateSearchFinished _searchFinished;
 
+
+    #endregion
+
+    #region Properties
+
+    public Brush Background => (Brush)new BrushConverter().ConvertFromString(_options.MainSettings.BackGround);
 
     #endregion
 
