@@ -13,6 +13,7 @@ xcopy %1\MPTagThat.Base\*.* %TARGETPATH% /E /R /Y /D
 REM Copy Main Program
 xcopy /y %1\MPTagThat\bin\%2\MPTagThat.exe %TARGETPATH%
 xcopy /y %1\MPTagThat\bin\%2\MPTagThat.exe.* %TARGETPATH%
+xcopy /y %1\MPTagThat\bin\%2\Bass.Net.dll %TARGETPATH%\Bin\
 xcopy /y %1\MPTagThat\bin\%2\Prism.* %TARGETPATH%\Bin\
 xcopy /y %1\MPTagThat\bin\%2\Syncfusion.* %TARGETPATH%\Bin\
 xcopy /y %1\MPTagThat\bin\%2\System.* %TARGETPATH%\Bin\
