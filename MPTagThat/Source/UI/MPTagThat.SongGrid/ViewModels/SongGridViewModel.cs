@@ -535,7 +535,16 @@ namespace MPTagThat.SongGrid.ViewModels
             });
           }
 
-          break;
+          if ((Action.ActionType)msg.MessageData["command"] == Action.ActionType.ACTION_GETCOVERART)
+          {
+            _dialogService.ShowNotificationInAnotherWindow("AlbumCoverSearchView", "DialogWindowView", "", r =>
+            {
+
+            });
+          }
+
+
+            break;
       }
     }
 

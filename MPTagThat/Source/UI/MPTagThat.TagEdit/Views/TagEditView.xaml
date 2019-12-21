@@ -37,7 +37,7 @@
                             SmallIcon="pack://application:,,,/MPTagThat.TagEdit;component/Resources/Images/Cancel_Changes_32x.png" 
                             Command="{Binding CancelEditCommand}" />
     </Grid>
-    <syncfusion:TabNavigationControl x:Name="tabNavigation" TabStripVisibility="Visible" >
+    <syncfusion:TabNavigationControl x:Name="tabNavigation" TabStripVisibility="Visible" SelectedIndex="0" >
       <syncfusion:TabNavigationItem Header="Main">
         <syncfusion:TabNavigationItem.Content>
           <StackPanel>
@@ -100,11 +100,11 @@
             <Grid Margin="5">
               <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="100"/>
-                <ColumnDefinition/>
+                <ColumnDefinition Width="250"/>
                 <ColumnDefinition Width="20"/>
               </Grid.ColumnDefinitions>
               <Label Grid.Column="0" Content="{lex:Loc tagEdit_Title}" />
-              <TextBox Grid.Column="1" Name="Title" Text="{Binding SongEdit.Title, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" >
+              <TextBox Grid.Column="1" Name="Title" Text="{Binding SongEdit.Title, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" MaxWidth="250" HorizontalAlignment="Stretch" >
                 <i:Interaction.Triggers>
                   <i:EventTrigger EventName="TextChanged">
                     <prism:InvokeCommandAction Command="{Binding TextChangedCommand}"/>
