@@ -52,7 +52,7 @@ using Prism.Services.Dialogs;
 
 namespace MPTagThat.SongGrid.ViewModels
 {
-  class SongGridViewModel : BindableBase, INotifyPropertyChanged
+  class SongGridViewModel : BindableBase
   {
     #region Variables
 
@@ -61,9 +61,7 @@ namespace MPTagThat.SongGrid.ViewModels
     private readonly NLogLogger log;
     private Options _options;
     private readonly SongGridViewColumns _gridColumns;
-    private ObservableCollection<object> _selectedItems;
-
-
+    
     private string _selectedFolder;
     private string[] _filterFileExtensions;
     private string _filterFileMask = "*.*";
@@ -85,8 +83,8 @@ namespace MPTagThat.SongGrid.ViewModels
     {
       _regionManager = regionManager;
       _dialogService = dialogService;
-      log = (ServiceLocator.Current.GetInstance(typeof(ILogger)) as ILogger).GetLogger;
-      _options = (ServiceLocator.Current.GetInstance(typeof(ISettingsManager)) as ISettingsManager).GetOptions;
+      log = (ServiceLocator.Current.GetInstance(typeof(ILogger)) as ILogger)?.GetLogger;
+      _options = (ServiceLocator.Current.GetInstance(typeof(ISettingsManager)) as ISettingsManager)?.GetOptions;
 
       // Load the Settings
       _gridColumns = new SongGridViewColumns();
@@ -103,8 +101,14 @@ namespace MPTagThat.SongGrid.ViewModels
 
     #region Properties
 
+    /// <summary>
+    /// The columns in the Grid
+    /// </summary>
     public Columns DataGridColumns { get; set; }
 
+    /// <summary>
+    /// The Songs in the Grid
+    /// </summary>
     public BindingList<SongData> Songs
     {
       get => _options.Songlist;
@@ -112,6 +116,17 @@ namespace MPTagThat.SongGrid.ViewModels
       {
         _options.Songlist = (SongList)value;
         RaisePropertyChanged("Songs");
+      }
+    }
+
+    private ObservableCollection<object> _selectedItems = new ObservableCollection<object>();
+    public ObservableCollection<object> SelectedItems
+    {
+      get => _selectedItems;
+      set
+      {
+        _selectedItems = value;
+        RaisePropertyChanged("SelectedItems");
       }
     }
 
@@ -144,7 +159,7 @@ namespace MPTagThat.SongGrid.ViewModels
       if (param != null)
       {
         _selectedItems = (ObservableCollection<object>)param;
-        var songs = (param as ObservableCollection<object>).Cast<SongData>().ToList();
+        var songs = _selectedItems.Cast<SongData>().ToList();
         var parameters = new NavigationParameters();
         parameters.Add("songs", songs);
         _regionManager.RequestNavigate("TagEdit", "TagEditView", parameters);
@@ -185,138 +200,139 @@ namespace MPTagThat.SongGrid.ViewModels
     {
       await Task.Run(() =>
       {
-        System.Windows.Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Background, (SendOrPostCallback)delegate
-        {
-
-          log.Trace(">>>");
-          if (String.IsNullOrEmpty(_selectedFolder))
-          {
-            log.Info("FolderScan: No folder selected");
-            return;
-          }
-
-          IsBusy = true;
-          _folderScanInProgress = true;
-          Songs.Clear();
-          _nonMusicFiles = new List<string>();
-          GC.Collect();
-
-          _options.ScanFolderRecursive = false;
-          if (!Directory.Exists(_selectedFolder))
-            return;
-
-          // Get File Filter Settings
-          _filterFileExtensions = new string[] { "*.*" };
-          //_filterFileExtensions = _main.TreeView.ActiveFilter.FileFilter.Split('|');
-          //_filterFileMask = _main.TreeView.ActiveFilter.FileMask.Trim() == ""
-          //                    ? " * "
-          //                    : _main.TreeView.ActiveFilter.FileMask.Trim();
-
-          int count = 1;
-          int nonMusicCount = 0;
-          StatusBarEvent msg = new StatusBarEvent { CurrentFolder = _selectedFolder, CurrentProgress = -1 };
-
-          try
-          {
-            foreach (FileInfo fi in GetFiles(new DirectoryInfo(_selectedFolder), _options.ScanFolderRecursive))
+        if (System.Windows.Application.Current.Dispatcher != null)
+          System.Windows.Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Background,
+            (SendOrPostCallback) delegate
             {
-              Application.DoEvents();
-              if (_progressCancelled)
+              log.Trace(">>>");
+              if (String.IsNullOrEmpty(_selectedFolder))
               {
-                IsBusy = false;
-                break;
+                log.Info("FolderScan: No folder selected");
+                return;
               }
+
+              IsBusy = true;
+              _folderScanInProgress = true;
+              Songs.Clear();
+              _nonMusicFiles = new List<string>();
+              GC.Collect();
+
+              _options.ScanFolderRecursive = false;
+              if (!Directory.Exists(_selectedFolder))
+                return;
+
+              // Get File Filter Settings
+              _filterFileExtensions = new string[] {"*.*"};
+              //_filterFileExtensions = _main.TreeView.ActiveFilter.FileFilter.Split('|');
+              //_filterFileMask = _main.TreeView.ActiveFilter.FileMask.Trim() == ""
+              //                    ? " * "
+              //                    : _main.TreeView.ActiveFilter.FileMask.Trim();
+
+              int count = 1;
+              int nonMusicCount = 0;
+              StatusBarEvent msg = new StatusBarEvent {CurrentFolder = _selectedFolder, CurrentProgress = -1};
 
               try
               {
-                if (Util.IsAudio(fi.FullName))
+                foreach (FileInfo fi in GetFiles(new DirectoryInfo(_selectedFolder), _options.ScanFolderRecursive))
                 {
-                  msg.CurrentFile = fi.FullName;
-                  log.Trace($"Retrieving file: {fi.FullName}");
-                  // Read the Tag
-                  SongData track = Song.Create(fi.FullName);
-                  if (track != null)
+                  Application.DoEvents();
+                  if (_progressCancelled)
                   {
-                    //if (ApplyTagFilter(track))
-                    //{
-                    Songs.Add(track);
-                    count++;
-                    msg.NumberOfFiles = count;
-                    EventSystem.Publish(msg);
-                    //}
+                    IsBusy = false;
+                    break;
+                  }
+
+                  try
+                  {
+                    if (Util.IsAudio(fi.FullName))
+                    {
+                      msg.CurrentFile = fi.FullName;
+                      log.Trace($"Retrieving file: {fi.FullName}");
+                      // Read the Tag
+                      SongData track = Song.Create(fi.FullName);
+                      if (track != null)
+                      {
+                        //if (ApplyTagFilter(track))
+                        //{
+                        Songs.Add(track);
+                        count++;
+                        msg.NumberOfFiles = count;
+                        EventSystem.Publish(msg);
+                        //}
+                      }
+                    }
+                    else
+                    {
+                      _nonMusicFiles.Add(fi.FullName);
+                      nonMusicCount++;
+                    }
+                  }
+                  catch (PathTooLongException)
+                  {
+                    log.Warn($"FolderScan: Ignoring track {fi.FullName} - path too long!");
+                    continue;
+                  }
+                  catch (System.UnauthorizedAccessException exUna)
+                  {
+                    log.Warn($"FolderScan: Could not access file or folder: {exUna.Message}. {fi.FullName}");
+                  }
+                  catch (Exception ex)
+                  {
+                    log.Error($"FolderScan: Caught error processing files: {ex.Message} {fi.FullName}");
                   }
                 }
-                else
-                {
-                  _nonMusicFiles.Add(fi.FullName);
-                  nonMusicCount++;
-                }
               }
-              catch (PathTooLongException)
+              catch (OutOfMemoryException)
               {
-                log.Warn($"FolderScan: Ignoring track {fi.FullName} - path too long!");
-                continue;
+                GC.Collect();
+                MessageBox.Show(LocalizeDictionary.Instance.GetLocalizedObject("MPTagThat", "Strings",
+                    "message_OutOfMemory",
+                    LocalizeDictionary.Instance.Culture).ToString(),
+                  LocalizeDictionary.Instance.GetLocalizedObject("MPTagThat", "Strings", "message_ErrorTitle",
+                    LocalizeDictionary.Instance.Culture).ToString(),
+                  MessageBoxButtons.OK);
+                log.Error("Folderscan: Running out of memory. Scanning aborted.");
               }
-              catch (System.UnauthorizedAccessException exUna)
+
+              // Commit changes to SongTemp, in case we have switched to DB Mode
+              _options.Songlist.CommitDatabaseChanges();
+
+              msg.CurrentProgress = 0;
+              msg.CurrentFile = "";
+              EventSystem.Publish(msg);
+              log.Info($"FolderScan: Scanned {nonMusicCount + count} files. Found {count} audio files");
+
+              var evt = new GenericEvent
               {
-                log.Warn($"FolderScan: Could not access file or folder: {exUna.Message}. {fi.FullName}");
-              }
-              catch (Exception ex)
+                Action = "miscfileschanged"
+              };
+              evt.MessageData.Add("files", _nonMusicFiles);
+              EventSystem.Publish(evt);
+
+              IsBusy = false;
+
+              // Display Status Information
+              try
               {
-                log.Error($"FolderScan: Caught error processing files: {ex.Message} {fi.FullName}");
+                //_main.ToolStripStatusFiles.Text = string.Format(localisation.ToString("main", "toolStripLabelFiles"), count, 0);
               }
+              catch (InvalidOperationException)
+              {
+              }
+
+              /*
+  
+            // If MP3 Validation is turned on, set the color
+            if (Options.MainSettings.MP3Validate)
+            {
+              ChangeErrorRowColor();
             }
-          }
-          catch (OutOfMemoryException)
-          {
-            GC.Collect();
-            MessageBox.Show(LocalizeDictionary.Instance.GetLocalizedObject("MPTagThat", "Strings", "message_OutOfMemory",
-                LocalizeDictionary.Instance.Culture).ToString(),
-              LocalizeDictionary.Instance.GetLocalizedObject("MPTagThat", "Strings", "message_ErrorTitle",
-                LocalizeDictionary.Instance.Culture).ToString(),
-              MessageBoxButtons.OK);
-            log.Error("Folderscan: Running out of memory. Scanning aborted.");
-          }
-
-          // Commit changes to SongTemp, in case we have switched to DB Mode
-          _options.Songlist.CommitDatabaseChanges();
-
-          msg.CurrentProgress = 0;
-          msg.CurrentFile = "";
-          EventSystem.Publish(msg);
-          log.Info($"FolderScan: Scanned {nonMusicCount + count} files. Found {count} audio files");
-
-          var evt = new GenericEvent
-          {
-            Action = "miscfileschanged"
-          };
-          evt.MessageData.Add("files", _nonMusicFiles);
-          EventSystem.Publish(evt);
-
-          IsBusy = false;
-
-          // Display Status Information
-          try
-          {
-            //_main.ToolStripStatusFiles.Text = string.Format(localisation.ToString("main", "toolStripLabelFiles"), count, 0);
-          }
-          catch (InvalidOperationException)
-          {
-          }
-
-          /*
-
-          // If MP3 Validation is turned on, set the color
-          if (Options.MainSettings.MP3Validate)
-          {
-            ChangeErrorRowColor();
-          }
-
-          */
-          _folderScanInProgress = false;
-          log.Trace("<<<");
-
-        }, null);
+  
+            */
+              _folderScanInProgress = false;
+              log.Trace("<<<");
+            }, null);
       });
     }
 
@@ -425,10 +441,10 @@ namespace MPTagThat.SongGrid.ViewModels
       var commandParm = commandParmObj.GetLength(0) > 0 ? (string)commandParmObj[0] : "";
 
       int count = 0;
-      var msg = new ProgressBarEvent { CurrentProgress = 0, MinValue = 0, MaxValue = _selectedItems.Count };
+      var msg = new ProgressBarEvent { CurrentProgress = 0, MinValue = 0, MaxValue = SelectedItems.Count };
       EventSystem.Publish(msg);
 
-      var songs = (_selectedItems as ObservableCollection<object>).Cast<SongData>().ToList();
+      var songs = (SelectedItems as ObservableCollection<object>).Cast<SongData>().ToList();
 
       IsBusy = true;
 
@@ -510,6 +526,8 @@ namespace MPTagThat.SongGrid.ViewModels
 
     #region Event Handling
 
+    private readonly List<Action.ActionType> _supportedCommands = new List<Action.ActionType>() { Action.ActionType.ACTION_SAVE };
+
     private void OnMessageReceived(GenericEvent msg)
     {
       switch (msg.Action.ToLower())
@@ -523,13 +541,24 @@ namespace MPTagThat.SongGrid.ViewModels
           break;
 
         case "command":
-          if ((Action.ActionType)msg.MessageData["command"] == Action.ActionType.ACTION_SAVE)
+          if (_supportedCommands.Contains((Action.ActionType) msg.MessageData["command"]))
           {
             ExecuteCommand(Action.ActionToCommand((Action.ActionType)msg.MessageData["command"]));
+            return;
           }
+
+          if (SelectedItems.Count == 0)
+          {
+            Songs.ToList().ForEach(song => SelectedItems.Add(song));
+          }
+
+          var songs = SelectedItems.Cast<SongData>().ToList();
+          var parameters = new DialogParameters();
+          parameters.Add("songs", songs);
+
           if ((Action.ActionType)msg.MessageData["command"] == Action.ActionType.ACTION_FILENAME2TAG)
           {
-            _dialogService.ShowNotificationInAnotherWindow("FileName2TagView", "DialogWindowView","Huhu", r =>
+            _dialogService.ShowDialogInAnotherWindow("FileName2TagView", "DialogWindowView",parameters, r =>
             {
              
             });
@@ -537,14 +566,14 @@ namespace MPTagThat.SongGrid.ViewModels
 
           if ((Action.ActionType)msg.MessageData["command"] == Action.ActionType.ACTION_GETCOVERART)
           {
-            _dialogService.ShowNotificationInAnotherWindow("AlbumCoverSearchView", "DialogWindowView", "", r =>
+            _dialogService.ShowDialogInAnotherWindow("AlbumCoverSearchView", "DialogWindowView", parameters, r =>
             {
 
             });
           }
 
 
-            break;
+          break;
       }
     }
 

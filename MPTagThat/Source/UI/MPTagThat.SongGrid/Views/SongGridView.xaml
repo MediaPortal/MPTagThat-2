@@ -39,10 +39,19 @@
   </UserControl.Cursor>
 
   <Grid>
-    <syncfusion:SfDataGrid x:Name="SongDataGrid" ItemsSource="{Binding Songs, Mode=TwoWay}"
-                           Columns="{Binding DataGridColumns, Mode=TwoWay}" FrozenColumnCount="3"
-                           ColumnSizer="AutoWithLastColumnFill" AllowResizingColumns="True" AllowDraggingColumns="True" ShowRowHeader="False" 
-                           AllowEditing="True" AutoGenerateColumns="False" SelectionMode="Multiple" EnableDataVirtualization="True" ShowBusyIndicator="True" 
+    <syncfusion:SfDataGrid x:Name="SongDataGrid" 
+                           ItemsSource="{Binding Songs, Mode=TwoWay}"
+                           Columns="{Binding DataGridColumns, Mode=TwoWay}" 
+                           FrozenColumnCount="3"
+                           ColumnSizer="AutoWithLastColumnFill" 
+                           AllowResizingColumns="True" 
+                           AllowDraggingColumns="True" 
+                           AutoGenerateColumns="False"
+                           ShowRowHeader="False" 
+                           AllowEditing="True" 
+                           SelectionMode="Extended" 
+                           EnableDataVirtualization="True" 
+                           ShowBusyIndicator="True" 
                            AlternatingRowStyle="{StaticResource alternatingRowStyle}" 
                            RowStyle="{StaticResource changedRowStyle}" >
       
