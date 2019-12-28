@@ -50,15 +50,9 @@ namespace MPTagThat.Core.AlbumSearch.AlbumSites
 
     #region Properties
 
-    public override string SiteName
-    {
-      get { return "MusicBrainz"; }
-    }
+    public override string SiteName => "MusicBrainz";
 
-    public override bool SiteActive()
-    {
-      return true;
-    }
+    public override bool SiteActive() => true;
 
     #endregion
 
@@ -93,16 +87,18 @@ namespace MPTagThat.Core.AlbumSearch.AlbumSites
 
     private async Task<Album> GetAlbumQuery(string artistName, string albumName)
     {
+      log.Debug($"MusicBrainz: Querying {artistName} - {albumName}");
       // If we have an artist in form "LastName, FirstName" change it to "FirstName LastName" to have both results
       var artistNameOriginal = _switchedArtist.IsMatch(artistName) ? $" OR {SwitchArtist(artistName)}" : "";
 
-      var query = new QueryParameters<Release>();
-      query.Add("artist", $"{artistName} {artistNameOriginal}");
-      query.Add("release", albumName);
+      var query = new QueryParameters<Release>
+      {
+        {"artist", $"{artistName} {artistNameOriginal}"}, {"release", albumName}
+      };
       var albums = await Release.SearchAsync(query);
 
-      // First look for Albums from the selected country in AmazonSites
-      var mbAlbum = albums.Items.FirstOrDefault(r => (r.Title != null && r.Title.ToLower() == albumName.ToLower()) && (r.Country != null && r.Country.ToLower() == _options.MainSettings.AmazonSite.ToLower()));
+      // First look for Albums from the selected countries
+      var mbAlbum = albums.Items.FirstOrDefault(r => (r.Title != null && r.Title.ToLower() == albumName.ToLower()) && (r.Country != null && r.Country.ToLower() == _options.MainSettings.DefaultAlbumSite.ToLower()));
       if (mbAlbum == null)
       {
         // Look for European wide release
@@ -124,7 +120,7 @@ namespace MPTagThat.Core.AlbumSearch.AlbumSites
 
       var release = await Release.GetAsync(mbAlbum.Id, new[] { "recordings", "media", "artists", "discids" });
 
-      var album = new Album();
+      var album = new Album() { Site = "MusicBrainz" };
       album.LargeImageUrl = release.CoverArtArchive != null && release.CoverArtArchive.Front
         ? string.Format(@"http://coverartarchive.org/release/{0}/front.jpg", release.Id)
         : "";
@@ -152,6 +148,7 @@ namespace MPTagThat.Core.AlbumSearch.AlbumSites
         discs.Add(albumTracks);
       }
       album.Discs = discs;
+      log.Debug("MusicBrainz: Finished MusicBrainz Query");
       return album;
     }
 

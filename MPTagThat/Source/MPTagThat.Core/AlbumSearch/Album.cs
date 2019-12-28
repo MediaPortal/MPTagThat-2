@@ -18,11 +18,13 @@
 
 #region
 
+using System;
 using MPTagThat.Core.AlbumCoverSearch;
 using MPTagThat.Core.Utils;
 using System.Collections.Generic;
 using System.IO;
 using System.Net;
+using System.Windows.Media.Imaging;
 using TagLib;
 
 #endregion
@@ -46,6 +48,8 @@ namespace MPTagThat.Core.AlbumSearch
     #endregion
 
     #region Properties
+
+    public string Site { get; set; }
 
     public string MusicBrainzId { get; set; }
 
@@ -75,11 +79,19 @@ namespace MPTagThat.Core.AlbumSearch
 
     public string CoverHeight { get; set; }
 
-    public ByteVector AlbumImage
+    public string ListViewText
+    {
+      get
+      { 
+        var albumSize = (CoverWidth == "0" || CoverWidth == "") ? " " : $" {CoverWidth}x{CoverHeight} ";
+        return $"{Title}{albumSize}";
+      }
+    }
+
+    public BitmapImage AlbumImage
     {
       get
       {
-        var vector = new ByteVector();
         var sUrl = LargeImageUrl ?? MediumImageUrl ?? SmallImageUrl;
 
         if (sUrl == null)
@@ -89,22 +101,16 @@ namespace MPTagThat.Core.AlbumSearch
 
         try
         {
-          var webReq = WebRequest.Create(sUrl);
-
-          // For Discogs, we need a special User Agent
-          if (sUrl.Contains("discogs.com"))
-          {
-            (webReq as HttpWebRequest).UserAgent = "MPTagThat/3.2 +http://www.team-mediaportal.com";
-          }
-          WebResponse webResp = webReq.GetResponse();
-          Stream stream = webResp.GetResponseStream();
-
-          byte[] data = Util.ReadFullStream(stream, 32768);
-          if (data.Length > 0)
-            vector.Add(data);
+          BitmapImage bitmap = new BitmapImage();
+          bitmap.BeginInit();
+          bitmap.UriSource = new Uri(sUrl, UriKind.Absolute);
+          bitmap.CacheOption = BitmapCacheOption.OnLoad;
+          bitmap.EndInit();
+          return bitmap;
         }
-        catch { }
-        return vector;
+        catch { /* On purpose */}
+
+        return null;
       }
     }
     #endregion

@@ -70,6 +70,24 @@ namespace MPTagThat.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Album Cover Search.
+        /// </summary>
+        public static string coverSearch_Title {
+            get {
+                return ResourceManager.GetString("coverSearch_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Close.
+        /// </summary>
+        public static string dialog_Close {
+            get {
+                return ResourceManager.GetString("dialog_Close", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Corrupt File.
         /// </summary>
         public static string message_CorruptFile {

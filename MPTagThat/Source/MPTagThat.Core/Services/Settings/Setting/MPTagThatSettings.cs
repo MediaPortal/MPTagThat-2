@@ -64,29 +64,6 @@ namespace MPTagThat.Core.Services.Settings.Setting
     [Setting(SettingScope.User, "false")]
     public bool FormIsMaximized { get; set; }
 
-    [Setting(SettingScope.User, "-1")]
-    public int LeftPanelSize { get; set; }
-
-    [Setting(SettingScope.User, "-1")]
-    public int RightPanelSize { get; set; }
-
-    [Setting(SettingScope.User, "false")]
-    public bool RightPanelCollapsed { get; set; }
-
-    [Setting(SettingScope.User, "-1")]
-    public int BottomPanelSize { get; set; }
-
-    [Setting(SettingScope.User, "false")]
-    public bool PlayerPanelCollapsed { get; set; }
-
-    /// <summary>
-    /// Location of the Track List
-    /// 0 - Top
-    /// 1 - Bottom
-    /// </summary>
-    [Setting(SettingScope.User, "1")]
-    public int TrackListLocation { get; set; }
-
     #endregion
 
     [Setting(SettingScope.User, "")]
@@ -164,8 +141,8 @@ namespace MPTagThat.Core.Services.Settings.Setting
     [Setting(SettingScope.User, "false")]
     public bool MP3AutoFix { get; set; }
 
-    [Setting(SettingScope.User, "com")]
-    public string AmazonSite { get; set; }
+    [Setting(SettingScope.User, "de")]
+    public string DefaultAlbumSite { get; set; }
 
     [Setting(SettingScope.User, "")]
     public List<string> AlbumInfoSites

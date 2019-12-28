@@ -25,6 +25,8 @@ using MPTagThat.Core.Services.Settings.Setting;
 using Prism.Services.Dialogs;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Windows.Data;
 using System.Windows.Media;
 using Prism.Events;
 
@@ -46,16 +48,27 @@ namespace MPTagThat.Dialogs.ViewModels
 
     #endregion
 
-    private Options _options = (ServiceLocator.Current.GetInstance(typeof(ISettingsManager)) as ISettingsManager).GetOptions;
-    private DelegateAlbumFound _albumFound;
-    private DelegateSearchFinished _searchFinished;
-
+    private readonly Options _options = (ServiceLocator.Current.GetInstance(typeof(ISettingsManager)) as ISettingsManager).GetOptions;
+    private readonly DelegateAlbumFound _albumFound;
+    private readonly DelegateSearchFinished _searchFinished;
+    private object _lock = new object();
 
     #endregion
 
     #region Properties
 
     public Brush Background => (Brush)new BrushConverter().ConvertFromString(_options.MainSettings.BackGround);
+    
+    /// <summary>
+    /// Binding for the Albums found
+    /// </summary>
+    private ObservableCollection<Album> _albums;
+    public ObservableCollection<Album> Albums
+    {
+      get => _albums;
+      set => SetProperty(ref _albums, value);
+    }
+
 
     #endregion
 
@@ -67,6 +80,8 @@ namespace MPTagThat.Dialogs.ViewModels
       Title = "Album Cover Search";
       _albumFound = new DelegateAlbumFound(AlbumFoundMethod);
       _searchFinished = new DelegateSearchFinished(SearchFinishedMethod);
+      _albums = new ObservableCollection<Album>();
+      BindingOperations.EnableCollectionSynchronization(Albums, _lock);
     }
 
     #endregion
@@ -77,7 +92,7 @@ namespace MPTagThat.Dialogs.ViewModels
     {
       var albumSearch = new AlbumSearch(this, "Eagles", "Long Road Out Of Eden");
       //albumSearch.AlbumSites = _options.MainSettings.AlbumInfoSites;
-      albumSearch.AlbumSites = new List<string>() { "MusicBrainz" };
+      albumSearch.AlbumSites = new List<string>() { "MusicBrainz", "Discogs", "LastFM" };
       albumSearch.Run();
     }
 
@@ -108,7 +123,7 @@ namespace MPTagThat.Dialogs.ViewModels
 
     private void AlbumFoundMethod(List<Album> albums, string siteName)
     {
-
+      Albums.AddRange(albums);
     }
 
     private void SearchFinishedMethod()
