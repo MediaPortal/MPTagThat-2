@@ -258,10 +258,10 @@ namespace MPTagThat.TagEdit.ViewModels
 
     public TagEditViewModel()
     {
-      _applyEditCommand = new BaseCommand(ApplyEdit);
-      _cancelEditCommand = new BaseCommand(CancelEdit);
-      _textChangedCommand = new BaseCommand(TextChanged);
-      _applyArtistToAlbumArtistCommand = new BaseCommand(ApplyArtistToAlbumArtist);
+      ApplyEditCommand = new BaseCommand(ApplyEdit);
+      CancelEditCommand = new BaseCommand(CancelEdit);
+      TextChangedCommand = new BaseCommand(TextChanged);
+      ApplyArtistToAlbumArtistCommand = new BaseCommand(ApplyArtistToAlbumArtist);
 
       SelectedGenres.CollectionChanged += SelectedGenres_CollectionChanged;
 
@@ -272,8 +272,7 @@ namespace MPTagThat.TagEdit.ViewModels
 
     #region Commands
 
-    private ICommand _textChangedCommand;
-    public ICommand TextChangedCommand => _textChangedCommand;
+    public ICommand TextChangedCommand { get; }
 
     /// <summary>
     /// Callback from the View when a Text is changed, it should check the checkbox
@@ -336,8 +335,7 @@ namespace MPTagThat.TagEdit.ViewModels
     /// <summary>
     /// Invoked by the Cancel Edit Button
     /// </summary>
-    private ICommand _cancelEditCommand;
-    public ICommand CancelEditCommand => _cancelEditCommand;
+    public ICommand CancelEditCommand { get; }
 
     private void CancelEdit(object param)
     {
@@ -352,8 +350,7 @@ namespace MPTagThat.TagEdit.ViewModels
     /// <summary>
     /// Use the content of the Album Field as AlbumArtist
     /// </summary>
-    private ICommand _applyArtistToAlbumArtistCommand;
-    public ICommand ApplyArtistToAlbumArtistCommand => _applyArtistToAlbumArtistCommand;
+    public ICommand ApplyArtistToAlbumArtistCommand { get; }
 
     private void ApplyArtistToAlbumArtist(object param)
     {
@@ -367,8 +364,7 @@ namespace MPTagThat.TagEdit.ViewModels
     /// Invoked by the Apply Changes button in the View
     /// Loop through the the selected songs and apply the changes.
     /// </summary>
-    private ICommand _applyEditCommand;
-    public ICommand ApplyEditCommand => _applyEditCommand;
+    public ICommand ApplyEditCommand { get; }
 
     private void ApplyEdit(object param)
     {

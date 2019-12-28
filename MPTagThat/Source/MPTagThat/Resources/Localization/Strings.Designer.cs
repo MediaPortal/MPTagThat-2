@@ -88,6 +88,15 @@ namespace MPTagThat.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Search.
+        /// </summary>
+        public static string dialog_Search {
+            get {
+                return ResourceManager.GetString("dialog_Search", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Corrupt File.
         /// </summary>
         public static string message_CorruptFile {

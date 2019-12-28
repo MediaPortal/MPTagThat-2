@@ -93,7 +93,6 @@ namespace MPTagThat.Core.AlbumSearch
       get
       {
         var sUrl = LargeImageUrl ?? MediumImageUrl ?? SmallImageUrl;
-
         if (sUrl == null)
         {
           return null;
@@ -113,6 +112,36 @@ namespace MPTagThat.Core.AlbumSearch
         return null;
       }
     }
+
+    public ByteVector ImageData
+    {
+      get
+      {
+        ByteVector vector = new ByteVector();
+
+        var sUrl = LargeImageUrl ?? (MediumImageUrl ?? SmallImageUrl);
+        if (sUrl == null)
+        {
+          return null;
+        }
+
+        try
+        {
+          var webReq = WebRequest.Create(sUrl);
+          // For Discogs, we need a special User Agent
+          (webReq as HttpWebRequest).UserAgent = "MPTagThat/4.0 +http://www.team-mediaportal.com";
+          var webResp = webReq.GetResponse();
+          var stream = webResp.GetResponseStream();
+
+          var data = Util.ReadFullStream(stream, 32768);
+          if (data.Length > 0)
+            vector.Add(data);
+        }
+        catch { /* On purpose */ }
+        return vector;
+      }
+    }
+
     #endregion
   }
 }

@@ -26,9 +26,14 @@ using Prism.Services.Dialogs;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Windows.Data;
+using System.Windows.Input;
 using System.Windows.Media;
+using MPTagThat.Core.Common;
+using MPTagThat.Core.Common.Song;
 using Prism.Events;
+using WPFLocalizeExtension.Engine;
 
 #endregion
 
@@ -48,10 +53,12 @@ namespace MPTagThat.Dialogs.ViewModels
 
     #endregion
 
-    private readonly Options _options = (ServiceLocator.Current.GetInstance(typeof(ISettingsManager)) as ISettingsManager).GetOptions;
+    private readonly Options _options = (ServiceLocator.Current.GetInstance(typeof(ISettingsManager)) as ISettingsManager)?.GetOptions;
     private readonly DelegateAlbumFound _albumFound;
     private readonly DelegateSearchFinished _searchFinished;
     private object _lock = new object();
+
+    private List<SongData> _songs;
 
     #endregion
 
@@ -69,6 +76,37 @@ namespace MPTagThat.Dialogs.ViewModels
       set => SetProperty(ref _albums, value);
     }
 
+    /// <summary>
+    /// Binding for Artist Text Field
+    /// </summary>
+    private string _artist;
+
+    public string Artist
+    {
+      get => _artist;
+      set => SetProperty(ref _artist, value);
+    }
+
+    /// <summary>
+    /// Binding for Album Text Field
+    /// </summary>
+    private string _album;
+
+    public string Album
+    {
+      get => _album;
+      set => SetProperty(ref _album, value);
+    }
+
+    /// <summary>
+    /// Binding for Search Button enabled
+    /// </summary>
+    private bool _isSearchButtonEnabled;
+    public bool IsSearchButtonEnabled
+    {
+      get => _isSearchButtonEnabled;
+      set => SetProperty(ref _isSearchButtonEnabled, value);
+    }
 
     #endregion
 
@@ -77,22 +115,67 @@ namespace MPTagThat.Dialogs.ViewModels
 
     public AlbumCoverSearchViewModel()
     {
-      Title = "Album Cover Search";
-      _albumFound = new DelegateAlbumFound(AlbumFoundMethod);
-      _searchFinished = new DelegateSearchFinished(SearchFinishedMethod);
+      Title = LocalizeDictionary.Instance.GetLocalizedObject("MPTagThat", "Strings", "coverSearch_Title",
+        LocalizeDictionary.Instance.Culture).ToString();
+      _albumFound = AlbumFoundMethod;
+      _searchFinished = SearchFinishedMethod;
       _albums = new ObservableCollection<Album>();
       BindingOperations.EnableCollectionSynchronization(Albums, _lock);
+
+      CoverSelectedCommand = new BaseCommand(CoverSelected);
+      SearchCommand = new BaseCommand(SearchCovers);
     }
 
     #endregion
+
+    #region Commands
+
+    public ICommand CoverSelectedCommand { get; }
+
+    /// <summary>
+    /// A cover has been selected. Set the picture in the selected Songs
+    /// </summary>
+    /// <param name="param"></param>
+    private void CoverSelected(object param)
+    {
+      var vector = (param as Album)?.ImageData;
+      if (vector != null)
+      {
+        var pic = new Picture();
+        pic.MimeType = "image/jpg";
+        pic.Description = "";
+        pic.Type = TagLib.PictureType.FrontCover;
+        pic.Data = vector.Data;
+
+        
+        foreach (var song in _songs)
+        {
+          song.Pictures.Clear();
+          song.Pictures.Add(pic);
+          song.Changed = true;
+        }
+
+        CloseDialog("true");
+      }
+    }
+
+    public ICommand SearchCommand { get; }
+
+    private void SearchCovers(object param)
+    {
+      Albums.Clear();
+      DoSearchAlbum();
+    }
+
+    #endregion
+
 
     #region Private Methods
 
     private void DoSearchAlbum()
     {
-      var albumSearch = new AlbumSearch(this, "Eagles", "Long Road Out Of Eden");
-      //albumSearch.AlbumSites = _options.MainSettings.AlbumInfoSites;
-      albumSearch.AlbumSites = new List<string>() { "MusicBrainz", "Discogs", "LastFM" };
+      IsSearchButtonEnabled = false;
+      var albumSearch = new AlbumSearch(this, Artist, Album) {AlbumSites = _options.MainSettings.AlbumInfoSites};
       albumSearch.Run();
     }
 
@@ -128,7 +211,7 @@ namespace MPTagThat.Dialogs.ViewModels
 
     private void SearchFinishedMethod()
     {
-
+      IsSearchButtonEnabled = true;
     }
 
     #endregion
@@ -137,6 +220,15 @@ namespace MPTagThat.Dialogs.ViewModels
 
     public override void OnDialogOpened(IDialogParameters parameters)
     {
+      _songs = parameters.GetValue<List<SongData>>("songs");
+      if (_songs.GroupBy(s => s.Artist).Count() == 1)
+      {
+        Artist = _songs[0].Artist;
+      }
+      if (_songs.GroupBy(s => s.Album).Count() == 1)
+      {
+        Album = _songs[0].Album;
+      }
       DoSearchAlbum();
     }
 

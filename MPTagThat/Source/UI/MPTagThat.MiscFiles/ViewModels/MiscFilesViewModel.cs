@@ -89,10 +89,10 @@ namespace MPTagThat.MiscFiles.ViewModels
     public MiscFilesViewModel()
     {
       _miscFiles = new ObservableCollection<MiscFile>();
-      _renameFileCommand = new BaseCommand(RenameFile);
-      _deleteFileCommand = new BaseCommand(DeleteFile);
-      _selectionChangedCommand = new BaseCommand(SelectionChanged);
-      _enterKeyPressedCommand = new BaseCommand(EnterKeypressed);
+      RenameFileCommand = new BaseCommand(RenameFile);
+      DeleteFileCommand = new BaseCommand(DeleteFile);
+      SelectionChangedCommand = new BaseCommand(SelectionChanged);
+      EnterKeyPressedCommand = new BaseCommand(EnterKeypressed);
       EventSystem.Subscribe<GenericEvent>(OnMessageReceived,ThreadOption.PublisherThread);
     }
 
@@ -100,8 +100,7 @@ namespace MPTagThat.MiscFiles.ViewModels
 
     #region Commands
 
-    private ICommand _selectionChangedCommand;
-    public ICommand SelectionChangedCommand => _selectionChangedCommand;
+    public ICommand SelectionChangedCommand { get; }
 
     /// <summary>
     /// Check if the Rename to Folder Menu should be enabled.
@@ -132,8 +131,7 @@ namespace MPTagThat.MiscFiles.ViewModels
       }
     }
 
-    private ICommand _enterKeyPressedCommand;
-    public ICommand EnterKeyPressedCommand => _enterKeyPressedCommand;
+    public ICommand EnterKeyPressedCommand { get; }
 
     /// <summary>
     /// Some manual change has been done to rename a file
@@ -165,8 +163,7 @@ namespace MPTagThat.MiscFiles.ViewModels
     }
 
 
-    private ICommand _renameFileCommand;
-    public ICommand RenameFileCommand => _renameFileCommand;
+    public ICommand RenameFileCommand { get; }
 
     /// <summary>
     /// Rename File to Folder.jpg
@@ -194,8 +191,7 @@ namespace MPTagThat.MiscFiles.ViewModels
       }
     }
 
-    private ICommand _deleteFileCommand;
-    public ICommand DeleteFileCommand => _deleteFileCommand;
+    public ICommand DeleteFileCommand { get; }
 
     /// <summary>
     /// Delete the selected File

@@ -404,5 +404,10 @@
   </data>
   <data name="coverSearch_Title" xml:space="preserve">
     <value>Album Cover Search</value>
+    <comment>The Title of the Cover Search Dialog</comment>
+  </data>
+  <data name="dialog_Search" xml:space="preserve">
+    <value>Search</value>
+    <comment>A Search Button in a Dialog</comment>
   </data>
 </root>
