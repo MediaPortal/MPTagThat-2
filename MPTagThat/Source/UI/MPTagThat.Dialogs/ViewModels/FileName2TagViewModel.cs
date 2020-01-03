@@ -18,12 +18,22 @@
 
 #region
 
-using Prism.Services.Dialogs;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Collections.ObjectModel;
+using System.IO;
+using System.Windows;
+using System.Windows.Input;
+using System.Windows.Media;
+using Prism.Services.Dialogs;
+using CommonServiceLocator;
+using MPTagThat.Core.Common;
+using MPTagThat.Core.Common.Song;
+using MPTagThat.Core.Services.Logging;
+using MPTagThat.Core.Services.Settings;
+using MPTagThat.Core.Services.Settings.Setting;
+using MPTagThat.Core.Utils;
+using WPFLocalizeExtension.Engine;
 
 #endregion
 
@@ -31,33 +41,287 @@ namespace MPTagThat.Dialogs.ViewModels
 {
   public class FileName2TagViewModel : DialogViewModelBase
   {
-    private string _message;
-    public string Message
+    #region Variables
+
+    private readonly Options _options = (ServiceLocator.Current.GetInstance(typeof(ISettingsManager)) as ISettingsManager)?.GetOptions;
+    private readonly NLogLogger log = (ServiceLocator.Current.GetInstance(typeof(ILogger)) as ILogger)?.GetLogger;
+    private List<SongData> _songs;
+
+    #endregion
+
+    #region Properties
+
+    public Brush Background => (Brush)new BrushConverter().ConvertFromString(_options.MainSettings.BackGround);
+
+    /// <summary>
+    /// The Binding for the Parameters in the ComboBox
+    /// </summary>
+    private ObservableCollection<string> _parameters = new ObservableCollection<string>();
+    public ObservableCollection<string> Parameters
     {
-      get { return _message; }
-      set { SetProperty(ref _message, value); }
+      get => _parameters;
+      set
+      {
+        _parameters = value;
+        RaisePropertyChanged("Parameters");
+      }
     }
+
+    /// <summary>
+    /// The Selected Text in the Combobox
+    /// </summary>
+    private string _selectedItemText;
+
+    public string SelectedItemText
+    {
+      get => _selectedItemText;
+      set => SetProperty(ref _selectedItemText, value);
+    }
+
+    /// <summary>
+    /// The Binding for the Selected Index in the Commbobox
+    /// </summary>
+    private int _selectedIndex;
+
+    public int SelectedIndex
+    {
+      get => _selectedIndex;
+      set => SetProperty(ref _selectedIndex, value);
+    }
+
+    #endregion
+
+    #region ctor
 
     public FileName2TagViewModel()
     {
-      Title = "File Name To Tag";
+      Title = LocalizeDictionary.Instance.GetLocalizedObject("MPTagThat", "Strings", "tagAndRename_Header",
+        LocalizeDictionary.Instance.Culture).ToString();
+      CancelChangesCommand = new BaseCommand(CancelChanges);
+      LabelClickedCommand = new BaseCommand(LabelClicked);
+      FileNameToTagCommand = new BaseCommand(FileNameToTag);
     }
+
+    #endregion
+
+
+    #region Commands
+
+    public ICommand CancelChangesCommand { get; }
+
+    private void CancelChanges(object parameters)
+    {
+      CloseDialogWindow(new DialogResult(ButtonResult.Cancel));
+    }
+
+    public ICommand LabelClickedCommand { get; }
+
+    private void LabelClicked(object param)
+    {
+      if (param == null)
+      {
+        return;
+      }
+      var label = (param as MouseButtonEventArgs)?.Source as System.Windows.Controls.Label;
+      SelectedItemText += Util.LabelToParameter(label?.Name);
+    }
+
+    public ICommand FileNameToTagCommand { get; }
+
+    private void FileNameToTag(object param)
+    {
+      log.Trace(">>>");
+
+      if (!Util.CheckParameterFormat(SelectedItemText, Options.ParameterFormat.FileNameToTag))
+      {
+        MessageBox.Show(LocalizeDictionary.Instance.GetLocalizedObject("MPTagThat", "Strings", "tagAndRename_InvalidParm",LocalizeDictionary.Instance.Culture).ToString(),
+          LocalizeDictionary.Instance.GetLocalizedObject("MPTagThat", "Strings", "message_Error_Title",LocalizeDictionary.Instance.Culture).ToString(), MessageBoxButton.OK);
+        return;
+      }
+
+      var tagFormat = new TagFormat(SelectedItemText);
+      var parts = tagFormat.ParameterParts;
+
+
+      // Use a For loop instead foreach because we want to modify the song
+      for (var i = 0; i < _songs.Count; i++)
+      {
+        try
+        {
+          ReplaceParametersWithValues(_songs[i], parts);
+          _songs[i].Changed = true;
+        }
+        catch (Exception ex)
+        {
+          log.Error($"Error applying changes from Filename To Tag: {ex.Message} stack: {ex.StackTrace}");
+          _songs[i].Status = 2;
+          //_main.TracksGridView.AddErrorMessage(row, localisation.ToString("TagAndRename", "InvalidParm"));
+        }
+      }
+      log.Trace("<<<");
+      CloseDialog("true");
+    }
+
+    private void ReplaceParametersWithValues(SongData song, List<ParameterPart> parameters)
+    {
+      var splittedFileValues = new List<string>();
+
+      // Split up the file name
+      // We use already the FileName from the Track instance, which might be already modified by the user.
+      var file = $@"{Path.GetDirectoryName(song.FullFileName)}\{Path.GetFileNameWithoutExtension(song.FileName)}";
+
+      var fileArray = file.Split(new[] { '\\' });
+
+      // Now set Upper Bound depending on the length of parameters and file
+      int upperBound;
+      if (parameters.Count >= fileArray.Length)
+        upperBound = fileArray.Length - 1;
+      else
+        upperBound = parameters.Count - 1;
+
+      // Now loop through the delimiters and assign files
+      for (var i = 0; i <= upperBound; i++)
+      {
+        var parameterpart = parameters[i];
+        var delims = parameterpart.Delimiters;
+        var parms = parameterpart.Parameters;
+
+        // Set the part of the File to Process
+        var filePart = fileArray[fileArray.GetUpperBound(0) - i];
+        splittedFileValues.Clear();
+
+        var upperBoundDelims = delims.GetUpperBound(0);
+        for (var j = 0; j <= upperBoundDelims; j++)
+        {
+          if ((j == upperBoundDelims) | (delims[j] != ""))
+          {
+            if (filePart.IndexOf(delims[j], StringComparison.Ordinal) == 0 && j == upperBoundDelims)
+            {
+              splittedFileValues.Add(filePart);
+              break;
+            }
+
+            var delimIndex = filePart.IndexOf(delims[j], StringComparison.Ordinal);
+            if (delimIndex > -1)
+            {
+              splittedFileValues.Add(filePart.Substring(0, filePart.IndexOf(delims[j], StringComparison.Ordinal)));
+              filePart = filePart.Substring(filePart.IndexOf(delims[j], StringComparison.Ordinal) + delims[j].Length);
+            }
+          }
+        }
+
+        int index = -1;
+        // Now we need to Update the Tag Values
+        foreach (string parm in parms)
+        {
+          index++;
+          switch (parm.ToLower())
+          {
+            case "%artist%":
+              song.Artist = splittedFileValues[index];
+              break;
+
+            case "%title%":
+              song.Title = splittedFileValues[index];
+              break;
+
+            case "%album%":
+              song.Album = splittedFileValues[index];
+              break;
+
+            case "%year%":
+              song.Year = Convert.ToInt32(splittedFileValues[index]);
+              break;
+
+            case "%track%":
+              song.TrackNumber = Convert.ToUInt32(splittedFileValues[index]);
+              break;
+
+            case "%tracktotal%":
+              song.TrackCount = Convert.ToUInt32(splittedFileValues[index]);
+              break;
+
+            case "%disc%":
+              song.DiscNumber = Convert.ToUInt32(splittedFileValues[index]);
+              break;
+
+            case "%disctotal%":
+              song.DiscCount = Convert.ToUInt32(splittedFileValues[index]);
+              break;
+
+            case "%genre%":
+              song.Genre = splittedFileValues[index];
+              break;
+
+            case "%albumartist%":
+              song.AlbumArtist = splittedFileValues[index];
+              break;
+
+            case "%Comment%":
+              song.Comment = splittedFileValues[index];
+              break;
+
+            case "%conductor%":
+              song.Conductor = splittedFileValues[index];
+              break;
+
+            case "%composer%":
+              song.Composer = splittedFileValues[index];
+              break;
+
+            case "%group%":
+              song.Grouping = splittedFileValues[index];
+              break;
+
+            case "%subtitle%":
+              song.SubTitle = splittedFileValues[index];
+              break;
+
+            case "%remixed%":
+              song.Interpreter = splittedFileValues[index];
+              break;
+
+            case "%bpm%":
+              song.BPM = Convert.ToInt32(splittedFileValues[index]);
+              break;
+
+            case "%x%":
+              // ignore it
+              break;
+          }
+        }
+      }
+    }
+
+    #endregion
+
+    #region Private Methods
+
+    private void LoadParameters()
+    {
+      log.Trace(">>>");
+      foreach (string item in _options.FileNameToTagSettingsTemp)
+      {
+        Parameters.Add(item);
+      }
+
+      if (_options.FileNameToTagSettings.LastUsedFormat > Parameters.Count - 1)
+        SelectedIndex = -1;
+      else
+        SelectedIndex = _options.FileNameToTagSettings.LastUsedFormat;
+      log.Trace("<<<");
+    }
+
+    #endregion
+
+    #region Overrides
 
     public override void OnDialogOpened(IDialogParameters parameters)
     {
-      Message = parameters.GetValue<string>("message");
+      _songs = parameters.GetValue<List<SongData>>("songs");
+      LoadParameters();
     }
 
-    public override void CloseDialog(string parameter)
-    {
-      ButtonResult result = ButtonResult.None;
-
-      if (parameter?.ToLower() == "true")
-        result = ButtonResult.OK;
-      else if (parameter?.ToLower() == "false")
-        result = ButtonResult.Cancel;
-
-      CloseDialogWindow(new DialogResult(result));
-    }
+    #endregion
   }
 }

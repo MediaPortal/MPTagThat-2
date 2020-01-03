@@ -594,5 +594,238 @@ namespace MPTagThat.Core.Utils
     }
 
     #endregion
+
+    #region Tag And Rename Parameter related methods
+
+    /// <summary>
+    ///   Convert the Label to a Parameter
+    /// </summary>
+    /// <param name = "label"></param>
+    /// <returns></returns>
+    public static string LabelToParameter(string label)
+    {
+      var parameter = string.Empty;
+
+      switch (label)
+      {
+        case "Artist":
+          parameter = "%artist%";
+          break;
+
+        case "Title":
+          parameter = "%title%";
+          break;
+
+        case "Album":
+          parameter = "%album%";
+          break;
+
+        case "Year":
+          parameter = "%year%";
+          break;
+
+        case "TrackNumber":
+          parameter = "%track%";
+          break;
+
+        case "TrackTotal":
+          parameter = "%tracktotal%";
+          break;
+
+        case "DiscNumber":
+          parameter = "%disc%";
+          break;
+
+        case "DiscTotal":
+          parameter = "%disctotal%";
+          break;
+
+        case "Genre":
+          parameter = "%genre%";
+          break;
+
+        case "AlbumArtist":
+          parameter = "%albumartist%";
+          break;
+
+        case "Comment":
+          parameter = "%comment%";
+          break;
+
+        case "Conductor":
+          parameter = "%conductor%";
+          break;
+
+        case "Composer":
+          parameter = "%composer%";
+          break;
+
+        case "Remixed":
+          parameter = "%remixed%";
+          break;
+
+        case "Bpm":
+          parameter = "%bpm%";
+          break;
+
+        case "Subtitle":
+          parameter = "%subtitle";
+          break;
+
+        case "Group":
+          parameter = "%group%";
+          break;
+
+        case "FileName":
+          parameter = "%filename";
+          break;
+
+        case "Enumerate":
+          parameter = "%#%";
+          break;
+
+        case "Bitrate":
+          parameter = "%bitrate%";
+          break;
+
+        case "FirstArtist":
+          parameter = "%artist:n%";
+          break;
+
+        case "FirstAlbumArtist":
+          parameter = "%albumartist:n%";
+          break;
+
+        case "Unused":
+          parameter = "%x%";
+          break;
+
+        case "Folder":
+          parameter = @"\";
+          break;
+      }
+      return parameter;
+    }
+
+    /// <summary>
+    ///   Check the Parameter Format for validity
+    /// </summary>
+    /// <param name = "str"></param>
+    /// <param name = "formattype"></param>
+    /// <returns></returns>
+    public static bool CheckParameterFormat(string str, Options.ParameterFormat formattype)
+    {
+      if (formattype == Options.ParameterFormat.FileNameToTag || formattype == Options.ParameterFormat.TagToFileName ||
+          formattype == Options.ParameterFormat.RipFileName || formattype == Options.ParameterFormat.Organise)
+      {
+        str = str.Replace("%artist%", "\x0001");
+        str = str.Replace("%title%", "\x0001");
+        str = str.Replace("%album%", "\x0001");
+        str = str.Replace("%genre%", "\x0001");
+        str = str.Replace("%year%", "\x0001");
+        str = str.Replace("%albumartist%", "\x0001");
+        str = str.Replace("%track%", "\x0001");
+      }
+
+      if (formattype == Options.ParameterFormat.FileNameToTag || formattype == Options.ParameterFormat.TagToFileName ||
+          formattype == Options.ParameterFormat.Organise)
+      {
+        str = str.Replace("%comment%", "\x0001");
+        str = str.Replace("%disc%", "\x0001");
+        str = str.Replace("%disctotal%", "\x0001");
+        str = str.Replace("%tracktotal%", "\x0001");
+        str = str.Replace("%group%", "\x0001");
+        str = str.Replace("%conductor%", "\x0001");
+        str = str.Replace("%composer%", "\x0001");
+        str = str.Replace("%subtitle%", "\x0001");
+        str = str.Replace("%bpm%", "\x0001");
+        str = str.Replace("%remixed%", "\x0001");
+      }
+
+      if (formattype == Options.ParameterFormat.TagToFileName)
+      {
+        str = str.Replace("%filename%", "\x0001");
+        str = str.Replace("%#%", "\x0001");
+
+        int index = str.IndexOf("%track:");
+        if (index > -1 && !CheckParmWithLengthIndicator(index, str, out str))
+        {
+          return false;
+        }
+
+        index = str.IndexOf("%tracktotal:");
+        if (index > -1 && !CheckParmWithLengthIndicator(index, str, out str))
+        {
+          return false;
+        }
+
+        index = str.IndexOf("%disc:"); 
+        if (index > -1 && !CheckParmWithLengthIndicator(index, str, out str))
+        {
+          return false;
+        }
+
+        index = str.IndexOf("%disctotal:"); 
+        if (index > -1 && !CheckParmWithLengthIndicator(index, str, out str))
+        {
+          return false;
+        }
+      }
+
+      if (formattype == Options.ParameterFormat.Organise)
+      {
+        str = str.Replace("%bitrate%", "\x0001");
+
+        int index = str.IndexOf("%artist:");
+        if (index > -1 && !CheckParmWithLengthIndicator(index, str, out str))
+        {
+          return false;
+        }
+
+        index = str.IndexOf("%albumartist:");
+        if (index > -1 && !CheckParmWithLengthIndicator(index, str, out str))
+        {
+          return false;
+        }
+      }
+
+      if (formattype == Options.ParameterFormat.FileNameToTag)
+      {
+        str = str.Replace("%x%", "\x0001"); 
+      }
+
+      if (str.IndexOf("%") >= 0 || (str.IndexOf("\x0001\x0001") >= 0 && 
+                                     formattype == Options.ParameterFormat.FileNameToTag))
+        return false;
+
+      return true;
+    }
+
+    /// <summary>
+    ///   Check a Parameter with a given Length Indicator for correctness
+    /// </summary>
+    /// <param name = "startIndex"></param>
+    /// <param name = "str"></param>
+    /// <param name = "parmString"></param>
+    /// <returns></returns>
+    private static bool CheckParmWithLengthIndicator(int startIndex, string str, out string parmString)
+    {
+      bool retVal = true;
+      int last = -1;
+      last = str.IndexOf("%", startIndex);
+      string s1 = str.Substring(startIndex, last - startIndex + 1);
+
+      char c = s1[3];
+      if (!Char.IsDigit(c))
+        retVal = false;
+
+      if (s1.Length > 5)
+        retVal = false;
+
+      parmString = str.Replace(s1, "\x0001");
+      return retVal;
+    }
+
+    #endregion
   }
 }

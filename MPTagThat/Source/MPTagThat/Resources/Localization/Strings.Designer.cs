@@ -655,6 +655,96 @@ namespace MPTagThat.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        public static string String1 {
+            get {
+                return ResourceManager.GetString("String1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add Format To List.
+        /// </summary>
+        public static string tagAndRename_AddFormat {
+            get {
+                return ResourceManager.GetString("tagAndRename_AddFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Format.
+        /// </summary>
+        public static string tagAndRename_GroupBoxFormat {
+            get {
+                return ResourceManager.GetString("tagAndRename_GroupBoxFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Parameters (Click to add to the list).
+        /// </summary>
+        public static string tagAndRename_GroupBoxParam {
+            get {
+                return ResourceManager.GetString("tagAndRename_GroupBoxParam", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tag from File Name.
+        /// </summary>
+        public static string tagAndRename_Header {
+            get {
+                return ResourceManager.GetString("tagAndRename_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invalid Parameter Format. Please Correct..
+        /// </summary>
+        public static string tagAndRename_InvalidParm {
+            get {
+                return ResourceManager.GetString("tagAndRename_InvalidParm", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Preview Changes.
+        /// </summary>
+        public static string tagAndRename_PreviewChanges {
+            get {
+                return ResourceManager.GetString("tagAndRename_PreviewChanges", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Remove Format From List.
+        /// </summary>
+        public static string tagAndRename_RemoveFormat {
+            get {
+                return ResourceManager.GetString("tagAndRename_RemoveFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Parameters.
+        /// </summary>
+        public static string tagAndRename_TabHeader_Parameter {
+            get {
+                return ResourceManager.GetString("tagAndRename_TabHeader_Parameter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Preview.
+        /// </summary>
+        public static string tagAndRename_TabHeader_Preview {
+            get {
+                return ResourceManager.GetString("tagAndRename_TabHeader_Preview", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Album:.
         /// </summary>
         public static string tagEdit_Album {
@@ -750,6 +840,15 @@ namespace MPTagThat.Resources.Localization {
         public static string tagEdit_PartOfCompilation {
             get {
                 return ResourceManager.GetString("tagEdit_PartOfCompilation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Main Tags.
+        /// </summary>
+        public static string tagEdit_TabHeader_Main {
+            get {
+                return ResourceManager.GetString("tagEdit_TabHeader_Main", resourceCulture);
             }
         }
         

@@ -25,20 +25,10 @@ namespace MPTagThat.Core.Services.Settings.Setting
 {
   public class ParameterFormat
   {
-    #region Variables
-
-    private List<string> _formatValues = new List<string>();
-
-    #endregion
-
     #region Properties
 
     [Setting(SettingScope.User, "")]
-    public List<string> FormatValues
-    {
-      get { return _formatValues; }
-      set { _formatValues = value; }
-    }
+    public List<string> FormatValues { get; set; } = new List<string>();
 
     [Setting(SettingScope.User, "-1")]
     public int LastUsedFormat { get; set; }

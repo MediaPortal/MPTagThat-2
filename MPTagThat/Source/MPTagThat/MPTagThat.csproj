@@ -216,6 +216,21 @@
   <ItemGroup>
     <Resource Include="Resources\Images\MPTagThat_mepo.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Apply_Changes_16x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Apply_Changes_32x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Cancel_Changes_16x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Cancel_Changes_32x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Lens_32x.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>$(ProjectDir)PostBuild.bat $(SolutionDir) $(ConfigurationName)</PostBuildEvent>

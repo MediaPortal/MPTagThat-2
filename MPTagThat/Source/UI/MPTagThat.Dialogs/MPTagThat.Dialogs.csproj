@@ -51,14 +51,19 @@
     <Reference Include="Syncfusion.Shared.WPF, Version=17.4460.0.40, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Syncfusion.Shared.WPF.17.4.0.40\lib\net46\Syncfusion.Shared.WPF.dll</HintPath>
     </Reference>
+    <Reference Include="Syncfusion.Tools.WPF, Version=17.4460.0.40, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Syncfusion.Tools.WPF.17.4.0.40\lib\net46\Syncfusion.Tools.WPF.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Management" />
+    <Reference Include="System.Runtime.Serialization.Formatters.Soap" />
     <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\..\packages\System.ValueTuple.4.5.0\lib\net461\System.ValueTuple.dll</HintPath>
     </Reference>
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -69,9 +74,12 @@
       <RequiredTargetFramework>4.0</RequiredTargetFramework>
     </Reference>
     <Reference Include="taglib-sharp, Version=2.1.0.5, Culture=neutral, PublicKeyToken=db62eba44689b5b0" />
+    <Reference Include="UIAutomationProvider" />
+    <Reference Include="UIAutomationTypes" />
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
+    <Reference Include="WindowsFormsIntegration" />
     <Reference Include="WPFLocalizeExtension, Version=3.4.0.0, Culture=neutral, PublicKeyToken=c726e0262981a1eb, processorArchitecture=MSIL">
       <HintPath>..\..\packages\WPFLocalizeExtension.3.4.0-alpha0039\lib\net452\WPFLocalizeExtension.dll</HintPath>
     </Reference>
@@ -88,6 +96,8 @@
     <Compile Include="ViewModels\DialogServiceExtensions.cs" />
     <Compile Include="ViewModels\DialogViewModelBase.cs" />
     <Compile Include="ViewModels\FileName2TagViewModel.cs" />
+    <Compile Include="ViewModels\ParameterPart.cs" />
+    <Compile Include="ViewModels\TagFormat.cs" />
     <Compile Include="Views\AlbumCoverSearchView.xaml.cs">
       <DependentUpon>AlbumCoverSearchView.xaml</DependentUpon>
     </Compile>
@@ -120,9 +130,8 @@
       <Name>MPTagThat.Core</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
-    <Resource Include="Resources\Images\Lens_32x.png" />
+    <Folder Include="Resources\Images\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

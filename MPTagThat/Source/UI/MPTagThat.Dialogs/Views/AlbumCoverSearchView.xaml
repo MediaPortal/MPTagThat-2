@@ -27,7 +27,7 @@
       <Grid.RowDefinitions>
         <RowDefinition Height="60" />
         <RowDefinition Height="Auto" />
-        <RowDefinition Height="450" />
+        <RowDefinition Height="400" />
         <RowDefinition Height="Auto" />
       </Grid.RowDefinitions>
       <Grid.ColumnDefinitions>
@@ -54,7 +54,7 @@
         <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding Artist, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
         
         <syncfusion:ButtonAdv Grid.Row="0" Grid.Column="2" Label="{lex:Loc dialog_Search}" HorizontalAlignment="Left"  Width="80" Margin="5"
-                              SmallIcon="pack://application:,,,/MPTagThat.Dialogs;component/Resources/Images/Lens_32x.png" 
+                              SmallIcon="pack://application:,,,/MPTagThat;component/Resources/Images/Lens_32x.png" 
                               Command="{Binding SearchCommand}"
                               IsEnabled="{Binding IsSearchButtonEnabled, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
         

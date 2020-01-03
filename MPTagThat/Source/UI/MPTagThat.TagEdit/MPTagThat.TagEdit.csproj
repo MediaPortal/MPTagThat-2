@@ -118,14 +118,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\Images\Apply_Changes_16x.png" />
-    <Resource Include="Resources\Images\Apply_Changes_32x.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Resources\Images\RemovePictures_32x.png" />
     <Resource Include="Resources\Images\RemovePictures_16x.png" />
-    <Resource Include="Resources\Images\Cancel_Changes_16x.png" />
-    <Resource Include="Resources\Images\Cancel_Changes_32x.png" />
     <Resource Include="Resources\Images\CopyToAlbumArtist_10x.png" />
     <Content Include="x64\FreeImage.dll" />
     <Content Include="x86\FreeImage.dll" />

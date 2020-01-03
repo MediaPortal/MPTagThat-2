@@ -558,10 +558,7 @@ namespace MPTagThat.SongGrid.ViewModels
 
           if ((Action.ActionType)msg.MessageData["command"] == Action.ActionType.ACTION_FILENAME2TAG)
           {
-            _dialogService.ShowDialogInAnotherWindow("FileName2TagView", "DialogWindowView",parameters, r =>
-            {
-             
-            });
+            _dialogService.ShowDialogInAnotherWindow("FileName2TagView", "DialogWindowView",parameters, null);
           }
 
           if ((Action.ActionType)msg.MessageData["command"] == Action.ActionType.ACTION_GETCOVERART)

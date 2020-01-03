@@ -410,4 +410,47 @@
     <value>Search</value>
     <comment>A Search Button in a Dialog</comment>
   </data>
+  <data name="tagAndRename_AddFormat" xml:space="preserve">
+    <value>Add Format To List</value>
+    <comment>The  Add Format button</comment>
+  </data>
+  <data name="tagAndRename_GroupBoxFormat" xml:space="preserve">
+    <value>Format</value>
+    <comment>The Header of the Groupbox Format</comment>
+  </data>
+  <data name="tagAndRename_GroupBoxParam" xml:space="preserve">
+    <value>Parameters (Click to add to the list)</value>
+    <comment>The Header of the Parameter GroupBox</comment>
+  </data>
+  <data name="tagAndRename_Header" xml:space="preserve">
+    <value>Tag from File Name</value>
+    <comment>The Header of FileName2Tag</comment>
+  </data>
+  <data name="tagAndRename_PreviewChanges" xml:space="preserve">
+    <value>Preview Changes</value>
+    <comment>The Preview Changes Button</comment>
+  </data>
+  <data name="tagAndRename_RemoveFormat" xml:space="preserve">
+    <value>Remove Format From List</value>
+    <comment>The Remove Format Button</comment>
+  </data>
+  <data name="tagAndRename_TabHeader_Parameter" xml:space="preserve">
+    <value>Parameters</value>
+    <comment>The Tab Header for the Parameters</comment>
+  </data>
+  <data name="tagAndRename_TabHeader_Preview" xml:space="preserve">
+    <value>Preview</value>
+    <comment>The Tab Header for the Preview Tab</comment>
+  </data>
+  <data name="tagEdit_TabHeader_Main" xml:space="preserve">
+    <value>Main Tags</value>
+    <comment>The Header for the Main Tags Tab</comment>
+  </data>
+  <data name="String1" xml:space="preserve">
+    <value />
+  </data>
+  <data name="tagAndRename_InvalidParm" xml:space="preserve">
+    <value>Invalid Parameter Format. Please Correct.</value>
+    <comment>The Error message for Invalid Parms</comment>
+  </data>
 </root>

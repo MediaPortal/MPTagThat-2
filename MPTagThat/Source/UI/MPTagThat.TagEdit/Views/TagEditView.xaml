@@ -28,17 +28,17 @@
         <ColumnDefinition Width = "Auto" />
       </Grid.ColumnDefinitions>
       <syncfusion:ButtonAdv Grid.Column="0" Label="{lex:Loc tagEdit_Apply}" HorizontalAlignment="Left"  Width="75" 
-                            SmallIcon="pack://application:,,,/MPTagThat.TagEdit;component/Resources/Images/Apply_Changes_32x.png" 
+                            SmallIcon="pack://application:,,,/MPTagThat;component/Resources/Images/Apply_Changes_32x.png" 
                             Command="{Binding ApplyEditCommand}"
                             CommandParameter="{Binding SongEdit}" 
                             IsEnabled="{Binding IsApplyButtonEnabled, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 
       <syncfusion:ButtonAdv Grid.Column="1" Label="{lex:Loc tagEdit_Cancel}" HorizontalAlignment="Left"  Width="75" 
-                            SmallIcon="pack://application:,,,/MPTagThat.TagEdit;component/Resources/Images/Cancel_Changes_32x.png" 
+                            SmallIcon="pack://application:,,,/MPTagThat;component/Resources/Images/Cancel_Changes_32x.png" 
                             Command="{Binding CancelEditCommand}" />
     </Grid>
     <syncfusion:TabNavigationControl x:Name="tabNavigation" TabStripVisibility="Visible" SelectedIndex="0" >
-      <syncfusion:TabNavigationItem Header="Main">
+      <syncfusion:TabNavigationItem Header="{lex:Loc tagEdit_TabHeader_Main}">
         <syncfusion:TabNavigationItem.Content>
           <StackPanel>
             <!-- Track and Disc -->
