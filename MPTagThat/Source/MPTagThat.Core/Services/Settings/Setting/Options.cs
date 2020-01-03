@@ -216,14 +216,13 @@ namespace MPTagThat.Core.Services.Settings.Setting
 
     public void InitOptions()
     {
-      var settings = (ServiceLocator.Current.GetInstance(typeof(ISettingsManager)) as ISettingsManager);
-      if (settings != null)
+      if (ServiceLocator.Current.GetInstance(typeof(ISettingsManager)) is ISettingsManager settings)
       {
         StartupSettings = settings.StartupSettings;
         if (StartupSettings.Portable)
           _configDir = $@"{Application.StartupPath}\Config";
         else
-          _configDir = $@"{Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)}\MPTagThat\Config";
+          _configDir = $@"{Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)}\MPTagThat2\Config";
 
         _MPTagThatSettings = new MPTagThatSettings();
         settings.Load(_MPTagThatSettings);
@@ -283,13 +282,13 @@ namespace MPTagThat.Core.Services.Settings.Setting
         if (_fileNameToTagSettings.FormatValues.Count == 0)
         {
           // Add Default Values
-          _fileNameToTagSettings.FormatValues.Add(@"<K> - <T>");
-          _fileNameToTagSettings.FormatValues.Add(@"<A> - <T>");
-          _fileNameToTagSettings.FormatValues.Add(@"<K> - <A> - <T>");
-          _fileNameToTagSettings.FormatValues.Add(@"<A> - <K> - <T>");
-          _fileNameToTagSettings.FormatValues.Add(@"<A>\<B>\<K> - <T>");
-          _fileNameToTagSettings.FormatValues.Add(@"<A>\<B>\<A> - <K> - <T>");
-          _fileNameToTagSettings.FormatValues.Add(@"<A>\<B>\<K> - <A> - <T>");
+          _fileNameToTagSettings.FormatValues.Add(@"%track% - %title%");
+          _fileNameToTagSettings.FormatValues.Add(@"%artist% - %title%");
+          _fileNameToTagSettings.FormatValues.Add(@"%track% - %artist% - %title%");
+          _fileNameToTagSettings.FormatValues.Add(@"%artist% - %track% - %title%");
+          _fileNameToTagSettings.FormatValues.Add(@"%artist%\%album%\%track% - %title%");
+          _fileNameToTagSettings.FormatValues.Add(@"%artist%\%album%\%artist% - %track% - %title%");
+          _fileNameToTagSettings.FormatValues.Add(@"%artist%\%album%\%track% - %artist% - %title%");
         }
 
         _fileNameToTagSettingsTemp = new List<string>(_fileNameToTagSettings.FormatValues);
@@ -301,10 +300,10 @@ namespace MPTagThat.Core.Services.Settings.Setting
         if (_tagToFileNameSettings.FormatValues.Count == 0)
         {
           // Add Default Values
-          _tagToFileNameSettings.FormatValues.Add(@"<K> - <T>");
-          _tagToFileNameSettings.FormatValues.Add(@"<A> - <T>");
-          _tagToFileNameSettings.FormatValues.Add(@"<K> - <A> - <T>");
-          _tagToFileNameSettings.FormatValues.Add(@"<A> - <K> - <T>");
+          _tagToFileNameSettings.FormatValues.Add(@"%track% - %title%");
+          _tagToFileNameSettings.FormatValues.Add(@"%artist% - %title%");
+          _tagToFileNameSettings.FormatValues.Add(@"%track% - %artist% - %title%");
+          _tagToFileNameSettings.FormatValues.Add(@"%artist% - %track% - %title%");
         }
 
         _tagToFileNameSettingsTemp = new List<string>(_tagToFileNameSettings.FormatValues);
@@ -316,10 +315,10 @@ namespace MPTagThat.Core.Services.Settings.Setting
         if (_organiseSettings.FormatValues.Count == 0)
         {
           // Add Default values
-          _organiseSettings.FormatValues.Add(@"<A>\<B>\<K> - <T>");
-          _organiseSettings.FormatValues.Add(@"<A:1>\<A>\<B>\<K> - <T>");
-          _organiseSettings.FormatValues.Add(@"<O>\<B>\<K> - <A> - <T>");
-          _organiseSettings.FormatValues.Add(@"<O:1>\<A>\<B>\<K> - <T>");
+          _organiseSettings.FormatValues.Add(@"%artist%\%album%\%track% - %title%");
+          _organiseSettings.FormatValues.Add(@"%artist:1%\%artist%\%album%\%track% - %title%");
+          _organiseSettings.FormatValues.Add(@"%albumartist%\%album%\%track% - %artist% - %title%");
+          _organiseSettings.FormatValues.Add(@"%albumartist:1%\%artist%\%album%\%track% - %title%");
         }
 
         _organiseSettingsTemp = new List<string>(_organiseSettings.FormatValues);

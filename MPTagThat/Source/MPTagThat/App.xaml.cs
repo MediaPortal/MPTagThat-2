@@ -151,7 +151,7 @@ namespace MPTagThat
         var appSettingssettings = configFile.AppSettings.Settings;
         var key = "Raven/WorkingDir";
         var value = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) +
-                    "\\MPTagthat\\Databases";
+                    "\\MPTagthat2\\Databases";
         if (appSettingssettings[key] == null)
         {
           appSettingssettings.Add(key, value);
@@ -288,12 +288,12 @@ namespace MPTagThat
         _startupSettings.RavenStudioPort = ravenPortNode != null ? Convert.ToInt32(ravenPortNode.InnerText) : 8080;
 
         XmlNode ravenDatabaseNode = doc.DocumentElement.SelectSingleNode("/config/MusicDatabaseFolder");
-        var dbPath = ravenDatabaseNode?.InnerText ?? "%APPDATA%\\MPTagThat\\Databases";
+        var dbPath = ravenDatabaseNode?.InnerText ?? "%APPDATA%\\MPTagThat2\\Databases";
         dbPath = CheckPath(dbPath);
         _startupSettings.DatabaseFolder = dbPath;
 
         XmlNode coverArtNode = doc.DocumentElement.SelectSingleNode("/config/CoverArtFolder");
-        var coverArtPath = coverArtNode?.InnerText ?? "%APPDATA%\\MPTagThat\\CoverArt";
+        var coverArtPath = coverArtNode?.InnerText ?? "%APPDATA%\\MPTagThat2\\CoverArt";
         coverArtPath = CheckPath(coverArtPath);
         _startupSettings.CoverArtFolder = coverArtPath;
       }
