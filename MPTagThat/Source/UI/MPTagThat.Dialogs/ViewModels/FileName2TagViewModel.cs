@@ -33,6 +33,7 @@ using MPTagThat.Core.Services.Logging;
 using MPTagThat.Core.Services.Settings;
 using MPTagThat.Core.Services.Settings.Setting;
 using MPTagThat.Core.Utils;
+using Syncfusion.UI.Xaml.Grid;
 using WPFLocalizeExtension.Engine;
 
 #endregion
@@ -89,6 +90,32 @@ namespace MPTagThat.Dialogs.ViewModels
       set => SetProperty(ref _selectedIndex, value);
     }
 
+    /// <summary>
+    /// The Binding for the Songs in the Preview Grid
+    /// </summary>
+    private ObservableCollection<SongData> _songsPreview = new ObservableCollection<SongData>();
+    public ObservableCollection<SongData> SongsPreview
+    {
+      get => _songsPreview;
+      set => SetProperty(ref _songsPreview, value);
+    }
+
+    /// <summary>
+    /// The columns in the Preview Grid
+    /// </summary>
+    public Columns DataGridColumns { get; set; } = new Columns();
+
+    /// <summary>
+    /// The Selected Tab Index in the NavigationTab
+    /// </summary>
+    private int _selectedTabIndex;
+
+    public int SelectedTabIndex
+    {
+      get => _selectedTabIndex;
+      set => SetProperty(ref _selectedTabIndex, value);
+    }
+
     #endregion
 
     #region ctor
@@ -100,10 +127,13 @@ namespace MPTagThat.Dialogs.ViewModels
       CancelChangesCommand = new BaseCommand(CancelChanges);
       LabelClickedCommand = new BaseCommand(LabelClicked);
       FileNameToTagCommand = new BaseCommand(FileNameToTag);
+      PreviewChangesCommand = new BaseCommand(PreviewChanges);
+      AddFormatCommand = new BaseCommand(AddFormat);
+      RemoveFormatCommand = new BaseCommand(RemoveFormat);
+      SelectionChangingCommand = new BaseCommand(SelectionChanging);
     }
 
     #endregion
-
 
     #region Commands
 
@@ -158,8 +188,26 @@ namespace MPTagThat.Dialogs.ViewModels
           //_main.TracksGridView.AddErrorMessage(row, localisation.ToString("TagAndRename", "InvalidParm"));
         }
       }
+
+      // Did we get a new Format in the list, then store it temporarily
+      bool newFormat = true;
+      foreach (string format in _options.FileNameToTagSettingsTemp)
+      {
+        if (format == SelectedItemText)
+        {
+          newFormat = false;
+          break;
+        }
+      }
+
+      if (newFormat)
+      {
+        _options.FileNameToTagSettingsTemp.Add(SelectedItemText);
+      }
+      _options.FileNameToTagSettings.LastUsedFormat = SelectedIndex;
+
       log.Trace("<<<");
-      CloseDialog("true");
+      CloseDialogWindow(new DialogResult(ButtonResult.OK));
     }
 
     private void ReplaceParametersWithValues(SongData song, List<ParameterPart> parameters)
@@ -293,6 +341,117 @@ namespace MPTagThat.Dialogs.ViewModels
       }
     }
 
+    public ICommand SelectionChangingCommand { get; set; }
+
+    private void SelectionChanging(object parm)
+    {
+      SongsPreview.Clear();
+      DataGridColumns = new Columns();
+      FillPreview();
+    }
+
+    /// <summary>
+    /// The Preview Button has been pressed
+    /// </summary>
+    public ICommand PreviewChangesCommand { get; set; }
+
+    private void PreviewChanges(object parm)
+    {
+      SelectedTabIndex = 1;
+    }
+
+    /// <summary>
+    /// Fill the Preview Grid
+    /// </summary>
+    private void FillPreview()
+    {
+      log.Trace(">>>");
+
+      if (!Util.CheckParameterFormat(SelectedItemText, Options.ParameterFormat.FileNameToTag))
+      {
+        MessageBox.Show(LocalizeDictionary.Instance.GetLocalizedObject("MPTagThat", "Strings", "tagAndRename_InvalidParm", LocalizeDictionary.Instance.Culture).ToString(),
+          LocalizeDictionary.Instance.GetLocalizedObject("MPTagThat", "Strings", "message_Error_Title", LocalizeDictionary.Instance.Culture).ToString(), MessageBoxButton.OK);
+        return;
+      }
+
+      var tagFormat = new TagFormat(SelectedItemText);
+      var parts = tagFormat.ParameterParts;
+
+      // Add Columns to Preview Grid
+      var column = new GridTextColumn();
+      column.HeaderText = "FullFileName";
+      column.MappingName = "FullFileName";
+      DataGridColumns.Add(column);
+
+      foreach (var part in parts)
+      {
+        foreach (var parameter in part.Parameters)
+        {
+          column = new GridTextColumn();
+          column.HeaderText = Util.ParameterToLabel(parameter);
+          column.MappingName = Util.ParameterToLabel(parameter);
+          DataGridColumns.Add(column);
+        }
+      }
+
+      foreach (var song in _songs)
+      {
+        var songPreview = song.Clone();
+        songPreview.Changed = false;
+        ReplaceParametersWithValues(songPreview, parts);
+        SongsPreview.Add(songPreview);
+      }
+
+      log.Trace("<<<");
+    }
+
+    /// <summary>
+    /// Adds the current Format to the list
+    /// </summary>
+    public ICommand AddFormatCommand { get; set; }
+
+    private void AddFormat(object parm)
+    {
+      bool found = false;
+      foreach (string format in _options.FileNameToTagSettings.FormatValues)
+      {
+        if (format == SelectedItemText)
+        {
+          found = true;
+          break;
+        }
+      }
+
+      if (!found)
+      {
+        _options.FileNameToTagSettings.FormatValues.Add(SelectedItemText);
+        _options.FileNameToTagSettings.Save();
+
+        _options.FileNameToTagSettingsTemp.Add(SelectedItemText);
+        Parameters.Add(SelectedItemText);
+      }
+    }
+
+    /// <summary>
+    /// Removes the selected Item from the List
+    /// </summary>
+    public ICommand RemoveFormatCommand { get; set; }
+
+    private void RemoveFormat(object parm)
+    {
+      for (int i = 0; i < _options.FileNameToTagSettings.FormatValues.Count; i++)
+      {
+        if (_options.FileNameToTagSettings.FormatValues[i] == SelectedItemText)
+        {
+          _options.FileNameToTagSettings.FormatValues.RemoveAt(i);
+          _options.FileNameToTagSettings.Save();
+        }
+      }
+
+      _options.FileNameToTagSettingsTemp.RemoveAt(SelectedIndex);
+      Parameters.RemoveAt(SelectedIndex);
+    }
+
     #endregion
 
     #region Private Methods
@@ -306,7 +465,7 @@ namespace MPTagThat.Dialogs.ViewModels
       }
 
       if (_options.FileNameToTagSettings.LastUsedFormat > Parameters.Count - 1)
-        SelectedIndex = -1;
+        SelectedIndex = 0;
       else
         SelectedIndex = _options.FileNameToTagSettings.LastUsedFormat;
       log.Trace("<<<");

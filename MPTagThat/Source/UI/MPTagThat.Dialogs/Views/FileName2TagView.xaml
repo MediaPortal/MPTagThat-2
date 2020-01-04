@@ -8,6 +8,7 @@
              xmlns:lex="http://wpflocalizeextension.codeplex.com"
              xmlns:syncfusion="http://schemas.syncfusion.com/wpf"
              xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
+             xmlns:core="clr-namespace:MPTagThat.Core.Common.Converter;assembly=MPTagThat.Core"
              lex:LocalizeDictionary.DesignCulture="en"
              lex:ResxLocalizationProvider.DefaultAssembly="MPTagThat"
              lex:ResxLocalizationProvider.DefaultDictionary="Strings"
@@ -22,8 +23,19 @@
     </Style>
   </prism:Dialog.WindowStyle>
 
+  <UserControl.Resources>
+
+    <core:AlternateRowChangedColorConverter x:Key="changedAlternateRowStyleSelector" />
+
+    <Style TargetType="syncfusion:VirtualizingCellsControl" x:Key="alternatingRowStyle">
+      <Setter Property="Background" Value="{Binding Path=Changed,UpdateSourceTrigger=PropertyChanged,Converter={StaticResource changedAlternateRowStyleSelector}}"/>
+    </Style>
+
+  </UserControl.Resources>
+
+
   <Border Background="{Binding Background}"  BorderBrush="LightGray" BorderThickness="3" CornerRadius="5" >
-    <Grid x:Name="LayoutRoot" Margin="5">
+    <Grid x:Name="LayoutRoot" Margin="5" >
       <Grid.RowDefinitions>
         <RowDefinition Height="60" />
         <RowDefinition Height="Auto"/>
@@ -53,14 +65,28 @@
                     SelectedIndex="{Binding SelectedIndex, Mode=TwoWay}" />
 
           <StackPanel Grid.Row="1"  Orientation="Horizontal">
-            <syncfusion:ButtonAdv Label="{lex:Loc tagAndRename_AddFormat}"  IconHeight="0" IconWidth="0" Height="25" Margin="5,5,0,0" />
-            <syncfusion:ButtonAdv Label="{lex:Loc tagAndRename_RemoveFormat}" IconHeight="0" IconWidth="0" Height="25" Margin="5,5,0,0" />
-            <syncfusion:ButtonAdv Label="{lex:Loc tagAndRename_PreviewChanges}" IconHeight="0" IconWidth="0" Height="25" Margin="5,5,0,0" />
+            <syncfusion:ButtonAdv Label="{lex:Loc tagAndRename_AddFormat}"  
+                                  Command="{Binding AddFormatCommand}"
+                                  IconHeight="0" IconWidth="0" Height="25" Margin="5,5,0,0" />
+            <syncfusion:ButtonAdv Label="{lex:Loc tagAndRename_RemoveFormat}" 
+                                  Command="{Binding RemoveFormatCommand}"
+                                  IconHeight="0" IconWidth="0" Height="25" Margin="5,5,0,0" />
+            <syncfusion:ButtonAdv Label="{lex:Loc tagAndRename_PreviewChanges}" 
+                                  Command="{Binding PreviewChangesCommand}"
+                                  IconHeight="0" IconWidth="0" Height="25" Margin="5,5,0,0" />
           </StackPanel>
         </Grid>
       </GroupBox>
 
-      <syncfusion:TabNavigationControl Grid.Row="2" RenderTransformOrigin="0.512,0.561" >
+      <syncfusion:TabNavigationControl x:Name="TabNavigationControl" Grid.Row="2" RenderTransformOrigin="0.512,0.561" 
+                                       SelectedIndex="{Binding SelectedTabIndex, Mode=TwoWay}" >
+
+        <b:Interaction.Triggers>
+          <b:EventTrigger EventName="SelectionChanging">
+            <b:InvokeCommandAction Command="{Binding SelectionChangingCommand}" />
+          </b:EventTrigger>
+        </b:Interaction.Triggers>
+
         <!-- Parameter Tab -->
         <syncfusion:TabNavigationItem Header="{lex:Loc tagAndRename_TabHeader_Parameter}">
           <syncfusion:TabNavigationItem.Content>
@@ -387,6 +413,20 @@
         <syncfusion:TabNavigationItem Header="{lex:Loc tagAndRename_TabHeader_Preview}">
           <syncfusion:TabNavigationItem.Content>
             <Grid>
+              <Grid.RowDefinitions>
+                <RowDefinition Height="400" />
+              </Grid.RowDefinitions>
+              <syncfusion:SfDataGrid x:Name="SongPreviewGrid" 
+                                     ItemsSource="{Binding SongsPreview, Mode=TwoWay}"
+                                     Columns="{Binding DataGridColumns, Mode=TwoWay}" 
+                                     ColumnSizer="AutoWithLastColumnFill" 
+                                     AllowResizingColumns="True" 
+                                     AllowDraggingColumns="False" 
+                                     AutoGenerateColumns="False"
+                                     ShowRowHeader="False" 
+                                     AllowEditing="False" 
+                                     AlternatingRowStyle="{StaticResource alternatingRowStyle}" 
+              />
 
             </Grid>
           </syncfusion:TabNavigationItem.Content>

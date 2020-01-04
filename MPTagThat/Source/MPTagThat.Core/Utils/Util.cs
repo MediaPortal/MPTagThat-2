@@ -677,7 +677,7 @@ namespace MPTagThat.Core.Utils
           break;
 
         case "FileName":
-          parameter = "%filename";
+          parameter = "%filename%";
           break;
 
         case "Enumerate":
@@ -705,6 +705,116 @@ namespace MPTagThat.Core.Utils
           break;
       }
       return parameter;
+    }
+
+    /// <summary>
+    ///   Convert the Parameter to a Label
+    /// </summary>
+    /// <param name = "parameter"></param>
+    /// <returns></returns>
+    public static string ParameterToLabel(string parameter)
+    {
+      var label = string.Empty;
+
+      switch (parameter)
+      {
+        case "%artist%":
+          label = "Artist";
+          break;
+
+        case "%title%":
+          label = "Title";
+          break;
+
+        case "%album%":
+          label = "Album";
+          break;
+
+        case "%year%":
+          label = "Year";
+          break;
+
+        case "%track%":
+          label = "TrackNumber";
+          break;
+
+        case "%tracktotal%":
+          label = "TrackCount";
+          break;
+
+        case "%disc%":
+          label = "DiscNumber";
+          break;
+
+        case "%disctotal%":
+          label = "DiscCount";
+          break;
+
+        case "%genre%":
+          label = "Genre";
+          break;
+
+        case "%albumartist%":
+          label = "AlbumArtist";
+          break;
+
+        case "%comment%":
+          label = "Comment";
+          break;
+
+        case "%conductor%":
+          label = "Conductor";
+          break;
+
+        case "%composer%":
+          label = "Composer";
+          break;
+
+        case "%remixed%":
+          label = "Interpreter";
+          break;
+
+        case "%bpm%":
+          label = "Bpm";
+          break;
+
+        case "%subtitle%":
+          label = "Subtitle";
+          break;
+
+        case "%group%":
+          label = "Grouping";
+          break;
+
+        case "%filename%":
+          label = "Filename";
+          break;
+
+        case "%#%":
+          label = "Enumerate";
+          break;
+
+        case "%bitrate%":
+          label = "Bitrate";
+          break;
+
+        case "%artist:n%":
+          label = "FirstArtist";
+          break;
+
+        case "%albumartist:n%":
+          label = "FirstAlbumArtist";
+          break;
+
+        case "%x%":
+          label = "Unused";
+          break;
+
+        case @"\":
+          label = "Folder";
+          break;
+      }
+      return label;
     }
 
     /// <summary>

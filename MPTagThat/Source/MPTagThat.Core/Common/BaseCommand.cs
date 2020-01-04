@@ -71,7 +71,8 @@ namespace MPTagThat.Core.Common
 
     public void Execute(object parameter)
     {
-      _execute(parameter);
+      var parm = parameter ?? "";
+      _execute(parm);
     }
 
     #endregion // ICommand Members

@@ -535,6 +535,7 @@ namespace MPTagThat.SongGrid.ViewModels
         case "selectedfolderchanged":
           if (msg.MessageData.ContainsKey("folder"))
           {
+            SelectedItems.Clear();
             _selectedFolder = (string)msg.MessageData["folder"];
             FolderScan();
           }
