@@ -158,8 +158,8 @@ namespace MPTagThat.SongGrid.ViewModels
     {
       if (param != null)
       {
-        _selectedItems = (ObservableCollection<object>)param;
-        var songs = _selectedItems.Cast<SongData>().ToList();
+        SelectedItems = (ObservableCollection<object>)param;
+        var songs = SelectedItems.Cast<SongData>().ToList();
         var parameters = new NavigationParameters();
         parameters.Add("songs", songs);
         _regionManager.RequestNavigate("TagEdit", "TagEditView", parameters);
@@ -560,16 +560,20 @@ namespace MPTagThat.SongGrid.ViewModels
           if ((Action.ActionType)msg.MessageData["command"] == Action.ActionType.ACTION_FILENAME2TAG)
           {
             _dialogService.ShowDialogInAnotherWindow("FileName2TagView", "DialogWindowView",parameters, null);
+            return;
           }
 
           if ((Action.ActionType)msg.MessageData["command"] == Action.ActionType.ACTION_GETCOVERART)
           {
-            _dialogService.ShowDialogInAnotherWindow("AlbumCoverSearchView", "DialogWindowView", parameters, r =>
-            {
-
-            });
+            _dialogService.ShowDialogInAnotherWindow("AlbumCoverSearchView", "DialogWindowView", parameters, null);
+            return;
           }
 
+          if ((Action.ActionType)msg.MessageData["command"] == Action.ActionType.ACTION_GETLYRICS)
+          {
+            _dialogService.ShowDialogInAnotherWindow("LyricsSearchView", "DialogWindowView", parameters, null);
+            return;
+          }
 
           break;
       }

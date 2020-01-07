@@ -95,6 +95,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DialogModule.cs" />
+    <Compile Include="Models\LyricsModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -102,6 +103,7 @@
     <Compile Include="ViewModels\DialogServiceExtensions.cs" />
     <Compile Include="ViewModels\DialogViewModelBase.cs" />
     <Compile Include="ViewModels\FileName2TagViewModel.cs" />
+    <Compile Include="ViewModels\LyricsSearchViewModel.cs" />
     <Compile Include="ViewModels\ParameterPart.cs" />
     <Compile Include="ViewModels\TagFormat.cs" />
     <Compile Include="Views\AlbumCoverSearchView.xaml.cs">
@@ -112,6 +114,9 @@
     </Compile>
     <Compile Include="Views\FileName2TagView.xaml.cs">
       <DependentUpon>FileName2TagView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\LyricsSearchView.xaml.cs">
+      <DependentUpon>LyricsSearchView.xaml</DependentUpon>
     </Compile>
     <None Include="app.config" />
     <None Include="packages.config" />
@@ -126,6 +131,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\FileName2TagView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\LyricsSearchView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

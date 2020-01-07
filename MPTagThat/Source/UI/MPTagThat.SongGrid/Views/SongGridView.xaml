@@ -40,6 +40,7 @@
 
   <Grid>
     <syncfusion:SfDataGrid x:Name="SongDataGrid" 
+                           SelectedItems="{Binding SelectedItems,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                            ItemsSource="{Binding Songs, Mode=TwoWay}"
                            Columns="{Binding DataGridColumns, Mode=TwoWay}" 
                            FrozenColumnCount="3"
