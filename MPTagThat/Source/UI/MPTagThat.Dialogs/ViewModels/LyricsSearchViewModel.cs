@@ -190,6 +190,9 @@ namespace MPTagThat.Dialogs.ViewModels
         }
       }
 
+      _options.MainSettings.SelectedLyricSites = SelectedLyricsSearchSites.ToList();
+      CloseDialog("true");
+
       log.Trace("<<<");
     }
 
