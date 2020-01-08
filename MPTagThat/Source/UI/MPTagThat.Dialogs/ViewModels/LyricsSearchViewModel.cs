@@ -164,6 +164,7 @@ namespace MPTagThat.Dialogs.ViewModels
     private void SearchLyrics(object parm)
     {
       Lyrics.Clear();
+      StopThread();
       DoSearchLyrics();
     }
 
@@ -269,6 +270,14 @@ namespace MPTagThat.Dialogs.ViewModels
     // Called when user presses Stop button of form is closed.
     private void StopThread()
     {
+      if (_lc != null)
+      {
+        log.Debug("Stop all searches");
+        _lc.StopSearches = true;
+      }
+
+      log.Debug("Stop all threads");
+      _bgWorkerLyrics.CancelAsync();
       if (_lyricControllerThread != null && _lyricControllerThread.IsAlive) // thread is active
       {
         _eventStopThread.Set();
@@ -358,17 +367,6 @@ namespace MPTagThat.Dialogs.ViewModels
     private void ThreadFinishedMethod(string message, string site)
     {
       log.Info("All Searches Finished");
-      /*
-      if (_lc != null)
-      {
-        log.Debug("Stop all searches");
-        _lc.StopSearches = true;
-      }
-      
-      log.Debug("Stop all threads");
-      _bgWorkerLyrics.CancelAsync();
-      StopThread();
-      */
     }
 
     private void ThreadExceptionMethod(string s) { }
@@ -439,6 +437,12 @@ namespace MPTagThat.Dialogs.ViewModels
       _songs = parameters.GetValue<List<SongData>>("songs");
       DoSearchLyrics();
       log.Trace("<<<");
+    }
+
+    public override void CloseDialog(string parameter)
+    {
+      StopThread();
+      base.CloseDialog(parameter);
     }
 
     #endregion

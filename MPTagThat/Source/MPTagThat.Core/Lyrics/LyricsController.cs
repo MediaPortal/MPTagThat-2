@@ -209,10 +209,23 @@ namespace MPTagThat.Core.Lyrics
                     _nrOfLyricsNotFound
           };
 
-      if ((_nrOfLyricsSearched >= NrOfLyricsToSearch))
+      if ((_nrOfLyricsSearched >= NrOfLyricsToSearch) && !ThreadsStillAlive())
       {
         FinishThread(artist, title, "All songs have been searched!", site);
       }
+    }
+
+    internal bool ThreadsStillAlive()
+    {
+      foreach (var thread in _threadList)
+      {
+        if (thread.IsAlive)
+        {
+          return true;
+        }
+      }
+
+      return false;
     }
 
 
