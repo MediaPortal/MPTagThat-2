@@ -27,13 +27,13 @@
         <ColumnDefinition Width = "90" />
         <ColumnDefinition Width = "Auto" />
       </Grid.ColumnDefinitions>
-      <syncfusion:ButtonAdv Grid.Column="0" Label="{lex:Loc tagEdit_Apply}" HorizontalAlignment="Left"  Width="75" 
+      <syncfusion:ButtonAdv Grid.Column="0" Label="{lex:Loc dialog_Apply}" HorizontalAlignment="Left"  Width="75" 
                             SmallIcon="pack://application:,,,/MPTagThat;component/Resources/Images/Apply_Changes_32x.png" 
                             Command="{Binding ApplyEditCommand}"
                             CommandParameter="{Binding SongEdit}" 
                             IsEnabled="{Binding IsApplyButtonEnabled, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 
-      <syncfusion:ButtonAdv Grid.Column="1" Label="{lex:Loc tagEdit_Cancel}" HorizontalAlignment="Left"  Width="75" 
+      <syncfusion:ButtonAdv Grid.Column="1" Label="{lex:Loc dialog_Cancel}" HorizontalAlignment="Left"  Width="75" 
                             SmallIcon="pack://application:,,,/MPTagThat;component/Resources/Images/Cancel_Changes_32x.png" 
                             Command="{Binding CancelEditCommand}" />
     </Grid>

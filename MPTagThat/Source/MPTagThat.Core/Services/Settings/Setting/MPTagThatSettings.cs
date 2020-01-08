@@ -33,15 +33,13 @@ namespace MPTagThat.Core.Services.Settings.Setting
     private string _lastRipEncoderUsed;
     private int _numTrackDigits = 2;
 
-    private List<string> _albumInfoSites = new List<string>() { "MusicBrainz", "Discogs", "LastFM"};
-
     #endregion
 
     #region Properties
 
     #region Layout
 
-    
+
     [Setting(SettingScope.User, "#FFFFFF")]
     public string BackGround { get; set; }
 
@@ -93,7 +91,7 @@ namespace MPTagThat.Core.Services.Settings.Setting
     #region Tags
 
     [Setting(SettingScope.User, "1")]
-    public int CharacterEncoding  { get; set; }
+    public int CharacterEncoding { get; set; }
 
     [Setting(SettingScope.User, "2")]
     public int NumberTrackDigits
@@ -109,10 +107,10 @@ namespace MPTagThat.Core.Services.Settings.Setting
     public int ID3Version { get; set; }
 
     [Setting(SettingScope.User, "false")]
-    public bool RemoveID3V1 { get; set; } 
+    public bool RemoveID3V1 { get; set; }
 
     [Setting(SettingScope.User, "false")]
-    public bool RemoveID3V2 { get; set; } 
+    public bool RemoveID3V2 { get; set; }
 
     [Setting(SettingScope.User, "false")]
     public bool CopyArtist { get; set; }
@@ -145,11 +143,7 @@ namespace MPTagThat.Core.Services.Settings.Setting
     public string DefaultAlbumSite { get; set; }
 
     [Setting(SettingScope.User, "")]
-    public List<string> AlbumInfoSites
-    {
-      get { return _albumInfoSites; }
-      set { _albumInfoSites = value; }
-    }
+    public List<string> AlbumInfoSites { get; set; } = new List<string>() { "MusicBrainz", "Discogs", "LastFM" };
 
     [Setting(SettingScope.User, "false")]
     public bool OnlySaveFolderThumb { get; set; }
@@ -174,7 +168,10 @@ namespace MPTagThat.Core.Services.Settings.Setting
     #region Lyrics
 
     [Setting(SettingScope.User, "")]
-    public List<string> LyricSites { get; set; } = new List<string>();
+    public List<string> LyricSites { get; set; } = new List<string>() { "Lyrics007", "Lyricsmode", "LyricsOnDemand" };
+
+    [Setting(SettingScope.User, "")]
+    public List<string> SelectedLyricSites { get; set; } = new List<string>();
 
     [Setting(SettingScope.User, "false")]
     public bool SwitchArtist { get; set; }

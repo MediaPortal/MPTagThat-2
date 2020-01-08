@@ -16,35 +16,31 @@
 // along with MPTagThat. If not, see <http://www.gnu.org/licenses/>.
 #endregion
 
-#region
+#region 
 
 using System;
 using System.Globalization;
-using System.Windows;
 using System.Windows.Data;
-using System.Windows.Media;
 
 #endregion
 
 namespace MPTagThat.Core.Common.Converter
 {
   /// <summary>
-  /// Converter to set the color for alternate rows
+  /// This Value Converter inverses a boolean value
   /// </summary>
-  public class AlternateRowChangedColorConverter : IValueConverter
+  public class InvertBoolConverter : IValueConverter
   {
-
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
-      if ((bool)value)
-        return new SolidColorBrush(Colors.Yellow);
-
-      return new SolidColorBrush(Colors.LightBlue);
+      bool booleanValue = (bool)value;
+      return !booleanValue;
     }
 
     public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
     {
-      throw new NotImplementedException();
+      bool booleanValue = (bool)value;
+      return !booleanValue;
     }
   }
 }

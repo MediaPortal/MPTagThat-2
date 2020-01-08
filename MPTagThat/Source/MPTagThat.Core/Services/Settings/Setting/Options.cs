@@ -227,6 +227,12 @@ namespace MPTagThat.Core.Services.Settings.Setting
         _MPTagThatSettings = new MPTagThatSettings();
         settings.Load(_MPTagThatSettings);
 
+        // Set default values for Lyrics Search Sites, when starting the first time
+        if (_MPTagThatSettings.SelectedLyricSites.Count == 0)
+        {
+          _MPTagThatSettings.SelectedLyricSites = _MPTagThatSettings.LyricSites;
+        }
+
         _caseConversionSettings = new CaseConversionSettings();
         settings.Load(_caseConversionSettings);
         // Set Default Values, when starting the first Time

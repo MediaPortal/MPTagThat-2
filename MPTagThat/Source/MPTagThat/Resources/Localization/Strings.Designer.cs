@@ -79,6 +79,24 @@ namespace MPTagThat.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Apply.
+        /// </summary>
+        public static string dialog_Apply {
+            get {
+                return ResourceManager.GetString("dialog_Apply", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cancel.
+        /// </summary>
+        public static string dialog_Cancel {
+            get {
+                return ResourceManager.GetString("dialog_Cancel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Close.
         /// </summary>
         public static string dialog_Close {
@@ -88,11 +106,56 @@ namespace MPTagThat.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ok.
+        /// </summary>
+        public static string dialog_Ok {
+            get {
+                return ResourceManager.GetString("dialog_Ok", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Search.
         /// </summary>
         public static string dialog_Search {
             get {
                 return ResourceManager.GetString("dialog_Search", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Please select at least one Lyrics Search Site.
+        /// </summary>
+        public static string lyricsSearch_NoSites_Selected {
+            get {
+                return ResourceManager.GetString("lyricsSearch_NoSites_Selected", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to There is nothing to search for.
+        /// </summary>
+        public static string lyricsSearch_NothingToSearch {
+            get {
+                return ResourceManager.GetString("lyricsSearch_NothingToSearch", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select Lyrics Search Site(s).
+        /// </summary>
+        public static string lyricsSearch_Sites_Watermark {
+            get {
+                return ResourceManager.GetString("lyricsSearch_Sites_Watermark", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Lyrics Search.
+        /// </summary>
+        public static string lyricsSearch_Title {
+            get {
+                return ResourceManager.GetString("lyricsSearch_Title", resourceCulture);
             }
         }
         
@@ -655,15 +718,6 @@ namespace MPTagThat.Resources.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
-        /// </summary>
-        public static string String1 {
-            get {
-                return ResourceManager.GetString("String1", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Add Format To List.
         /// </summary>
         public static string tagAndRename_AddFormat {
@@ -763,29 +817,11 @@ namespace MPTagThat.Resources.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Apply.
-        /// </summary>
-        public static string tagEdit_Apply {
-            get {
-                return ResourceManager.GetString("tagEdit_Apply", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Artist:.
         /// </summary>
         public static string tagEdit_Artist {
             get {
                 return ResourceManager.GetString("tagEdit_Artist", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Cancel.
-        /// </summary>
-        public static string tagEdit_Cancel {
-            get {
-                return ResourceManager.GetString("tagEdit_Cancel", resourceCulture);
             }
         }
         

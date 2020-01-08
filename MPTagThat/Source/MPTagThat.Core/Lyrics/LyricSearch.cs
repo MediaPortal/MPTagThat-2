@@ -116,14 +116,17 @@ namespace MPTagThat.Core.Lyrics
       ThreadStart job = delegate
           {
             var lyricsSearchSite = LyricsSiteFactory.Create(lyricsSearchSiteName, _mArtist, _mTitle, _mEventStopSiteSearches, TimeLimitForSite);
-            lyricsSearchSite.FindLyrics();
-            if (_mAllowAllToComplete)
+            if (lyricsSearchSite != null)
             {
-              ValidateSearchOutputForAllowAllToComplete(lyricsSearchSite.Lyric, lyricsSearchSiteName);
-            }
-            else
-            {
-              ValidateSearchOutput(lyricsSearchSite.Lyric, lyricsSearchSiteName);
+              lyricsSearchSite.FindLyrics();
+              if (_mAllowAllToComplete)
+              {
+                ValidateSearchOutputForAllowAllToComplete(lyricsSearchSite.Lyric, lyricsSearchSiteName);
+              }
+              else
+              {
+                ValidateSearchOutput(lyricsSearchSite.Lyric, lyricsSearchSiteName);
+              }
             }
           };
       var searchThread = new Thread(job);

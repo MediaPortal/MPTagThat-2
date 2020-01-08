@@ -16,24 +16,32 @@
 // along with MPTagThat. If not, see <http://www.gnu.org/licenses/>.
 #endregion
 
+#region 
+
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Data;
+using System.Windows.Input;
 using System.Windows.Media;
 using CommonServiceLocator;
 using MPTagThat.Core.Common.Song;
 using MPTagThat.Core.Lyrics;
+using MPTagThat.Core.Services.Logging;
 using MPTagThat.Core.Services.Settings;
 using MPTagThat.Core.Services.Settings.Setting;
 using MPTagThat.Dialogs.Models;
 using Prism.Services.Dialogs;
-using Syncfusion.Data.Extensions;
+using Syncfusion.UI.Xaml.Utility;
+using WPFLocalizeExtension.Engine;
+
+#endregion
 
 namespace MPTagThat.Dialogs.ViewModels
 {
@@ -41,13 +49,17 @@ namespace MPTagThat.Dialogs.ViewModels
   {
     #region Variables
 
+    private readonly NLogLogger log = (ServiceLocator.Current.GetInstance(typeof(ILogger)) as ILogger)?.GetLogger;
     private readonly Options _options = (ServiceLocator.Current.GetInstance(typeof(ISettingsManager)) as ISettingsManager)?.GetOptions;
     private object _lock = new object();
+
+    private const int NrOfCurrentSearchesAllowed = 6;
+    private BackgroundWorker _bgWorkerLyrics;
+    private LyricsController _lc;
 
     private Queue _lyricsQueue;
     private ManualResetEvent _eventStopThread;
     private Thread _lyricControllerThread;
-    private List<string> _sitesToSearch;
 
     private List<SongData> _songs;
     private readonly string[] _strippedPrefixStrings = { "the ", "les " };
@@ -62,7 +74,7 @@ namespace MPTagThat.Dialogs.ViewModels
 
     public delegate void DelegateStringUpdate(string message, string site);
 
-    public delegate void DelegateThreadException(string s);
+    public delegate void DelegateThreadException(string exception);
 
     public delegate void DelegateThreadFinished(string message, string site);
 
@@ -79,9 +91,19 @@ namespace MPTagThat.Dialogs.ViewModels
     #region Properties
 
     public Brush Background => (Brush)new BrushConverter().ConvertFromString(_options.MainSettings.BackGround);
-    
+
     /// <summary>
-    /// Binding for the Albums found
+    /// Binding for Wait Cursor
+    /// </summary>
+    private bool _isBusy;
+    public bool IsBusy
+    {
+      get => _isBusy;
+      set => SetProperty(ref _isBusy, value);
+    }
+
+    /// <summary>
+    /// Binding for the Lyrics found
     /// </summary>
     private ObservableCollection<LyricsModel> _lyrics = new ObservableCollection<LyricsModel>();
     public ObservableCollection<LyricsModel> Lyrics
@@ -90,61 +112,167 @@ namespace MPTagThat.Dialogs.ViewModels
       set => SetProperty(ref _lyrics, value);
     }
 
+    /// <summary>
+    /// The Binding for the Lyrics Search Sites
+    /// </summary>
+    private ObservableCollection<string> _lyricsSearchSites = new ObservableCollection<string>();
+    public ObservableCollection<string> LyricsSearchSites
+    {
+      get => _lyricsSearchSites;
+      set => SetProperty(ref _lyricsSearchSites, value);
+    }
+
+    /// <summary>
+    /// The Selected Lyrics Search sites
+    /// </summary>
+    private ObservableCollection<string> _selectedLyricsSearchSites = new ObservableCollection<string>();
+    public ObservableCollection<string> SelectedLyricsSearchSites
+    {
+      get => _selectedLyricsSearchSites;
+      set => SetProperty(ref _selectedLyricsSearchSites, value);
+    }
+
     #endregion
-    
+
     #region ctor
 
     public LyricsSearchViewModel()
     {
-      BindingOperations.EnableCollectionSynchronization(Lyrics, _lock);
-      _eventStopThread = new ManualResetEvent(false);
-      _lyricsQueue = new Queue();
-      _sitesToSearch = new List<string>();
+      Title = LocalizeDictionary.Instance.GetLocalizedObject("MPTagThat", "Strings", "lyricsSearch_Title",
+        LocalizeDictionary.Instance.Culture).ToString();
 
+      BindingOperations.EnableCollectionSynchronization(Lyrics, _lock);
+      
       // initialize delegates
       _delegateLyricFound = LyricFoundMethod;
       _delegateLyricNotFound = LyricNotFoundMethod;
-      //_delegateThreadFinished = ThreadFinishedMethod;
-      //_delegateThreadException = ThreadExceptionMethod;
+      _delegateThreadFinished = ThreadFinishedMethod;
+      _delegateThreadException = ThreadExceptionMethod;
 
+      // Commands
+      SearchLyricsCommand = new BaseCommand(SearchLyrics);
+    }
+
+    #endregion
+
+    #region Commands
+
+    /// <summary>
+    /// The Search Lyrics Button has been pressed
+    /// </summary>
+    public ICommand SearchLyricsCommand { get; set; }
+    private void SearchLyrics(object parm)
+    {
+      Lyrics.Clear();
+      DoSearchLyrics();
     }
 
     #endregion
 
     #region Private Methods
 
+    /// <summary>
+    /// Start the Lyrics controller Thread
+    /// </summary>
     private void DoSearchLyrics()
     {
+      log.Trace(">>>");
+      if (SelectedLyricsSearchSites.Count == 0)
+      {
+        MessageBox.Show(LocalizeDictionary.Instance.GetLocalizedObject("MPTagThat", "Strings", "lyricsSearch_NoSites_Selected", LocalizeDictionary.Instance.Culture).ToString(),
+          LocalizeDictionary.Instance.GetLocalizedObject("MPTagThat", "Strings", "message_Error_Title", LocalizeDictionary.Instance.Culture).ToString(), MessageBoxButton.OK);
+        return;
+      }
+
+      log.Info($"Starting Lyrics Controller for {SelectedLyricsSearchSites.Count} sites");
+      _eventStopThread = new ManualResetEvent(false);
+
+      log.Debug($"Adding {_songs.Count} songs to the queue");
+      _lyricsQueue = new Queue();
       var row = 0;
       foreach (var song in _songs)
       {
         var switchedArtist = SwitchArtist(song.Artist);
-        var lyricsModel = new LyricsModel {ArtistAndTitle = $"{switchedArtist} - {song.Title}", Site = "", Lyric = "", Row = row};
+        var lyricsModel = new LyricsModel { ArtistAndTitle = $"{switchedArtist} - {song.Title}", Site = "", Lyric = "", Row = row };
         Lyrics.Add(lyricsModel);
         row++;
         string[] lyricId = new string[] { song.Artist, song.Title };
         _lyricsQueue.Enqueue(lyricId);
       }
 
-      _sitesToSearch.Add("Lyrics007");
-      _sitesToSearch.Add("Lyricsmode");
-      _sitesToSearch.Add("LyricsOnDemand");
-      var lyricsController = new LyricsController(this, _eventStopThread, _sitesToSearch.ToArray(), true, false, "", "")
+      log.Debug("Starting Async Worker Thread");
+      _bgWorkerLyrics = new BackgroundWorker();
+      _bgWorkerLyrics.DoWork += bgWorkerLyrics_DoWork;
+      _bgWorkerLyrics.ProgressChanged += bgWorkerLyrics_ProgressChanged;
+      _bgWorkerLyrics.RunWorkerCompleted += bgWorkerLyrics_RunWorkerCompleted;
+      _bgWorkerLyrics.WorkerSupportsCancellation = true;
+      _bgWorkerLyrics.RunWorkerAsync();
+      log.Trace("<<<");
+    }
+
+    /// <summary>
+    /// Lyrics Controller Thread 
+    /// </summary>
+    private void bgWorkerLyrics_DoWork(object sender, DoWorkEventArgs e)
+    {
+      log.Trace(">>>");
+      IsBusy = true;
+
+      if (_lyricsQueue.Count > 0)
       {
-        NrOfLyricsToSearch = _lyricsQueue.Count
-      };
+        // start running the lyricController
+        _lc = new LyricsController(this, _eventStopThread, SelectedLyricsSearchSites.ToArray(), true, false, "", "")
+        {
+          NrOfLyricsToSearch = _lyricsQueue.Count
+        };
 
-      ThreadStart runLyricController = delegate { lyricsController.Run(); };
-      _lyricControllerThread = new Thread(runLyricController);
-      _lyricControllerThread.Start();
+        ThreadStart runLyricController = delegate { _lc.Run(); };
+        _lyricControllerThread = new Thread(runLyricController);
+        _lyricControllerThread.Start();
 
-      lyricsController.StopSearches = false;
+        _lc.StopSearches = false;
 
-      var lyr = (string[])_lyricsQueue.Dequeue();
-      lyr[0] = SwitchArtist(lyr[0]);
-      lyricsController.AddNewLyricSearch(lyr[0], TrimTitle(lyr[1]), GetStrippedPrefixArtist(lyr[0], _strippedPrefixStrings),
-        0);
 
+        int row = 0;
+        while (_lyricsQueue.Count != 0)
+        {
+          if (_lc == null)
+            return;
+
+          if (_lc.NrOfCurrentSearches < NrOfCurrentSearchesAllowed && _lc.StopSearches == false)
+          {
+            string[] lyricId = (string[])_lyricsQueue.Dequeue();
+            lyricId[0] = SwitchArtist(lyricId[0]);
+
+            _lc.AddNewLyricSearch(lyricId[0], TrimTitle(lyricId[1]), GetStrippedPrefixArtist(lyricId[0], _strippedPrefixStrings),
+              row);
+            row++;
+          }
+
+          Thread.Sleep(100);
+        }
+      }
+      else
+      {
+        ThreadFinished = new object[] { "", "", LocalizeDictionary.Instance.GetLocalizedObject("MPTagThat", "Strings", "lyricsSearch_NothingToSearch", LocalizeDictionary.Instance.Culture).ToString(), "" };
+      }
+
+      IsBusy = false;
+      log.Trace("<<<");
+    }
+
+    private void bgWorkerLyrics_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e) { }
+
+    private void bgWorkerLyrics_ProgressChanged(object sender, ProgressChangedEventArgs e) { }
+
+    // Stop worker thread if it is running.
+    // Called when user presses Stop button of form is closed.
+    private void StopThread()
+    {
+      if (_lyricControllerThread != null && _lyricControllerThread.IsAlive) // thread is active
+      {
+        _eventStopThread.Set();
+      }
     }
 
     private string GetStrippedPrefixArtist(string artist, string[] strippedPrefixStringArray)
@@ -199,20 +327,24 @@ namespace MPTagThat.Dialogs.ViewModels
 
     private void LyricFoundMethod(string artist, string title, string site, int row, string lyric)
     {
-      var lyricsModel = new LyricsModel {ArtistAndTitle = $"{artist} - {title}", Site = site, Lyric = lyric, Row = row};
-      var found = false;
+      var lyricsModel = new LyricsModel { ArtistAndTitle = $"{artist} - {title}", Site = site, Lyric = lyric, Row = row };
+
+      log.Info($"{lyricsModel.Site} returned lyrics for {lyricsModel.ArtistAndTitle}");
+
+      // is this the first site returning Lyrics?
+      var firstSite = false;
       for (var i = 0; i < Lyrics.Count; i++)
       {
         if (Lyrics[i].ArtistAndTitle == lyricsModel.ArtistAndTitle && Lyrics[i].Site.Length == 0 && Lyrics[i].Row == lyricsModel.Row)
         {
           Lyrics[i].Site = lyricsModel.Site;
           Lyrics[i].Lyric = lyricsModel.Lyric;
-          found = true;
+          firstSite = true;
           break;
         }
       }
 
-      if (!found)
+      if (!firstSite)
       {
         Lyrics.Add(lyricsModel);
       }
@@ -220,8 +352,26 @@ namespace MPTagThat.Dialogs.ViewModels
 
     private void LyricNotFoundMethod(string artist, string title, string site, int row, string message)
     {
-      Console.WriteLine($"No Lyrics on {site} for Row {row}");
+      log.Info($"{site} did not return lyrics for {artist} - {title}"); ;
     }
+
+    private void ThreadFinishedMethod(string message, string site)
+    {
+      log.Info("All Searches Finished");
+      /*
+      if (_lc != null)
+      {
+        log.Debug("Stop all searches");
+        _lc.StopSearches = true;
+      }
+      
+      log.Debug("Stop all threads");
+      _bgWorkerLyrics.CancelAsync();
+      StopThread();
+      */
+    }
+
+    private void ThreadExceptionMethod(string s) { }
 
     #endregion
 
@@ -235,7 +385,7 @@ namespace MPTagThat.Dialogs.ViewModels
       {
         try
         {
-          _delegateLyricFound.Invoke((string)value[0],(string)value[1],(string)value[2], (int)value[3],(string)value[4]); 
+          _delegateLyricFound.Invoke((string)value[0], (string)value[1], (string)value[2], (int)value[3], (string)value[4]);
         }
         catch (InvalidOperationException) { }
       }
@@ -247,14 +397,35 @@ namespace MPTagThat.Dialogs.ViewModels
       {
         try
         {
-          _delegateLyricNotFound.Invoke((string)value[0],(string)value[1],(string)value[2], (int)value[3], (string)value[4]);
+          _delegateLyricNotFound.Invoke((string)value[0], (string)value[1], (string)value[2], (int)value[3], (string)value[4]);
         }
         catch (InvalidOperationException) { }
       }
     }
 
-    public object[] ThreadFinished { get; set; }
-    public string ThreadException { get; set; }
+    public object[] ThreadFinished
+    {
+      set
+      {
+        try
+        {
+          _delegateThreadFinished.Invoke((string)value[0], (string)value[1]);
+        }
+        catch (InvalidOperationException) { }
+      }
+    }
+    
+    public string ThreadException
+    {
+      set
+      {
+        try
+        {
+          _delegateThreadException.Invoke(value);
+        }
+        catch (InvalidOperationException) { }
+      }
+    }
 
     #endregion
 
@@ -262,24 +433,14 @@ namespace MPTagThat.Dialogs.ViewModels
 
     public override void OnDialogOpened(IDialogParameters parameters)
     {
+      log.Trace(">>>");
+      LyricsSearchSites.AddRange(_options.MainSettings.LyricSites);
+      SelectedLyricsSearchSites.AddRange(_options.MainSettings.SelectedLyricSites);
       _songs = parameters.GetValue<List<SongData>>("songs");
       DoSearchLyrics();
+      log.Trace("<<<");
     }
-
-    public override void CloseDialog(string parameter)
-    {
-      ButtonResult result = ButtonResult.None;
-
-      if (parameter?.ToLower() == "true")
-        result = ButtonResult.OK;
-      else if (parameter?.ToLower() == "false")
-        result = ButtonResult.Cancel;
-
-      CloseDialogWindow(new DialogResult(result));
-    }
-
 
     #endregion
-
   }
 }

@@ -169,7 +169,6 @@ namespace MPTagThat.Dialogs.ViewModels
 
     #endregion
 
-
     #region Private Methods
 
     private void DoSearchAlbum()
@@ -203,7 +202,6 @@ namespace MPTagThat.Dialogs.ViewModels
       }
     }
 
-
     private void AlbumFoundMethod(List<Album> albums, string siteName)
     {
       Albums.AddRange(albums);
@@ -231,19 +229,6 @@ namespace MPTagThat.Dialogs.ViewModels
       }
       DoSearchAlbum();
     }
-
-    public override void CloseDialog(string parameter)
-    {
-      ButtonResult result = ButtonResult.None;
-
-      if (parameter?.ToLower() == "true")
-        result = ButtonResult.OK;
-      else if (parameter?.ToLower() == "false")
-        result = ButtonResult.Cancel;
-
-      CloseDialogWindow(new DialogResult(result));
-    }
-
 
     #endregion
   }

@@ -56,7 +56,7 @@ namespace MPTagThat.Dialogs.ViewModels
       else if (parameter?.ToLower() == "false")
         result = ButtonResult.Cancel;
 
-      
+      CloseDialogWindow(new DialogResult(result));
     }
 
     public void CloseDialogWindow(DialogResult result)

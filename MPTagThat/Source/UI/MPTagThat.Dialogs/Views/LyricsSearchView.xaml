@@ -8,7 +8,7 @@
              xmlns:syncfusion="http://schemas.syncfusion.com/wpf" 
              xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
              xmlns:lex="http://wpflocalizeextension.codeplex.com"
-             xmlns:data="clr-namespace:Syncfusion.Data;assembly=Syncfusion.Data.WPF"
+             xmlns:core="clr-namespace:MPTagThat.Core.Common.Converter;assembly=MPTagThat.Core"
              lex:LocalizeDictionary.DesignCulture="en"
              lex:ResxLocalizationProvider.DefaultAssembly="MPTagThat"
              lex:ResxLocalizationProvider.DefaultDictionary="Strings"
@@ -23,6 +23,15 @@
     </Style>
   </prism:Dialog.WindowStyle>
 
+  <UserControl.Resources>
+    <core:BusyToCursorConverter x:Key="busyToCursorConverter" />
+    <core:InvertBoolConverter x:Key="invertBoolConverter" />
+  </UserControl.Resources>
+
+  <UserControl.Cursor>
+    <Binding Path="DataContext.IsBusy" RelativeSource="{RelativeSource Self}" Converter="{StaticResource busyToCursorConverter}" />
+  </UserControl.Cursor>
+
   <Border Background="{Binding Background}"  BorderBrush="LightGray" BorderThickness="3" CornerRadius="5" >
     <Grid>
       <Grid.RowDefinitions>
@@ -34,6 +43,12 @@
         <ColumnDefinition Width = "800" />
       </Grid.ColumnDefinitions>
 
+      <!-- Header -->
+      <Canvas x:Name="Logo" Grid.Row="0"  RenderTransformOrigin="0.5,0.5">
+        <TextBlock Text="{Binding Title}" TextWrapping="NoWrap" Foreground="#FFC4CFD6" FontSize="30" Opacity="0.85" Canvas.Left="0" Canvas.Top="5" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Height="50" TextAlignment="Left" FontWeight="Bold" />
+      </Canvas>
+
+      <!-- Lyrics Grid-->
       <syncfusion:SfDataGrid Grid.Row="1" x:Name="LyricsGrid"
                            Margin="5,0,0,0"
                            AllowFrozenGroupHeaders="True"                                   
@@ -42,7 +57,8 @@
                            GroupCaptionTextFormat=" {Key}"
                            ItemsSource="{Binding Lyrics}"
                            NavigationMode="Cell"
-                           ShowColumnWhenGrouped="False">
+                           ShowColumnWhenGrouped="False"
+                           ShowBusyIndicator="True" >
 
         <syncfusion:SfDataGrid.GroupColumnDescriptions>
           <syncfusion:GroupColumnDescription ColumnName="ArtistAndTitle" />
@@ -72,9 +88,30 @@
         </syncfusion:SfDataGrid.Columns>
       </syncfusion:SfDataGrid>
 
-      <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right">
-        <Button Content="OK" Command="{Binding CloseDialogCommand}" CommandParameter="True" Width="75" Height="25" HorizontalAlignment="Right" Margin="0,10,0,0" />
-        <Button Content="{lex:Loc dialog_Close}" Command="{Binding CloseDialogCommand}" CommandParameter="False" Width="75" Height="25" HorizontalAlignment="Right" Margin="20,10,0,0" IsDefault="True"/>
+      <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Left" Margin="10,0,0,0" >
+        <syncfusion:ComboBoxAdv Name="Sites" ItemsSource="{Binding LyricsSearchSites, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                                DefaultText="{lex:Loc lyricsSearch_Sites_Watermark}" SelectedValueDelimiter=" | " AllowMultiSelect="True" 
+                                SelectedItems="{Binding SelectedLyricsSearchSites, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                                Height="25" Width="300" />
+      </StackPanel>
+
+      <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right"  Margin="0,0,10,0" >
+        <syncfusion:ButtonAdv Label="{lex:Loc dialog_Search}" 
+                              SmallIcon="pack://application:,,,/MPTagThat;component/Resources/Images/Lens_32x.png" 
+                              Command="{Binding SearchLyricsCommand}" 
+                              IsEnabled="{Binding IsBusy, Converter={StaticResource invertBoolConverter}}"
+                              Width="75" Height="25" 
+                              HorizontalAlignment="Right" Margin="0,5,0,0" />
+        <syncfusion:ButtonAdv Label="{lex:Loc dialog_Apply}" 
+                              SmallIcon="pack://application:,,,/MPTagThat;component/Resources/Images/Apply_Changes_32x.png" 
+                              Command="{Binding ApplyLyricsCommand}" 
+                              Width="75" Height="25" 
+                              HorizontalAlignment="Right" Margin="20,5,0,0" />
+        <syncfusion:ButtonAdv Label="{lex:Loc dialog_Cancel}" 
+                              SmallIcon="pack://application:,,,/MPTagThat;component/Resources/Images/Cancel_Changes_32x.png" 
+                              Command="{Binding CloseDialogCommand}" 
+                              Width="75" Height="25" 
+                              HorizontalAlignment="Right" Margin="20,5,0,0" />
       </StackPanel>
     </Grid>
   </Border>

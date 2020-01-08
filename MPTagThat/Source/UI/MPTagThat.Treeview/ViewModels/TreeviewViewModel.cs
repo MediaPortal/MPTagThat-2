@@ -68,11 +68,11 @@ namespace MPTagThat.Treeview.ViewModels
         var selecteditem = "";
         if (_selectedItem is DriveItem)
         {
-          selecteditem = (_selectedItem as DriveInfo).Name;
+          selecteditem = (_selectedItem as DriveInfo)?.Name;
         }
         else if (_selectedItem is FolderItem)
         {
-          selecteditem = (_selectedItem as FolderItem).FullPathName;
+          selecteditem = (_selectedItem as FolderItem)?.FullPathName;
         }
 
         if (!string.IsNullOrEmpty(selecteditem))

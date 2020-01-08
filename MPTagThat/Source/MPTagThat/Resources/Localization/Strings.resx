@@ -346,17 +346,9 @@
     <value>Album Artist:</value>
     <comment>The AlbumArtist Tag</comment>
   </data>
-  <data name="tagEdit_Apply" xml:space="preserve">
-    <value>Apply</value>
-    <comment>The Apply Button</comment>
-  </data>
   <data name="tagEdit_Artist" xml:space="preserve">
     <value>Artist:</value>
     <comment>The Artist Tag</comment>
-  </data>
-  <data name="tagEdit_Cancel" xml:space="preserve">
-    <value>Cancel</value>
-    <comment>The Cancel Button</comment>
   </data>
   <data name="tagEdit_Disc" xml:space="preserve">
     <value>Disc:</value>
@@ -384,7 +376,7 @@
   </data>
   <data name="tagEdit_Genre_Watermark" xml:space="preserve">
     <value>Select Genre(s)</value>
-    <comment>The Help Text displayed in empty Combobox</comment>
+    <comment>The Help Text displayed in empty Genre Combobox</comment>
   </data>
   <data name="tagEdit_PartOfCompilation" xml:space="preserve">
     <value>Part of Compilation</value>
@@ -446,11 +438,35 @@
     <value>Main Tags</value>
     <comment>The Header for the Main Tags Tab</comment>
   </data>
-  <data name="String1" xml:space="preserve">
-    <value />
+  <data name="lyricsSearch_Title" xml:space="preserve">
+    <value>Lyrics Search</value>
+    <comment>The Title of the Lyrics Search Dialog</comment>
   </data>
   <data name="tagAndRename_InvalidParm" xml:space="preserve">
     <value>Invalid Parameter Format. Please Correct.</value>
     <comment>The Error message for Invalid Parms</comment>
+  </data>
+  <data name="dialog_Apply" xml:space="preserve">
+    <value>Apply</value>
+    <comment>The Text of the Apply Button in a Dialog</comment>
+  </data>
+  <data name="dialog_Cancel" xml:space="preserve">
+    <value>Cancel</value>
+    <comment>The Text of the Cancel Button in a Dialog</comment>
+  </data>
+  <data name="dialog_Ok" xml:space="preserve">
+    <value>Ok</value>
+    <comment>The Text of the OK Button in a Dialog</comment>
+  </data>
+  <data name="lyricsSearch_NoSites_Selected" xml:space="preserve">
+    <value>Please select at least one Lyrics Search Site</value>
+    <comment>The Error message, when no Lyrics Search Site is selected.</comment>
+  </data>
+  <data name="lyricsSearch_NothingToSearch" xml:space="preserve">
+    <value>There is nothing to search for</value>
+  </data>
+  <data name="lyricsSearch_Sites_Watermark" xml:space="preserve">
+    <value>Select Lyrics Search Site(s)</value>
+    <comment>The Help text displayed in empty Lyrics Search Combobox</comment>
   </data>
 </root>

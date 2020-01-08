@@ -434,12 +434,12 @@
       </syncfusion:TabNavigationControl>
 
       <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Right">
-        <syncfusion:ButtonAdv Label="{lex:Loc tagEdit_Apply}" 
+        <syncfusion:ButtonAdv Label="{lex:Loc dialog_Apply}" 
                               SmallIcon="pack://application:,,,/MPTagThat;component/Resources/Images/Apply_Changes_32x.png" 
                               Command="{Binding FileNameToTagCommand}" 
                               Width="75" Height="25" 
                               HorizontalAlignment="Right" Margin="0,10,0,0" />
-        <syncfusion:ButtonAdv Label="{lex:Loc tagEdit_Cancel}" 
+        <syncfusion:ButtonAdv Label="{lex:Loc dialog_Cancel}" 
                               SmallIcon="pack://application:,,,/MPTagThat;component/Resources/Images/Cancel_Changes_32x.png" 
                               Command="{Binding CancelChangesCommand}" 
                               Width="75" Height="25" 

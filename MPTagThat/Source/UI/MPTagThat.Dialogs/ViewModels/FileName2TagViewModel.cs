@@ -141,7 +141,7 @@ namespace MPTagThat.Dialogs.ViewModels
 
     private void CancelChanges(object parameters)
     {
-      CloseDialogWindow(new DialogResult(ButtonResult.Cancel));
+      CloseDialog("false"); ;
     }
 
     public ICommand LabelClickedCommand { get; }
@@ -207,7 +207,7 @@ namespace MPTagThat.Dialogs.ViewModels
       _options.FileNameToTagSettings.LastUsedFormat = SelectedIndex;
 
       log.Trace("<<<");
-      CloseDialogWindow(new DialogResult(ButtonResult.OK));
+      CloseDialog("true");
     }
 
     private void ReplaceParametersWithValues(SongData song, List<ParameterPart> parameters)
