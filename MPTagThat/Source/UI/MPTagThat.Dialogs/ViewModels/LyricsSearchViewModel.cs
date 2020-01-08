@@ -151,6 +151,7 @@ namespace MPTagThat.Dialogs.ViewModels
 
       // Commands
       SearchLyricsCommand = new BaseCommand(SearchLyrics);
+      ApplyLyricsCommand = new BaseCommand(ApplyLyrics);
     }
 
     #endregion
@@ -163,9 +164,33 @@ namespace MPTagThat.Dialogs.ViewModels
     public ICommand SearchLyricsCommand { get; set; }
     private void SearchLyrics(object parm)
     {
+      log.Trace(">>>");
       Lyrics.Clear();
       StopThread();
       DoSearchLyrics();
+      log.Trace("<<<");
+    }
+
+    /// <summary>
+    /// Apply the Lyrics to the Song
+    /// </summary>
+    public ICommand ApplyLyricsCommand { get; set; }
+
+    private void ApplyLyrics(object parm)
+    {
+      log.Trace(">>>");
+
+      foreach (var lyric in Lyrics)
+      {
+        if (lyric.IsSelected)
+        {
+          log.Info($"Setting Lyrics from {lyric.Site} for {_songs[lyric.Row].FileName}");
+          _songs[lyric.Row].Lyrics = lyric.Lyric;
+          _songs[lyric.Row].Changed = true;
+        }
+      }
+
+      log.Trace("<<<");
     }
 
     #endregion
