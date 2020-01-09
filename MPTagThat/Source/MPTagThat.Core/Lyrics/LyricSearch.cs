@@ -35,8 +35,8 @@ namespace MPTagThat.Core.Lyrics
   {
     #region Members
 
-    private const int TimeLimit = 30 * 1000;
-    private const int TimeLimitForSite = 15 * 1000;
+    private const int TimeLimit = 60 * 1000;
+    private const int TimeLimitForSite = 30 * 1000;
 
     public static string[] LyricsSites;
 
@@ -48,7 +48,6 @@ namespace MPTagThat.Core.Lyrics
 
     private readonly bool _mAllowAllToComplete;
     private readonly string _mArtist;
-    private readonly bool _mAutomaticUpdate;
 
     private readonly string _mOriginalArtist;
     private readonly string _mOriginalTrack;
@@ -64,7 +63,7 @@ namespace MPTagThat.Core.Lyrics
 
     #region Functions
 
-    internal LyricSearch(LyricsController lyricsController, string artist, string title, string strippedArtistName, int row, bool allowAllToComplete, bool automaticUpdate)
+    internal LyricSearch(LyricsController lyricsController, string artist, string title, string strippedArtistName, int row, bool allowAllToComplete)
     {
       _mLyricsController = lyricsController;
 
@@ -77,7 +76,6 @@ namespace MPTagThat.Core.Lyrics
       _mOriginalTrack = title;
 
       _mAllowAllToComplete = allowAllToComplete;
-      _mAutomaticUpdate = automaticUpdate;
 
       _mEventStopSiteSearches = new ManualResetEvent(false);
 
@@ -113,9 +111,10 @@ namespace MPTagThat.Core.Lyrics
 
     private void RunSearchForSiteInThread(string lyricsSearchSiteName)
     {
+      // Moved the Create out of the Thread, since we sometimes got null returned
+      var lyricsSearchSite = LyricsSiteFactory.Create(lyricsSearchSiteName, _mArtist, _mTitle, _mEventStopSiteSearches, TimeLimitForSite);
       ThreadStart job = delegate
           {
-            var lyricsSearchSite = LyricsSiteFactory.Create(lyricsSearchSiteName, _mArtist, _mTitle, _mEventStopSiteSearches, TimeLimitForSite);
             if (lyricsSearchSite != null)
             {
               lyricsSearchSite.FindLyrics();
@@ -193,7 +192,7 @@ namespace MPTagThat.Core.Lyrics
           {
             _lyricFound = true;
             _mLyricsController.LyricFound(lyric, _mOriginalArtist, _mOriginalTrack, site, _mRow);
-            if (++_mSitesSearched == LyricsSites.Length || _mAutomaticUpdate)
+            if (++_mSitesSearched == LyricsSites.Length)
             {
               Dispose();
             }

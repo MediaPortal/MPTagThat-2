@@ -168,7 +168,7 @@ namespace MPTagThat.Core.Services.Settings.Setting
     #region Lyrics
 
     [Setting(SettingScope.User, "")]
-    public List<string> LyricSites { get; set; } = new List<string>() { "Lyrics007", "Lyricsmode", "LyricsOnDemand" };
+    public List<string> LyricSites { get; set; } = new List<string>() { "Lyrics007", "Lyricsmode", "LyricsNet" ,"LyricsOnDemand", "LyricWiki" };
 
     [Setting(SettingScope.User, "")]
     public List<string> SelectedLyricSites { get; set; } = new List<string>();

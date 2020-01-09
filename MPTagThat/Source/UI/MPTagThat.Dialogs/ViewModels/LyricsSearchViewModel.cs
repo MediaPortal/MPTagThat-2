@@ -24,7 +24,6 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Windows;
 using System.Windows.Data;
@@ -62,9 +61,15 @@ namespace MPTagThat.Dialogs.ViewModels
     private Thread _lyricControllerThread;
 
     private List<SongData> _songs;
-    private readonly string[] _strippedPrefixStrings = { "the ", "les " };
+
+    private readonly string[] _strippedPrefixStrings = { "the ", "les ", "der " };
     private readonly string[] _titleBrackets = { "{}", "[]", "()" };
 
+    // Strings that should be searched and replaced in final lyrics
+    private readonly string _findStr = "<br>,<br />,<i>,<a>";
+    private readonly string _replaceStr = " , , , ";
+
+    private string _statusMsgTmp;
 
     #region Delegates
 
@@ -72,7 +77,7 @@ namespace MPTagThat.Dialogs.ViewModels
 
     public delegate void DelegateLyricNotFound(string artist, string title, string site, int row, string message);
 
-    public delegate void DelegateStringUpdate(string message, string site);
+    public delegate void DelegateStatusUpdate(int nrOfLyricsToSearch, int nrOfLyricsSearched, int nrOfLyricsFound,int nrOfLyricsNotFound);
 
     public delegate void DelegateThreadException(string exception);
 
@@ -80,7 +85,7 @@ namespace MPTagThat.Dialogs.ViewModels
 
     public DelegateLyricFound _delegateLyricFound;
     public DelegateLyricNotFound _delegateLyricNotFound;
-    public DelegateStringUpdate _delegateStringUpdate;
+    public DelegateStatusUpdate _delegateStatusUpdate;
     public DelegateThreadException _delegateThreadException;
     public DelegateThreadFinished _delegateThreadFinished;
 
@@ -132,6 +137,13 @@ namespace MPTagThat.Dialogs.ViewModels
       set => SetProperty(ref _selectedLyricsSearchSites, value);
     }
 
+    private string _statusMsg;
+    public string StatusMsg
+    {
+      get => _statusMsg;
+      set => SetProperty(ref _statusMsg, value);
+    }
+
     #endregion
 
     #region ctor
@@ -148,6 +160,7 @@ namespace MPTagThat.Dialogs.ViewModels
       _delegateLyricNotFound = LyricNotFoundMethod;
       _delegateThreadFinished = ThreadFinishedMethod;
       _delegateThreadException = ThreadExceptionMethod;
+      _delegateStatusUpdate = StatusUpdateMethod;
 
       // Commands
       SearchLyricsCommand = new BaseCommand(SearchLyrics);
@@ -168,6 +181,7 @@ namespace MPTagThat.Dialogs.ViewModels
       Lyrics.Clear();
       StopThread();
       DoSearchLyrics();
+      _options.MainSettings.SelectedLyricSites = SelectedLyricsSearchSites.ToList();
       log.Trace("<<<");
     }
 
@@ -185,6 +199,7 @@ namespace MPTagThat.Dialogs.ViewModels
         if (lyric.IsSelected)
         {
           log.Info($"Setting Lyrics from {lyric.Site} for {_songs[lyric.Row].FileName}");
+          _songs[lyric.Row].LyricsFrames.Clear();
           _songs[lyric.Row].Lyrics = lyric.Lyric;
           _songs[lyric.Row].Changed = true;
         }
@@ -213,6 +228,9 @@ namespace MPTagThat.Dialogs.ViewModels
         return;
       }
 
+      _statusMsgTmp = LocalizeDictionary.Instance.GetLocalizedObject("MPTagThat", "Strings", "lyricsSearch_Status",
+        LocalizeDictionary.Instance.Culture).ToString();
+
       log.Info($"Starting Lyrics Controller for {SelectedLyricsSearchSites.Count} sites");
       _eventStopThread = new ManualResetEvent(false);
 
@@ -222,7 +240,7 @@ namespace MPTagThat.Dialogs.ViewModels
       foreach (var song in _songs)
       {
         var switchedArtist = SwitchArtist(song.Artist);
-        var lyricsModel = new LyricsModel { ArtistAndTitle = $"{switchedArtist} - {song.Title}", Site = "", Lyric = "", Row = row };
+        var lyricsModel = new LyricsModel { ArtistAndTitle = $"{row+1:D2}. {switchedArtist} - {song.Title}", Site = "", Lyric = "", Row = row };
         Lyrics.Add(lyricsModel);
         row++;
         string[] lyricId = new string[] { song.Artist, song.Title };
@@ -250,7 +268,7 @@ namespace MPTagThat.Dialogs.ViewModels
       if (_lyricsQueue.Count > 0)
       {
         // start running the lyricController
-        _lc = new LyricsController(this, _eventStopThread, SelectedLyricsSearchSites.ToArray(), true, false, "", "")
+        _lc = new LyricsController(this, _eventStopThread, SelectedLyricsSearchSites.ToArray(), true, _findStr, _replaceStr)
         {
           NrOfLyricsToSearch = _lyricsQueue.Count
         };
@@ -364,7 +382,7 @@ namespace MPTagThat.Dialogs.ViewModels
 
     private void LyricFoundMethod(string artist, string title, string site, int row, string lyric)
     {
-      var lyricsModel = new LyricsModel { ArtistAndTitle = $"{artist} - {title}", Site = site, Lyric = lyric, Row = row };
+      var lyricsModel = new LyricsModel { ArtistAndTitle = $"{row+1:D2}. {artist} - {title}", Site = site, Lyric = lyric, Row = row };
 
       log.Info($"{lyricsModel.Site} returned lyrics for {lyricsModel.ArtistAndTitle}");
 
@@ -395,17 +413,38 @@ namespace MPTagThat.Dialogs.ViewModels
     private void ThreadFinishedMethod(string message, string site)
     {
       log.Info("All Searches Finished");
+      StatusMsg = LocalizeDictionary.Instance.GetLocalizedObject("MPTagThat", "Strings", "lyricsSearch_Finished",
+        LocalizeDictionary.Instance.Culture).ToString();
+      StopThread();
     }
 
     private void ThreadExceptionMethod(string s) { }
+
+    private void StatusUpdateMethod(int nrOfLyricsToSearch, int nrOfLyricsSearched, int nrOfLyricsFound,int nrOfLyricsNotFound)
+    {
+      //Searching for Lyrics ...  {0} Sites  x {1} Songs  = {2} Songs to Search. Found: {3} Not Found: {4} Remaining: {5}
+      var remaining = nrOfLyricsToSearch * _lyricsSearchSites.Count - nrOfLyricsSearched;
+      StatusMsg = string.Format(_statusMsgTmp, _lyricsSearchSites.Count, _songs.Count,  nrOfLyricsToSearch * _lyricsSearchSites.Count, nrOfLyricsFound,
+        nrOfLyricsNotFound, remaining);
+    }
 
     #endregion
 
     #region Interface Implementation
 
-    public object[] UpdateString { get; set; }
-    public object[] UpdateStatus { get; set; }
-    public Object[] LyricFound
+    public object[] UpdateStatus
+    {
+      set
+      {
+        try
+        {
+          _delegateStatusUpdate.Invoke((int)value[0], (int)value[1], (int)value[2], (int)value[3]);
+        }
+        catch (InvalidOperationException) { }
+      }
+    }
+
+    public object[] LyricFound
     {
       set
       {
@@ -417,7 +456,7 @@ namespace MPTagThat.Dialogs.ViewModels
       }
     }
 
-    public Object[] LyricNotFound
+    public object[] LyricNotFound
     {
       set
       {

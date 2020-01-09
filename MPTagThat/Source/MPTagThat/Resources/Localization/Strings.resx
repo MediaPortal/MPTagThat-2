@@ -469,4 +469,12 @@
     <value>Select Lyrics Search Site(s)</value>
     <comment>The Help text displayed in empty Lyrics Search Combobox</comment>
   </data>
+  <data name="lyricsSearch_Finished" xml:space="preserve">
+    <value>Search Finished. Select correct  Lyrics.</value>
+    <comment>The Lyrics Search has finished</comment>
+  </data>
+  <data name="lyricsSearch_Status" xml:space="preserve">
+    <value>Searching for Lyrics ...  {0} Sites  x {1} Songs  = {2} Songs to Search. Found: {3} Not Found: {4} Remaining: {5}</value>
+    <comment>The Lyrics Search Status Message</comment>
+  </data>
 </root>

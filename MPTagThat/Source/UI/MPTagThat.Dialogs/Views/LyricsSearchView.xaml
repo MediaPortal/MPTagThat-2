@@ -12,7 +12,7 @@
              lex:LocalizeDictionary.DesignCulture="en"
              lex:ResxLocalizationProvider.DefaultAssembly="MPTagThat"
              lex:ResxLocalizationProvider.DefaultDictionary="Strings"
-             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="600" >
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="630" >
 
   <prism:Dialog.WindowStyle>
     <Style TargetType="Window">
@@ -36,20 +36,24 @@
     <Grid>
       <Grid.RowDefinitions>
         <RowDefinition Height="60" />
+        <RowDefinition Height="25" />
         <RowDefinition Height="500" />
-        <RowDefinition Height="Auto" />
+        <RowDefinition Height="Auto"/>
       </Grid.RowDefinitions>
       <Grid.ColumnDefinitions>
         <ColumnDefinition Width = "800" />
       </Grid.ColumnDefinitions>
 
       <!-- Header -->
-      <Canvas x:Name="Logo" Grid.Row="0"  RenderTransformOrigin="0.5,0.5">
+      <Canvas x:Name="Logo" Grid.Row="0"  RenderTransformOrigin="0.5,0.5" Margin="5,0,0,0" >
         <TextBlock Text="{Binding Title}" TextWrapping="NoWrap" Foreground="#FFC4CFD6" FontSize="30" Opacity="0.85" Canvas.Left="0" Canvas.Top="5" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Height="50" TextAlignment="Left" FontWeight="Bold" />
       </Canvas>
 
+      <!-- Status Message -->
+      <TextBlock Grid.Row="1" Text="{Binding StatusMsg}" Margin="5,0,0,0" />
+
       <!-- Lyrics Grid-->
-      <syncfusion:SfDataGrid Grid.Row="1" x:Name="LyricsGrid"
+      <syncfusion:SfDataGrid Grid.Row="2" x:Name="LyricsGrid"
                            Margin="5,0,0,0"
                            AllowFrozenGroupHeaders="True"                                   
                            AutoGenerateColumns="False"
@@ -58,6 +62,7 @@
                            ItemsSource="{Binding Lyrics}"
                            NavigationMode="Cell"
                            ShowColumnWhenGrouped="False"
+                           AutoExpandGroups="True"
                            ShowBusyIndicator="True" >
 
         <syncfusion:SfDataGrid.GroupColumnDescriptions>
@@ -88,14 +93,14 @@
         </syncfusion:SfDataGrid.Columns>
       </syncfusion:SfDataGrid>
 
-      <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Left" Margin="10,0,0,0" >
+      <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Left" Margin="10,5,0,5" >
         <syncfusion:ComboBoxAdv Name="Sites" ItemsSource="{Binding LyricsSearchSites, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
                                 DefaultText="{lex:Loc lyricsSearch_Sites_Watermark}" SelectedValueDelimiter=" | " AllowMultiSelect="True" 
                                 SelectedItems="{Binding SelectedLyricsSearchSites, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
                                 Height="25" Width="300" />
       </StackPanel>
 
-      <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right"  Margin="0,0,10,0" >
+      <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Right"  Margin="0,5,10,5" >
         <syncfusion:ButtonAdv Label="{lex:Loc dialog_Search}" 
                               SmallIcon="pack://application:,,,/MPTagThat;component/Resources/Images/Lens_32x.png" 
                               Command="{Binding SearchLyricsCommand}" 

@@ -31,7 +31,6 @@ namespace MPTagThat.Core.Lyrics
     private readonly string[] _lyricsSites;
 
     private readonly bool _allowAllToComplete;
-    private readonly bool _automaticUpdate;
 
     // Main thread sets this event to stop LyricController
     private readonly ManualResetEvent _eventStopLyricController;
@@ -54,12 +53,11 @@ namespace MPTagThat.Core.Lyrics
     public LyricsController(ILyricsSearch dialog,
                             ManualResetEvent eventStopThread,
                             string[] lyricSites,
-                            bool allowAllToComplete, bool automaticUpdate,
+                            bool allowAllToComplete,
                             string find, string replace)
     {
       _lyricsDialog = dialog;
       _allowAllToComplete = allowAllToComplete;
-      _automaticUpdate = automaticUpdate;
 
       NrOfLyricsToSearch = 1;
       _nrOfLyricsSearched = 0;
@@ -172,7 +170,7 @@ namespace MPTagThat.Core.Lyrics
         // create worker thread instance
         ThreadStart threadInstance = delegate
             {
-              var lyricSearch = new LyricSearch(this, artist, title, strippedArtistName, row, _allowAllToComplete, _automaticUpdate);
+              var lyricSearch = new LyricSearch(this, artist, title, strippedArtistName, row, _allowAllToComplete);
               lyricSearch.Run();
             };
 
@@ -182,12 +180,6 @@ namespace MPTagThat.Core.Lyrics
         lyricSearchThread.Start();
         _threadList.Add(lyricSearchThread);
       }
-    }
-
-
-    internal void UpdateString(String message, String site)
-    {
-      _lyricsDialog.UpdateString = new Object[] { message, site };
     }
 
     internal void StatusUpdate(string artist, string title, string site, bool lyricFound)
@@ -209,25 +201,11 @@ namespace MPTagThat.Core.Lyrics
                     _nrOfLyricsNotFound
           };
 
-      if ((_nrOfLyricsSearched >= NrOfLyricsToSearch) && !ThreadsStillAlive())
+      if ((_nrOfLyricsSearched >= NrOfLyricsToSearch * _lyricsSites.Length))
       {
         FinishThread(artist, title, "All songs have been searched!", site);
       }
     }
-
-    internal bool ThreadsStillAlive()
-    {
-      foreach (var thread in _threadList)
-      {
-        if (thread.IsAlive)
-        {
-          return true;
-        }
-      }
-
-      return false;
-    }
-
 
     internal void LyricFound(String lyricStrings, String artist, String title, String site, int row)
     {

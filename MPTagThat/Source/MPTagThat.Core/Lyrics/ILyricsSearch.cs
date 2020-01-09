@@ -26,7 +26,6 @@ namespace MPTagThat.Core.Lyrics
 {
   public interface ILyricsSearch
   {
-    Object[] UpdateString { set; }
     Object[] UpdateStatus { set; }
     Object[] LyricFound { set; }
     Object[] LyricNotFound { set; }

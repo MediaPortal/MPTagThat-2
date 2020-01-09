@@ -205,8 +205,10 @@
     <Compile Include="Lyrics\LyricsSites\ILyricSite.cs" />
     <Compile Include="Lyrics\LyricsSites\Lyrics007.cs" />
     <Compile Include="Lyrics\LyricsSites\Lyricsmode.cs" />
+    <Compile Include="Lyrics\LyricsSites\LyricsNet.cs" />
     <Compile Include="Lyrics\LyricsSites\LyricsOnDemand.cs" />
     <Compile Include="Lyrics\LyricsSites\LyricsSiteFactory.cs" />
+    <Compile Include="Lyrics\LyricsSites\LyricWiki.cs" />
     <Compile Include="Lyrics\LyricsWebClient.cs">
       <SubType>Component</SubType>
     </Compile>

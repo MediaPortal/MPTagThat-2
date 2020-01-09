@@ -16,40 +16,40 @@
 // along with MPTagThat. If not, see <http://www.gnu.org/licenses/>.
 #endregion
 
-#region
+#region 
 
 using System;
-using System.Globalization;
 using System.IO;
 using System.Net;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
+using System.Web;
 
 #endregion
 
 namespace MPTagThat.Core.Lyrics.LyricsSites
 {
-  public class Lyricsmode : AbstractSite
+  public class LyricWiki : AbstractSite
   {
     #region const
 
     // Name
-    private const string SiteName = "Lyricsmode";
+    private const string SiteName = "LyricWiki";
 
     // Base url
-    private const string SiteBaseUrl = "https://www.lyricsmode.com";
+    private const string SiteBaseUrl = "https://lyrics.fandom.com/wiki";
 
-    #endregion
+    #endregion const
 
     #region patterns
 
     // lyrics mark pattern 
-    private const string LyricsMarkPattern = @".*<div id=""lyrics_text"" .*?"">(.*?)<div";
+    private const string LyricsMarkPattern = @".*<div class='lyricbox'>(.*?)<div";
 
     #endregion patterns
 
-    public Lyricsmode(string artist, string title, WaitHandle mEventStopSiteSearches, int timeLimit) : base(artist, title, mEventStopSiteSearches, timeLimit)
+    public LyricWiki(string artist, string title, WaitHandle mEventStopSiteSearches, int timeLimit) : base(artist, title, mEventStopSiteSearches, timeLimit)
     {
     }
 
@@ -57,41 +57,38 @@ namespace MPTagThat.Core.Lyrics.LyricsSites
 
     protected override void FindLyricsWithTimer()
     {
-      var artist = Artist.ToLower();
-      artist = ClearName(artist);
+      // Clean artist name
+      var artist = LyricUtil.RemoveFeatComment(Artist);
+      artist = LyricUtil.CapitalizeString(artist);
+      artist = artist.Replace(" ", "_");
 
-      var title = Title.ToLower();
-      title = ClearName(title);
+      // Clean title name
+      var title = LyricUtil.TrimForParenthesis(Title);
+      title = LyricUtil.CapitalizeString(title);
+      title = title.Replace(" ", "_");
+      title = title.Replace("?", "%3F");
 
-      // Validation
+      // Validate not empty
       if (string.IsNullOrEmpty(artist) || string.IsNullOrEmpty(title))
       {
         return;
       }
 
-      var firstLetter = artist[0].ToString(CultureInfo.InvariantCulture);
-
-      var urlString = SiteBaseUrl + "/lyrics/" + firstLetter + "/" + artist + "/" + title + ".html";
-
-      var client = new LyricsWebClient();
+      var urlString = SiteBaseUrl + "/" + artist + ":" + title;
 
       var uri = new Uri(urlString);
+      var client = new LyricsWebClient();
       client.OpenReadCompleted += CallbackMethod;
       client.OpenReadAsync(uri);
 
       while (Complete == false)
       {
-        if (MEventStopSiteSearches.WaitOne(1, true))
+        if (MEventStopSiteSearches.WaitOne(500, true))
         {
           Complete = true;
         }
-        else
-        {
-          Thread.Sleep(300);
-        }
       }
     }
-
 
     public override LyricType GetLyricType()
     {
@@ -141,6 +138,7 @@ namespace MPTagThat.Core.Lyrics.LyricsSites
         if (match.Success)
         {
           LyricText = match.Groups[1].Value;
+          LyricText = HttpUtility.HtmlDecode(LyricText);
         }
 
         if (LyricText.Length > 0)
@@ -167,51 +165,12 @@ namespace MPTagThat.Core.Lyrics.LyricsSites
     // Cleans the lyrics
     private void CleanLyrics()
     {
-      LyricText = LyricText.Replace("&quot;", "\"");
-      LyricText = LyricText.Replace("<br>", " ");
-      LyricText = LyricText.Replace("<br />", " ");
-      LyricText = LyricText.Replace("<BR>", " ");
+      LyricText = LyricText.Replace("%quot;", "\"");
+      LyricText = LyricText.Replace("<br>", "\r\n");
+      LyricText = LyricText.Replace("<br />", "\r\n");
+      LyricText = LyricText.Replace("<BR>", "\r\n");
       LyricText = LyricText.Replace("&amp;", "&");
       LyricText = LyricText.Trim();
-    }
-
-
-    private static string ClearName(string name)
-    {
-      // Spaces and special characters
-      name = name.Replace(" ", "_");
-      name = name.Replace("#", "_");
-      name = name.Replace("%", "_");
-      name = name.Replace("'", "");
-      name = name.Replace("(", "%28");
-      name = name.Replace(")", "%29");
-      name = name.Replace("+", "%2B");
-      name = name.Replace(",", "");
-      name = name.Replace(".", "_");
-      name = name.Replace(":", "_");
-      name = name.Replace("=", "%3D");
-      name = name.Replace("?", "_");
-
-      // German letters
-      name = name.Replace("ü", "%FC");
-      name = name.Replace("Ü", "%DC");
-      name = name.Replace("ä", "%E4");
-      name = name.Replace("Ä", "%C4");
-      name = name.Replace("ö", "%F6");
-      name = name.Replace("Ö", "%D6");
-      name = name.Replace("ß", "%DF");
-
-      // Danish letters
-      name = name.Replace("å", "%E5");
-      name = name.Replace("Å", "%C5");
-      name = name.Replace("æ", "%E6");
-      name = name.Replace("ø", "%F8");
-
-      // French letters
-      name = name.Replace("é", "%E9");
-
-
-      return name;
     }
 
     #endregion private methods

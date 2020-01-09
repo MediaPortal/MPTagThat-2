@@ -124,6 +124,15 @@ namespace MPTagThat.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Search Finished. Select correct  Lyrics..
+        /// </summary>
+        public static string lyricsSearch_Finished {
+            get {
+                return ResourceManager.GetString("lyricsSearch_Finished", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Please select at least one Lyrics Search Site.
         /// </summary>
         public static string lyricsSearch_NoSites_Selected {
@@ -147,6 +156,15 @@ namespace MPTagThat.Resources.Localization {
         public static string lyricsSearch_Sites_Watermark {
             get {
                 return ResourceManager.GetString("lyricsSearch_Sites_Watermark", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Searching for Lyrics ...  {0} Sites  x {1} Songs  = {2} Songs to Search. Found: {3} Not Found: {4} Remaining: {5}.
+        /// </summary>
+        public static string lyricsSearch_Status {
+            get {
+                return ResourceManager.GetString("lyricsSearch_Status", resourceCulture);
             }
         }
         

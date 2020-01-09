@@ -123,9 +123,9 @@ namespace MPTagThat.Core.Lyrics.LyricsSites
     /// <returns></returns>
     private static AbstractSite Create(Type type, string artist, string title, WaitHandle mEventStopSiteSearches, int timeLimit)
     {
-      var _lock = new object();
+      var objectLock = new object();
 
-      Monitor.Enter(_lock);
+      Monitor.Enter(objectLock);
       try
       {
         ConstructorDelegate del;
@@ -152,7 +152,13 @@ namespace MPTagThat.Core.Lyrics.LyricsSites
         ilGenerator.Emit(OpCodes.Ret);
 
         del = (ConstructorDelegate) dynamicMethod.CreateDelegate(typeof(ConstructorDelegate));
-        ClassConstructors.Add(type.Name, del);
+
+        // In some occasions we get duplicate keys
+        if (!ClassConstructors.ContainsKey(type.Name))
+        {
+          ClassConstructors.Add(type.Name, del);
+
+        }
         
         return del(artist, title, mEventStopSiteSearches, timeLimit);
       }
@@ -162,7 +168,7 @@ namespace MPTagThat.Core.Lyrics.LyricsSites
       }
       finally
       {
-        Monitor.Exit(_lock);
+        Monitor.Exit(objectLock);
       }
     }
 
