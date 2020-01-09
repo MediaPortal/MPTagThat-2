@@ -70,6 +70,24 @@ namespace MPTagThat.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Search Finished. Select Cover Art (Double Click or Apply Button).
+        /// </summary>
+        public static string coverSearch_Finished {
+            get {
+                return ResourceManager.GetString("coverSearch_Finished", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Searching for Cover Art ... {0} Sites. Remaining: {1}.
+        /// </summary>
+        public static string coverSearch_Status {
+            get {
+                return ResourceManager.GetString("coverSearch_Status", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Album Cover Search.
         /// </summary>
         public static string coverSearch_Title {

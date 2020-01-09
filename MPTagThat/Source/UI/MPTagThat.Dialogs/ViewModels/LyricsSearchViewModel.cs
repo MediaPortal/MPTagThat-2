@@ -137,6 +137,9 @@ namespace MPTagThat.Dialogs.ViewModels
       set => SetProperty(ref _selectedLyricsSearchSites, value);
     }
 
+    /// <summary>
+    /// The Binding for the Status Message
+    /// </summary>
     private string _statusMsg;
     public string StatusMsg
     {
@@ -230,6 +233,9 @@ namespace MPTagThat.Dialogs.ViewModels
 
       _statusMsgTmp = LocalizeDictionary.Instance.GetLocalizedObject("MPTagThat", "Strings", "lyricsSearch_Status",
         LocalizeDictionary.Instance.Culture).ToString();
+
+      StatusMsg = string.Format(_statusMsgTmp, _lyricsSearchSites.Count, _songs.Count,  _songs.Count * _lyricsSearchSites.Count, 0,
+        0, _songs.Count * _lyricsSearchSites.Count);
 
       log.Info($"Starting Lyrics Controller for {SelectedLyricsSearchSites.Count} sites");
       _eventStopThread = new ManualResetEvent(false);

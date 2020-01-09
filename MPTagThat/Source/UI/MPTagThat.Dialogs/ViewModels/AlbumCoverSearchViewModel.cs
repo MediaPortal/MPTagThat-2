@@ -30,9 +30,9 @@ using System.Linq;
 using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Media;
+using MPTagThat.Core.Annotations;
 using MPTagThat.Core.Common;
 using MPTagThat.Core.Common.Song;
-using Prism.Events;
 using WPFLocalizeExtension.Engine;
 
 #endregion
@@ -59,6 +59,8 @@ namespace MPTagThat.Dialogs.ViewModels
     private object _lock = new object();
 
     private List<SongData> _songs;
+    private string _statusMsgTmp;
+    private int _nrOfSitesSearched;
 
     #endregion
 
@@ -108,8 +110,27 @@ namespace MPTagThat.Dialogs.ViewModels
       set => SetProperty(ref _isSearchButtonEnabled, value);
     }
 
-    #endregion
+    /// <summary>
+    /// Binding for Wait Cursor
+    /// </summary>
+    private bool _isBusy;
+    public bool IsBusy
+    {
+      get => _isBusy;
+      set => SetProperty(ref _isBusy, value);
+    }
 
+    /// <summary>
+    /// The Binding for the Status Message
+    /// </summary>
+    private string _statusMsg;
+    public string StatusMsg
+    {
+      get => _statusMsg;
+      set => SetProperty(ref _statusMsg, value);
+    }
+
+    #endregion
 
     #region ctor
 
@@ -124,12 +145,26 @@ namespace MPTagThat.Dialogs.ViewModels
 
       CoverSelectedCommand = new BaseCommand(CoverSelected);
       SearchCommand = new BaseCommand(SearchCovers);
+      ApplyCoverCommand = new BaseCommand(ApplyCover);
     }
 
     #endregion
 
     #region Commands
 
+    /// <summary>
+    /// The Apply Button has been pressed
+    /// </summary>
+    public ICommand ApplyCoverCommand { get; }
+
+    private void ApplyCover(object param)
+    {
+      CoverSelected(param);
+    }
+    
+    /// <summary>
+    /// A Cover has been selected by double clicking on it
+    /// </summary>
     public ICommand CoverSelectedCommand { get; }
 
     /// <summary>
@@ -159,6 +194,10 @@ namespace MPTagThat.Dialogs.ViewModels
       }
     }
 
+
+    /// <summary>
+    /// Search Album with the Artist and Album Name from the Dialog Text fields
+    /// </summary>
     public ICommand SearchCommand { get; }
 
     private void SearchCovers(object param)
@@ -173,6 +212,13 @@ namespace MPTagThat.Dialogs.ViewModels
 
     private void DoSearchAlbum()
     {
+
+      _statusMsgTmp = LocalizeDictionary.Instance.GetLocalizedObject("MPTagThat", "Strings", "coverSearch_Status",
+        LocalizeDictionary.Instance.Culture).ToString();
+
+      StatusMsg = string.Format(_statusMsgTmp, _options.MainSettings.AlbumInfoSites.Count, _options.MainSettings.AlbumInfoSites.Count - _nrOfSitesSearched);
+
+      IsBusy = true;
       IsSearchButtonEnabled = false;
       var albumSearch = new AlbumSearch(this, Artist, Album) {AlbumSites = _options.MainSettings.AlbumInfoSites};
       albumSearch.Run();
@@ -190,6 +236,7 @@ namespace MPTagThat.Dialogs.ViewModels
       }
     }
 
+    [NotNull]
     public object[] SearchFinished
     {
       set
@@ -204,12 +251,18 @@ namespace MPTagThat.Dialogs.ViewModels
 
     private void AlbumFoundMethod(List<Album> albums, string siteName)
     {
+      _nrOfSitesSearched++;
+      StatusMsg = string.Format(_statusMsgTmp, _options.MainSettings.AlbumInfoSites.Count, _options.MainSettings.AlbumInfoSites.Count - _nrOfSitesSearched);
+
       Albums.AddRange(albums);
     }
 
     private void SearchFinishedMethod()
     {
+      IsBusy = false;
       IsSearchButtonEnabled = true;
+      StatusMsg = LocalizeDictionary.Instance.GetLocalizedObject("MPTagThat", "Strings", "coverSearch_Finished",
+        LocalizeDictionary.Instance.Culture).ToString();
     }
 
     #endregion

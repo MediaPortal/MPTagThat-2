@@ -469,6 +469,14 @@
     <value>Select Lyrics Search Site(s)</value>
     <comment>The Help text displayed in empty Lyrics Search Combobox</comment>
   </data>
+  <data name="coverSearch_Finished" xml:space="preserve">
+    <value>Search Finished. Select Cover Art (Double Click or Apply Button)</value>
+    <comment>The Cover Art Search has finished</comment>
+  </data>
+  <data name="coverSearch_Status" xml:space="preserve">
+    <value>Searching for Cover Art ... {0} Sites. Remaining: {1}</value>
+    <comment>The Cover Search Status Message</comment>
+  </data>
   <data name="lyricsSearch_Finished" xml:space="preserve">
     <value>Search Finished. Select correct  Lyrics.</value>
     <comment>The Lyrics Search has finished</comment>

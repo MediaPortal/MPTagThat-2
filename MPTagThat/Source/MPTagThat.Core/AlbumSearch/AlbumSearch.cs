@@ -123,12 +123,13 @@ namespace MPTagThat.Core.AlbumSearch
         Monitor.Enter(this);
         try
         {
+          _mSitesSearched++;
           log.Debug($"{site} Albums: {albums.Count} Searched: {_mSitesSearched} Sites Count: {AlbumSites.Count}");
           if (albums.Count > 0)
           {
             _albumFound = true;
             _controller.AlbumFound = new object[] { albums, site };
-            if (++_mSitesSearched == AlbumSites.Count)
+            if (_mSitesSearched == AlbumSites.Count)
             {
               Dispose();
             }
@@ -136,7 +137,7 @@ namespace MPTagThat.Core.AlbumSearch
           }
           else
           {
-            if (++_mSitesSearched == AlbumSites.Count)
+            if (_mSitesSearched == AlbumSites.Count)
             {
               Dispose();
             }

@@ -7,11 +7,12 @@
              prism:ViewModelLocator.AutoWireViewModel="True"
              xmlns:syncfusion="http://schemas.syncfusion.com/wpf" 
              xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
+             xmlns:core="clr-namespace:MPTagThat.Core.Common.Converter;assembly=MPTagThat.Core"
              xmlns:lex="http://wpflocalizeextension.codeplex.com"
              lex:LocalizeDictionary.DesignCulture="en"
              lex:ResxLocalizationProvider.DefaultAssembly="MPTagThat"
              lex:ResxLocalizationProvider.DefaultDictionary="Strings"
-             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="600" >
+             mc:Ignorable="d" d:DesignWidth="818" d:DesignHeight="622" >
 
   <prism:Dialog.WindowStyle>
     <Style TargetType="Window">
@@ -22,10 +23,20 @@
     </Style>
   </prism:Dialog.WindowStyle>
 
+  <UserControl.Resources>
+    <core:BusyToCursorConverter x:Key="busyToCursorConverter" />
+    <core:InvertBoolConverter x:Key="invertBoolConverter" />
+  </UserControl.Resources>
+
+  <UserControl.Cursor>
+    <Binding Path="DataContext.IsBusy" RelativeSource="{RelativeSource Self}" Converter="{StaticResource busyToCursorConverter}" />
+  </UserControl.Cursor>
+
   <Border Background="{Binding Background}"  BorderBrush="LightGray" BorderThickness="3" CornerRadius="5" >
     <Grid x:Name="LayoutRoot" Margin="5">
       <Grid.RowDefinitions>
         <RowDefinition Height="60" />
+        <RowDefinition Height="25" />
         <RowDefinition Height="Auto" />
         <RowDefinition Height="400" />
         <RowDefinition Height="Auto" />
@@ -35,12 +46,15 @@
       </Grid.ColumnDefinitions>
 
       <!-- Header -->
-      <Canvas x:Name="Logo" Grid.Row="0"  RenderTransformOrigin="0.5,0.5">
+      <Canvas x:Name="Logo" Grid.Row="0"  RenderTransformOrigin="0.5,0.5" Margin="5,0,0,0" >
         <TextBlock Text="{Binding Title}" TextWrapping="NoWrap" Foreground="#FFC4CFD6" FontSize="30" Opacity="0.85" Canvas.Left="0" Canvas.Top="5" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Height="50" TextAlignment="Left" FontWeight="Bold" />
       </Canvas>
 
+      <!-- Status Message -->
+      <TextBlock Grid.Row="1" Text="{Binding StatusMsg}" Margin="5,0,0,0" />
+
       <!-- Artist and Album -->
-      <Grid Grid.Row="1" Margin="5" >
+      <Grid Grid.Row="2" Margin="5" >
         <Grid.RowDefinitions>
           <RowDefinition/>
           <RowDefinition />
@@ -51,7 +65,7 @@
           <ColumnDefinition Width = "90" />
         </Grid.ColumnDefinitions>
         <Label Grid.Row="0" Grid.Column="0" Content="{lex:Loc tagEdit_Artist}" />
-        <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding Artist, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+        <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding Artist, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Height="27" />
         
         <syncfusion:ButtonAdv Grid.Row="0" Grid.Column="2" Label="{lex:Loc dialog_Search}" HorizontalAlignment="Left"  Width="80" Margin="5"
                               SmallIcon="pack://application:,,,/MPTagThat;component/Resources/Images/Lens_32x.png" 
@@ -63,7 +77,7 @@
       </Grid>
 
       <!-- Cover Art -->
-      <ListView Grid.Row="2" x:Name="AlbumListView" 
+      <ListView Grid.Row="3" x:Name="AlbumListView" 
                 Background="{Binding Background}"
                 ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                 HorizontalAlignment="Stretch" 
@@ -93,9 +107,19 @@
       </ListView>
 
 
-      <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Right">
-        <Button Content="OK" Command="{Binding CloseDialogCommand}" CommandParameter="True" Width="75" Height="25" HorizontalAlignment="Right" Margin="0,10,0,0" />
-        <Button Content="{lex:Loc dialog_Close}" Command="{Binding CloseDialogCommand}" CommandParameter="False" Width="75" Height="25" HorizontalAlignment="Right" Margin="20,10,0,0" IsDefault="True"/>
+      <StackPanel Grid.Row="4" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,5,10,5">
+        <syncfusion:ButtonAdv Label="{lex:Loc dialog_Apply}" 
+                              SmallIcon="pack://application:,,,/MPTagThat;component/Resources/Images/Apply_Changes_32x.png" 
+                              Command="{Binding ApplyCoverCommand}" 
+                              CommandParameter="{Binding Path=SelectedItem, ElementName=AlbumListView}"
+                              IsEnabled="{Binding IsBusy, Converter={StaticResource invertBoolConverter}}"
+                              Width="75" Height="25" 
+                              HorizontalAlignment="Right" Margin="0,5,0,0" />
+        <syncfusion:ButtonAdv Label="{lex:Loc dialog_Cancel}" 
+                              SmallIcon="pack://application:,,,/MPTagThat;component/Resources/Images/Cancel_Changes_32x.png" 
+                              Command="{Binding CloseDialogCommand}" 
+                              Width="75" Height="25" 
+                              HorizontalAlignment="Right" Margin="20,5,0,0" />
       </StackPanel>
     </Grid>
   </Border>
