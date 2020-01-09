@@ -124,6 +124,10 @@ namespace MPTagThat.Core.AlbumSearch.AlbumSites
         return del(artist, album, mEventStopSiteSearches, timeLimit);
       }
 
+      var objectLock = new object();
+
+      Monitor.Enter(objectLock);
+
       try
       {
         var dynamicMethod = new DynamicMethod(Createinstance, type, ConstructorArgs, ClassType);
@@ -143,12 +147,22 @@ namespace MPTagThat.Core.AlbumSearch.AlbumSites
         ilGenerator.Emit(OpCodes.Ret);
 
         del = (ConstructorDelegate)dynamicMethod.CreateDelegate(typeof(ConstructorDelegate));
-        ClassConstructors.Add(type.Name, del);
+        
+        // In some occasions we get duplicate keys
+        if (!ClassConstructors.ContainsKey(type.Name))
+        {
+          ClassConstructors.Add(type.Name, del);
+        }
+
         return del(artist, album, mEventStopSiteSearches, timeLimit);
       }
       catch (NullReferenceException)
       {
         return null;
+      }
+      finally
+      {
+        Monitor.Exit(objectLock);
       }
     }
 

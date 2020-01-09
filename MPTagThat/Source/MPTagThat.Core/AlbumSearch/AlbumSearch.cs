@@ -102,9 +102,10 @@ namespace MPTagThat.Core.AlbumSearch
 
     private void RunSearchForSiteInThread(string albumInfoSite)
     {
+      // Moved outside of thread on purpose, since we could get conflicts creating the delegate
+      var albumSearchSite = AlbumSiteFactory.Create(albumInfoSite, _artist, _albumTitle, _mEventStopSiteSearches, TimeLimitForSite);
       ThreadStart job = delegate
       {
-        var albumSearchSite = AlbumSiteFactory.Create(albumInfoSite, _artist, _albumTitle, _mEventStopSiteSearches, TimeLimitForSite);
         if (albumSearchSite != null)
         {
           albumSearchSite.GetAlbumInfo();
