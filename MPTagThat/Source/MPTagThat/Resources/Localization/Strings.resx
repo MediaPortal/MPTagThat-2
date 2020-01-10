@@ -539,7 +539,7 @@
   <data name="tagAndRename_Group" xml:space="preserve">
     <value>Content Group</value>
   </data>
-  <data name="tagAndRename_HeadingRename" xml:space="preserve">
+  <data name="tagAndRename_Header_Rename" xml:space="preserve">
     <value>Rename File</value>
   </data>
   <data name="tagAndRename_ModifiedBy" xml:space="preserve">

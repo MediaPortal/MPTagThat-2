@@ -24,6 +24,7 @@ using System.IO;
 using System.Windows.Forms;
 using CommonServiceLocator;
 using MPTagThat.Core.Common;
+using MPTagThat.Core.Common.Song;
 using MPTagThat.Core.Services.Logging;
 using MPTagThat.Core.Services.Settings;
 using MPTagThat.Core.Services.Settings.Setting;
@@ -32,6 +33,8 @@ using TagLib;
 using WPFLocalizeExtension.Engine;
 using File = TagLib.File;
 using Tag = TagLib.Id3v2.Tag;
+// ReSharper disable StringIndexOfIsCultureSpecific.1
+// ReSharper disable StringLiteralTypo
 
 #endregion
 
@@ -57,6 +60,9 @@ namespace MPTagThat.Core.Utils
     private static ILogger log;
     private static readonly object padlock = new object();
 
+    private static char[] _invalidFilenameChars;
+    private static char[] _invalidFoldernameChars;
+
     #endregion
 
     #region ctor
@@ -64,6 +70,8 @@ namespace MPTagThat.Core.Utils
     private Util()
     {
       log = (ServiceLocator.Current.GetInstance(typeof(ILogger)) as ILogger).GetLogger;
+      _invalidFilenameChars = Path.GetInvalidFileNameChars();
+      _invalidFoldernameChars = Path.GetInvalidPathChars();
     }
 
     #endregion
@@ -469,9 +477,39 @@ namespace MPTagThat.Core.Utils
       return false;
     }
 
+    /// <summary>
+    ///   Make a Valid Filename out of a given String
+    /// </summary>
+    /// <param name = "str"></param>
+    /// <returns></returns>
+    public static string MakeValidFileName(string str)
+    {
+      if (str.IndexOfAny(_invalidFilenameChars) > -1)
+      {
+        foreach (char c in _invalidFilenameChars)
+          str = str.Replace(c, '_');
+      }
+      return str;
+    }
+
     #endregion
 
     #region Folder related methods
+
+    /// <summary>
+    ///   Make a Valid Foldername out of a given String
+    /// </summary>
+    /// <param name = "str"></param>
+    /// <returns></returns>
+    public static string MakeValidFolderName(string str)
+    {
+      if (str.IndexOfAny(_invalidFoldernameChars) > -1)
+      {
+        foreach (char c in _invalidFoldernameChars)
+          str = str.Replace(c, '_');
+      }
+      return str;
+    }
 
     /// <summary>
     /// Deletes folder, setting the attributes before to allow deletion
@@ -818,6 +856,170 @@ namespace MPTagThat.Core.Utils
       }
       return label;
     }
+    
+    /// <summary>
+    ///   Replace the given Parameter string with the values from the Track
+    /// </summary>
+    /// <param name = "parameter"></param>
+    /// <param name = "song"></param>
+    /// <returns></returns>
+    public static string ReplaceParametersWithTrackValues(string parameter, SongData song)
+    {
+      string replacedString = parameter.Trim(new[] {'\\'});
+
+      try
+      {
+        if (replacedString.IndexOf("%artist%") > -1)
+          replacedString = replacedString.Replace("%artist%", song.Artist.Replace(';', '_').Trim());
+
+        if (replacedString.IndexOf("%title%") > -1)
+          replacedString = replacedString.Replace("%title%", song.Title.Trim());
+
+        if (replacedString.IndexOf("%album%") > -1)
+          replacedString = replacedString.Replace("%album%", song.Album.Trim());
+
+        if (replacedString.IndexOf("%year%") > -1)
+          replacedString = replacedString.Replace("%year%", song.Year.ToString().Trim());
+
+        if (replacedString.IndexOf("%track%") > -1)
+        {
+          replacedString = replacedString.Replace("%track%", song.TrackNumber.ToString().PadLeft(2, '0'));
+        }
+
+        if (replacedString.IndexOf("%tracktotal%") > -1)
+        {
+          replacedString = replacedString.Replace("%tracktotal%", song.TrackCount.ToString().PadLeft(2, '0'));
+        }
+
+        if (replacedString.IndexOf("%disc%") > -1)
+        {
+          replacedString = replacedString.Replace("%disc%", song.DiscNumber.ToString().PadLeft(2, '0'));
+        }
+
+        if (replacedString.IndexOf("%disctotal%") > -1)
+        {
+          replacedString = replacedString.Replace("%disctotal%", song.DiscCount.ToString().PadLeft(2, '0'));
+        }
+
+        if (replacedString.IndexOf("%genre%") > -1)
+        {
+          var strGenre = song.Genre.Replace(';', '_');
+          replacedString = replacedString.Replace("<G>", strGenre.Trim());
+        }
+
+        if (replacedString.IndexOf("%albumartist%") > -1)
+          replacedString = replacedString.Replace("%albumartist%", song.AlbumArtist.Replace(';', '_').Trim());
+
+        if (replacedString.IndexOf("%comment%") > -1)
+          replacedString = replacedString.Replace("%comment%", song.Comment.Trim());
+
+        if (replacedString.IndexOf("%group%") > -1)
+          replacedString = replacedString.Replace("%group%", song.Grouping.Trim());
+
+        if (replacedString.IndexOf("%conductor%") > -1)
+          replacedString = replacedString.Replace("%conductor%", song.Conductor.Trim());
+
+        if (replacedString.IndexOf("%composer%") > -1)
+          replacedString = replacedString.Replace("%composer%", song.Composer.Replace(';', '_').Trim());
+
+        if (replacedString.IndexOf("%subtitle%") > -1)
+          replacedString = replacedString.Replace("%subtitle%", song.SubTitle.Trim());
+
+        if (replacedString.IndexOf("%bpm%") > -1)
+          replacedString = replacedString.Replace("%bpm%", song.BPM.ToString());
+
+        if (replacedString.IndexOf("%remixed%") > -1)
+          replacedString = replacedString.Replace("%remixed%", song.Interpreter.Trim());
+
+        if (replacedString.IndexOf("%bitrate%") > -1)
+          replacedString = replacedString.Replace("%bitrate%", song.BitRate);
+
+        int index = replacedString.IndexOf("%artist:");
+        if (index > -1)
+        {
+          replacedString = ReplaceStringWithLengthIndicator(index, replacedString, song.Artist.Replace(';', '_').Trim());
+        }
+
+        index = replacedString.IndexOf("%albumartist:");
+        if (index > -1)
+        {
+          replacedString = ReplaceStringWithLengthIndicator(index, replacedString,
+                                                            song.AlbumArtist.Replace(';', '_').Trim());
+        }
+
+        index = replacedString.IndexOf("%track:");
+        if (index > -1)
+        {
+          replacedString = ReplaceStringWithLengthIndicator(index, replacedString, song.TrackNumber.ToString());
+        }
+
+        index = replacedString.IndexOf("%tracktotal:");
+        if (index > -1)
+        {
+          replacedString = ReplaceStringWithLengthIndicator(index, replacedString, song.TrackCount.ToString());
+        }
+
+        index = replacedString.IndexOf("%disc:");
+        if (index > -1)
+        {
+          replacedString = ReplaceStringWithLengthIndicator(index, replacedString, song.DiscNumber.ToString());
+        }
+
+        index = replacedString.IndexOf("%disctotal:");
+        if (index > -1)
+        {
+          replacedString = ReplaceStringWithLengthIndicator(index, replacedString, song.DiscCount.ToString());
+        }
+
+        // Empty Values would create invalid folders
+        replacedString = replacedString.Replace(@"\\", @"\_\");
+
+        // If the directory name starts with a backslash, we've got an empty value on the beginning
+        if (replacedString.IndexOf("\\") == 0)
+          replacedString = "_" + replacedString;
+
+        // We might have an empty value on the end of the path, which is indicated by a slash. 
+        // replace it with underscore
+        if (replacedString.LastIndexOf("\\") == replacedString.Length - 1)
+          replacedString += "_";
+
+        replacedString = MakeValidFolderName(replacedString);
+      }
+      catch (Exception)
+      {
+        return "";
+      }
+      return replacedString;
+    }
+
+    private static string ReplaceStringWithLengthIndicator(int startIndex, string replaceString, string replaceValue)
+    {
+      // Check if we have a numeric Parameter as replace value
+      bool isNumericParm = (replaceString.Substring(1, 1).IndexOfAny(new[] {'K', 'k', 'D', 'd'}) > -1);
+      int last = -1;
+      last = replaceString.IndexOf(">", startIndex);
+      string s1 = replaceString.Substring(startIndex, last - startIndex + 1);
+      int strLength = Convert.ToInt32(s1.Substring(3, 1));
+
+      if (replaceValue.Length >= strLength)
+      {
+        if (isNumericParm)
+        {
+          replaceValue = replaceValue.Substring(replaceValue.Length - strLength);
+        }
+        else
+        {
+          replaceValue = replaceValue.Substring(0, strLength);
+        }
+      }
+      else if (isNumericParm && replaceValue.Length < strLength)
+      {
+        // Do Pad numeric values with zeroes
+        replaceValue = replaceValue.PadLeft(strLength, '0');
+      }
+
+      return replaceString.Replace(s1, replaceValue);
+    }
 
     /// <summary>
     ///   Check the Parameter Format for validity
@@ -924,7 +1126,7 @@ namespace MPTagThat.Core.Utils
     {
       bool retVal = true;
       int last = -1;
-      last = str.IndexOf("%", startIndex);
+      last = str.IndexOf("%", startIndex, StringComparison.Ordinal);
       string s1 = str.Substring(startIndex, last - startIndex + 1);
 
       char c = s1[3];

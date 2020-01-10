@@ -563,6 +563,12 @@ namespace MPTagThat.SongGrid.ViewModels
             return;
           }
 
+          if ((Action.ActionType)msg.MessageData["command"] == Action.ActionType.ACTION_TAG2FILENAME)
+          {
+            _dialogService.ShowDialogInAnotherWindow("Tag2FileNameView", "DialogWindowView",parameters, null);
+            return;
+          }
+
           if ((Action.ActionType)msg.MessageData["command"] == Action.ActionType.ACTION_GETCOVERART)
           {
             _dialogService.ShowDialogInAnotherWindow("AlbumCoverSearchView", "DialogWindowView", parameters, null);

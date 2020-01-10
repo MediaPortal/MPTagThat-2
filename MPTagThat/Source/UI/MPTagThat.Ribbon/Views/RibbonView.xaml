@@ -18,11 +18,17 @@
     </Grid.ColumnDefinitions>
     <syncfusion:Ribbon x:Name="Ribbon" Margin="0" Grid.ColumnSpan="2" BackStageHeader="" RibbonState="Normal">
       <syncfusion:RibbonTab x:Name="TabTag" Caption="{lex:Loc ribbon_TagTab}"  IsChecked="True">
+
         <syncfusion:RibbonBar Name="RibbonBarRetrieveTags" Header="{lex:Loc ribbon_RetrieveTags}">
-          <syncfusion:RibbonButton x:Name="ButtonTagFromFile" SizeForm="Large" Label="{lex:Loc ribbon_TagFromFile}" LargeIcon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_TagFromFile_32x.png" SmallIcon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_TagFromFile_16x.png" />
+          <syncfusion:RibbonButton x:Name="ButtonTagFromFile" SizeForm="Large" Label="{lex:Loc ribbon_TagFromFile}" LargeIcon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_TagFromFile_32x.png" SmallIcon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_TagFromFile_16x.png" >
+            <syncfusion:RibbonButton.ToolTip>
+              <syncfusion:ScreenTip MinWidth="150" Description="ScreenTip Example" VerticalOffset="10" Content="Represent a ribbon simple buttons" ImageSource="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_TagFromFile_16x.png" />
+            </syncfusion:RibbonButton.ToolTip>
+          </syncfusion:RibbonButton>/>
           <syncfusion:RibbonButton x:Name="ButtonIdentifyFile" SizeForm="Large" Label="{lex:Loc ribbon_IdentifyFile}" LargeIcon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_IdentifyFile_32x.png" SmallIcon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_IdentifyFile_16x.png" />
           <syncfusion:RibbonButton x:Name="ButtonTagFromInternet" SizeForm="Large" Label="{lex:Loc ribbon_TagFromInternet}" LargeIcon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_TagFromInternet_32x.png" SmallIcon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_TagFromInternet_16x.png" />
         </syncfusion:RibbonBar>
+        
         <syncfusion:RibbonBar Name="RibbonBarEditTags" Header="{lex:Loc ribbon_EditTags}">
           <syncfusion:SplitButton x:Name="ButtonCaseConversion" SizeForm="Large" Label="{lex:Loc ribbon_CaseConversionMenu}" LargeIcon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_CaseConversion_32x.png" SmallIcon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_CaseConversion_16x.png">
             <syncfusion:DropDownMenuItem x:Name="ButtonCaseConversionOptions" Header="{lex:Loc ribbon_CaseConversionOption}"/>
@@ -57,12 +63,28 @@
             <syncfusion:RibbonButton x:Name="ButtonBpm" SizeForm="Small" Label="" SmallIcon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_Bpm_16x.png" />
           </syncfusion:ButtonPanel>
         </syncfusion:RibbonBar>
+
         <syncfusion:RibbonBar Name="RibbonBarCoverArt" Header="{lex:Loc ribbon_Picture}">
           <syncfusion:RibbonGallery x:Name="RibbonCoverArt" HorizontalAlignment="Left" Height="66" VerticalAlignment="Top" Width="81" Margin="1" />
           <syncfusion:RibbonButton x:Name="ButtonGetCoverArt" SizeForm="Small" Label="" SmallIcon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_CoverArt_16x.png" />
           <syncfusion:RibbonButton x:Name="ButtonRemoveCoverArt" SizeForm="Small" Label="" SmallIcon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_RemovePictures_16x.png" />
           <syncfusion:RibbonButton x:Name="ButtonSaveCoverArt" SizeForm="Small" Label="" SmallIcon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_Save_16x.png" />
         </syncfusion:RibbonBar>
+
+        <syncfusion:RibbonBar Name="RibbonBarOrganise" Header="{lex:Loc ribbon_OrganiseFiles}">
+          <syncfusion:RibbonButton x:Name="ButtonRenameFiles" SizeForm="Large" Label="{lex:Loc ribbon_RenameFile}" LargeIcon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_Rename_32x.png" SmallIcon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_Rename_16x.png" >
+            <syncfusion:RibbonButton.ToolTip>
+              <syncfusion:ScreenTip MinWidth="150" Description="ScreenTip Example" VerticalOffset="10" Content="Represent a ribbon simple buttons" ImageSource="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_Rename_16x.png" />
+            </syncfusion:RibbonButton.ToolTip>
+          </syncfusion:RibbonButton>
+          <syncfusion:RibbonButton x:Name="ButtonOrganiseFiles" SizeForm="Large" Label="{lex:Loc ribbon_Organise}" LargeIcon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_Organise_32x.png" SmallIcon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_Organise_16x.png" >
+            <syncfusion:RibbonButton.ToolTip>
+              <syncfusion:ScreenTip MinWidth="150" Description="ScreenTip Example" VerticalOffset="10" Content="Represent a ribbon simple buttons" ImageSource="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_Organise_16x.png" />
+            </syncfusion:RibbonButton.ToolTip>
+          </syncfusion:RibbonButton>
+        </syncfusion:RibbonBar>
+
+
       </syncfusion:RibbonTab>
       <syncfusion:RibbonTab x:Name="TabRip" Caption="{lex:Loc ribbon_RipTab}"  IsChecked="False"/>
       <syncfusion:RibbonTab x:Name="TabConvert" Caption="{lex:Loc ribbon_ConvertTab}"  IsChecked="False"/>

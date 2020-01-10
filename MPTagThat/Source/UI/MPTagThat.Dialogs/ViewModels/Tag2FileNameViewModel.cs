@@ -35,13 +35,14 @@ using MPTagThat.Core.Services.Settings.Setting;
 using MPTagThat.Core.Utils;
 using Syncfusion.UI.Xaml.Grid;
 using WPFLocalizeExtension.Engine;
-// ReSharper disable StringLiteralTypo
+// ReSharper disable IdentifierTypo
+// ReSharper disable StringIndexOfIsCultureSpecific.1
 
 #endregion
 
 namespace MPTagThat.Dialogs.ViewModels
 {
-  public class FileName2TagViewModel : DialogViewModelBase
+  public class Tag2FileNameViewModel : DialogViewModelBase
   {
     #region Variables
 
@@ -127,17 +128,37 @@ namespace MPTagThat.Dialogs.ViewModels
       set => SetProperty(ref _selectedTabIndex, value);
     }
 
+    /// <summary>
+    /// The Cursor Position, while Editing the Parameter Combobox
+    /// </summary>
+    private int _enumerateStartAt;
+    public int EnumerateStartAt
+    {
+      get => _enumerateStartAt;
+      set => SetProperty(ref _enumerateStartAt, value);
+    }
+
+    /// <summary>
+    /// The Cursor Position, while Editing the Parameter Combobox
+    /// </summary>
+    private int _enumerateNumberDigits;
+    public int EnumerateNumberDigits
+    {
+      get => _enumerateNumberDigits;
+      set => SetProperty(ref _enumerateNumberDigits, value);
+    }
+
     #endregion
 
     #region ctor
 
-    public FileName2TagViewModel()
+    public Tag2FileNameViewModel()
     {
-      Title = LocalizeDictionary.Instance.GetLocalizedObject("MPTagThat", "Strings", "tagAndRename_Header",
+      Title = LocalizeDictionary.Instance.GetLocalizedObject("MPTagThat", "Strings", "tagAndRename_Header_Rename",
         LocalizeDictionary.Instance.Culture).ToString();
       CancelChangesCommand = new BaseCommand(CancelChanges);
       LabelClickedCommand = new BaseCommand(LabelClicked);
-      FileNameToTagCommand = new BaseCommand(FileNameToTag);
+      Tag2FileNameCommand = new BaseCommand(Tag2FileNameApply);
       PreviewChangesCommand = new BaseCommand(PreviewChanges);
       AddFormatCommand = new BaseCommand(AddFormat);
       RemoveFormatCommand = new BaseCommand(RemoveFormat);
@@ -173,42 +194,27 @@ namespace MPTagThat.Dialogs.ViewModels
       }
     }
 
-    public ICommand FileNameToTagCommand { get; }
+    /// <summary>
+    /// The Apply Button has been pressed
+    /// </summary>
+    public ICommand Tag2FileNameCommand { get; }
 
-    private void FileNameToTag(object param)
+    private void Tag2FileNameApply(object param)
     {
       log.Trace(">>>");
 
-      if (!Util.CheckParameterFormat(SelectedItemText, Options.ParameterFormat.FileNameToTag))
+      if (!Util.CheckParameterFormat(SelectedItemText, Options.ParameterFormat.TagToFileName))
       {
         MessageBox.Show(LocalizeDictionary.Instance.GetLocalizedObject("MPTagThat", "Strings", "tagAndRename_InvalidParm",LocalizeDictionary.Instance.Culture).ToString(),
           LocalizeDictionary.Instance.GetLocalizedObject("MPTagThat", "Strings", "message_Error_Title",LocalizeDictionary.Instance.Culture).ToString(), MessageBoxButton.OK);
         return;
       }
 
-      var tagFormat = new TagFormat(SelectedItemText);
-      var parts = tagFormat.ParameterParts;
-
-
-      // Use a For loop instead foreach because we want to modify the song
-      for (var i = 0; i < _songs.Count; i++)
-      {
-        try
-        {
-          ReplaceParametersWithValues(_songs[i], parts);
-          _songs[i].Changed = true;
-        }
-        catch (Exception ex)
-        {
-          log.Error($"Error applying changes from Filename To Tag: {ex.Message} stack: {ex.StackTrace}");
-          _songs[i].Status = 2;
-          _songs[i].StatusMsg = ex.Message;
-        }
-      }
+      Tag2FileName(SelectedItemText);
 
       // Did we get a new Format in the list, then store it temporarily
       bool newFormat = true;
-      foreach (string format in _options.FileNameToTagSettingsTemp)
+      foreach (string format in _options.TagToFileNameSettingsTemp)
       {
         if (format == SelectedItemText)
         {
@@ -219,148 +225,80 @@ namespace MPTagThat.Dialogs.ViewModels
 
       if (newFormat)
       {
-        _options.FileNameToTagSettingsTemp.Add(SelectedItemText);
+        _options.TagToFileNameSettingsTemp.Add(SelectedItemText);
       }
-      _options.FileNameToTagSettings.LastUsedFormat = SelectedIndex;
+      _options.TagToFileNameSettings.LastUsedFormat = SelectedIndex;
 
       log.Trace("<<<");
       CloseDialog("true");
     }
-
-    private void ReplaceParametersWithValues(SongData song, List<ParameterPart> parameters)
+    
+    /// <summary>
+    /// Rename the Filename either via Command Button or Batch Mode
+    /// </summary>
+    /// <param name="parameter"></param>
+    private void Tag2FileName(string parameter)
     {
-      var splittedFileValues = new List<string>();
-
-      // Split up the file name
-      // We use already the FileName from the Track instance, which might be already modified by the user.
-      var file = $@"{Path.GetDirectoryName(song.FullFileName)}\{Path.GetFileNameWithoutExtension(song.FileName)}";
-
-      var fileArray = file.Split(new[] { '\\' });
-
-      // Now set Upper Bound depending on the length of parameters and file
-      int upperBound;
-      if (parameters.Count >= fileArray.Length)
-        upperBound = fileArray.Length - 1;
-      else
-        upperBound = parameters.Count - 1;
-
-      // Now loop through the delimiters and assign files
-      for (var i = 0; i <= upperBound; i++)
+      // Use a For loop instead foreach because we want to modify the song
+      for (var i = 0; i < _songs.Count; i++)
       {
-        var parameterpart = parameters[i];
-        var delims = parameterpart.Delimiters;
-        var parms = parameterpart.Parameters;
-
-        // Set the part of the File to Process
-        var filePart = fileArray[fileArray.GetUpperBound(0) - i];
-        splittedFileValues.Clear();
-
-        var upperBoundDelims = delims.GetUpperBound(0);
-        for (var j = 0; j <= upperBoundDelims; j++)
+        try
         {
-          if ((j == upperBoundDelims) | (delims[j] != ""))
-          {
-            if (filePart.IndexOf(delims[j], StringComparison.Ordinal) == 0 && j == upperBoundDelims)
-            {
-              splittedFileValues.Add(filePart);
-              break;
-            }
+          var fileName = ReplaceParametersWithValues(_songs[i], parameter);
 
-            var delimIndex = filePart.IndexOf(delims[j], StringComparison.Ordinal);
-            if (delimIndex > -1)
-            {
-              splittedFileValues.Add(filePart.Substring(0, filePart.IndexOf(delims[j], StringComparison.Ordinal)));
-              filePart = filePart.Substring(filePart.IndexOf(delims[j], StringComparison.Ordinal) + delims[j].Length);
-            }
+          // Now check the length of the filename
+          if (fileName.Length > 255)
+          {
+            log.Debug($"Filename too long: {fileName}");
+            _songs[i].Status = 2;
+            _songs[i].StatusMsg = LocalizeDictionary.Instance.GetLocalizedObject("MPTagThat", "Strings",
+              "tagAndRename_NameTooLong", LocalizeDictionary.Instance.Culture).ToString();
+            continue; // Process next song
           }
+
+          string ext = Path.GetExtension(_songs[i].FileName);
+
+          // Now that we have a correct Filename and no duplicates accept the changes
+          _songs[i].FileName = $"{fileName}{ext}";
+          _songs[i].Changed = true;
         }
-
-        int index = -1;
-        // Now we need to Update the Tag Values
-        foreach (string param in parms)
+        catch (Exception ex)
         {
-          index++;
-          switch (param.ToLower())
-          {
-            case "%artist%":
-              song.Artist = splittedFileValues[index];
-              break;
-
-            case "%title%":
-              song.Title = splittedFileValues[index];
-              break;
-
-            case "%album%":
-              song.Album = splittedFileValues[index];
-              break;
-
-            case "%year%":
-              song.Year = Convert.ToInt32(splittedFileValues[index]);
-              break;
-
-            case "%track%":
-              song.TrackNumber = Convert.ToUInt32(splittedFileValues[index]);
-              break;
-
-            case "%tracktotal%":
-              song.TrackCount = Convert.ToUInt32(splittedFileValues[index]);
-              break;
-
-            case "%disc%":
-              song.DiscNumber = Convert.ToUInt32(splittedFileValues[index]);
-              break;
-
-            case "%disctotal%":
-              song.DiscCount = Convert.ToUInt32(splittedFileValues[index]);
-              break;
-
-            case "%genre%":
-              song.Genre = splittedFileValues[index];
-              break;
-
-            case "%albumartist%":
-              song.AlbumArtist = splittedFileValues[index];
-              break;
-
-            case "%Comment%":
-              song.Comment = splittedFileValues[index];
-              break;
-
-            case "%conductor%":
-              song.Conductor = splittedFileValues[index];
-              break;
-
-            case "%composer%":
-              song.Composer = splittedFileValues[index];
-              break;
-
-            case "%group%":
-              song.Grouping = splittedFileValues[index];
-              break;
-
-            case "%subtitle%":
-              song.SubTitle = splittedFileValues[index];
-              break;
-
-            case "%remixed%":
-              song.Interpreter = splittedFileValues[index];
-              break;
-
-            case "%bpm%":
-              song.BPM = Convert.ToInt32(splittedFileValues[index]);
-              break;
-
-            case "%x%":
-              // ignore it
-              break;
-          }
+          log.Error($"Error applying changes from Filename To Tag: {ex.Message} stack: {ex.StackTrace}");
+          _songs[i].Status = 2;
+          _songs[i].StatusMsg = ex.Message;
         }
       }
     }
 
+    private string ReplaceParametersWithValues(SongData song, string parameter)
+    {
+      string fileName = "";
+      try
+      {
+        // FilenameToTag Special Variables
+        if (parameter.IndexOf("%filename%") > -1)
+          parameter = parameter.Replace("<F>", Path.GetFileNameWithoutExtension(song.FileName));
+
+        if (parameter.IndexOf("<#>") > -1)
+        {
+          parameter = parameter.Replace("<#>", EnumerateStartAt.ToString().PadLeft(EnumerateStartAt, '0'));
+          EnumerateStartAt++;
+        }
+
+        fileName = Util.ReplaceParametersWithTrackValues(parameter, song);
+      }
+      catch (Exception ex)
+      {
+        log.Error("Error Replacing parameters in file: {0} stack: {1}", ex.Message, ex.StackTrace);
+      }
+      return fileName;
+    }
+
+
     public ICommand SelectionChangingCommand { get; set; }
 
-    private void SelectionChanging(object param)
+    private void SelectionChanging(object parm)
     {
       SongsPreview.Clear();
       DataGridColumns = new Columns();
@@ -384,15 +322,14 @@ namespace MPTagThat.Dialogs.ViewModels
     {
       log.Trace(">>>");
 
-      if (!Util.CheckParameterFormat(SelectedItemText, Options.ParameterFormat.FileNameToTag))
+      if (!Util.CheckParameterFormat(SelectedItemText, Options.ParameterFormat.TagToFileName))
       {
         MessageBox.Show(LocalizeDictionary.Instance.GetLocalizedObject("MPTagThat", "Strings", "tagAndRename_InvalidParm", LocalizeDictionary.Instance.Culture).ToString(),
           LocalizeDictionary.Instance.GetLocalizedObject("MPTagThat", "Strings", "message_Error_Title", LocalizeDictionary.Instance.Culture).ToString(), MessageBoxButton.OK);
         return;
       }
 
-      var tagFormat = new TagFormat(SelectedItemText);
-      var parts = tagFormat.ParameterParts;
+      var parameter = SelectedItemText;
 
       // Add Columns to Preview Grid
       var column = new GridTextColumn();
@@ -400,23 +337,16 @@ namespace MPTagThat.Dialogs.ViewModels
       column.MappingName = "FullFileName";
       DataGridColumns.Add(column);
 
-      foreach (var part in parts)
-      {
-        foreach (var parameter in part.Parameters)
-        {
-          column = new GridTextColumn();
-          column.HeaderText = LocalizeDictionary.Instance.GetLocalizedObject("MPTagThat", "Strings", $"songHeader_{Util.ParameterToLabel(parameter)}",
-            LocalizeDictionary.Instance.Culture).ToString();
-          column.MappingName = Util.ParameterToLabel(parameter);
-          DataGridColumns.Add(column);
-        }
-      }
+      column = new GridTextColumn();
+      column.HeaderText = LocalizeDictionary.Instance.GetLocalizedObject("MPTagThat", "Strings", "songHeader_NewFileName", LocalizeDictionary.Instance.Culture).ToString();
+      column.MappingName = "FileName";
+      DataGridColumns.Add(column);
 
       foreach (var song in _songs)
       {
         var songPreview = song.Clone();
         songPreview.Changed = false;
-        ReplaceParametersWithValues(songPreview, parts);
+        songPreview.FileName = ReplaceParametersWithValues(songPreview, parameter);
         SongsPreview.Add(songPreview);
       }
 
@@ -428,10 +358,10 @@ namespace MPTagThat.Dialogs.ViewModels
     /// </summary>
     public ICommand AddFormatCommand { get; set; }
 
-    private void AddFormat(object param)
+    private void AddFormat(object parm)
     {
       bool found = false;
-      foreach (string format in _options.FileNameToTagSettings.FormatValues)
+      foreach (string format in _options.TagToFileNameSettings.FormatValues)
       {
         if (format == SelectedItemText)
         {
@@ -442,10 +372,10 @@ namespace MPTagThat.Dialogs.ViewModels
 
       if (!found)
       {
-        _options.FileNameToTagSettings.FormatValues.Add(SelectedItemText);
-        _options.FileNameToTagSettings.Save();
+        _options.TagToFileNameSettings.FormatValues.Add(SelectedItemText);
+        _options.TagToFileNameSettings.Save();
 
-        _options.FileNameToTagSettingsTemp.Add(SelectedItemText);
+        _options.TagToFileNameSettingsTemp.Add(SelectedItemText);
         Parameters.Add(SelectedItemText);
       }
     }
@@ -455,20 +385,21 @@ namespace MPTagThat.Dialogs.ViewModels
     /// </summary>
     public ICommand RemoveFormatCommand { get; set; }
 
-    private void RemoveFormat(object param)
+    private void RemoveFormat(object parm)
     {
-      for (int i = 0; i < _options.FileNameToTagSettings.FormatValues.Count; i++)
+      for (int i = 0; i < _options.TagToFileNameSettings.FormatValues.Count; i++)
       {
-        if (_options.FileNameToTagSettings.FormatValues[i] == SelectedItemText)
+        if (_options.TagToFileNameSettings.FormatValues[i] == SelectedItemText)
         {
-          _options.FileNameToTagSettings.FormatValues.RemoveAt(i);
-          _options.FileNameToTagSettings.Save();
+          _options.TagToFileNameSettings.FormatValues.RemoveAt(i);
+          _options.TagToFileNameSettings.Save();
         }
       }
 
-      _options.FileNameToTagSettingsTemp.RemoveAt(SelectedIndex);
+      _options.TagToFileNameSettingsTemp.RemoveAt(SelectedIndex);
       Parameters.RemoveAt(SelectedIndex);
     }
+
 
     #endregion
 
@@ -477,15 +408,15 @@ namespace MPTagThat.Dialogs.ViewModels
     private void LoadParameters()
     {
       log.Trace(">>>");
-      foreach (string item in _options.FileNameToTagSettingsTemp)
+      foreach (string item in _options.TagToFileNameSettingsTemp)
       {
         Parameters.Add(item);
       }
 
-      if (_options.FileNameToTagSettings.LastUsedFormat > Parameters.Count - 1)
+      if (_options.TagToFileNameSettings.LastUsedFormat > Parameters.Count - 1)
         SelectedIndex = 0;
       else
-        SelectedIndex = _options.FileNameToTagSettings.LastUsedFormat;
+        SelectedIndex = _options.TagToFileNameSettings.LastUsedFormat;
       log.Trace("<<<");
     }
 

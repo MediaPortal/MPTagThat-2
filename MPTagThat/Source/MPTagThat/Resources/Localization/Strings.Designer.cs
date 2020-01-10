@@ -1530,9 +1530,9 @@ namespace MPTagThat.Resources.Localization {
         /// <summary>
         ///   Looks up a localized string similar to Rename File.
         /// </summary>
-        public static string tagAndRename_HeadingRename {
+        public static string tagAndRename_Header_Rename {
             get {
-                return ResourceManager.GetString("tagAndRename_HeadingRename", resourceCulture);
+                return ResourceManager.GetString("tagAndRename_Header_Rename", resourceCulture);
             }
         }
         

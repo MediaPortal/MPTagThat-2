@@ -144,6 +144,16 @@ namespace MPTagThat.Core.Common.Song
     public bool Changed { get => _changed; set => SetProperty(ref _changed, value); }
 
     /// <summary>
+    /// A Status message, which we might want to display
+    /// </summary>
+    private string _statusMsg = "";
+    public string StatusMsg
+    {
+      get => _statusMsg;
+      set => SetProperty(ref _statusMsg, value);
+    }
+
+    /// <summary>
     /// Indicates, if the Tags have been removed
     /// </summary>
     public List<TagLib.TagTypes> TagsRemoved

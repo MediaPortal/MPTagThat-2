@@ -183,6 +183,14 @@
     <Resource Include="Resources\Images\ribbon_DeleteLayout_16x.png" />
     <Resource Include="Resources\Images\ribbon_DeleteLayout_32x.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\ribbon_Rename_16x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\ribbon_Organise_16x.png" />
+    <Resource Include="Resources\Images\ribbon_Organise_32x.png" />
+    <Resource Include="Resources\Images\ribbon_Rename_32x.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>
