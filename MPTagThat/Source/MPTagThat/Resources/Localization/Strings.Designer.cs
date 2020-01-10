@@ -763,6 +763,168 @@ namespace MPTagThat.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Album.
+        /// </summary>
+        public static string tagAndRename_Album {
+            get {
+                return ResourceManager.GetString("tagAndRename_Album", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Album Artist.
+        /// </summary>
+        public static string tagAndRename_AlbumArtist {
+            get {
+                return ResourceManager.GetString("tagAndRename_AlbumArtist", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Artist.
+        /// </summary>
+        public static string tagAndRename_Artist {
+            get {
+                return ResourceManager.GetString("tagAndRename_Artist", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bitrate.
+        /// </summary>
+        public static string tagAndRename_BitRate {
+            get {
+                return ResourceManager.GetString("tagAndRename_BitRate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to BPM.
+        /// </summary>
+        public static string tagAndRename_BPM {
+            get {
+                return ResourceManager.GetString("tagAndRename_BPM", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Comment.
+        /// </summary>
+        public static string tagAndRename_Comment {
+            get {
+                return ResourceManager.GetString("tagAndRename_Comment", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Composer.
+        /// </summary>
+        public static string tagAndRename_Composer {
+            get {
+                return ResourceManager.GetString("tagAndRename_Composer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Conductor.
+        /// </summary>
+        public static string tagAndRename_Conductor {
+            get {
+                return ResourceManager.GetString("tagAndRename_Conductor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Disc Number.
+        /// </summary>
+        public static string tagAndRename_Disc {
+            get {
+                return ResourceManager.GetString("tagAndRename_Disc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Total # of discs.
+        /// </summary>
+        public static string tagAndRename_DiscTotal {
+            get {
+                return ResourceManager.GetString("tagAndRename_DiscTotal", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enumerates Files.
+        /// </summary>
+        public static string tagAndRename_Enumerate {
+            get {
+                return ResourceManager.GetString("tagAndRename_Enumerate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to File already exists. Common Tags used?.
+        /// </summary>
+        public static string tagAndRename_FileExists {
+            get {
+                return ResourceManager.GetString("tagAndRename_FileExists", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Current Filename.
+        /// </summary>
+        public static string tagAndRename_Filename {
+            get {
+                return ResourceManager.GetString("tagAndRename_Filename", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to First &quot;n&quot; characters of Album Artist.
+        /// </summary>
+        public static string tagAndRename_FirstNofAlbumArtist {
+            get {
+                return ResourceManager.GetString("tagAndRename_FirstNofAlbumArtist", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to First &quot;n&quot; characters of Artist.
+        /// </summary>
+        public static string tagAndRename_FirstNofArtist {
+            get {
+                return ResourceManager.GetString("tagAndRename_FirstNofArtist", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to \ = Folder: to specify that parameters in front of it to be taken from the folder name.
+        /// </summary>
+        public static string tagAndRename_Folder {
+            get {
+                return ResourceManager.GetString("tagAndRename_Folder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Genre.
+        /// </summary>
+        public static string tagAndRename_Genre {
+            get {
+                return ResourceManager.GetString("tagAndRename_Genre", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Content Group.
+        /// </summary>
+        public static string tagAndRename_Group {
+            get {
+                return ResourceManager.GetString("tagAndRename_Group", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Format.
         /// </summary>
         public static string tagAndRename_GroupBoxFormat {
@@ -790,11 +952,56 @@ namespace MPTagThat.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Rename File.
+        /// </summary>
+        public static string tagAndRename_HeadingRename {
+            get {
+                return ResourceManager.GetString("tagAndRename_HeadingRename", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Invalid Parameter Format. Please Correct..
         /// </summary>
         public static string tagAndRename_InvalidParm {
             get {
                 return ResourceManager.GetString("tagAndRename_InvalidParm", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Modified / remixed by.
+        /// </summary>
+        public static string tagAndRename_ModifiedBy {
+            get {
+                return ResourceManager.GetString("tagAndRename_ModifiedBy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Filename too long. Please change it..
+        /// </summary>
+        public static string tagAndRename_NameTooLong {
+            get {
+                return ResourceManager.GetString("tagAndRename_NameTooLong", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Number of Digits.
+        /// </summary>
+        public static string tagAndRename_NumberDigits {
+            get {
+                return ResourceManager.GetString("tagAndRename_NumberDigits", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Original:.
+        /// </summary>
+        public static string tagAndRename_Original {
+            get {
+                return ResourceManager.GetString("tagAndRename_Original", resourceCulture);
             }
         }
         
@@ -817,6 +1024,33 @@ namespace MPTagThat.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Can&apos;t Rename File {0}: {1}.
+        /// </summary>
+        public static string tagAndRename_Rename {
+            get {
+                return ResourceManager.GetString("tagAndRename_Rename", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Start at.
+        /// </summary>
+        public static string tagAndRename_StartAt {
+            get {
+                return ResourceManager.GetString("tagAndRename_StartAt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SubTitle.
+        /// </summary>
+        public static string tagAndRename_SubTitle {
+            get {
+                return ResourceManager.GetString("tagAndRename_SubTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Parameters.
         /// </summary>
         public static string tagAndRename_TabHeader_Parameter {
@@ -831,6 +1065,51 @@ namespace MPTagThat.Resources.Localization {
         public static string tagAndRename_TabHeader_Preview {
             get {
                 return ResourceManager.GetString("tagAndRename_TabHeader_Preview", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Title.
+        /// </summary>
+        public static string tagAndRename_Title {
+            get {
+                return ResourceManager.GetString("tagAndRename_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Track Number.
+        /// </summary>
+        public static string tagAndRename_Track {
+            get {
+                return ResourceManager.GetString("tagAndRename_Track", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Total # of tracks.
+        /// </summary>
+        public static string tagAndRename_TrackTotal {
+            get {
+                return ResourceManager.GetString("tagAndRename_TrackTotal", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unused.
+        /// </summary>
+        public static string tagAndRename_Unused {
+            get {
+                return ResourceManager.GetString("tagAndRename_Unused", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Year.
+        /// </summary>
+        public static string tagAndRename_Year {
+            get {
+                return ResourceManager.GetString("tagAndRename_Year", resourceCulture);
             }
         }
         

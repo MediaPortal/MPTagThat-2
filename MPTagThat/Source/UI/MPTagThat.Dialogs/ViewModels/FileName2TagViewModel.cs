@@ -80,7 +80,7 @@ namespace MPTagThat.Dialogs.ViewModels
     }
 
     /// <summary>
-    /// The Binding for the Selected Index in the Commbobox
+    /// The Binding for the Selected Index in the Combobox
     /// </summary>
     private int _selectedIndex;
 
@@ -88,6 +88,16 @@ namespace MPTagThat.Dialogs.ViewModels
     {
       get => _selectedIndex;
       set => SetProperty(ref _selectedIndex, value);
+    }
+
+    /// <summary>
+    /// The Cursor Position, while Editing the Parameter Combobox
+    /// </summary>
+    private int _cursorPositionCombo;
+    public int CursorPositionCombo
+    {
+      get => _cursorPositionCombo;
+      set => SetProperty(ref _cursorPositionCombo, value);
     }
 
     /// <summary>
@@ -153,7 +163,13 @@ namespace MPTagThat.Dialogs.ViewModels
         return;
       }
       var label = (param as MouseButtonEventArgs)?.Source as System.Windows.Controls.Label;
-      SelectedItemText += Util.LabelToParameter(label?.Name);
+      var parameter = Util.LabelToParameter(label?.Name);
+      if (parameter != String.Empty)
+      {
+        var currentCursorPos = CursorPositionCombo;
+        SelectedItemText = SelectedItemText.Insert(CursorPositionCombo, parameter);
+        CursorPositionCombo = currentCursorPos + parameter.Length;
+      }
     }
 
     public ICommand FileNameToTagCommand { get; }

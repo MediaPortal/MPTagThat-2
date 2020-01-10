@@ -9,6 +9,7 @@
              xmlns:syncfusion="http://schemas.syncfusion.com/wpf"
              xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
              xmlns:core="clr-namespace:MPTagThat.Core.Common.Converter;assembly=MPTagThat.Core"
+             xmlns:behaviors="clr-namespace:MPTagThat.Core.Common.Behaviors;assembly=MPTagThat.Core"
              lex:LocalizeDictionary.DesignCulture="en"
              lex:ResxLocalizationProvider.DefaultAssembly="MPTagThat"
              lex:ResxLocalizationProvider.DefaultDictionary="Strings"
@@ -62,7 +63,12 @@
                     IsEditable="True" 
                     ItemsSource="{Binding Parameters}" 
                     Text="{Binding SelectedItemText, Mode=TwoWay}"
-                    SelectedIndex="{Binding SelectedIndex, Mode=TwoWay}" />
+                    PreviewTextInput="UIElement_OnPreviewTextInput"
+                    SelectedIndex="{Binding SelectedIndex, Mode=TwoWay}" 
+                    behaviors:ComboBoxCursorPositionBehavior.TrackCaretIndex="True"
+                    behaviors:ComboBoxCursorPositionBehavior.CursorPosition="{Binding CursorPositionCombo,Mode=TwoWay}" 
+
+                    />
 
           <StackPanel Grid.Row="1"  Orientation="Horizontal">
             <syncfusion:ButtonAdv Label="{lex:Loc tagAndRename_AddFormat}"  
@@ -116,7 +122,7 @@
                       </b:Interaction.Triggers>
                     </Label>
                     <Label Grid.Column="1" Content="=" />
-                    <Label Grid.Column="2" Content="Artist"/>
+                    <Label Grid.Column="2" Content="{lex:Loc tagAndRename_Artist}"/>
                   </Grid>
                   <Grid>
                     <Grid.ColumnDefinitions>
@@ -132,7 +138,7 @@
                       </b:Interaction.Triggers>
                     </Label>
                     <Label Grid.Column="1" Content="=" />
-                    <Label Grid.Column="2" Content="Album Artist / Orchestra"/>
+                    <Label Grid.Column="2" Content="{lex:Loc tagAndRename_AlbumArtist}"/>
                   </Grid>
                   <Grid>
                     <Grid.ColumnDefinitions>
@@ -148,7 +154,7 @@
                       </b:Interaction.Triggers>
                     </Label>
                     <Label Grid.Column="1" Content="=" />
-                    <Label Grid.Column="2" Content="Year"/>
+                    <Label Grid.Column="2" Content="{lex:Loc tagAndRename_Year}"/>
                   </Grid>
                   <Grid>
                     <Grid.ColumnDefinitions>
@@ -164,7 +170,7 @@
                       </b:Interaction.Triggers>
                     </Label>
                     <Label Grid.Column="1" Content="=" />
-                    <Label Grid.Column="2" Content="Track Number"/>
+                    <Label Grid.Column="2" Content="{lex:Loc tagAndRename_Track}"/>
                   </Grid>
                   <Grid>
                     <Grid.ColumnDefinitions>
@@ -180,7 +186,7 @@
                       </b:Interaction.Triggers>
                     </Label>
                     <Label Grid.Column="1" Content="=" />
-                    <Label Grid.Column="2" Content="Disc Number"/>
+                    <Label Grid.Column="2" Content="{lex:Loc tagAndRename_Disc}"/>
                   </Grid>
                   <Grid>
                     <Grid.ColumnDefinitions>
@@ -196,7 +202,7 @@
                       </b:Interaction.Triggers>
                     </Label>
                     <Label Grid.Column="1" Content="=" />
-                    <Label Grid.Column="2" Content="Modified / Remixed by"/>
+                    <Label Grid.Column="2" Content="{lex:Loc tagAndRename_ModifiedBy}"/>
                   </Grid>
                 </StackPanel>
                 <StackPanel Grid.Row="0" Grid.Column="1">
@@ -214,7 +220,7 @@
                       </b:Interaction.Triggers>
                     </Label>
                     <Label Grid.Column="1" Content="=" />
-                    <Label Grid.Column="2" Content="Title"/>
+                    <Label Grid.Column="2" Content="{lex:Loc tagAndRename_Title}"/>
                   </Grid>
                   <Grid>
                     <Grid.ColumnDefinitions>
@@ -230,7 +236,7 @@
                       </b:Interaction.Triggers>
                     </Label>
                     <Label Grid.Column="1" Content="=" />
-                    <Label Grid.Column="2" Content="Genre"/>
+                    <Label Grid.Column="2" Content="{lex:Loc tagAndRename_Genre}"/>
                   </Grid>
                   <Grid>
                     <Grid.ColumnDefinitions>
@@ -246,7 +252,7 @@
                       </b:Interaction.Triggers>
                     </Label>
                     <Label Grid.Column="1" Content="=" />
-                    <Label Grid.Column="2" Content="Conductor"/>
+                    <Label Grid.Column="2" Content="{lex:Loc tagAndRename_Conductor}"/>
                   </Grid>
                   <Grid>
                     <Grid.ColumnDefinitions>
@@ -262,7 +268,7 @@
                       </b:Interaction.Triggers>
                     </Label>
                     <Label Grid.Column="1" Content="=" />
-                    <Label Grid.Column="2" Content="Total # of Tracks"/>
+                    <Label Grid.Column="2" Content="{lex:Loc tagAndRename_TrackTotal}"/>
                   </Grid>
                   <Grid>
                     <Grid.ColumnDefinitions>
@@ -278,7 +284,7 @@
                       </b:Interaction.Triggers>
                     </Label>
                     <Label Grid.Column="1" Content="=" />
-                    <Label Grid.Column="2" Content="Total # of Discs"/>
+                    <Label Grid.Column="2" Content="{lex:Loc tagAndRename_DiscTotal}"/>
                   </Grid>
                   <Grid>
                     <Grid.ColumnDefinitions>
@@ -294,7 +300,7 @@
                       </b:Interaction.Triggers>
                     </Label>
                     <Label Grid.Column="1" Content="=" />
-                    <Label Grid.Column="2" Content="BPM"/>
+                    <Label Grid.Column="2" Content="{lex:Loc tagAndRename_BPM}"/>
                   </Grid>
                 </StackPanel>
                 <StackPanel Grid.Row="0" Grid.Column="2">
@@ -312,7 +318,7 @@
                       </b:Interaction.Triggers>
                     </Label>
                     <Label Grid.Column="1" Content="=" />
-                    <Label Grid.Column="2" Content="Album"/>
+                    <Label Grid.Column="2" Content="{lex:Loc tagAndRename_Album}"/>
                   </Grid>
                   <Grid>
                     <Grid.ColumnDefinitions>
@@ -328,7 +334,7 @@
                       </b:Interaction.Triggers>
                     </Label>
                     <Label Grid.Column="1" Content="=" />
-                    <Label Grid.Column="2" Content="Comment"/>
+                    <Label Grid.Column="2" Content="{lex:Loc tagAndRename_Comment}"/>
                   </Grid>
                   <Grid>
                     <Grid.ColumnDefinitions>
@@ -344,7 +350,7 @@
                       </b:Interaction.Triggers>
                     </Label>
                     <Label Grid.Column="1" Content="=" />
-                    <Label Grid.Column="2" Content="Composer"/>
+                    <Label Grid.Column="2" Content="{lex:Loc tagAndRename_Composer}"/>
                   </Grid>
                   <Grid>
                     <Grid.ColumnDefinitions>
@@ -360,7 +366,7 @@
                       </b:Interaction.Triggers>
                     </Label>
                     <Label Grid.Column="1" Content="=" />
-                    <Label Grid.Column="2" Content="Content Group"/>
+                    <Label Grid.Column="2" Content="{lex:Loc tagAndRename_Group}"/>
                   </Grid>
                   <Grid>
                     <Grid.ColumnDefinitions>
@@ -376,7 +382,7 @@
                       </b:Interaction.Triggers>
                     </Label>
                     <Label Grid.Column="1" Content="=" />
-                    <Label Grid.Column="2" Content="Sub Title"/>
+                    <Label Grid.Column="2" Content="{lex:Loc tagAndRename_SubTitle}"/>
                   </Grid>
                   <Grid>
                     <Grid.ColumnDefinitions>
@@ -392,11 +398,11 @@
                       </b:Interaction.Triggers>
                     </Label>
                     <Label Grid.Column="1" Content="=" />
-                    <Label Grid.Column="2" Content="Unused"/>
+                    <Label Grid.Column="2" Content="{lex:Loc tagAndRename_Unused}"/>
                   </Grid>
                 </StackPanel>
                 <StackPanel Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" >
-                  <Label Name="Folder" Content="\ = Folder: to specify that parameters in front of it to be taken from the folder name"  >
+                  <Label Name="Folder" Content="{lex:Loc tagAndRename_Folder}"  >
                     <b:Interaction.Triggers>
                       <b:EventTrigger EventName="MouseDown">
                         <prism:InvokeCommandAction Command="{Binding LabelClickedCommand}"/>

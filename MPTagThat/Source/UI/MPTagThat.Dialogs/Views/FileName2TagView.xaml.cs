@@ -43,5 +43,20 @@ namespace MPTagThat.Dialogs.Views
     {
       InitializeComponent();
     }
+
+    private void UIElement_OnPreviewTextInput(object sender, TextCompositionEventArgs e)
+    {
+      switch (e.Text)
+      {
+        case "|":
+        case "\"":
+        case "/":
+        case "*":
+        case "?":
+        case ":":
+          e.Handled = true;
+          break;
+      }
+    }
   }
 }

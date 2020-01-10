@@ -34,6 +34,7 @@ using MPTagThat.Core.Events;
 using Prism.Events;
 using Prism.Mvvm;
 using Prism.Regions;
+// ReSharper disable StringLiteralTypo
 
 #endregion
 

@@ -485,4 +485,97 @@
     <value>Searching for Lyrics ...  {0} Sites  x {1} Songs  = {2} Songs to Search. Found: {3} Not Found: {4} Remaining: {5}</value>
     <comment>The Lyrics Search Status Message</comment>
   </data>
+  <data name="tagAndRename_Album" xml:space="preserve">
+    <value>Album</value>
+  </data>
+  <data name="tagAndRename_AlbumArtist" xml:space="preserve">
+    <value>Album Artist</value>
+  </data>
+  <data name="tagAndRename_Artist" xml:space="preserve">
+    <value>Artist</value>
+  </data>
+  <data name="tagAndRename_BitRate" xml:space="preserve">
+    <value>Bitrate</value>
+  </data>
+  <data name="tagAndRename_BPM" xml:space="preserve">
+    <value>BPM</value>
+  </data>
+  <data name="tagAndRename_Comment" xml:space="preserve">
+    <value>Comment</value>
+  </data>
+  <data name="tagAndRename_Composer" xml:space="preserve">
+    <value>Composer</value>
+  </data>
+  <data name="tagAndRename_Conductor" xml:space="preserve">
+    <value>Conductor</value>
+  </data>
+  <data name="tagAndRename_Disc" xml:space="preserve">
+    <value>Disc Number</value>
+  </data>
+  <data name="tagAndRename_DiscTotal" xml:space="preserve">
+    <value>Total # of discs</value>
+  </data>
+  <data name="tagAndRename_Enumerate" xml:space="preserve">
+    <value>Enumerates Files</value>
+  </data>
+  <data name="tagAndRename_FileExists" xml:space="preserve">
+    <value>File already exists. Common Tags used?</value>
+  </data>
+  <data name="tagAndRename_Filename" xml:space="preserve">
+    <value>Current Filename</value>
+  </data>
+  <data name="tagAndRename_FirstNofAlbumArtist" xml:space="preserve">
+    <value>First "n" characters of Album Artist</value>
+  </data>
+  <data name="tagAndRename_FirstNofArtist" xml:space="preserve">
+    <value>First "n" characters of Artist</value>
+  </data>
+  <data name="tagAndRename_Folder" xml:space="preserve">
+    <value>\ = Folder: to specify that parameters in front of it to be taken from the folder name</value>
+  </data>
+  <data name="tagAndRename_Genre" xml:space="preserve">
+    <value>Genre</value>
+  </data>
+  <data name="tagAndRename_Group" xml:space="preserve">
+    <value>Content Group</value>
+  </data>
+  <data name="tagAndRename_HeadingRename" xml:space="preserve">
+    <value>Rename File</value>
+  </data>
+  <data name="tagAndRename_ModifiedBy" xml:space="preserve">
+    <value>Modified / remixed by</value>
+  </data>
+  <data name="tagAndRename_NameTooLong" xml:space="preserve">
+    <value>Filename too long. Please change it.</value>
+  </data>
+  <data name="tagAndRename_NumberDigits" xml:space="preserve">
+    <value>Number of Digits</value>
+  </data>
+  <data name="tagAndRename_Original" xml:space="preserve">
+    <value>Original:</value>
+  </data>
+  <data name="tagAndRename_Rename" xml:space="preserve">
+    <value>Can't Rename File {0}: {1}</value>
+  </data>
+  <data name="tagAndRename_StartAt" xml:space="preserve">
+    <value>Start at</value>
+  </data>
+  <data name="tagAndRename_SubTitle" xml:space="preserve">
+    <value>SubTitle</value>
+  </data>
+  <data name="tagAndRename_Title" xml:space="preserve">
+    <value>Title</value>
+  </data>
+  <data name="tagAndRename_Track" xml:space="preserve">
+    <value>Track Number</value>
+  </data>
+  <data name="tagAndRename_TrackTotal" xml:space="preserve">
+    <value>Total # of tracks</value>
+  </data>
+  <data name="tagAndRename_Unused" xml:space="preserve">
+    <value>Unused</value>
+  </data>
+  <data name="tagAndRename_Year" xml:space="preserve">
+    <value>Year</value>
+  </data>
 </root>
