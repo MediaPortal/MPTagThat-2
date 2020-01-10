@@ -404,7 +404,8 @@ namespace MPTagThat.Dialogs.ViewModels
         foreach (var parameter in part.Parameters)
         {
           column = new GridTextColumn();
-          column.HeaderText = Util.ParameterToLabel(parameter);
+          column.HeaderText = LocalizeDictionary.Instance.GetLocalizedObject("MPTagThat", "Strings", $"songHeader_{Util.ParameterToLabel(parameter)}",
+            LocalizeDictionary.Instance.Culture).ToString();
           column.MappingName = Util.ParameterToLabel(parameter);
           DataGridColumns.Add(column);
         }

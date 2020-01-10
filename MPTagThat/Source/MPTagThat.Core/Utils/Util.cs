@@ -29,6 +29,7 @@ using MPTagThat.Core.Services.Settings;
 using MPTagThat.Core.Services.Settings.Setting;
 using Syncfusion.UI.Xaml.Grid;
 using TagLib;
+using WPFLocalizeExtension.Engine;
 using File = TagLib.File;
 using Tag = TagLib.Id3v2.Tag;
 
@@ -324,7 +325,8 @@ namespace MPTagThat.Core.Utils
           break;
       }
 
-      column.HeaderText = setting.Title;
+      column.HeaderText = LocalizeDictionary.Instance.GetLocalizedObject("MPTagThat", "Strings", $"songHeader_{setting.Name}",
+        LocalizeDictionary.Instance.Culture).ToString();
       column.IsReadOnly = setting.Readonly;
       column.IsHidden = !setting.Display;
       column.Width = setting.Width;
@@ -735,7 +737,7 @@ namespace MPTagThat.Core.Utils
           break;
 
         case "%track%":
-          label = "TrackNumber";
+          label = "Track";
           break;
 
         case "%tracktotal%":
@@ -743,7 +745,7 @@ namespace MPTagThat.Core.Utils
           break;
 
         case "%disc%":
-          label = "DiscNumber";
+          label = "Disc";
           break;
 
         case "%disctotal%":

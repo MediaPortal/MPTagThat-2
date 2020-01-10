@@ -718,6 +718,582 @@ namespace MPTagThat.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Album.
+        /// </summary>
+        public static string songHeader_Album {
+            get {
+                return ResourceManager.GetString("songHeader_Album", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Album Artist.
+        /// </summary>
+        public static string songHeader_AlbumArtist {
+            get {
+                return ResourceManager.GetString("songHeader_AlbumArtist", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Album Sortname.
+        /// </summary>
+        public static string songHeader_AlbumSortName {
+            get {
+                return ResourceManager.GetString("songHeader_AlbumSortName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Artist.
+        /// </summary>
+        public static string songHeader_Artist {
+            get {
+                return ResourceManager.GetString("songHeader_Artist", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Artist Sortname.
+        /// </summary>
+        public static string songHeader_ArtistSortName {
+            get {
+                return ResourceManager.GetString("songHeader_ArtistSortName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bitrate.
+        /// </summary>
+        public static string songHeader_BitRate {
+            get {
+                return ResourceManager.GetString("songHeader_BitRate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to BPM.
+        /// </summary>
+        public static string songHeader_BPM {
+            get {
+                return ResourceManager.GetString("songHeader_BPM", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Channels.
+        /// </summary>
+        public static string songHeader_Channels {
+            get {
+                return ResourceManager.GetString("songHeader_Channels", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Comment.
+        /// </summary>
+        public static string songHeader_Comment {
+            get {
+                return ResourceManager.GetString("songHeader_Comment", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Commercial Information.
+        /// </summary>
+        public static string songHeader_CommercialInformation {
+            get {
+                return ResourceManager.GetString("songHeader_CommercialInformation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Composer.
+        /// </summary>
+        public static string songHeader_Composer {
+            get {
+                return ResourceManager.GetString("songHeader_Composer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Conductor.
+        /// </summary>
+        public static string songHeader_Conductor {
+            get {
+                return ResourceManager.GetString("songHeader_Conductor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Copyright.
+        /// </summary>
+        public static string songHeader_Copyright {
+            get {
+                return ResourceManager.GetString("songHeader_Copyright", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Copyright Information.
+        /// </summary>
+        public static string songHeader_CopyrightInformation {
+            get {
+                return ResourceManager.GetString("songHeader_CopyrightInformation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Created.
+        /// </summary>
+        public static string songHeader_CreationTime {
+            get {
+                return ResourceManager.GetString("songHeader_CreationTime", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Disc #.
+        /// </summary>
+        public static string songHeader_Disc {
+            get {
+                return ResourceManager.GetString("songHeader_Disc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to # Discs.
+        /// </summary>
+        public static string songHeader_DiscCount {
+            get {
+                return ResourceManager.GetString("songHeader_DiscCount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Duration.
+        /// </summary>
+        public static string songHeader_Duration {
+            get {
+                return ResourceManager.GetString("songHeader_Duration", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Encoded by.
+        /// </summary>
+        public static string songHeader_EncodedBy {
+            get {
+                return ResourceManager.GetString("songHeader_EncodedBy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enumerate.
+        /// </summary>
+        public static string songHeader_Enumerate {
+            get {
+                return ResourceManager.GetString("songHeader_Enumerate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to File Name.
+        /// </summary>
+        public static string songHeader_FileName {
+            get {
+                return ResourceManager.GetString("songHeader_FileName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Path.
+        /// </summary>
+        public static string songHeader_FilePath {
+            get {
+                return ResourceManager.GetString("songHeader_FilePath", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Size (kb).
+        /// </summary>
+        public static string songHeader_FileSize {
+            get {
+                return ResourceManager.GetString("songHeader_FileSize", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Genre.
+        /// </summary>
+        public static string songHeader_Genre {
+            get {
+                return ResourceManager.GetString("songHeader_Genre", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Grouping.
+        /// </summary>
+        public static string songHeader_Grouping {
+            get {
+                return ResourceManager.GetString("songHeader_Grouping", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Interpreted by.
+        /// </summary>
+        public static string songHeader_Interpreter {
+            get {
+                return ResourceManager.GetString("songHeader_Interpreter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Changed.
+        /// </summary>
+        public static string songHeader_LastWriteTime {
+            get {
+                return ResourceManager.GetString("songHeader_LastWriteTime", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Lyrics.
+        /// </summary>
+        public static string songHeader_Lyrics {
+            get {
+                return ResourceManager.GetString("songHeader_Lyrics", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Media Type.
+        /// </summary>
+        public static string songHeader_MediaType {
+            get {
+                return ResourceManager.GetString("songHeader_MediaType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to New File Name.
+        /// </summary>
+        public static string songHeader_NewFileName {
+            get {
+                return ResourceManager.GetString("songHeader_NewFileName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Num. Discs.
+        /// </summary>
+        public static string songHeader_NumDisc {
+            get {
+                return ResourceManager.GetString("songHeader_NumDisc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to # Pics.
+        /// </summary>
+        public static string songHeader_NumPics {
+            get {
+                return ResourceManager.GetString("songHeader_NumPics", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Num. Tracks.
+        /// </summary>
+        public static string songHeader_NumTracks {
+            get {
+                return ResourceManager.GetString("songHeader_NumTracks", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Off. Artist Information.
+        /// </summary>
+        public static string songHeader_OfficialArtistInformation {
+            get {
+                return ResourceManager.GetString("songHeader_OfficialArtistInformation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Off. Audiofile Information.
+        /// </summary>
+        public static string songHeader_OfficialAudioFileInformation {
+            get {
+                return ResourceManager.GetString("songHeader_OfficialAudioFileInformation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Off. Audiosource Information.
+        /// </summary>
+        public static string songHeader_OfficialAudioSourceInformation {
+            get {
+                return ResourceManager.GetString("songHeader_OfficialAudioSourceInformation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Off. Internet Radio Information.
+        /// </summary>
+        public static string songHeader_OfficialInternetRadioInformation {
+            get {
+                return ResourceManager.GetString("songHeader_OfficialInternetRadioInformation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Off. Payment Information.
+        /// </summary>
+        public static string songHeader_OfficialPaymentInformation {
+            get {
+                return ResourceManager.GetString("songHeader_OfficialPaymentInformation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Off. Publisher Information.
+        /// </summary>
+        public static string songHeader_OfficialPublisherInformation {
+            get {
+                return ResourceManager.GetString("songHeader_OfficialPublisherInformation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Original Album.
+        /// </summary>
+        public static string songHeader_OriginalAlbum {
+            get {
+                return ResourceManager.GetString("songHeader_OriginalAlbum", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Original Artist.
+        /// </summary>
+        public static string songHeader_OriginalArtist {
+            get {
+                return ResourceManager.GetString("songHeader_OriginalArtist", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Original Filename.
+        /// </summary>
+        public static string songHeader_OriginalFileName {
+            get {
+                return ResourceManager.GetString("songHeader_OriginalFileName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Original Lyricswriter.
+        /// </summary>
+        public static string songHeader_OriginalLyricsWriter {
+            get {
+                return ResourceManager.GetString("songHeader_OriginalLyricsWriter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Original Owner.
+        /// </summary>
+        public static string songHeader_OriginalOwner {
+            get {
+                return ResourceManager.GetString("songHeader_OriginalOwner", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Original Release.
+        /// </summary>
+        public static string songHeader_OriginalRelease {
+            get {
+                return ResourceManager.GetString("songHeader_OriginalRelease", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Picture.
+        /// </summary>
+        public static string songHeader_Picture {
+            get {
+                return ResourceManager.GetString("songHeader_Picture", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Publisher.
+        /// </summary>
+        public static string songHeader_Publisher {
+            get {
+                return ResourceManager.GetString("songHeader_Publisher", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Rating.
+        /// </summary>
+        public static string songHeader_Rating {
+            get {
+                return ResourceManager.GetString("songHeader_Rating", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Album Gain.
+        /// </summary>
+        public static string songHeader_ReplayGainAlbum {
+            get {
+                return ResourceManager.GetString("songHeader_ReplayGainAlbum", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Album Peak.
+        /// </summary>
+        public static string songHeader_ReplayGainAlbumPeak {
+            get {
+                return ResourceManager.GetString("songHeader_ReplayGainAlbumPeak", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Track Gain.
+        /// </summary>
+        public static string songHeader_ReplayGainTrack {
+            get {
+                return ResourceManager.GetString("songHeader_ReplayGainTrack", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Track Peak.
+        /// </summary>
+        public static string songHeader_ReplayGainTrackPeak {
+            get {
+                return ResourceManager.GetString("songHeader_ReplayGainTrackPeak", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Samplerate.
+        /// </summary>
+        public static string songHeader_SampleRate {
+            get {
+                return ResourceManager.GetString("songHeader_SampleRate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Status.
+        /// </summary>
+        public static string songHeader_Status {
+            get {
+                return ResourceManager.GetString("songHeader_Status", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Subtitle.
+        /// </summary>
+        public static string songHeader_SubTitle {
+            get {
+                return ResourceManager.GetString("songHeader_SubTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Type.
+        /// </summary>
+        public static string songHeader_TagType {
+            get {
+                return ResourceManager.GetString("songHeader_TagType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Textwriter.
+        /// </summary>
+        public static string songHeader_TextWriter {
+            get {
+                return ResourceManager.GetString("songHeader_TextWriter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Title.
+        /// </summary>
+        public static string songHeader_Title {
+            get {
+                return ResourceManager.GetString("songHeader_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Title Sortname.
+        /// </summary>
+        public static string songHeader_TitleSortName {
+            get {
+                return ResourceManager.GetString("songHeader_TitleSortName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Track.
+        /// </summary>
+        public static string songHeader_Track {
+            get {
+                return ResourceManager.GetString("songHeader_Track", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to # Tracks.
+        /// </summary>
+        public static string songHeader_TrackCount {
+            get {
+                return ResourceManager.GetString("songHeader_TrackCount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unused.
+        /// </summary>
+        public static string songHeader_Unused {
+            get {
+                return ResourceManager.GetString("songHeader_Unused", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Codec.
+        /// </summary>
+        public static string songHeader_Version {
+            get {
+                return ResourceManager.GetString("songHeader_Version", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Year.
+        /// </summary>
+        public static string songHeader_Year {
+            get {
+                return ResourceManager.GetString("songHeader_Year", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Tagfilter: Active.
         /// </summary>
         public static string statusBar_FilterActive {

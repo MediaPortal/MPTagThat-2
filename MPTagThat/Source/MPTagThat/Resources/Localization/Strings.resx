@@ -578,4 +578,196 @@
   <data name="tagAndRename_Year" xml:space="preserve">
     <value>Year</value>
   </data>
+  <data name="songHeader_FileName" xml:space="preserve">
+    <value>File Name</value>
+  </data>
+  <data name="songHeader_FilePath" xml:space="preserve">
+    <value>Path</value>
+  </data>
+  <data name="songHeader_NewFileName" xml:space="preserve">
+    <value>New File Name</value>
+  </data>
+  <data name="songHeader_Status" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="songHeader_Track" xml:space="preserve">
+    <value>Track</value>
+  </data>
+  <data name="songHeader_NumTracks" xml:space="preserve">
+    <value>Num. Tracks</value>
+  </data>
+  <data name="songHeader_Title" xml:space="preserve">
+    <value>Title</value>
+  </data>
+  <data name="songHeader_Artist" xml:space="preserve">
+    <value>Artist</value>
+  </data>
+  <data name="songHeader_AlbumArtist" xml:space="preserve">
+    <value>Album Artist</value>
+  </data>
+  <data name="songHeader_Album" xml:space="preserve">
+    <value>Album</value>
+  </data>
+  <data name="songHeader_Year" xml:space="preserve">
+    <value>Year</value>
+  </data>
+  <data name="songHeader_Genre" xml:space="preserve">
+    <value>Genre</value>
+  </data>
+  <data name="songHeader_CreationTime" xml:space="preserve">
+    <value>Created</value>
+  </data>
+  <data name="songHeader_LastWriteTime" xml:space="preserve">
+    <value>Changed</value>
+  </data>
+  <data name="songHeader_TagType" xml:space="preserve">
+    <value>Type</value>
+  </data>
+  <data name="songHeader_Disc" xml:space="preserve">
+    <value>Disc #</value>
+  </data>
+  <data name="songHeader_NumDisc" xml:space="preserve">
+    <value>Num. Discs</value>
+  </data>
+  <data name="songHeader_BPM" xml:space="preserve">
+    <value>BPM</value>
+  </data>
+  <data name="songHeader_Rating" xml:space="preserve">
+    <value>Rating</value>
+  </data>
+  <data name="songHeader_ReplayGainTrack" xml:space="preserve">
+    <value>Track Gain</value>
+  </data>
+  <data name="songHeader_ReplayGainTrackPeak" xml:space="preserve">
+    <value>Track Peak</value>
+  </data>
+  <data name="songHeader_ReplayGainAlbum" xml:space="preserve">
+    <value>Album Gain</value>
+  </data>
+  <data name="songHeader_ReplayGainAlbumPeak" xml:space="preserve">
+    <value>Album Peak</value>
+  </data>
+  <data name="songHeader_Comment" xml:space="preserve">
+    <value>Comment</value>
+  </data>
+  <data name="songHeader_Composer" xml:space="preserve">
+    <value>Composer</value>
+  </data>
+  <data name="songHeader_Conductor" xml:space="preserve">
+    <value>Conductor</value>
+  </data>
+  <data name="songHeader_NumPics" xml:space="preserve">
+    <value># Pics</value>
+  </data>
+  <data name="songHeader_Picture" xml:space="preserve">
+    <value>Picture</value>
+  </data>
+  <data name="songHeader_ArtistSortName" xml:space="preserve">
+    <value>Artist Sortname</value>
+  </data>
+  <data name="songHeader_AlbumSortName" xml:space="preserve">
+    <value>Album Sortname</value>
+  </data>
+  <data name="songHeader_CommercialInformation" xml:space="preserve">
+    <value>Commercial Information</value>
+  </data>
+  <data name="songHeader_Copyright" xml:space="preserve">
+    <value>Copyright</value>
+  </data>
+  <data name="songHeader_CopyrightInformation" xml:space="preserve">
+    <value>Copyright Information</value>
+  </data>
+  <data name="songHeader_EncodedBy" xml:space="preserve">
+    <value>Encoded by</value>
+  </data>
+  <data name="songHeader_Interpreter" xml:space="preserve">
+    <value>Interpreted by</value>
+  </data>
+  <data name="songHeader_Grouping" xml:space="preserve">
+    <value>Grouping</value>
+  </data>
+  <data name="songHeader_Lyrics" xml:space="preserve">
+    <value>Lyrics</value>
+  </data>
+  <data name="songHeader_MediaType" xml:space="preserve">
+    <value>Media Type</value>
+  </data>
+  <data name="songHeader_OfficialAudioFileInformation" xml:space="preserve">
+    <value>Off. Audiofile Information</value>
+  </data>
+  <data name="songHeader_OfficialArtistInformation" xml:space="preserve">
+    <value>Off. Artist Information</value>
+  </data>
+  <data name="songHeader_OfficialAudioSourceInformation" xml:space="preserve">
+    <value>Off. Audiosource Information</value>
+  </data>
+  <data name="songHeader_OfficialInternetRadioInformation" xml:space="preserve">
+    <value>Off. Internet Radio Information</value>
+  </data>
+  <data name="songHeader_OfficialPaymentInformation" xml:space="preserve">
+    <value>Off. Payment Information</value>
+  </data>
+  <data name="songHeader_OfficialPublisherInformation" xml:space="preserve">
+    <value>Off. Publisher Information</value>
+  </data>
+  <data name="songHeader_OriginalAlbum" xml:space="preserve">
+    <value>Original Album</value>
+  </data>
+  <data name="songHeader_OriginalFileName" xml:space="preserve">
+    <value>Original Filename</value>
+  </data>
+  <data name="songHeader_OriginalLyricsWriter" xml:space="preserve">
+    <value>Original Lyricswriter</value>
+  </data>
+  <data name="songHeader_OriginalArtist" xml:space="preserve">
+    <value>Original Artist</value>
+  </data>
+  <data name="songHeader_OriginalOwner" xml:space="preserve">
+    <value>Original Owner</value>
+  </data>
+  <data name="songHeader_OriginalRelease" xml:space="preserve">
+    <value>Original Release</value>
+  </data>
+  <data name="songHeader_Publisher" xml:space="preserve">
+    <value>Publisher</value>
+  </data>
+  <data name="songHeader_SubTitle" xml:space="preserve">
+    <value>Subtitle</value>
+  </data>
+  <data name="songHeader_TextWriter" xml:space="preserve">
+    <value>Textwriter</value>
+  </data>
+  <data name="songHeader_TitleSortName" xml:space="preserve">
+    <value>Title Sortname</value>
+  </data>
+  <data name="songHeader_Duration" xml:space="preserve">
+    <value>Duration</value>
+  </data>
+  <data name="songHeader_FileSize" xml:space="preserve">
+    <value>Size (kb)</value>
+  </data>
+  <data name="songHeader_BitRate" xml:space="preserve">
+    <value>Bitrate</value>
+  </data>
+  <data name="songHeader_SampleRate" xml:space="preserve">
+    <value>Samplerate</value>
+  </data>
+  <data name="songHeader_Channels" xml:space="preserve">
+    <value>Channels</value>
+  </data>
+  <data name="songHeader_Version" xml:space="preserve">
+    <value>Codec</value>
+  </data>
+  <data name="songHeader_DiscCount" xml:space="preserve">
+    <value># Discs</value>
+  </data>
+  <data name="songHeader_Enumerate" xml:space="preserve">
+    <value>Enumerate</value>
+  </data>
+  <data name="songHeader_TrackCount" xml:space="preserve">
+    <value># Tracks</value>
+  </data>
+  <data name="songHeader_Unused" xml:space="preserve">
+    <value>Unused</value>
+  </data>
 </root>
