@@ -304,9 +304,6 @@
     <Compile Include="Lyrics\LyricUtil.cs" />
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Scripting.evaluator.cs" />
-    <Compile Include="Scripting.Extensions.cs" />
-    <Compile Include="Scripting.native.cs" />
     <Compile Include="Services\Logging\ILogger.cs" />
     <Compile Include="Services\Logging\NLogLogger.cs" />
     <Compile Include="Services\ScriptManager\IScript.cs" />
