@@ -770,4 +770,7 @@
   <data name="songHeader_Unused" xml:space="preserve">
     <value>Unused</value>
   </data>
+  <data name="message_Script_Compile_Failed" xml:space="preserve">
+    <value>The compile of the script failed.\n\nPlease look for the error in the log and correct it.</value>
+  </data>
 </root>

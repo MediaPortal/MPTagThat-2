@@ -1,5 +1,5 @@
-#region Copyright (C) 2017 Team MediaPortal
-// Copyright (C) 2017 Team MediaPortal
+﻿#region Copyright (C) 2020 Team MediaPortal
+// Copyright (C) 2020 Team MediaPortal
 // http://www.team-mediaportal.com
 // 
 // MPTagThat is free software: you can redistribute it and/or modify
@@ -15,33 +15,20 @@
 // You should have received a copy of the GNU General Public License
 // along with MPTagThat. If not, see <http://www.gnu.org/licenses/>.
 #endregion
-namespace MPTagThat.Core.Common
+
+#region
+
+using System.Collections;
+using System.Reflection;
+
+#endregion
+
+namespace MPTagThat.Core.Services.ScriptManager
 {
-  public class Item
+  public interface IScriptManager
   {
-    public string Name { get; set; }
-    public string ToolTip { get; set; }
-    public object Value { get; set; }
-
-    public Item(string name, object value)
-    {
-      Name = name;
-      Value = value;
-      ToolTip = "";
-    }
-
-
-    public Item(string name, object value, string tooltip)
-    {
-      Name = name;
-      Value = value;
-      ToolTip = tooltip;
-    }
-
-    public override string ToString()
-    {
-      // Generates the text shown in the combo box
-      return (string)Value;
-    }
+    Assembly Load(string scriptFile);
+    ArrayList GetScripts();
+    ArrayList GetOrganiseScripts();
   }
 }

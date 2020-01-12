@@ -180,8 +180,8 @@ namespace MPTagThat.ViewModels
       EventSystem.Subscribe<ProgressBarEvent>(UpdateProgressBar);
       SfSkinManager.ApplyStylesOnApplication = true;
 
-      _windowCloseCommand = new BaseCommand(WindowClose);
-      _keyPressedCommand = new BaseCommand(Keypressed);
+      WindowCloseCommand = new BaseCommand(WindowClose);
+      KeyPressedCommand = new BaseCommand(Keypressed);
 
       _options = (ServiceLocator.Current.GetInstance(typeof(ISettingsManager)) as ISettingsManager).GetOptions;
 
@@ -200,8 +200,7 @@ namespace MPTagThat.ViewModels
     /// <summary>
     /// Handle the Close of the Window
     /// </summary>
-    private ICommand _windowCloseCommand;
-    public ICommand WindowCloseCommand => _windowCloseCommand;
+    public ICommand WindowCloseCommand { get; }
 
     private void WindowClose(object param)
     {
@@ -211,8 +210,8 @@ namespace MPTagThat.ViewModels
       _options.SaveAllSettings();
     }
 
-    private ICommand _keyPressedCommand;
-    public ICommand KeyPressedCommand => _keyPressedCommand;
+    public ICommand KeyPressedCommand { get; }
+
     private void Keypressed(object param)
     {
       // Send out the Event with the action

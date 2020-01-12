@@ -7,6 +7,7 @@ using System.Threading;
 using System.Windows;
 using System.Xml;
 using MPTagThat.Core.Services.Logging;
+using MPTagThat.Core.Services.ScriptManager;
 using MPTagThat.Core.Services.Settings;
 using MPTagThat.Core.Services.Settings.Setting;
 using Prism.Ioc;
@@ -56,14 +57,23 @@ namespace MPTagThat
     {
       var logger = new NLogLogger("MPTagThat.log", LogLevel.Debug, 0);
       containerRegistry.RegisterInstance<ILogger>(logger);
+
+      logger.GetLogger.Info("Registering Services");
+      logger.GetLogger.Debug("Registering Settings Manager");
       var settings = new SettingsManager();
       containerRegistry.RegisterInstance<ISettingsManager>(settings);
+      
+      // Set the Service Locator, to allow other service using the Logger
       CommonServiceLocator.ServiceLocator.SetLocatorProvider(() => new UnityServiceLocatorAdapter(Container.GetContainer()));
 
       // Must be the last thing here, since we are referring to the service 
       settings.StartupSettings = _startupSettings;
       settings.GetOptions.InitOptions();
 
+      // All other services, relying on Settings to come here
+      logger.GetLogger.Debug("Registering Scripting Manager");
+      var scripting = new ScriptManager();
+      containerRegistry.RegisterInstance<IScriptManager>(scripting);
     }
 
     /// <summary>
@@ -212,7 +222,7 @@ namespace MPTagThat
       Environment.SetEnvironmentVariable("Path", newPath);
     }
 
-        /// <summary>
+    /// <summary>
     /// Init Service Thread
     /// </summary>
     private static void DoInitService(IUnityContainer container)

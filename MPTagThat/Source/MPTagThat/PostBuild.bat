@@ -7,7 +7,7 @@ echo off
 set TARGETPATH="%1%..\Bin"
 
 REM Copy All new files from base
-xcopy %1\MPTagThat.Base\*.* %TARGETPATH% /E /R /Y /D
+xcopy %1\MPTagThat.Base\bin\*.* %TARGETPATH%\Bin\ /E /R /Y /D
 
 
 REM Copy Main Program
@@ -31,9 +31,13 @@ xcopy /y %1\MPTagThat.Core\bin\%2\NewtonSoft.Json.dll %TARGETPATH%\Bin\
 xcopy /y %1\MPTagThat.Core\bin\%2\FreeImageNET.dll %TARGETPATH%\Bin\
 xcopy /y %1\MPTagThat.Core\bin\%2\x64\FreeImage.dll %TARGETPATH%\Bin\x64\
 xcopy /y %1\MPTagThat.Core\bin\%2\CommonServiceLocator.dll %TARGETPATH%\Bin\
+xcopy /y %1\MPTagThat.Core\bin\%2\CSScriptLibrary.dll %TARGETPATH%\Bin\
 xcopy /y %1\MPTagThat.Core\bin\%2\Hqub.MusicBrainz.API.dll %TARGETPATH%\Bin\
 xcopy /y %1\MPTagThat.Core\bin\%2\DiscogsClient.dll %TARGETPATH%\Bin\
 xcopy /y %1\MPTagThat.Core\bin\%2\IF.Lastfm.Core.dll %TARGETPATH%\Bin\
+xcopy /y %1\MPTagThat.Core\bin\%2\Microsoft.* %TARGETPATH%\Bin\
+xcopy /y %1\MPTagThat.Core\bin\%2\Mono.CSharp.dll %TARGETPATH%\Bin\
+xcopy /y %1\MPTagThat.Core\bin\%2\netstandard.dll %TARGETPATH%\Bin\
 xcopy /y %1\MPTagThat.Core\bin\%2\RateLimiter.dll %TARGETPATH%\Bin\
 xcopy /y %1\MPTagThat.Core\bin\%2\RestSharp.dll %TARGETPATH%\Bin\
 xcopy /y %1\MPTagThat.Core\bin\%2\RestSharpHelper.dll %TARGETPATH%\Bin\

@@ -24,6 +24,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Input;
@@ -44,9 +45,13 @@ using Syncfusion.UI.Xaml.Grid;
 using WPFLocalizeExtension.Engine;
 using System.Windows.Threading;
 using System.Threading;
+using System.Windows;
+using MPTagThat.Core.Services.ScriptManager;
 using MPTagThat.Dialogs.ViewModels;
 using Action = MPTagThat.Core.Common.Action;
 using Prism.Services.Dialogs;
+using Application = System.Windows.Forms.Application;
+using MessageBox = System.Windows.MessageBox;
 
 #endregion
 
@@ -194,6 +199,74 @@ namespace MPTagThat.SongGrid.ViewModels
 
     #endregion
 
+    #region Script Handling
+
+    /// <summary>
+    ///   Executes a script on all selected rows
+    /// </summary>
+    /// <param name = "scriptFile"></param>
+    public void ExecuteScript(string scriptFile)
+    {
+      log.Trace(">>>");
+      Assembly assembly = (ServiceLocator.Current.GetInstance(typeof(IScriptManager)) as IScriptManager)?.Load(scriptFile);
+
+      var count = 0;
+      var msg = new ProgressBarEvent { CurrentProgress = 0, MinValue = 0, MaxValue = SelectedItems.Count };
+      EventSystem.Publish(msg);
+
+      try
+      {
+        if (assembly != null)
+        {
+          log.Debug($"Invoking Script: {scriptFile}");
+          
+          IsBusy = true;
+          var songs = SelectedItems.Cast<SongData>().ToList();
+          IScript script = (IScript)assembly.CreateInstance("Script");
+
+          foreach (var song in songs)
+          {
+            count++;
+            try
+            {
+              Application.DoEvents();
+              msg.CurrentFile = song.FileName;
+              msg.CurrentProgress = count;
+              EventSystem.Publish(msg);
+
+              song.Status = -1;
+              song.StatusMsg = "";
+              script?.Invoke(song);
+            }
+            catch (Exception ex)
+            {
+              song.Status = 2;
+              song.StatusMsg = ex.Message;
+            }
+
+          }
+        }
+      }
+      catch (Exception ex)
+      {
+        log.Error("Script Execution failed: {0}", ex.Message);
+        MessageBox.Show(LocalizeDictionary.Instance.GetLocalizedObject("MPTagThat", "Strings", "message_Script_Compile_Failed",LocalizeDictionary.Instance.Culture).ToString(),
+          LocalizeDictionary.Instance.GetLocalizedObject("MPTagThat", "Strings", "message_Error_Title",LocalizeDictionary.Instance.Culture).ToString(), MessageBoxButton.OK);
+      }
+
+      msg.MinValue = 0;
+      msg.MaxValue = 0;
+      msg.CurrentProgress = 0;
+      msg.CurrentFile = "";
+      EventSystem.Publish(msg);
+
+      IsBusy = false;
+
+      log.Trace("<<<");
+    }
+
+    #endregion
+
     #region Folder Scanning
 
     private async void FolderScan()
@@ -286,12 +359,8 @@ namespace MPTagThat.SongGrid.ViewModels
               catch (OutOfMemoryException)
               {
                 GC.Collect();
-                MessageBox.Show(LocalizeDictionary.Instance.GetLocalizedObject("MPTagThat", "Strings",
-                    "message_OutOfMemory",
-                    LocalizeDictionary.Instance.Culture).ToString(),
-                  LocalizeDictionary.Instance.GetLocalizedObject("MPTagThat", "Strings", "message_ErrorTitle",
-                    LocalizeDictionary.Instance.Culture).ToString(),
-                  MessageBoxButtons.OK);
+                MessageBox.Show(LocalizeDictionary.Instance.GetLocalizedObject("MPTagThat", "Strings", "message_OutOfMemory", LocalizeDictionary.Instance.Culture).ToString(),
+                  LocalizeDictionary.Instance.GetLocalizedObject("MPTagThat", "Strings", "message_ErrorTitle", LocalizeDictionary.Instance.Culture).ToString(), MessageBoxButton.OK);
                 log.Error("Folderscan: Running out of memory. Scanning aborted.");
               }
 
@@ -444,7 +513,7 @@ namespace MPTagThat.SongGrid.ViewModels
       var msg = new ProgressBarEvent { CurrentProgress = 0, MinValue = 0, MaxValue = SelectedItems.Count };
       EventSystem.Publish(msg);
 
-      var songs = (SelectedItems as ObservableCollection<object>).Cast<SongData>().ToList();
+      var songs = SelectedItems.Cast<SongData>().ToList();
 
       IsBusy = true;
 
@@ -499,7 +568,7 @@ namespace MPTagThat.SongGrid.ViewModels
         catch (Exception ex)
         {
           song.Status = 2;
-          //AddErrorMessage(row, ex.Message);
+          song.StatusMsg = ex.Message;
         }
       }
 
@@ -551,6 +620,12 @@ namespace MPTagThat.SongGrid.ViewModels
           if (SelectedItems.Count == 0)
           {
             Songs.ToList().ForEach(song => SelectedItems.Add(song));
+          }
+
+          if ((Action.ActionType)msg.MessageData["command"] == Action.ActionType.ACTION_SCRIPTEXECUTE)
+          {
+            ExecuteScript(_options.MainSettings.ActiveScript);
+            return;
           }
 
           var songs = SelectedItems.Cast<SongData>().ToList();

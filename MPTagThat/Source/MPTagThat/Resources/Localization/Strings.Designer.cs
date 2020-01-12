@@ -259,6 +259,15 @@ namespace MPTagThat.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The compile of the script failed.\n\nPlease look for the error in the log and correct it..
+        /// </summary>
+        public static string message_Script_Compile_Failed {
+            get {
+                return ResourceManager.GetString("message_Script_Compile_Failed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Unsupported Format.
         /// </summary>
         public static string message_UnsupportedFormat {

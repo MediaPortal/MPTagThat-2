@@ -48,19 +48,35 @@
             <syncfusion:DropDownMenuItem x:Name="ButtonDeleteV2Tags" Header="{lex:Loc ribbon_DeleteID3V2Tags}" />
           </syncfusion:SplitButton>
           <syncfusion:RibbonButton x:Name="ButtonRemoveComments" SizeForm="Large" Label="{lex:Loc ribbon_RemoveComments}" LargeIcon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_RemoveComments_32x.png" SmallIcon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_RemoveComments_16x.png" />
+          
           <syncfusion:RibbonSeparator/>
-          <syncfusion:ButtonPanel SeparatorVisibility="Hidden" Height="21">
-            <syncfusion:RibbonComboBox x:Name="RibbonComboBoxScript" MaxDropDownHeight="150" Width="100" Height="18"  />
-            <syncfusion:RibbonButton x:Name="ButtonExecuteScripts" SizeForm="Small" Label="" SmallIcon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_ScriptExecute_16x.png" RenderTransformOrigin="4.321,0.658" Height="18" />
+          
+          <!-- Scripts -->
+          <syncfusion:ButtonPanel SeparatorVisibility="Hidden" Height="22" Margin="0,0,0,2" >
+            <syncfusion:RibbonComboBox x:Name="RibbonComboBoxScript" MaxDropDownHeight="150" Width="100" Height="16" 
+                                       ItemsSource="{Binding Scripts}" 
+                                       SelectedIndex="{Binding ScriptsSelectedIndex, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" >
+              <ComboBox.ItemTemplate>
+                <DataTemplate>
+                  <TextBlock Text="{Binding Value}" ToolTip="{Binding ToolTip}" >
+                  </TextBlock>
+                </DataTemplate>
+              </ComboBox.ItemTemplate>
+            </syncfusion:RibbonComboBox>
+            <syncfusion:RibbonButton x:Name="ButtonExecuteScripts" SizeForm="Small" 
+                                     Label="" SmallIcon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_ScriptExecute_32x.png" 
+                                     Height="18" 
+                                     Command="{Binding ExecuteScriptCommand}" />
           </syncfusion:ButtonPanel>
+          
           <syncfusion:ButtonPanel SeparatorVisibility="Hidden" Height="21">
-            <syncfusion:RibbonButton x:Name="ButtonAutoNumber" SizeForm="Small" Label="" SmallIcon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_AutoNumber_16x.png" />
-            <syncfusion:RibbonButton x:Name="ButtonNumberOnClick" SizeForm="Small" Label="" SmallIcon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_NumberOnClick_16x.png" />
+            <syncfusion:RibbonButton x:Name="ButtonAutoNumber" SizeForm="Small" Label="" SmallIcon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_AutoNumber_32x.png" />
+            <syncfusion:RibbonButton x:Name="ButtonNumberOnClick" SizeForm="Small" Label="" SmallIcon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_NumberOnClick_32x.png" />
             <syncfusion:IntegerTextBox x:Name="TextBoxNumberOnClick" HorizontalAlignment="Left" Height="20" VerticalAlignment="Top" Width="25" MinValue="1" MaxValue="99999" />
           </syncfusion:ButtonPanel>
           <syncfusion:ButtonPanel SeparatorVisibility="Hidden" Height="21">
-            <syncfusion:RibbonButton x:Name="ButtonGain" SizeForm="Small" Label="" SmallIcon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_Gain_16x.png" />
-            <syncfusion:RibbonButton x:Name="ButtonBpm" SizeForm="Small" Label="" SmallIcon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_Bpm_16x.png" />
+            <syncfusion:RibbonButton x:Name="ButtonGain" SizeForm="Small" Label="" SmallIcon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_Gain_32x.png" />
+            <syncfusion:RibbonButton x:Name="ButtonBpm" SizeForm="Small" Label="" SmallIcon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_Bpm_32x.png" />
           </syncfusion:ButtonPanel>
         </syncfusion:RibbonBar>
 

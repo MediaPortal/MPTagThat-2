@@ -18,24 +18,82 @@
 
 #region
 
-using System;
+using System.Collections;
+using System.Collections.ObjectModel;
 using System.Windows.Input;
+using CommonServiceLocator;
 using MPTagThat.Core;
+using MPTagThat.Core.Common;
 using MPTagThat.Core.Events;
+using MPTagThat.Core.Services.Logging;
+using MPTagThat.Core.Services.ScriptManager;
+using MPTagThat.Core.Services.Settings;
+using MPTagThat.Core.Services.Settings.Setting;
 using Prism.Commands;
+using Prism.Mvvm;
+using Prism.Regions;
+using Syncfusion.Windows.Tools.Controls;
 
 #endregion
 
 namespace MPTagThat.Ribbon.ViewModels
 {
-  public class RibbonViewModel
+  public class RibbonViewModel : BindableBase
   {
+    #region Variables
 
-    public RibbonViewModel()
+    private IRegionManager _regionManager;
+    private readonly NLogLogger log;
+    private Options _options;
+
+    #endregion
+
+    #region ctor
+
+    public RibbonViewModel(IRegionManager regionManager)
     {
-      ResetLayoutCommand = new DelegateCommand<object>(ResetLayout);
-      DeleteLayoutCommand = new DelegateCommand<object>(DeleteLayout);
+      log = (ServiceLocator.Current.GetInstance(typeof(ILogger)) as ILogger)?.GetLogger;
+      _options = (ServiceLocator.Current.GetInstance(typeof(ISettingsManager)) as ISettingsManager)?.GetOptions;
+
+      ResetLayoutCommand = new BaseCommand(ResetLayout);
+      DeleteLayoutCommand = new BaseCommand(DeleteLayout);
+      ExecuteScriptCommand = new BaseCommand(ExecuteScript);
+
+      Initialise();
     }
+
+    #endregion
+
+    #region Properties
+
+    /// <summary>
+    /// The Binding for the Scripts
+    /// </summary>
+    private ObservableCollection<Item> _scripts = new ObservableCollection<Item>();
+    public ObservableCollection<Item> Scripts
+    {
+      get => _scripts;
+      set
+      {
+        _scripts = value;
+        RaisePropertyChanged("Scripts");
+      }
+    }
+
+    private int _scriptsSelectedIndex;
+
+    public int ScriptsSelectedIndex
+    {
+      get => _scriptsSelectedIndex;
+      set
+      {
+        _options.MainSettings.ActiveScript = Scripts[value].Name;
+        SetProperty(ref _scriptsSelectedIndex, value);
+      }
+    }
+
+
+    #endregion
 
     #region Command Handling
 
@@ -44,7 +102,7 @@ namespace MPTagThat.Ribbon.ViewModels
     /// The Selected Item has Changed. 
     /// </summary>
     /// <param name="param"></param>
-    public void ResetLayout(object param)
+    private void ResetLayout(object param)
     {
       GenericEvent evt = new GenericEvent
       {
@@ -58,13 +116,65 @@ namespace MPTagThat.Ribbon.ViewModels
     /// The Selected Item has Changed. 
     /// </summary>
     /// <param name="param"></param>
-    public void DeleteLayout(object param)
+    private void DeleteLayout(object param)
     {
       GenericEvent evt = new GenericEvent
       {
         Action = "deletedockstate"
       };
       EventSystem.Publish(evt);
+    }
+
+    public ICommand ExecuteScriptCommand { get; set; }
+
+    private void ExecuteScript(object param)
+    {
+      // Send out the Event with the action
+      var evt = new GenericEvent
+      {
+        Action = "Command"
+      };
+      evt.MessageData.Add("command", Action.ActionType.ACTION_SCRIPTEXECUTE);
+      EventSystem.Publish(evt);
+    }
+
+    #endregion
+
+    #region Private Methods
+
+    /// <summary>
+    /// Initialise Values needed in the Ribbon
+    /// </summary>
+    private void Initialise()
+    {
+      log.Trace("<<<");
+
+      // Load the available Scripts
+      int i = 0;
+      Scripts.Clear();
+      ArrayList scripts = null;
+
+      if (_options.MainSettings.ActiveScript == "")
+      {
+        _options.MainSettings.ActiveScript = "SwitchArtist.sct";
+      }
+
+      scripts =  (ServiceLocator.Current.GetInstance(typeof(IScriptManager)) as IScriptManager)?.GetScripts();
+      i = 0;
+      if (scripts != null)
+        foreach (string[] item in scripts)
+        {
+          Scripts.Add(new Item(item[0], item[1], item[2]));
+          if (item[0] == _options.MainSettings.ActiveScript)
+          {
+            ScriptsSelectedIndex = i;
+          }
+
+          i++;
+        }
+
+
+      log.Trace(">>>");
     }
 
     #endregion
