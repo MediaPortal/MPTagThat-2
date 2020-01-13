@@ -24,5 +24,18 @@ namespace MPTagThat.TagEdit.Views
     {
       InitializeComponent();
     }
+
+    private void TagEditView_OnSizeChanged(object sender, SizeChangedEventArgs e)
+    {
+      if (e.NewSize.Height < 300.00 || e.NewSize.Width > 600)
+      {
+        VisualStateManager.GoToElementState(GenrePanel, "Wide", false);
+      }
+      else
+      {
+        VisualStateManager.GoToElementState(GenrePanel, "Narrow", false);
+      }
+      Console.WriteLine($"Size Changed: {e.NewSize.Width} x {e.NewSize.Height}");
+    }
   }
 }
