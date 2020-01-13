@@ -82,6 +82,7 @@
                 ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                 HorizontalAlignment="Stretch" 
                 VerticalAlignment="Stretch"
+                SelectedItem="{Binding SelectedItem}"
                 ItemsSource="{Binding Albums}">
 
         <b:Interaction.Triggers>

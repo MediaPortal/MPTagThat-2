@@ -31,6 +31,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using CommonServiceLocator;
 using MPTagThat.Core.Common.Song;
+using MPTagThat.Core.Events;
 using MPTagThat.Core.Lyrics;
 using MPTagThat.Core.Services.Logging;
 using MPTagThat.Core.Services.Settings;
@@ -516,6 +517,21 @@ namespace MPTagThat.Dialogs.ViewModels
     {
       StopThread();
       base.CloseDialog(parameter);
+    }
+
+    #endregion
+
+    #region Event Handling
+
+    public override void OnMessageReceived(GenericEvent msg)
+    {
+      switch (msg.Action.ToLower())
+      {
+        case "applychangesrequested":
+          ApplyLyrics("");
+          break;
+      }
+      base.OnMessageReceived(msg);
     }
 
     #endregion

@@ -29,6 +29,7 @@ using Prism.Services.Dialogs;
 using CommonServiceLocator;
 using MPTagThat.Core.Common;
 using MPTagThat.Core.Common.Song;
+using MPTagThat.Core.Events;
 using MPTagThat.Core.Services.Logging;
 using MPTagThat.Core.Services.Settings;
 using MPTagThat.Core.Services.Settings.Setting;
@@ -428,6 +429,21 @@ namespace MPTagThat.Dialogs.ViewModels
     {
       _songs = parameters.GetValue<List<SongData>>("songs");
       LoadParameters();
+    }
+
+    #endregion
+
+    #region Event Handling
+
+    public override void OnMessageReceived(GenericEvent msg)
+    {
+      switch (msg.Action.ToLower())
+      {
+        case "applychangesrequested":
+          Tag2FileNameApply("");
+          break;
+      }
+      base.OnMessageReceived(msg);
     }
 
     #endregion

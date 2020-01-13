@@ -24,6 +24,9 @@ using Prism.Services.Dialogs;
 using System;
 using System.ComponentModel;
 using System.Windows;
+using MPTagThat.Core;
+using MPTagThat.Core.Events;
+using Prism.Events;
 
 #endregion
 
@@ -34,16 +37,35 @@ namespace MPTagThat.Dialogs.ViewModels
   /// </summary>
   public class DialogViewModelBase : BindableBase, IDialogAware
   {
+    #region Variables
+
     private DelegateCommand<string> _closeDialogCommand;
     public DelegateCommand<string> CloseDialogCommand =>
       _closeDialogCommand ?? (_closeDialogCommand = new DelegateCommand<string>(CloseDialog));
 
+    #endregion
+
+    #region Properties
+
     private string _title;
     public string Title
     {
-      get => _title; 
+      get => _title;
       set => SetProperty(ref _title, value);
     }
+
+    #endregion
+
+    #region ctor
+
+    public DialogViewModelBase()
+    {
+      EventSystem.Subscribe<GenericEvent>(OnMessageReceived, ThreadOption.UIThread);
+    }
+
+    #endregion
+
+    #region Public Methods
 
     public event Action<IDialogResult> RequestClose;
 
@@ -79,5 +101,21 @@ namespace MPTagThat.Dialogs.ViewModels
     {
 
     }
+
+    #endregion
+
+    #region Event Handling
+
+    public virtual void OnMessageReceived(GenericEvent msg)
+    {
+      switch (msg.Action.ToLower())
+      {
+        case "closedialogrequested":
+          CloseDialog("false");
+          break;
+      }
+    }
+
+    #endregion
   }
 }

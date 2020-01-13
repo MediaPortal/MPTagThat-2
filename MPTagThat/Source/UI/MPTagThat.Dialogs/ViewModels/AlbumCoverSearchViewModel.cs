@@ -33,6 +33,7 @@ using System.Windows.Media;
 using MPTagThat.Core.Annotations;
 using MPTagThat.Core.Common;
 using MPTagThat.Core.Common.Song;
+using MPTagThat.Core.Events;
 using WPFLocalizeExtension.Engine;
 
 #endregion
@@ -77,6 +78,15 @@ namespace MPTagThat.Dialogs.ViewModels
       get => _albums;
       set => SetProperty(ref _albums, value);
     }
+
+    private Album _selectedItem;
+
+    public Album SelectedItem
+    {
+      get => _selectedItem;
+      set => SetProperty(ref _selectedItem, value);
+    }
+
 
     /// <summary>
     /// Binding for Artist Text Field
@@ -281,6 +291,21 @@ namespace MPTagThat.Dialogs.ViewModels
         Album = _songs[0].Album;
       }
       DoSearchAlbum();
+    }
+
+    #endregion
+
+    #region Event Handling
+
+    public override void OnMessageReceived(GenericEvent msg)
+    {
+      switch (msg.Action.ToLower())
+      {
+        case "applychangesrequested":
+          ApplyCover(SelectedItem);
+          break;
+      }
+      base.OnMessageReceived(msg);
     }
 
     #endregion
