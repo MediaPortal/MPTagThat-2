@@ -107,6 +107,12 @@
         </ListView.ItemTemplate>
       </ListView>
 
+      <StackPanel Grid.Row="4" Orientation="Horizontal" HorizontalAlignment="Left" Margin="10,5,0,5" >
+        <syncfusion:ComboBoxAdv Name="Sites" ItemsSource="{Binding AlbumSearchSites, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                                DefaultText="{lex:Loc coverSearch_Sites_Watermark}" SelectedValueDelimiter=" | " AllowMultiSelect="True" 
+                                SelectedItems="{Binding SelectedAlbumSearchSites, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                                Height="25" Width="200" />
+      </StackPanel>
 
       <StackPanel Grid.Row="4" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,5,10,5">
         <syncfusion:ButtonAdv Label="{lex:Loc dialog_Apply}" 

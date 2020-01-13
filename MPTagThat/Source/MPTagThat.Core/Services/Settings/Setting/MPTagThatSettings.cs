@@ -145,6 +145,9 @@ namespace MPTagThat.Core.Services.Settings.Setting
     [Setting(SettingScope.User, "")]
     public List<string> AlbumInfoSites { get; set; } = new List<string>() { "MusicBrainz", "Discogs", "LastFM" };
 
+    [Setting(SettingScope.User, "")]
+    public List<string> SelectedAlbumInfoSites { get; set; } = new List<string>();
+
     [Setting(SettingScope.User, "false")]
     public bool OnlySaveFolderThumb { get; set; }
 

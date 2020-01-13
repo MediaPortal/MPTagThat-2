@@ -27,6 +27,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Windows;
 using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -79,6 +80,29 @@ namespace MPTagThat.Dialogs.ViewModels
       set => SetProperty(ref _albums, value);
     }
 
+    /// <summary>
+    /// The Binding for the Album Search Sites
+    /// </summary>
+    private ObservableCollection<string> _albumSearchSites = new ObservableCollection<string>();
+    public ObservableCollection<string> AlbumSearchSites
+    {
+      get => _albumSearchSites;
+      set => SetProperty(ref _albumSearchSites, value);
+    }
+
+    /// <summary>
+    /// The Selected Album Search sites
+    /// </summary>
+    private ObservableCollection<string> _selectedAlbumSearchSites = new ObservableCollection<string>();
+    public ObservableCollection<string> SelectedAlbumSearchSites
+    {
+      get => _selectedAlbumSearchSites;
+      set => SetProperty(ref _selectedAlbumSearchSites, value);
+    }
+
+    /// <summary>
+    /// The binding for the selected Album
+    /// </summary>
     private Album _selectedItem;
 
     public Album SelectedItem
@@ -222,16 +246,23 @@ namespace MPTagThat.Dialogs.ViewModels
 
     private void DoSearchAlbum()
     {
+      if (SelectedAlbumSearchSites.Count == 0)
+      {
+        MessageBox.Show(LocalizeDictionary.Instance.GetLocalizedObject("MPTagThat", "Strings", "coverSearch_NoSites_Selected", LocalizeDictionary.Instance.Culture).ToString(),
+          LocalizeDictionary.Instance.GetLocalizedObject("MPTagThat", "Strings", "message_Error_Title", LocalizeDictionary.Instance.Culture).ToString(), MessageBoxButton.OK);
+        return;
+      }
 
       _statusMsgTmp = LocalizeDictionary.Instance.GetLocalizedObject("MPTagThat", "Strings", "coverSearch_Status",
         LocalizeDictionary.Instance.Culture).ToString();
 
-      StatusMsg = string.Format(_statusMsgTmp, _options.MainSettings.AlbumInfoSites.Count, _options.MainSettings.AlbumInfoSites.Count - _nrOfSitesSearched);
+      StatusMsg = string.Format(_statusMsgTmp, SelectedAlbumSearchSites.Count, SelectedAlbumSearchSites.Count - _nrOfSitesSearched);
 
       IsBusy = true;
       IsSearchButtonEnabled = false;
-      var albumSearch = new AlbumSearch(this, Artist, Album) {AlbumSites = _options.MainSettings.AlbumInfoSites};
+      var albumSearch = new AlbumSearch(this, Artist, Album) {AlbumSites = SelectedAlbumSearchSites.ToList()};
       albumSearch.Run();
+      _options.MainSettings.SelectedAlbumInfoSites = SelectedAlbumSearchSites.ToList();
     }
 
     public object[] AlbumFound
@@ -281,6 +312,10 @@ namespace MPTagThat.Dialogs.ViewModels
 
     public override void OnDialogOpened(IDialogParameters parameters)
     {
+      // Add the Album Search Sites to the Combobox
+      AlbumSearchSites.AddRange(_options.MainSettings.AlbumInfoSites);
+      SelectedAlbumSearchSites.AddRange(_options.MainSettings.SelectedAlbumInfoSites);
+
       _songs = parameters.GetValue<List<SongData>>("songs");
       if (_songs.GroupBy(s => s.Artist).Count() == 1)
       {

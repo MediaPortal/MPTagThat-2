@@ -233,6 +233,12 @@ namespace MPTagThat.Core.Services.Settings.Setting
           _MPTagThatSettings.SelectedLyricSites = _MPTagThatSettings.LyricSites;
         }
 
+        // Set default values for Album Search Sites, when starting the first time
+        if (_MPTagThatSettings.SelectedAlbumInfoSites.Count == 0)
+        {
+          _MPTagThatSettings.SelectedAlbumInfoSites = _MPTagThatSettings.AlbumInfoSites;
+        }
+
         _caseConversionSettings = new CaseConversionSettings();
         settings.Load(_caseConversionSettings);
         // Set Default Values, when starting the first Time

@@ -773,4 +773,11 @@
   <data name="message_Script_Compile_Failed" xml:space="preserve">
     <value>The compile of the script failed.\n\nPlease look for the error in the log and correct it.</value>
   </data>
+  <data name="coverSearch_NoSites_Selected" xml:space="preserve">
+    <value>Please select at least one Album Search Site</value>
+  </data>
+  <data name="coverSearch_Sites_Watermark" xml:space="preserve">
+    <value>Select Album Search Site(s)</value>
+    <comment>The Help Text displayed for the Album Search Combo</comment>
+  </data>
 </root>

@@ -79,6 +79,24 @@ namespace MPTagThat.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Please select at least one Album Search Site.
+        /// </summary>
+        public static string coverSearch_NoSites_Selected {
+            get {
+                return ResourceManager.GetString("coverSearch_NoSites_Selected", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select Album Search Site(s).
+        /// </summary>
+        public static string coverSearch_Sites_Watermark {
+            get {
+                return ResourceManager.GetString("coverSearch_Sites_Watermark", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Searching for Cover Art ... {0} Sites. Remaining: {1}.
         /// </summary>
         public static string coverSearch_Status {
