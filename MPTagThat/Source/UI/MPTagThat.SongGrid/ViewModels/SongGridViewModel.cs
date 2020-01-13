@@ -138,7 +138,10 @@ namespace MPTagThat.SongGrid.ViewModels
     /// <summary>
     ///   Do we have any changes pending?
     /// </summary>
-    public bool ChangesPending { get; set; }
+    public bool ChangesPending
+    {
+      get { return Songs.Any(s => s.Changed); }
+    }
 
     /// <summary>
     /// Binding for Wait Cursor
@@ -197,6 +200,24 @@ namespace MPTagThat.SongGrid.ViewModels
       log.Trace("<<<");
     }
 
+    /// <summary>
+    /// Check, if we have any changes pending, when changing folder or closing the Application
+    /// </summary>
+    private void CheckChangesPending()
+    {
+      if (ChangesPending)
+      {
+        var result = MessageBox.Show(LocalizeDictionary.Instance.GetLocalizedObject("MPTagThat", "Strings", "message_Save_Changes", LocalizeDictionary.Instance.Culture).ToString(),
+          LocalizeDictionary.Instance.GetLocalizedObject("MPTagThat", "Strings", "message_Save_Changes_Title", LocalizeDictionary.Instance.Culture).ToString(), MessageBoxButton.YesNo);
+
+        if (result == MessageBoxResult.Yes)
+        {
+          object[] parm = {"true"};
+          ExecuteCommand("SaveAll", parm, false);
+        }
+      }
+    }
+
     #endregion
 
     #region Script Handling
@@ -235,7 +256,6 @@ namespace MPTagThat.SongGrid.ViewModels
               EventSystem.Publish(msg);
 
               song.Status = -1;
-              song.StatusMsg = "";
               script?.Invoke(song);
             }
             catch (Exception ex)
@@ -513,7 +533,8 @@ namespace MPTagThat.SongGrid.ViewModels
       var msg = new ProgressBarEvent { CurrentProgress = 0, MinValue = 0, MaxValue = SelectedItems.Count };
       EventSystem.Publish(msg);
 
-      var songs = SelectedItems.Cast<SongData>().ToList();
+      // Select all Items in case of a SaveAll Command
+      var songs = command == "SaveAll" ? Songs.ToList() : SelectedItems.Cast<SongData>().ToList();
 
       IsBusy = true;
 
@@ -558,7 +579,7 @@ namespace MPTagThat.SongGrid.ViewModels
 
           if (commandObj.Execute(song))
           {
-            ChangesPending = true;
+            song.Changed = true;
           }
           if (commandObj.ProgressCancelled)
           {
@@ -573,7 +594,8 @@ namespace MPTagThat.SongGrid.ViewModels
       }
 
       // Do Command Post Processing
-      ChangesPending = commandObj.PostProcess();
+      //ChangesPending = commandObj.PostProcess();
+      commandObj.PostProcess();
       if (CommandThreadEnded != null && commandObj.NeedsCallback)
       {
         CommandThreadEnded(this, new EventArgs());
@@ -602,6 +624,7 @@ namespace MPTagThat.SongGrid.ViewModels
       switch (msg.Action.ToLower())
       {
         case "selectedfolderchanged":
+          CheckChangesPending();
           if (msg.MessageData.ContainsKey("folder"))
           {
             SelectedItems.Clear();
@@ -656,6 +679,10 @@ namespace MPTagThat.SongGrid.ViewModels
             return;
           }
 
+          break;
+
+        case "applicationclosing":
+          CheckChangesPending();
           break;
       }
     }

@@ -780,4 +780,10 @@
     <value>Select Album Search Site(s)</value>
     <comment>The Help Text displayed for the Album Search Combo</comment>
   </data>
+  <data name="message_Save_Changes" xml:space="preserve">
+    <value>Changes have not been saved. Do you want to save the changes?</value>
+  </data>
+  <data name="message_Save_Changes_Title" xml:space="preserve">
+    <value>Save Changes</value>
+  </data>
 </root>

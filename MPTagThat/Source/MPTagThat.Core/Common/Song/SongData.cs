@@ -135,7 +135,19 @@ namespace MPTagThat.Core.Common.Song
     /// 4  = Fixed Song
     /// </summary>
     private int _status = -1;
-    public int Status { get => _status; set => SetProperty(ref _status, value); }
+
+    public int Status
+    {
+      get => _status;
+      set
+      {
+        if (value == -1)
+        {
+          StatusMsg = "";
+        }
+        SetProperty(ref _status, value);
+      }
+    }
 
     /// <summary>
     /// Has the Track been changed

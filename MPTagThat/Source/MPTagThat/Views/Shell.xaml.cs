@@ -73,6 +73,12 @@ namespace MPTagThat.Views
 
     private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
     {
+      GenericEvent evt = new GenericEvent
+      {
+        Action = "applicationclosing"
+      };
+      EventSystem.Publish(evt);
+
       var stateFile = _options.ConfigDir + "\\DockingLayout.xml";
       BinaryFormatter formatter = new BinaryFormatter();
       MainDockingManager.SaveDockState(formatter, StorageFormat.Xml, stateFile);

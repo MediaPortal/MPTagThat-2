@@ -277,6 +277,24 @@ namespace MPTagThat.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Changes have not been saved. Do you want to save the changes?.
+        /// </summary>
+        public static string message_Save_Changes {
+            get {
+                return ResourceManager.GetString("message_Save_Changes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save Changes.
+        /// </summary>
+        public static string message_Save_Changes_Title {
+            get {
+                return ResourceManager.GetString("message_Save_Changes_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The compile of the script failed.\n\nPlease look for the error in the log and correct it..
         /// </summary>
         public static string message_Script_Compile_Failed {
