@@ -458,7 +458,7 @@ namespace MPTagThat.TagEdit.ViewModels
       _isInitializing = true;
       FrontCover = null;
       _genres.Clear();
-      SelectedGenres.Clear();
+      SelectedGenres?.Clear();
       Genres.AddRange(TagLib.Genres.Audio);
 
       if (songs.Count == 1)
@@ -650,7 +650,7 @@ namespace MPTagThat.TagEdit.ViewModels
     {
       SongEdit = new SongData();
       UncheckCheckboxes();
-      SelectedGenres.Clear();
+      SelectedGenres?.Clear();
       FrontCover = null;
       MultiCheckBoxVisibility = false;
       IsApplyButtonEnabled = false;

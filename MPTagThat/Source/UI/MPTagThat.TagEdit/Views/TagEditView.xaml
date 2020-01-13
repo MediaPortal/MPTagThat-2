@@ -47,7 +47,7 @@
               <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-              <ColumnDefinition />
+              <ColumnDefinition Width = "Auto" />
               <ColumnDefinition Width = "Auto" />
             </Grid.ColumnDefinitions>
 
@@ -60,7 +60,7 @@
                   <ColumnDefinition Width = "15" />
                   <ColumnDefinition Width = "Auto" />
                   <ColumnDefinition Width = "20" />
-                  <ColumnDefinition />
+                  <ColumnDefinition Width="Auto"/>
                   <ColumnDefinition Width = "Auto" />
                   <ColumnDefinition Width = "Auto" />
                   <ColumnDefinition Width = "15" />
@@ -129,7 +129,7 @@
               <Grid Margin="5">
                 <Grid.ColumnDefinitions>
                   <ColumnDefinition Width="100"/>
-                  <ColumnDefinition/>
+                  <ColumnDefinition Width="230"/>
                   <ColumnDefinition Width="20"/>
                   <ColumnDefinition Width="20"/>
                 </Grid.ColumnDefinitions>
@@ -151,7 +151,7 @@
               <Grid Margin="5">
                 <Grid.ColumnDefinitions>
                   <ColumnDefinition Width="100"/>
-                  <ColumnDefinition/>
+                  <ColumnDefinition  Width="250" />
                   <ColumnDefinition Width="20"/>
                 </Grid.ColumnDefinitions>
                 <Label Grid.Column="0" Content="{lex:Loc tagEdit_AlbumArtist}" />
@@ -169,7 +169,7 @@
               <Grid Margin="5">
                 <Grid.ColumnDefinitions>
                   <ColumnDefinition Width="100"/>
-                  <ColumnDefinition/>
+                  <ColumnDefinition Width="250"/>
                   <ColumnDefinition Width="20"/>
                 </Grid.ColumnDefinitions>
                 <Label Grid.Column="0" Content="{lex:Loc tagEdit_Album}" />
@@ -239,7 +239,7 @@
               <Grid Margin="5">
                 <Grid.ColumnDefinitions>
                   <ColumnDefinition Width="100"/>
-                  <ColumnDefinition/>
+                  <ColumnDefinition Width="250"/>
                   <ColumnDefinition Width="20"/>
                 </Grid.ColumnDefinitions>
                 <Label Grid.Column="0" Content="{lex:Loc tagEdit_Genre}" />
@@ -254,7 +254,7 @@
               <Grid Margin="5">
                 <Grid.ColumnDefinitions>
                   <ColumnDefinition Width="100"/>
-                  <ColumnDefinition/>
+                  <ColumnDefinition Width="250"/>
                   <ColumnDefinition Width="20"/>
                 </Grid.ColumnDefinitions>
                 <Label Grid.Column="0" Content="{lex:Loc tagEdit_Comment}" />

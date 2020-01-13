@@ -35,7 +35,6 @@ namespace MPTagThat.TagEdit.Views
       {
         VisualStateManager.GoToElementState(GenrePanel, "Narrow", false);
       }
-      Console.WriteLine($"Size Changed: {e.NewSize.Width} x {e.NewSize.Height}");
     }
   }
 }
