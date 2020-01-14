@@ -56,9 +56,9 @@ namespace MPTagThat.SongGrid.Commands
 
     #region Command Implementation
 
-    public override bool Execute(SongData song)
+    public override bool Execute(ref SongData song)
     {
-      if (!SaveTrack(song))
+      if (!SaveTrack(ref song))
       {
         bErrors = true;
       }
@@ -83,7 +83,7 @@ namespace MPTagThat.SongGrid.Commands
     /// </summary>
     /// <param name = "song"></param>
     /// <returns></returns>
-    private bool SaveTrack(SongData song)
+    private bool SaveTrack(ref SongData song)
     {
       try
       {
@@ -117,18 +117,14 @@ namespace MPTagThat.SongGrid.Commands
           var errorMessage = "";
           if (Song.SaveFile(song, ref errorMessage))
           {
-            if (RenameFile(song))
+            if (RenameFile(song, out var newFileName))
             {
-              // rename was ok, so get the new file into the binding list
-              string ext = Path.GetExtension(song.FileName);
-              string newFileName = Path.Combine(Path.GetDirectoryName(song.FullFileName),
-                                                $"{Path.GetFileNameWithoutExtension(song.FileName)}{ext}");
-
+              // Read the Song with the new Information
               song = Song.Create(newFileName);
             }
 
             // Check, if we need to create a folder.jpg
-            if (!System.IO.File.Exists(Path.Combine(Path.GetDirectoryName(song.FullFileName), "folder.jpg")) &&
+            if (!File.Exists(Path.Combine(Path.GetDirectoryName(song.FullFileName), "folder.jpg")) &&
                 options.MainSettings.CreateFolderThumb)
             {
               //Util.SavePicture(song);
@@ -139,24 +135,19 @@ namespace MPTagThat.SongGrid.Commands
 
             song.Status = 0;
             song.Changed = false;
-            //TracksGrid.View.Rows[rowIndex].Cells[0].ToolTipText = "";
-            //track.Changed = false;
-            //TracksGrid.View.Rows[rowIndex].Tag = "";
-            //Options.Songlist[rowIndex] = track;
-            //TracksGrid.SetGridRowColors(rowIndex);
           }
           else
           {
             song.Status = 2;
-            //TracksGrid.AddErrorMessage(TracksGrid.View.Rows[rowIndex], errorMessage);
+            song.StatusMsg = errorMessage;
           }
         }
       }
       catch (Exception ex)
       {
-        //Options.Songlist[rowIndex].Status = 2;
-        //TracksGrid.AddErrorMessage(TracksGrid.View.Rows[rowIndex], ex.Message);
-        //log.Error("Save: Error Saving data for row {0}: {1} {2}", rowIndex, ex.Message, ex.StackTrace);
+        song.Status = 2;
+        song.StatusMsg = ex.Message;
+        log.Error($"Save: Error Saving data for song {song.FileName}: {ex.Message} {ex.StackTrace}");
         return false;
       }
       return true;
@@ -167,30 +158,32 @@ namespace MPTagThat.SongGrid.Commands
     ///   Called by Save and SaveAll
     /// </summary>
     /// <param name = "song"></param>
-    private bool RenameFile(SongData song)
+    /// <param name="newFileName"></param>
+    private bool RenameFile(SongData song, out string newFileName)
     {
+      newFileName = "";
       var originalFileName = Path.GetFileName(song.FullFileName);
       if (originalFileName != song.FileName)
       {
         var ext = Path.GetExtension(song.FileName);
         var filename = Path.GetFileNameWithoutExtension(song.FileName);
         var path = Path.GetDirectoryName(song.FullFileName);
-        var newFileName = Path.Combine(path, $"{filename}{ext}");
+        newFileName = Path.Combine(path, $"{filename}{ext}");
 
         // Check, if the New file name already exists
         // Don't change the newfilename, when only the Case change happened in filename
         int i = 1;
-        if (System.IO.File.Exists(newFileName) && originalFileName.ToLowerInvariant() != song.FileName.ToLowerInvariant())
+        if (File.Exists(newFileName) && originalFileName.ToLowerInvariant() != song.FileName.ToLowerInvariant())
         {
           newFileName = Path.Combine(path, $"{filename} ({i}){ext}");
-          while (System.IO.File.Exists(newFileName))
+          while (File.Exists(newFileName))
           {
             i++;
             newFileName = Path.Combine(path, $"{filename} ({i}){ext}");
           }
         }
 
-        System.IO.File.Move(song.FullFileName, newFileName);
+        File.Move(song.FullFileName, newFileName);
         log.Debug($"Save: Renaming Song: {song.FullFileName} Newname: {newFileName}");
         return true;
       }

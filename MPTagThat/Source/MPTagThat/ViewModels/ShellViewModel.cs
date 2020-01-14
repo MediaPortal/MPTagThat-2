@@ -218,7 +218,9 @@ namespace MPTagThat.ViewModels
       _options.MainSettings.FormSize = new Size(WindowWidth, WindowHeight);
       _options.MainSettings.FormLocation = new Point(WindowLeft, WindowTop);
 
+      log.Info("Saving Settings");
       _options.SaveAllSettings();
+      log.Info("Terminating application");
     }
 
     public ICommand KeyPressedCommand { get; }

@@ -50,7 +50,7 @@ namespace MPTagThat.SongGrid.Commands
     /// </summary>
     /// <param name="song"></param>
     /// <returns></returns>
-    public virtual bool Execute(SongData song)
+    public virtual bool Execute(ref SongData song)
     {
       return false;
     }

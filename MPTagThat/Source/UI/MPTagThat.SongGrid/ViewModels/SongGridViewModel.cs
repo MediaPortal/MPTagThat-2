@@ -52,6 +52,7 @@ using Action = MPTagThat.Core.Common.Action;
 using Prism.Services.Dialogs;
 using Application = System.Windows.Forms.Application;
 using MessageBox = System.Windows.MessageBox;
+// ReSharper disable ForCanBeConvertedToForeach
 
 #endregion
 
@@ -536,21 +537,30 @@ namespace MPTagThat.SongGrid.ViewModels
       EventSystem.Publish(msg);
 
       // Select all Items in case of a SaveAll Command
-      var songs = command == "SaveAll" ? Songs.ToList() : SelectedItems.Cast<SongData>().ToList();
+      var selectedSongs = command == "SaveAll" ? Songs.ToList() : SelectedItems.Cast<SongData>().ToList();
 
       IsBusy = true;
 
       // If the command needs Preprocessing, then first loop over all tracks
       if (commandObj.NeedsPreprocessing)
       {
-        foreach (var song in songs)
+        foreach (var song in Songs)
         {
           commandObj.PreProcess(song);
         }
       }
 
-      foreach (var song in songs)
+      // Iterate in a for loop, since we are passing
+      // the song as reference, which is not allowed in a foreach
+      for (var i = 0; i < Songs.Count; i++)
       {
+        var song = Songs[i];
+        
+        if (!selectedSongs.Contains(song))
+        {
+          continue;
+        }
+
         count++;
         try
         {
@@ -579,10 +589,9 @@ namespace MPTagThat.SongGrid.ViewModels
             song.Status = -1;
           }
 
-          if (commandObj.Execute(song))
-          {
-            song.Changed = true;
-          }
+          song.Changed = commandObj.Execute(ref song);
+          Songs[i] = song;
+
           if (commandObj.ProgressCancelled)
           {
             break;

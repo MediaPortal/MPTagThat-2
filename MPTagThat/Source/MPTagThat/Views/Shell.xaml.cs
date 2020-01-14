@@ -8,6 +8,7 @@ using Syncfusion.Windows.Tools.Controls;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Windows;
 using System.Windows.Media;
+using MPTagThat.Core.Services.Logging;
 using MPTagThat.Core.Services.Settings.Setting;
 
 namespace MPTagThat.Views
@@ -79,6 +80,7 @@ namespace MPTagThat.Views
       };
       EventSystem.Publish(evt);
 
+      (ServiceLocator.Current.GetInstance(typeof(ILogger)) as ILogger).GetLogger.Info("Saving Docking State");
       var stateFile = _options.ConfigDir + "\\DockingLayout.xml";
       BinaryFormatter formatter = new BinaryFormatter();
       MainDockingManager.SaveDockState(formatter, StorageFormat.Xml, stateFile);

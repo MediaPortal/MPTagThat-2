@@ -141,7 +141,7 @@ namespace MPTagThat.Core.Common.Song
       get => _status;
       set
       {
-        if (value == -1)
+        if (value < 1)
         {
           StatusMsg = "";
         }
