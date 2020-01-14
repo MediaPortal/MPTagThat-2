@@ -119,6 +119,9 @@
     <Compile Include="Views\LyricsSearchView.xaml.cs">
       <DependentUpon>LyricsSearchView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\OrganiseFilesView.xaml.cs">
+      <DependentUpon>OrganiseFilesView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Tag2FileNameView.xaml.cs">
       <DependentUpon>Tag2FileNameView.xaml</DependentUpon>
     </Compile>
@@ -139,6 +142,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\LyricsSearchView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\OrganiseFilesView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

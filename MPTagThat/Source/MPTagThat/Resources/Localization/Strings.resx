@@ -525,10 +525,10 @@
     <value>Current Filename</value>
   </data>
   <data name="tagAndRename_FirstNofAlbumArtist" xml:space="preserve">
-    <value>First "n" characters of Album Artist</value>
+    <value>First "n" char of Album Artist</value>
   </data>
   <data name="tagAndRename_FirstNofArtist" xml:space="preserve">
-    <value>First "n" characters of Artist</value>
+    <value>First "n" char of Artist</value>
   </data>
   <data name="tagAndRename_Folder" xml:space="preserve">
     <value>\ = Folder: to specify that parameters in front of it to be taken from the folder name</value>
@@ -785,5 +785,22 @@
   </data>
   <data name="message_Save_Changes_Title" xml:space="preserve">
     <value>Save Changes</value>
+  </data>
+  <data name="organise_BrowseFolder" xml:space="preserve">
+    <value>Browse</value>
+  </data>
+  <data name="organise_Folder" xml:space="preserve">
+    <value>\ = Folder: to specify that parameters in front to be used as subfoldername within target folder</value>
+    <comment>The Text of the Browse button</comment>
+  </data>
+  <data name="organise_Format" xml:space="preserve">
+    <value>Format:</value>
+  </data>
+  <data name="organise_Options" xml:space="preserve">
+    <value>Options</value>
+    <comment>The Title of the Options GroupBox</comment>
+  </data>
+  <data name="organise_TargetPath" xml:space="preserve">
+    <value>Target Path:</value>
   </data>
 </root>

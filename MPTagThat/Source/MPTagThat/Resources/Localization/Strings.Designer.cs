@@ -340,6 +340,51 @@ namespace MPTagThat.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Browse.
+        /// </summary>
+        public static string organise_BrowseFolder {
+            get {
+                return ResourceManager.GetString("organise_BrowseFolder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to \ = Folder: to specify that parameters in front to be used as subfoldername within target folder.
+        /// </summary>
+        public static string organise_Folder {
+            get {
+                return ResourceManager.GetString("organise_Folder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Format:.
+        /// </summary>
+        public static string organise_Format {
+            get {
+                return ResourceManager.GetString("organise_Format", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Options.
+        /// </summary>
+        public static string organise_Options {
+            get {
+                return ResourceManager.GetString("organise_Options", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Target Path:.
+        /// </summary>
+        public static string organise_TargetPath {
+            get {
+                return ResourceManager.GetString("organise_TargetPath", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Add to Burner.
         /// </summary>
         public static string ribbon_AddBurner {
@@ -1501,7 +1546,7 @@ namespace MPTagThat.Resources.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to First &quot;n&quot; characters of Album Artist.
+        ///   Looks up a localized string similar to First &quot;n&quot; char of Album Artist.
         /// </summary>
         public static string tagAndRename_FirstNofAlbumArtist {
             get {
@@ -1510,7 +1555,7 @@ namespace MPTagThat.Resources.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to First &quot;n&quot; characters of Artist.
+        ///   Looks up a localized string similar to First &quot;n&quot; char of Artist.
         /// </summary>
         public static string tagAndRename_FirstNofArtist {
             get {

@@ -1,0 +1,508 @@
+﻿<UserControl x:Class="MPTagThat.Dialogs.Views.OrganiseFilesView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:prism="http://prismlibrary.com/"
+             prism:ViewModelLocator.AutoWireViewModel="True"
+             xmlns:lex="http://wpflocalizeextension.codeplex.com"
+             xmlns:syncfusion="http://schemas.syncfusion.com/wpf"
+             xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
+             xmlns:core="clr-namespace:MPTagThat.Core.Common.Converter;assembly=MPTagThat.Core"
+             xmlns:behaviors="clr-namespace:MPTagThat.Core.Common.Behaviors;assembly=MPTagThat.Core"
+             lex:LocalizeDictionary.DesignCulture="en"
+             lex:ResxLocalizationProvider.DefaultAssembly="MPTagThat"
+             lex:ResxLocalizationProvider.DefaultDictionary="Strings"
+             mc:Ignorable="d" 
+             d:DesignHeight="600" d:DesignWidth="850">
+
+  <prism:Dialog.WindowStyle>
+    <Style TargetType="Window">
+      <Setter Property="prism:Dialog.WindowStartupLocation" Value="CenterScreen" />
+      <Setter Property="ResizeMode" Value="NoResize"/>
+      <Setter Property="ShowInTaskbar" Value="False"/>
+      <Setter Property="SizeToContent" Value="WidthAndHeight"/>
+    </Style>
+  </prism:Dialog.WindowStyle>
+
+  <UserControl.Resources>
+
+    <core:AlternateRowChangedColorConverter x:Key="ChangedAlternateRowStyleSelector" />
+
+    <Style TargetType="syncfusion:VirtualizingCellsControl" x:Key="AlternatingRowStyle">
+      <Setter Property="Background" Value="{Binding Path=Changed,UpdateSourceTrigger=PropertyChanged,Converter={StaticResource ChangedAlternateRowStyleSelector}}"/>
+    </Style>
+
+  </UserControl.Resources>
+
+  <Border Background="{Binding Background}"  BorderBrush="LightGray" BorderThickness="3" CornerRadius="5" >
+    <Grid x:Name="LayoutRoot" Margin="5" >
+      <Grid.RowDefinitions>
+        <RowDefinition Height="60" />
+        <RowDefinition Height="Auto"/>
+        <RowDefinition Height="Auto" />
+        <RowDefinition Height="Auto" />
+      </Grid.RowDefinitions>
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width = "800" />
+      </Grid.ColumnDefinitions>
+
+      <!-- Header -->
+      <Canvas x:Name="Logo" Grid.Row="0"  RenderTransformOrigin="0.5,0.5">
+        <TextBlock Text="{Binding Title}" TextWrapping="NoWrap" Foreground="#FFC4CFD6" FontSize="30" Opacity="0.85" Canvas.Left="0" Canvas.Top="5" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Height="50" TextAlignment="Left" FontWeight="Bold" />
+      </Canvas>
+
+      <GroupBox Grid.Row="1" HorizontalAlignment="Left" Height="100" Width="775" Margin="10" VerticalAlignment="Top" >
+        <Grid>
+          <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+          </Grid.RowDefinitions>
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="150"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
+          </Grid.ColumnDefinitions>
+          <Label Grid.Row="0" Grid.Column="0" Content="{lex:Loc organise_TargetPath}"/>
+          <ComboBox Grid.Row="0" Grid.Column="1" HorizontalAlignment="Left"  
+                    Height="25" Width="400" 
+                    IsEditable="True" 
+                    ItemsSource="{Binding Parameters}" 
+                    Text="{Binding SelectedItemText, Mode=TwoWay}"
+                    PreviewTextInput="ComboBox_OnPreviewTextInput"
+                    SelectedIndex="{Binding SelectedIndex, Mode=TwoWay}" />
+          <syncfusion:ButtonAdv Grid.Row="0" Grid.Column="2" Label="{lex:Loc organise_BrowseFolder}"  
+                                Command="{Binding BrowseFolder}"
+                                IconHeight="0" IconWidth="0" Height="25" Margin="5,5,0,0" />
+
+          <Label Grid.Row="1" Grid.Column="0" Content="{lex:Loc organise_Format}"/>
+          <ComboBox Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left"  
+                    Height="25" Width="400" 
+                    IsEditable="True" 
+                    ItemsSource="{Binding Parameters}" 
+                    Text="{Binding SelectedItemText, Mode=TwoWay}"
+                    PreviewTextInput="ComboBox_OnPreviewTextInput"
+                    SelectedIndex="{Binding SelectedIndex, Mode=TwoWay}" 
+                    behaviors:ComboBoxCursorPositionBehavior.TrackCaretIndex="True"
+                    behaviors:ComboBoxCursorPositionBehavior.CursorPosition="{Binding CursorPositionCombo,Mode=TwoWay}" />
+
+          <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Horizontal">
+            <syncfusion:ButtonAdv Label="{lex:Loc tagAndRename_AddFormat}"  
+                                  Command="{Binding AddFormatCommand}"
+                                  IconHeight="0" IconWidth="0" Height="25" Margin="5,5,0,0" />
+            <syncfusion:ButtonAdv Label="{lex:Loc tagAndRename_RemoveFormat}" 
+                                  Command="{Binding RemoveFormatCommand}"
+                                  IconHeight="0" IconWidth="0" Height="25" Margin="5,5,0,0" />
+            <syncfusion:ButtonAdv Label="{lex:Loc tagAndRename_PreviewChanges}" 
+                                  Command="{Binding PreviewChangesCommand}"
+                                  IconHeight="0" IconWidth="0" Height="25" Margin="5,5,0,0" />
+          </StackPanel>
+        </Grid>
+      </GroupBox>
+
+      <syncfusion:TabNavigationControl x:Name="TabNavigationControl" Grid.Row="2" RenderTransformOrigin="0.512,0.561" 
+                                       SelectedIndex="{Binding SelectedTabIndex, Mode=TwoWay}" >
+
+        <b:Interaction.Triggers>
+          <b:EventTrigger EventName="SelectionChanging">
+            <b:InvokeCommandAction Command="{Binding SelectionChangingCommand}" />
+          </b:EventTrigger>
+        </b:Interaction.Triggers>
+
+        <!-- Parameter Tab -->
+        <syncfusion:TabNavigationItem Header="{lex:Loc tagAndRename_TabHeader_Parameter}">
+          <syncfusion:TabNavigationItem.Content>
+            <StackPanel>
+              <GroupBox Header="{lex:Loc tagAndRename_GroupBoxParam}" HorizontalAlignment="Left" Margin="10" VerticalAlignment="Top">
+              <Grid>
+                <Grid.RowDefinitions>
+                  <RowDefinition Height="Auto"/>
+                  <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                  <ColumnDefinition Width="255" />
+                  <ColumnDefinition Width="255" />
+                  <ColumnDefinition Width="255" />
+                </Grid.ColumnDefinitions>
+                <StackPanel Grid.Row="0" Grid.Column="0">
+                  <Grid>
+                    <Grid.ColumnDefinitions>
+                      <ColumnDefinition Width="90" />
+                      <ColumnDefinition Width="15" />
+                      <ColumnDefinition Width="150" />
+                    </Grid.ColumnDefinitions>
+                    <Label Grid.Column="0" Name="Artist" Content="%artist%">
+                      <b:Interaction.Triggers>
+                        <b:EventTrigger EventName="MouseDown">
+                          <prism:InvokeCommandAction Command="{Binding LabelClickedCommand}"/>
+                        </b:EventTrigger>
+                      </b:Interaction.Triggers>
+                    </Label>
+                    <Label Grid.Column="1" Content="=" />
+                    <Label Grid.Column="2" Content="{lex:Loc tagAndRename_Artist}"/>
+                  </Grid>
+                  <Grid>
+                    <Grid.ColumnDefinitions>
+                      <ColumnDefinition Width="90" />
+                      <ColumnDefinition Width="15" />
+                      <ColumnDefinition Width="150" />
+                    </Grid.ColumnDefinitions>
+                    <Label Grid.Column="0" Name="AlbumArtist" Content="%albumartist%">
+                      <b:Interaction.Triggers>
+                        <b:EventTrigger EventName="MouseDown">
+                          <prism:InvokeCommandAction Command="{Binding LabelClickedCommand}"/>
+                        </b:EventTrigger>
+                      </b:Interaction.Triggers>
+                    </Label>
+                    <Label Grid.Column="1" Content="=" />
+                    <Label Grid.Column="2" Content="{lex:Loc tagAndRename_AlbumArtist}"/>
+                  </Grid>
+                  <Grid>
+                    <Grid.ColumnDefinitions>
+                      <ColumnDefinition Width="90" />
+                      <ColumnDefinition Width="15" />
+                      <ColumnDefinition Width="150" />
+                    </Grid.ColumnDefinitions>
+                    <Label Grid.Column="0" Name="Year" Content="%year%">
+                      <b:Interaction.Triggers>
+                        <b:EventTrigger EventName="MouseDown">
+                          <prism:InvokeCommandAction Command="{Binding LabelClickedCommand}"/>
+                        </b:EventTrigger>
+                      </b:Interaction.Triggers>
+                    </Label>
+                    <Label Grid.Column="1" Content="=" />
+                    <Label Grid.Column="2" Content="{lex:Loc tagAndRename_Year}"/>
+                  </Grid>
+                  <Grid>
+                    <Grid.ColumnDefinitions>
+                      <ColumnDefinition Width="90" />
+                      <ColumnDefinition Width="15" />
+                      <ColumnDefinition Width="150" />
+                    </Grid.ColumnDefinitions>
+                    <Label Grid.Column="0" Name="TrackNumber" Content="%track%">
+                      <b:Interaction.Triggers>
+                        <b:EventTrigger EventName="MouseDown">
+                          <prism:InvokeCommandAction Command="{Binding LabelClickedCommand}"/>
+                        </b:EventTrigger>
+                      </b:Interaction.Triggers>
+                    </Label>
+                    <Label Grid.Column="1" Content="=" />
+                    <Label Grid.Column="2" Content="{lex:Loc tagAndRename_Track}"/>
+                  </Grid>
+                  <Grid>
+                    <Grid.ColumnDefinitions>
+                      <ColumnDefinition Width="90" />
+                      <ColumnDefinition Width="15" />
+                      <ColumnDefinition Width="150" />
+                    </Grid.ColumnDefinitions>
+                    <Label Grid.Column="0" Name="DiscNumber" Content="%disc%">
+                      <b:Interaction.Triggers>
+                        <b:EventTrigger EventName="MouseDown">
+                          <prism:InvokeCommandAction Command="{Binding LabelClickedCommand}"/>
+                        </b:EventTrigger>
+                      </b:Interaction.Triggers>
+                    </Label>
+                    <Label Grid.Column="1" Content="=" />
+                    <Label Grid.Column="2" Content="{lex:Loc tagAndRename_Disc}"/>
+                  </Grid>
+                  <Grid>
+                    <Grid.ColumnDefinitions>
+                      <ColumnDefinition Width="90" />
+                      <ColumnDefinition Width="15" />
+                      <ColumnDefinition Width="150" />
+                    </Grid.ColumnDefinitions>
+                    <Label Grid.Column="0" Name="Remixed" Content="%remixed%">
+                      <b:Interaction.Triggers>
+                        <b:EventTrigger EventName="MouseDown">
+                          <prism:InvokeCommandAction Command="{Binding LabelClickedCommand}"/>
+                        </b:EventTrigger>
+                      </b:Interaction.Triggers>
+                    </Label>
+                    <Label Grid.Column="1" Content="=" />
+                    <Label Grid.Column="2" Content="{lex:Loc tagAndRename_ModifiedBy}"/>
+                  </Grid>
+                  <Grid>
+                    <Grid.ColumnDefinitions>
+                      <ColumnDefinition Width="90" />
+                      <ColumnDefinition Width="15" />
+                      <ColumnDefinition Width="150" />
+                    </Grid.ColumnDefinitions>
+                    <Label Grid.Column="0" Name="FirstArtist" Content="%artist:n%">
+                      <b:Interaction.Triggers>
+                        <b:EventTrigger EventName="MouseDown">
+                          <prism:InvokeCommandAction Command="{Binding LabelClickedCommand}"/>
+                        </b:EventTrigger>
+                      </b:Interaction.Triggers>
+                    </Label>
+                    <Label Grid.Column="1" Content="=" />
+                    <Label Grid.Column="2" Content="{lex:Loc tagAndRename_FirstNofArtist}"/>
+                  </Grid>
+                </StackPanel>
+                <StackPanel Grid.Row="0" Grid.Column="1">
+                  <Grid>
+                    <Grid.ColumnDefinitions>
+                      <ColumnDefinition Width="90" />
+                      <ColumnDefinition Width="15" />
+                      <ColumnDefinition Width="150" />
+                    </Grid.ColumnDefinitions>
+                    <Label Grid.Column="0" Name="Title" Content="%title%">
+                      <b:Interaction.Triggers>
+                        <b:EventTrigger EventName="MouseDown">
+                          <prism:InvokeCommandAction Command="{Binding LabelClickedCommand}"/>
+                        </b:EventTrigger>
+                      </b:Interaction.Triggers>
+                    </Label>
+                    <Label Grid.Column="1" Content="=" />
+                    <Label Grid.Column="2" Content="{lex:Loc tagAndRename_Title}"/>
+                  </Grid>
+                  <Grid>
+                    <Grid.ColumnDefinitions>
+                      <ColumnDefinition Width="90" />
+                      <ColumnDefinition Width="15" />
+                      <ColumnDefinition Width="150" />
+                    </Grid.ColumnDefinitions>
+                    <Label Grid.Column="0" Name="Genre" Content="%genre%">
+                      <b:Interaction.Triggers>
+                        <b:EventTrigger EventName="MouseDown">
+                          <prism:InvokeCommandAction Command="{Binding LabelClickedCommand}"/>
+                        </b:EventTrigger>
+                      </b:Interaction.Triggers>
+                    </Label>
+                    <Label Grid.Column="1" Content="=" />
+                    <Label Grid.Column="2" Content="{lex:Loc tagAndRename_Genre}"/>
+                  </Grid>
+                  <Grid>
+                    <Grid.ColumnDefinitions>
+                      <ColumnDefinition Width="90" />
+                      <ColumnDefinition Width="15" />
+                      <ColumnDefinition Width="150" />
+                    </Grid.ColumnDefinitions>
+                    <Label Grid.Column="0" Name="Conductor" Content="%conductor%">
+                      <b:Interaction.Triggers>
+                        <b:EventTrigger EventName="MouseDown">
+                          <prism:InvokeCommandAction Command="{Binding LabelClickedCommand}"/>
+                        </b:EventTrigger>
+                      </b:Interaction.Triggers>
+                    </Label>
+                    <Label Grid.Column="1" Content="=" />
+                    <Label Grid.Column="2" Content="{lex:Loc tagAndRename_Conductor}"/>
+                  </Grid>
+                  <Grid>
+                    <Grid.ColumnDefinitions>
+                      <ColumnDefinition Width="90" />
+                      <ColumnDefinition Width="15" />
+                      <ColumnDefinition Width="150" />
+                    </Grid.ColumnDefinitions>
+                    <Label Grid.Column="0" Name="TrackTotal" Content="%tracktotal%">
+                      <b:Interaction.Triggers>
+                        <b:EventTrigger EventName="MouseDown">
+                          <prism:InvokeCommandAction Command="{Binding LabelClickedCommand}"/>
+                        </b:EventTrigger>
+                      </b:Interaction.Triggers>
+                    </Label>
+                    <Label Grid.Column="1" Content="=" />
+                    <Label Grid.Column="2" Content="{lex:Loc tagAndRename_TrackTotal}"/>
+                  </Grid>
+                  <Grid>
+                    <Grid.ColumnDefinitions>
+                      <ColumnDefinition Width="90" />
+                      <ColumnDefinition Width="15" />
+                      <ColumnDefinition Width="150" />
+                    </Grid.ColumnDefinitions>
+                    <Label Grid.Column="0" Name="DiscTotal" Content="%disctotal%">
+                      <b:Interaction.Triggers>
+                        <b:EventTrigger EventName="MouseDown">
+                          <prism:InvokeCommandAction Command="{Binding LabelClickedCommand}"/>
+                        </b:EventTrigger>
+                      </b:Interaction.Triggers>
+                    </Label>
+                    <Label Grid.Column="1" Content="=" />
+                    <Label Grid.Column="2" Content="{lex:Loc tagAndRename_DiscTotal}"/>
+                  </Grid>
+                  <Grid>
+                    <Grid.ColumnDefinitions>
+                      <ColumnDefinition Width="90" />
+                      <ColumnDefinition Width="15" />
+                      <ColumnDefinition Width="150" />
+                    </Grid.ColumnDefinitions>
+                    <Label Grid.Column="0" Name="Bpm" Content="%bpm%">
+                      <b:Interaction.Triggers>
+                        <b:EventTrigger EventName="MouseDown">
+                          <prism:InvokeCommandAction Command="{Binding LabelClickedCommand}"/>
+                        </b:EventTrigger>
+                      </b:Interaction.Triggers>
+                    </Label>
+                    <Label Grid.Column="1" Content="=" />
+                    <Label Grid.Column="2" Content="{lex:Loc tagAndRename_BPM}"/>
+                  </Grid>
+                  <Grid>
+                    <Grid.ColumnDefinitions>
+                      <ColumnDefinition Width="90" />
+                      <ColumnDefinition Width="15" />
+                      <ColumnDefinition Width="150" />
+                    </Grid.ColumnDefinitions>
+                    <Label Grid.Column="0" Name="FirstAlbumArtist" Content="%albumartist:n%">
+                      <b:Interaction.Triggers>
+                        <b:EventTrigger EventName="MouseDown">
+                          <prism:InvokeCommandAction Command="{Binding LabelClickedCommand}"/>
+                        </b:EventTrigger>
+                      </b:Interaction.Triggers>
+                    </Label>
+                    <Label Grid.Column="1" Content="=" />
+                    <Label Grid.Column="2" Content="{lex:Loc tagAndRename_FirstNofAlbumArtist}"/>
+                  </Grid>
+                </StackPanel>
+                <StackPanel Grid.Row="0" Grid.Column="2">
+                  <Grid>
+                    <Grid.ColumnDefinitions>
+                      <ColumnDefinition Width="90" />
+                      <ColumnDefinition Width="15" />
+                      <ColumnDefinition Width="150" />
+                    </Grid.ColumnDefinitions>
+                    <Label Grid.Column="0" Name="Album" Content="%album%">
+                      <b:Interaction.Triggers>
+                        <b:EventTrigger EventName="MouseDown">
+                          <prism:InvokeCommandAction Command="{Binding LabelClickedCommand}"/>
+                        </b:EventTrigger>
+                      </b:Interaction.Triggers>
+                    </Label>
+                    <Label Grid.Column="1" Content="=" />
+                    <Label Grid.Column="2" Content="{lex:Loc tagAndRename_Album}"/>
+                  </Grid>
+                  <Grid>
+                    <Grid.ColumnDefinitions>
+                      <ColumnDefinition Width="90" />
+                      <ColumnDefinition Width="15" />
+                      <ColumnDefinition Width="150" />
+                    </Grid.ColumnDefinitions>
+                    <Label Grid.Column="0" Name="Comment" Content="%comment%">
+                      <b:Interaction.Triggers>
+                        <b:EventTrigger EventName="MouseDown">
+                          <prism:InvokeCommandAction Command="{Binding LabelClickedCommand}"/>
+                        </b:EventTrigger>
+                      </b:Interaction.Triggers>
+                    </Label>
+                    <Label Grid.Column="1" Content="=" />
+                    <Label Grid.Column="2" Content="{lex:Loc tagAndRename_Comment}"/>
+                  </Grid>
+                  <Grid>
+                    <Grid.ColumnDefinitions>
+                      <ColumnDefinition Width="90" />
+                      <ColumnDefinition Width="15" />
+                      <ColumnDefinition Width="150" />
+                    </Grid.ColumnDefinitions>
+                    <Label Grid.Column="0" Name="Composer" Content="%composer%">
+                      <b:Interaction.Triggers>
+                        <b:EventTrigger EventName="MouseDown">
+                          <prism:InvokeCommandAction Command="{Binding LabelClickedCommand}"/>
+                        </b:EventTrigger>
+                      </b:Interaction.Triggers>
+                    </Label>
+                    <Label Grid.Column="1" Content="=" />
+                    <Label Grid.Column="2" Content="{lex:Loc tagAndRename_Composer}"/>
+                  </Grid>
+                  <Grid>
+                    <Grid.ColumnDefinitions>
+                      <ColumnDefinition Width="90" />
+                      <ColumnDefinition Width="15" />
+                      <ColumnDefinition Width="150" />
+                    </Grid.ColumnDefinitions>
+                    <Label Grid.Column="0" Name="Group" Content="%group%">
+                      <b:Interaction.Triggers>
+                        <b:EventTrigger EventName="MouseDown">
+                          <prism:InvokeCommandAction Command="{Binding LabelClickedCommand}"/>
+                        </b:EventTrigger>
+                      </b:Interaction.Triggers>
+                    </Label>
+                    <Label Grid.Column="1" Content="=" />
+                    <Label Grid.Column="2" Content="{lex:Loc tagAndRename_Group}"/>
+                  </Grid>
+                  <Grid>
+                    <Grid.ColumnDefinitions>
+                      <ColumnDefinition Width="90" />
+                      <ColumnDefinition Width="15" />
+                      <ColumnDefinition Width="150" />
+                    </Grid.ColumnDefinitions>
+                    <Label Grid.Column="0" Name="Subtitle" Content="%subtitle%">
+                      <b:Interaction.Triggers>
+                        <b:EventTrigger EventName="MouseDown">
+                          <prism:InvokeCommandAction Command="{Binding LabelClickedCommand}"/>
+                        </b:EventTrigger>
+                      </b:Interaction.Triggers>
+                    </Label>
+                    <Label Grid.Column="1" Content="=" />
+                    <Label Grid.Column="2" Content="{lex:Loc tagAndRename_SubTitle}"/>
+                  </Grid>
+                  <Grid>
+                    <Grid.ColumnDefinitions>
+                      <ColumnDefinition Width="90" />
+                      <ColumnDefinition Width="15" />
+                      <ColumnDefinition Width="150" />
+                    </Grid.ColumnDefinitions>
+                    <Label Grid.Column="0" Name="BitRate" Content="%bitrate%">
+                      <b:Interaction.Triggers>
+                        <b:EventTrigger EventName="MouseDown">
+                          <prism:InvokeCommandAction Command="{Binding LabelClickedCommand}"/>
+                        </b:EventTrigger>
+                      </b:Interaction.Triggers>
+                    </Label>
+                    <Label Grid.Column="1" Content="=" />
+                    <Label Grid.Column="2" Content="{lex:Loc tagAndRename_BitRate}"/>
+                  </Grid>
+                </StackPanel>
+                <StackPanel Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" >
+                  <Label Name="Folder" Content="{lex:Loc organise_Folder}"  >
+                    <b:Interaction.Triggers>
+                      <b:EventTrigger EventName="MouseDown">
+                        <prism:InvokeCommandAction Command="{Binding LabelClickedCommand}"/>
+                      </b:EventTrigger>
+                    </b:Interaction.Triggers>
+                  </Label>
+                </StackPanel>
+              </Grid>
+            </GroupBox>
+              </StackPanel>
+          </syncfusion:TabNavigationItem.Content>
+        </syncfusion:TabNavigationItem>
+
+        <!-- Preview Tab -->
+        <syncfusion:TabNavigationItem Header="{lex:Loc tagAndRename_TabHeader_Preview}">
+          <syncfusion:TabNavigationItem.Content>
+            <Grid>
+              <Grid.RowDefinitions>
+                <RowDefinition Height="400" />
+              </Grid.RowDefinitions>
+              <syncfusion:SfDataGrid x:Name="SongPreviewGrid" 
+                                     ItemsSource="{Binding SongsPreview, Mode=TwoWay}"
+                                     Columns="{Binding DataGridColumns, Mode=TwoWay}" 
+                                     ColumnSizer="AutoWithLastColumnFill" 
+                                     AllowResizingColumns="True" 
+                                     AllowDraggingColumns="False" 
+                                     AutoGenerateColumns="False"
+                                     ShowRowHeader="False" 
+                                     AllowEditing="False" 
+                                     AlternatingRowStyle="{StaticResource AlternatingRowStyle}" 
+              />
+
+            </Grid>
+          </syncfusion:TabNavigationItem.Content>
+        </syncfusion:TabNavigationItem>
+      </syncfusion:TabNavigationControl>
+
+      <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Right">
+        <syncfusion:ButtonAdv Label="{lex:Loc dialog_Apply}" 
+                              SmallIcon="pack://application:,,,/MPTagThat;component/Resources/Images/Apply_Changes_32x.png" 
+                              Command="{Binding FileNameToTagCommand}" 
+                              Width="75" Height="25" 
+                              HorizontalAlignment="Right" Margin="0,10,0,0" />
+        <syncfusion:ButtonAdv Label="{lex:Loc dialog_Cancel}" 
+                              SmallIcon="pack://application:,,,/MPTagThat;component/Resources/Images/Cancel_Changes_32x.png" 
+                              Command="{Binding CancelChangesCommand}" 
+                              Width="75" Height="25" 
+                              HorizontalAlignment="Right" Margin="20,10,0,0" />
+      </StackPanel>
+
+    </Grid>
+  </Border>
+</UserControl>
