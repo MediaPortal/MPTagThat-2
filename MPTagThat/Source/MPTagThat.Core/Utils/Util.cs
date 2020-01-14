@@ -25,6 +25,7 @@ using System.Windows.Forms;
 using CommonServiceLocator;
 using MPTagThat.Core.Common;
 using MPTagThat.Core.Common.Song;
+using MPTagThat.Core.Events;
 using MPTagThat.Core.Services.Logging;
 using MPTagThat.Core.Services.Settings;
 using MPTagThat.Core.Services.Settings.Setting;
@@ -359,6 +360,16 @@ namespace MPTagThat.Core.Utils
       }
 
       return column;
+    }
+
+    /// <summary>
+    /// Update the Current File in the Status Bar
+    /// </summary>
+    /// <param name="msg"></param>
+    public static void StatusCurrentFile(string msg)
+    {
+      var evt = new StatusBarEvent { CurrentFile = msg, Type = StatusBarEvent.StatusTypes.CurrentFile };
+      EventSystem.Publish(evt);
     }
 
     #endregion

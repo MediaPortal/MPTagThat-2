@@ -24,10 +24,38 @@ namespace MPTagThat.Core.Events
   /// </summary>
   public class StatusBarEvent
   {
+    public enum StatusTypes : int
+    {
+      Unknown = -1,
+      CurrentFile = 0,
+      SelectedFiles = 1
+    }
+
+    public StatusTypes Type { get; set; } = StatusTypes.Unknown;
+
+    /// <summary>
+    /// The Number of Files Found
+    /// </summary>
     public int NumberOfFiles { get; set; } = 0;
+
+    /// <summary>
+    /// The Number of Files Selected
+    /// </summary>
     public int NumberOfSelectedFiles { get; set; } = 0;
+
+    /// <summary>
+    /// The Current file Processed
+    /// </summary>
     public string CurrentFile { get; set; } = "";
+
+    /// <summary>
+    /// The Current Folder
+    /// </summary>
     public string CurrentFolder { get; set; } = "";
+
+    /// <summary>
+    /// The Progress
+    /// </summary>
     public int CurrentProgress { get; set; } = 0;
   }
 }

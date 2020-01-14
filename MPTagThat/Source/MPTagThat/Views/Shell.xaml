@@ -69,14 +69,15 @@
     <syncfusion:RibbonStatusBar>
       <Grid>
         <Grid.ColumnDefinitions>
-          <ColumnDefinition Width="2*"/>
-          <ColumnDefinition Width="2*"/>
-          <ColumnDefinition Width="2*"/>
+          <ColumnDefinition Width="Auto"/>
+          <ColumnDefinition Width="Auto"/>
+          <ColumnDefinition Width="Auto"/>
           <ColumnDefinition Width="2*"/>
         </Grid.ColumnDefinitions>
 
         <WrapPanel Grid.Column="0" >
           <TextBlock Text="{Binding NumberOfFiles}" Margin="10,0,0,0" />
+          <TextBlock Text="{Binding NumberOfSelectedFiles}" Margin="5,0,0,0" />
           <Border BorderThickness="1,0,0,0" Width="3" Margin="5,0,0,0" BorderBrush="#FFC5C5C5"/>
           <TextBlock Text="{Binding FilterActive}" Margin="10,0,0,0"/>
         </WrapPanel>

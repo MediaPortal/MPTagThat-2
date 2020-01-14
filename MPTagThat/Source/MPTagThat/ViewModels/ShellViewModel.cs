@@ -128,6 +128,17 @@ namespace MPTagThat.ViewModels
     }
 
     /// <summary>
+    /// Property to Show the Number of Selected Files
+    /// </summary>
+    private string _selectedFiles = "0";
+    public string NumberOfSelectedFiles
+    {
+      get => string.Format(LocalizeDictionary.Instance.GetLocalizedObject("MPTagThat", "Strings", "statusBar_NumberOfSelectedFiles",
+        LocalizeDictionary.Instance.Culture).ToString(), _selectedFiles);
+      set => SetProperty(ref _selectedFiles, value);
+    }
+
+    /// <summary>
     /// Property to show the current Folder
     /// </summary>
     private string _currentFolder = "";
@@ -335,10 +346,23 @@ namespace MPTagThat.ViewModels
 
     private void UpdateStatusBar(StatusBarEvent msg)
     {
-      NumberOfFiles = msg.NumberOfFiles.ToString();
-      ProgressBarIsIndeterminate = msg.CurrentProgress == -1;
-      CurrentFolder = msg.CurrentFolder;
-      CurrentFile = msg.CurrentFile;
+      switch (msg.Type)
+      {
+        case StatusBarEvent.StatusTypes.CurrentFile:
+          CurrentFile = msg.CurrentFile;
+          break;
+
+        case StatusBarEvent.StatusTypes.SelectedFiles:
+          NumberOfSelectedFiles = msg.NumberOfSelectedFiles.ToString();
+          break;
+
+        default:
+          NumberOfFiles = msg.NumberOfFiles.ToString();
+          ProgressBarIsIndeterminate = msg.CurrentProgress == -1;
+          CurrentFolder = msg.CurrentFolder;
+          CurrentFile = msg.CurrentFile;
+          break;
+      }
     }
 
     private void UpdateProgressBar(ProgressBarEvent msg)
@@ -354,6 +378,7 @@ namespace MPTagThat.ViewModels
       }
       ProgressBarMinimum = msg.MinValue;
       ProgressBarMaximum = msg.MaxValue;
+      CurrentFile = msg.CurrentFile;
     }
 
     #endregion

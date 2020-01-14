@@ -16,15 +16,14 @@
 // along with MPTagThat. If not, see <http://www.gnu.org/licenses/>.
 #endregion
 
+#region 
+
 using MPTagThat.Core.Common.Song;
-using MPTagThat.Core.Services.Settings.Setting;
-using MPTagThat.Core.Utils;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using MPTagThat.Core.Utils;
+
+#endregion
 
 namespace MPTagThat.SongGrid.Commands
 {
@@ -90,8 +89,8 @@ namespace MPTagThat.SongGrid.Commands
       {
         if (song.Changed)
         {
-          //Util.SendProgress($"Saving file {track.FullFileName}");
-          log.Debug($"Save: Saving track: {song.FullFileName}");
+          Util.StatusCurrentFile($"Saving file {song.FullFileName}");
+          log.Debug($"Save: Saving song: {song.FullFileName}");
 
           // The track to be saved, may be currently playing. If this is the case stop playback to free the file
           //if (track.FullFileName == TracksGrid.MainForm.Player.CurrentSongPlaying)

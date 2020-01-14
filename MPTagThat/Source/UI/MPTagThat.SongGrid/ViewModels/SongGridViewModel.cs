@@ -131,6 +131,8 @@ namespace MPTagThat.SongGrid.ViewModels
       set
       {
         _selectedItems = value;
+        var evt = new StatusBarEvent { NumberOfSelectedFiles = _selectedItems.Count, Type = StatusBarEvent.StatusTypes.SelectedFiles };
+        EventSystem.Publish(evt);
         RaisePropertyChanged("SelectedItems");
       }
     }
