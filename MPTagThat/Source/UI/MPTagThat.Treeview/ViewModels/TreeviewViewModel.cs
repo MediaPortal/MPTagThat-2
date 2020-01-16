@@ -21,6 +21,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Configuration;
 using System.IO;
 using System.Linq;
 using System.Windows;
@@ -33,6 +34,7 @@ using MPTagThat.Core.Services.Settings;
 using MPTagThat.Core.Services.Settings.Setting;
 using MPTagThat.Core.Utils;
 using MPTagThat.Treeview.Model;
+using Prism.Events;
 using Syncfusion.Windows.Shared;
 using Syncfusion.Windows.Tools.Controls;
 
@@ -119,6 +121,19 @@ namespace MPTagThat.Treeview.ViewModels
     }
 
 
+    private NavTreeItem _rootItem;
+
+    public NavTreeItem RootItem
+    {
+      get => _rootItem;
+      set
+      {
+        _rootItem = value;
+        RaisePropertyChanged(() => RootItem);
+      } 
+    }
+
+
     private int _rootNr;
     public int RootNr
     {
@@ -149,34 +164,40 @@ namespace MPTagThat.Treeview.ViewModels
     {
       _options = (ServiceLocator.Current.GetInstance(typeof(ISettingsManager)) as ISettingsManager).GetOptions;
 
+      EventSystem.Subscribe<GenericEvent>(OnMessageReceived, ThreadOption.UIThread);
+
       // create a new RootItem given rootNumber using convention
       RootNr = 0;
-      NavTreeItem treeRootItem = NavTreeUtils.ReturnRootItem(RootNr);
-
-      // Delete RootChildren and init RootChildren ussing treeRootItem.Children
-      foreach (INavTreeItem item in RootChildren) { 
-        item.DeleteChildren(); 
-      }
-      RootChildren.Clear();
+      //NavTreeItem treeRootItem = NavTreeUtils.ReturnRootItem(RootNr);
+      RootItem = NavTreeUtils.ReturnRootItem(RootNr);
 
       SelectedItemChangedCommand = new DelegateCommand<object>(SelectedItemChanged);
       LoadFolderOnDemandCommand = new DelegateCommand<object>(LoadFolderOnDemand);
 
-      foreach (INavTreeItem item in treeRootItem.Children) {
-        RootChildren.Add(item); 
-      }
+      RefreshTreeview();
 
       // Work around the problem with Load On Demand being called from the Constructor.
       _timer = new DispatcherTimer();
-      _timer.Interval = new TimeSpan(0, 0, 0, 0, 300);
+      _timer.Interval = new TimeSpan(0, 0, 0, 0, 200);
       _timer.Tick += new EventHandler(SetCurrentFolder);
-      _timer.Tag = treeRootItem;
+      _timer.Tag = RootItem;
       _timer.Start();
     }
 
     #endregion
 
     #region Private Methods
+
+    private void RefreshTreeview()
+    {
+      RootItem = NavTreeUtils.ReturnRootItem(RootNr);
+      RootChildren.Clear();
+
+      foreach (INavTreeItem item in RootItem.Children) {
+        RootChildren.Add(item); 
+      }
+    }
+
 
     /// <summary>
     /// Expand the tree to list the current folder.
@@ -186,14 +207,18 @@ namespace MPTagThat.Treeview.ViewModels
     /// <param name="e"></param>
     private void SetCurrentFolder(object sender, EventArgs e)
     {
-      _timer.Stop();
+      if (_timer != null && _timer.IsEnabled)
+      {
+        _timer.Stop();
+      }
       var currentFolder = _options.MainSettings.LastFolderUsed;
       if (!System.IO.Directory.Exists(currentFolder))
       {
         return;
       }
 
-      var treeRootItem = ((DispatcherTimer)sender).Tag as NavTreeItem;
+      //var treeRootItem = ((DispatcherTimer)sender).Tag as NavTreeItem;
+      //var treeRootItem = RootItem;
 
       var splitFolder = currentFolder.Split(new char[] { '\\' });
       var currentDir = new List<string>();
@@ -214,11 +239,26 @@ namespace MPTagThat.Treeview.ViewModels
         }
         currentDir.Add(tmpStr);
       }
-      NavTreeUtils.ExpandCurrentFolder(currentDir, treeRootItem);
+      NavTreeUtils.ExpandCurrentFolder(currentDir, RootItem);
       
       // Set the Selected Item, because we will get a null value from the XAML Event
       var item = new FolderItem { FullPathName = currentFolder };
       SelectedItem = item;
+    }
+
+    #endregion
+
+    #region Events
+
+    private void OnMessageReceived(GenericEvent msg)
+    {
+      switch (msg.Action.ToLower())
+      {
+        case "currentfolderchanged":
+          RefreshTreeview();
+          SetCurrentFolder(null, new EventArgs());
+          break;
+      }
     }
 
     #endregion

@@ -431,17 +431,7 @@ namespace MPTagThat.Dialogs.ViewModels
 
     private void AddFormat(object param)
     {
-      bool found = false;
-      foreach (string format in _options.FileNameToTagSettings.FormatValues)
-      {
-        if (format == SelectedItemText)
-        {
-          found = true;
-          break;
-        }
-      }
-
-      if (!found)
+      if (!_options.FileNameToTagSettings.FormatValues.Contains(SelectedItemText))
       {
         _options.FileNameToTagSettings.FormatValues.Add(SelectedItemText);
         _options.FileNameToTagSettings.Save();
@@ -458,17 +448,10 @@ namespace MPTagThat.Dialogs.ViewModels
 
     private void RemoveFormat(object param)
     {
-      for (int i = 0; i < _options.FileNameToTagSettings.FormatValues.Count; i++)
-      {
-        if (_options.FileNameToTagSettings.FormatValues[i] == SelectedItemText)
-        {
-          _options.FileNameToTagSettings.FormatValues.RemoveAt(i);
-          _options.FileNameToTagSettings.Save();
-        }
-      }
-
-      _options.FileNameToTagSettingsTemp.RemoveAt(SelectedIndex);
-      Parameters.RemoveAt(SelectedIndex);
+      _options.FileNameToTagSettings.FormatValues.Remove(SelectedItemText);
+      _options.FileNameToTagSettings.Save();
+      _options.FileNameToTagSettingsTemp.Remove(SelectedItemText);
+      Parameters.Remove(SelectedItemText);
     }
 
     #endregion

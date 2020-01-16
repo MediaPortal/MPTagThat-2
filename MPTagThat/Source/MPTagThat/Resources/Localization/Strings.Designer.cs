@@ -349,6 +349,33 @@ namespace MPTagThat.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Copy Files instead of Moving them.
+        /// </summary>
+        public static string organise_Copy_Files {
+            get {
+                return ResourceManager.GetString("organise_Copy_Files", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Copy/Move Non-Music Files (Pictures, etc.).
+        /// </summary>
+        public static string organise_Copy_NonMusic_Files {
+            get {
+                return ResourceManager.GetString("organise_Copy_NonMusic_Files", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Target File already exists. Will not be replaced.
+        /// </summary>
+        public static string organise_FileExists {
+            get {
+                return ResourceManager.GetString("organise_FileExists", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to \ = Folder: to specify that parameters in front to be used as subfoldername within target folder.
         /// </summary>
         public static string organise_Folder {
@@ -367,11 +394,47 @@ namespace MPTagThat.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Organise Files.
+        /// </summary>
+        public static string organise_Header {
+            get {
+                return ResourceManager.GetString("organise_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Options.
         /// </summary>
         public static string organise_Options {
             get {
                 return ResourceManager.GetString("organise_Options", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Override Target Root Directory using Script:.
+        /// </summary>
+        public static string organise_Override_TargetPath {
+            get {
+                return ResourceManager.GetString("organise_Override_TargetPath", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Overwrite existing files.
+        /// </summary>
+        public static string organise_OverWrite_Files {
+            get {
+                return ResourceManager.GetString("organise_OverWrite_Files", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Source and Target File are the same. File skipped.
+        /// </summary>
+        public static string organise_SameFile {
+            get {
+                return ResourceManager.GetString("organise_SameFile", resourceCulture);
             }
         }
         

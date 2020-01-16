@@ -590,7 +590,12 @@ namespace MPTagThat.SongGrid.ViewModels
           }
 
           song.Changed = commandObj.Execute(ref song);
-          Songs[i] = song;
+          
+          // Has the file be renamed during save?
+          if (Songs[i].FullFileName != song.FullFileName)
+          {
+            Songs[i] = song;
+          }
 
           if (commandObj.ProgressCancelled)
           {
@@ -628,7 +633,10 @@ namespace MPTagThat.SongGrid.ViewModels
 
     #region Event Handling
 
-    private readonly List<Action.ActionType> _supportedCommands = new List<Action.ActionType>() { Action.ActionType.ACTION_SAVE };
+    private readonly List<Action.ActionType> _supportedCommands = new List<Action.ActionType>() 
+      { Action.ActionType.ACTION_SAVE, 
+        Action.ActionType.ACTION_SAVEALL
+      };
 
     private void OnMessageReceived(GenericEvent msg)
     {
@@ -647,7 +655,18 @@ namespace MPTagThat.SongGrid.ViewModels
         case "command":
           if (_supportedCommands.Contains((Action.ActionType) msg.MessageData["command"]))
           {
-            ExecuteCommand(Action.ActionToCommand((Action.ActionType)msg.MessageData["command"]));
+            msg.MessageData.TryGetValue("runasync", out var runAsyncParam);
+            var runAsync = true;
+            if (runAsyncParam != null)
+            {
+              runAsync = (bool) runAsyncParam;
+            }
+
+            msg.MessageData.TryGetValue("param", out var param);
+            object parameter;
+            parameter = param ?? new object[] { };
+
+            ExecuteCommand(Action.ActionToCommand((Action.ActionType)msg.MessageData["command"]), parameter, runAsync);
             return;
           }
 
@@ -687,6 +706,13 @@ namespace MPTagThat.SongGrid.ViewModels
           if ((Action.ActionType)msg.MessageData["command"] == Action.ActionType.ACTION_GETLYRICS)
           {
             _dialogService.ShowDialogInAnotherWindow("LyricsSearchView", "DialogWindowView", parameters, null);
+            return;
+          }
+
+          if ((Action.ActionType)msg.MessageData["command"] == Action.ActionType.ACTION_ORGANISE)
+          {
+            parameters.Add("songgridinstance", this);  // We need to reference to the SongGrod using Reflection for a Save all Command
+            _dialogService.ShowDialogInAnotherWindow("OrganiseFilesView", "DialogWindowView", parameters, null);
             return;
           }
 

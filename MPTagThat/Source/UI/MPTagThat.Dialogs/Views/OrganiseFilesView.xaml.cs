@@ -24,5 +24,25 @@ namespace MPTagThat.Dialogs.Views
         {
             InitializeComponent();
         }
+
+        /// <summary>
+        /// Ignore characters, which would result in invalid filenames
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ComboBox_OnPreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+          switch (e.Text)
+          {
+            case "|":
+            case "\"":
+            case "/":
+            case "*":
+            case "?":
+            case ":":
+              e.Handled = true;
+              break;
+          }
+        }
     }
 }

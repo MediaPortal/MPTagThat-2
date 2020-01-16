@@ -803,4 +803,25 @@
   <data name="organise_TargetPath" xml:space="preserve">
     <value>Target Path:</value>
   </data>
+  <data name="organise_Copy_Files" xml:space="preserve">
+    <value>Copy Files instead of Moving them</value>
+  </data>
+  <data name="organise_Copy_NonMusic_Files" xml:space="preserve">
+    <value>Copy/Move Non-Music Files (Pictures, etc.)</value>
+  </data>
+  <data name="organise_FileExists" xml:space="preserve">
+    <value>Target File already exists. Will not be replaced</value>
+  </data>
+  <data name="organise_Header" xml:space="preserve">
+    <value>Organise Files</value>
+  </data>
+  <data name="organise_Override_TargetPath" xml:space="preserve">
+    <value>Override Target Root Directory using Script:</value>
+  </data>
+  <data name="organise_OverWrite_Files" xml:space="preserve">
+    <value>Overwrite existing files</value>
+  </data>
+  <data name="organise_SameFile" xml:space="preserve">
+    <value>Source and Target File are the same. File skipped</value>
+  </data>
 </root>

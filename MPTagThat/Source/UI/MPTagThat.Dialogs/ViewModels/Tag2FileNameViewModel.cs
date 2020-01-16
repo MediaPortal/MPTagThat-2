@@ -170,31 +170,6 @@ namespace MPTagThat.Dialogs.ViewModels
 
     #region Commands
 
-    public ICommand CancelChangesCommand { get; }
-
-    private void CancelChanges(object parameters)
-    {
-      CloseDialog("false"); 
-    }
-
-    public ICommand LabelClickedCommand { get; }
-
-    private void LabelClicked(object param)
-    {
-      if (param == null)
-      {
-        return;
-      }
-      var label = (param as MouseButtonEventArgs)?.Source as System.Windows.Controls.Label;
-      var parameter = Util.LabelToParameter(label?.Name);
-      if (parameter != String.Empty)
-      {
-        var currentCursorPos = CursorPositionCombo;
-        SelectedItemText = SelectedItemText.Insert(CursorPositionCombo, parameter);
-        CursorPositionCombo = currentCursorPos + parameter.Length;
-      }
-    }
-
     /// <summary>
     /// The Apply Button has been pressed
     /// </summary>
@@ -296,7 +271,40 @@ namespace MPTagThat.Dialogs.ViewModels
       return fileName;
     }
 
+    /// <summary>
+    /// Cancel Button has been clicked
+    /// </summary>
+    public ICommand CancelChangesCommand { get; }
 
+    private void CancelChanges(object parameters)
+    {
+      CloseDialog("false"); 
+    }
+
+    /// <summary>
+    /// One of the labels has been clicked.
+    /// </summary>
+    public ICommand LabelClickedCommand { get; }
+
+    private void LabelClicked(object param)
+    {
+      if (param == null)
+      {
+        return;
+      }
+      var label = (param as MouseButtonEventArgs)?.Source as System.Windows.Controls.Label;
+      var parameter = Util.LabelToParameter(label?.Name);
+      if (parameter != String.Empty)
+      {
+        var currentCursorPos = CursorPositionCombo;
+        SelectedItemText = SelectedItemText.Insert(CursorPositionCombo, parameter);
+        CursorPositionCombo = currentCursorPos + parameter.Length;
+      }
+    }
+
+    /// <summary>
+    /// The Preview has been requested, by scrolling the navigator
+    /// </summary>
     public ICommand SelectionChangingCommand { get; set; }
 
     private void SelectionChanging(object parm)
@@ -361,17 +369,7 @@ namespace MPTagThat.Dialogs.ViewModels
 
     private void AddFormat(object parm)
     {
-      bool found = false;
-      foreach (string format in _options.TagToFileNameSettings.FormatValues)
-      {
-        if (format == SelectedItemText)
-        {
-          found = true;
-          break;
-        }
-      }
-
-      if (!found)
+      if (!_options.TagToFileNameSettings.FormatValues.Contains(SelectedItemText))
       {
         _options.TagToFileNameSettings.FormatValues.Add(SelectedItemText);
         _options.TagToFileNameSettings.Save();
@@ -388,17 +386,10 @@ namespace MPTagThat.Dialogs.ViewModels
 
     private void RemoveFormat(object parm)
     {
-      for (int i = 0; i < _options.TagToFileNameSettings.FormatValues.Count; i++)
-      {
-        if (_options.TagToFileNameSettings.FormatValues[i] == SelectedItemText)
-        {
-          _options.TagToFileNameSettings.FormatValues.RemoveAt(i);
-          _options.TagToFileNameSettings.Save();
-        }
-      }
-
-      _options.TagToFileNameSettingsTemp.RemoveAt(SelectedIndex);
-      Parameters.RemoveAt(SelectedIndex);
+      _options.TagToFileNameSettings.FormatValues.Remove(SelectedItemText);
+      _options.TagToFileNameSettings.Save();
+      _options.TagToFileNameSettingsTemp.Remove(SelectedItemText);
+      Parameters.Remove(SelectedItemText);
     }
 
 
@@ -414,10 +405,8 @@ namespace MPTagThat.Dialogs.ViewModels
         Parameters.Add(item);
       }
 
-      if (_options.TagToFileNameSettings.LastUsedFormat > Parameters.Count - 1)
-        SelectedIndex = 0;
-      else
-        SelectedIndex = _options.TagToFileNameSettings.LastUsedFormat;
+      SelectedIndex = _options.TagToFileNameSettings.LastUsedFormat > Parameters.Count - 1 ? 0 : _options.TagToFileNameSettings.LastUsedFormat;
+
       log.Trace("<<<");
     }
 

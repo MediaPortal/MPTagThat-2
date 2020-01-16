@@ -1006,22 +1006,17 @@ namespace MPTagThat.Core.Utils
     private static string ReplaceStringWithLengthIndicator(int startIndex, string replaceString, string replaceValue)
     {
       // Check if we have a numeric Parameter as replace value
-      bool isNumericParm = (replaceString.Substring(1, 1).IndexOfAny(new[] {'K', 'k', 'D', 'd'}) > -1);
-      int last = -1;
-      last = replaceString.IndexOf(">", startIndex);
-      string s1 = replaceString.Substring(startIndex, last - startIndex + 1);
-      int strLength = Convert.ToInt32(s1.Substring(3, 1));
+      var numberParameters = new string[] {"%t", "%d"};
+      var isNumericParm = Array.IndexOf(numberParameters, replaceString.Substring(startIndex,2), startIndex) == 0;
+      var last = replaceString.IndexOf("%", startIndex + 1);
+      var s1 = replaceString.Substring(startIndex, last - startIndex + 1);
+      var s2 = replaceString.Substring(replaceString.IndexOf(":") + 1, last - replaceString.IndexOf(":") - 1);
+
+      int.TryParse(s2, out int strLength);
 
       if (replaceValue.Length >= strLength)
       {
-        if (isNumericParm)
-        {
-          replaceValue = replaceValue.Substring(replaceValue.Length - strLength);
-        }
-        else
-        {
-          replaceValue = replaceValue.Substring(0, strLength);
-        }
+        replaceValue = isNumericParm ? replaceValue.Substring(replaceValue.Length - strLength) : replaceValue.Substring(0, strLength);
       }
       else if (isNumericParm && replaceValue.Length < strLength)
       {
@@ -1123,6 +1118,11 @@ namespace MPTagThat.Core.Utils
                                      formattype == Options.ParameterFormat.FileNameToTag))
         return false;
 
+      if (str.Length == 0)
+      {
+        return false;
+      }
+
       return true;
     }
 
@@ -1135,17 +1135,15 @@ namespace MPTagThat.Core.Utils
     /// <returns></returns>
     private static bool CheckParmWithLengthIndicator(int startIndex, string str, out string parmString)
     {
-      bool retVal = true;
-      int last = -1;
-      last = str.IndexOf("%", startIndex, StringComparison.Ordinal);
-      string s1 = str.Substring(startIndex, last - startIndex + 1);
+      var retVal = true;
+      var last = str.IndexOf("%", startIndex + 1, StringComparison.Ordinal);
+      var s1 = str.Substring(startIndex, last - startIndex + 1);
+      var s2 = str.Substring(str.IndexOf(":") + 1, last - str.IndexOf(":") - 1);
 
-      char c = s1[3];
-      if (!Char.IsDigit(c))
+      if (!int.TryParse(s2, out int n))
+      {
         retVal = false;
-
-      if (s1.Length > 5)
-        retVal = false;
+      }
 
       parmString = str.Replace(s1, "\x0001");
       return retVal;
