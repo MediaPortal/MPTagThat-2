@@ -20,6 +20,7 @@
 
 using System;
 using System.Drawing;
+using System.Drawing.Imaging;
 using System.IO;
 using System.Windows.Forms;
 using CommonServiceLocator;
@@ -398,7 +399,7 @@ namespace MPTagThat.Core.Utils
     ///   Based on the Options set, use the correct version for ID3
     ///   Eventually remove V1 or V2 tags, if set in the options
     /// </summary>
-    /// <param name = "File"></param>
+    /// <param name = "file"></param>
     public static File FormatID3Tag(File file)
     {
       if (file.MimeType == "taglib/mp3")
@@ -427,6 +428,60 @@ namespace MPTagThat.Core.Utils
         }
       }
       return file;
+    }
+
+    #endregion
+
+    #region Picture related methods
+
+    /// <summary>
+    ///   Save the Picture of the track as folder.jpg
+    /// </summary>
+    /// <param name = "song"></param>
+    public static void SavePicture(SongData song)
+    {
+      if (song.NumPics > 0)
+      {
+        var fileName = Path.Combine(Path.GetDirectoryName(song.FullFileName), "folder.jpg");
+        try
+        {
+          Image img = Common.Song.Picture.ImageFromData(song.Pictures[0].Data);
+          // Need to make a copy, otherwise we have a GDI+ Error
+          Bitmap bCopy = new Bitmap(img);
+          bCopy.Save(fileName, ImageFormat.Jpeg);
+        }
+        catch (Exception ex)
+        {
+          log.Error("Exception Saving picture: {0} {1}", fileName, ex.Message);
+        }
+      }
+    }
+
+    /// <summary>
+    ///   Return the folder.jpg as a Taglib.Picture
+    /// </summary>
+    /// <param name = "folder"></param>
+    /// <returns></returns>
+    public static Common.Song.Picture GetFolderThumb(string folder)
+    {
+      string thumb = Path.Combine(folder, "folder.jpg");
+      if (!System.IO.File.Exists(thumb))
+      {
+        return null;
+      }
+
+      try
+      {
+        Common.Song.Picture pic = new Common.Song.Picture(thumb);
+        pic.Description = "Front Cover";
+        pic.Type = PictureType.FrontCover;
+        return pic;
+      }
+      catch (Exception ex)
+      {
+        log.Error("Exception loading thumb file: {0} {1}", thumb, ex.Message);
+        return null;
+      }
     }
 
     #endregion

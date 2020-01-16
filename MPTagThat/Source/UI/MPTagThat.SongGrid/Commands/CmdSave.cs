@@ -106,6 +106,7 @@ namespace MPTagThat.SongGrid.Commands
 
           if (options.MainSettings.UseCaseConversion)
           {
+            // TODO: Case Conversion
             //CaseConversion.CaseConversion convert = new CaseConversion.CaseConversion(TracksGrid.MainForm, true);
             //convert.CaseConvert(track, rowIndex);
             //convert.Dispose();
@@ -127,10 +128,10 @@ namespace MPTagThat.SongGrid.Commands
             if (!File.Exists(Path.Combine(Path.GetDirectoryName(song.FullFileName), "folder.jpg")) &&
                 options.MainSettings.CreateFolderThumb)
             {
-              //Util.SavePicture(song);
+              Util.SavePicture(song);
             }
 
-            // Update the Music Database
+            // TODO: Update the Music Database
             //ServiceScope.Get<IMusicDatabase>().UpdateTrack(track, originalFileName);
 
             song.Status = 0;
