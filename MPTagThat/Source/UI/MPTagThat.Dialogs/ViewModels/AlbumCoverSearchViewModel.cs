@@ -64,6 +64,7 @@ namespace MPTagThat.Dialogs.ViewModels
     private List<SongData> _songs;
     private string _statusMsgTmp;
     private int _nrOfSitesSearched;
+    private bool _removeExistingPictures;
 
     #endregion
 
@@ -220,7 +221,10 @@ namespace MPTagThat.Dialogs.ViewModels
         
         foreach (var song in _songs)
         {
-          song.Pictures.Clear();
+          if (_removeExistingPictures || _options.MainSettings.ClearExistingPictures)
+          {
+            song.Pictures.Clear();
+          }
           song.Pictures.Add(pic);
           song.Changed = true;
         }
@@ -322,6 +326,14 @@ namespace MPTagThat.Dialogs.ViewModels
       // Add the Album Search Sites to the Combobox
       AlbumSearchSites.AddRange(_options.MainSettings.AlbumInfoSites);
       SelectedAlbumSearchSites.AddRange(_options.MainSettings.SelectedAlbumInfoSites);
+
+      if (parameters.TryGetValue("removeexistingpictures", out string param))
+      {
+        if (param == "true")
+        {
+          _removeExistingPictures = true;
+        }
+      }
 
       _songs = parameters.GetValue<List<SongData>>("songs");
       if (_songs.GroupBy(s => s.Artist).Count() == 1)

@@ -28,6 +28,7 @@ using System.Windows.Input;
 using System.Windows.Media.Imaging;
 using CommonServiceLocator;
 using FreeImageAPI;
+using Microsoft.Win32;
 using MPTagThat.Core;
 using MPTagThat.Core.Common;
 using MPTagThat.Core.Common.Song;
@@ -259,6 +260,11 @@ namespace MPTagThat.TagEdit.ViewModels
     private bool _ckPartOfCompilationIsChecked;
     public bool CkPartOfCompilationIsChecked { get => _ckPartOfCompilationIsChecked; set => SetProperty(ref _ckPartOfCompilationIsChecked, value); }
 
+    private bool _ckRemovePicturesIsChecked;
+    public bool CkRemovePicturesIsChecked { get => _ckRemovePicturesIsChecked; set => SetProperty(ref _ckRemovePicturesIsChecked, value); }
+
+    private bool _ckPicturesIsChecked;
+    public bool CkPicturesIsChecked { get => _ckPicturesIsChecked; set => SetProperty(ref _ckPicturesIsChecked, value); }
     #endregion
 
     #region ctor
@@ -272,6 +278,7 @@ namespace MPTagThat.TagEdit.ViewModels
       SaveCoverCommand = new BaseCommand(SaveCover);
       RemoveCoverCommand = new BaseCommand(RemoveCover);
       GetCoverCommand = new BaseCommand(GetCover);
+      GetCoverFromFileCommand = new BaseCommand(GetCoverFromFile);
 
       SelectedGenres.CollectionChanged += SelectedGenres_CollectionChanged;
 
@@ -376,6 +383,8 @@ namespace MPTagThat.TagEdit.ViewModels
         UndoSongedits(_songs[0], _songBackup);
         _songBackup = null;
       }
+
+      _songs.ForEach(s => s.Changed = false);
     }
 
     /// <summary>
@@ -403,9 +412,55 @@ namespace MPTagThat.TagEdit.ViewModels
         Action = "Command"
       };
       evt.MessageData.Add("command", Action.ActionType.ACTION_GETCOVERART);
+      evt.MessageData.Add("removeexistingpictures", "true");
       EventSystem.Publish(evt);
     }
 
+    /// <summary>
+    /// Get a Cover From a File
+    /// </summary>
+    public ICommand GetCoverFromFileCommand { get; }
+
+    private void GetCoverFromFile(object param)
+    {
+      if (SongEdit == null)
+      {
+        return;
+      }
+
+      var oFd = new OpenFileDialog
+      {
+        Filter = "Pictures (Bmp, Jpg, Gif, Png)|*.jpg;*.jpeg;*.bmp;*.Gif;*.png|All Files|*.*",
+        InitialDirectory = SongEdit.FullFileName != null ? SongEdit.FilePath : _songs[0].FilePath
+        
+      };
+      if (oFd.ShowDialog() == true)
+      {
+        if (CkRemovePicturesIsChecked)
+        {
+          SongEdit.Pictures.Clear();
+          FrontCover = null;
+        }
+
+        try
+        {
+          var pic = new Picture(oFd.FileName);
+          SongEdit.Pictures.Add(pic);
+          FrontCover = SongEdit.FrontCover;
+          SongEdit.Changed = true;
+          
+          if (MultiCheckBoxVisibility)
+          {
+            CkPicturesIsChecked = true;
+          }
+        }
+        catch (Exception ex)
+        {
+          log.Error("Exception Loading picture: {0} {1}", oFd.FileName, ex.Message);
+        }
+      }
+    }
+    
     /// <summary>
     /// Remove covers
     /// </summary>
@@ -420,6 +475,10 @@ namespace MPTagThat.TagEdit.ViewModels
       evt.MessageData.Add("command", Action.ActionType.ACTION_REMOVEPICTURE);
       EventSystem.Publish(evt);
       FrontCover = null;
+      if (MultiCheckBoxVisibility)
+      {
+        CkPicturesIsChecked = true;
+      }
     }
 
     /// <summary>
@@ -520,6 +579,12 @@ namespace MPTagThat.TagEdit.ViewModels
         if (CkCommentIsChecked)
         {
           song.Comment = songEdit.Comment;
+          song.Changed = true;
+        }
+
+        if (CkPicturesIsChecked)
+        {
+          song.Pictures = songEdit.Pictures;
           song.Changed = true;
         }
 
@@ -747,6 +812,7 @@ namespace MPTagThat.TagEdit.ViewModels
       CkRemoveLyricsIsChecked = false;
       CkMediaTypeIsChecked = false;
       CkTrackLengthIsChecked = false;
+      CkPicturesIsChecked = false;
     }
 
     /// <summary>
@@ -796,6 +862,7 @@ namespace MPTagThat.TagEdit.ViewModels
       original.OriginalOwner = backup.OriginalOwner;
       original.OriginalRelease = backup.OriginalRelease;
       original.Publisher = backup.Publisher;
+      original.Pictures = backup.Pictures;
       original.Rating = backup.Rating;
       original.ReplayGainTrack = backup.ReplayGainTrack;
       original.ReplayGainTrackPeak = backup.ReplayGainTrackPeak;
@@ -864,6 +931,10 @@ namespace MPTagThat.TagEdit.ViewModels
         // Update the FrontCover
         case "coverschanged":
           FrontCover = _songs[0].FrontCover;
+          if (MultiCheckBoxVisibility)
+          {
+            CkPicturesIsChecked = true;
+          }
           break;
       }
     }

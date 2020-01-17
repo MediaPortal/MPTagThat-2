@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Syncfusion.Windows.Tools.Controls;
 
 namespace MPTagThat.TagEdit.Views
 {
@@ -24,6 +26,8 @@ namespace MPTagThat.TagEdit.Views
     {
       InitializeComponent();
     }
+
+
 
     private void TagEditView_OnSizeChanged(object sender, SizeChangedEventArgs e)
     {

@@ -824,4 +824,7 @@
   <data name="organise_SameFile" xml:space="preserve">
     <value>Source and Target File are the same. File skipped</value>
   </data>
+  <data name="tagEdit_Remove_Existing_Pictures" xml:space="preserve">
+    <value>Remove existing pictures</value>
+  </data>
 </root>

@@ -702,6 +702,10 @@ namespace MPTagThat.SongGrid.ViewModels
 
           if ((Action.ActionType)msg.MessageData["command"] == Action.ActionType.ACTION_GETCOVERART)
           {
+            if (msg.MessageData.ContainsKey("removeexistingpictures"))
+            {
+              parameters.Add("removeexistingpictures", msg.MessageData["removeexistingpictures"]);
+            }
             _dialogService.ShowDialogInAnotherWindow("AlbumCoverSearchView", "DialogWindowView", parameters, null);
             return;
           }

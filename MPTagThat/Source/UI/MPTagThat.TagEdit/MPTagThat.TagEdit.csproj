@@ -124,6 +124,8 @@
     <Resource Include="Resources\Images\GetCoverArt_16x.png" />
     <Resource Include="Resources\Images\GetCoverArt_32x.png" />
     <Resource Include="Resources\Images\Save_16x.png" />
+    <Resource Include="Resources\Images\File_16x.png" />
+    <Resource Include="Resources\Images\File_32x.png" />
     <Content Include="x64\FreeImage.dll" />
     <Content Include="x86\FreeImage.dll" />
   </ItemGroup>

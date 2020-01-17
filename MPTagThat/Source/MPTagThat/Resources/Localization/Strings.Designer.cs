@@ -1924,6 +1924,15 @@ namespace MPTagThat.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Remove existing pictures.
+        /// </summary>
+        public static string tagEdit_Remove_Existing_Pictures {
+            get {
+                return ResourceManager.GetString("tagEdit_Remove_Existing_Pictures", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Main Tags.
         /// </summary>
         public static string tagEdit_TabHeader_Main {

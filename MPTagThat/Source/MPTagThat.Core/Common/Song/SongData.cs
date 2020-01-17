@@ -809,7 +809,11 @@ namespace MPTagThat.Core.Common.Song
     /// <summary>
     /// Returns the stored Coverart for the Song
     /// </summary>
-    public List<Picture> Pictures => _pictures;
+    public List<Picture> Pictures
+    {
+      get => _pictures;
+      set => _pictures = value;
+    }
 
     /// <summary>
     /// Returns the Hashlist for objects, which we have in the database

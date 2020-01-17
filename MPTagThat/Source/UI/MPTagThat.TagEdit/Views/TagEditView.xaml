@@ -39,7 +39,7 @@
                             Command="{Binding CancelEditCommand}" />
     </Grid>
     <syncfusion:TabNavigationControl x:Name="tabNavigation" TabStripVisibility="Visible" SelectedIndex="0" >
-      <syncfusion:TabNavigationItem Header="{lex:Loc tagEdit_TabHeader_Main}">
+      <syncfusion:TabNavigationItem Header="{lex:Loc tagEdit_TabHeader_Main}" >
         <syncfusion:TabNavigationItem.Content>
           <Grid>
             <Grid.RowDefinitions>
@@ -271,36 +271,46 @@
 
               <!-- Picture -->
               <Grid Margin="5">
+                <Grid.RowDefinitions>
+                  <RowDefinition/>
+                  <RowDefinition/>
+                </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                   <ColumnDefinition Width="100"/>
                   <ColumnDefinition Width="40"/>
                   <ColumnDefinition/>
                   <ColumnDefinition Width="20"/>
                 </Grid.ColumnDefinitions>
-                <Label Grid.Column="0" Content="{lex:Loc tagEdit_FrontCover}" />
-                <StackPanel Grid.Column="1" >
+                <Label Grid.Row="0" Grid.Column="0" Content="{lex:Loc tagEdit_FrontCover}" />
+                <StackPanel Grid.Row="0" Grid.Column="1" >
                   <syncfusion:ButtonAdv  Label="" Width="30" Height="30" VerticalAlignment="Top" HorizontalAlignment="Left" 
                                          SmallIcon="pack://application:,,,/MPTagThat.TagEdit;component/Resources/Images/GetCoverArt_32x.png" 
                                          Command="{Binding GetCoverCommand}"
                                          CommandParameter="{Binding SongEdit}" />
-                  <syncfusion:ButtonAdv  Label="" Width="30" Height="30" VerticalAlignment="Top" Margin="0,5,0,0" HorizontalAlignment="Left" 
+                  <syncfusion:ButtonAdv  Label="" Width="30" Height="30" VerticalAlignment="Top" Margin="0,4,0,0" HorizontalAlignment="Left" 
+                                         SmallIcon="pack://application:,,,/MPTagThat.TagEdit;component/Resources/Images/File_32x.png" 
+                                         Command="{Binding GetCoverFromFileCommand}"
+                                         CommandParameter="{Binding SongEdit}" />
+                  <syncfusion:ButtonAdv  Label="" Width="30" Height="30" VerticalAlignment="Top" Margin="0,4,0,0" HorizontalAlignment="Left" 
                                          SmallIcon="pack://application:,,,/MPTagThat.TagEdit;component/Resources/Images/RemovePictures_32x.png" 
                                          Command="{Binding RemoveCoverCommand}"
                                          CommandParameter="{Binding SongEdit}" />
-                  <syncfusion:ButtonAdv  Label="" Width="30" Height="30" VerticalAlignment="Top" Margin="0,5,0,0" HorizontalAlignment="Left" 
+                  <syncfusion:ButtonAdv  Label="" Width="30" Height="30" VerticalAlignment="Top" Margin="0,4,0,0" HorizontalAlignment="Left" 
                                          SmallIcon="pack://application:,,,/MPTagThat.TagEdit;component/Resources/Images/Save_16x.png" 
                                          Command="{Binding SaveCoverCommand}"
                                          CommandParameter="{Binding SongEdit}" />
                 </StackPanel>
-                <Border Grid.Column="2" BorderThickness="1" BorderBrush="#FF000000" VerticalAlignment="Top" HorizontalAlignment="Left" Width="131" Height="131" >
+                <Border Grid.Row="0" Grid.Column="2" BorderThickness="1" BorderBrush="#FF000000" VerticalAlignment="Top" HorizontalAlignment="Left" Width="131" Height="131" >
                   <Image  Name="FrontCover" Source="{Binding FrontCover}"  Width="128" Height="128" />
                 </Border>
+                <CheckBox Grid.Row="0" Grid.Column="3" VerticalAlignment="Center" Margin="2,0,0,0" IsChecked="{Binding CkPicturesIsChecked, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Visibility="{Binding MultiCheckBoxVisibility, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                <CheckBox Grid.Row="1" Grid.Column="2" Content="{lex:Loc tagEdit_Remove_Existing_Pictures}" IsChecked="{Binding CkRemovePicturesIsChecked, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" /> 
               </Grid>
             </StackPanel>
           </Grid>
         </syncfusion:TabNavigationItem.Content>
       </syncfusion:TabNavigationItem>
-      <syncfusion:TabNavigationItem Header="Additional">
+      <syncfusion:TabNavigationItem Header="Additional" >
         <syncfusion:TabNavigationItem.Content>
           <Grid>
 
