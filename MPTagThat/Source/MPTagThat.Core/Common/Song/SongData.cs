@@ -19,7 +19,10 @@
 
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
+using System.Windows.Media.Imaging;
+using FreeImageAPI;
 using MPTagThat.Core.Utils;
 using Prism.Mvvm;
 using TagLib;
@@ -770,12 +773,43 @@ namespace MPTagThat.Core.Common.Song
     }
 
     /// <summary>
+    /// Return the Front Cover
+    /// </summary>
+    public BitmapImage FrontCover
+    {
+      get
+      {
+        if (Pictures.Count > 0)
+        {
+          FreeImageBitmap img = null;
+          try
+          {
+            var bitmapImage = new BitmapImage();
+            using (var stream = new MemoryStream(_pictures[0].Data))
+            {
+              stream.Seek(0, SeekOrigin.Begin);
+              bitmapImage.BeginInit();
+              bitmapImage.StreamSource = stream;
+              bitmapImage.CreateOptions = BitmapCreateOptions.PreservePixelFormat;
+              bitmapImage.CacheOption = BitmapCacheOption.OnLoad;
+              bitmapImage.EndInit();
+              return bitmapImage;
+            }
+          }
+          catch
+          {
+            return null;
+          }
+        }
+
+        return null;
+      }
+    }
+
+    /// <summary>
     /// Returns the stored Coverart for the Song
     /// </summary>
-    public List<Picture> Pictures
-    {
-      get => _pictures; 
-    }
+    public List<Picture> Pictures => _pictures;
 
     /// <summary>
     /// Returns the Hashlist for objects, which we have in the database

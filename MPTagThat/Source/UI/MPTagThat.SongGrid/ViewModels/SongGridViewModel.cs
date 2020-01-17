@@ -633,9 +633,12 @@ namespace MPTagThat.SongGrid.ViewModels
 
     #region Event Handling
 
+    // List of Supported commands, that should be processed by ExecuteCommand
+    // Commands that show a Dialog, like Lyrics, CoverARt, etc. should not specified here, they will be handled as dialogs
     private readonly List<Action.ActionType> _supportedCommands = new List<Action.ActionType>() 
       { Action.ActionType.ACTION_SAVE, 
-        Action.ActionType.ACTION_SAVEALL
+        Action.ActionType.ACTION_SAVEALL,
+        Action.ActionType.ACTION_REMOVEPICTURE
       };
 
     private void OnMessageReceived(GenericEvent msg)

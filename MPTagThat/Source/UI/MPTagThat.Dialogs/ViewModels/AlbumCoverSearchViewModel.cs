@@ -31,6 +31,7 @@ using System.Windows;
 using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Media;
+using MPTagThat.Core;
 using MPTagThat.Core.Annotations;
 using MPTagThat.Core.Common;
 using MPTagThat.Core.Common.Song;
@@ -223,6 +224,12 @@ namespace MPTagThat.Dialogs.ViewModels
           song.Pictures.Add(pic);
           song.Changed = true;
         }
+
+        GenericEvent evt = new GenericEvent
+        {
+          Action = "coverschanged"
+        };
+        EventSystem.Publish(evt);
 
         CloseDialog("true");
       }

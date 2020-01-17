@@ -18,6 +18,8 @@
 using System;
 using System.Drawing;
 using System.IO;
+using System.Windows.Forms;
+using System.Windows.Media.Imaging;
 using TagLib;
 using FreeImageAPI;
 
@@ -145,6 +147,18 @@ namespace MPTagThat.Core.Common.Song
       }
       return byteArray;
     }
+
+    public static byte[] ImageToByte(BitmapImage img)
+    {
+      using (MemoryStream stream = new MemoryStream())
+      {
+        BitmapEncoder enc = new BmpBitmapEncoder();
+        enc.Frames.Add(BitmapFrame.Create(img));
+        enc.Save(stream);
+        return stream.ToArray();
+      }
+    }
+
 
     public void Resize (int width)
     {

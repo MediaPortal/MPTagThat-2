@@ -38,12 +38,10 @@ namespace MPTagThat.SongGrid.Commands
     private static Type[] _staticCommandTypes = new Type[]
     {
       typeof (CmdSave),
+      typeof (CmdRemoveCoverArt),
       /*
       typeof (CmdIdentifyFile),
-      typeof (CmdGetCoverArt),
-      typeof (CmdGetLyrics),
       typeof (CmdRemoveComment),
-      typeof (CmdRemoveCoverArt),
       typeof (CmdValidateMp3File),
       typeof (CmdFixMp3File),
       typeof (CmdReplayGain),

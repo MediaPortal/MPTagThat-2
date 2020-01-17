@@ -26,14 +26,19 @@ using System.Linq;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
+using CommonServiceLocator;
 using FreeImageAPI;
 using MPTagThat.Core;
 using MPTagThat.Core.Common;
 using MPTagThat.Core.Common.Song;
 using MPTagThat.Core.Events;
+using MPTagThat.Core.Services.Logging;
+using MPTagThat.Core.Utils;
 using Prism.Events;
 using Prism.Mvvm;
 using Prism.Regions;
+using Action = MPTagThat.Core.Common.Action;
+
 // ReSharper disable StringLiteralTypo
 
 #endregion
@@ -44,6 +49,7 @@ namespace MPTagThat.TagEdit.ViewModels
   {
     #region Variables
 
+    private readonly NLogLogger log = (ServiceLocator.Current.GetInstance(typeof(ILogger)) as ILogger)?.GetLogger;
     private List<SongData> _songs = null;
     private SongData _songBackup = null;
     private bool _isInitializing = false;
@@ -61,7 +67,7 @@ namespace MPTagThat.TagEdit.ViewModels
       get => _songEdit;
       set => SetProperty(ref _songEdit, value);
     }
-    
+
     /// <summary>
     /// Binding for View Enablement
     /// </summary>
@@ -92,7 +98,7 @@ namespace MPTagThat.TagEdit.ViewModels
       get => _genres;
       set => SetProperty(ref _genres, value);
     }
-    
+
     /// <summary>
     /// The Selected Genres
     /// </summary>
@@ -102,7 +108,7 @@ namespace MPTagThat.TagEdit.ViewModels
       get => _selectedGenres;
       set => SetProperty(ref _selectedGenres, value);
     }
-    
+
     /// <summary>
     /// Indicates if the checkboxes for Multiline edit should be shown
     /// </summary>
@@ -263,6 +269,9 @@ namespace MPTagThat.TagEdit.ViewModels
       CancelEditCommand = new BaseCommand(CancelEdit);
       TextChangedCommand = new BaseCommand(TextChanged);
       ApplyArtistToAlbumArtistCommand = new BaseCommand(ApplyArtistToAlbumArtist);
+      SaveCoverCommand = new BaseCommand(SaveCover);
+      RemoveCoverCommand = new BaseCommand(RemoveCover);
+      GetCoverCommand = new BaseCommand(GetCover);
 
       SelectedGenres.CollectionChanged += SelectedGenres_CollectionChanged;
 
@@ -293,19 +302,40 @@ namespace MPTagThat.TagEdit.ViewModels
         return;
       }
 
-      var tb = (TextBox)(param as TextChangedEventArgs).Source;
-      if (tb.Name.ToLower() == "tracknumber") CkTrackIsChecked = true;
-      else if (tb.Name.ToLower() == "trackcount") CkTrackIsChecked = true;
-      else if (tb.Name.ToLower() == "discnumber") CkDiscIsChecked = true;
-      else if (tb.Name.ToLower() == "disccount") CkDiscIsChecked = true;
-      else if (tb.Name.ToLower() == "title") CkTitleIsChecked = true;
-      else if (tb.Name.ToLower() == "artist") CkArtistIsChecked = true;
-      else if (tb.Name.ToLower() == "albumartist") CkAlbumArtistIsChecked = true;
-      else if (tb.Name.ToLower() == "album") CkAlbumIsChecked = true;
-      else if (tb.Name.ToLower() == "year") CkYearIsChecked = true;
-      else if (tb.Name.ToLower() == "comment") CkCommentIsChecked = true;
-      
+      var tb = (TextBox)(param as TextChangedEventArgs)?.Source;
 
+      if (tb != null)
+      {
+        switch (tb.Name.ToLower())
+        {
+          case "tracknumber":
+          case "trackcount":
+            CkTrackIsChecked = true;
+            break;
+          case "discnumber":
+          case "disccount":
+            CkDiscIsChecked = true;
+            break;
+          case "title":
+            CkTitleIsChecked = true;
+            break;
+          case "artist":
+            CkArtistIsChecked = true;
+            break;
+          case "albumartist":
+            CkAlbumArtistIsChecked = true;
+            break;
+          case "album":
+            CkAlbumIsChecked = true;
+            break;
+          case "year":
+            CkYearIsChecked = true;
+            break;
+          case "comment":
+            CkCommentIsChecked = true;
+            break;
+        }
+      }
     }
 
     /// <summary>
@@ -343,7 +373,7 @@ namespace MPTagThat.TagEdit.ViewModels
       ClearForm();
       if (_songBackup != null && _songs.Count == 1)
       {
-        UndoSongedits(_songs[0],_songBackup);
+        UndoSongedits(_songs[0], _songBackup);
         _songBackup = null;
       }
     }
@@ -362,6 +392,57 @@ namespace MPTagThat.TagEdit.ViewModels
     }
 
     /// <summary>
+    /// Retrieve Cover Art
+    /// </summary>
+    public ICommand GetCoverCommand { get; }
+
+    private void GetCover(object param)
+    {
+      GenericEvent evt = new GenericEvent()
+      {
+        Action = "Command"
+      };
+      evt.MessageData.Add("command", Action.ActionType.ACTION_GETCOVERART);
+      EventSystem.Publish(evt);
+    }
+
+    /// <summary>
+    /// Remove covers
+    /// </summary>
+    public ICommand RemoveCoverCommand { get; }
+
+    private void RemoveCover(object param)
+    {
+      GenericEvent evt = new GenericEvent()
+      {
+        Action = "Command"
+      };
+      evt.MessageData.Add("command", Action.ActionType.ACTION_REMOVEPICTURE);
+      EventSystem.Publish(evt);
+      FrontCover = null;
+    }
+
+    /// <summary>
+    /// Save picture as Folder.jpg
+    /// </summary>
+    public ICommand SaveCoverCommand { get; }
+
+    private void SaveCover(object param)
+    {
+      log.Info("Saving Folder Thumb");
+      var song = (SongData)param;
+      // Do we have multiple Songs selected and a Front Cover exists?
+      if (_songs.Count > 1 && FrontCover != null)
+      {
+        song.FullFileName = _songs[0].FullFileName;
+        var pic = new Picture { Data = Picture.ImageToByte(FrontCover) };
+        song.Pictures.Add(pic);
+      }
+      Util.SavePicture(song);
+    }
+
+
+    /// <summary>
     /// Invoked by the Apply Changes button in the View
     /// Loop through the the selected songs and apply the changes.
     /// </summary>
@@ -370,7 +451,7 @@ namespace MPTagThat.TagEdit.ViewModels
     private void ApplyEdit(object param)
     {
       var songEdit = (SongData)param;
-      
+
       if (_songs == null)
       {
         return;
@@ -383,7 +464,7 @@ namespace MPTagThat.TagEdit.ViewModels
         songEdit.Changed = true;
         return;
       }
-      
+
       foreach (var song in _songs)
       {
         if (CkTrackIsChecked)
@@ -468,7 +549,7 @@ namespace MPTagThat.TagEdit.ViewModels
         _songBackup = SongEdit.Clone();
         UpdateGenres(SongEdit);
         SelectedGenres.AddRange(SongEdit.Genre.Split(';'));
-        GetFrontCover(SongEdit);
+        FrontCover = SongEdit.FrontCover;
         _isInitializing = false;
         return;
       }
@@ -572,7 +653,7 @@ namespace MPTagThat.TagEdit.ViewModels
           {
             if (i == 0)
             {
-              GetFrontCover(song);
+              FrontCover = song.FrontCover;
               picData = song.Pictures[0].Data;
             }
             else
@@ -591,44 +672,6 @@ namespace MPTagThat.TagEdit.ViewModels
       // We have multiple Songs selected, so show the Checkboxes and
       // decide if they shoud be checked.
       MultiCheckBoxVisibility = true;
-    }
-
-    /// <summary>
-    /// Get the Picture out of the file and set the FrontCover property for the Binding in the View
-    /// </summary>
-    /// <param name="song"></param>
-    private void GetFrontCover(SongData song)
-    {
-      if (song.Pictures.Count > 0)
-      {
-        var data = song.Pictures[0].Data;
-        FreeImageBitmap img = null;
-        try
-        {
-          MemoryStream ms = new MemoryStream(data);
-          img = new FreeImageBitmap(ms);
-          
-          var bitmapImage = new BitmapImage();
-          using (var memory = new MemoryStream())
-          {
-            img.Save(memory, FREE_IMAGE_FORMAT.FIF_PNG);
-            memory.Position = 0;
-
-
-            bitmapImage.BeginInit();
-            bitmapImage.StreamSource = memory;
-            bitmapImage.CacheOption = BitmapCacheOption.OnLoad;
-            bitmapImage.EndInit();
-            bitmapImage.Freeze();
-            img.Dispose();
-            FrontCover = bitmapImage;
-          }
-
-        }
-        catch (Exception)
-        {
-        }
-      }
     }
 
     /// <summary>
@@ -815,6 +858,12 @@ namespace MPTagThat.TagEdit.ViewModels
         case "selectedfolderchanged":
           ClearForm();
           IsEnabled = false;
+          break;
+
+        // Covers have been changed because of a Cover Search
+        // Update the FrontCover
+        case "coverschanged":
+          FrontCover = _songs[0].FrontCover;
           break;
       }
     }
