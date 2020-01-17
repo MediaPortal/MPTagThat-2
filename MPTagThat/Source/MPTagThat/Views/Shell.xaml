@@ -45,23 +45,29 @@
     <ContentControl prism:RegionManager.RegionName="RibbonRegion" Grid.ColumnSpan="2" Grid.RowSpan="2" />
     <syncfusion:DockingManager prism:RegionManager.RegionName="MainRegion" Name="MainDockingManager" DockFill="True" DockFillDocumentMode="Normal" Grid.ColumnSpan="2" Grid.Row="1">
       <ContentControl syncfusion:DockingManager.Header="{lex:Loc treeview_Header}" x:Name="Treeview" 
-                      syncfusion:DockingManager.DesiredWidthInDockedMode="150" 
-                      syncfusion:DockingManager.DesiredWidthInFloatingMode="150" 
+                      syncfusion:DockingManager.DesiredWidthInDockedMode="200" 
+                      syncfusion:DockingManager.DesiredWidthInFloatingMode="200" 
+                      syncfusion:DockingManager.DesiredHeightInDockedMode="650" 
+                      syncfusion:DockingManager.DesiredHeightInFloatingMode="650"
                       syncfusion:DockingManager.CanClose="False" 
                       prism:RegionManager.RegionName="TreeviewTab" />
 
       <ContentControl syncfusion:DockingManager.Header="{lex:Loc miscFiles_Header}" x:Name="MiscFiles"
-                      syncfusion:DockingManager.SideInDockedMode="Tabbed"
+                      syncfusion:DockingManager.SideInDockedMode="Bottom"
                       syncfusion:DockingManager.TargetNameInDockedMode="Treeview"
                       prism:RegionManager.RegionName="MiscFilesTab" />
 
+      <ContentControl syncfusion:DockingManager.Header="TagEdit" x:Name="TagEdit"
+                      syncfusion:DockingManager.SideInDockedMode="Right"
+                      syncfusion:DockingManager.DesiredWidthInDockedMode="375" 
+                      syncfusion:DockingManager.DesiredWidthInFloatingMode="375" 
+                      syncfusion:DockingManager.CanClose="False"
+                      prism:RegionManager.RegionName="TagEdit" />
+
       <ContentControl syncfusion:DockingManager.Header="SongGrid" x:Name="SongGrid"
                       syncfusion:DockingManager.SideInDockedMode="Top"
+                      syncfusion:DockingManager.CanClose="False" 
                       prism:RegionManager.RegionName="SongGrid" />
-
-      <ContentControl syncfusion:DockingManager.Header="TagEdit" x:Name="TagEdit"
-                      syncfusion:DockingManager.SideInDockedMode="Bottom"
-                      prism:RegionManager.RegionName="TagEdit" />
 
     </syncfusion:DockingManager>
   </Grid>
