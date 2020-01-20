@@ -236,7 +236,6 @@ namespace MPTagThat.Dialogs.ViewModels
 
           // Now that we have a correct Filename and no duplicates accept the changes
           _songs[i].FileName = $"{fileName}{ext}";
-          _songs[i].Changed = true;
         }
         catch (Exception ex)
         {

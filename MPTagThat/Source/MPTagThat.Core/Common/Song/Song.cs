@@ -35,6 +35,7 @@ namespace MPTagThat.Core.Common.Song
     public static SongData Create(string fileName)
     {
       SongData song = new SongData();
+      song.Init = true; // Don't set the Song Changed property
       TagLib.File file = null;
       bool error = false;
 
@@ -358,6 +359,7 @@ namespace MPTagThat.Core.Common.Song
         log.Error("Exception getting User Defined frames for file: {0}. {1}", fileName, ex.Message);
       }
 
+      song.Init = false;
       return song;
     }
 

@@ -21,6 +21,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Windows.Controls;
@@ -34,6 +35,8 @@ using MPTagThat.Core.Common;
 using MPTagThat.Core.Common.Song;
 using MPTagThat.Core.Events;
 using MPTagThat.Core.Services.Logging;
+using MPTagThat.Core.Services.Settings;
+using MPTagThat.Core.Services.Settings.Setting;
 using MPTagThat.Core.Utils;
 using Prism.Events;
 using Prism.Mvvm;
@@ -51,6 +54,7 @@ namespace MPTagThat.TagEdit.ViewModels
     #region Variables
 
     private readonly NLogLogger log = (ServiceLocator.Current.GetInstance(typeof(ILogger)) as ILogger)?.GetLogger;
+    private readonly Options _options = (ServiceLocator.Current.GetInstance(typeof(ISettingsManager)) as ISettingsManager)?.GetOptions;
     private List<SongData> _songs = null;
     private SongData _songBackup = null;
     private bool _isInitializing = false;
@@ -88,7 +92,6 @@ namespace MPTagThat.TagEdit.ViewModels
       get => _isApplyButtonEnabled;
       set => SetProperty(ref _isApplyButtonEnabled, value);
     }
-
 
     /// <summary>
     /// The Binding for the Genres
@@ -128,6 +131,28 @@ namespace MPTagThat.TagEdit.ViewModels
     {
       get => _frontCover;
       set => SetProperty(ref _frontCover, value);
+    }
+
+    /// <summary>
+    /// The Binding for the Media Types
+    /// </summary>
+    private ObservableCollection<Item> _mediaTypes = new ObservableCollection<Item>();
+
+    public ObservableCollection<Item> MediaTypes
+    {
+      get => _mediaTypes;
+      set => SetProperty(ref _mediaTypes, value);
+    }
+
+    /// <summary>
+    /// The Selected Text in the Media Types Combobox
+    /// </summary>
+    private string _selectedMediaTypeText;
+
+    public string SelectedMediaTypeText
+    {
+      get => _selectedMediaTypeText;
+      set => SetProperty(ref _selectedMediaTypeText, value);
     }
 
     // Check Box Checked properties
@@ -187,6 +212,9 @@ namespace MPTagThat.TagEdit.ViewModels
 
     private bool _ckArtistSortIsChecked;
     public bool CkArtistSortIsChecked { get => _ckArtistSortIsChecked; set => SetProperty(ref _ckArtistSortIsChecked, value); }
+
+    private bool _ckAlbumArtistSortIsChecked;
+    public bool CkAlbumArtistSortIsChecked { get => _ckAlbumArtistSortIsChecked; set => SetProperty(ref _ckAlbumArtistSortIsChecked, value); }
 
     private bool _ckAlbumSortIsChecked;
     public bool CkAlbumSortIsChecked { get => _ckAlbumSortIsChecked; set => SetProperty(ref _ckAlbumSortIsChecked, value); }
@@ -282,6 +310,8 @@ namespace MPTagThat.TagEdit.ViewModels
 
       SelectedGenres.CollectionChanged += SelectedGenres_CollectionChanged;
 
+      MediaTypes.AddRange(_options.MediaTypes);
+
       EventSystem.Subscribe<GenericEvent>(OnMessageReceived, ThreadOption.UIThread);
     }
 
@@ -298,11 +328,6 @@ namespace MPTagThat.TagEdit.ViewModels
     private void TextChanged(object param)
     {
       IsApplyButtonEnabled = true;
-
-      if (!_isInitializing)
-      {
-        SongEdit.Changed = true;
-      }
 
       if (!MultiCheckBoxVisibility)
       {
@@ -340,6 +365,45 @@ namespace MPTagThat.TagEdit.ViewModels
             break;
           case "comment":
             CkCommentIsChecked = true;
+            break;
+          case "composer":
+            CkComposerIsChecked = true;
+            break;
+          case "conductor":
+            CkConductorIsChecked = true;
+            break;
+          case "interpretedby":
+            CkInterpretedByIsChecked = true;
+            break;
+          case "textwriter":
+            CkTextWriterIsChecked = true;
+            break;
+          case "publisher":
+            CkPublisherIsChecked = true;
+            break;
+          case "encodedby":
+            CkEncodedByIsChecked = true;
+            break;
+          case "copyright":
+            CkCopyrightIsChecked = true;
+            break;
+          case "grouping":
+            CkContentGroupIsChecked = true;
+            break;
+          case "subtitle":
+            CkSubTitleIsChecked = true;
+            break;
+          case "artistsort":
+            CkArtistSortIsChecked = true;
+            break;
+          case "albumartistsort":
+            CkAlbumArtistSortIsChecked = true;
+            break;
+          case "albumsort":
+            CkAlbumSortIsChecked = true;
+            break;
+          case "titlesort":
+            CkTitleSortIsChecked = true;
             break;
         }
       }
@@ -517,10 +581,8 @@ namespace MPTagThat.TagEdit.ViewModels
       }
 
       // If we got only one song, then the changes have been applied already through binding
-      // Just indicate that the song was changed and return
       if (_songs.Count == 1)
       {
-        songEdit.Changed = true;
         return;
       }
 
@@ -529,37 +591,31 @@ namespace MPTagThat.TagEdit.ViewModels
         if (CkTrackIsChecked)
         {
           song.Track = songEdit.Track;
-          song.Changed = true;
         }
 
         if (CkDiscIsChecked)
         {
           song.Disc = songEdit.Disc;
-          song.Changed = true;
         }
 
         if (CkTitleIsChecked)
         {
           song.Title = songEdit.Title;
-          song.Changed = true;
         }
 
         if (CkArtistIsChecked)
         {
           song.Artist = songEdit.Artist.Trim();
-          song.Changed = true;
         }
 
         if (CkAlbumArtistIsChecked)
         {
           song.AlbumArtist = songEdit.AlbumArtist.Trim();
-          song.Changed = true;
         }
 
         if (CkAlbumIsChecked)
         {
           song.Album = songEdit.Album;
-          song.Changed = true;
         }
 
         song.Compilation = CkPartOfCompilationIsChecked;
@@ -567,25 +623,87 @@ namespace MPTagThat.TagEdit.ViewModels
         if (CkYearIsChecked)
         {
           song.Year = songEdit.Year;
-          song.Changed = true;
         }
 
         if (CkGenreIsChecked)
         {
           song.Genre = songEdit.Genre;
-          song.Changed = true;
         }
 
         if (CkCommentIsChecked)
         {
           song.Comment = songEdit.Comment;
-          song.Changed = true;
         }
 
         if (CkPicturesIsChecked)
         {
           song.Pictures = songEdit.Pictures;
           song.Changed = true;
+        }
+
+        if (CkComposerIsChecked)
+        {
+          song.Composer = songEdit.Composer;
+        }
+
+        if (CkConductorIsChecked)
+        {
+          song.Conductor = songEdit.Conductor;
+        }
+
+        if (CkInterpretedByIsChecked)
+        {
+          song.Interpreter = songEdit.Interpreter;
+        }
+
+        if (CkTextWriterIsChecked)
+        {
+          song.TextWriter = songEdit.TextWriter;
+        }
+
+        if (CkPublisherIsChecked)
+        {
+          song.Publisher = songEdit.Publisher;
+        }
+
+        if (CkEncodedByIsChecked)
+        {
+          song.EncodedBy = songEdit.EncodedBy;
+        }
+
+        if (CkCopyrightIsChecked)
+        {
+          song.Copyright = songEdit.Copyright;
+        }
+
+        if (CkContentGroupIsChecked)
+        {
+          song.Grouping = songEdit.Grouping;
+        }
+
+        if (CkSubTitleIsChecked)
+        {
+          song.SubTitle = songEdit.SubTitle;
+        }
+
+        if (CkArtistSortIsChecked)
+        {
+          song.ArtistSortName = songEdit.ArtistSortName;
+        }
+
+        if (CkAlbumArtistSortIsChecked)
+        {
+          song.AlbumArtistSortName = songEdit.AlbumArtistSortName;
+        }
+
+        if (CkAlbumSortIsChecked)
+        {
+          song.AlbumSortName = songEdit.AlbumSortName;
+        }
+
+        if (CkTitleSortIsChecked)
+        {
+          song.TitleSortName = songEdit.TitleSortName;
         }
 
       }
@@ -710,8 +828,7 @@ namespace MPTagThat.TagEdit.ViewModels
         {
           SongEdit.Comment = i == 0 ? song.Comment : "";
         }
-
-
+        
         if (song.Pictures.Count > 0)
         {
           if (!song.Pictures[0].Data.SequenceEqual(picData))
@@ -728,6 +845,70 @@ namespace MPTagThat.TagEdit.ViewModels
           }
         }
 
+        if (SongEdit.Composer != song.Composer)
+        {
+          SongEdit.Composer = i == 0 ? song.Composer : "";
+        }
+
+        if (SongEdit.Conductor != song.Conductor)
+        {
+          SongEdit.Conductor = i == 0 ? song.Conductor : "";
+        }
+
+        if (SongEdit.Interpreter != song.Interpreter)
+        {
+          SongEdit.Interpreter = i == 0 ? song.Interpreter : "";
+        }
+
+        if (SongEdit.TextWriter != song.TextWriter)
+        {
+          SongEdit.TextWriter = i == 0 ? song.TextWriter : "";
+        }
+
+        if (SongEdit.Publisher != song.Publisher)
+        {
+          SongEdit.Publisher = i == 0 ? song.Publisher : "";
+        }
+
+        if (SongEdit.EncodedBy != song.EncodedBy)
+        {
+          SongEdit.EncodedBy = i == 0 ? song.EncodedBy : "";
+        }
+
+        if (SongEdit.Copyright != song.Copyright)
+        {
+          SongEdit.Copyright = i == 0 ? song.Copyright : "";
+        }
+
+        if (SongEdit.Grouping != song.Grouping)
+        {
+          SongEdit.Grouping = i == 0 ? song.Grouping : "";
+        }
+
+        if (SongEdit.SubTitle != song.SubTitle)
+        {
+          SongEdit.SubTitle = i == 0 ? song.SubTitle : "";
+        }
+
+        if (SongEdit.ArtistSortName != song.ArtistSortName)
+        {
+          SongEdit.ArtistSortName = i == 0 ? song.ArtistSortName : "";
+        }
+
+        if (SongEdit.AlbumArtistSortName != song.AlbumArtistSortName)
+        {
+          SongEdit.AlbumArtistSortName = i == 0 ? song.AlbumArtistSortName : "";
+        }
+
+        if (SongEdit.AlbumSortName != song.AlbumSortName)
+        {
+          SongEdit.AlbumSortName = i == 0 ? song.AlbumSortName : "";
+        }
+
+        if (SongEdit.TitleSortName != song.TitleSortName)
+        {
+          SongEdit.TitleSortName = i == 0 ? song.TitleSortName : "";
+        }
 
         i++;
       }

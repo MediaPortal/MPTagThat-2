@@ -1861,11 +1861,38 @@ namespace MPTagThat.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Album Artist Sort:.
+        /// </summary>
+        public static string tagEdit_AlbumArtistSort {
+            get {
+                return ResourceManager.GetString("tagEdit_AlbumArtistSort", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Album Sort:.
+        /// </summary>
+        public static string tagEdit_AlbumSort {
+            get {
+                return ResourceManager.GetString("tagEdit_AlbumSort", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Artist:.
         /// </summary>
         public static string tagEdit_Artist {
             get {
                 return ResourceManager.GetString("tagEdit_Artist", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Artist Sort:.
+        /// </summary>
+        public static string tagEdit_ArtistSort {
+            get {
+                return ResourceManager.GetString("tagEdit_ArtistSort", resourceCulture);
             }
         }
         
@@ -1879,11 +1906,56 @@ namespace MPTagThat.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Composer:.
+        /// </summary>
+        public static string tagEdit_Composer {
+            get {
+                return ResourceManager.GetString("tagEdit_Composer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Conductor:.
+        /// </summary>
+        public static string tagEdit_Conductor {
+            get {
+                return ResourceManager.GetString("tagEdit_Conductor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Content Group:.
+        /// </summary>
+        public static string tagEdit_Content_Group {
+            get {
+                return ResourceManager.GetString("tagEdit_Content_Group", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Copyright:.
+        /// </summary>
+        public static string tagEdit_Copyright {
+            get {
+                return ResourceManager.GetString("tagEdit_Copyright", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Disc:.
         /// </summary>
         public static string tagEdit_Disc {
             get {
                 return ResourceManager.GetString("tagEdit_Disc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Encoded By:.
+        /// </summary>
+        public static string tagEdit_EncodedBy {
+            get {
+                return ResourceManager.GetString("tagEdit_EncodedBy", resourceCulture);
             }
         }
         
@@ -1915,11 +1987,47 @@ namespace MPTagThat.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Interpreted by:.
+        /// </summary>
+        public static string tagEdit_InterpretedBy {
+            get {
+                return ResourceManager.GetString("tagEdit_InterpretedBy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Media Type:.
+        /// </summary>
+        public static string tagEdit_MediaType {
+            get {
+                return ResourceManager.GetString("tagEdit_MediaType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Media Types:.
+        /// </summary>
+        public static string tagEdit_MediaTypes {
+            get {
+                return ResourceManager.GetString("tagEdit_MediaTypes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Part of Compilation.
         /// </summary>
         public static string tagEdit_PartOfCompilation {
             get {
                 return ResourceManager.GetString("tagEdit_PartOfCompilation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Publisher:.
+        /// </summary>
+        public static string tagEdit_Publisher {
+            get {
+                return ResourceManager.GetString("tagEdit_Publisher", resourceCulture);
             }
         }
         
@@ -1933,6 +2041,42 @@ namespace MPTagThat.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Song Length (ms):.
+        /// </summary>
+        public static string tagEdit_Songlength {
+            get {
+                return ResourceManager.GetString("tagEdit_Songlength", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Subtitle:.
+        /// </summary>
+        public static string tagEdit_SubTitle {
+            get {
+                return ResourceManager.GetString("tagEdit_SubTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Additional Tags.
+        /// </summary>
+        public static string tagEdit_TabHeader_Additional {
+            get {
+                return ResourceManager.GetString("tagEdit_TabHeader_Additional", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Detailed Information.
+        /// </summary>
+        public static string tagEdit_TabHeader_Detailed_Information {
+            get {
+                return ResourceManager.GetString("tagEdit_TabHeader_Detailed_Information", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Main Tags.
         /// </summary>
         public static string tagEdit_TabHeader_Main {
@@ -1942,11 +2086,29 @@ namespace MPTagThat.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Lyrics / Text Writer:.
+        /// </summary>
+        public static string tagEdit_TextWriter {
+            get {
+                return ResourceManager.GetString("tagEdit_TextWriter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Title:.
         /// </summary>
         public static string tagEdit_Title {
             get {
                 return ResourceManager.GetString("tagEdit_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Title Sort:.
+        /// </summary>
+        public static string tagEdit_TitleSort {
+            get {
+                return ResourceManager.GetString("tagEdit_TitleSort", resourceCulture);
             }
         }
         

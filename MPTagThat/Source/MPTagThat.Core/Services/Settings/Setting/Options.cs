@@ -29,7 +29,7 @@ using MPTagThat.Core.Common.Song;
 #endregion
 
 namespace MPTagThat.Core.Services.Settings.Setting
-{ 
+{
   public class Options
   {
     #region private Variables
@@ -58,6 +58,78 @@ namespace MPTagThat.Core.Services.Settings.Setting
 
     public string HelpLocation = "http://www.team-mediaportal.com/manual/MediaPortalTools/MPTagThat";
     public string ForumLocation = "http://forum.team-mediaportal.com/forums/mptagthat.261";
+
+    public Item[] MediaTypes = new[]
+                    {
+                      new Item("","",""), // empty item on purpose 
+                      new Item("DIG","","Other digital media"),
+                      new Item("DIG/A","","Analogue transfer from media"),
+                      new Item("ANA","","Other analogue media"),
+                      new Item("ANA/WAC","","Wax cylinder"),
+                      new Item("ANA/8CA","","8-track tape cassette"),
+                      new Item("CD","","CD"),
+                      new Item("CD/A","","Analogue transfer from media"),
+                      new Item("CD/DD","","DDD"),
+                      new Item("CD/AD","","ADD"),
+                      new Item("CD/AA","","AAD"),
+                      new Item("LD","","Laserdisc"),
+                      new Item("TT","","Turntable records"),
+                      new Item("TT/33","","Turntable 33.33 rpm"),
+                      new Item("TT/45","","Turntable 45 rpm"),
+                      new Item("TT/71","","Turntable 71.29 rpm"),
+                      new Item("TT/76","","Turntable 76.59 rpm"),
+                      new Item("TT/78","","Turntable 78.26 rpm"),
+                      new Item("TT/80","","Turntable 80 rpm"),
+                      new Item("MD","","MiniDisc"),
+                      new Item("MD/A","","MiniDisc - Analogue transfer from media"),
+                      new Item("DAT","","DAT"),
+                      new Item("DAT/A","","DAT - Analogue transfer from media"),
+                      new Item("DAT/1","","DAT - standard, 48 kHz/16 bits, linear"),
+                      new Item("DAT/2","","DAT - mode 2, 32 kHz/16 bits, linear"),
+                      new Item("DAT/3","","DAT - mode 3, 32 kHz/12 bits, non-linear, low speed"),
+                      new Item("DAT/4","","DAT - mode 4, 32 kHz/12 bits, 4 channels"),
+                      new Item("DAT/5","","DAT - mode 5, 44.1 kHz/16 bits, linear"),
+                      new Item("DAT/6","","DAT - mode 6, 44.1 kHz/16 bits, 'wide track' play"),
+                      new Item("DCC","","DCC"),
+                      new Item("DCC/A","","DCC - Analogue transfer from media"),
+                      new Item("DVD","","DVD"),
+                      new Item("DVD/A","","DVD - Analogue transfer from media"),
+                      new Item("TV","","Television"),
+                      new Item("TV/PAL","","PAL"),
+                      new Item("TV/NTSC","","NTSC"),
+                      new Item("TV/SECAM","","SECAM"),
+                      new Item("VID","","Video"),
+                      new Item("VID/PAL","","Video PAL"),
+                      new Item("VID/NTSC","","Video NTSC"),
+                      new Item("VID/SECAM","","Video SECAM"),
+                      new Item("VID/VHS","","Video VHS"),
+                      new Item("VID/SVHS","","Video S-VHS"),
+                      new Item("VID/BETA","","Video BETAMAX"),
+                      new Item("RAD","","Radio"),
+                      new Item("RAD/FM","","Radio FM"),
+                      new Item("RAD/AM","","Radio AM"),
+                      new Item("RAD/LW","","Radio LW"),
+                      new Item("RAD/MW","","Radio MW"),
+                      new Item("TEL","","Telephone"),
+                      new Item("TEL/I","","ISDN"),
+                      new Item("MC","","MC (normal cassette)"),
+                      new Item("MC/4","","MC 4.75 cm/s (normal speed for a two sided cassette)"),
+                      new Item("MC/9","","MC 9.5 cm/s"),
+                      new Item("MC/I","","MC Type I cassette (ferric/normal)"),
+                      new Item("MC/II","","MC Type II cassette (chrome)"),
+                      new Item("MC/III","","MC Type III cassette (ferric chrome)"),
+                      new Item("MC/IV","","MC Type IV cassette (metal)"),
+                      new Item("REE","","Reel"),
+                      new Item("REE/9","","Reel 9.5 cm/s"),
+                      new Item("REE/19","","Reel 19 cm/s"),
+                      new Item("REE/38","","Reel 38 cm/s"),
+                      new Item("REE/76","","Reel 76 cm/s"),
+                      new Item("REE/I","","Reel Type I cassette (ferric/normal)"),
+                      new Item("REE/II","","Reel Type II cassette (chrome)"),
+                      new Item("REE/III","","Reel Type III cassette (ferric chrome)"),
+                      new Item("REE/IV","","Reel Type IV cassette (metal)")
+                    };
+
 
     public Item[] WmaStandardSampleVBR = new[]
                                                   {

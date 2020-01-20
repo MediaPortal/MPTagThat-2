@@ -205,7 +205,6 @@ namespace MPTagThat.Dialogs.ViewModels
           log.Info($"Setting Lyrics from {lyric.Site} for {_songs[lyric.Row].FileName}");
           _songs[lyric.Row].LyricsFrames.Clear();
           _songs[lyric.Row].Lyrics = lyric.Lyric;
-          _songs[lyric.Row].Changed = true;
         }
       }
 

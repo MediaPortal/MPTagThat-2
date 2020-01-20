@@ -827,4 +827,76 @@
   <data name="tagEdit_Remove_Existing_Pictures" xml:space="preserve">
     <value>Remove existing pictures</value>
   </data>
+  <data name="tagEdit_AlbumArtistSort" xml:space="preserve">
+    <value>Album Artist Sort:</value>
+    <comment>The Album Artist Sort Tag</comment>
+  </data>
+  <data name="tagEdit_AlbumSort" xml:space="preserve">
+    <value>Album Sort:</value>
+    <comment>The Album Sort Tag</comment>
+  </data>
+  <data name="tagEdit_ArtistSort" xml:space="preserve">
+    <value>Artist Sort:</value>
+    <comment>The Artist Sort Tag</comment>
+  </data>
+  <data name="tagEdit_Composer" xml:space="preserve">
+    <value>Composer:</value>
+    <comment>The Composer Tag</comment>
+  </data>
+  <data name="tagEdit_Conductor" xml:space="preserve">
+    <value>Conductor:</value>
+    <comment>The Conductor Tag</comment>
+  </data>
+  <data name="tagEdit_Content_Group" xml:space="preserve">
+    <value>Content Group:</value>
+    <comment>The Content Group Tag</comment>
+  </data>
+  <data name="tagEdit_Copyright" xml:space="preserve">
+    <value>Copyright:</value>
+    <comment>The Copyright Tag</comment>
+  </data>
+  <data name="tagEdit_EncodedBy" xml:space="preserve">
+    <value>Encoded By:</value>
+    <comment>The Encoded Tag</comment>
+  </data>
+  <data name="tagEdit_InterpretedBy" xml:space="preserve">
+    <value>Interpreted by:</value>
+    <comment>The Interpreted / Remixed Tag</comment>
+  </data>
+  <data name="tagEdit_MediaType" xml:space="preserve">
+    <value>Media Type:</value>
+    <comment>The Media Type Tag</comment>
+  </data>
+  <data name="tagEdit_Publisher" xml:space="preserve">
+    <value>Publisher:</value>
+    <comment>The Publisher Tag</comment>
+  </data>
+  <data name="tagEdit_Songlength" xml:space="preserve">
+    <value>Song Length (ms):</value>
+    <comment>The Song Length Tag</comment>
+  </data>
+  <data name="tagEdit_SubTitle" xml:space="preserve">
+    <value>Subtitle:</value>
+    <comment>The Subtitle Tag</comment>
+  </data>
+  <data name="tagEdit_TabHeader_Additional" xml:space="preserve">
+    <value>Additional Tags</value>
+    <comment>The Header for the additional Tags Tab</comment>
+  </data>
+  <data name="tagEdit_TabHeader_Detailed_Information" xml:space="preserve">
+    <value>Detailed Information</value>
+    <comment>The Header for Detailed Information</comment>
+  </data>
+  <data name="tagEdit_TextWriter" xml:space="preserve">
+    <value>Lyrics / Text Writer:</value>
+    <comment>The Text Writer Tag</comment>
+  </data>
+  <data name="tagEdit_TitleSort" xml:space="preserve">
+    <value>Title Sort:</value>
+    <comment>The Title Sort Tag</comment>
+  </data>
+  <data name="tagEdit_MediaTypes" xml:space="preserve">
+    <value>Media Types:</value>
+    <comment>The Media Types Tag</comment>
+  </data>
 </root>

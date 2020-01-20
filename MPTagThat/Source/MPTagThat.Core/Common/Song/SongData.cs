@@ -20,6 +20,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.IO;
 using System.Windows.Media.Imaging;
 using FreeImageAPI;
@@ -156,7 +157,12 @@ namespace MPTagThat.Core.Common.Song
     /// Has the Track been changed
     /// </summary>
     private bool _changed = false;
-    public bool Changed { get => _changed; set => SetProperty(ref _changed, value); }
+
+    public bool Changed
+    {
+      get => _changed; 
+      set => SetProperty(ref _changed, value);
+    }
 
     /// <summary>
     /// A Status message, which we might want to display
@@ -167,6 +173,12 @@ namespace MPTagThat.Core.Common.Song
       get => _statusMsg;
       set => SetProperty(ref _statusMsg, value);
     }
+
+    /// <summary>
+    /// Indicates that we are in the Init stage and
+    /// should not set the Changed status
+    /// </summary>
+    public bool Init { get; set; }
 
     /// <summary>
     /// Indicates, if the Tags have been removed
@@ -1190,6 +1202,19 @@ namespace MPTagThat.Core.Common.Song
       {
         Frames.Add(new Frame(frameId, "", text));
       }
+    }
+
+    #endregion
+
+    #region overrides
+
+    protected override void OnPropertyChanged(PropertyChangedEventArgs args)
+    {
+      if (!Init && args.PropertyName != "Changed")
+      {
+        Changed = true;
+      }
+      base.OnPropertyChanged(args);
     }
 
     #endregion

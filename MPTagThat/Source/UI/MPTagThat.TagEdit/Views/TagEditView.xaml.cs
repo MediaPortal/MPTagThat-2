@@ -28,7 +28,11 @@ namespace MPTagThat.TagEdit.Views
     }
 
 
-
+    /// <summary>
+    /// Handle Size Changes, so that the layout adapts to multi column display
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void TagEditView_OnSizeChanged(object sender, SizeChangedEventArgs e)
     {
       if (e.NewSize.Height < 300.00 || e.NewSize.Width > 600)

@@ -197,7 +197,6 @@ namespace MPTagThat.Dialogs.ViewModels
         try
         {
           ReplaceParametersWithValues(_songs[i], parts);
-          _songs[i].Changed = true;
         }
         catch (Exception ex)
         {
