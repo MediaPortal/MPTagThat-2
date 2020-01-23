@@ -1987,6 +1987,24 @@ namespace MPTagThat.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Get From File.
+        /// </summary>
+        public static string tagEdit_GetTrackLength {
+            get {
+                return ResourceManager.GetString("tagEdit_GetTrackLength", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Get Song Length from File.
+        /// </summary>
+        public static string tagEdit_GetTrackLength_Checkbox {
+            get {
+                return ResourceManager.GetString("tagEdit_GetTrackLength_Checkbox", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Interpreted by:.
         /// </summary>
         public static string tagEdit_InterpretedBy {

@@ -9,6 +9,7 @@
              xmlns:syncfusion="http://schemas.syncfusion.com/wpf" 
              xmlns:lex="http://wpflocalizeextension.codeplex.com"
              xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+             xmlns:core="clr-namespace:MPTagThat.Core.Common.Converter;assembly=MPTagThat.Core"
              lex:LocalizeDictionary.DesignCulture="en"
              lex:ResxLocalizationProvider.DefaultAssembly="MPTagThat"
              lex:ResxLocalizationProvider.DefaultDictionary="Strings"
@@ -19,6 +20,7 @@
 
   <UserControl.Resources>
     <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+    <core:InvertVisibilityConverter x:Key="InvertVisibilityConverter" />
 
     <!--  AccordionButton Style -->
     <Style TargetType="syncfusion:AccordionButton" x:Key="expanderButtonStyle">
@@ -651,8 +653,7 @@
                           <Label Grid.Column="0" Content="{lex:Loc tagEdit_MediaTypes}" />
                           <ComboBox Grid.Column="1" Name="MediaTypes"
                                     ItemsSource="{Binding MediaTypes}" 
-                                    IsEditable="True"
-                                    SelectedItem="{Binding SelectedMediaTypeText, Mode=TwoWay}">
+                                    SelectedIndex="{Binding SelectedIndexMediaType, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
 
                             <ComboBox.ItemTemplate>
                               <DataTemplate>
@@ -664,8 +665,35 @@
                           <CheckBox Grid.Column="2" VerticalAlignment="Center" Margin="2,0,0,0" IsChecked="{Binding CkMediaTypeIsChecked, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Visibility="{Binding MultiCheckBoxVisibility, Converter={StaticResource BooleanToVisibilityConverter}}" />
                         </Grid>
 
-
                         <!-- Song Length -->
+                        <Grid Margin="5">
+                          <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="120"/>
+                            <ColumnDefinition Width="250"/>
+                          </Grid.ColumnDefinitions>
+                          <Label Grid.Column="0" Content="{lex:Loc tagEdit_Songlength}" Visibility="{Binding MultiCheckBoxVisibility, Converter={StaticResource InvertVisibilityConverter}}" />
+                          <Grid Grid.Column="1">
+                            <Grid.ColumnDefinitions>
+                              <ColumnDefinition Width="90"/>
+                              <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBox Grid.Column="0" Name="SongLength" Text="{Binding SongEdit.TrackLength, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  
+                                     Visibility="{Binding MultiCheckBoxVisibility, Converter={StaticResource InvertVisibilityConverter}}" >
+                              <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="TextChanged">
+                                  <prism:InvokeCommandAction Command="{Binding TextChangedCommand}"/>
+                                </i:EventTrigger>
+                              </i:Interaction.Triggers>
+                            </TextBox>
+                            <syncfusion:ButtonAdv Grid.Column="1" Label="{lex:Loc tagEdit_GetTrackLength}" 
+                                                  IconHeight="0" IconWidth="0"
+                                                  Command="{Binding GetSongLengthCommand}" 
+                                                  CommandParameter="{Binding SongEdit}"
+                                                  Visibility="{Binding MultiCheckBoxVisibility, Converter={StaticResource InvertVisibilityConverter}}"
+                                                  Height="25" Margin="5,0,0,0" />
+                          </Grid>
+                          <CheckBox Grid.Column="1" Content="{lex:Loc tagEdit_GetTrackLength_Checkbox}" VerticalAlignment="Center" IsChecked="{Binding CkTrackLengthIsChecked, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Visibility="{Binding MultiCheckBoxVisibility, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                        </Grid>
 
                       </StackPanel>
                     </GroupBox>

@@ -147,12 +147,25 @@ namespace MPTagThat.TagEdit.ViewModels
     /// <summary>
     /// The Selected Text in the Media Types Combobox
     /// </summary>
-    private string _selectedMediaTypeText;
+    private int _selectedMediaTypeText;
 
-    public string SelectedMediaTypeText
+    public int SelectedIndexMediaType
     {
       get => _selectedMediaTypeText;
-      set => SetProperty(ref _selectedMediaTypeText, value);
+      set
+      {
+        if (MultiCheckBoxVisibility)
+        {
+          CkMediaTypeIsChecked = true;
+        }
+
+        if (!_isInitializing)
+        {
+          SongEdit.MediaType = MediaTypes[value].Value.ToString();
+          IsApplyButtonEnabled = true;
+        }
+        SetProperty(ref _selectedMediaTypeText, value);
+      }
     }
 
     // Check Box Checked properties
@@ -280,7 +293,16 @@ namespace MPTagThat.TagEdit.ViewModels
     public bool CkMediaTypeIsChecked { get => _ckMediaTypeIsChecked; set => SetProperty(ref _ckMediaTypeIsChecked, value); }
 
     private bool _ckTrackLengthIsChecked;
-    public bool CkTrackLengthIsChecked { get => _ckTrackLengthIsChecked; set => SetProperty(ref _ckTrackLengthIsChecked, value); }
+
+    public bool CkTrackLengthIsChecked
+    {
+      get => _ckTrackLengthIsChecked;
+      set
+      {
+        IsApplyButtonEnabled = true;
+        SetProperty(ref _ckTrackLengthIsChecked, value);
+      }
+    }
 
     private bool _ckCommentIsChecked;
     public bool CkCommentIsChecked { get => _ckCommentIsChecked; set => SetProperty(ref _ckCommentIsChecked, value); }
@@ -307,6 +329,7 @@ namespace MPTagThat.TagEdit.ViewModels
       RemoveCoverCommand = new BaseCommand(RemoveCover);
       GetCoverCommand = new BaseCommand(GetCover);
       GetCoverFromFileCommand = new BaseCommand(GetCoverFromFile);
+      GetSongLengthCommand = new BaseCommand(GetSongLength);
 
       SelectedGenres.CollectionChanged += SelectedGenres_CollectionChanged;
 
@@ -338,6 +361,7 @@ namespace MPTagThat.TagEdit.ViewModels
 
       if (tb != null)
       {
+        // Song Length left out on Purpose
         switch (tb.Name.ToLower())
         {
           case "tracknumber":
@@ -564,6 +588,17 @@ namespace MPTagThat.TagEdit.ViewModels
       Util.SavePicture(song);
     }
 
+    /// <summary>
+    /// Set the Song Length from file
+    /// </summary>
+    public ICommand GetSongLengthCommand { get; }
+
+    private void GetSongLength(object param)
+    {
+      var song = (SongData)param;
+      song.TrackLength = song.DurationTimespan.TotalMilliseconds.ToString();
+    }
+
 
     /// <summary>
     /// Invoked by the Apply Changes button in the View
@@ -706,6 +741,15 @@ namespace MPTagThat.TagEdit.ViewModels
           song.TitleSortName = songEdit.TitleSortName;
         }
 
+        if (CkMediaTypeIsChecked)
+        {
+          song.MediaType = MediaTypes[SelectedIndexMediaType].Value.ToString();
+        }
+
+        if (CkTrackLengthIsChecked)
+        {
+          song.TrackLength = song.DurationTimespan.TotalMilliseconds.ToString();
+        }
       }
     }
 
@@ -732,6 +776,17 @@ namespace MPTagThat.TagEdit.ViewModels
         _songBackup = SongEdit.Clone();
         UpdateGenres(SongEdit);
         SelectedGenres.AddRange(SongEdit.Genre.Split(';'));
+        var j = 0;
+        foreach (var mediatype in MediaTypes)
+        {
+          if (mediatype.Value.ToString() == SongEdit.MediaType)
+          {
+            SelectedIndexMediaType = j;
+            break;
+          }
+
+          j++;
+        }
         FrontCover = SongEdit.FrontCover;
         _isInitializing = false;
         return;
@@ -910,6 +965,35 @@ namespace MPTagThat.TagEdit.ViewModels
           SongEdit.TitleSortName = i == 0 ? song.TitleSortName : "";
         }
 
+        if (SongEdit.MediaType != song.MediaType)
+        {
+          if (i == 0)
+          {
+            var j = 0;
+            foreach (var mediatype in MediaTypes)
+            {
+              if (mediatype.Value.ToString() == song.MediaType)
+              {
+                SelectedIndexMediaType = j;
+                break;
+              }
+            }
+
+            j++;
+          }
+          else
+          {
+            SelectedIndexMediaType = 0;
+          }
+        }
+
+        if (SongEdit.TrackLength != song.TrackLength)
+        {
+          SongEdit.TrackLength = i == 0 ? song.TrackLength : "";
+        }
+
+
+
         i++;
       }
 
@@ -940,6 +1024,7 @@ namespace MPTagThat.TagEdit.ViewModels
       SongEdit = new SongData();
       UncheckCheckboxes();
       SelectedGenres?.Clear();
+      SelectedIndexMediaType = 0;
       FrontCover = null;
       MultiCheckBoxVisibility = false;
       IsApplyButtonEnabled = false;

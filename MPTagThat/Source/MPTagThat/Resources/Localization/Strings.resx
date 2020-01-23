@@ -899,4 +899,12 @@
     <value>Media Types:</value>
     <comment>The Media Types Tag</comment>
   </data>
+  <data name="tagEdit_GetTrackLength" xml:space="preserve">
+    <value>Get From File</value>
+    <comment>The Button Text</comment>
+  </data>
+  <data name="tagEdit_GetTrackLength_Checkbox" xml:space="preserve">
+    <value>Get Song Length from File</value>
+    <comment>The Check Box Text</comment>
+  </data>
 </root>
