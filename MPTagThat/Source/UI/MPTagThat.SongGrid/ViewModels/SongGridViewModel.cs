@@ -702,6 +702,38 @@ namespace MPTagThat.SongGrid.ViewModels
 
           if ((Action.ActionType)msg.MessageData["command"] == Action.ActionType.ACTION_GETCOVERART)
           {
+            if (_options.MainSettings.EmbedFolderThumb && !_options.MainSettings.OnlySaveFolderThumb 
+                                                       && File.Exists(Path.Combine(songs[0].FilePath, "folder.jpg")))
+            {
+              log.Debug("CoverArt: Using existing folder.jpg");
+              Picture folderThumb = null;
+              var savedFolder = "";
+              foreach (var song in songs)
+              {
+                if (folderThumb == null || Path.GetDirectoryName(song.FullFileName) != savedFolder)
+                {
+                  savedFolder = Path.GetDirectoryName(song.FullFileName);
+                  folderThumb = Util.GetFolderThumb(savedFolder);
+                }
+
+                if (folderThumb != null)
+                {
+                  // Only write a picture if we don't have a picture OR Overwrite Pictures is set
+                  if (song.Pictures.Count == 0 || _options.MainSettings.OverwriteExistingCovers)
+                  {
+                    if (_options.MainSettings.ChangeCoverSize && Picture.ImageFromData(folderThumb.Data).Width > _options.MainSettings.MaxCoverWidth)
+                    {
+                      folderThumb.Resize(_options.MainSettings.MaxCoverWidth);
+                    }
+                    // First Clear all the existingPictures
+                    song.Pictures.Clear();
+                    song.Pictures.Add(folderThumb);
+                  }
+                }
+              }
+              return;
+            }
+
             if (msg.MessageData.ContainsKey("removeexistingpictures"))
             {
               parameters.Add("removeexistingpictures", msg.MessageData["removeexistingpictures"]);

@@ -899,6 +899,21 @@
     <value>Media Types:</value>
     <comment>The Media Types Tag</comment>
   </data>
+  <data name="coverSearch_ChangeCoverSize" xml:space="preserve">
+    <value>Save covers with a maximum pixel width of:</value>
+  </data>
+  <data name="coverSearch_CreateMissingFolderThumb" xml:space="preserve">
+    <value>Create missing folder thumb (folder.jpg) on Save</value>
+  </data>
+  <data name="coverSearch_EmbedExistingThumb" xml:space="preserve">
+    <value>Embed existing folder thumb (folder.jpg) on cover search</value>
+  </data>
+  <data name="coverSearch_OnlySaveFolderThumb" xml:space="preserve">
+    <value>Save Cover Art only to folder thumb. Don't touch the music file</value>
+  </data>
+  <data name="coverSearch_OverwriteExistingCover" xml:space="preserve">
+    <value>Overwrite existing Cover(s) on automatic tagging</value>
+  </data>
   <data name="tagEdit_GetTrackLength" xml:space="preserve">
     <value>Get From File</value>
     <comment>The Button Text</comment>

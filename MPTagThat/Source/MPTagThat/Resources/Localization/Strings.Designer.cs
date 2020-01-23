@@ -70,6 +70,33 @@ namespace MPTagThat.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Save covers with a maximum pixel width of:.
+        /// </summary>
+        public static string coverSearch_ChangeCoverSize {
+            get {
+                return ResourceManager.GetString("coverSearch_ChangeCoverSize", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Create missing folder thumb (folder.jpg) on Save.
+        /// </summary>
+        public static string coverSearch_CreateMissingFolderThumb {
+            get {
+                return ResourceManager.GetString("coverSearch_CreateMissingFolderThumb", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Embed existing folder thumb (folder.jpg) on cover search.
+        /// </summary>
+        public static string coverSearch_EmbedExistingThumb {
+            get {
+                return ResourceManager.GetString("coverSearch_EmbedExistingThumb", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Search Finished. Select Cover Art (Double Click or Apply Button).
         /// </summary>
         public static string coverSearch_Finished {
@@ -84,6 +111,24 @@ namespace MPTagThat.Resources.Localization {
         public static string coverSearch_NoSites_Selected {
             get {
                 return ResourceManager.GetString("coverSearch_NoSites_Selected", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save Cover Art only to folder thumb. Don&apos;t touch the music file.
+        /// </summary>
+        public static string coverSearch_OnlySaveFolderThumb {
+            get {
+                return ResourceManager.GetString("coverSearch_OnlySaveFolderThumb", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Overwrite existing Cover(s) on automatic tagging.
+        /// </summary>
+        public static string coverSearch_OverwriteExistingCover {
+            get {
+                return ResourceManager.GetString("coverSearch_OverwriteExistingCover", resourceCulture);
             }
         }
         

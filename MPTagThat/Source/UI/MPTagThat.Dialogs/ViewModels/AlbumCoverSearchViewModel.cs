@@ -26,17 +26,23 @@ using Prism.Services.Dialogs;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Drawing;
+using System.Drawing.Imaging;
+using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Media;
+using Microsoft.VisualBasic.Logging;
 using MPTagThat.Core;
 using MPTagThat.Core.Annotations;
 using MPTagThat.Core.Common;
 using MPTagThat.Core.Common.Song;
 using MPTagThat.Core.Events;
+using MPTagThat.Core.Services.Logging;
 using WPFLocalizeExtension.Engine;
+using Brush = System.Windows.Media.Brush;
 
 #endregion
 
@@ -56,6 +62,7 @@ namespace MPTagThat.Dialogs.ViewModels
 
     #endregion
 
+    private readonly NLogLogger log = (ServiceLocator.Current.GetInstance(typeof(ILogger)) as ILogger)?.GetLogger;
     private readonly Options _options = (ServiceLocator.Current.GetInstance(typeof(ISettingsManager)) as ISettingsManager)?.GetOptions;
     private readonly DelegateAlbumFound _albumFound;
     private readonly DelegateSearchFinished _searchFinished;
@@ -71,7 +78,7 @@ namespace MPTagThat.Dialogs.ViewModels
     #region Properties
 
     public Brush Background => (Brush)new BrushConverter().ConvertFromString(_options.MainSettings.BackGround);
-    
+
     /// <summary>
     /// Binding for the Albums found
     /// </summary>
@@ -112,7 +119,6 @@ namespace MPTagThat.Dialogs.ViewModels
       get => _selectedItem;
       set => SetProperty(ref _selectedItem, value);
     }
-
 
     /// <summary>
     /// Binding for Artist Text Field
@@ -166,6 +172,54 @@ namespace MPTagThat.Dialogs.ViewModels
       set => SetProperty(ref _statusMsg, value);
     }
 
+    private bool _createFolderThumb;
+
+    public bool CreateFolderThumb
+    {
+      get => _createFolderThumb;
+      set => SetProperty(ref _createFolderThumb, value);
+    }
+
+    private bool _embedFolderThumb;
+
+    public bool EmbedFolderThumb
+    {
+      get => _embedFolderThumb;
+      set => SetProperty(ref _embedFolderThumb, value);
+    }
+
+    private bool _overwriteExistingCovers;
+
+    public bool OverwriteExistingCovers
+    {
+      get => _overwriteExistingCovers;
+      set => SetProperty(ref _overwriteExistingCovers, value);
+    }
+
+    private bool _onlySaveFolderThumb;
+
+    public bool OnlySaveFolderThumb
+    {
+      get => _onlySaveFolderThumb;
+      set => SetProperty(ref _onlySaveFolderThumb, value);
+    }
+
+    private bool _changeCoverSize;
+
+    public bool ChangeCoverSize
+    {
+      get => _changeCoverSize;
+      set => SetProperty(ref _changeCoverSize, value);
+    }
+
+    private int _maxCoverWidth;
+
+    public int MaxCoverWidth
+    {
+      get => _maxCoverWidth;
+      set => SetProperty(ref _maxCoverWidth, value);
+    }
+
     #endregion
 
     #region ctor
@@ -197,7 +251,7 @@ namespace MPTagThat.Dialogs.ViewModels
     {
       CoverSelected(param);
     }
-    
+
     /// <summary>
     /// A Cover has been selected by double clicking on it
     /// </summary>
@@ -218,15 +272,39 @@ namespace MPTagThat.Dialogs.ViewModels
         pic.Type = TagLib.PictureType.FrontCover;
         pic.Data = vector.Data;
 
-        
-        foreach (var song in _songs)
+        if (_options.MainSettings.ChangeCoverSize &&
+            Picture.ImageFromData(pic.Data).Width > _options.MainSettings.MaxCoverWidth)
         {
-          if (_removeExistingPictures || _options.MainSettings.ClearExistingPictures)
+          pic.Resize(_options.MainSettings.MaxCoverWidth);
+        }
+
+        if (_options.MainSettings.OnlySaveFolderThumb)
+        {
+          var fileName = Path.Combine(Path.GetDirectoryName(_songs[0].FullFileName), "folder.jpg");
+          try
           {
-            song.Pictures.Clear();
+            Image img = Picture.ImageFromData(pic.Data);
+
+            // Need to make a copy, otherwise we have a GDI+ Error
+            Bitmap bmp = new Bitmap(img);
+            bmp.Save(fileName, ImageFormat.Jpeg);
           }
-          song.Pictures.Add(pic);
-          song.Changed = true;
+          catch (Exception ex)
+          {
+            log.Error("Exception Saving picture: {0} {1}", fileName, ex.Message);
+          }
+        }
+        else
+        {
+          foreach (var song in _songs)
+          {
+            if (_removeExistingPictures || _options.MainSettings.OverwriteExistingCovers)
+            {
+              song.Pictures.Clear();
+            }
+            song.Pictures.Add(pic);
+            song.Changed = true;
+          }
         }
 
         GenericEvent evt = new GenericEvent
@@ -234,6 +312,14 @@ namespace MPTagThat.Dialogs.ViewModels
           Action = "coverschanged"
         };
         EventSystem.Publish(evt);
+
+        // Save Settings
+        _options.MainSettings.CreateFolderThumb = CreateFolderThumb;
+        _options.MainSettings.EmbedFolderThumb = EmbedFolderThumb;
+        _options.MainSettings.OverwriteExistingCovers = OverwriteExistingCovers;
+        _options.MainSettings.OnlySaveFolderThumb = OnlySaveFolderThumb;
+        _options.MainSettings.ChangeCoverSize = ChangeCoverSize;
+        _options.MainSettings.MaxCoverWidth = MaxCoverWidth;
 
         CloseDialog("true");
       }
@@ -271,7 +357,7 @@ namespace MPTagThat.Dialogs.ViewModels
 
       IsBusy = true;
       IsSearchButtonEnabled = false;
-      var albumSearch = new AlbumSearch(this, Artist, Album) {AlbumSites = SelectedAlbumSearchSites.ToList()};
+      var albumSearch = new AlbumSearch(this, Artist, Album) { AlbumSites = SelectedAlbumSearchSites.ToList() };
       albumSearch.Run();
       _options.MainSettings.SelectedAlbumInfoSites = SelectedAlbumSearchSites.ToList();
     }
@@ -323,6 +409,14 @@ namespace MPTagThat.Dialogs.ViewModels
 
     public override void OnDialogOpened(IDialogParameters parameters)
     {
+      // Get Settings
+      CreateFolderThumb = _options.MainSettings.CreateFolderThumb;
+      EmbedFolderThumb = _options.MainSettings.EmbedFolderThumb;
+      OverwriteExistingCovers = _options.MainSettings.OverwriteExistingCovers;
+      OnlySaveFolderThumb = _options.MainSettings.OnlySaveFolderThumb;
+      ChangeCoverSize = _options.MainSettings.ChangeCoverSize;
+      MaxCoverWidth = _options.MainSettings.MaxCoverWidth;
+
       // Add the Album Search Sites to the Combobox
       AlbumSearchSites.AddRange(_options.MainSettings.AlbumInfoSites);
       SelectedAlbumSearchSites.AddRange(_options.MainSettings.SelectedAlbumInfoSites);

@@ -12,7 +12,7 @@
              lex:LocalizeDictionary.DesignCulture="en"
              lex:ResxLocalizationProvider.DefaultAssembly="MPTagThat"
              lex:ResxLocalizationProvider.DefaultDictionary="Strings"
-             mc:Ignorable="d" d:DesignWidth="818" d:DesignHeight="622" >
+             mc:Ignorable="d" d:DesignWidth="818" d:DesignHeight="822" >
 
   <prism:Dialog.WindowStyle>
     <Style TargetType="Window">
@@ -40,6 +40,7 @@
         <RowDefinition Height="Auto" />
         <RowDefinition Height="400" />
         <RowDefinition Height="Auto" />
+        <RowDefinition Height="Auto" />
       </Grid.RowDefinitions>
       <Grid.ColumnDefinitions>
         <ColumnDefinition Width = "800" />
@@ -66,12 +67,12 @@
         </Grid.ColumnDefinitions>
         <Label Grid.Row="0" Grid.Column="0" Content="{lex:Loc tagEdit_Artist}" />
         <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding Artist, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Height="27" />
-        
+
         <syncfusion:ButtonAdv Grid.Row="0" Grid.Column="2" Label="{lex:Loc dialog_Search}" HorizontalAlignment="Left"  Width="80" Margin="5"
                               SmallIcon="pack://application:,,,/MPTagThat;component/Resources/Images/Lens_32x.png" 
                               Command="{Binding SearchCommand}"
                               IsEnabled="{Binding IsSearchButtonEnabled, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-        
+
         <Label Grid.Row="1" Grid.Column="0" Content="{lex:Loc tagEdit_Album}" />
         <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Album, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
       </Grid>
@@ -107,14 +108,58 @@
         </ListView.ItemTemplate>
       </ListView>
 
-      <StackPanel Grid.Row="4" Orientation="Horizontal" HorizontalAlignment="Left" Margin="10,5,0,5" >
-        <syncfusion:ComboBoxAdv Name="Sites" ItemsSource="{Binding AlbumSearchSites, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
-                                DefaultText="{lex:Loc coverSearch_Sites_Watermark}" SelectedValueDelimiter=" | " AllowMultiSelect="True" 
-                                SelectedItems="{Binding SelectedAlbumSearchSites, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
-                                Height="25" Width="200" />
+      <StackPanel Grid.Row="4" Orientation="Horizontal" HorizontalAlignment="Left" Margin="5,5,0,5" >
+        <GroupBox Header="{lex:Loc organise_Options}" HorizontalAlignment="Left" VerticalAlignment="Top">
+          <Grid>
+            <Grid.RowDefinitions>
+              <RowDefinition />
+              <RowDefinition />
+              <RowDefinition />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+              <ColumnDefinition Width="390"/>
+              <ColumnDefinition Width="390"/>
+            </Grid.ColumnDefinitions>
+
+            <syncfusion:ComboBoxAdv Grid.Row="0" Grid.Column="0" Name="Sites" HorizontalAlignment="Left"
+                                    ItemsSource="{Binding AlbumSearchSites, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                                    DefaultText="{lex:Loc coverSearch_Sites_Watermark}" SelectedValueDelimiter=" | " AllowMultiSelect="True" 
+                                    SelectedItems="{Binding SelectedAlbumSearchSites, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                                    Width="200" />
+
+            <CheckBox Grid.Row="0" Grid.Column="1" Content="{lex:Loc coverSearch_CreateMissingFolderThumb}" 
+                      IsChecked="{Binding CreateFolderThumb, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+
+            <CheckBox Grid.Row="1" Grid.Column="0" Content="{lex:Loc coverSearch_EmbedExistingThumb}" Margin="0,7,0,0"
+                      IsChecked="{Binding EmbedFolderThumb, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/> 
+
+            <CheckBox Grid.Row="1" Grid.Column="1" Content="{lex:Loc coverSearch_OverwriteExistingCover}" Margin="0,7,0,0"
+                      IsChecked="{Binding OverwriteExistingCovers, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+
+            <CheckBox Grid.Row="2" Grid.Column="0" Content="{lex:Loc coverSearch_OnlySaveFolderThumb}" Margin="0,7,0,0"
+                      IsChecked="{Binding OnlySaveFolderThumb, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+
+            <Grid Grid.Row="2" Grid.Column="1" Margin="0,7,0,0">
+              <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+              </Grid.ColumnDefinitions>
+
+              <CheckBox Content="{lex:Loc coverSearch_ChangeCoverSize}" 
+                        IsChecked="{Binding ChangeCoverSize, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+              <TextBox Grid.Column="1"  Width="40" Margin="3,0,0,0" Text="{Binding MaxCoverWidth, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center"/>
+            </Grid>
+
+          </Grid>
+        </GroupBox>
+
+
+
+
+
       </StackPanel>
 
-      <StackPanel Grid.Row="4" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,5,10,5">
+      <StackPanel Grid.Row="5" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,5,10,5">
         <syncfusion:ButtonAdv Label="{lex:Loc dialog_Apply}" 
                               SmallIcon="pack://application:,,,/MPTagThat;component/Resources/Images/Apply_Changes_32x.png" 
                               Command="{Binding ApplyCoverCommand}" 

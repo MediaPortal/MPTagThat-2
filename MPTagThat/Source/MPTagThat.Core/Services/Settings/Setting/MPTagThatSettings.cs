@@ -163,9 +163,6 @@ namespace MPTagThat.Core.Services.Settings.Setting
     [Setting(SettingScope.User, "")]
     public List<string> CustomGenres { get; set; } = new List<string>();
 
-    [Setting(SettingScope.User, "false")]
-    public bool ClearExistingPictures { get; set; }
-
     #endregion
 
     #region Lyrics
