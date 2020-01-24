@@ -785,7 +785,7 @@
                         <Image   Source="{Binding FrontCover}"  Width="128" Height="128" />
                       </Border>
                       <CheckBox Grid.Row="1" Grid.Column="1" Content="{lex:Loc tagEdit_Remove_Existing_Pictures}" IsChecked="{Binding CkRemovePicturesIsChecked, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                      <StackPanel Grid.Row="2" Grid.Column="1" Margin="10,0,0,0">
+                      <StackPanel Grid.Row="2" Grid.Column="1" Margin="0,5,0,0">
                         <syncfusion:SfDataGrid ItemsSource="{Binding SongEdit.Pictures, Mode=TwoWay}"
                                              ColumnSizer="AutoWithLastColumnFill" 
                                              AllowResizingColumns="True" 

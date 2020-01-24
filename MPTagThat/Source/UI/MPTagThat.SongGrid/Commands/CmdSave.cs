@@ -21,6 +21,8 @@
 using MPTagThat.Core.Common.Song;
 using System;
 using System.IO;
+using MPTagThat.Core;
+using MPTagThat.Core.Events;
 using MPTagThat.Core.Utils;
 
 #endregion
@@ -129,6 +131,11 @@ namespace MPTagThat.SongGrid.Commands
                 options.MainSettings.CreateFolderThumb)
             {
               Util.SavePicture(song);
+              var miscfileevt = new GenericEvent
+              {
+                Action = "miscfileschanged"
+              };
+              EventSystem.Publish(miscfileevt);
             }
 
             // TODO: Update the Music Database

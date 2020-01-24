@@ -78,7 +78,7 @@ namespace MPTagThat.Core.Common.Song
 
     private Util.MP3Error _mp3ValError;
     private string _mp3ValErrorText;
-    private List<Picture> _pictures = new List<Picture>();
+    private ObservableCollection<Picture> _pictures = new ObservableCollection<Picture>();
     private List<string> _pictureHashList = new List<string>();
     private List<Comment> _comments = new List<Comment>();
     private List<Lyric> _lyrics = new List<Lyric>();
@@ -95,6 +95,8 @@ namespace MPTagThat.Core.Common.Song
       _mp3ValErrorText = "";
       Frames = new List<Frame>();
       UserFrames = new List<Frame>();
+
+      Pictures.CollectionChanged += Pictures_CollectionChanged;
     }
 
     #endregion
@@ -821,10 +823,10 @@ namespace MPTagThat.Core.Common.Song
     /// <summary>
     /// Returns the stored Coverart for the Song
     /// </summary>
-    public List<Picture> Pictures
+    public ObservableCollection<Picture> Pictures
     {
       get => _pictures;
-      set => _pictures = value;
+      set => SetProperty(ref _pictures, value);
     }
 
     /// <summary>
@@ -1203,6 +1205,13 @@ namespace MPTagThat.Core.Common.Song
         Frames.Add(new Frame(frameId, "", text));
       }
     }
+
+    
+    private void Pictures_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+    {
+      RaisePropertyChanged($"Pictures");
+    }
+
 
     #endregion
 

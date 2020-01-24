@@ -24,6 +24,7 @@ using System.Collections.ObjectModel;
 using FreeImageAPI;
 using System.IO;
 using System.Linq;
+using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
 using CommonServiceLocator;
@@ -34,9 +35,9 @@ using MPTagThat.Core.Services.Logging;
 using MPTagThat.Core.Utils;
 using Prism.Events;
 using Prism.Mvvm;
-using Syncfusion.Windows.Shared;
-using Syncfusion.Windows.Tools.Controls;
 using System.Windows.Media;
+using MPTagThat.Core.Services.Settings;
+using MPTagThat.Core.Services.Settings.Setting;
 
 #endregion
 
@@ -45,8 +46,10 @@ namespace MPTagThat.MiscFiles.ViewModels
   public class MiscFilesViewModel : BindableBase
   {
     #region Variables
-        
+    
+    private object _lock = new object();
     private MiscFile _currentItem;
+    private Options _options = (ServiceLocator.Current.GetInstance(typeof(ISettingsManager)) as ISettingsManager)?.GetOptions;
 
     #endregion
 
@@ -94,6 +97,7 @@ namespace MPTagThat.MiscFiles.ViewModels
       SelectionChangedCommand = new BaseCommand(SelectionChanged);
       EnterKeyPressedCommand = new BaseCommand(EnterKeypressed);
       EventSystem.Subscribe<GenericEvent>(OnMessageReceived,ThreadOption.PublisherThread);
+      BindingOperations.EnableCollectionSynchronization(MiscFiles, _lock);
     }
 
     #endregion
@@ -219,6 +223,70 @@ namespace MPTagThat.MiscFiles.ViewModels
 
     #endregion
 
+    #region Private Methods
+
+    /// <summary>
+    ///  Get the non Music files from Current folder
+    /// </summary>
+    private List<string> GetNonMusicFiles()
+    {
+      var files = new List<string>();
+      foreach (var file in Directory.GetFiles(_options.MainSettings.LastFolderUsed))
+      {
+        if (!Util.IsAudio(file))
+        {
+          files.Add(file);
+        }
+      }
+
+      return files;
+    }
+
+    private void FillFilesCollection(ref List<string> files)
+    {
+      MiscFiles.Clear();
+      foreach (var file in files)
+      {
+        if (file == null)
+        {
+          return;
+        }
+
+        var imgFailure = false;
+        var nonPicFile = true;
+        if (Util.IsPicture(Path.GetFileName(file)))
+        {
+          nonPicFile = false;
+          var f = new MiscFile
+          {
+            FileName = Path.GetFileName(file),
+            FullFileName = file
+          };
+
+          try
+          {
+            var bmi = GetImageFromFile(file, out var size);
+            if (bmi != null)
+            {
+              f.ImageData = bmi;
+              f.Size = size;
+              MiscFiles.Add(f);
+            }
+            else
+            {
+              imgFailure = true;
+            }
+          }
+          catch (Exception)
+          {
+            imgFailure = true;
+          }
+        }
+      }
+    }
+
+    #endregion
+
     #region Events
 
     /// <summary>
@@ -230,51 +298,18 @@ namespace MPTagThat.MiscFiles.ViewModels
       switch (msg.Action.ToLower())
       {
         case "miscfileschanged":
+          List<string> files = new List<string>();
           if (msg.MessageData.ContainsKey("files"))
           {
-            var files = (List<string>)msg.MessageData["files"];
-            MiscFiles.Clear();
-            foreach (var file in files)
-            {
-              if (file == null)
-              {
-                return;
-              }
-
-              var imgFailure = false;
-              var nonPicFile = true;
-              if (Util.IsPicture(Path.GetFileName(file)))
-              {
-                nonPicFile = false;
-                var f = new MiscFile
-                {
-                  FileName = Path.GetFileName(file),
-                  FullFileName = file
-                };
-
-                try
-                {
-                  var bmi = GetImageFromFile(file, out var size);
-                  if (bmi != null)
-                  {
-                    f.ImageData = bmi;
-                    f.Size = size;
-                    MiscFiles.Add(f);
-                  }
-                  else
-                  {
-                    imgFailure = true;
-                  }
-                }
-                catch (Exception)
-                {
-                  imgFailure = true;
-                }
-
-                
-              }
-            }
+            // Called from Folder Scan
+            files = (List<string>)msg.MessageData["files"];
           }
+          else
+          {
+            // Called outside Folder Scan, e.g. Cover Search placed Folder.jpg
+            files = GetNonMusicFiles();
+          }
+          FillFilesCollection(ref files);
           break;
       }
     }

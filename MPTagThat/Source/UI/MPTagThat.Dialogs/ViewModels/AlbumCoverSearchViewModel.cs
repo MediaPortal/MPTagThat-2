@@ -288,6 +288,12 @@ namespace MPTagThat.Dialogs.ViewModels
             // Need to make a copy, otherwise we have a GDI+ Error
             Bitmap bmp = new Bitmap(img);
             bmp.Save(fileName, ImageFormat.Jpeg);
+
+            var miscfileevt = new GenericEvent
+            {
+              Action = "miscfileschanged"
+            };
+            EventSystem.Publish(miscfileevt);
           }
           catch (Exception ex)
           {

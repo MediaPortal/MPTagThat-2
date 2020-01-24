@@ -592,6 +592,11 @@ namespace MPTagThat.TagEdit.ViewModels
         song.Pictures.Add(pic);
       }
       Util.SavePicture(song);
+      var miscfileevt = new GenericEvent
+      {
+        Action = "miscfileschanged"
+      };
+      EventSystem.Publish(miscfileevt);
     }
 
     /// <summary>
@@ -1161,6 +1166,8 @@ namespace MPTagThat.TagEdit.ViewModels
     {
       MultiCheckBoxVisibility = false;
       _songs = navigationContext.Parameters["songs"] as List<SongData>;
+      _selectedGenres = new ObservableCollection<string>();
+      _genres = new ObservableCollection<string>();
 
       if (_songs.Count > 0)
       {
