@@ -804,6 +804,7 @@ namespace MPTagThat.TagEdit.ViewModels
       }
 
       SongEdit = new SongData();
+      SongEdit.Init = true;
       var i = 0;
       byte[] picData = new byte[] { };
       var strGenreTemp = "";
@@ -818,7 +819,7 @@ namespace MPTagThat.TagEdit.ViewModels
           }
           else
           {
-            song.TrackCount = 0;
+            SongEdit.TrackCount = 0;
           }
         }
 
@@ -830,7 +831,7 @@ namespace MPTagThat.TagEdit.ViewModels
           }
           else
           {
-            song.DiscNumber = 0;
+            SongEdit.DiscNumber = 0;
           }
         }
 
@@ -842,7 +843,7 @@ namespace MPTagThat.TagEdit.ViewModels
           }
           else
           {
-            song.DiscCount = 0;
+            SongEdit.DiscCount = 0;
           }
         }
 
@@ -1009,6 +1010,7 @@ namespace MPTagThat.TagEdit.ViewModels
       }
 
       _isInitializing = false;
+      SongEdit.Init = false;
 
       // We have multiple Songs selected, so show the Checkboxes and
       // decide if they shoud be checked.

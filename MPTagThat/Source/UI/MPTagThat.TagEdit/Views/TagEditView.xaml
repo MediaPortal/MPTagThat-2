@@ -792,16 +792,11 @@
                                              AllowDraggingColumns="False" 
                                              AutoGenerateColumns="False"
                                              ShowRowHeader="False" 
-                                             AllowEditing="True" >
+                                             AllowEditing="True" 
+                                             RowSelectionBrush="Cornsilk">
                           <syncfusion:SfDataGrid.Columns>
-                            <syncfusion:GridComboBoxColumn ItemsSource="{Binding PictureTypes}" MappingName="Type"/>
-                            <syncfusion:GridTextColumn MappingName="Description">
-                              <syncfusion:GridTextColumn.CellStyle>
-                                <Style TargetType="syncfusion:GridCell">
-                                  <Setter Property="Background" Value="Transparent"/>
-                                </Style>
-                              </syncfusion:GridTextColumn.CellStyle>
-                            </syncfusion:GridTextColumn>
+                            <syncfusion:GridComboBoxColumn ItemsSource="{Binding PictureTypes}" MappingName="Type" IsEditable="False"/>
+                            <syncfusion:GridTextColumn MappingName="Description" />
                           </syncfusion:SfDataGrid.Columns>
                         </syncfusion:SfDataGrid>
                       </StackPanel>
