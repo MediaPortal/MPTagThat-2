@@ -922,4 +922,24 @@
     <value>Get Song Length from File</value>
     <comment>The Check Box Text</comment>
   </data>
+  <data name="tagEdit_TabHeader_Pictures" xml:space="preserve">
+    <value>Pictures</value>
+    <comment>The Header for the Pictures Information</comment>
+  </data>
+  <data name="tagEdit_ToolTip_Picture_GetCoverArt_File" xml:space="preserve">
+    <value>Get Cover Art from File</value>
+    <comment>The Tool Tip for the Get Cover Art from File Button</comment>
+  </data>
+  <data name="tagEdit_ToolTip_Picture_GetCoverArt_Internet" xml:space="preserve">
+    <value>Get Cover Art from configured Sites</value>
+    <comment>The Tool Tip for the Get Cover Art Button</comment>
+  </data>
+  <data name="tagEdit_ToolTip_Picture_Remove_CoverArt" xml:space="preserve">
+    <value>Remove Cover Art</value>
+    <comment>The Tool Tip for the Remove Cover Art Button</comment>
+  </data>
+  <data name="tagEdit_ToolTip_Picture_Save_CoverArt" xml:space="preserve">
+    <value>Save Cover Art to File</value>
+    <comment>The Tool Tip for the Save Cover Art to File Button</comment>
+  </data>
 </root>

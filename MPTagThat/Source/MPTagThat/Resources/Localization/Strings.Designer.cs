@@ -2149,6 +2149,15 @@ namespace MPTagThat.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Pictures.
+        /// </summary>
+        public static string tagEdit_TabHeader_Pictures {
+            get {
+                return ResourceManager.GetString("tagEdit_TabHeader_Pictures", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Lyrics / Text Writer:.
         /// </summary>
         public static string tagEdit_TextWriter {
@@ -2172,6 +2181,42 @@ namespace MPTagThat.Resources.Localization {
         public static string tagEdit_TitleSort {
             get {
                 return ResourceManager.GetString("tagEdit_TitleSort", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Get Cover Art from File.
+        /// </summary>
+        public static string tagEdit_ToolTip_Picture_GetCoverArt_File {
+            get {
+                return ResourceManager.GetString("tagEdit_ToolTip_Picture_GetCoverArt_File", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Get Cover Art from configured Sites.
+        /// </summary>
+        public static string tagEdit_ToolTip_Picture_GetCoverArt_Internet {
+            get {
+                return ResourceManager.GetString("tagEdit_ToolTip_Picture_GetCoverArt_Internet", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Remove Cover Art.
+        /// </summary>
+        public static string tagEdit_ToolTip_Picture_Remove_CoverArt {
+            get {
+                return ResourceManager.GetString("tagEdit_ToolTip_Picture_Remove_CoverArt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save Cover Art to File.
+        /// </summary>
+        public static string tagEdit_ToolTip_Picture_Save_CoverArt {
+            get {
+                return ResourceManager.GetString("tagEdit_ToolTip_Picture_Save_CoverArt", resourceCulture);
             }
         }
         

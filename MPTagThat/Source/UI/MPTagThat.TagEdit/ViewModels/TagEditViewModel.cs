@@ -168,6 +168,12 @@ namespace MPTagThat.TagEdit.ViewModels
       }
     }
 
+    /// <summary>
+    /// The Picture Types shown in the Picture Details Grid
+    /// </summary>
+    public List<string> PictureTypes => Enum.GetNames(typeof(TagLib.PictureType)).ToList();
+
+
     // Check Box Checked properties
     private bool _ckTrackIsChecked;
     public bool CkTrackIsChecked { get => _ckTrackIsChecked; set => SetProperty(ref _ckTrackIsChecked, value); }
