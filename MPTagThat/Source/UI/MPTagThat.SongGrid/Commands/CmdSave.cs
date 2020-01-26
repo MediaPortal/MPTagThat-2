@@ -21,9 +21,12 @@
 using MPTagThat.Core.Common.Song;
 using System;
 using System.IO;
+using System.Linq;
 using MPTagThat.Core;
 using MPTagThat.Core.Events;
 using MPTagThat.Core.Utils;
+using TagLib;
+using File = System.IO.File;
 
 #endregion
 
@@ -127,10 +130,18 @@ namespace MPTagThat.SongGrid.Commands
             }
 
             // Check, if we need to create a folder.jpg
-            if (!File.Exists(Path.Combine(Path.GetDirectoryName(song.FullFileName), "folder.jpg")) &&
+            var fileName = Path.Combine(Path.GetDirectoryName(song.FullFileName), "folder.jpg");
+            if (!File.Exists(fileName) &&
                 options.MainSettings.CreateFolderThumb)
             {
-              Util.SavePicture(song);
+              int indexFrontCover = song.Pictures
+                .Select((pic, i) => new { Pic = pic, Position = i}).First(m => m.Pic.Type == PictureType.FrontCover).Position;
+              if (indexFrontCover < 0)
+              {
+                indexFrontCover = 0;
+              }
+
+              Util.SavePicture(song.Pictures[indexFrontCover], fileName);
               var miscfileevt = new GenericEvent
               {
                 Action = "miscfileschanged"

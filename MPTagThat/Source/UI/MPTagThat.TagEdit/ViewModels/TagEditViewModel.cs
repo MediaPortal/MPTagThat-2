@@ -41,7 +41,10 @@ using MPTagThat.Core.Utils;
 using Prism.Events;
 using Prism.Mvvm;
 using Prism.Regions;
+using TagLib;
 using Action = MPTagThat.Core.Common.Action;
+using Picture = MPTagThat.Core.Common.Song.Picture;
+using TextBox = System.Windows.Controls.TextBox;
 
 // ReSharper disable StringLiteralTypo
 
@@ -173,8 +176,31 @@ namespace MPTagThat.TagEdit.ViewModels
     /// </summary>
     public List<string> PictureTypes => Enum.GetNames(typeof(TagLib.PictureType)).ToList();
 
+    /// <summary>
+    /// The selected Picture in the Picture Details
+    /// </summary>
+    private ObservableCollection<object> _selectedPicture = new ObservableCollection<object>();
+    public ObservableCollection<object> SelectedPicture
+    {
+      get => _selectedPicture;
+      set
+      {
+        _selectedPicture = value;
+        RaisePropertyChanged("SelectedPicture");
+      }
+    }
 
-    // Check Box Checked properties
+    /// <summary>
+    /// The Binding for the Front Cover Picture
+    /// </summary>
+    private BitmapImage _pictureDetail;
+    public BitmapImage PictureDetail
+    {
+      get => _pictureDetail;
+      set => SetProperty(ref _pictureDetail, value);
+    }
+
+    #region Check Box Checked properties
     private bool _ckTrackIsChecked;
     public bool CkTrackIsChecked { get => _ckTrackIsChecked; set => SetProperty(ref _ckTrackIsChecked, value); }
 
@@ -323,6 +349,8 @@ namespace MPTagThat.TagEdit.ViewModels
     public bool CkPicturesIsChecked { get => _ckPicturesIsChecked; set => SetProperty(ref _ckPicturesIsChecked, value); }
     #endregion
 
+    #endregion
+
     #region ctor
 
     public TagEditViewModel()
@@ -336,6 +364,10 @@ namespace MPTagThat.TagEdit.ViewModels
       GetCoverCommand = new BaseCommand(GetCover);
       GetCoverFromFileCommand = new BaseCommand(GetCoverFromFile);
       GetSongLengthCommand = new BaseCommand(GetSongLength);
+      PictureSelectionChangedCommand = new BaseCommand(PictureSelectionChanged);
+      RemoveDetailedCoverCommand = new BaseCommand(RemoveDetailCover);
+      SaveDetailCoverCommand = new BaseCommand(SaveDetailCover);
+
 
       SelectedGenres.CollectionChanged += SelectedGenres_CollectionChanged;
 
@@ -367,7 +399,7 @@ namespace MPTagThat.TagEdit.ViewModels
 
       if (tb != null)
       {
-        // Song Length left out on Purpose
+        // Song Length left out on Purpose, it doesn't need a multi checkbox
         switch (tb.Name.ToLower())
         {
           case "tracknumber":
@@ -494,6 +526,8 @@ namespace MPTagThat.TagEdit.ViewModels
       }
     }
 
+    #region Picture related Commands
+
     /// <summary>
     /// Retrieve Cover Art
     /// </summary>
@@ -539,6 +573,7 @@ namespace MPTagThat.TagEdit.ViewModels
         try
         {
           var pic = new Picture(oFd.FileName);
+          pic.Type = PictureType.FrontCover;
           SongEdit.Pictures.Add(pic);
           FrontCover = SongEdit.FrontCover;
           SongEdit.Changed = true;
@@ -556,7 +591,7 @@ namespace MPTagThat.TagEdit.ViewModels
     }
     
     /// <summary>
-    /// Remove covers
+    /// Remove All covers
     /// </summary>
     public ICommand RemoveCoverCommand { get; }
 
@@ -576,6 +611,19 @@ namespace MPTagThat.TagEdit.ViewModels
     }
 
     /// <summary>
+    /// Remove a cover, selected in the details section
+    /// </summary>
+    public ICommand RemoveDetailedCoverCommand { get; }
+
+    private void RemoveDetailCover(object param)
+    {
+      if (SelectedPicture.Count > 0)
+      {
+        SongEdit.Pictures.Remove((Picture)SelectedPicture[0]);
+      }
+    }
+
+    /// <summary>
     /// Save picture as Folder.jpg
     /// </summary>
     public ICommand SaveCoverCommand { get; }
@@ -589,15 +637,89 @@ namespace MPTagThat.TagEdit.ViewModels
       {
         song.FullFileName = _songs[0].FullFileName;
         var pic = new Picture { Data = Picture.ImageToByte(FrontCover) };
+        pic.Type = PictureType.FrontCover;
         song.Pictures.Add(pic);
       }
-      Util.SavePicture(song);
+      var fileName = Path.Combine(Path.GetDirectoryName(song.FullFileName), "folder.jpg");
+      int indexFrontCover = song.Pictures
+        .Select((pic, i) => new { Pic = pic, Position = i}).First(m => m.Pic.Type == PictureType.FrontCover).Position;
+      if (indexFrontCover < 0)
+      {
+        indexFrontCover = 0;
+      }
+
+      Util.SavePicture(song.Pictures[indexFrontCover], fileName);
       var miscfileevt = new GenericEvent
       {
         Action = "miscfileschanged"
       };
       EventSystem.Publish(miscfileevt);
     }
+
+    /// <summary>
+    /// Save a detailed picture as specified filename
+    /// </summary>
+    public ICommand SaveDetailCoverCommand { get; }
+
+    private void SaveDetailCover(object param)
+    {
+      log.Info("Saving Picture as file");
+      if (SelectedPicture.Count > 0)
+      {
+        var sFd = new SaveFileDialog
+        {
+          Filter = "Pictures (Bmp, Jpg, Gif, Png)|*.jpg;*.jpeg;*.bmp;*.Gif;*.png|All Files|*.*",
+          InitialDirectory = SongEdit.FullFileName != null ? SongEdit.FilePath : _songs[0].FilePath
+        
+        };
+        if (sFd.ShowDialog() == true)
+        {
+          var fileName = Path.Combine(Path.GetDirectoryName(SongEdit.FullFileName), sFd.FileName);
+          Util.SavePicture((Picture)SelectedPicture[0], fileName);
+          var miscfileevt = new GenericEvent
+          {
+            Action = "miscfileschanged"
+          };
+          EventSystem.Publish(miscfileevt);
+        }
+      }
+    }
+
+    /// <summary>
+    /// A Picture has been selected in the Picture Details
+    /// </summary>
+    public ICommand PictureSelectionChangedCommand { get; }
+    private void PictureSelectionChanged(object param)
+    {
+      if (SelectedPicture.Count > 0)
+      {
+        var pic = (Picture) SelectedPicture[0];
+        try
+        {
+          var bitmapImage = new BitmapImage();
+          using (var stream = new MemoryStream(pic.Data))
+          {
+            stream.Seek(0, SeekOrigin.Begin);
+            bitmapImage.BeginInit();
+            bitmapImage.StreamSource = stream;
+            bitmapImage.CreateOptions = BitmapCreateOptions.PreservePixelFormat;
+            bitmapImage.CacheOption = BitmapCacheOption.OnLoad;
+            bitmapImage.EndInit();
+            PictureDetail = bitmapImage;
+          }
+        }
+        catch
+        {
+          PictureDetail = null;
+        }
+      }
+      else
+      {
+        PictureDetail = null;
+      }
+    }
+
+    #endregion
 
     /// <summary>
     /// Set the Song Length from file
@@ -609,7 +731,6 @@ namespace MPTagThat.TagEdit.ViewModels
       var song = (SongData)param;
       song.TrackLength = song.DurationTimespan.TotalMilliseconds.ToString();
     }
-
 
     /// <summary>
     /// Invoked by the Apply Changes button in the View
@@ -776,6 +897,7 @@ namespace MPTagThat.TagEdit.ViewModels
     {
       _isInitializing = true;
       FrontCover = null;
+      PictureDetail = null;
       _genres.Clear();
       SelectedGenres?.Clear();
       Genres.AddRange(TagLib.Genres.Audio);
@@ -1039,6 +1161,7 @@ namespace MPTagThat.TagEdit.ViewModels
       SelectedGenres?.Clear();
       SelectedIndexMediaType = 0;
       FrontCover = null;
+      PictureDetail = null;
       MultiCheckBoxVisibility = false;
       IsApplyButtonEnabled = false;
     }

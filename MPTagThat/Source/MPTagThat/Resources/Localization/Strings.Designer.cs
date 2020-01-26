@@ -2203,7 +2203,7 @@ namespace MPTagThat.Resources.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Remove Cover Art.
+        ///   Looks up a localized string similar to Remove all Cover Art.
         /// </summary>
         public static string tagEdit_ToolTip_Picture_Remove_CoverArt {
             get {
@@ -2212,11 +2212,29 @@ namespace MPTagThat.Resources.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Save Cover Art to File.
+        ///   Looks up a localized string similar to Remove this Cover Art.
+        /// </summary>
+        public static string tagEdit_ToolTip_Picture_RemoveDetail_CoverArt {
+            get {
+                return ResourceManager.GetString("tagEdit_ToolTip_Picture_RemoveDetail_CoverArt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save Cover Art to folder.jpg.
         /// </summary>
         public static string tagEdit_ToolTip_Picture_Save_CoverArt {
             get {
                 return ResourceManager.GetString("tagEdit_ToolTip_Picture_Save_CoverArt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save Cover Art to file.
+        /// </summary>
+        public static string tagEdit_ToolTip_Picture_SaveDetail_CoverArt {
+            get {
+                return ResourceManager.GetString("tagEdit_ToolTip_Picture_SaveDetail_CoverArt", resourceCulture);
             }
         }
         

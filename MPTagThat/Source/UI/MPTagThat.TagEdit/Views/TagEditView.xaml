@@ -416,7 +416,6 @@
                   <syncfusion:ButtonAdv  Label="" Width="30" Height="30" VerticalAlignment="Top" HorizontalAlignment="Left" 
                                          SmallIcon="pack://application:,,,/MPTagThat.TagEdit;component/Resources/Images/GetCoverArt_32x.png" 
                                          Command="{Binding GetCoverCommand}"
-                                         CommandParameter="{Binding SongEdit}" 
                                          ToolTip="{lex:Loc tagEdit_ToolTip_Picture_GetCoverArt_Internet}" />
                   <syncfusion:ButtonAdv  Label="" Width="30" Height="30" VerticalAlignment="Top" Margin="0,4,0,0" HorizontalAlignment="Left" 
                                          SmallIcon="pack://application:,,,/MPTagThat.TagEdit;component/Resources/Images/File_32x.png" 
@@ -426,12 +425,10 @@
                   <syncfusion:ButtonAdv  Label="" Width="30" Height="30" VerticalAlignment="Top" Margin="0,4,0,0" HorizontalAlignment="Left" 
                                          SmallIcon="pack://application:,,,/MPTagThat.TagEdit;component/Resources/Images/RemovePictures_32x.png" 
                                          Command="{Binding RemoveCoverCommand}"
-                                         CommandParameter="{Binding SongEdit}" 
                                          ToolTip="{lex:Loc tagEdit_ToolTip_Picture_Remove_CoverArt}"/>
                   <syncfusion:ButtonAdv  Label="" Width="30" Height="30" VerticalAlignment="Top" Margin="0,4,0,0" HorizontalAlignment="Left" 
                                          SmallIcon="pack://application:,,,/MPTagThat.TagEdit;component/Resources/Images/Save_16x.png" 
                                          Command="{Binding SaveCoverCommand}"
-                                         CommandParameter="{Binding SongEdit}" 
                                          ToolTip="{lex:Loc tagEdit_ToolTip_Picture_Save_CoverArt}"/>
                 </StackPanel>
                 <Border Grid.Row="0" Grid.Column="2" BorderThickness="1" BorderBrush="#FF000000" VerticalAlignment="Top" HorizontalAlignment="Left" Width="131" Height="131" >
@@ -757,13 +754,11 @@
                       <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="40"/>
                         <ColumnDefinition/>
-                        <ColumnDefinition/>
                       </Grid.ColumnDefinitions>
                       <StackPanel Grid.Row="0" Grid.Column="0" >
                         <syncfusion:ButtonAdv  Label="" Width="30" Height="30" VerticalAlignment="Top" HorizontalAlignment="Left" 
                                          SmallIcon="pack://application:,,,/MPTagThat.TagEdit;component/Resources/Images/GetCoverArt_32x.png" 
                                          Command="{Binding GetCoverCommand}"
-                                         CommandParameter="{Binding SongEdit}" 
                                          ToolTip="{lex:Loc tagEdit_ToolTip_Picture_GetCoverArt_Internet}" />
                         <syncfusion:ButtonAdv  Label="" Width="30" Height="30" VerticalAlignment="Top" Margin="0,4,0,0" HorizontalAlignment="Left" 
                                          SmallIcon="pack://application:,,,/MPTagThat.TagEdit;component/Resources/Images/File_32x.png" 
@@ -772,32 +767,39 @@
                                          ToolTip="{lex:Loc tagEdit_ToolTip_Picture_GetCoverArt_File}"/>
                         <syncfusion:ButtonAdv  Label="" Width="30" Height="30" VerticalAlignment="Top" Margin="0,4,0,0" HorizontalAlignment="Left" 
                                          SmallIcon="pack://application:,,,/MPTagThat.TagEdit;component/Resources/Images/RemovePictures_32x.png" 
-                                         Command="{Binding RemoveCoverCommand}"
-                                         CommandParameter="{Binding SongEdit}" 
-                                         ToolTip="{lex:Loc tagEdit_ToolTip_Picture_Remove_CoverArt}"/>
+                                         Command="{Binding RemoveDetailedCoverCommand}"
+                                         ToolTip="{lex:Loc tagEdit_ToolTip_Picture_RemoveDetail_CoverArt}"/>
                         <syncfusion:ButtonAdv  Label="" Width="30" Height="30" VerticalAlignment="Top" Margin="0,4,0,0" HorizontalAlignment="Left" 
                                          SmallIcon="pack://application:,,,/MPTagThat.TagEdit;component/Resources/Images/Save_16x.png" 
-                                         Command="{Binding SaveCoverCommand}"
+                                         Command="{Binding SaveDetailCoverCommand}"
                                          CommandParameter="{Binding SongEdit}" 
-                                         ToolTip="{lex:Loc tagEdit_ToolTip_Picture_Save_CoverArt}"/>
+                                         ToolTip="{lex:Loc tagEdit_ToolTip_Picture_SaveDetail_CoverArt}"/>
                       </StackPanel>
                       <Border Grid.Row="0" Grid.Column="1" BorderThickness="1" BorderBrush="#FF000000" VerticalAlignment="Top" HorizontalAlignment="Left" Width="131" Height="131" >
-                        <Image   Source="{Binding FrontCover}"  Width="128" Height="128" />
+                        <Image   Source="{Binding PictureDetail}"  Width="128" Height="128" />
                       </Border>
                       <CheckBox Grid.Row="1" Grid.Column="1" Content="{lex:Loc tagEdit_Remove_Existing_Pictures}" IsChecked="{Binding CkRemovePicturesIsChecked, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                       <StackPanel Grid.Row="2" Grid.Column="1" Margin="0,5,0,0">
-                        <syncfusion:SfDataGrid ItemsSource="{Binding SongEdit.Pictures, Mode=TwoWay}"
-                                             ColumnSizer="AutoWithLastColumnFill" 
-                                             AllowResizingColumns="True" 
-                                             AllowDraggingColumns="False" 
-                                             AutoGenerateColumns="False"
-                                             ShowRowHeader="False" 
-                                             AllowEditing="True" 
-                                             RowSelectionBrush="Cornsilk">
+                        <syncfusion:SfDataGrid x:Name="PictureGrid"
+                                               ItemsSource="{Binding SongEdit.Pictures, Mode=TwoWay}"
+                                               SelectedItems="{Binding SelectedPicture,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                                               SelectionMode="Single"
+                                               ColumnSizer="AutoWithLastColumnFill" 
+                                               AllowResizingColumns="True" 
+                                               AllowDraggingColumns="False" 
+                                               AutoGenerateColumns="False"
+                                               ShowRowHeader="False" 
+                                               AllowEditing="True" 
+                                               RowSelectionBrush="Cornsilk">
                           <syncfusion:SfDataGrid.Columns>
                             <syncfusion:GridComboBoxColumn ItemsSource="{Binding PictureTypes}" MappingName="Type" IsEditable="False"/>
                             <syncfusion:GridTextColumn MappingName="Description" />
                           </syncfusion:SfDataGrid.Columns>
+                          <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="SelectionChanged">
+                              <i:InvokeCommandAction Command="{Binding PictureSelectionChangedCommand}" />
+                            </i:EventTrigger>
+                          </i:Interaction.Triggers>
                         </syncfusion:SfDataGrid>
                       </StackPanel>
                     </Grid>

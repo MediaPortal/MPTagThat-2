@@ -22,6 +22,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
+using System.Linq;
 using System.Windows.Media.Imaging;
 using FreeImageAPI;
 using MPTagThat.Core.Utils;
@@ -793,13 +794,19 @@ namespace MPTagThat.Core.Common.Song
     {
       get
       {
+        int indexFrontCover = _pictures
+          .Select((pic, i) => new { Pic = pic, Position = i}).First(m => m.Pic.Type == PictureType.FrontCover).Position;
+        if (indexFrontCover < 0)
+        {
+          indexFrontCover = 0;
+        }
+
         if (Pictures.Count > 0)
         {
-          FreeImageBitmap img = null;
           try
           {
             var bitmapImage = new BitmapImage();
-            using (var stream = new MemoryStream(_pictures[0].Data))
+            using (var stream = new MemoryStream(_pictures[indexFrontCover].Data))
             {
               stream.Seek(0, SeekOrigin.Begin);
               bitmapImage.BeginInit();
@@ -815,7 +822,6 @@ namespace MPTagThat.Core.Common.Song
             return null;
           }
         }
-
         return null;
       }
     }

@@ -935,11 +935,18 @@
     <comment>The Tool Tip for the Get Cover Art Button</comment>
   </data>
   <data name="tagEdit_ToolTip_Picture_Remove_CoverArt" xml:space="preserve">
-    <value>Remove Cover Art</value>
+    <value>Remove all Cover Art</value>
     <comment>The Tool Tip for the Remove Cover Art Button</comment>
   </data>
   <data name="tagEdit_ToolTip_Picture_Save_CoverArt" xml:space="preserve">
-    <value>Save Cover Art to File</value>
+    <value>Save Cover Art to folder.jpg</value>
     <comment>The Tool Tip for the Save Cover Art to File Button</comment>
+  </data>
+  <data name="tagEdit_ToolTip_Picture_RemoveDetail_CoverArt" xml:space="preserve">
+    <value>Remove this Cover Art</value>
+    <comment>The Tooltip to remove a single cover art</comment>
+  </data>
+  <data name="tagEdit_ToolTip_Picture_SaveDetail_CoverArt" xml:space="preserve">
+    <value>Save Cover Art to file</value>
   </data>
 </root>

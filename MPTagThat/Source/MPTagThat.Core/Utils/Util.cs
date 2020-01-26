@@ -437,22 +437,22 @@ namespace MPTagThat.Core.Utils
     /// <summary>
     ///   Save the Picture of the track as folder.jpg
     /// </summary>
-    /// <param name = "song"></param>
-    public static void SavePicture(SongData song)
+    /// <param name = "pic"></param>
+    /// <param name = "name"></param>
+    public static void SavePicture(Common.Song.Picture pic, string name)
     {
-      if (song.NumPics > 0)
+      if (pic != null)
       {
-        var fileName = Path.Combine(Path.GetDirectoryName(song.FullFileName), "folder.jpg");
         try
         {
-          Image img = Common.Song.Picture.ImageFromData(song.Pictures[0].Data);
+          Image img = Common.Song.Picture.ImageFromData(pic.Data);
           // Need to make a copy, otherwise we have a GDI+ Error
           Bitmap bCopy = new Bitmap(img);
-          bCopy.Save(fileName, ImageFormat.Jpeg);
+          bCopy.Save(name, ImageFormat.Jpeg);
         }
         catch (Exception ex)
         {
-          log.Error("Exception Saving picture: {0} {1}", fileName, ex.Message);
+          log.Error("Exception Saving picture: {0} {1}", name, ex.Message);
         }
       }
     }
