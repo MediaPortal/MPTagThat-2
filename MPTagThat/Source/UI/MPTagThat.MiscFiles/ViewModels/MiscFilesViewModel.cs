@@ -116,6 +116,10 @@ namespace MPTagThat.MiscFiles.ViewModels
       if (param != null)
       {
         var items = (param as ObservableCollection<object>).Cast<MiscFile>().ToList();
+        if (items.Count == 0)
+        {
+          return;
+        }
         if (items.Count > 1)
         {
           // More than one file selected.

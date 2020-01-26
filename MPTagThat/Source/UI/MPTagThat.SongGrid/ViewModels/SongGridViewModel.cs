@@ -656,6 +656,7 @@ namespace MPTagThat.SongGrid.ViewModels
           break;
 
         case "command":
+          // Run Commands, which don't display a dialog
           if (_supportedCommands.Contains((Action.ActionType) msg.MessageData["command"]))
           {
             msg.MessageData.TryGetValue("runasync", out var runAsyncParam);
@@ -673,11 +674,20 @@ namespace MPTagThat.SongGrid.ViewModels
             return;
           }
 
+          // Refresh the current folder
+          if ((Action.ActionType)msg.MessageData["command"] == Action.ActionType.ACTION_REFRESH)
+          {
+            CheckChangesPending();
+            FolderScan();
+            return;
+          }
+
           if (SelectedItems.Count == 0)
           {
             Songs.ToList().ForEach(song => SelectedItems.Add(song));
           }
 
+          // Execute a script
           if ((Action.ActionType)msg.MessageData["command"] == Action.ActionType.ACTION_SCRIPTEXECUTE)
           {
             ExecuteScript(_options.MainSettings.ActiveScript);

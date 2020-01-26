@@ -57,7 +57,7 @@ namespace MPTagThat.Ribbon.ViewModels
 
       ResetLayoutCommand = new BaseCommand(ResetLayout);
       DeleteLayoutCommand = new BaseCommand(DeleteLayout);
-      ExecuteScriptCommand = new BaseCommand(ExecuteScript);
+      ExecuteRibbonCommand = new BaseCommand(RibbonCommand);
 
       Initialise();
     }
@@ -97,7 +97,7 @@ namespace MPTagThat.Ribbon.ViewModels
 
     #region Command Handling
 
-    public ICommand ResetLayoutCommand { get; set; }
+    public ICommand ResetLayoutCommand { get; }
     /// <summary>
     /// The Selected Item has Changed. 
     /// </summary>
@@ -111,7 +111,7 @@ namespace MPTagThat.Ribbon.ViewModels
       EventSystem.Publish(evt);
     }
 
-    public ICommand DeleteLayoutCommand { get; set; }
+    public ICommand DeleteLayoutCommand { get; }
     /// <summary>
     /// The Selected Item has Changed. 
     /// </summary>
@@ -125,17 +125,58 @@ namespace MPTagThat.Ribbon.ViewModels
       EventSystem.Publish(evt);
     }
 
-    public ICommand ExecuteScriptCommand { get; set; }
+    public ICommand ExecuteRibbonCommand { get; }
 
-    private void ExecuteScript(object param)
+    private void RibbonCommand(object param)
     {
-      // Send out the Event with the action
-      var evt = new GenericEvent
+      if (param == null)
       {
-        Action = "Command"
-      };
-      evt.MessageData.Add("command", Action.ActionType.ACTION_SCRIPTEXECUTE);
-      EventSystem.Publish(evt);
+        return;
+      }
+
+      var elementName = (string) param;
+      var type = Action.ActionType.ACTION_INVALID;
+      switch (elementName)
+      {
+        case "ButtonSave":
+          type = Action.ActionType.ACTION_SAVE;
+          break;
+
+        case "ButtonRefresh":
+          type = Action.ActionType.ACTION_REFRESH;
+          break;
+
+        case "ButtonExecuteScripts":
+          type = Action.ActionType.ACTION_SCRIPTEXECUTE;
+          break;
+
+        case "ButtonTagFromFile":
+          type = Action.ActionType.ACTION_FILENAME2TAG;
+          break;
+
+        case "ButtonGetLyrics":
+          type = Action.ActionType.ACTION_GETLYRICS;
+          break;
+
+        case "ButtonRenameFiles":
+          type = Action.ActionType.ACTION_TAG2FILENAME;
+          break;
+
+        case "ButtonOrganiseFiles":
+          type = Action.ActionType.ACTION_ORGANISE;
+          break;
+      }
+
+      if (type != Action.ActionType.ACTION_INVALID)
+      {
+        // Send out the Event with the action
+        var evt = new GenericEvent
+        {
+          Action = "Command"
+        };
+        evt.MessageData.Add("command", type);
+        EventSystem.Publish(evt);
+      }
     }
 
     #endregion

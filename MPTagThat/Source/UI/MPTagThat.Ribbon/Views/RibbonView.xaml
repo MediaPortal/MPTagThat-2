@@ -20,34 +20,89 @@
       <syncfusion:RibbonTab x:Name="TabTag" Caption="{lex:Loc ribbon_TagTab}"  IsChecked="True">
 
         <syncfusion:RibbonBar Name="RibbonBarRetrieveTags" Header="{lex:Loc ribbon_RetrieveTags}">
-          <syncfusion:RibbonButton x:Name="ButtonTagFromFile" SizeForm="Large" Label="{lex:Loc ribbon_TagFromFile}" LargeIcon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_TagFromFile_32x.png" SmallIcon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_TagFromFile_16x.png" >
+          <syncfusion:RibbonButton x:Name="ButtonTagFromFile" SizeForm="Large" 
+                                   Label="{lex:Loc ribbon_TagFromFile}" 
+                                   LargeIcon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_TagFromFile_32x.png" 
+                                   SmallIcon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_TagFromFile_16x.png" 
+                                   Command="{Binding ExecuteRibbonCommand}" 
+                                   CommandParameter="{Binding Name ,RelativeSource={RelativeSource Self}}" >
             <syncfusion:RibbonButton.ToolTip>
               <syncfusion:ScreenTip MinWidth="150" Description="ScreenTip Example" VerticalOffset="10" Content="Represent a ribbon simple buttons" ImageSource="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_TagFromFile_16x.png" />
             </syncfusion:RibbonButton.ToolTip>
           </syncfusion:RibbonButton>/>
-          <syncfusion:RibbonButton x:Name="ButtonIdentifyFile" SizeForm="Large" Label="{lex:Loc ribbon_IdentifyFile}" LargeIcon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_IdentifyFile_32x.png" SmallIcon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_IdentifyFile_16x.png" />
-          <syncfusion:RibbonButton x:Name="ButtonTagFromInternet" SizeForm="Large" Label="{lex:Loc ribbon_TagFromInternet}" LargeIcon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_TagFromInternet_32x.png" SmallIcon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_TagFromInternet_16x.png" />
+
+          <syncfusion:RibbonButton x:Name="ButtonIdentifyFile" SizeForm="Large" 
+                                   Label="{lex:Loc ribbon_IdentifyFile}" 
+                                   LargeIcon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_IdentifyFile_32x.png" 
+                                   SmallIcon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_IdentifyFile_16x.png" 
+                                   Command="{Binding ExecuteRibbonCommand}" 
+                                   CommandParameter="{Binding Name ,RelativeSource={RelativeSource Self}}"/>
+
+          <syncfusion:RibbonButton x:Name="ButtonTagFromInternet" SizeForm="Large" 
+                                   Label="{lex:Loc ribbon_TagFromInternet}" 
+                                   LargeIcon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_TagFromInternet_32x.png" 
+                                   SmallIcon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_TagFromInternet_16x.png" 
+                                   Command="{Binding ExecuteRibbonCommand}" 
+                                   CommandParameter="{Binding Name ,RelativeSource={RelativeSource Self}}" />
         </syncfusion:RibbonBar>
         
         <syncfusion:RibbonBar Name="RibbonBarEditTags" Header="{lex:Loc ribbon_EditTags}">
-          <syncfusion:SplitButton x:Name="ButtonCaseConversion" SizeForm="Large" Label="{lex:Loc ribbon_CaseConversionMenu}" LargeIcon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_CaseConversion_32x.png" SmallIcon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_CaseConversion_16x.png">
+          <syncfusion:SplitButton x:Name="ButtonCaseConversion" SizeForm="Large" 
+                                  Label="{lex:Loc ribbon_CaseConversionMenu}" 
+                                  LargeIcon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_CaseConversion_32x.png" 
+                                  SmallIcon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_CaseConversion_16x.png"
+                                  Command="{Binding ExecuteRibbonCommand}" 
+                                  CommandParameter="{Binding Name ,RelativeSource={RelativeSource Self}}" >
             <syncfusion:DropDownMenuItem x:Name="ButtonCaseConversionOptions" Header="{lex:Loc ribbon_CaseConversionOption}"/>
           </syncfusion:SplitButton>
-          <syncfusion:RibbonButton x:Name="ButtonGetLyrics" SizeForm="Large" Label="{lex:Loc ribbon_GetLyrics}" LargeIcon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_Lyrics_32x.png" SmallIcon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_Lyrics_16x.png" />
+
+          <syncfusion:RibbonButton x:Name="ButtonGetLyrics" SizeForm="Large" 
+                                   Label="{lex:Loc ribbon_GetLyrics}" 
+                                   LargeIcon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_Lyrics_32x.png" 
+                                   SmallIcon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_Lyrics_16x.png" 
+                                   Command="{Binding ExecuteRibbonCommand}" 
+                                   CommandParameter="{Binding Name ,RelativeSource={RelativeSource Self}}"/>
+
           <syncfusion:RibbonSeparator/>
-          <syncfusion:SplitButton x:Name="ButtonFind" SizeForm="Large" Label="{lex:Loc ribbon_Find}" LargeIcon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_Find_32x.png" SmallIcon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_Find_16x.png">
-            <syncfusion:DropDownMenuItem x:Name="ButtonReplace" Header="{lex:Loc ribbon_Replace}" Icon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_Replace_16x.png" />
+
+          <syncfusion:SplitButton x:Name="ButtonFind" SizeForm="Large" 
+                                  Label="{lex:Loc ribbon_Find}" 
+                                  LargeIcon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_Find_32x.png" 
+                                  SmallIcon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_Find_16x.png"
+                                  Command="{Binding ExecuteRibbonCommand}" 
+                                  CommandParameter="{Binding Name ,RelativeSource={RelativeSource Self}}">
+            <syncfusion:DropDownMenuItem x:Name="ButtonReplace" 
+                                         Header="{lex:Loc ribbon_Replace}" 
+                                         Icon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_Replace_32x.png" />
           </syncfusion:SplitButton>
-          <syncfusion:SplitButton x:Name="ButtonValidateSong" SizeForm="Large" Label="{lex:Loc ribbon_ValidateSong}" LargeIcon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_BrokenSong_32x.png" SmallIcon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_BrokenSong_16x.png">
+
+          <syncfusion:SplitButton x:Name="ButtonValidateSong" SizeForm="Large" 
+                                  Label="{lex:Loc ribbon_ValidateSong}" 
+                                  LargeIcon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_BrokenSong_32x.png" 
+                                  SmallIcon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_BrokenSong_16x.png"
+                                  Command="{Binding ExecuteRibbonCommand}" 
+                                  CommandParameter="{Binding Name ,RelativeSource={RelativeSource Self}}">
             <syncfusion:DropDownMenuItem x:Name="ButtonFixSong" Header="{lex:Loc ribbon_FixSong}" Icon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_FixSong_16x.png"/>
           </syncfusion:SplitButton>
+
           <syncfusion:RibbonSeparator/>
-          <syncfusion:SplitButton x:Name="ButtonDeleteTags" SizeForm="Large" Label="{lex:Loc ribbon_DeleteTags}" LargeIcon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_DeleteTags_32x.png" SmallIcon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_DeleteTags_16x.png">
+          <syncfusion:SplitButton x:Name="ButtonDeleteTags" SizeForm="Large" 
+                                  Label="{lex:Loc ribbon_DeleteTags}" 
+                                  LargeIcon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_DeleteTags_32x.png" 
+                                  SmallIcon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_DeleteTags_16x.png"
+                                  Command="{Binding ExecuteRibbonCommand}" 
+                                  CommandParameter="{Binding Name ,RelativeSource={RelativeSource Self}}" >
             <syncfusion:DropDownMenuItem x:Name="ButtonDeleteAllTags" Header="{lex:Loc ribbon_DeleteAllTags}" />
             <syncfusion:DropDownMenuItem x:Name="ButtonDeleteV1Tags" Header="{lex:Loc ribbon_DeleteID3V1Tags}" />
             <syncfusion:DropDownMenuItem x:Name="ButtonDeleteV2Tags" Header="{lex:Loc ribbon_DeleteID3V2Tags}" />
           </syncfusion:SplitButton>
-          <syncfusion:RibbonButton x:Name="ButtonRemoveComments" SizeForm="Large" Label="{lex:Loc ribbon_RemoveComments}" LargeIcon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_RemoveComments_32x.png" SmallIcon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_RemoveComments_16x.png" />
+
+          <syncfusion:RibbonButton x:Name="ButtonRemoveComments" SizeForm="Large" 
+                                   Label="{lex:Loc ribbon_RemoveComments}" 
+                                   LargeIcon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_RemoveComments_32x.png" 
+                                   SmallIcon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_RemoveComments_16x.png" 
+                                   Command="{Binding ExecuteRibbonCommand}" 
+                                   CommandParameter="{Binding Name ,RelativeSource={RelativeSource Self}}" />
           
           <syncfusion:RibbonSeparator/>
           
@@ -66,7 +121,8 @@
             <syncfusion:RibbonButton x:Name="ButtonExecuteScripts" SizeForm="Small" 
                                      Label="" SmallIcon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_ScriptExecute_32x.png" 
                                      Height="18" 
-                                     Command="{Binding ExecuteScriptCommand}" />
+                                     Command="{Binding ExecuteRibbonCommand}" 
+                                     CommandParameter="{Binding Name ,RelativeSource={RelativeSource Self}}"/>
           </syncfusion:ButtonPanel>
           
           <syncfusion:ButtonPanel SeparatorVisibility="Hidden" Height="21">
@@ -80,20 +136,24 @@
           </syncfusion:ButtonPanel>
         </syncfusion:RibbonBar>
 
-        <syncfusion:RibbonBar Name="RibbonBarCoverArt" Header="{lex:Loc ribbon_Picture}">
-          <syncfusion:RibbonGallery x:Name="RibbonCoverArt" HorizontalAlignment="Left" Height="66" VerticalAlignment="Top" Width="81" Margin="1" />
-          <syncfusion:RibbonButton x:Name="ButtonGetCoverArt" SizeForm="Small" Label="" SmallIcon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_CoverArt_16x.png" />
-          <syncfusion:RibbonButton x:Name="ButtonRemoveCoverArt" SizeForm="Small" Label="" SmallIcon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_RemovePictures_16x.png" />
-          <syncfusion:RibbonButton x:Name="ButtonSaveCoverArt" SizeForm="Small" Label="" SmallIcon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_Save_16x.png" />
-        </syncfusion:RibbonBar>
-
         <syncfusion:RibbonBar Name="RibbonBarOrganise" Header="{lex:Loc ribbon_OrganiseFiles}">
-          <syncfusion:RibbonButton x:Name="ButtonRenameFiles" SizeForm="Large" Label="{lex:Loc ribbon_RenameFile}" LargeIcon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_Rename_32x.png" SmallIcon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_Rename_16x.png" >
+          <syncfusion:RibbonButton x:Name="ButtonRenameFiles" SizeForm="Large" 
+                                   Label="{lex:Loc ribbon_RenameFile}" 
+                                   LargeIcon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_Rename_32x.png" 
+                                   SmallIcon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_Rename_16x.png" 
+                                   Command="{Binding ExecuteRibbonCommand}" 
+                                   CommandParameter="{Binding Name ,RelativeSource={RelativeSource Self}}">
             <syncfusion:RibbonButton.ToolTip>
               <syncfusion:ScreenTip MinWidth="150" Description="ScreenTip Example" VerticalOffset="10" Content="Represent a ribbon simple buttons" ImageSource="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_Rename_16x.png" />
             </syncfusion:RibbonButton.ToolTip>
           </syncfusion:RibbonButton>
-          <syncfusion:RibbonButton x:Name="ButtonOrganiseFiles" SizeForm="Large" Label="{lex:Loc ribbon_Organise}" LargeIcon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_Organise_32x.png" SmallIcon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_Organise_16x.png" >
+
+          <syncfusion:RibbonButton x:Name="ButtonOrganiseFiles" SizeForm="Large" 
+                                   Label="{lex:Loc ribbon_Organise}" 
+                                   LargeIcon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_Organise_32x.png" 
+                                   SmallIcon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_Organise_16x.png" 
+                                   Command="{Binding ExecuteRibbonCommand}" 
+                                   CommandParameter="{Binding Name ,RelativeSource={RelativeSource Self}}" >
             <syncfusion:RibbonButton.ToolTip>
               <syncfusion:ScreenTip MinWidth="150" Description="ScreenTip Example" VerticalOffset="10" Content="Represent a ribbon simple buttons" ImageSource="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_Organise_16x.png" />
             </syncfusion:RibbonButton.ToolTip>
@@ -106,6 +166,21 @@
       <syncfusion:RibbonTab x:Name="TabConvert" Caption="{lex:Loc ribbon_ConvertTab}"  IsChecked="False"/>
       <syncfusion:RibbonTab x:Name="TabBurn" Caption="{lex:Loc ribbon_BurnTab}"  IsChecked="False"/>
       <syncfusion:RibbonTab x:Name="TabDatabase" Caption="{lex:Loc ribbon_DatabaseTab}"  IsChecked="False"/>
+
+      <!-- Quick Access Toolbar  -->
+      <syncfusion:Ribbon.QuickAccessToolBar>
+        <syncfusion:QuickAccessToolBar QATDropDownVisiblity="Hidden">
+          <syncfusion:RibbonButton x:Name="ButtonSave" SizeForm="ExtraSmall"
+                                   SmallIcon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_Save_16x.png" 
+                                   Command="{Binding ExecuteRibbonCommand}" 
+                                   CommandParameter="{Binding Name ,RelativeSource={RelativeSource Self}}"/>
+          <syncfusion:RibbonButton x:Name="ButtonRefresh" SizeForm="ExtraSmall"
+                                   SmallIcon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_Refresh_16x.png" 
+                                   Command="{Binding ExecuteRibbonCommand}" 
+                                   CommandParameter="{Binding Name ,RelativeSource={RelativeSource Self}}"/>
+        </syncfusion:QuickAccessToolBar>
+      </syncfusion:Ribbon.QuickAccessToolBar>
+
 
       <syncfusion:Ribbon.BackStage>
         <syncfusion:Backstage>
