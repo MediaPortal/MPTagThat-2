@@ -24,6 +24,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
@@ -43,6 +44,7 @@ using Prism.Mvvm;
 using Prism.Regions;
 using TagLib;
 using Action = MPTagThat.Core.Common.Action;
+using File = System.IO.File;
 using Picture = MPTagThat.Core.Common.Song.Picture;
 using TextBox = System.Windows.Controls.TextBox;
 
@@ -367,6 +369,9 @@ namespace MPTagThat.TagEdit.ViewModels
       PictureSelectionChangedCommand = new BaseCommand(PictureSelectionChanged);
       RemoveDetailedCoverCommand = new BaseCommand(RemoveDetailCover);
       SaveDetailCoverCommand = new BaseCommand(SaveDetailCover);
+      GetLyricsCommand = new BaseCommand(GetLyrics);
+      GetLyricsFromFileCommand = new BaseCommand(GetLyricsFromFile);
+      RemoveLyricsCommand = new BaseCommand(RemoveLyrics);
 
 
       SelectedGenres.CollectionChanged += SelectedGenres_CollectionChanged;
@@ -507,6 +512,7 @@ namespace MPTagThat.TagEdit.ViewModels
       if (_songBackup != null && _songs.Count == 1)
       {
         UndoSongedits(_songs[0], _songBackup);
+        SongEdit = _songs[0];
         _songBackup = null;
       }
 
@@ -716,6 +722,71 @@ namespace MPTagThat.TagEdit.ViewModels
       else
       {
         PictureDetail = null;
+      }
+    }
+
+    #endregion
+
+    #region Lyrics related Commands
+
+    /// <summary>
+    /// Get Lyrics from Internet
+    /// </summary>
+    public ICommand GetLyricsCommand { get; }
+
+    public void GetLyrics(object param)
+    {
+      var evt = new GenericEvent
+      {
+        Action = "Command"
+      };
+      evt.MessageData.Add("command", Action.ActionType.ACTION_GETLYRICS);
+      EventSystem.Publish(evt);
+    }
+
+    /// <summary>
+    /// Get Lyrics from File
+    /// </summary>
+    public ICommand GetLyricsFromFileCommand { get; }
+
+    public void GetLyricsFromFile(object param)
+    {
+      var oFd = new OpenFileDialog
+      {
+        Filter = "Text Files|*.txt|All Files|*.*",
+        InitialDirectory = SongEdit.FullFileName != null ? SongEdit.FilePath : _songs[0].FilePath
+      };
+      if (oFd.ShowDialog() == true)
+      {
+        try
+        {
+          SongEdit.Lyrics = File.ReadAllText(oFd.FileName, Encoding.UTF8);
+        }
+        catch (Exception ex)
+        {
+          log.Error($"Error reading Lyrics text {ex.Message}");
+        }
+      }
+    }
+
+    /// <summary>
+    /// RemoveLyrics
+    /// </summary>
+    public ICommand RemoveLyricsCommand { get; }
+
+    public void RemoveLyrics(object param)
+    {
+      // Do we have multiple Songs selected
+      if (_songs.Count > 1)
+      {
+        foreach (var song in _songs)
+        {
+          song.Lyrics = "";
+        }
+      }
+      else
+      {
+        SongEdit.Lyrics = "";
       }
     }
 

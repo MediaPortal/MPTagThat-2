@@ -23,6 +23,14 @@ namespace MPTagThat.Core.Common.Song
 
     public Lyric() {}
 
+    public Lyric(Lyric copyFrom)
+    {
+      this.Description = copyFrom.Description;
+      this.Language = copyFrom.Language;
+      this.Text = copyFrom.Text;
+    }
+
+
     public Lyric(string desc, string lang, string text)
     {
       Description = desc;

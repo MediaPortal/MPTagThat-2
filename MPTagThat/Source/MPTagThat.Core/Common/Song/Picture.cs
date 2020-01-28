@@ -33,8 +33,14 @@ namespace MPTagThat.Core.Common.Song
     /// <summary>
     /// Standard ctor
     /// </summary>
-    public Picture()
+    public Picture() { }
+
+    public Picture(Picture copyFrom)
     {
+      this.MimeType = copyFrom.MimeType;
+      this.Type = copyFrom.Type;
+      this.Description = copyFrom.Description;
+      this.Data = copyFrom.Data;
     }
 
     /// <summary>

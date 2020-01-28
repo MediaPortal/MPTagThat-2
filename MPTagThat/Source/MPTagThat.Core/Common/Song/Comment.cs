@@ -27,6 +27,13 @@ namespace MPTagThat.Core.Common.Song
 
     public Comment() { }
 
+    public Comment(Comment copyFrom)
+    {
+      this.Description = copyFrom.Description;
+      this.Language = copyFrom.Language;
+      this.Text = copyFrom.Text;
+    }
+
     public Comment(string desc, string lang, string text)
     {
       Description = desc;

@@ -743,6 +743,7 @@
                   </Grid>
                 </syncfusion:SfAccordionItem>
 
+                <!-- Picture Details -->
                 <syncfusion:SfAccordionItem Header="{lex:Loc tagEdit_TabHeader_Pictures}">
                   <StackPanel Margin="5,5,0,5" >
                     <Grid>
@@ -802,6 +803,47 @@
                           </i:Interaction.Triggers>
                         </syncfusion:SfDataGrid>
                       </StackPanel>
+                    </Grid>
+                  </StackPanel>
+                </syncfusion:SfAccordionItem>
+
+                <!-- Lyrics Details -->
+                <syncfusion:SfAccordionItem Header="{lex:Loc tagEdit_TabHeader_Lyrics}">
+                  <StackPanel Margin="5,5,0,5" >
+                    <Grid>
+                      <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                      </Grid.RowDefinitions>
+                      <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="40"/>
+                        <ColumnDefinition/>
+                      </Grid.ColumnDefinitions>
+                      <StackPanel Grid.Row="0" Grid.Column="0" >
+                        <syncfusion:ButtonAdv  Label="" Width="30" Height="30" VerticalAlignment="Top" HorizontalAlignment="Left" 
+                                         SmallIcon="pack://application:,,,/MPTagThat.TagEdit;component/Resources/Images/GetLyrics_32x.png" 
+                                         Command="{Binding GetLyricsCommand}"
+                                         ToolTip="{lex:Loc tagEdit_ToolTip_Lyrics_GetInternet}" />
+                        <syncfusion:ButtonAdv  Label="" Width="30" Height="30" VerticalAlignment="Top" Margin="0,4,0,0" HorizontalAlignment="Left" 
+                                         SmallIcon="pack://application:,,,/MPTagThat.TagEdit;component/Resources/Images/File_32x.png" 
+                                         Command="{Binding GetLyricsFromFileCommand}"
+                                         CommandParameter="{Binding SongEdit}" 
+                                         ToolTip="{lex:Loc tagEdit_ToolTip_Lyrics_GetFile}"/>
+                        <syncfusion:ButtonAdv  Label="" Width="30" Height="30" VerticalAlignment="Top" Margin="0,4,0,0" HorizontalAlignment="Left" 
+                                         SmallIcon="pack://application:,,,/MPTagThat.TagEdit;component/Resources/Images/RemoveLyrics_32x.png" 
+                                         Command="{Binding RemoveLyricsCommand}"
+                                         ToolTip="{lex:Loc tagEdit_ToolTip_Lyrics_Remove}"/>
+                      </StackPanel>
+                      <TextBox Grid.Row="0" Grid.Column="1" Name="Lyrics" 
+                               Text="{Binding SongEdit.Lyrics, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                               TextWrapping="Wrap" 
+                               AcceptsReturn="True" 
+                               VerticalScrollBarVisibility="Auto" 
+                               MaxHeight="400" >
+
+                      </TextBox>
+
                     </Grid>
                   </StackPanel>
                 </syncfusion:SfAccordionItem>

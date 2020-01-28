@@ -2140,6 +2140,15 @@ namespace MPTagThat.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Lyrics Details.
+        /// </summary>
+        public static string tagEdit_TabHeader_Lyrics {
+            get {
+                return ResourceManager.GetString("tagEdit_TabHeader_Lyrics", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Main Tags.
         /// </summary>
         public static string tagEdit_TabHeader_Main {
@@ -2149,7 +2158,7 @@ namespace MPTagThat.Resources.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Pictures.
+        ///   Looks up a localized string similar to Picture Details.
         /// </summary>
         public static string tagEdit_TabHeader_Pictures {
             get {
@@ -2181,6 +2190,33 @@ namespace MPTagThat.Resources.Localization {
         public static string tagEdit_TitleSort {
             get {
                 return ResourceManager.GetString("tagEdit_TitleSort", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Get Lyrics from File.
+        /// </summary>
+        public static string tagEdit_ToolTip_Lyrics_GetFile {
+            get {
+                return ResourceManager.GetString("tagEdit_ToolTip_Lyrics_GetFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Get Lyrics from configured Sites.
+        /// </summary>
+        public static string tagEdit_ToolTip_Lyrics_GetInternet {
+            get {
+                return ResourceManager.GetString("tagEdit_ToolTip_Lyrics_GetInternet", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Remove Lyrics.
+        /// </summary>
+        public static string tagEdit_ToolTip_Lyrics_Remove {
+            get {
+                return ResourceManager.GetString("tagEdit_ToolTip_Lyrics_Remove", resourceCulture);
             }
         }
         

@@ -923,7 +923,7 @@
     <comment>The Check Box Text</comment>
   </data>
   <data name="tagEdit_TabHeader_Pictures" xml:space="preserve">
-    <value>Pictures</value>
+    <value>Picture Details</value>
     <comment>The Header for the Pictures Information</comment>
   </data>
   <data name="tagEdit_ToolTip_Picture_GetCoverArt_File" xml:space="preserve">
@@ -948,5 +948,21 @@
   </data>
   <data name="tagEdit_ToolTip_Picture_SaveDetail_CoverArt" xml:space="preserve">
     <value>Save Cover Art to file</value>
+  </data>
+  <data name="tagEdit_TabHeader_Lyrics" xml:space="preserve">
+    <value>Lyrics Details</value>
+    <comment>The Header for the Lyrics Tab</comment>
+  </data>
+  <data name="tagEdit_ToolTip_Lyrics_GetFile" xml:space="preserve">
+    <value>Get Lyrics from File</value>
+    <comment>The Tool Tip to get Lyrics from File</comment>
+  </data>
+  <data name="tagEdit_ToolTip_Lyrics_GetInternet" xml:space="preserve">
+    <value>Get Lyrics from configured Sites</value>
+    <comment>The Tool Tip to get Lyrics from Internet</comment>
+  </data>
+  <data name="tagEdit_ToolTip_Lyrics_Remove" xml:space="preserve">
+    <value>Remove Lyrics</value>
+    <comment>The Tool Tip to remove the Lyrics</comment>
   </data>
 </root>

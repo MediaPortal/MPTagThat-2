@@ -23,6 +23,13 @@ namespace MPTagThat.Core.Common
 
     public PopmFrame() {}
 
+    public PopmFrame(PopmFrame copyFrom)
+    {
+      this.User = copyFrom.User;
+      this.Rating = copyFrom.Rating;
+      this.PlayCount = copyFrom.PlayCount;
+    }
+
     public PopmFrame(string user, int rating, int playcount)
     {
       User = user;
