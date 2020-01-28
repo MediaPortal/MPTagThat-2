@@ -12,42 +12,38 @@ namespace MPTagThat.Core.Common
 
     public enum ActionType
     {
-      ACTION_INVALID = 0,
-      ACTION_SAVE = 1,
-      ACTION_FILENAME2TAG = 3,
-      ACTION_TAG2FILENAME = 4,
-      ACTION_SELECTALL = 5,
-      ACTION_COPY = 6,
-      ACTION_PASTE = 7,
-      ACTION_SCRIPTEXECUTE = 8,
-      ACTION_TREEREFRESH = 9,
-      ACTION_FOLDERDELETE = 10,
-      ACTION_CASECONVERSION = 11,
-      ACTION_REFRESH = 12,
-      ACTION_OPTIONS = 13,
-      ACTION_DELETE = 14,
-      ACTION_PAGEDOWN = 15,
-      ACTION_PAGEUP = 16,
-      ACTION_NEXTFILE = 17,
-      ACTION_PREVFILE = 18,
-      ACTION_ORGANISE = 20,
-      ACTION_IDENTIFYFILE = 21,
-      ACTION_GETCOVERART = 22,
-      ACTION_GETLYRICS = 23,
-      ACTION_EXIT = 24,
-      ACTION_HELP = 25,
-      ACTION_TAGFROMINTERNET = 26,
-      ACTION_TOGGLESTREEVIEWSPLITTER = 27,
-      ACTION_REMOVECOMMENT = 28,
-      ACTION_REMOVEPICTURE = 29,
-      ACTION_SAVEALL = 30,
-      ACTION_VALIDATEMP3 = 32,
-      ACTION_FIXMP3 = 33,
-      ACTION_FIND = 34,
-      ACTION_REPLACE = 35,
-      ACTION_TOGGLEQUICKEDIT = 36,
-      ACTION_TOGGLEMISCFILES = 37,
-      ACTION_REPLAYGAIN = 38,
+      INVALID = 0,
+      SAVE = 1,
+      FILENAME2TAG = 3,
+      TAG2FILENAME = 4,
+      SELECTALL = 5,
+      COPY = 6,
+      PASTE = 7,
+      SCRIPTEXECUTE = 8,
+      TREEREFRESH = 9,
+      FOLDERDELETE = 10,
+      CASECONVERSION = 11,
+      CASECONVERSION_BATCH = 12,
+      REFRESH = 13,
+      OPTIONS = 14,
+      DELETE = 15,
+      NEXTFILE = 16,
+      PREVFILE = 17,
+      ORGANISE = 18,
+      IDENTIFYFILE = 19,
+      GETCOVERART = 20,
+      GETLYRICS = 21,
+      EXIT = 22,
+      HELP = 23,
+      TAGFROMINTERNET = 24,
+      REMOVECOMMENT = 25,
+      REMOVEPICTURE = 26,
+      SAVEALL = 27,
+      VALIDATEMP3 = 28,
+      FIXMP3 = 29,
+      FIND = 30,
+      REPLACE = 31,
+      REPLAYGAIN = 32,
     }
 
     #endregion
@@ -74,43 +70,47 @@ namespace MPTagThat.Core.Common
     {
       switch (action)
       {
-        case ActionType.ACTION_SAVE:
+        case ActionType.SAVE:
           return "Save";
 
-        case ActionType.ACTION_SAVEALL:
+        case ActionType.SAVEALL:
           return "SaveAll";
 
-        case ActionType.ACTION_IDENTIFYFILE:
+        case ActionType.IDENTIFYFILE:
           checkSelections = true;
           return "IdentifyFiles";
 
-        case Action.ActionType.ACTION_GETCOVERART:
+        case Action.ActionType.GETCOVERART:
           checkSelections = true;
           return "GetCoverArt";
 
-        case Action.ActionType.ACTION_GETLYRICS:
+        case Action.ActionType.GETLYRICS:
           checkSelections = true;
           return "GetLyrics";
 
-        case Action.ActionType.ACTION_REMOVECOMMENT:
+        case Action.ActionType.REMOVECOMMENT:
           checkSelections = true;
           return "RemoveComments";
 
-        case Action.ActionType.ACTION_REMOVEPICTURE:
+        case Action.ActionType.REMOVEPICTURE:
           checkSelections = true;
           return "RemoveCoverArt";
 
-        case Action.ActionType.ACTION_VALIDATEMP3:
+        case Action.ActionType.VALIDATEMP3:
           checkSelections = true;
           return "ValidateMP3File";
 
-        case Action.ActionType.ACTION_FIXMP3:
+        case Action.ActionType.FIXMP3:
           checkSelections = true;
           return "FixMP3File";
 
-        case Action.ActionType.ACTION_REPLAYGAIN:
+        case Action.ActionType.REPLAYGAIN:
           checkSelections = true;
           return "ReplayGain";
+
+        case Action.ActionType.CASECONVERSION_BATCH:
+          checkSelections = true;
+          return "CaseConversion";
 
         default:
           return "";

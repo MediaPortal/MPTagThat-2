@@ -636,9 +636,10 @@ namespace MPTagThat.SongGrid.ViewModels
     // List of Supported commands, that should be processed by ExecuteCommand
     // Commands that show a Dialog, like Lyrics, CoverARt, etc. should not specified here, they will be handled as dialogs
     private readonly List<Action.ActionType> _supportedCommands = new List<Action.ActionType>() 
-      { Action.ActionType.ACTION_SAVE, 
-        Action.ActionType.ACTION_SAVEALL,
-        Action.ActionType.ACTION_REMOVEPICTURE
+      { Action.ActionType.SAVE, 
+        Action.ActionType.SAVEALL,
+        Action.ActionType.REMOVEPICTURE,
+        Action.ActionType.CASECONVERSION_BATCH,
       };
 
     private void OnMessageReceived(GenericEvent msg)
@@ -656,6 +657,12 @@ namespace MPTagThat.SongGrid.ViewModels
           break;
 
         case "command":
+
+          if (SelectedItems.Count == 0)
+          {
+            Songs.ToList().ForEach(song => SelectedItems.Add(song));
+          }
+
           // Run Commands, which don't display a dialog
           if (_supportedCommands.Contains((Action.ActionType) msg.MessageData["command"]))
           {
@@ -675,20 +682,15 @@ namespace MPTagThat.SongGrid.ViewModels
           }
 
           // Refresh the current folder
-          if ((Action.ActionType)msg.MessageData["command"] == Action.ActionType.ACTION_REFRESH)
+          if ((Action.ActionType)msg.MessageData["command"] == Action.ActionType.REFRESH)
           {
             CheckChangesPending();
             FolderScan();
             return;
           }
 
-          if (SelectedItems.Count == 0)
-          {
-            Songs.ToList().ForEach(song => SelectedItems.Add(song));
-          }
-
           // Execute a script
-          if ((Action.ActionType)msg.MessageData["command"] == Action.ActionType.ACTION_SCRIPTEXECUTE)
+          if ((Action.ActionType)msg.MessageData["command"] == Action.ActionType.SCRIPTEXECUTE)
           {
             ExecuteScript(_options.MainSettings.ActiveScript);
             return;
@@ -698,19 +700,19 @@ namespace MPTagThat.SongGrid.ViewModels
           var parameters = new DialogParameters();
           parameters.Add("songs", songs);
 
-          if ((Action.ActionType)msg.MessageData["command"] == Action.ActionType.ACTION_FILENAME2TAG)
+          if ((Action.ActionType)msg.MessageData["command"] == Action.ActionType.FILENAME2TAG)
           {
             _dialogService.ShowDialogInAnotherWindow("FileName2TagView", "DialogWindowView",parameters, null);
             return;
           }
 
-          if ((Action.ActionType)msg.MessageData["command"] == Action.ActionType.ACTION_TAG2FILENAME)
+          if ((Action.ActionType)msg.MessageData["command"] == Action.ActionType.TAG2FILENAME)
           {
             _dialogService.ShowDialogInAnotherWindow("Tag2FileNameView", "DialogWindowView",parameters, null);
             return;
           }
 
-          if ((Action.ActionType)msg.MessageData["command"] == Action.ActionType.ACTION_GETCOVERART)
+          if ((Action.ActionType)msg.MessageData["command"] == Action.ActionType.GETCOVERART)
           {
             if (_options.MainSettings.EmbedFolderThumb && !_options.MainSettings.OnlySaveFolderThumb 
                                                        && File.Exists(Path.Combine(songs[0].FilePath, "folder.jpg")))
@@ -752,16 +754,22 @@ namespace MPTagThat.SongGrid.ViewModels
             return;
           }
 
-          if ((Action.ActionType)msg.MessageData["command"] == Action.ActionType.ACTION_GETLYRICS)
+          if ((Action.ActionType)msg.MessageData["command"] == Action.ActionType.GETLYRICS)
           {
             _dialogService.ShowDialogInAnotherWindow("LyricsSearchView", "DialogWindowView", parameters, null);
             return;
           }
 
-          if ((Action.ActionType)msg.MessageData["command"] == Action.ActionType.ACTION_ORGANISE)
+          if ((Action.ActionType)msg.MessageData["command"] == Action.ActionType.ORGANISE)
           {
-            parameters.Add("songgridinstance", this);  // We need to reference to the SongGrod using Reflection for a Save all Command
+            parameters.Add("songgridinstance", this);  // We need to reference to the SongGrid using Reflection for a Save all Command
             _dialogService.ShowDialogInAnotherWindow("OrganiseFilesView", "DialogWindowView", parameters, null);
+            return;
+          }
+
+          if ((Action.ActionType)msg.MessageData["command"] == Action.ActionType.CASECONVERSION)
+          {
+            _dialogService.ShowDialogInAnotherWindow("CaseConversionView", "DialogWindowView", parameters, null);
             return;
           }
 

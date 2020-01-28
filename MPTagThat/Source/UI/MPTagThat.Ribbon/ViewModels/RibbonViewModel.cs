@@ -135,39 +135,47 @@ namespace MPTagThat.Ribbon.ViewModels
       }
 
       var elementName = (string) param;
-      var type = Action.ActionType.ACTION_INVALID;
+      var type = Action.ActionType.INVALID;
       switch (elementName)
       {
         case "ButtonSave":
-          type = Action.ActionType.ACTION_SAVE;
+          type = Action.ActionType.SAVE;
           break;
 
         case "ButtonRefresh":
-          type = Action.ActionType.ACTION_REFRESH;
+          type = Action.ActionType.REFRESH;
+          break;
+
+        case "ButtonCaseConversion":
+          type = Action.ActionType.CASECONVERSION_BATCH;
+          break;
+
+        case "ButtonCaseConversionOptions":
+          type = Action.ActionType.CASECONVERSION;
           break;
 
         case "ButtonExecuteScripts":
-          type = Action.ActionType.ACTION_SCRIPTEXECUTE;
+          type = Action.ActionType.SCRIPTEXECUTE;
           break;
 
         case "ButtonTagFromFile":
-          type = Action.ActionType.ACTION_FILENAME2TAG;
+          type = Action.ActionType.FILENAME2TAG;
           break;
 
         case "ButtonGetLyrics":
-          type = Action.ActionType.ACTION_GETLYRICS;
+          type = Action.ActionType.GETLYRICS;
           break;
 
         case "ButtonRenameFiles":
-          type = Action.ActionType.ACTION_TAG2FILENAME;
+          type = Action.ActionType.TAG2FILENAME;
           break;
 
         case "ButtonOrganiseFiles":
-          type = Action.ActionType.ACTION_ORGANISE;
+          type = Action.ActionType.ORGANISE;
           break;
       }
 
-      if (type != Action.ActionType.ACTION_INVALID)
+      if (type != Action.ActionType.INVALID)
       {
         // Send out the Event with the action
         var evt = new GenericEvent

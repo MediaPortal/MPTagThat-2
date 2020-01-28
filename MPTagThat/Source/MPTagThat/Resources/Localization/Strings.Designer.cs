@@ -70,6 +70,222 @@ namespace MPTagThat.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Album.
+        /// </summary>
+        public static string caseConversion_Album {
+            get {
+                return ResourceManager.GetString("caseConversion_Album", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Album Artist.
+        /// </summary>
+        public static string caseConversion_AlbumArtist {
+            get {
+                return ResourceManager.GetString("caseConversion_AlbumArtist", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to All First Letter Upper Case.
+        /// </summary>
+        public static string caseConversion_AllFirstLetterUpperCase {
+            get {
+                return ResourceManager.GetString("caseConversion_AllFirstLetterUpperCase", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to All Lower Case.
+        /// </summary>
+        public static string caseConversion_AllLowerCase {
+            get {
+                return ResourceManager.GetString("caseConversion_AllLowerCase", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to All Upper Case.
+        /// </summary>
+        public static string caseConversion_AllUpperCase {
+            get {
+                return ResourceManager.GetString("caseConversion_AllUpperCase", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Always Uppercase First Letter.
+        /// </summary>
+        public static string caseConversion_AlwaysUpperCaseFirstLetter {
+            get {
+                return ResourceManager.GetString("caseConversion_AlwaysUpperCaseFirstLetter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Artist.
+        /// </summary>
+        public static string caseConversion_Artist {
+            get {
+                return ResourceManager.GetString("caseConversion_Artist", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Comment.
+        /// </summary>
+        public static string caseConversion_Comment {
+            get {
+                return ResourceManager.GetString("caseConversion_Comment", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add.
+        /// </summary>
+        public static string caseConversion_Exception_Add {
+            get {
+                return ResourceManager.GetString("caseConversion_Exception_Add", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Remove.
+        /// </summary>
+        public static string caseConversion_Exception_Remove {
+            get {
+                return ResourceManager.GetString("caseConversion_Exception_Remove", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Exceptions.
+        /// </summary>
+        public static string caseConversion_Exceptions {
+            get {
+                return ResourceManager.GetString("caseConversion_Exceptions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Convert Filename.
+        /// </summary>
+        public static string caseConversion_FileName {
+            get {
+                return ResourceManager.GetString("caseConversion_FileName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to First Letter Upper Case.
+        /// </summary>
+        public static string caseConversion_FirstLetterUpperCase {
+            get {
+                return ResourceManager.GetString("caseConversion_FirstLetterUpperCase", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Conversion Method.
+        /// </summary>
+        public static string caseConversion_GroupBox_Method {
+            get {
+                return ResourceManager.GetString("caseConversion_GroupBox_Method", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Convert Tags for ....
+        /// </summary>
+        public static string caseConversion_GroupBoxTags {
+            get {
+                return ResourceManager.GetString("caseConversion_GroupBoxTags", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Case Conversion.
+        /// </summary>
+        public static string caseConversion_Header {
+            get {
+                return ResourceManager.GetString("caseConversion_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to General Options.
+        /// </summary>
+        public static string caseConversion_Options {
+            get {
+                return ResourceManager.GetString("caseConversion_Options", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Replace &quot;%20&quot; by Space.
+        /// </summary>
+        public static string caseConversion_Replace20bySpace {
+            get {
+                return ResourceManager.GetString("caseConversion_Replace20bySpace", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Replace Space by &quot;%20&quot;.
+        /// </summary>
+        public static string caseConversion_ReplaceSpaceBy20 {
+            get {
+                return ResourceManager.GetString("caseConversion_ReplaceSpaceBy20", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Replace Space by &quot;_&quot;.
+        /// </summary>
+        public static string caseConversion_ReplaceSpaceByUnderscore {
+            get {
+                return ResourceManager.GetString("caseConversion_ReplaceSpaceByUnderscore", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Replace &quot;_&quot; by Space.
+        /// </summary>
+        public static string caseConversion_ReplaceUnderScoreBySpace {
+            get {
+                return ResourceManager.GetString("caseConversion_ReplaceUnderScoreBySpace", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Settings.
+        /// </summary>
+        public static string caseConversion_Tab_Settings {
+            get {
+                return ResourceManager.GetString("caseConversion_Tab_Settings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Convert Tags.
+        /// </summary>
+        public static string caseConversion_Tags {
+            get {
+                return ResourceManager.GetString("caseConversion_Tags", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Title.
+        /// </summary>
+        public static string caseConversion_Title {
+            get {
+                return ResourceManager.GetString("caseConversion_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Save covers with a maximum pixel width of:.
         /// </summary>
         public static string coverSearch_ChangeCoverSize {

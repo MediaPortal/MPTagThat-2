@@ -545,7 +545,7 @@ namespace MPTagThat.TagEdit.ViewModels
       {
         Action = "Command"
       };
-      evt.MessageData.Add("command", Action.ActionType.ACTION_GETCOVERART);
+      evt.MessageData.Add("command", Action.ActionType.GETCOVERART);
       evt.MessageData.Add("removeexistingpictures", "true");
       EventSystem.Publish(evt);
     }
@@ -607,7 +607,7 @@ namespace MPTagThat.TagEdit.ViewModels
       {
         Action = "Command"
       };
-      evt.MessageData.Add("command", Action.ActionType.ACTION_REMOVEPICTURE);
+      evt.MessageData.Add("command", Action.ActionType.REMOVEPICTURE);
       EventSystem.Publish(evt);
       FrontCover = null;
       if (MultiCheckBoxVisibility)
@@ -740,7 +740,7 @@ namespace MPTagThat.TagEdit.ViewModels
       {
         Action = "Command"
       };
-      evt.MessageData.Add("command", Action.ActionType.ACTION_GETLYRICS);
+      evt.MessageData.Add("command", Action.ActionType.GETLYRICS);
       EventSystem.Publish(evt);
     }
 

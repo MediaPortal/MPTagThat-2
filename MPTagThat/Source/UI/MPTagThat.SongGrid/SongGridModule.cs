@@ -43,6 +43,7 @@ namespace MPTagThat.SongGrid
       containerRegistry.RegisterDialog<OrganiseFilesView, OrganiseFilesViewModel>();
       containerRegistry.RegisterDialog<AlbumCoverSearchView, AlbumCoverSearchViewModel>();
       containerRegistry.RegisterDialog<LyricsSearchView, LyricsSearchViewModel>();
+      containerRegistry.RegisterDialog<CaseConversionView, CaseConversionViewModel>();
       containerRegistry.RegisterDialogWindow<DialogWindowView>(nameof(DialogWindowView));
     }
 

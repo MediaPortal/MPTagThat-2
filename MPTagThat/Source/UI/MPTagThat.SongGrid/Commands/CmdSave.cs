@@ -111,10 +111,7 @@ namespace MPTagThat.SongGrid.Commands
 
           if (options.MainSettings.UseCaseConversion)
           {
-            // TODO: Case Conversion
-            //CaseConversion.CaseConversion convert = new CaseConversion.CaseConversion(TracksGrid.MainForm, true);
-            //convert.CaseConvert(track, rowIndex);
-            //convert.Dispose();
+            CaseConversion.CaseConvert(ref song);
           }
 
           var originalFileName = song.FullFileName; // Need the original filename for database update, in case a rename happens

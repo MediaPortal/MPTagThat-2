@@ -1,0 +1,155 @@
+﻿<UserControl x:Class="MPTagThat.Dialogs.Views.CaseConversionView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:prism="http://prismlibrary.com/"
+             prism:ViewModelLocator.AutoWireViewModel="True"
+             xmlns:lex="http://wpflocalizeextension.codeplex.com"
+             xmlns:syncfusion="http://schemas.syncfusion.com/wpf"
+             xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
+             xmlns:core="clr-namespace:MPTagThat.Core.Common.Converter;assembly=MPTagThat.Core"
+             xmlns:behaviors="clr-namespace:MPTagThat.Core.Common.Behaviors;assembly=MPTagThat.Core"
+             lex:LocalizeDictionary.DesignCulture="en"
+             lex:ResxLocalizationProvider.DefaultAssembly="MPTagThat"
+             lex:ResxLocalizationProvider.DefaultDictionary="Strings"
+             mc:Ignorable="d" d:DesignHeight="450" d:DesignWidth="800">
+
+  <prism:Dialog.WindowStyle>
+    <Style TargetType="Window">
+      <Setter Property="prism:Dialog.WindowStartupLocation" Value="CenterScreen" />
+      <Setter Property="ResizeMode" Value="NoResize"/>
+      <Setter Property="ShowInTaskbar" Value="False"/>
+      <Setter Property="SizeToContent" Value="WidthAndHeight"/>
+    </Style>
+  </prism:Dialog.WindowStyle>
+
+  <UserControl.Resources>
+
+    <core:AlternateRowChangedColorConverter x:Key="ChangedAlternateRowStyleSelector" />
+
+    <Style TargetType="syncfusion:VirtualizingCellsControl" x:Key="AlternatingRowStyle">
+      <Setter Property="Background" Value="{Binding Path=Changed,UpdateSourceTrigger=PropertyChanged,Converter={StaticResource ChangedAlternateRowStyleSelector}}"/>
+    </Style>
+
+  </UserControl.Resources>
+
+  <Border Background="{Binding Background}"  BorderBrush="LightGray" BorderThickness="3" CornerRadius="5" >
+    <Grid x:Name="LayoutRoot" Margin="5" >
+      <Grid.RowDefinitions>
+        <RowDefinition Height="60"/>
+        <RowDefinition Height="Auto" />
+        <RowDefinition Height="Auto" />
+      </Grid.RowDefinitions>
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="Auto" />
+      </Grid.ColumnDefinitions>
+
+      <!-- Header -->
+      <Canvas x:Name="Logo" Grid.Row="0"  RenderTransformOrigin="0.5,0.5">
+        <TextBlock Text="{Binding Title}" TextWrapping="NoWrap" Foreground="#FFC4CFD6" FontSize="30" Opacity="0.85" Canvas.Left="0" Canvas.Top="5" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Height="50" TextAlignment="Left" FontWeight="Bold" />
+      </Canvas>
+
+      <syncfusion:TabNavigationControl x:Name="TabNavigationControl" Grid.Row="1" >
+        <!-- Settings -->
+        <syncfusion:TabNavigationItem Header="{lex:Loc caseConversion_Tab_Settings}">
+          <syncfusion:TabNavigationItem.Content>
+            <Grid>
+              <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+              </Grid.RowDefinitions>
+              <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="255" />
+                <ColumnDefinition Width="255" />
+              </Grid.ColumnDefinitions>
+
+              <CheckBox Grid.Row="0" Grid.Column="0"  Content="{lex:Loc caseConversion_Tags}" Margin="5,5,0,0"
+                          IsChecked="{Binding CkConvertTags, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+              <CheckBox Grid.Row="0" Grid.Column="1" Content="{lex:Loc caseConversion_FileName}" Margin="5,5,0,0"
+                        IsChecked="{Binding CkConvertFileName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+
+              <GroupBox Grid.Row="1" Grid.Column="0" Header="{lex:Loc caseConversion_GroupBox_Method}" Margin="5,5,0,5">
+                <StackPanel>
+                  <RadioButton Content="{lex:Loc caseConversion_AllLowerCase}" Margin="0,5,0,0"
+                               IsChecked="{Binding CkAllLowerCase, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                  <RadioButton Content="{lex:Loc caseConversion_AllUpperCase}"
+                               IsChecked="{Binding CkAllUpperCase, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                  <RadioButton Content="{lex:Loc caseConversion_FirstLetterUpperCase}"
+                               IsChecked="{Binding CkFirstLetterUpperCase, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                  <RadioButton Content="{lex:Loc caseConversion_AllFirstLetterUpperCase}"
+                               IsChecked="{Binding CkAllFirstLetterUpperCase, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                </StackPanel>
+              </GroupBox>
+
+              <GroupBox Grid.Row="1" Grid.Column="1" Header="{lex:Loc caseConversion_GroupBoxTags}" Margin="5,5,0,5">
+                <StackPanel>
+                  <CheckBox Content="{lex:Loc caseConversion_Artist}" Margin="0,5,0,0"
+                          IsChecked="{Binding CkConvertArtist, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                  <CheckBox Content="{lex:Loc caseConversion_AlbumArtist}" 
+                            IsChecked="{Binding CkConvertAlbumArtist, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                  <CheckBox Content="{lex:Loc caseConversion_Album}" 
+                            IsChecked="{Binding CkConvertAlbum, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                  <CheckBox Content="{lex:Loc caseConversion_Title}" 
+                            IsChecked="{Binding CkConvertTitle, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                  <CheckBox Content="{lex:Loc caseConversion_Comment}" 
+                            IsChecked="{Binding CkConvertComment, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                </StackPanel>
+              </GroupBox>
+
+              <GroupBox Grid.Row="2" Grid.Column="0"  Grid.ColumnSpan="2" Header="{lex:Loc caseConversion_Options}" Margin="5,5,0,5">
+                <Grid>
+                  <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="255" />
+                    <ColumnDefinition Width="255" />
+                  </Grid.ColumnDefinitions>
+                  <StackPanel Grid.Column="0">
+                    <CheckBox Content="{lex:Loc caseConversion_Replace20bySpace}" Margin="0,5,0,0"
+                              IsChecked="{Binding CkReplace20BySpace, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                    <CheckBox Content="{lex:Loc caseConversion_ReplaceUnderScoreBySpace}" 
+                              IsChecked="{Binding CkReplaceUnderScoreBySpace, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                    <CheckBox Content="{lex:Loc caseConversion_AlwaysUpperCaseFirstLetter}" 
+                              IsChecked="{Binding CkAlwaysUpperCaseFirstLetter, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                  </StackPanel>
+
+                  <StackPanel Grid.Column="1">
+                    <CheckBox Content="{lex:Loc caseConversion_ReplaceSpaceBy20}" Margin="0,5,0,0"
+                              IsChecked="{Binding CkReplaceSpaceBy20, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                    <CheckBox Content="{lex:Loc caseConversion_ReplaceSpaceByUnderscore}" 
+                              IsChecked="{Binding CkReplaceSpaceByUnderscore, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                  </StackPanel>
+                </Grid>
+              </GroupBox>
+
+            </Grid>
+          </syncfusion:TabNavigationItem.Content>
+        </syncfusion:TabNavigationItem>
+
+        <!-- Exception -->
+        <syncfusion:TabNavigationItem Header="{lex:Loc caseConversion_Exceptions}">
+          <syncfusion:TabNavigationItem.Content>
+            <Grid>
+
+            </Grid>
+          </syncfusion:TabNavigationItem.Content>
+        </syncfusion:TabNavigationItem>
+
+      </syncfusion:TabNavigationControl>
+
+      <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right">
+        <syncfusion:ButtonAdv Label="{lex:Loc dialog_Apply}" 
+                              SmallIcon="pack://application:,,,/MPTagThat;component/Resources/Images/Apply_Changes_32x.png" 
+                              Command="{Binding CaseConversionCommand}" 
+                              Width="75" Height="25" 
+                              HorizontalAlignment="Right" Margin="0,10,0,0" />
+        <syncfusion:ButtonAdv Label="{lex:Loc dialog_Cancel}" 
+                              SmallIcon="pack://application:,,,/MPTagThat;component/Resources/Images/Cancel_Changes_32x.png" 
+                              Command="{Binding CancelChangesCommand}" 
+                              Width="75" Height="25" 
+                              HorizontalAlignment="Right" Margin="20,10,0,0" />
+      </StackPanel>
+
+    </Grid>
+  </Border>
+</UserControl>

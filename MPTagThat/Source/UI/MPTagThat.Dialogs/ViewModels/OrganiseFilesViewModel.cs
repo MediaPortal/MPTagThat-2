@@ -259,7 +259,7 @@ namespace MPTagThat.Dialogs.ViewModels
       _options.OrganiseSettings.OverWriteFiles = CkOverWriteFiles;
       _options.OrganiseSettings.CopyNonMusicFiles = CkCopyNonMusicFiles;
       _options.OrganiseSettings.LastUsedScript = SelectedIndexScripts > -1 ? Scripts[SelectedIndexScripts].Name : "";
-
+      CloseDialog("true");
       log.Trace("<<<");
     }
 
@@ -482,7 +482,7 @@ namespace MPTagThat.Dialogs.ViewModels
         };
         EventSystem.Publish(evt);
       }
-      CloseDialog("true");
+      
       log.Trace("<<<");
     }
 

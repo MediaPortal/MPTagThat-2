@@ -53,7 +53,9 @@
                                   SmallIcon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_CaseConversion_16x.png"
                                   Command="{Binding ExecuteRibbonCommand}" 
                                   CommandParameter="{Binding Name ,RelativeSource={RelativeSource Self}}" >
-            <syncfusion:DropDownMenuItem x:Name="ButtonCaseConversionOptions" Header="{lex:Loc ribbon_CaseConversionOption}"/>
+            <syncfusion:DropDownMenuItem x:Name="ButtonCaseConversionOptions" Header="{lex:Loc ribbon_CaseConversionOption}"
+                                         Command="{Binding ExecuteRibbonCommand}" 
+                                         CommandParameter="{Binding Name ,RelativeSource={RelativeSource Self}}" />
           </syncfusion:SplitButton>
 
           <syncfusion:RibbonButton x:Name="ButtonGetLyrics" SizeForm="Large" 

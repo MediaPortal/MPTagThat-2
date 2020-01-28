@@ -965,4 +965,76 @@
     <value>Remove Lyrics</value>
     <comment>The Tool Tip to remove the Lyrics</comment>
   </data>
+  <data name="caseConversion_Album" xml:space="preserve">
+    <value>Album</value>
+  </data>
+  <data name="caseConversion_AlbumArtist" xml:space="preserve">
+    <value>Album Artist</value>
+  </data>
+  <data name="caseConversion_AllFirstLetterUpperCase" xml:space="preserve">
+    <value>All First Letter Upper Case</value>
+  </data>
+  <data name="caseConversion_AllLowerCase" xml:space="preserve">
+    <value>All Lower Case</value>
+  </data>
+  <data name="caseConversion_AllUpperCase" xml:space="preserve">
+    <value>All Upper Case</value>
+  </data>
+  <data name="caseConversion_AlwaysUpperCaseFirstLetter" xml:space="preserve">
+    <value>Always Uppercase First Letter</value>
+  </data>
+  <data name="caseConversion_Artist" xml:space="preserve">
+    <value>Artist</value>
+  </data>
+  <data name="caseConversion_Comment" xml:space="preserve">
+    <value>Comment</value>
+  </data>
+  <data name="caseConversion_Exceptions" xml:space="preserve">
+    <value>Exceptions</value>
+  </data>
+  <data name="caseConversion_Exception_Add" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="caseConversion_Exception_Remove" xml:space="preserve">
+    <value>Remove</value>
+  </data>
+  <data name="caseConversion_FileName" xml:space="preserve">
+    <value>Convert Filename</value>
+  </data>
+  <data name="caseConversion_FirstLetterUpperCase" xml:space="preserve">
+    <value>First Letter Upper Case</value>
+  </data>
+  <data name="caseConversion_GroupBoxTags" xml:space="preserve">
+    <value>Convert Tags for ...</value>
+  </data>
+  <data name="caseConversion_GroupBox_Method" xml:space="preserve">
+    <value>Conversion Method</value>
+  </data>
+  <data name="caseConversion_Header" xml:space="preserve">
+    <value>Case Conversion</value>
+  </data>
+  <data name="caseConversion_Options" xml:space="preserve">
+    <value>General Options</value>
+  </data>
+  <data name="caseConversion_Replace20bySpace" xml:space="preserve">
+    <value>Replace "%20" by Space</value>
+  </data>
+  <data name="caseConversion_ReplaceSpaceBy20" xml:space="preserve">
+    <value>Replace Space by "%20"</value>
+  </data>
+  <data name="caseConversion_ReplaceSpaceByUnderscore" xml:space="preserve">
+    <value>Replace Space by "_"</value>
+  </data>
+  <data name="caseConversion_ReplaceUnderScoreBySpace" xml:space="preserve">
+    <value>Replace "_" by Space</value>
+  </data>
+  <data name="caseConversion_Tab_Settings" xml:space="preserve">
+    <value>Settings</value>
+  </data>
+  <data name="caseConversion_Tags" xml:space="preserve">
+    <value>Convert Tags</value>
+  </data>
+  <data name="caseConversion_Title" xml:space="preserve">
+    <value>Title</value>
+  </data>
 </root>

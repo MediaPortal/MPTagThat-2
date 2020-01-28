@@ -101,6 +101,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="ViewModels\AlbumCoverSearchViewModel.cs" />
+    <Compile Include="ViewModels\CaseConversionViewModel.cs" />
     <Compile Include="ViewModels\DialogServiceExtensions.cs" />
     <Compile Include="ViewModels\DialogViewModelBase.cs" />
     <Compile Include="ViewModels\FileName2TagViewModel.cs" />
@@ -111,6 +112,9 @@
     <Compile Include="ViewModels\TagFormat.cs" />
     <Compile Include="Views\AlbumCoverSearchView.xaml.cs">
       <DependentUpon>AlbumCoverSearchView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\CaseConversionView.xaml.cs">
+      <DependentUpon>CaseConversionView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\DialogWindowView.xaml.cs">
       <DependentUpon>DialogWindowView.xaml</DependentUpon>
@@ -132,6 +136,10 @@
   </ItemGroup>
   <ItemGroup>
     <Page Include="Views\AlbumCoverSearchView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\CaseConversionView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
