@@ -105,10 +105,21 @@
                                    CommandParameter="{Binding Name ,RelativeSource={RelativeSource Self}}" />
           
           <syncfusion:RibbonSeparator/>
-          
+          <syncfusion:RibbonButton x:Name="ButtonGain" SizeForm="Large" 
+                                   Label="{lex:Loc ribbon_ReplayGain}" 
+                                   LargeIcon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_Gain_32x.png" 
+                                   SmallIcon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_Gain_16x.png" />
+
+          <syncfusion:RibbonButton x:Name="ButtonBpm" SizeForm="Large" 
+                                   Label="{lex:Loc ribbon_BPM}" 
+                                   LargeIcon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_Bpm_32x.png"
+                                   SmallIcon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_Bpm_16x.png" />
+
+          <syncfusion:RibbonSeparator/>
+
           <!-- Scripts -->
-          <syncfusion:ButtonPanel SeparatorVisibility="Hidden" Height="22" Margin="0,0,0,2" >
-            <syncfusion:RibbonComboBox x:Name="RibbonComboBoxScript" MaxDropDownHeight="150" Width="100" Height="16" 
+          <syncfusion:ButtonPanel SeparatorVisibility="Hidden" Height="25" Margin="0,5,0,5" >
+            <syncfusion:RibbonComboBox x:Name="RibbonComboBoxScript" MaxDropDownHeight="150" Width="100"  
                                        ItemsSource="{Binding Scripts}" 
                                        SelectedIndex="{Binding ScriptsSelectedIndex, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" >
               <ComboBox.ItemTemplate>
@@ -125,14 +136,10 @@
                                      CommandParameter="{Binding Name ,RelativeSource={RelativeSource Self}}"/>
           </syncfusion:ButtonPanel>
           
-          <syncfusion:ButtonPanel SeparatorVisibility="Hidden" Height="21">
+          <syncfusion:ButtonPanel SeparatorVisibility="Hidden" Height="25">
             <syncfusion:RibbonButton x:Name="ButtonAutoNumber" SizeForm="Small" Label="" SmallIcon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_AutoNumber_32x.png" />
             <syncfusion:RibbonButton x:Name="ButtonNumberOnClick" SizeForm="Small" Label="" SmallIcon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_NumberOnClick_32x.png" />
             <syncfusion:IntegerTextBox x:Name="TextBoxNumberOnClick" HorizontalAlignment="Left" Height="20" VerticalAlignment="Top" Width="25" MinValue="1" MaxValue="99999" />
-          </syncfusion:ButtonPanel>
-          <syncfusion:ButtonPanel SeparatorVisibility="Hidden" Height="21">
-            <syncfusion:RibbonButton x:Name="ButtonGain" SizeForm="Small" Label="" SmallIcon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_Gain_32x.png" />
-            <syncfusion:RibbonButton x:Name="ButtonBpm" SizeForm="Small" Label="" SmallIcon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_Bpm_32x.png" />
           </syncfusion:ButtonPanel>
         </syncfusion:RibbonBar>
 
