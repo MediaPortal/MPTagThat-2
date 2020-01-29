@@ -57,7 +57,7 @@ namespace MPTagThat.Core.Common.Song
 
     #region Public Methods
 
-    public static void CaseConvert(ref SongData song)
+    public static bool CaseConvert(ref SongData song)
     {
       log.Trace(">>>");
       bool bErrors = false;
@@ -148,6 +148,7 @@ namespace MPTagThat.Core.Common.Song
         }
       }
       log.Trace("<<<");
+      return song.Changed == true;
     }
 
     #endregion

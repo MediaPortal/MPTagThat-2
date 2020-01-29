@@ -46,8 +46,12 @@ namespace MPTagThat.SongGrid.Commands
 
     public override bool Execute(ref SongData song)
     {
-      CaseConversion.CaseConvert(ref song);
-      return true;
+      if (CaseConversion.CaseConvert(ref song))
+      {
+        return true;
+      }
+
+      return false;
     }
 
     #endregion
