@@ -644,6 +644,7 @@ namespace MPTagThat.SongGrid.ViewModels
         Action.ActionType.DELETEV1TAGS,
         Action.ActionType.DELETEV2TAGS,
         Action.ActionType.REMOVECOMMENT,
+        Action.ActionType.BPM,
       };
 
     private void OnMessageReceived(GenericEvent msg)

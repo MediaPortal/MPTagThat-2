@@ -50,6 +50,7 @@ namespace MPTagThat.Core.Common
       DELETEALLTAGS = 61,
       DELETEV1TAGS = 62,
       DELETEV2TAGS = 63,
+      BPM = 64,
     }
 
     #endregion
@@ -129,6 +130,10 @@ namespace MPTagThat.Core.Common
         case Action.ActionType.DELETEV2TAGS:
           checkSelections = true;
           return "DeleteV2Tags";
+
+        case Action.ActionType.BPM:
+          checkSelections = true;
+          return "Bpm";
 
         default:
           return "";

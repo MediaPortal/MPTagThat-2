@@ -15,6 +15,7 @@ using Prism.Modularity;
 using Prism.Regions;
 using Prism.Unity;
 using Syncfusion.Windows.Tools.Controls;
+using Un4seen.Bass;
 using Unity;
 
 namespace MPTagThat
@@ -186,7 +187,7 @@ namespace MPTagThat
 
       // Add our Bin and Bin\Bass Directory to the Path
       SetPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Bin"));
-      SetPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"Bin\Bass"));
+      SetPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"Bin\x64"));
 
       base.OnStartup(e);
     }
@@ -230,7 +231,13 @@ namespace MPTagThat
     /// </summary>
     private static void DoInitService(IUnityContainer container)
     {
-     byte[] buffer = new byte[2048];
+      if (!Bass.BASS_Init(0, 44100, BASSInit.BASS_DEVICE_DEFAULT, IntPtr.Zero))
+      {
+        int error = (int)Bass.BASS_ErrorGetCode();
+        container.Resolve<ILogger>().GetLogger.Error("Error Init Bass: {0}", Enum.GetName(typeof(BASSError), error));
+      }
+
+      byte[] buffer = new byte[2048];
       var messageWaitHandle = new EventWaitHandle(false, EventResetMode.AutoReset, "MPTagThat_IPC");
 
       container.Resolve<ILogger>().GetLogger.Debug("Registering MemoryMappedFile");

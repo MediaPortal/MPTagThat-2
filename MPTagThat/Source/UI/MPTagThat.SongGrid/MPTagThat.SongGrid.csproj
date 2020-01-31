@@ -34,6 +34,9 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Bass.Net, Version=2.4.12.5, Culture=neutral, PublicKeyToken=b7566c273e6ef480, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\BASS.NET.2.4.12.5\lib\net46\Bass.Net.dll</HintPath>
+    </Reference>
     <Reference Include="CommonServiceLocator, Version=2.0.5.0, Culture=neutral, PublicKeyToken=489b6accfaf20ef0, processorArchitecture=MSIL">
       <HintPath>..\..\packages\CommonServiceLocator.2.0.5\lib\net46\CommonServiceLocator.dll</HintPath>
     </Reference>
@@ -94,6 +97,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Commands\CmdBpm.cs" />
     <Compile Include="Commands\CmdCaseConversion.cs" />
     <Compile Include="Commands\CmdDeleteTags.cs" />
     <Compile Include="Commands\CmdRemoveComments.cs" />

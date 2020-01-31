@@ -121,7 +121,9 @@
           <syncfusion:RibbonButton x:Name="ButtonBpm" SizeForm="Large" 
                                    Label="{lex:Loc ribbon_BPM}" 
                                    LargeIcon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_Bpm_32x.png"
-                                   SmallIcon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_Bpm_16x.png" />
+                                   SmallIcon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_Bpm_16x.png" 
+                                   Command="{Binding ExecuteRibbonCommand}" 
+                                   CommandParameter="{Binding Name ,RelativeSource={RelativeSource Self}}" />
 
           <syncfusion:RibbonSeparator/>
 

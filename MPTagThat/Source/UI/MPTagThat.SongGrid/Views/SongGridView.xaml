@@ -32,8 +32,6 @@
     <Style TargetType="syncfusion:VirtualizingCellsControl" x:Key="ChangedRowStyle">
       <Setter Property="Background" Value="{Binding Path=Changed,UpdateSourceTrigger=PropertyChanged,Converter={StaticResource ChangedRowStyleSelector}}"/>
     </Style>
-
-
   </UserControl.Resources>
 
   <UserControl.Cursor>

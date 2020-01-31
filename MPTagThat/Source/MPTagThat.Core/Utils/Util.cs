@@ -23,10 +23,10 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Forms;
 using CommonServiceLocator;
-using MPTagThat.Core.Common;
 using MPTagThat.Core.Common.Converter;
 using MPTagThat.Core.Common.Song;
 using MPTagThat.Core.Events;
@@ -38,7 +38,9 @@ using TagLib;
 using WPFLocalizeExtension.Engine;
 using Binding = System.Windows.Data.Binding;
 using File = TagLib.File;
+using GridViewColumn = MPTagThat.Core.Common.GridViewColumn;
 using HorizontalAlignment = System.Windows.HorizontalAlignment;
+using Image = System.Drawing.Image;
 using Tag = TagLib.Id3v2.Tag;
 // ReSharper disable StringIndexOfIsCultureSpecific.1
 // ReSharper disable StringLiteralTypo
@@ -388,6 +390,11 @@ namespace MPTagThat.Core.Utils
         column.Width = 25;
         var binding = new Binding("Status") {Converter = new SongStatusToImageConverter()};
         column.ValueBinding = binding;
+
+        // Bind the tooltip for the column to StatusMsg
+        var styleToolTip = new Style();
+        styleToolTip.Setters.Add(new Setter(ToolTipService.ToolTipProperty, new Binding("StatusMsg")));
+        column.CellStyle = styleToolTip;
       }
 
       switch (setting.Type.ToLower())

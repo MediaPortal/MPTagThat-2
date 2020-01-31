@@ -190,6 +190,10 @@ namespace MPTagThat.Ribbon.ViewModels
         case "ButtonRemoveComments":
           type = Action.ActionType.REMOVECOMMENT;
           break;
+
+        case "ButtonBpm":
+          type = Action.ActionType.BPM;
+          break;
       }
 
       if (type != Action.ActionType.INVALID)
