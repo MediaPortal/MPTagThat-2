@@ -274,6 +274,7 @@
     <Compile Include="Common\Converter\InvertBoolConverter.cs" />
     <Compile Include="Common\Converter\InvertVisibilityConverter.cs" />
     <Compile Include="Common\Converter\RowChangedColorConverter.cs" />
+    <Compile Include="Common\Converter\SongStatusToImageConverter.cs" />
     <Compile Include="Common\GridViewColumn.cs" />
     <Compile Include="Common\Item.cs" />
     <Compile Include="Common\Song\CaseConversion.cs" />

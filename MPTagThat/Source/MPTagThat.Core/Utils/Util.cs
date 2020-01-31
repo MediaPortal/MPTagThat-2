@@ -22,9 +22,12 @@ using System;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
+using System.Windows;
+using System.Windows.Data;
 using System.Windows.Forms;
 using CommonServiceLocator;
 using MPTagThat.Core.Common;
+using MPTagThat.Core.Common.Converter;
 using MPTagThat.Core.Common.Song;
 using MPTagThat.Core.Events;
 using MPTagThat.Core.Services.Logging;
@@ -33,7 +36,9 @@ using MPTagThat.Core.Services.Settings.Setting;
 using Syncfusion.UI.Xaml.Grid;
 using TagLib;
 using WPFLocalizeExtension.Engine;
+using Binding = System.Windows.Data.Binding;
 using File = TagLib.File;
+using HorizontalAlignment = System.Windows.HorizontalAlignment;
 using Tag = TagLib.Id3v2.Tag;
 // ReSharper disable StringIndexOfIsCultureSpecific.1
 // ReSharper disable StringLiteralTypo
@@ -349,7 +354,6 @@ namespace MPTagThat.Core.Utils
       {
         case "image":
           column = new GridImageColumn();
-          //((GridImageColumn)column) = new Bitmap(1, 1);   // Default empty Image
           break;
 
         case "process":
@@ -370,12 +374,17 @@ namespace MPTagThat.Core.Utils
           break;
       }
 
+      if (setting.Name == "Status")
+      {
+        Binding binding = new Binding("Status");
+        binding.Converter = new SongStatusToImageConverter();
+        column.ValueBinding = binding;
+      }
       column.HeaderText = LocalizeDictionary.Instance.GetLocalizedObject("MPTagThat", "Strings", $"songHeader_{setting.Name}",
         LocalizeDictionary.Instance.Culture).ToString();
       column.IsReadOnly = setting.Readonly;
       column.IsHidden = !setting.Display;
       column.Width = setting.Width;
-      //column.IsFrozen = setting.Frozen;
       // For columns bound to a data Source set the property
       //if (setting.Bound)
       //{

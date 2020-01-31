@@ -231,6 +231,18 @@
   <ItemGroup>
     <Resource Include="Resources\Images\Lens_32x.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Status_Changed.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Status_Critical.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Status_Ok.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Status_Warning.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>$(ProjectDir)PostBuild.bat $(SolutionDir) $(ConfigurationName)</PostBuildEvent>

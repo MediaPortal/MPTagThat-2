@@ -20,22 +20,24 @@
              mc:Ignorable="d" d:DesignWidth="300" d:DesignHeight="300" >
 
   <UserControl.Resources>
+    <!-- The Converts used -->
+    <core:BusyToCursorConverter x:Key="BusyToCursorConverter" />
+    <core:RowChangedColorConverter x:Key="ChangedRowStyleSelector" />
+    <core:AlternateRowChangedColorConverter x:Key="AlternateRowStyleSelector" />
 
-    <core:BusyToCursorConverter x:Key="busyToCursorConverter" />
-    <core:RowChangedColorConverter x:Key="changedRowStyleSelector" />
-    <core:AlternateRowChangedColorConverter x:Key="changedAlternateRowStyleSelector" />
-
-    <Style TargetType="syncfusion:VirtualizingCellsControl" x:Key="alternatingRowStyle">
-      <Setter Property="Background" Value="{Binding Path=Changed,UpdateSourceTrigger=PropertyChanged,Converter={StaticResource changedAlternateRowStyleSelector}}"/>
+    <!-- The Row Styles in the Grid -->
+    <Style TargetType="syncfusion:VirtualizingCellsControl" x:Key="AlternatingRowStyle">
+      <Setter Property="Background" Value="{Binding Path=Changed,UpdateSourceTrigger=PropertyChanged,Converter={StaticResource AlternateRowStyleSelector}}"/>
+    </Style>
+    <Style TargetType="syncfusion:VirtualizingCellsControl" x:Key="ChangedRowStyle">
+      <Setter Property="Background" Value="{Binding Path=Changed,UpdateSourceTrigger=PropertyChanged,Converter={StaticResource ChangedRowStyleSelector}}"/>
     </Style>
 
-    <Style TargetType="syncfusion:VirtualizingCellsControl" x:Key="changedRowStyle">
-      <Setter Property="Background" Value="{Binding Path=Changed,UpdateSourceTrigger=PropertyChanged,Converter={StaticResource changedRowStyleSelector}}"/>
-    </Style>
+
   </UserControl.Resources>
 
   <UserControl.Cursor>
-    <Binding Path="DataContext.IsBusy" RelativeSource="{RelativeSource Self}" Converter="{StaticResource busyToCursorConverter}" />
+    <Binding Path="DataContext.IsBusy" RelativeSource="{RelativeSource Self}" Converter="{StaticResource BusyToCursorConverter}" />
   </UserControl.Cursor>
 
   <Grid>
@@ -53,8 +55,8 @@
                            SelectionMode="Extended" 
                            EnableDataVirtualization="True" 
                            ShowBusyIndicator="True" 
-                           AlternatingRowStyle="{StaticResource alternatingRowStyle}" 
-                           RowStyle="{StaticResource changedRowStyle}" 
+                           AlternatingRowStyle="{StaticResource AlternatingRowStyle}" 
+                           RowStyle="{StaticResource ChangedRowStyle}" 
                            RowSelectionBrush="Cornsilk" >
       
       <i:Interaction.Triggers>

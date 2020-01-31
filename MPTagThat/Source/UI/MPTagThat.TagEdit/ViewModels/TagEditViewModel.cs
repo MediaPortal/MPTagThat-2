@@ -517,6 +517,7 @@ namespace MPTagThat.TagEdit.ViewModels
       }
 
       _songs.ForEach(s => s.Changed = false);
+      SongEdit.Changed = false;
     }
 
     /// <summary>
@@ -1295,7 +1296,8 @@ namespace MPTagThat.TagEdit.ViewModels
     /// <param name="backup"></param>
     private void UndoSongedits(SongData original, SongData backup)
     {
-      original.Status = 0;
+      original.Status = -1;
+      original.Init = true;
       original.Changed = false;
       original.FullFileName = backup.FullFileName;
       original.FileName = backup.FileName;
@@ -1348,6 +1350,7 @@ namespace MPTagThat.TagEdit.ViewModels
       original.Track = backup.Track;
       original.TrackLength = backup.TrackLength;
       original.Year = backup.Year;
+      original.Init = false;
     }
 
     #endregion

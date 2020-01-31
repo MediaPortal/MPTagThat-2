@@ -166,7 +166,14 @@ namespace MPTagThat.Core.Common.Song
     public bool Changed
     {
       get => _changed;
-      set => SetProperty(ref _changed, value);
+      set
+      {
+        if (value)
+        {
+          Status = 1;
+        }
+        SetProperty(ref _changed, value);
+      }
     }
 
     /// <summary>
@@ -1321,7 +1328,7 @@ namespace MPTagThat.Core.Common.Song
 
     protected override void OnPropertyChanged(PropertyChangedEventArgs args)
     {
-      if (!Init && args.PropertyName != "Changed" && args.PropertyName != "Genre")
+      if (!Init && args.PropertyName != "Changed" && args.PropertyName != "Status" && args.PropertyName != "Genre")
       {
         Changed = true;
       }
