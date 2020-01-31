@@ -374,22 +374,21 @@ namespace MPTagThat.Core.Utils
           break;
       }
 
-      if (setting.Name == "Status")
-      {
-        Binding binding = new Binding("Status");
-        binding.Converter = new SongStatusToImageConverter();
-        column.ValueBinding = binding;
-      }
       column.HeaderText = LocalizeDictionary.Instance.GetLocalizedObject("MPTagThat", "Strings", $"songHeader_{setting.Name}",
         LocalizeDictionary.Instance.Culture).ToString();
       column.IsReadOnly = setting.Readonly;
       column.IsHidden = !setting.Display;
       column.Width = setting.Width;
-      // For columns bound to a data Source set the property
-      //if (setting.Bound)
-      //{
-        column.MappingName = setting.Name;
-      //}
+      column.MappingName = setting.Name;
+
+      if (setting.Name == "Status")
+      {
+        // Don't need a header and also set image width
+        column.HeaderText = "";
+        column.Width = 25;
+        var binding = new Binding("Status") {Converter = new SongStatusToImageConverter()};
+        column.ValueBinding = binding;
+      }
 
       switch (setting.Type.ToLower())
       {
