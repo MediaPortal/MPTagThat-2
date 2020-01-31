@@ -139,8 +139,8 @@
     <value>Rename File Options</value>
   </data>
   <data name="ribbon_IdentifyFile" xml:space="preserve">
-    <value>Identify File</value>
-    <comment>Button Identify File</comment>
+    <value>Auto Tagging</value>
+    <comment>Button Auto Tagging</comment>
   </data>
   <data name="ribbon_TagFromInternet" xml:space="preserve">
     <value>Tag from Internet</value>

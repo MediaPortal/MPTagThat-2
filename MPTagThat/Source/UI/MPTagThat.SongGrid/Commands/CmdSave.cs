@@ -90,6 +90,7 @@ namespace MPTagThat.SongGrid.Commands
     /// <returns></returns>
     private bool SaveTrack(ref SongData song)
     {
+      log.Trace(">>>");
       try
       {
         if (song.Changed)
@@ -166,6 +167,7 @@ namespace MPTagThat.SongGrid.Commands
         log.Error($"Save: Error Saving data for song {song.FileName}: {ex.Message} {ex.StackTrace}");
         return false;
       }
+      log.Trace("<<<");
       return true;
     }
 

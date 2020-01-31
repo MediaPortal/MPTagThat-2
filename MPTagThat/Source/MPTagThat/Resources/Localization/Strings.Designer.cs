@@ -916,7 +916,7 @@ namespace MPTagThat.Resources.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Identify File.
+        ///   Looks up a localized string similar to Auto Tagging.
         /// </summary>
         public static string ribbon_IdentifyFile {
             get {

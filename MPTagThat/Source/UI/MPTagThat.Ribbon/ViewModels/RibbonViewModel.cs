@@ -154,6 +154,19 @@ namespace MPTagThat.Ribbon.ViewModels
           type = Action.ActionType.CASECONVERSION;
           break;
 
+        case "ButtonDeleteTags":
+        case "ButtonDeleteAllTags":
+          type = Action.ActionType.DELETEALLTAGS;
+          break;
+
+        case "ButtonDeleteV1Tags":
+          type = Action.ActionType.DELETEV1TAGS;
+          break;
+
+        case "ButtonDeleteV2Tags":
+          type = Action.ActionType.DELETEV2TAGS;
+          break;
+
         case "ButtonExecuteScripts":
           type = Action.ActionType.SCRIPTEXECUTE;
           break;
@@ -172,6 +185,10 @@ namespace MPTagThat.Ribbon.ViewModels
 
         case "ButtonOrganiseFiles":
           type = Action.ActionType.ORGANISE;
+          break;
+
+        case "ButtonRemoveComments":
+          type = Action.ActionType.REMOVECOMMENT;
           break;
       }
 

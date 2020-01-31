@@ -95,6 +95,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Commands\CmdCaseConversion.cs" />
+    <Compile Include="Commands\CmdDeleteTags.cs" />
+    <Compile Include="Commands\CmdRemoveComments.cs" />
     <Compile Include="Commands\CmdRemoveCoverArt.cs" />
     <Compile Include="Commands\CmdSave.cs" />
     <Compile Include="Commands\Command.cs" />

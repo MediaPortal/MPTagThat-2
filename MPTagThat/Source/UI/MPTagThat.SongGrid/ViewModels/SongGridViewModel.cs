@@ -640,6 +640,10 @@ namespace MPTagThat.SongGrid.ViewModels
         Action.ActionType.SAVEALL,
         Action.ActionType.REMOVEPICTURE,
         Action.ActionType.CASECONVERSION_BATCH,
+        Action.ActionType.DELETEALLTAGS,
+        Action.ActionType.DELETEV1TAGS,
+        Action.ActionType.DELETEV2TAGS,
+        Action.ActionType.REMOVECOMMENT,
       };
 
     private void OnMessageReceived(GenericEvent msg)

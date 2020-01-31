@@ -371,8 +371,11 @@ namespace MPTagThat.Core.Common.Song
     public static SongData ClearTag(SongData song)
     {
       song.Artist = "";
+      song.ArtistSortName = "";
       song.AlbumArtist = "";
+      song.AlbumArtistSortName = "";
       song.Album = "";
+      song.AlbumSortName = "";
       song.BPM = 0;
       song.ID3Comments.Clear();
       song.Frames.Clear();
@@ -380,10 +383,8 @@ namespace MPTagThat.Core.Common.Song
       song.Composer = "";
       song.Conductor = "";
       song.Copyright = "";
-
       song.DiscNumber = 0;
       song.DiscCount = 0;
-
       song.Genre = "";
       song.Grouping = "";
       song.LyricsFrames.Clear();
@@ -393,6 +394,35 @@ namespace MPTagThat.Core.Common.Song
       song.TrackCount = 0;
       song.Year = 0;
       song.Ratings.Clear();
+      song.CommercialInformation = "";
+      song.CopyrightInformation = "";
+      song.EncodedBy = "";
+      song.Interpreter = "";
+      song.InvolvedPeople = "";
+      song.MediaType = "";
+      song.MusicCreditList = "";
+      song.OfficialAudioFileInformation = "";
+      song.OfficialArtistInformation = "";
+      song.OfficialAudioSourceInformation = "";
+      song.OfficialInternetRadioInformation = "";
+      song.OfficialPaymentInformation = "";
+      song.OfficialPublisherInformation = "";
+      song.OriginalAlbum = "";
+      song.OriginalFileName = "";
+      song.OriginalLyricsWriter = "";
+      song.OriginalArtist = "";
+      song.OriginalOwner = "";
+      song.OriginalRelease = "";
+      song.Publisher = "";
+      song.ReplayGainTrack = "";
+      song.ReplayGainTrackPeak = "";
+      song.ReplayGainAlbum = "";
+      song.ReplayGainAlbumPeak = "";
+      song.SubTitle = "";
+      song.TextWriter = "";
+      song.TitleSortName = "";
+      song.TrackLength = "";
+      
       return song;
     }
 

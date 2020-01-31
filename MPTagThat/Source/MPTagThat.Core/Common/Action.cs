@@ -47,6 +47,9 @@ namespace MPTagThat.Core.Common
       
       // Actions which don't have a Key assigned
       CASECONVERSION = 60,
+      DELETEALLTAGS = 61,
+      DELETEV1TAGS = 62,
+      DELETEV2TAGS = 63,
     }
 
     #endregion
@@ -114,6 +117,18 @@ namespace MPTagThat.Core.Common
         case Action.ActionType.CASECONVERSION_BATCH:
           checkSelections = true;
           return "CaseConversion";
+
+        case Action.ActionType.DELETEALLTAGS:
+          checkSelections = true;
+          return "DeleteAllTags";
+
+        case Action.ActionType.DELETEV1TAGS:
+          checkSelections = true;
+          return "DeleteV1Tags";
+
+        case Action.ActionType.DELETEV2TAGS:
+          checkSelections = true;
+          return "DeleteV2Tags";
 
         default:
           return "";

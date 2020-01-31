@@ -29,7 +29,7 @@
             <syncfusion:RibbonButton.ToolTip>
               <syncfusion:ScreenTip MinWidth="150" Description="ScreenTip Example" VerticalOffset="10" Content="Represent a ribbon simple buttons" ImageSource="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_TagFromFile_16x.png" />
             </syncfusion:RibbonButton.ToolTip>
-          </syncfusion:RibbonButton>/>
+          </syncfusion:RibbonButton>
 
           <syncfusion:RibbonButton x:Name="ButtonIdentifyFile" SizeForm="Large" 
                                    Label="{lex:Loc ribbon_IdentifyFile}" 
@@ -94,9 +94,15 @@
                                   SmallIcon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_DeleteTags_16x.png"
                                   Command="{Binding ExecuteRibbonCommand}" 
                                   CommandParameter="{Binding Name ,RelativeSource={RelativeSource Self}}" >
-            <syncfusion:DropDownMenuItem x:Name="ButtonDeleteAllTags" Header="{lex:Loc ribbon_DeleteAllTags}" />
-            <syncfusion:DropDownMenuItem x:Name="ButtonDeleteV1Tags" Header="{lex:Loc ribbon_DeleteID3V1Tags}" />
-            <syncfusion:DropDownMenuItem x:Name="ButtonDeleteV2Tags" Header="{lex:Loc ribbon_DeleteID3V2Tags}" />
+            <syncfusion:DropDownMenuItem x:Name="ButtonDeleteAllTags" Header="{lex:Loc ribbon_DeleteAllTags}" 
+                                         Command="{Binding ExecuteRibbonCommand}" 
+                                         CommandParameter="{Binding Name ,RelativeSource={RelativeSource Self}}" />
+            <syncfusion:DropDownMenuItem x:Name="ButtonDeleteV1Tags" Header="{lex:Loc ribbon_DeleteID3V1Tags}" 
+                                         Command="{Binding ExecuteRibbonCommand}" 
+                                         CommandParameter="{Binding Name ,RelativeSource={RelativeSource Self}}" />
+            <syncfusion:DropDownMenuItem x:Name="ButtonDeleteV2Tags" Header="{lex:Loc ribbon_DeleteID3V2Tags}" 
+                                         Command="{Binding ExecuteRibbonCommand}" 
+                                         CommandParameter="{Binding Name ,RelativeSource={RelativeSource Self}}"/>
           </syncfusion:SplitButton>
 
           <syncfusion:RibbonButton x:Name="ButtonRemoveComments" SizeForm="Large" 
