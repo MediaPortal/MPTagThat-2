@@ -70,6 +70,9 @@ namespace MPTagThat
       settings.StartupSettings = _startupSettings;
       settings.GetOptions.InitOptions();
 
+      logger.Level = (LogLevel)Enum.Parse(typeof(LogLevel),(CommonServiceLocator.ServiceLocator.Current.GetInstance(typeof(ISettingsManager)) as ISettingsManager)?.GetOptions
+        .MainSettings.DebugLevel);
+
       // All other services, relying on Settings to come here
       logger.GetLogger.Debug("Registering Scripting Manager");
       var scripting = new ScriptManager();

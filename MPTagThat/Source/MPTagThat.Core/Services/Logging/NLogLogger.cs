@@ -20,6 +20,8 @@
 
 using System;
 using System.IO;
+using CommonServiceLocator;
+using MPTagThat.Core.Services.Settings;
 using NLog;
 using NLog.Config;
 using NLog.Filters;
@@ -81,13 +83,11 @@ namespace MPTagThat.Core.Services.Logging
       fileTarget.Layout = "${date:format=yyyy-MM-dd HH\\:mm\\:ss.ffffff} " +
                           "[${level:fixedLength=true:padding=5}]" +
                           "[${threadid:padding=3}]" +
-                          "[${stacktrace:format=Flat:topFrames=1:separator=\":\":fixedLength=true:padding=-30}]: " +
+                          "[${stacktrace:format=Flat:topFrames=3:skipFrames=2:separator=\":\":fixedLength=true:padding=-40}]: " +
                           "${message} " +
                           "${exception:format=tostring}";
 
       config.AddTarget("file", fileTarget);
-
-      level = LogLevel.Debug;
 
       var rule = new LoggingRule("*", ConvertLogLevel(level), fileTarget);
 
