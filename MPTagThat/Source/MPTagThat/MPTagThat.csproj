@@ -41,8 +41,8 @@
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Bass.Net, Version=2.4.12.5, Culture=neutral, PublicKeyToken=b7566c273e6ef480, processorArchitecture=MSIL">
-      <HintPath>..\packages\BASS.NET.2.4.12.5\lib\net46\Bass.Net.dll</HintPath>
+    <Reference Include="Bass.Net, Version=2.4.14.1, Culture=neutral, PublicKeyToken=b7566c273e6ef480, processorArchitecture=MSIL">
+      <HintPath>..\packages\BASS.NET.2.4.14.1\lib\net46\Bass.Net.dll</HintPath>
     </Reference>
     <Reference Include="CommonServiceLocator, Version=2.0.5.0, Culture=neutral, PublicKeyToken=489b6accfaf20ef0, processorArchitecture=MSIL">
       <HintPath>..\packages\CommonServiceLocator.2.0.5\lib\net46\CommonServiceLocator.dll</HintPath>
@@ -51,7 +51,7 @@
       <HintPath>..\packages\Microsoft.Xaml.Behaviors.Wpf.1.1.3\lib\net45\Microsoft.Xaml.Behaviors.dll</HintPath>
     </Reference>
     <Reference Include="MPTagThat.LicenseManager, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\MPTagThat_License_Manager.1.0.0\lib\net461\MPTagThat.LicenseManager.dll</HintPath>
+      <HintPath>..\packages\MPTagThat_License_Manager.1.0.1\lib\net461\MPTagThat.LicenseManager.dll</HintPath>
     </Reference>
     <Reference Include="PresentationFramework.Aero" />
     <Reference Include="Prism, Version=8.0.0.1455, Culture=neutral, PublicKeyToken=40ee6c3a2184dc59, processorArchitecture=MSIL">
@@ -64,17 +64,17 @@
       <HintPath>..\packages\Prism.Wpf.8.0.0.1455-ci\lib\net45\Prism.Wpf.dll</HintPath>
     </Reference>
     <Reference Include="ReachFramework" />
-    <Reference Include="Syncfusion.Licensing, Version=17.4460.0.40, Culture=neutral, PublicKeyToken=632609b4d040f6b4, processorArchitecture=MSIL">
-      <HintPath>..\packages\Syncfusion.Licensing.17.4.0.40\lib\net46\Syncfusion.Licensing.dll</HintPath>
+    <Reference Include="Syncfusion.Licensing, Version=17.4460.0.46, Culture=neutral, PublicKeyToken=632609b4d040f6b4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Syncfusion.Licensing.17.4.0.46\lib\net46\Syncfusion.Licensing.dll</HintPath>
     </Reference>
     <Reference Include="Syncfusion.SfSkinManager.WPF, Version=17.4460.0.40, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
       <HintPath>..\packages\Syncfusion.SfSkinManager.WPF.17.4.0.40\lib\net46\Syncfusion.SfSkinManager.WPF.dll</HintPath>
     </Reference>
-    <Reference Include="Syncfusion.Shared.WPF, Version=17.4460.0.40, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
-      <HintPath>..\packages\Syncfusion.Shared.WPF.17.4.0.40\lib\net46\Syncfusion.Shared.WPF.dll</HintPath>
+    <Reference Include="Syncfusion.Shared.WPF, Version=17.4460.0.46, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <HintPath>..\packages\Syncfusion.Shared.WPF.17.4.0.46\lib\net46\Syncfusion.Shared.WPF.dll</HintPath>
     </Reference>
-    <Reference Include="Syncfusion.Tools.WPF, Version=17.4460.0.40, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
-      <HintPath>..\packages\Syncfusion.Tools.WPF.17.4.0.40\lib\net46\Syncfusion.Tools.WPF.dll</HintPath>
+    <Reference Include="Syncfusion.Tools.WPF, Version=17.4460.0.46, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <HintPath>..\packages\Syncfusion.Tools.WPF.17.4.0.46\lib\net46\Syncfusion.Tools.WPF.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
@@ -245,15 +245,20 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="x64\bass.dll" />
+    <Content Include="x64\bassasio.dll" />
     <Content Include="x64\basscd.dll" />
+    <Content Include="x64\bassenc.dll" />
     <Content Include="x64\bassmix.dll" />
     <Content Include="x64\basswasapi.dll" />
+    <Content Include="x64\bass_fx.dll" />
+    <Content Include="x64\bass_vst.dll" />
     <Content Include="x64\Plugins\bassalac.dll" />
     <Content Include="x64\Plugins\bassdsd.dll" />
     <Content Include="x64\Plugins\bassflac.dll" />
     <Content Include="x64\Plugins\basshls.dll" />
     <Content Include="x64\Plugins\bassmidi.dll" />
     <Content Include="x64\Plugins\bassopus.dll" />
+    <Content Include="x64\Plugins\basswebm.dll" />
     <Content Include="x64\Plugins\basswma.dll" />
     <Content Include="x64\Plugins\basswv.dll" />
     <Content Include="x64\Plugins\bass_aac.dll" />
@@ -266,15 +271,21 @@
     <Content Include="x64\Plugins\OptimFROG.dll" />
     <Content Include="x64\Plugins\tags.dll" />
     <Content Include="x86\bass.dll" />
+    <Content Include="x86\bassasio.dll" />
     <Content Include="x86\basscd.dll" />
+    <Content Include="x86\bassenc.dll" />
     <Content Include="x86\bassmix.dll" />
     <Content Include="x86\basswasapi.dll" />
+    <Content Include="x86\bass_fx.dll" />
+    <Content Include="x86\bass_vst.dll" />
+    <Content Include="x86\bass_wadsp.dll" />
     <Content Include="x86\Plugins\bassalac.dll" />
     <Content Include="x86\Plugins\bassdsd.dll" />
     <Content Include="x86\Plugins\bassflac.dll" />
     <Content Include="x86\Plugins\basshls.dll" />
     <Content Include="x86\Plugins\bassmidi.dll" />
     <Content Include="x86\Plugins\bassopus.dll" />
+    <Content Include="x86\Plugins\basswebm.dll" />
     <Content Include="x86\Plugins\basswma.dll" />
     <Content Include="x86\Plugins\basswv.dll" />
     <Content Include="x86\Plugins\bass_aac.dll" />
@@ -293,12 +304,12 @@
   <PropertyGroup>
     <PostBuildEvent>$(ProjectDir)PostBuild.bat $(SolutionDir) $(ConfigurationName)</PostBuildEvent>
   </PropertyGroup>
-  <Import Project="..\packages\BASSCombined.2.4.13.1\build\basscombined.targets" Condition="Exists('..\packages\BASSCombined.2.4.13.1\build\basscombined.targets')" />
+  <Import Project="..\packages\BASSCombined.2.4.15\build\basscombined.targets" Condition="Exists('..\packages\BASSCombined.2.4.15\build\basscombined.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
-    <Error Condition="!Exists('..\packages\BASSCombined.2.4.13.1\build\basscombined.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\BASSCombined.2.4.13.1\build\basscombined.targets'))" />
+    <Error Condition="!Exists('..\packages\BASSCombined.2.4.15\build\basscombined.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\BASSCombined.2.4.15\build\basscombined.targets'))" />
   </Target>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
