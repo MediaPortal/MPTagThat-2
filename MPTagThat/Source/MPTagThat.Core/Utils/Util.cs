@@ -388,6 +388,7 @@ namespace MPTagThat.Core.Utils
         // Don't need a header and also set image width
         column.HeaderText = "";
         column.Width = 25;
+        column.TextAlignment = TextAlignment.Center;
         var binding = new Binding("Status") {Converter = new SongStatusToImageConverter()};
         column.ValueBinding = binding;
 
