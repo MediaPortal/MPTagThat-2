@@ -83,7 +83,7 @@ namespace MPTagThat.Core.Services.Logging
       fileTarget.Layout = "${date:format=yyyy-MM-dd HH\\:mm\\:ss.ffffff} " +
                           "[${level:fixedLength=true:padding=5}]" +
                           "[${threadid:padding=3}]" +
-                          "[${stacktrace:format=Flat:topFrames=3:skipFrames=2:separator=\":\":fixedLength=true:padding=-40}]: " +
+                          "[${stacktrace:format=Flat:topFrames=1:separator=\":\":fixedLength=true:padding=-40}]: " +
                           "${message} " +
                           "${exception:format=tostring}";
 

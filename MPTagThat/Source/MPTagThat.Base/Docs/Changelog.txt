@@ -1,0 +1,12 @@
+Changelog
+---------
+
+Legend:
+-------
++ Added
+- Deleted
+x Fixed
+
+1.0.0 Date: 03.02.2020
+------------------------------------
++ Initial Release

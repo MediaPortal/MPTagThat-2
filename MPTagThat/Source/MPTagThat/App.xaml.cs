@@ -50,7 +50,6 @@ namespace MPTagThat
     /// <returns></returns>
     protected override Window CreateShell()
     {
-      _splashScreen.Status.Content = "Creating Main Window ...";
       return Container.Resolve<Views.Shell>();
     }
 
@@ -59,7 +58,6 @@ namespace MPTagThat
     /// </summary>
     protected override void RegisterTypes(IContainerRegistry containerRegistry)
     {
-      _splashScreen.Status.Content = "Registering types ...";
       var logger = new NLogLogger("MPTagThat.log", LogLevel.Debug, 0);
       containerRegistry.RegisterInstance<ILogger>(logger);
 
@@ -90,6 +88,7 @@ namespace MPTagThat
     /// <returns></returns>
     protected override void ConfigureRegionAdapterMappings(RegionAdapterMappings regionAdapterMappings)
     {
+      (CommonServiceLocator.ServiceLocator.Current.GetInstance(typeof(ILogger)) as ILogger)?.GetLogger.Trace("Configure Region Adapater Mappings");
       base.ConfigureRegionAdapterMappings(regionAdapterMappings);
       regionAdapterMappings.RegisterMapping(typeof(DockingManager), Container.Resolve<DockingManagerRegionAdapter>());
     }
@@ -99,7 +98,7 @@ namespace MPTagThat
     /// </summary>
     protected override void ConfigureModuleCatalog(IModuleCatalog moduleCatalog)
     {
-      _splashScreen.Status.Content = "Adding modules ...";
+      (CommonServiceLocator.ServiceLocator.Current.GetInstance(typeof(ILogger)) as ILogger)?.GetLogger.Trace("Adding modules to Catalog");
       moduleCatalog.AddModule(typeof(Ribbon.RibbonModule));
       moduleCatalog.AddModule(typeof(Treeview.TreeviewModule));
       moduleCatalog.AddModule(typeof(SongGrid.SongGridModule));
@@ -206,9 +205,10 @@ namespace MPTagThat
     /// </summary>
     protected override void OnInitialized()
     {
-      _splashScreen.Status.Content = "Finishing startup ...";
       var log = Container.Resolve<ILogger>().GetLogger;
-    
+      log.Trace(">>>");
+      _splashScreen.Status.Content = "Finishing startup ...";
+      
       log.Info("MPTagThat is starting...");
       
       // Move Init of Services, which we don't need immediately to a separate thread to increase startup performance
@@ -219,8 +219,10 @@ namespace MPTagThat
       };
       initService.Start();
 
+      log.Trace("About to show Main Window");
       Current.MainWindow.Show();
       _splashScreen.Close();
+      log.Trace("<<<");
     }
 
     #endregion
@@ -242,6 +244,7 @@ namespace MPTagThat
     /// </summary>
     private static void DoInitService(IUnityContainer container)
     {
+      (CommonServiceLocator.ServiceLocator.Current.GetInstance(typeof(ILogger)) as ILogger)?.GetLogger.Trace(">>>");
       if (!Bass.BASS_Init(0, 44100, BASSInit.BASS_DEVICE_DEFAULT, IntPtr.Zero))
       {
         int error = (int)Bass.BASS_ErrorGetCode();

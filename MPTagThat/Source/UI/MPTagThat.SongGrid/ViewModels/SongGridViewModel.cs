@@ -90,6 +90,7 @@ namespace MPTagThat.SongGrid.ViewModels
       _regionManager = regionManager;
       _dialogService = dialogService;
       log = (ServiceLocator.Current.GetInstance(typeof(ILogger)) as ILogger)?.GetLogger;
+      log.Trace(">>>");
       _options = (ServiceLocator.Current.GetInstance(typeof(ISettingsManager)) as ISettingsManager)?.GetOptions;
 
       // Load the Settings
@@ -101,6 +102,7 @@ namespace MPTagThat.SongGrid.ViewModels
       _selectionChangedCommand = new BaseCommand(SelectionChanged);
 
       EventSystem.Subscribe<GenericEvent>(OnMessageReceived, ThreadOption.UIThread);
+      log.Trace("<<<");
     }
 
     #endregion

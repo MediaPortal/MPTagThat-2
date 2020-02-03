@@ -187,6 +187,8 @@ namespace MPTagThat.ViewModels
       _regionManager = regionManager;
       log = (ServiceLocator.Current.GetInstance(typeof(ILogger)) as ILogger).GetLogger;
 
+      log.Trace(">>>");
+
       EventSystem.Subscribe<StatusBarEvent>(UpdateStatusBar);
       EventSystem.Subscribe<ProgressBarEvent>(UpdateProgressBar);
       SfSkinManager.ApplyStylesOnApplication = true;
@@ -203,6 +205,7 @@ namespace MPTagThat.ViewModels
       WindowHeight = _options.MainSettings.FormSize.Height;
       WindowLeft = _options.MainSettings.FormLocation.X;
       WindowTop = _options.MainSettings.FormLocation.Y;
+      log.Trace("<<<");
     }
     #endregion
 
@@ -215,12 +218,14 @@ namespace MPTagThat.ViewModels
 
     private void WindowClose(object param)
     {
+      log.Trace(">>>");
       _options.MainSettings.FormSize = new Size(WindowWidth, WindowHeight);
       _options.MainSettings.FormLocation = new Point(WindowLeft, WindowTop);
 
       log.Info("Saving Settings");
       _options.SaveAllSettings();
       log.Info("Terminating application");
+      log.Trace("<<<");
     }
 
     public ICommand KeyPressedCommand { get; }
