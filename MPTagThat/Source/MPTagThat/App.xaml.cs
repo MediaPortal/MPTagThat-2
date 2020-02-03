@@ -10,6 +10,7 @@ using MPTagThat.Core.Services.Logging;
 using MPTagThat.Core.Services.ScriptManager;
 using MPTagThat.Core.Services.Settings;
 using MPTagThat.Core.Services.Settings.Setting;
+using MPTagThat.Views;
 using Prism.Ioc;
 using Prism.Modularity;
 using Prism.Regions;
@@ -31,6 +32,7 @@ namespace MPTagThat
     private static StartupSettings _startupSettings;
     private static int _portable;
     private static string _startupFolder;
+    private Splash _splashScreen;
 
     public App()
     {
@@ -48,6 +50,7 @@ namespace MPTagThat
     /// <returns></returns>
     protected override Window CreateShell()
     {
+      _splashScreen.Status.Content = "Creating Main Window ...";
       return Container.Resolve<Views.Shell>();
     }
 
@@ -56,6 +59,7 @@ namespace MPTagThat
     /// </summary>
     protected override void RegisterTypes(IContainerRegistry containerRegistry)
     {
+      _splashScreen.Status.Content = "Registering types ...";
       var logger = new NLogLogger("MPTagThat.log", LogLevel.Debug, 0);
       containerRegistry.RegisterInstance<ILogger>(logger);
 
@@ -95,6 +99,7 @@ namespace MPTagThat
     /// </summary>
     protected override void ConfigureModuleCatalog(IModuleCatalog moduleCatalog)
     {
+      _splashScreen.Status.Content = "Adding modules ...";
       moduleCatalog.AddModule(typeof(Ribbon.RibbonModule));
       moduleCatalog.AddModule(typeof(Treeview.TreeviewModule));
       moduleCatalog.AddModule(typeof(SongGrid.SongGridModule));
@@ -108,6 +113,10 @@ namespace MPTagThat
     /// </summary>
     protected override void OnStartup(StartupEventArgs e)
     {
+      _splashScreen = new Splash();
+      _splashScreen.Status.Content = "MPTagThat starting ...";
+      _splashScreen.Show();
+
       _commandLineArgs = e.Args;     
       _portable = 0;
       _startupFolder = "";
@@ -197,6 +206,7 @@ namespace MPTagThat
     /// </summary>
     protected override void OnInitialized()
     {
+      _splashScreen.Status.Content = "Finishing startup ...";
       var log = Container.Resolve<ILogger>().GetLogger;
     
       log.Info("MPTagThat is starting...");
@@ -210,6 +220,7 @@ namespace MPTagThat
       initService.Start();
 
       Current.MainWindow.Show();
+      _splashScreen.Close();
     }
 
     #endregion
