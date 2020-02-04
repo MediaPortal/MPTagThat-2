@@ -61,6 +61,7 @@ SetCompressor /SOLID lzma
 !include LogicLib.nsh
 !include InstallOptions.nsh
 !include "DotNetChecker.nsh"
+!include x64.nsh
 
 # Variables
 Var StartMenuGroup
@@ -227,6 +228,14 @@ SectionEnd
 
 # Installer functions
 Function .onInit
+
+     ${If} ${RunningX64}
+      DetailPrint "Detected 64-bit Windows"
+    ${Else}
+      DetailPrint "Detected 32-bit Windows"
+      MessageBox MB_OK|MB_ICONEXCLAMATION "MPTagThat 2 is only supported on 64-bit Windows"
+      Quit
+    ${EndIf}  
 
     InitPluginsDir
 	;Extract InstallOptions files
