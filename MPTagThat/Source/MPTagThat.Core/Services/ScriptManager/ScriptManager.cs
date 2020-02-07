@@ -55,6 +55,18 @@ namespace MPTagThat.Core.Services.ScriptManager
       _options = (ServiceLocator.Current.GetInstance(typeof(ISettingsManager)) as ISettingsManager)?.GetOptions;
 
       _sharedAsemblyDir = $@"{Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)}\MPTagThat2\Scripts";
+      if (!Directory.Exists(_sharedAsemblyDir))
+      {
+        try
+        {
+          Directory.CreateDirectory(_sharedAsemblyDir);
+        }
+        catch (Exception e)
+        {
+          log.Error($"Error creating Scripts folder: {e.InnerException}");
+          return;
+        }
+      }
       LoadAvailableScripts();
     }
 
