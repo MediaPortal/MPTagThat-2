@@ -18,7 +18,7 @@
       <local:ImageConverter x:Key="Converter"/>        
 
       <HierarchicalDataTemplate ItemsSource="{Binding Children}" x:Key="template">
-        <TextBlock Text="{Binding Name}"/>
+        <TextBlock Text="{Binding Name}" Margin="16,0,0,0"/>
       </HierarchicalDataTemplate>
           
       <Style TargetType="syncfusion:TreeViewItemAdv" x:Key="itemstyle">
@@ -51,7 +51,7 @@
         </i:EventTrigger>
       </i:Interaction.Triggers>
       <syncfusion:TreeViewItemAdv 
-        Header="Computer"
+        Header="   Computer"
         ItemsSource="{Binding RootChildren}"
         IsExpanded="True"
         IsSelected="True"
