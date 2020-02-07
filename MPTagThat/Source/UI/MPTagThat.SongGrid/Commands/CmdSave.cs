@@ -73,7 +73,7 @@ namespace MPTagThat.SongGrid.Commands
       return false;
     }
 
-    public override bool PostProcess()
+    public override bool PostProcess(SongData song)
     {
       options.ReadOnlyFileHandling = 2; //No
       return bErrors;

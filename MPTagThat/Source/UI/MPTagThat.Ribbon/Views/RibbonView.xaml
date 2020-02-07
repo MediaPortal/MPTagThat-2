@@ -116,7 +116,9 @@
           <syncfusion:RibbonButton x:Name="ButtonGain" SizeForm="Large" 
                                    Label="{lex:Loc ribbon_ReplayGain}" 
                                    LargeIcon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_Gain_32x.png" 
-                                   SmallIcon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_Gain_16x.png" />
+                                   SmallIcon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_Gain_16x.png" 
+                                   Command="{Binding ExecuteRibbonCommand}" 
+                                   CommandParameter="{Binding Name ,RelativeSource={RelativeSource Self}}" />
 
           <syncfusion:RibbonButton x:Name="ButtonBpm" SizeForm="Large" 
                                    Label="{lex:Loc ribbon_BPM}" 

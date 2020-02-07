@@ -52,13 +52,10 @@ namespace MPTagThat.SongGrid.Commands
 
     public override bool Execute(ref SongData song)
     {
-      //TracksGrid.SetProgressBar(100);
-
       int stream = Bass.BASS_StreamCreateFile(song.FullFileName, 0, 0, BASSFlag.BASS_STREAM_DECODE);
       if (stream == 0)
       {
-        (ServiceLocator.Current.GetInstance(typeof(ILogger)) as ILogger)?.GetLogger.Error("BPM: Could not create stream for {0}. {1}", 
-          song.FullFileName, Bass.BASS_ErrorGetCode().ToString());
+        log.Error("BPM: Could not create stream for {0}. {1}", song.FullFileName, Bass.BASS_ErrorGetCode().ToString());
         return false;
       }
 
@@ -70,7 +67,6 @@ namespace MPTagThat.SongGrid.Commands
 
       song.BPM = Convert.ToInt32(bpm);
       BassFx.BASS_FX_BPM_Free(stream);
-      // TracksGrid.MainForm.progressBar1.Value = 0;
       return true;
     }
 

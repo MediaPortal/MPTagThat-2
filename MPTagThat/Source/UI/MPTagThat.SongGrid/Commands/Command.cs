@@ -69,7 +69,7 @@ namespace MPTagThat.SongGrid.Commands
     /// Post Process after command execution
     /// </summary>
     /// <returns></returns>
-    public virtual bool PostProcess()
+    public virtual bool PostProcess(SongData song)
     {
       return false;
     }

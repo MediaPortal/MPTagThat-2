@@ -612,8 +612,11 @@ namespace MPTagThat.SongGrid.ViewModels
       }
 
       // Do Command Post Processing
-      //ChangesPending = commandObj.PostProcess();
-      commandObj.PostProcess();
+      foreach (var song in Songs)
+      {
+        commandObj.PostProcess(song);
+      }
+
       if (CommandThreadEnded != null && commandObj.NeedsCallback)
       {
         CommandThreadEnded(this, new EventArgs());
@@ -647,6 +650,7 @@ namespace MPTagThat.SongGrid.ViewModels
         Action.ActionType.DELETEV2TAGS,
         Action.ActionType.REMOVECOMMENT,
         Action.ActionType.BPM,
+        Action.ActionType.REPLAYGAIN,
       };
 
     private void OnMessageReceived(GenericEvent msg)
@@ -678,6 +682,12 @@ namespace MPTagThat.SongGrid.ViewModels
             if (runAsyncParam != null)
             {
               runAsync = (bool) runAsyncParam;
+            }
+
+            // If we have Replaygain and mutiple songs selected, we should do Album Gain
+            if ((Action.ActionType) msg.MessageData["command"] == Action.ActionType.REPLAYGAIN && SelectedItems.Count > 1)
+            {
+              msg.MessageData.Add("param", new object[] {"AlbumGain"});
             }
 
             msg.MessageData.TryGetValue("param", out var param);

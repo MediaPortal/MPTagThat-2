@@ -194,6 +194,10 @@ namespace MPTagThat.Ribbon.ViewModels
         case "ButtonBpm":
           type = Action.ActionType.BPM;
           break;
+
+        case "ButtonGain":
+          type = Action.ActionType.REPLAYGAIN;
+          break;
       }
 
       if (type != Action.ActionType.INVALID)
