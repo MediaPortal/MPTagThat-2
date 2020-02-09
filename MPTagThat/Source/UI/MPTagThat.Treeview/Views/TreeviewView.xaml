@@ -14,11 +14,12 @@
              xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
-    <UserControl.Resources>
+
+  <UserControl.Resources>
       <local:ImageConverter x:Key="Converter"/>        
 
       <HierarchicalDataTemplate ItemsSource="{Binding Children}" x:Key="template">
-        <TextBlock Text="{Binding Name}" Margin="16,0,0,0"/>
+        <TextBlock Text="{Binding Name}" />
       </HierarchicalDataTemplate>
           
       <Style TargetType="syncfusion:TreeViewItemAdv" x:Key="itemstyle">
@@ -37,11 +38,10 @@
                               AllowMultiSelect="False"
                               ItemTemplate="{StaticResource template}"
                               ItemContainerStyle="{StaticResource itemstyle}" 
-                              x:Name="Explorer"
-                              ShowRootLines="False"
+                              ShowRootLines="True"
                               BorderThickness="0 0 1 0" 
                               IsScrollOnExpand="False"
-                              ScrollViewer.VerticalScrollBarVisibility="Visible">
+                              ScrollViewer.VerticalScrollBarVisibility="Visible" >
       <i:Interaction.Triggers>
         <i:EventTrigger EventName="LoadOnDemand">
           <prism:InvokeCommandAction Command="{Binding LoadFolderOnDemandCommand}" />
@@ -51,13 +51,12 @@
         </i:EventTrigger>
       </i:Interaction.Triggers>
       <syncfusion:TreeViewItemAdv 
-        Header="   Computer"
+        Header="Computer"
         ItemsSource="{Binding RootChildren}"
         IsExpanded="True"
         IsSelected="True"
         ItemTemplate="{StaticResource template}"
         ItemContainerStyle="{StaticResource itemstyle}" 
-        x:Name="computer"
         IsImageSourceFreeze="False"/>
         
     </syncfusion:TreeViewAdv>
