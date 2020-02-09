@@ -40,7 +40,7 @@
       <HintPath>..\..\packages\MediaPortal.FreeImageNET.3.18.3\lib\net45\FreeImageNET.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Xaml.Behaviors, Version=1.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Microsoft.Xaml.Behaviors.Wpf.1.1.3\lib\net45\Microsoft.Xaml.Behaviors.dll</HintPath>
+      <HintPath>..\..\packages\Microsoft.Xaml.Behaviors.Wpf.1.1.19\lib\net45\Microsoft.Xaml.Behaviors.dll</HintPath>
     </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
@@ -51,23 +51,23 @@
       <HintPath>..\..\packages\Prism.Wpf.8.0.0.1455-ci\lib\net45\Prism.Wpf.dll</HintPath>
     </Reference>
     <Reference Include="ReachFramework" />
-    <Reference Include="Syncfusion.Data.WPF, Version=17.4460.0.46, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Syncfusion.Data.WPF.17.4.0.46\lib\net46\Syncfusion.Data.WPF.dll</HintPath>
+    <Reference Include="Syncfusion.Data.WPF, Version=17.4460.0.47, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Syncfusion.Data.WPF.17.4.0.47\lib\net46\Syncfusion.Data.WPF.dll</HintPath>
     </Reference>
-    <Reference Include="Syncfusion.Licensing, Version=17.4460.0.46, Culture=neutral, PublicKeyToken=632609b4d040f6b4, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Syncfusion.Licensing.17.4.0.46\lib\net46\Syncfusion.Licensing.dll</HintPath>
+    <Reference Include="Syncfusion.Licensing, Version=17.4460.0.47, Culture=neutral, PublicKeyToken=632609b4d040f6b4, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Syncfusion.Licensing.17.4.0.47\lib\net46\Syncfusion.Licensing.dll</HintPath>
     </Reference>
-    <Reference Include="Syncfusion.SfAccordion.WPF, Version=17.4460.0.46, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Syncfusion.SfAccordion.WPF.17.4.0.46\lib\net46\Syncfusion.SfAccordion.WPF.dll</HintPath>
+    <Reference Include="Syncfusion.SfAccordion.WPF, Version=17.4460.0.47, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Syncfusion.SfAccordion.WPF.17.4.0.47\lib\net46\Syncfusion.SfAccordion.WPF.dll</HintPath>
     </Reference>
-    <Reference Include="Syncfusion.SfGrid.WPF, Version=17.4460.0.46, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Syncfusion.SfGrid.WPF.17.4.0.46\lib\net46\Syncfusion.SfGrid.WPF.dll</HintPath>
+    <Reference Include="Syncfusion.SfGrid.WPF, Version=17.4460.0.47, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Syncfusion.SfGrid.WPF.17.4.0.47\lib\net46\Syncfusion.SfGrid.WPF.dll</HintPath>
     </Reference>
-    <Reference Include="Syncfusion.Shared.WPF, Version=17.4460.0.46, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Syncfusion.Shared.WPF.17.4.0.46\lib\net46\Syncfusion.Shared.WPF.dll</HintPath>
+    <Reference Include="Syncfusion.Shared.WPF, Version=17.4460.0.47, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Syncfusion.Shared.WPF.17.4.0.47\lib\net46\Syncfusion.Shared.WPF.dll</HintPath>
     </Reference>
-    <Reference Include="Syncfusion.Tools.WPF, Version=17.4460.0.46, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Syncfusion.Tools.WPF.17.4.0.46\lib\net46\Syncfusion.Tools.WPF.dll</HintPath>
+    <Reference Include="Syncfusion.Tools.WPF, Version=17.4460.0.47, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Syncfusion.Tools.WPF.17.4.0.47\lib\net46\Syncfusion.Tools.WPF.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
