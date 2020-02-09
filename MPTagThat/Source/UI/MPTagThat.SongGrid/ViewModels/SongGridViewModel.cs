@@ -46,6 +46,7 @@ using WPFLocalizeExtension.Engine;
 using System.Windows.Threading;
 using System.Threading;
 using System.Windows;
+using System.Windows.Data;
 using MPTagThat.Core.Services.ScriptManager;
 using MPTagThat.Dialogs.ViewModels;
 using Action = MPTagThat.Core.Common.Action;
@@ -62,6 +63,7 @@ namespace MPTagThat.SongGrid.ViewModels
   {
     #region Variables
 
+    private object _lock = new object();
     private IRegionManager _regionManager;
     private IDialogService _dialogService;
     private readonly NLogLogger log;
@@ -97,11 +99,12 @@ namespace MPTagThat.SongGrid.ViewModels
       _gridColumns = new SongGridViewColumns();
       CreateColumns();
 
-      Songs = _options.Songlist;
+      _songs = new BindingList<SongData>();
       ItemsSourceDataCommand = new BaseCommand(SetItemsSource);
       _selectionChangedCommand = new BaseCommand(SelectionChanged);
 
       EventSystem.Subscribe<GenericEvent>(OnMessageReceived, ThreadOption.UIThread);
+      BindingOperations.EnableCollectionSynchronization(Songs, _lock);
       log.Trace("<<<");
     }
 
@@ -117,14 +120,12 @@ namespace MPTagThat.SongGrid.ViewModels
     /// <summary>
     /// The Songs in the Grid
     /// </summary>
+
+    private BindingList<SongData> _songs;
     public BindingList<SongData> Songs
     {
-      get => _options.Songlist;
-      set
-      {
-        _options.Songlist = (SongList)value;
-        RaisePropertyChanged("Songs");
-      }
+      get => _songs;
+      set => SetProperty(ref _songs, value);
     }
 
     private ObservableCollection<object> _selectedItems = new ObservableCollection<object>();
@@ -596,7 +597,8 @@ namespace MPTagThat.SongGrid.ViewModels
           // Has the file be renamed during save?
           if (Songs[i].FullFileName != song.FullFileName)
           {
-            Songs[i] = song;
+            Songs.RemoveAt(i);
+            Songs.Insert(i, song);
           }
 
           if (commandObj.ProgressCancelled)
