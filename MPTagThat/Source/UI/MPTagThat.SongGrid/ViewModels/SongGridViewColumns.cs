@@ -112,7 +112,7 @@ namespace MPTagThat.SongGrid.ViewModels
       _tagtype = new GridViewColumn("TagType", "text", 100, true, true, true, false);
       _disc = new GridViewColumn("Disc", "text", 45, true, false, true, false);
       _bpm = new GridViewColumn("BPM", "number", 40, true, false, true, false);
-      _rating = new GridViewColumn("Rating", "rating", 90, true, false, true, false);
+      _rating = new GridViewColumn("Rating", "rating", 150, true, false, true, false);
       _replayGainTrack = new GridViewColumn("ReplayGainTrack", "text", 100, true, true, true, false);
       _replayGainTrackPeak = new GridViewColumn("ReplayGainTrackPeak", "text", 100, true, true, true, false);
       _replayGainAlbum = new GridViewColumn("ReplayGainAlbum", "text", 100, true, true, true, false);

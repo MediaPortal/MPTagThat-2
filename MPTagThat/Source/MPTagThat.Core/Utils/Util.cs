@@ -34,6 +34,8 @@ using MPTagThat.Core.Services.Logging;
 using MPTagThat.Core.Services.Settings;
 using MPTagThat.Core.Services.Settings.Setting;
 using Syncfusion.UI.Xaml.Grid;
+using Syncfusion.Windows.Controls.Input;
+using Syncfusion.Windows.Primitives;
 using TagLib;
 using WPFLocalizeExtension.Engine;
 using Binding = System.Windows.Data.Binding;
@@ -367,8 +369,19 @@ namespace MPTagThat.Core.Utils
           break;
 
         case "rating":
-          //column = new DataGridViewRatingColumn();
-          column = new GridTextColumn();
+          column = new GridTemplateColumn();
+          var rating = new FrameworkElementFactory(typeof(SfRating));
+          rating.SetValue(SfRating.PrecisionProperty, Precision.Standard);
+          rating.SetValue(SfRating.ItemsCountProperty, 5);
+          rating.SetBinding(SfRating.ValueProperty, new Binding {Path=new PropertyPath("Rating"), Mode=BindingMode.TwoWay });
+
+          var itemStyle = new Style();
+          itemStyle.Setters.Add(new Setter(SfRatingItem.HeightProperty, 15d));
+          rating.SetValue(SfRating.ItemContainerStyleProperty, itemStyle);
+
+          var dataTemplate = new DataTemplate();
+          dataTemplate.VisualTree = rating;
+          column.CellTemplate = dataTemplate;
           break;
 
         default:

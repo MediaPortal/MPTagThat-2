@@ -1172,6 +1172,7 @@ namespace MPTagThat.Core.Common.Song
     public SongData Clone()
     {
       var songClone = new SongData();
+      songClone.Init = true;
       songClone.FullFileName = this.FullFileName;
       songClone.FileName = this.FileName;
       songClone.Artist = this.Artist;
@@ -1263,7 +1264,7 @@ namespace MPTagThat.Core.Common.Song
       {
         // ignored
       }
-
+      songClone.Init = false;
       return songClone;
     }
 
