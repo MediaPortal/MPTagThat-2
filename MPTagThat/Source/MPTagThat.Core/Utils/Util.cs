@@ -376,7 +376,8 @@ namespace MPTagThat.Core.Utils
           rating.SetBinding(SfRating.ValueProperty, new Binding {Path=new PropertyPath("Rating"), Mode=BindingMode.TwoWay });
 
           var itemStyle = new Style();
-          itemStyle.Setters.Add(new Setter(SfRatingItem.HeightProperty, 15d));
+          itemStyle.Setters.Add(new Setter(SfRatingItem.HeightProperty, 17d));
+          itemStyle.Setters.Add(new Setter(SfRatingItem.WidthProperty, 17d));
           rating.SetValue(SfRating.ItemContainerStyleProperty, itemStyle);
 
           var dataTemplate = new DataTemplate();
