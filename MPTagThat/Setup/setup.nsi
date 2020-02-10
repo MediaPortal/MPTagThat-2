@@ -41,6 +41,10 @@ SetCompressor /SOLID lzma
 !define AUTHOR "Helmut Wahrmann"
 !define URL www.team-mediaportal.com
 
+# Various PATH Information
+!define BASEFOLDER "..\Source"
+!define BINFOLDER "..\Bin"
+
 # MUI defines
 !define MUI_ICON "MPTagThat.ico"
 !define MUI_HEADERIMAGE_BITMAP "HeaderImage.bmp"
@@ -86,7 +90,7 @@ Page custom Options OptionsValidate
 
 # Installer attributes
 OutFile MPTagThat_setup.exe
-InstallDir "$PROGRAMFILES\Team MediaPortal\MPTagThat2"
+InstallDir "$PROGRAMFILES64\Team MediaPortal\MPTagThat2"
 CRCCheck on
 XPStyle on
 ShowInstDetails show
@@ -113,11 +117,11 @@ Section -Main SEC0000
     
     # Bin Dir including external binaries
     SetOutPath $INSTDIR\bin
-    File /r /x .gitignore ..\..\Bin\bin\*
+    File /r /x .gitignore ${BINFOLDER}\bin\*
 	
 	# Docs Dir
 	SetOutPath $INSTDIR\Docs
-	File /r ..\MPTagThat.Base\Docs\*
+	File /r ${BASEFOLDER}\MPTagThat.Base\Docs\*
 
     # FileIcons
     #SetOutPath $INSTDIR\FileIcons
@@ -130,16 +134,16 @@ Section -Main SEC0000
     
     # Scripts
     # Get AppData Folder first
-    SetShellVarContext all
-    !define ROAMING_DATA "$APPDATA\Roaming\MPTagThat2"
-    SetOutPath ${ROAMING_DATA}\Scripts
-    File /r ..\MPTagThat.Base\Scripts\*
+    SetShellVarContext current
+    !define ROAMINGDATA "$APPDATA\MPTagThat2"
+    SetOutPath ${ROAMINGDATA}\Scripts
+    File /r ${BASEFOLDER}\MPTagThat.Base\Scripts\*
     
     # Base Files
     SetOutPath $INSTDIR
-    File ..\MPTagThat.Base\Config.xml
-    File ..\..\Bin\MPTagThat.exe
-    File ..\MPTagThat\bin\Release\MPTagThat.exe.config
+    File ${BASEFOLDER}\MPTagThat.Base\Config.xml
+    File ${BINFOLDER}\MPTagThat.exe
+    File ${BASEFOLDER}\MPTagthat\bin\Release\MPTagThat.exe.config
     WriteRegStr HKLM "${REGKEY}\Components" Main 1
 
     # Download MusicBrainz
@@ -149,6 +153,7 @@ Section -Main SEC0000
 SectionEnd
 
 Section -post SEC0001
+    SetShellVarContext current
     WriteRegStr HKLM "${REGKEY}" Path $INSTDIR
     SetOutPath $INSTDIR
     WriteUninstaller $INSTDIR\uninstall.exe
@@ -159,6 +164,7 @@ Section -post SEC0001
 	
 	${IF} $CreateStartMenu == 1
 		!insertmacro MUI_STARTMENU_WRITE_BEGIN Application
+		CreateDirectory "$SMPROGRAMS\$StartMenuGroup"
 		CreateShortCut "$SMPROGRAMS\$StartMenuGroup\$(^Name).lnk" "$INSTDIR\MpTagThat.exe" "" "$INSTDIR\MpTagThat.exe" 0 "" "" "MPTagThat2" 
 		CreateShortCut "$SMPROGRAMS\$StartMenuGroup\User Files.lnk" "$AppData\$(^Name)" "" "$AppData\$(^Name)" 0 "" "" "Browse your config files, logs, ..."
 		CreateShortCut "$SMPROGRAMS\$StartMenuGroup\Uninstall $(^Name).lnk" "$INSTDIR\uninstall.exe"
@@ -212,6 +218,7 @@ Section /o -un.Main UNSEC0000
 SectionEnd
 
 Section -un.post UNSEC0001
+    SetShellVarContext current
     DeleteRegKey HKLM "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\$(^Name)"
     Delete /REBOOTOK "$SMPROGRAMS\$StartMenuGroup\$(^Name).lnk"
     Delete /REBOOTOK "$SMPROGRAMS\$StartMenuGroup\Uninstall $(^Name).lnk"
