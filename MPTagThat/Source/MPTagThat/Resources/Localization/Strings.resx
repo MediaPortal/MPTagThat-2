@@ -1037,4 +1037,16 @@
   <data name="caseConversion_Title" xml:space="preserve">
     <value>Title</value>
   </data>
+  <data name="ribbon_Exit" xml:space="preserve">
+    <value>Exit</value>
+    <comment>The Exit Command Button in the Ribbon Backstage</comment>
+  </data>
+  <data name="ribbon_Refresh" xml:space="preserve">
+    <value>Refresh</value>
+    <comment>The Refresh Command Button in the Ribbon Backstage</comment>
+  </data>
+  <data name="ribbon_Save" xml:space="preserve">
+    <value>Save</value>
+    <comment>The Save Command Button in the Ribbon Backstage</comment>
+  </data>
 </root>

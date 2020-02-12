@@ -20,6 +20,7 @@
 
 using System.Collections;
 using System.Collections.ObjectModel;
+using System.Windows;
 using System.Windows.Input;
 using CommonServiceLocator;
 using MPTagThat.Core;
@@ -58,6 +59,7 @@ namespace MPTagThat.Ribbon.ViewModels
       ResetLayoutCommand = new BaseCommand(ResetLayout);
       DeleteLayoutCommand = new BaseCommand(DeleteLayout);
       ExecuteRibbonCommand = new BaseCommand(RibbonCommand);
+      ExitCommand = new BaseCommand(Exit);
 
       Initialise();
     }
@@ -125,6 +127,13 @@ namespace MPTagThat.Ribbon.ViewModels
       EventSystem.Publish(evt);
     }
 
+    public ICommand ExitCommand { get; }
+
+    private void Exit(object parm)
+    {
+      Application.Current.Shutdown();
+    }
+
     public ICommand ExecuteRibbonCommand { get; }
 
     private void RibbonCommand(object param)
@@ -139,10 +148,12 @@ namespace MPTagThat.Ribbon.ViewModels
       switch (elementName)
       {
         case "ButtonSave":
+        case "ButtonSaveBackStage":
           type = Action.ActionType.SAVE;
           break;
 
         case "ButtonRefresh":
+        case "ButtonRefreshBackStage":
           type = Action.ActionType.REFRESH;
           break;
 

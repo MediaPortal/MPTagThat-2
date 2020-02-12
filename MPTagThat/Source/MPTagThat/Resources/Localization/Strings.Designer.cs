@@ -880,6 +880,15 @@ namespace MPTagThat.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Exit.
+        /// </summary>
+        public static string ribbon_Exit {
+            get {
+                return ResourceManager.GetString("ribbon_Exit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Find.
         /// </summary>
         public static string ribbon_Find {
@@ -979,6 +988,15 @@ namespace MPTagThat.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Refresh.
+        /// </summary>
+        public static string ribbon_Refresh {
+            get {
+                return ResourceManager.GetString("ribbon_Refresh", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Remove:.
         /// </summary>
         public static string ribbon_RemoveCommentPicture {
@@ -1074,6 +1092,15 @@ namespace MPTagThat.Resources.Localization {
         public static string ribbon_RipTab {
             get {
                 return ResourceManager.GetString("ribbon_RipTab", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save.
+        /// </summary>
+        public static string ribbon_Save {
+            get {
+                return ResourceManager.GetString("ribbon_Save", resourceCulture);
             }
         }
         

@@ -196,6 +196,9 @@
     <Resource Include="Resources\Images\ribbon_Gain_16x.png" />
     <Resource Include="Resources\Images\ribbon_Gain_32x.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\ribbon_Exit_32x.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>

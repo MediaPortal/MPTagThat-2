@@ -10,7 +10,6 @@
              lex:LocalizeDictionary.DesignCulture="en"
              lex:ResxLocalizationProvider.DefaultAssembly="MPTagThat"
              lex:ResxLocalizationProvider.DefaultDictionary="Strings"
-             xmlns:local="clr-namespace:MPTagThat.Ribbon"
              mc:Ignorable="d">
   <Grid>
     <Grid.ColumnDefinitions>
@@ -203,10 +202,21 @@
 
       <syncfusion:Ribbon.BackStage>
         <syncfusion:Backstage>
+          <syncfusion:BackStageCommandButton x:Name="ButtonSaveBackStage" 
+                                             Header="{lex:Loc ribbon_Save}"
+                                             Icon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_Save_16x.png" 
+                                             Command="{Binding ExecuteRibbonCommand}" 
+                                             CommandParameter="{Binding Name ,RelativeSource={RelativeSource Self}}"/>
+          <syncfusion:BackStageCommandButton x:Name="ButtonRefreshBackStage"
+                                             Header="{lex:Loc ribbon_Refresh}"
+                                             Icon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_Refresh_16x.png" 
+                                             Command="{Binding ExecuteRibbonCommand}" 
+                                             CommandParameter="{Binding Name ,RelativeSource={RelativeSource Self}}"/>
           <syncfusion:BackStageSeparator/>
           <syncfusion:BackStageCommandButton Header="{lex:Loc ribbon_ResetLayout}" Command="{Binding ResetLayoutCommand}" Icon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_ResetLayout_32x.png" />
           <syncfusion:BackStageCommandButton Header="{lex:Loc ribbon_DeleteLayout}" Command="{Binding DeleteLayoutCommand}" Icon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_DeleteLayout_32x.png" />
           <syncfusion:BackStageSeparator/>
+          <syncfusion:BackStageCommandButton Header="{lex:Loc ribbon_Exit}" Command="{Binding ExitCommand}" Icon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_Exit_32x.png" />
         </syncfusion:Backstage>
       </syncfusion:Ribbon.BackStage>
     </syncfusion:Ribbon>
