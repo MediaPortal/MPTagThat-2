@@ -85,7 +85,7 @@ namespace MPTagThat.Core.Common
 
         case ActionType.IDENTIFYFILE:
           checkSelections = true;
-          return "IdentifyFiles";
+          return "IdentifySong";
 
         case Action.ActionType.GETCOVERART:
           checkSelections = true;

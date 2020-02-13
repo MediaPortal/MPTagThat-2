@@ -62,6 +62,7 @@ REM Copy SongGrid Module
 xcopy /y %1\UI\MPTagThat.SongGrid\bin\%2\MPTagThat.SongGrid.* %TARGETPATH%\Bin\
 xcopy /y %1\UI\MPTagThat.SongGrid\bin\%2\Syncfusion.* %TARGETPATH%\Bin\
 xcopy /y %1\UI\MPTagThat.SongGrid\bin\%2\NReplayGain.dll %TARGETPATH%\Bin\
+xcopy /y %1\UI\MPTagThat.SongGrid\bin\%2\AcoustID.dll %TARGETPATH%\Bin\
 
 REM Copy TagEdit Module
 xcopy /y %1\UI\MPTagThat.TagEdit\bin\%2\MPTagThat.TagEdit.* %TARGETPATH%\Bin\

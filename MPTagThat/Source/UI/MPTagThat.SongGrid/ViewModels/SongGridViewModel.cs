@@ -653,6 +653,7 @@ namespace MPTagThat.SongGrid.ViewModels
         Action.ActionType.REMOVECOMMENT,
         Action.ActionType.BPM,
         Action.ActionType.REPLAYGAIN,
+        Action.ActionType.IDENTIFYFILE,
       };
 
     private void OnMessageReceived(GenericEvent msg)

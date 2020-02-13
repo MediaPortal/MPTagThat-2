@@ -34,11 +34,17 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AcoustID, Version=1.3.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\AcoustID.NET.1.3.3\lib\net45\AcoustID.dll</HintPath>
+    </Reference>
     <Reference Include="Bass.Net, Version=2.4.14.1, Culture=neutral, PublicKeyToken=b7566c273e6ef480, processorArchitecture=MSIL">
       <HintPath>..\..\packages\BASS.NET.2.4.14.1\lib\net46\Bass.Net.dll</HintPath>
     </Reference>
     <Reference Include="CommonServiceLocator, Version=2.0.5.0, Culture=neutral, PublicKeyToken=489b6accfaf20ef0, processorArchitecture=MSIL">
       <HintPath>..\..\packages\CommonServiceLocator.2.0.5\lib\net46\CommonServiceLocator.dll</HintPath>
+    </Reference>
+    <Reference Include="Hqub.MusicBrainz.API, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\MusicBrainzAPI.2.1.0\lib\net45\Hqub.MusicBrainz.API.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Xaml.Behaviors, Version=1.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Microsoft.Xaml.Behaviors.Wpf.1.1.19\lib\net45\Microsoft.Xaml.Behaviors.dll</HintPath>
@@ -109,6 +115,7 @@
     <Compile Include="Commands\CmdBpm.cs" />
     <Compile Include="Commands\CmdCaseConversion.cs" />
     <Compile Include="Commands\CmdDeleteTags.cs" />
+    <Compile Include="Commands\CmdIdentifySong.cs" />
     <Compile Include="Commands\CmdRemoveComments.cs" />
     <Compile Include="Commands\CmdRemoveCoverArt.cs" />
     <Compile Include="Commands\CmdReplayGain.cs" />

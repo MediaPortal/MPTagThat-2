@@ -30,7 +30,7 @@
             </syncfusion:RibbonButton.ToolTip>
           </syncfusion:RibbonButton>
 
-          <syncfusion:RibbonButton x:Name="ButtonIdentifyFile" SizeForm="Large" 
+          <syncfusion:RibbonButton x:Name="ButtonIdentifySong" SizeForm="Large" 
                                    Label="{lex:Loc ribbon_IdentifyFile}" 
                                    LargeIcon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_IdentifyFile_32x.png" 
                                    SmallIcon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_IdentifyFile_16x.png" 

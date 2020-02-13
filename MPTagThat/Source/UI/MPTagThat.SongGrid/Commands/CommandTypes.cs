@@ -44,9 +44,9 @@ namespace MPTagThat.SongGrid.Commands
       typeof (CmdRemoveComments),
       typeof (CmdBpm),
       typeof (CmdReplayGain),
+      typeof (CmdIdentifySong),
       /*
-      typeof (CmdIdentifyFile),
-      
+            
       typeof (CmdValidateMp3File),
       typeof (CmdFixMp3File),
       typeof (CmdCoverArtDrop),
