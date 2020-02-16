@@ -400,6 +400,7 @@ namespace MPTagThat.Dialogs.ViewModels
         {
           Lyrics[i].Site = lyricsModel.Site;
           Lyrics[i].Lyric = lyricsModel.Lyric;
+          Lyrics[i].IsSelected = true;
           firstSite = true;
           break;
         }
