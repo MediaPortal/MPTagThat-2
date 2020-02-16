@@ -24,6 +24,7 @@ using MPTagThat.Core.Services.Logging;
 using MPTagThat.Core.Services.Settings;
 using MPTagThat.Core.Services.Settings.Setting;
 using System;
+using Prism.Services.Dialogs;
 
 #endregion
 
@@ -42,6 +43,7 @@ namespace MPTagThat.SongGrid.Commands
 
     public bool NeedsPreprocessing { get; set; }
     public bool NeedsCallback { get; set; }
+    public IDialogService DialogService { get; set; }
 
     #endregion
 

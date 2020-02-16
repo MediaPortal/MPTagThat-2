@@ -69,7 +69,7 @@ namespace MPTagThat.SongGrid.ViewModels
     private readonly NLogLogger log;
     private Options _options;
     private readonly SongGridViewColumns _gridColumns;
-    
+
     private string _selectedFolder;
     private string[] _filterFileExtensions;
     private string _filterFileMask = "*.*";
@@ -218,7 +218,7 @@ namespace MPTagThat.SongGrid.ViewModels
 
         if (result == MessageBoxResult.Yes)
         {
-          object[] parm = {"true"};
+          object[] parm = { "true" };
           ExecuteCommand("SaveAll", parm, false);
         }
       }
@@ -246,7 +246,7 @@ namespace MPTagThat.SongGrid.ViewModels
         if (assembly != null)
         {
           log.Debug($"Invoking Script: {scriptFile}");
-          
+
           IsBusy = true;
           var songs = SelectedItems.Cast<SongData>().ToList();
           IScript script = (IScript)assembly.CreateInstance("Script");
@@ -276,8 +276,8 @@ namespace MPTagThat.SongGrid.ViewModels
       catch (Exception ex)
       {
         log.Error("Script Execution failed: {0}", ex.Message);
-        MessageBox.Show(LocalizeDictionary.Instance.GetLocalizedObject("MPTagThat", "Strings", "message_Script_Compile_Failed",LocalizeDictionary.Instance.Culture).ToString(),
-          LocalizeDictionary.Instance.GetLocalizedObject("MPTagThat", "Strings", "message_Error_Title",LocalizeDictionary.Instance.Culture).ToString(), MessageBoxButton.OK);
+        MessageBox.Show(LocalizeDictionary.Instance.GetLocalizedObject("MPTagThat", "Strings", "message_Script_Compile_Failed", LocalizeDictionary.Instance.Culture).ToString(),
+          LocalizeDictionary.Instance.GetLocalizedObject("MPTagThat", "Strings", "message_Error_Title", LocalizeDictionary.Instance.Culture).ToString(), MessageBoxButton.OK);
       }
 
       msg.MinValue = 0;
@@ -301,133 +301,133 @@ namespace MPTagThat.SongGrid.ViewModels
       {
         if (System.Windows.Application.Current.Dispatcher != null)
           System.Windows.Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Background,
-            (SendOrPostCallback) delegate
-            {
-              log.Trace(">>>");
-              if (String.IsNullOrEmpty(_selectedFolder))
-              {
-                log.Info("FolderScan: No folder selected");
-                return;
-              }
+            (SendOrPostCallback)delegate
+           {
+             log.Trace(">>>");
+             if (String.IsNullOrEmpty(_selectedFolder))
+             {
+               log.Info("FolderScan: No folder selected");
+               return;
+             }
 
-              IsBusy = true;
-              _folderScanInProgress = true;
-              Songs.Clear();
-              _nonMusicFiles = new List<string>();
-              GC.Collect();
+             IsBusy = true;
+             _folderScanInProgress = true;
+             Songs.Clear();
+             _nonMusicFiles = new List<string>();
+             GC.Collect();
 
-              _options.ScanFolderRecursive = false;
-              if (!Directory.Exists(_selectedFolder))
-                return;
+             _options.ScanFolderRecursive = false;
+             if (!Directory.Exists(_selectedFolder))
+               return;
 
-              // Get File Filter Settings
-              _filterFileExtensions = new string[] {"*.*"};
-              //_filterFileExtensions = _main.TreeView.ActiveFilter.FileFilter.Split('|');
-              //_filterFileMask = _main.TreeView.ActiveFilter.FileMask.Trim() == ""
-              //                    ? " * "
-              //                    : _main.TreeView.ActiveFilter.FileMask.Trim();
+             // Get File Filter Settings
+             _filterFileExtensions = new string[] { "*.*" };
+             //_filterFileExtensions = _main.TreeView.ActiveFilter.FileFilter.Split('|');
+             //_filterFileMask = _main.TreeView.ActiveFilter.FileMask.Trim() == ""
+             //                    ? " * "
+             //                    : _main.TreeView.ActiveFilter.FileMask.Trim();
 
-              int count = 1;
-              int nonMusicCount = 0;
-              StatusBarEvent msg = new StatusBarEvent {CurrentFolder = _selectedFolder, CurrentProgress = -1};
+             int count = 1;
+             int nonMusicCount = 0;
+             StatusBarEvent msg = new StatusBarEvent { CurrentFolder = _selectedFolder, CurrentProgress = -1 };
 
-              try
-              {
-                foreach (FileInfo fi in GetFiles(new DirectoryInfo(_selectedFolder), _options.ScanFolderRecursive))
-                {
-                  Application.DoEvents();
-                  if (_progressCancelled)
-                  {
-                    IsBusy = false;
-                    break;
-                  }
+             try
+             {
+               foreach (FileInfo fi in GetFiles(new DirectoryInfo(_selectedFolder), _options.ScanFolderRecursive))
+               {
+                 Application.DoEvents();
+                 if (_progressCancelled)
+                 {
+                   IsBusy = false;
+                   break;
+                 }
 
-                  try
-                  {
-                    if (Util.IsAudio(fi.FullName))
-                    {
-                      msg.CurrentFile = fi.FullName;
-                      log.Trace($"Retrieving file: {fi.FullName}");
-                      // Read the Tag
-                      SongData track = Song.Create(fi.FullName);
-                      if (track != null)
-                      {
-                        //if (ApplyTagFilter(track))
-                        //{
-                        Songs.Add(track);
-                        count++;
-                        msg.NumberOfFiles = count;
-                        EventSystem.Publish(msg);
-                        //}
-                      }
-                    }
-                    else
-                    {
-                      _nonMusicFiles.Add(fi.FullName);
-                      nonMusicCount++;
-                    }
-                  }
-                  catch (PathTooLongException)
-                  {
-                    log.Warn($"FolderScan: Ignoring track {fi.FullName} - path too long!");
-                    continue;
-                  }
-                  catch (System.UnauthorizedAccessException exUna)
-                  {
-                    log.Warn($"FolderScan: Could not access file or folder: {exUna.Message}. {fi.FullName}");
-                  }
-                  catch (Exception ex)
-                  {
-                    log.Error($"FolderScan: Caught error processing files: {ex.Message} {fi.FullName}");
-                  }
-                }
-              }
-              catch (OutOfMemoryException)
-              {
-                GC.Collect();
-                MessageBox.Show(LocalizeDictionary.Instance.GetLocalizedObject("MPTagThat", "Strings", "message_OutOfMemory", LocalizeDictionary.Instance.Culture).ToString(),
-                  LocalizeDictionary.Instance.GetLocalizedObject("MPTagThat", "Strings", "message_ErrorTitle", LocalizeDictionary.Instance.Culture).ToString(), MessageBoxButton.OK);
-                log.Error("Folderscan: Running out of memory. Scanning aborted.");
-              }
+                 try
+                 {
+                   if (Util.IsAudio(fi.FullName))
+                   {
+                     msg.CurrentFile = fi.FullName;
+                     log.Trace($"Retrieving file: {fi.FullName}");
+                     // Read the Tag
+                     SongData track = Song.Create(fi.FullName);
+                     if (track != null)
+                     {
+                       //if (ApplyTagFilter(track))
+                       //{
+                       Songs.Add(track);
+                       count++;
+                       msg.NumberOfFiles = count;
+                       EventSystem.Publish(msg);
+                       //}
+                     }
+                   }
+                   else
+                   {
+                     _nonMusicFiles.Add(fi.FullName);
+                     nonMusicCount++;
+                   }
+                 }
+                 catch (PathTooLongException)
+                 {
+                   log.Warn($"FolderScan: Ignoring track {fi.FullName} - path too long!");
+                   continue;
+                 }
+                 catch (System.UnauthorizedAccessException exUna)
+                 {
+                   log.Warn($"FolderScan: Could not access file or folder: {exUna.Message}. {fi.FullName}");
+                 }
+                 catch (Exception ex)
+                 {
+                   log.Error($"FolderScan: Caught error processing files: {ex.Message} {fi.FullName}");
+                 }
+               }
+             }
+             catch (OutOfMemoryException)
+             {
+               GC.Collect();
+               MessageBox.Show(LocalizeDictionary.Instance.GetLocalizedObject("MPTagThat", "Strings", "message_OutOfMemory", LocalizeDictionary.Instance.Culture).ToString(),
+                 LocalizeDictionary.Instance.GetLocalizedObject("MPTagThat", "Strings", "message_ErrorTitle", LocalizeDictionary.Instance.Culture).ToString(), MessageBoxButton.OK);
+               log.Error("Folderscan: Running out of memory. Scanning aborted.");
+             }
 
-              // Commit changes to SongTemp, in case we have switched to DB Mode
-              _options.Songlist.CommitDatabaseChanges();
+             // Commit changes to SongTemp, in case we have switched to DB Mode
+             _options.Songlist.CommitDatabaseChanges();
 
-              msg.CurrentProgress = 0;
-              msg.CurrentFile = "";
-              EventSystem.Publish(msg);
-              log.Info($"FolderScan: Scanned {nonMusicCount + count} files. Found {count} audio files");
+             msg.CurrentProgress = 0;
+             msg.CurrentFile = "";
+             EventSystem.Publish(msg);
+             log.Info($"FolderScan: Scanned {nonMusicCount + count} files. Found {count} audio files");
 
-              var evt = new GenericEvent
-              {
-                Action = "miscfileschanged"
-              };
-              evt.MessageData.Add("files", _nonMusicFiles);
-              EventSystem.Publish(evt);
+             var evt = new GenericEvent
+             {
+               Action = "miscfileschanged"
+             };
+             evt.MessageData.Add("files", _nonMusicFiles);
+             EventSystem.Publish(evt);
 
-              IsBusy = false;
+             IsBusy = false;
 
-              // Display Status Information
-              try
-              {
-                //_main.ToolStripStatusFiles.Text = string.Format(localisation.ToString("main", "toolStripLabelFiles"), count, 0);
-              }
-              catch (InvalidOperationException)
-              {
-              }
+             // Display Status Information
+             try
+             {
+               //_main.ToolStripStatusFiles.Text = string.Format(localisation.ToString("main", "toolStripLabelFiles"), count, 0);
+             }
+             catch (InvalidOperationException)
+             {
+             }
 
-              /*
-  
-            // If MP3 Validation is turned on, set the color
-            if (Options.MainSettings.MP3Validate)
-            {
-              ChangeErrorRowColor();
-            }
-  
-            */
-              _folderScanInProgress = false;
-              log.Trace("<<<");
-            }, null);
+             /*
+
+           // If MP3 Validation is turned on, set the color
+           if (Options.MainSettings.MP3Validate)
+           {
+             ChangeErrorRowColor();
+           }
+
+           */
+             _folderScanInProgress = false;
+             log.Trace("<<<");
+           }, null);
       });
     }
 
@@ -499,39 +499,36 @@ namespace MPTagThat.SongGrid.ViewModels
 
       if (runAsync)
       {
-        if (_bgWorker == null)
-        {
-          _bgWorker = new BackgroundWorker();
-          _bgWorker.DoWork += ExecuteCommandThread;
-        }
-
-        if (!_bgWorker.IsBusy)
-        {
-          _bgWorker.RunWorkerAsync(parameter);
-        }
+        Thread commandThread = new Thread(ExecuteCommandThread);
+        commandThread.SetApartmentState(ApartmentState.STA);
+        commandThread.Start(parameter);
       }
       else
       {
-        ExecuteCommandThread(this, new DoWorkEventArgs(parameter));
+        ExecuteCommandThread(parameter);
       }
       log.Trace("<<<");
     }
 
-    private void ExecuteCommandThread(object sender, DoWorkEventArgs e)
+    private void ExecuteCommandThread(object param)
     {
       log.Trace(">>>");
 
       // Get the command object
-      object[] parameters = e.Argument as object[];
+      object[] parameters = param as object[];
       Commands.Command commandObj = Commands.Command.Create(parameters);
       if (commandObj == null)
       {
         return;
       }
 
+      // Just in case that the Command needs to display a Dialog pass the Dialog Service
+      commandObj.DialogService = _dialogService;
+
       // Extract the command name, since we might need it for specific selections afterwards
       var command = (string)parameters[0];
 
+      // Extract Parameters
       var commandParmObj = (object[])parameters[1];
       var commandParm = commandParmObj.GetLength(0) > 0 ? (string)commandParmObj[0] : "";
 
@@ -558,7 +555,7 @@ namespace MPTagThat.SongGrid.ViewModels
       for (var i = 0; i < Songs.Count; i++)
       {
         var song = Songs[i];
-        
+
         if (!selectedSongs.Contains(song))
         {
           continue;
@@ -593,7 +590,7 @@ namespace MPTagThat.SongGrid.ViewModels
           }
 
           song.Changed = commandObj.Execute(ref song);
-          
+
           // Has the file be renamed during save?
           if (Songs[i].FullFileName != song.FullFileName)
           {
@@ -642,8 +639,8 @@ namespace MPTagThat.SongGrid.ViewModels
 
     // List of Supported commands, that should be processed by ExecuteCommand
     // Commands that show a Dialog, like Lyrics, CoverARt, etc. should not specified here, they will be handled as dialogs
-    private readonly List<Action.ActionType> _supportedCommands = new List<Action.ActionType>() 
-      { Action.ActionType.SAVE, 
+    private readonly List<Action.ActionType> _supportedCommands = new List<Action.ActionType>()
+      { Action.ActionType.SAVE,
         Action.ActionType.SAVEALL,
         Action.ActionType.REMOVEPICTURE,
         Action.ActionType.CASECONVERSION_BATCH,
@@ -678,19 +675,19 @@ namespace MPTagThat.SongGrid.ViewModels
           }
 
           // Run Commands, which don't display a dialog
-          if (_supportedCommands.Contains((Action.ActionType) msg.MessageData["command"]))
+          if (_supportedCommands.Contains((Action.ActionType)msg.MessageData["command"]))
           {
             msg.MessageData.TryGetValue("runasync", out var runAsyncParam);
             var runAsync = true;
             if (runAsyncParam != null)
             {
-              runAsync = (bool) runAsyncParam;
+              runAsync = (bool)runAsyncParam;
             }
 
             // If we have Replaygain and mutiple songs selected, we should do Album Gain
-            if ((Action.ActionType) msg.MessageData["command"] == Action.ActionType.REPLAYGAIN && SelectedItems.Count > 1)
+            if ((Action.ActionType)msg.MessageData["command"] == Action.ActionType.REPLAYGAIN && SelectedItems.Count > 1)
             {
-              msg.MessageData.Add("param", new object[] {"AlbumGain"});
+              msg.MessageData.Add("param", new object[] { "AlbumGain" });
             }
 
             msg.MessageData.TryGetValue("param", out var param);
@@ -722,19 +719,19 @@ namespace MPTagThat.SongGrid.ViewModels
 
           if ((Action.ActionType)msg.MessageData["command"] == Action.ActionType.FILENAME2TAG)
           {
-            _dialogService.ShowDialogInAnotherWindow("FileName2TagView", "DialogWindowView",parameters, null);
+            _dialogService.ShowDialogInAnotherWindow("FileName2TagView", "DialogWindowView", parameters, null);
             return;
           }
 
           if ((Action.ActionType)msg.MessageData["command"] == Action.ActionType.TAG2FILENAME)
           {
-            _dialogService.ShowDialogInAnotherWindow("Tag2FileNameView", "DialogWindowView",parameters, null);
+            _dialogService.ShowDialogInAnotherWindow("Tag2FileNameView", "DialogWindowView", parameters, null);
             return;
           }
 
           if ((Action.ActionType)msg.MessageData["command"] == Action.ActionType.GETCOVERART)
           {
-            if (_options.MainSettings.EmbedFolderThumb && !_options.MainSettings.OnlySaveFolderThumb 
+            if (_options.MainSettings.EmbedFolderThumb && !_options.MainSettings.OnlySaveFolderThumb
                                                        && File.Exists(Path.Combine(songs[0].FilePath, "folder.jpg")))
             {
               log.Debug("CoverArt: Using existing folder.jpg");

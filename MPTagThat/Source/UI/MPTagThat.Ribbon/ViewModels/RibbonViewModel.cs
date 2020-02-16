@@ -145,6 +145,7 @@ namespace MPTagThat.Ribbon.ViewModels
 
       var elementName = (string) param;
       var type = Action.ActionType.INVALID;
+      var runAsync = true;
       switch (elementName)
       {
         case "ButtonSave":
@@ -209,6 +210,10 @@ namespace MPTagThat.Ribbon.ViewModels
         case "ButtonGain":
           type = Action.ActionType.REPLAYGAIN;
           break;
+
+        case "ButtonIdentifySong":
+          type = Action.ActionType.IDENTIFYFILE;
+          break;
       }
 
       if (type != Action.ActionType.INVALID)
@@ -219,6 +224,7 @@ namespace MPTagThat.Ribbon.ViewModels
           Action = "Command"
         };
         evt.MessageData.Add("command", type);
+        evt.MessageData.Add("runasync", runAsync);
         EventSystem.Publish(evt);
       }
     }
