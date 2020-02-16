@@ -421,6 +421,42 @@ namespace MPTagThat.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Country.
+        /// </summary>
+        public static string identifySong_Country {
+            get {
+                return ResourceManager.GetString("identifySong_Country", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Identified Song.
+        /// </summary>
+        public static string identifySong_GroupBox_Identified {
+            get {
+                return ResourceManager.GetString("identifySong_GroupBox_Identified", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The song is available on multiple albums. Please select.
+        /// </summary>
+        public static string identifySong_GroupBox_Results {
+            get {
+                return ResourceManager.GetString("identifySong_GroupBox_Results", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Auto Tagging.
+        /// </summary>
+        public static string identifySong_Title {
+            get {
+                return ResourceManager.GetString("identifySong_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Search Finished. Select correct  Lyrics..
         /// </summary>
         public static string lyricsSearch_Finished {

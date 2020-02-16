@@ -105,6 +105,7 @@
     <Compile Include="ViewModels\DialogServiceExtensions.cs" />
     <Compile Include="ViewModels\DialogViewModelBase.cs" />
     <Compile Include="ViewModels\FileName2TagViewModel.cs" />
+    <Compile Include="ViewModels\IdentifySongViewModel.cs" />
     <Compile Include="ViewModels\LyricsSearchViewModel.cs" />
     <Compile Include="ViewModels\OrganiseFilesViewModel.cs" />
     <Compile Include="ViewModels\ParameterPart.cs" />
@@ -121,6 +122,9 @@
     </Compile>
     <Compile Include="Views\FileName2TagView.xaml.cs">
       <DependentUpon>FileName2TagView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\IdentifySongView.xaml.cs">
+      <DependentUpon>IdentifySongView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\LyricsSearchView.xaml.cs">
       <DependentUpon>LyricsSearchView.xaml</DependentUpon>
@@ -148,6 +152,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\FileName2TagView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\IdentifySongView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -72,8 +72,7 @@ namespace MPTagThat.SongGrid.Commands
         return (false, song);
       }
 
-
-      DialogService.ShowDialogInAnotherWindow("CaseConversionView", "DialogWindowView", new DialogParameters(), null);
+      DialogService.ShowDialogInAnotherWindow("IdentifySongView", "DialogWindowView", new DialogParameters(), null);
 
       if (trackIds.Count > 0)
       {
