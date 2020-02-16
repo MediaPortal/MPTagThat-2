@@ -213,6 +213,7 @@ namespace MPTagThat.Ribbon.ViewModels
 
         case "ButtonIdentifySong":
           type = Action.ActionType.IDENTIFYFILE;
+          runAsync = false;
           break;
       }
 

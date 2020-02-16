@@ -510,7 +510,7 @@ namespace MPTagThat.SongGrid.ViewModels
       log.Trace("<<<");
     }
 
-    private void ExecuteCommandThread(object param)
+    private async void ExecuteCommandThread(object param)
     {
       log.Trace(">>>");
 
@@ -589,7 +589,11 @@ namespace MPTagThat.SongGrid.ViewModels
             song.Status = -1;
           }
 
-          song.Changed = commandObj.Execute(ref song);
+          var result = await commandObj.Execute(song);
+          if (result.Changed)
+          {
+            song = result.song;
+          }
 
           // Has the file be renamed during save?
           if (Songs[i].FullFileName != song.FullFileName)

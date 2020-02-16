@@ -62,17 +62,19 @@ namespace MPTagThat.SongGrid.Commands
 
     #region Command Implementation
 
-    public override bool Execute(ref SongData song)
+    public override async Task<(bool Changed, SongData song)> Execute(SongData song)
     {
       log.Info($"Auto Tag: Processing file: {song.FullFileName}");
-      var result = GetTrackIds(song.FullFileName);
-      if (result.Result.Count == 0)
+      var trackIds = await GetTrackIds(song.FullFileName);
+      if (trackIds.Count == 0)
       {
         log.Info("Auto Tag: Couldn't identify file");
-        return false;
+        return (false, song);
       }
 
-      var trackIds = result.Result;
+
+      DialogService.ShowDialogInAnotherWindow("CaseConversionView", "DialogWindowView", new DialogParameters(), null);
+
       if (trackIds.Count > 0)
       {
         if (trackIds.Count == 1)
@@ -80,7 +82,7 @@ namespace MPTagThat.SongGrid.Commands
           var releases = new List<Release>();
           foreach (var recording in trackIds[0].Recordings)
           {
-            releases.AddRange(GetReleases(recording).Result);
+            releases.AddRange(await GetReleases(recording));
           }
 
           var release = releases.FirstOrDefault(r => (r.Country != null && r.Country.ToLower() == "de"));
@@ -101,7 +103,7 @@ namespace MPTagThat.SongGrid.Commands
 
           if (release != null)
           {
-            var album = GetAlbum(release.Id).Result;
+            var album = await GetAlbum(release.Id);
             if (album != null)
             {
             }
@@ -112,7 +114,7 @@ namespace MPTagThat.SongGrid.Commands
       }
 
 
-      return false;
+      return (false, song);
     }
 
     #endregion

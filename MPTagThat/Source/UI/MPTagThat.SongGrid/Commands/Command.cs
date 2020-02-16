@@ -24,6 +24,8 @@ using MPTagThat.Core.Services.Logging;
 using MPTagThat.Core.Services.Settings;
 using MPTagThat.Core.Services.Settings.Setting;
 using System;
+using System.Threading.Tasks;
+using System.Windows.Forms;
 using Prism.Services.Dialogs;
 
 #endregion
@@ -52,9 +54,9 @@ namespace MPTagThat.SongGrid.Commands
     /// </summary>
     /// <param name="song"></param>
     /// <returns></returns>
-    public virtual bool Execute(ref SongData song)
+    public virtual async Task<(bool Changed, SongData song)> Execute(SongData song)
     {
-      return false;
+      return (false, song);
     }
 
     /// <summary>

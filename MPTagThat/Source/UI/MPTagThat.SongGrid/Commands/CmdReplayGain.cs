@@ -64,20 +64,20 @@ namespace MPTagThat.SongGrid.Commands
 
     #region Command Implementation
 
-    public override bool Execute(ref SongData song)
+    public override async Task<(bool Changed, SongData song)> Execute(SongData song)
     {
       int stream = Bass.BASS_StreamCreateFile(song.FullFileName, 0, 0, BASSFlag.BASS_STREAM_DECODE);
       if (stream == 0)
       {
         log.Error("ReplayGain: Could not create stream for {0}. {1}", song.FullFileName, Bass.BASS_ErrorGetCode().ToString());
-        return false;
+        return (false, song);
       }
 
       BASS_CHANNELINFO chInfo = Bass.BASS_ChannelGetInfo(stream);
       if (chInfo == null)
       {
         log.Error("ReplayGain: Could not get channel info for {0}. {1}", song.FullFileName, Bass.BASS_ErrorGetCode().ToString());
-        return false;
+        return (false, song);
       }
       var trackGain = new TrackGain(chInfo.freq, 16);
 
@@ -98,7 +98,9 @@ namespace MPTagThat.SongGrid.Commands
           rightSamples.Add(Convert.ToInt32(buf[i + 1]));
         }
       }
-      
+
+      Bass.BASS_StreamFree(stream);
+
       trackGain.AnalyzeSamples(leftSamples.ToArray(), rightSamples.ToArray());
 
       _albumGain?.AppendTrackData(trackGain);
@@ -108,7 +110,7 @@ namespace MPTagThat.SongGrid.Commands
       song.ReplayGainTrack = gain.ToString(CultureInfo.InvariantCulture);
       song.ReplayGainTrackPeak = peak.ToString(CultureInfo.InvariantCulture);
 
-      return true;
+      return (true, song);
     }
 
     public override bool PostProcess(SongData song)

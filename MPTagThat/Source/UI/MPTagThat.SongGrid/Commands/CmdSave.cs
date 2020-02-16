@@ -22,6 +22,7 @@ using MPTagThat.Core.Common.Song;
 using System;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using MPTagThat.Core;
 using MPTagThat.Core.Events;
 using MPTagThat.Core.Utils;
@@ -61,7 +62,7 @@ namespace MPTagThat.SongGrid.Commands
 
     #region Command Implementation
 
-    public override bool Execute(ref SongData song)
+    public override async Task<(bool Changed, SongData song)> Execute(SongData song)
     {
       if (!SaveTrack(ref song))
       {
@@ -70,7 +71,7 @@ namespace MPTagThat.SongGrid.Commands
 
       // returning false here, since we are setting the Track Status in Save Track
       // and don't want to have it changed again in calling routine
-      return false;
+      return (false, song);
     }
 
     public override bool PostProcess(SongData song)

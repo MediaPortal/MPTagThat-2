@@ -18,6 +18,7 @@
 
 #region
 
+using System.Threading.Tasks;
 using MPTagThat.Core.Common.Song;
 
 #endregion
@@ -44,14 +45,14 @@ namespace MPTagThat.SongGrid.Commands
 
     #region Command Implementation
 
-    public override bool Execute(ref SongData song)
+    public override async Task<(bool Changed, SongData song)> Execute(SongData song)
     {
       if (CaseConversion.CaseConvert(ref song))
       {
-        return true;
+        return (true, song);
       }
 
-      return false;
+      return (false, song);
     }
 
     #endregion

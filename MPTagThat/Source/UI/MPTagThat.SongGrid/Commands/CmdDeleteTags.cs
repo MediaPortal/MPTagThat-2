@@ -18,6 +18,7 @@
 
 #region
 
+using System.Threading.Tasks;
 using MPTagThat.Core.Common.Song;
 using TagLib;
 
@@ -64,11 +65,11 @@ namespace MPTagThat.SongGrid.Commands
 
     #region Command Implementation
 
-    public override bool Execute(ref SongData song)
+    public override async Task<(bool Changed, SongData song)> Execute(SongData song)
     {
       song.TagsRemoved.Add(_tagType);
       song = Song.ClearTag(song);
-      return true;
+      return (true, song);
     }
 
     #endregion

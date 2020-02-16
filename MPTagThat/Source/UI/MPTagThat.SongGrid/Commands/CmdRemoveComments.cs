@@ -16,8 +16,9 @@
 // along with MPTagThat. If not, see <http://www.gnu.org/licenses/>.
 #endregion
 
-#region 
+#region
 
+using System.Threading.Tasks;
 using MPTagThat.Core.Common.Song;
 
 #endregion
@@ -36,15 +37,15 @@ namespace MPTagThat.SongGrid.Commands
 
     #region Command Implementation
 
-    public override bool Execute(ref SongData song)
+    public override async Task<(bool Changed, SongData song)> Execute(SongData song)
     {
       if (song.Comment != "")
       {
         song.Comment = "";
         song.ID3Comments.Clear();
-        return true;
+        return (true, song);
       }
-      return false;
+      return (false, song);
     }
 
     #endregion
