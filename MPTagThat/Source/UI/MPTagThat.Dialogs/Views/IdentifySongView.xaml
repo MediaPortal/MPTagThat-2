@@ -33,7 +33,7 @@
         <RowDefinition Height="Auto" />
       </Grid.RowDefinitions>
       <Grid.ColumnDefinitions>
-        <ColumnDefinition Width = "800" />
+        <ColumnDefinition Width = "450" />
       </Grid.ColumnDefinitions>
 
       <!-- Header -->
@@ -62,7 +62,7 @@
 
       <GroupBox Grid.Row="2" Header="{lex:Loc identifySong_GroupBox_Results}">
         <syncfusion:SfDataGrid x:Name="SongPreviewGrid" 
-                               ItemsSource="{Binding Albums, Mode=TwoWay}"
+                               ItemsSource="{Binding Releases, Mode=TwoWay}"
                                ColumnSizer="AutoWithLastColumnFill" 
                                AllowResizingColumns="False" 
                                AllowDraggingColumns="False" 
@@ -71,9 +71,9 @@
                                AllowEditing="False" >
 
           <syncfusion:SfDataGrid.Columns>
-            <syncfusion:GridTextColumn MappingName="Album" HeaderText="{lex:Loc songHeader_Album}" Width="400"/>
+            <syncfusion:GridTextColumn MappingName="Title" HeaderText="{lex:Loc songHeader_Album}" Width="200"/>
             <syncfusion:GridTextColumn MappingName="Country" HeaderText="{lex:Loc identifySong_Country}" Width="60" />
-            <syncfusion:GridTextColumn MappingName="Year" HeaderText="{lex:Loc songHeader_Year}" Width="60" />
+            <syncfusion:GridTextColumn MappingName="Date.Year" HeaderText="{lex:Loc songHeader_Year}" Width="100" />
             <syncfusion:GridTextColumn MappingName="Duration" HeaderText="{lex:Loc songHeader_Duration}" Width="60" />
           </syncfusion:SfDataGrid.Columns>
 

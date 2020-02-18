@@ -18,14 +18,18 @@
 
 #region
 
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Windows.Data;
 using System.Windows.Media;
+using AcoustID.Web;
 using CommonServiceLocator;
 using MPTagThat.Core.AlbumSearch;
+using MPTagThat.Core.Common.Song;
 using MPTagThat.Core.Services.Logging;
 using MPTagThat.Core.Services.Settings;
 using MPTagThat.Core.Services.Settings.Setting;
+using Prism.Services.Dialogs;
 using WPFLocalizeExtension.Engine;
 
 #endregion
@@ -45,6 +49,15 @@ namespace MPTagThat.Dialogs.ViewModels
 
     public Brush Background => (Brush)new BrushConverter().ConvertFromString(_options.MainSettings.BackGround);
 
+    /// <summary>
+    /// Binding for the Releases
+    /// </summary>
+    private ObservableCollection<AcoustID.Web.Release> _releases;
+    public ObservableCollection<AcoustID.Web.Release> Releases
+    {
+      get => _releases;
+      set => SetProperty(ref _releases, value);
+    }
 
     #endregion
 
@@ -57,6 +70,16 @@ namespace MPTagThat.Dialogs.ViewModels
     }
 
     #endregion
+
+    #region Overrides
+
+    public override void OnDialogOpened(IDialogParameters parameters)
+    {
+      Releases = new ObservableCollection<Release>(parameters.GetValue<List<AcoustID.Web.Release>>("releases"));
+    }
+
+    #endregion
+
 
   }
 }

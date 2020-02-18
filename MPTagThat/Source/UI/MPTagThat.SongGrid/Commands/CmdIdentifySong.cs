@@ -72,44 +72,42 @@ namespace MPTagThat.SongGrid.Commands
         return (false, song);
       }
 
-      DialogService.ShowDialogInAnotherWindow("IdentifySongView", "DialogWindowView", new DialogParameters(), null);
-
       if (trackIds.Count > 0)
       {
-        if (trackIds.Count == 1)
+        var releases = new List<AcoustID.Web.Release>();
+        foreach (var trackId in trackIds)
         {
-          var releases = new List<Release>();
-          foreach (var recording in trackIds[0].Recordings)
+          foreach (var recording in trackId.Recordings)
           {
-            releases.AddRange(await GetReleases(recording));
+            releases.AddRange(recording.Releases);
           }
+        }
 
-          var release = releases.FirstOrDefault(r => (r.Country != null && r.Country.ToLower() == "de"));
-          if (release == null)
-          {
-            // Look for European wide release
-            release = releases.FirstOrDefault(r => (r.Country != null && r.Country.ToLower() == "xe"));
-            if (release == null)
-            {
-              // Look for US release
-              release = releases.FirstOrDefault(r => (r.Country != null && r.Country.ToLower() == "us"));
-              if (release == null)
-              {
-                release = releases.Count > 0 ? releases[0] : null;
-              }
-            }
-          }
+        var distinctReleases = releases
+          .GroupBy(r => new {r.Title, r.Country})
+          .Select(g => g.First())
+          .ToList();
 
-          if (release != null)
-          {
-            var album = await GetAlbum(release.Id);
-            if (album != null)
-            {
-            }
-          }
+        if (distinctReleases.Count > 0)
+        {
 
+          var parameters = new DialogParameters {{"releases", distinctReleases}};
+
+          DialogService.ShowDialogInAnotherWindow("IdentifySongView", "DialogWindowView", parameters, null);
 
         }
+
+
+        /*
+        if (release != null)
+        {
+          var album = await GetAlbum(release.Id);
+          if (album != null)
+          {
+          }
+        }
+        */
+
       }
 
 
@@ -149,20 +147,9 @@ namespace MPTagThat.SongGrid.Commands
       var len = Bass.BASS_ChannelGetLength(stream, BASSMode.BASS_POS_BYTE);
       var time = Bass.BASS_ChannelBytes2Seconds(stream, len);
 
-      var result = await lookupSvc.GetAsync(fingerPrint, Convert.ToInt32(time), new[] { "recordingids" });
+      var result = await lookupSvc.GetAsync(fingerPrint, Convert.ToInt32(time), new[] { "recordingids", "releases" });
 
       return result.Results;
-    }
-
-    /// <summary>
-    /// Get the releases for the Recording
-    /// </summary>
-    /// <param name="recordingid"></param>
-    /// <returns></returns>
-    private async Task<List<Release>> GetReleases(AcoustID.Web.Recording recordingid)
-    {
-      var recording = await Recording.GetAsync(recordingid.Id, new[] { "artists", "releases", "media", "discids" });
-      return recording.Releases;
     }
 
     private async Task<Release> GetAlbum(string releaseID)
