@@ -13,7 +13,7 @@
              lex:ResxLocalizationProvider.DefaultAssembly="MPTagThat"
              lex:ResxLocalizationProvider.DefaultDictionary="Strings"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="550" d:DesignWidth="850">
 
   <prism:Dialog.WindowStyle>
     <Style TargetType="Window">
@@ -28,12 +28,11 @@
     <Grid x:Name="LayoutRoot" Margin="5">
       <Grid.RowDefinitions>
         <RowDefinition Height="60" />
-        <RowDefinition Height="Auto" />
-        <RowDefinition Height="Auto" />
+        <RowDefinition Height="400" />
         <RowDefinition Height="Auto" />
       </Grid.RowDefinitions>
       <Grid.ColumnDefinitions>
-        <ColumnDefinition Width = "450" />
+        <ColumnDefinition Width = "800" />
       </Grid.ColumnDefinitions>
 
       <!-- Header -->
@@ -41,51 +40,47 @@
         <TextBlock Text="{Binding Title}" TextWrapping="NoWrap" Foreground="#FFC4CFD6" FontSize="30" Opacity="0.85" Canvas.Left="0" Canvas.Top="5" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Height="50" TextAlignment="Left" FontWeight="Bold" />
       </Canvas>
 
-      <!-- Artist and Title -->
-      <GroupBox Grid.Row="1" Header="{lex:Loc identifySong_GroupBox_Identified}">
-      <Grid Margin="5" >
-        <Grid.RowDefinitions>
-          <RowDefinition/>
-          <RowDefinition />
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-          <ColumnDefinition Width="100"/>
-          <ColumnDefinition Width="300" />
-        </Grid.ColumnDefinitions>
-        <Label Grid.Row="0" Grid.Column="0" Content="{lex:Loc tagEdit_Artist}" />
-        <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding Artist, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Height="27" />
-
-        <Label Grid.Row="1" Grid.Column="0" Content="{lex:Loc tagEdit_Title}" />
-        <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding Title, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-      </Grid>
-      </GroupBox>
-
-      <GroupBox Grid.Row="2" Header="{lex:Loc identifySong_GroupBox_Results}">
-        <syncfusion:SfDataGrid x:Name="SongPreviewGrid" 
-                               ItemsSource="{Binding Releases, Mode=TwoWay}"
+      <GroupBox Grid.Row="1" Header="{lex:Loc identifySong_GroupBox_Results}" FontSize="15">
+        <syncfusion:SfDataGrid x:Name="RecordingsGrid" 
+                               ItemsSource="{Binding Recordings, Mode=TwoWay}"
                                ColumnSizer="AutoWithLastColumnFill" 
                                AllowResizingColumns="False" 
                                AllowDraggingColumns="False" 
                                AutoGenerateColumns="False"
                                ShowRowHeader="False" 
-                               AllowEditing="False" >
+                               AllowEditing="False" 
+                               Margin="0,5,0,0">
+
+          <b:Interaction.Triggers>
+            <b:EventTrigger EventName="MouseDoubleClick">
+              <b:InvokeCommandAction Command="{Binding ApplyRecordingCommand}" CommandParameter="{Binding Path=SelectedItem, ElementName=RecordingsGrid}" />
+            </b:EventTrigger>
+          </b:Interaction.Triggers>
 
           <syncfusion:SfDataGrid.Columns>
-            <syncfusion:GridTextColumn MappingName="Title" HeaderText="{lex:Loc songHeader_Album}" Width="200"/>
-            <syncfusion:GridTextColumn MappingName="Country" HeaderText="{lex:Loc identifySong_Country}" Width="60" />
-            <syncfusion:GridTextColumn MappingName="Date.Year" HeaderText="{lex:Loc songHeader_Year}" Width="100" />
-            <syncfusion:GridTextColumn MappingName="Duration" HeaderText="{lex:Loc songHeader_Duration}" Width="60" />
+            <syncfusion:GridTextColumn MappingName="Title" HeaderText="{lex:Loc songHeader_Title}" AllowSorting="True" Width="180"/>
+            <syncfusion:GridTextColumn MappingName="Artist" HeaderText="{lex:Loc songHeader_Artist}" AllowSorting="True" Width="150"/>
+            <syncfusion:GridTextColumn MappingName="AlbumTitle" HeaderText="{lex:Loc songHeader_Album}" AllowSorting="True" Width="200"/>
+            <syncfusion:GridTextColumn MappingName="Country" HeaderText="{lex:Loc identifySong_Country}" AllowSorting="True" Width="80" />
+            <syncfusion:GridTextColumn MappingName="Date" HeaderText="{lex:Loc songHeader_Year}" AllowSorting="True" Width="80" />
+            <syncfusion:GridTextColumn MappingName="Duration" HeaderText="{lex:Loc songHeader_Duration}" Width="75" />
           </syncfusion:SfDataGrid.Columns>
+
+          <syncfusion:SfDataGrid.SortColumnDescriptions>
+            <syncfusion:SortColumnDescription ColumnName="Title" SortDirection="Ascending" />
+            <syncfusion:SortColumnDescription ColumnName="AlbumTitle" SortDirection="Ascending" />
+            <syncfusion:SortColumnDescription ColumnName="Country" SortDirection="Ascending" />
+          </syncfusion:SfDataGrid.SortColumnDescriptions>
 
         </syncfusion:SfDataGrid>
 
       </GroupBox>
 
-      <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,5,10,5">
+      <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,5,10,5">
         <syncfusion:ButtonAdv Label="{lex:Loc dialog_Apply}" 
                               SmallIcon="pack://application:,,,/MPTagThat;component/Resources/Images/Apply_Changes_32x.png" 
-                              Command="{Binding ApplyCoverCommand}" 
-                              CommandParameter="{Binding Path=SelectedItem, ElementName=AlbumListView}"
+                              Command="{Binding ApplyRecordingCommand}" 
+                              CommandParameter="{Binding Path=SelectedItem, ElementName=RecordingsGrid}"
                               Width="75" Height="25" 
                               HorizontalAlignment="Right" Margin="0,5,0,0" />
         <syncfusion:ButtonAdv Label="{lex:Loc dialog_Cancel}" 

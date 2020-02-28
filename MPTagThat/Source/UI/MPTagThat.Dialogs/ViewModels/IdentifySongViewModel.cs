@@ -20,16 +20,16 @@
 
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Windows.Data;
+using System.Linq;
+using System.Windows.Input;
 using System.Windows.Media;
-using AcoustID.Web;
 using CommonServiceLocator;
-using MPTagThat.Core.AlbumSearch;
-using MPTagThat.Core.Common.Song;
 using MPTagThat.Core.Services.Logging;
 using MPTagThat.Core.Services.Settings;
 using MPTagThat.Core.Services.Settings.Setting;
+using MPTagThat.Dialogs.Models;
 using Prism.Services.Dialogs;
+using Syncfusion.UI.Xaml.Utility;
 using WPFLocalizeExtension.Engine;
 
 #endregion
@@ -42,6 +42,7 @@ namespace MPTagThat.Dialogs.ViewModels
 
     private readonly NLogLogger log = (ServiceLocator.Current.GetInstance(typeof(ILogger)) as ILogger)?.GetLogger;
     private readonly Options _options = (ServiceLocator.Current.GetInstance(typeof(ISettingsManager)) as ISettingsManager)?.GetOptions;
+    private MusicBrainzRecording _selectedRecording = new MusicBrainzRecording();
 
     #endregion
 
@@ -50,13 +51,13 @@ namespace MPTagThat.Dialogs.ViewModels
     public Brush Background => (Brush)new BrushConverter().ConvertFromString(_options.MainSettings.BackGround);
 
     /// <summary>
-    /// Binding for the Releases
+    /// Binding for the Recordings
     /// </summary>
-    private ObservableCollection<AcoustID.Web.Release> _releases;
-    public ObservableCollection<AcoustID.Web.Release> Releases
+    private ObservableCollection<MusicBrainzRecording> _recordings;
+    public ObservableCollection<MusicBrainzRecording> Recordings
     {
-      get => _releases;
-      set => SetProperty(ref _releases, value);
+      get => _recordings;
+      set => SetProperty(ref _recordings, value);
     }
 
     #endregion
@@ -67,6 +68,25 @@ namespace MPTagThat.Dialogs.ViewModels
     {
       Title = LocalizeDictionary.Instance.GetLocalizedObject("MPTagThat", "Strings", "identifySong_Title",
         LocalizeDictionary.Instance.Culture).ToString();
+
+      ApplyRecordingCommand = new BaseCommand(ApplyRecording);
+    }
+
+    #endregion
+
+    #region Commands
+
+    /// <summary>
+    /// Apply the Lyrics to the Song
+    /// </summary>
+    public ICommand ApplyRecordingCommand { get; set; }
+
+    private void ApplyRecording(object param)
+    {
+      log.Trace(">>>");
+      _selectedRecording = (MusicBrainzRecording) param;
+      CloseDialog("true");
+      log.Trace("<<<");
     }
 
     #endregion
@@ -75,7 +95,24 @@ namespace MPTagThat.Dialogs.ViewModels
 
     public override void OnDialogOpened(IDialogParameters parameters)
     {
-      Releases = new ObservableCollection<Release>(parameters.GetValue<List<AcoustID.Web.Release>>("releases"));
+      var recordings = parameters.GetValue<List<MusicBrainzRecording>>("recordings");
+      Recordings = new ObservableCollection<MusicBrainzRecording>(recordings.Select(r => r));
+    }
+
+
+    public override void CloseDialog(string parameter)
+    {
+      ButtonResult result = ButtonResult.None;
+
+      if (parameter?.ToLower() == "true")
+        result = ButtonResult.OK;
+      else if (parameter?.ToLower() == "false")
+        result = ButtonResult.Cancel;
+
+      var parameters = new DialogParameters();
+      parameters.Add("selectedrecording", _selectedRecording);
+      var dialogResult = new DialogResult(result, parameters);
+      CloseDialogWindow(dialogResult);
     }
 
     #endregion
