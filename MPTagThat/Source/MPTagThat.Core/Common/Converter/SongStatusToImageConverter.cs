@@ -43,6 +43,8 @@ namespace MPTagThat.Core.Common.Converter
     public BitmapImage Changed = new BitmapImage(new Uri("pack://application:,,,/MPTagThat;component/Resources/Images/Status_Changed.png"));
     public BitmapImage Warning = new BitmapImage(new Uri("pack://application:,,,/MPTagThat;component/Resources/Images/Status_Warning.png"));
     public BitmapImage Critical = new BitmapImage(new Uri("pack://application:,,,/MPTagThat;component/Resources/Images/Status_Critical.png"));
+    public BitmapImage BrokenSong = new BitmapImage(new Uri("pack://application:,,,/MPTagThat;component/Resources/Images/Status_BrokenSong.png"));
+    public BitmapImage FixedSong = new BitmapImage(new Uri("pack://application:,,,/MPTagThat;component/Resources/Images/Status_FixedSong.png"));
 
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
@@ -65,6 +67,12 @@ namespace MPTagThat.Core.Common.Converter
 
         case 2:
           return Critical;
+
+        case 3:
+          return BrokenSong;
+
+        case 4:
+          return FixedSong;
       }
 
       return null;

@@ -261,6 +261,8 @@
     <Resource Include="Resources\Images\MPTagThat_mepo_transparent.png" />
     <Resource Include="Resources\Images\MPTagThat_Logo.png" />
     <Resource Include="MPTagThat.ico" />
+    <Resource Include="Resources\Images\Status_BrokenSong.png" />
+    <Resource Include="Resources\Images\Status_FixedSong.png" />
     <Content Include="x64\bass.dll" />
     <Content Include="x64\bassasio.dll" />
     <Content Include="x64\basscd.dll" />

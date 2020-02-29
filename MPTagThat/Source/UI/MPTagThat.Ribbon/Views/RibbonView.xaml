@@ -83,7 +83,10 @@
                                   SmallIcon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_BrokenSong_16x.png"
                                   Command="{Binding ExecuteRibbonCommand}" 
                                   CommandParameter="{Binding Name ,RelativeSource={RelativeSource Self}}">
-            <syncfusion:DropDownMenuItem x:Name="ButtonFixSong" Header="{lex:Loc ribbon_FixSong}" Icon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_FixSong_16x.png"/>
+            <syncfusion:DropDownMenuItem x:Name="ButtonFixSong" Header="{lex:Loc ribbon_FixSong}" 
+                                         Icon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_FixSong_16x.png"
+                                         Command="{Binding ExecuteRibbonCommand}" 
+                                         CommandParameter="{Binding Name ,RelativeSource={RelativeSource Self}}"/>
           </syncfusion:SplitButton>
 
           <syncfusion:RibbonSeparator/>

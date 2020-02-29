@@ -45,10 +45,12 @@ namespace MPTagThat.SongGrid.Commands
       typeof (CmdBpm),
       typeof (CmdReplayGain),
       typeof (CmdIdentifySong),
-      /*
-            
       typeof (CmdValidateMp3File),
       typeof (CmdFixMp3File),
+      /*
+            
+      
+      
       typeof (CmdCoverArtDrop),
       typeof (CmdConvert),
       */

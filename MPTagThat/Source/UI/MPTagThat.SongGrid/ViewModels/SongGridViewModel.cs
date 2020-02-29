@@ -655,6 +655,8 @@ namespace MPTagThat.SongGrid.ViewModels
         Action.ActionType.BPM,
         Action.ActionType.REPLAYGAIN,
         Action.ActionType.IDENTIFYFILE,
+        Action.ActionType.VALIDATEMP3,
+        Action.ActionType.FIXMP3,
       };
 
     private void OnMessageReceived(GenericEvent msg)

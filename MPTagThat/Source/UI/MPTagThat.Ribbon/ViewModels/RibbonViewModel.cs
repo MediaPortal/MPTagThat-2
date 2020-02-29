@@ -281,6 +281,16 @@ namespace MPTagThat.Ribbon.ViewModels
           type = Action.ActionType.IDENTIFYFILE;
           runAsync = false;
           break;
+
+        case "ButtonValidateSong":
+          type = Action.ActionType.VALIDATEMP3;
+          runAsync = false;
+          break;
+
+        case "ButtonFixSong":
+          type = Action.ActionType.FIXMP3;
+          runAsync = false;
+          break;
       }
 
       if (type != Action.ActionType.INVALID)

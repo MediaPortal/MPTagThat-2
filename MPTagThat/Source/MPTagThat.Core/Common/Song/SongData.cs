@@ -95,7 +95,6 @@ namespace MPTagThat.Core.Common.Song
     public SongData()
     {
       _mp3ValError = Util.MP3Error.NoError;
-      _mp3ValErrorText = "";
       Frames = new List<Frame>();
       UserFrames = new List<Frame>();
 
@@ -251,8 +250,6 @@ namespace MPTagThat.Core.Common.Song
     /// Has the Track fixable errors?
     /// </summary>
     public Util.MP3Error MP3ValidationError { get => _mp3ValError; set => SetProperty(ref _mp3ValError, value); }
-
-    public string MP3ValidationErrorText { get => _mp3ValErrorText; set => SetProperty(ref _mp3ValErrorText, value); }
 
     #endregion
 

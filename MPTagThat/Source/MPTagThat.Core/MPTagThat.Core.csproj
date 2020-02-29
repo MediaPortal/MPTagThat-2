@@ -262,6 +262,7 @@
     <Compile Include="Services\Settings\Setting\TreeViewFilterSettings.cs" />
     <Compile Include="Services\Settings\XmlNoNamespaceWriter.cs" />
     <Compile Include="Services\Settings\XmlSettingsProvider.cs" />
+    <Compile Include="Utils\Mp3Val.cs" />
     <Compile Include="Utils\ShellIcon.cs" />
     <Compile Include="Utils\Util.cs" />
   </ItemGroup>
