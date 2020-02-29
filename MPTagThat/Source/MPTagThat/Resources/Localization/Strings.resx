@@ -1062,4 +1062,23 @@
     <value>Auto Tagging</value>
     <comment>The Header of the Auto Tagging</comment>
   </data>
+  <data name="settings_DebugLevel" xml:space="preserve">
+    <value>Debug Level:</value>
+  </data>
+  <data name="settings_General" xml:space="preserve">
+    <value>General Settings</value>
+  </data>
+  <data name="settings_Header" xml:space="preserve">
+    <value>Settings</value>
+    <comment>The Header of Settings in the Ribbon Back Stage</comment>
+  </data>
+  <data name="settings_Keys" xml:space="preserve">
+    <value>Keyboard Shortcuts</value>
+  </data>
+  <data name="settings_Language" xml:space="preserve">
+    <value>Language:</value>
+  </data>
+  <data name="settings_Theme" xml:space="preserve">
+    <value>Theme:</value>
+  </data>
 </root>

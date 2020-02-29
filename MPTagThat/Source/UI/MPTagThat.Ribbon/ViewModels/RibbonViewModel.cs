@@ -18,8 +18,10 @@
 
 #region
 
+using System;
 using System.Collections;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Windows;
 using System.Windows.Input;
 using CommonServiceLocator;
@@ -30,10 +32,12 @@ using MPTagThat.Core.Services.Logging;
 using MPTagThat.Core.Services.ScriptManager;
 using MPTagThat.Core.Services.Settings;
 using MPTagThat.Core.Services.Settings.Setting;
-using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Regions;
-using Syncfusion.Windows.Tools.Controls;
+using Syncfusion.SfSkinManager;
+using Syncfusion.Windows.Shared;
+using Syncfusion.Windows.Tools;
+using Action = MPTagThat.Core.Common.Action;
 
 #endregion
 
@@ -94,7 +98,69 @@ namespace MPTagThat.Ribbon.ViewModels
       }
     }
 
+    // Settings related Properties in the Backstage
+    private ObservableCollection<string> _languages = new ObservableCollection<string>();
 
+    public ObservableCollection<string> Languages
+    {
+      get => _languages;
+      set
+      {
+        _languages = value;
+        RaisePropertyChanged("Languages");
+      }
+    }
+
+    private ObservableCollection<string> _themes = new ObservableCollection<string>();
+
+    public ObservableCollection<string> Themes
+    {
+      get => _themes;
+      set
+      {
+        _languages = value;
+        RaisePropertyChanged("Themes");
+      }
+    }
+
+    private string _selectedTheme;
+
+    public string SelectedTheme
+    {
+      get => _selectedTheme;
+      set
+      {
+        SetProperty(ref _selectedTheme, value);
+        //SkinStorage.SetVisualStyle(Application.Current.MainWindow,
+        //  (string)Enum.Parse(typeof(VisualStyles), value));
+        SfSkinManager.SetVisualStyle(Application.Current.MainWindow,
+          (VisualStyles) Enum.Parse(typeof(VisualStyles), value));
+      }
+    }
+
+    private ObservableCollection<string> _debugLevel = new ObservableCollection<string>();
+
+    public ObservableCollection<string> DebugLevel
+    {
+      get => _debugLevel;
+      set
+      {
+        _languages = value;
+        RaisePropertyChanged("DebugLevel");
+      }
+    }
+
+    private string _selectedLogLevel;
+
+    public string SelectedLogLevel
+    {
+      get => _selectedLogLevel;
+      set
+      {
+        SetProperty(ref _selectedLogLevel, value);
+        log.Level = (LogLevel) Enum.Parse(typeof(LogLevel), value);
+      }
+    }
     #endregion
 
     #region Command Handling
@@ -143,7 +209,7 @@ namespace MPTagThat.Ribbon.ViewModels
         return;
       }
 
-      var elementName = (string) param;
+      var elementName = (string)param;
       var type = Action.ActionType.INVALID;
       var runAsync = true;
       switch (elementName)
@@ -251,9 +317,10 @@ namespace MPTagThat.Ribbon.ViewModels
         _options.MainSettings.ActiveScript = "SwitchArtist.sct";
       }
 
-      scripts =  (ServiceLocator.Current.GetInstance(typeof(IScriptManager)) as IScriptManager)?.GetScripts();
+      scripts = (ServiceLocator.Current.GetInstance(typeof(IScriptManager)) as IScriptManager)?.GetScripts();
       i = 0;
       if (scripts != null)
+      {
         foreach (string[] item in scripts)
         {
           Scripts.Add(new Item(item[0], item[1], item[2]));
@@ -264,7 +331,15 @@ namespace MPTagThat.Ribbon.ViewModels
 
           i++;
         }
+      }
 
+      // Fill the Settings
+      var logLevels = Enum.GetNames(typeof(LogLevel)).ToList();
+      logLevels.ForEach(l => DebugLevel.Add(l));
+      SelectedLogLevel = _options.MainSettings.DebugLevel;
+
+      var themes = Enum.GetNames(typeof(VisualStyles)).ToList();
+      themes.ForEach(theme => Themes.Add(theme));
 
       log.Trace(">>>");
     }

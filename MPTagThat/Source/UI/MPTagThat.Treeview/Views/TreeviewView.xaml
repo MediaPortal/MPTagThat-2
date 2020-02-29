@@ -38,7 +38,7 @@
                               AllowMultiSelect="False"
                               ItemTemplate="{StaticResource template}"
                               ItemContainerStyle="{StaticResource itemstyle}" 
-                              ShowRootLines="True"
+                              ShowRootLines="False"
                               BorderThickness="0 0 1 0" 
                               IsScrollOnExpand="False"
                               ScrollViewer.VerticalScrollBarVisibility="Visible" >

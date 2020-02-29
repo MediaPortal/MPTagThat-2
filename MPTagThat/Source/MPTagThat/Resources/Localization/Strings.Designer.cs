@@ -1195,6 +1195,60 @@ namespace MPTagThat.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Debug Level:.
+        /// </summary>
+        public static string settings_DebugLevel {
+            get {
+                return ResourceManager.GetString("settings_DebugLevel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to General Settings.
+        /// </summary>
+        public static string settings_General {
+            get {
+                return ResourceManager.GetString("settings_General", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Settings.
+        /// </summary>
+        public static string settings_Header {
+            get {
+                return ResourceManager.GetString("settings_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Keyboard Shortcuts.
+        /// </summary>
+        public static string settings_Keys {
+            get {
+                return ResourceManager.GetString("settings_Keys", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Language:.
+        /// </summary>
+        public static string settings_Language {
+            get {
+                return ResourceManager.GetString("settings_Language", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Theme:.
+        /// </summary>
+        public static string settings_Theme {
+            get {
+                return ResourceManager.GetString("settings_Theme", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Album.
         /// </summary>
         public static string songHeader_Album {
