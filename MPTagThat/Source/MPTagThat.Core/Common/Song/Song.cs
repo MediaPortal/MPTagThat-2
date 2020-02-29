@@ -619,7 +619,7 @@ namespace MPTagThat.Core.Common.Song
           file.Tag.Year = (uint)song.Year;
 
           double gain;
-          var replayGainTrack = song.ReplayGainTrack.Substring(0, song.ReplayGainTrack.IndexOf(" ", StringComparison.Ordinal));
+          var replayGainTrack =  string.IsNullOrEmpty(song.ReplayGainTrack) ? "" : song.ReplayGainTrack.Substring(0, song.ReplayGainTrack.IndexOf(" ", StringComparison.Ordinal));
           if (double.TryParse(replayGainTrack, NumberStyles.Any, CultureInfo.InvariantCulture, out gain))
           {
             file.Tag.ReplayGainTrackGain = gain;
@@ -628,7 +628,7 @@ namespace MPTagThat.Core.Common.Song
           {
             file.Tag.ReplayGainTrackPeak = gain;
           }
-          var replayGainAlbum = song.ReplayGainAlbum.Substring(0, song.ReplayGainAlbum.IndexOf(" ", StringComparison.Ordinal));
+          var replayGainAlbum =  string.IsNullOrEmpty(song.ReplayGainAlbum) ? "" : song.ReplayGainAlbum.Substring(0, song.ReplayGainAlbum.IndexOf(" ", StringComparison.Ordinal));
           if (Double.TryParse(replayGainAlbum, NumberStyles.Any, CultureInfo.InvariantCulture, out gain))
           {
             file.Tag.ReplayGainAlbumGain = gain;

@@ -97,7 +97,7 @@
         <syncfusion:ComboBoxAdv Name="Sites" ItemsSource="{Binding LyricsSearchSites, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
                                 DefaultText="{lex:Loc lyricsSearch_Sites_Watermark}" SelectedValueDelimiter=" | " AllowMultiSelect="True" 
                                 SelectedItems="{Binding SelectedLyricsSearchSites, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
-                                Height="25" Width="300" />
+                                Height="25"  />
       </StackPanel>
 
       <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Right"  Margin="0,5,10,5" >

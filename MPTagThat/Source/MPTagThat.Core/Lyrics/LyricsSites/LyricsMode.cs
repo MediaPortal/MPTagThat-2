@@ -167,12 +167,21 @@ namespace MPTagThat.Core.Lyrics.LyricsSites
     // Cleans the lyrics
     private void CleanLyrics()
     {
+      LyricText = LyricText.Replace("</span>", "");
       LyricText = LyricText.Replace("&quot;", "\"");
       LyricText = LyricText.Replace("<br>", " ");
       LyricText = LyricText.Replace("<br />", " ");
       LyricText = LyricText.Replace("<BR>", " ");
       LyricText = LyricText.Replace("&amp;", "&");
+      LyricText = Regex.Replace(LyricText, ".*(<span class=.*>).*", MatchReplace, RegexOptions.Multiline);
+      // Need to execute it twice for some reason the first run didn't clean the first occurence
+      LyricText = Regex.Replace(LyricText, ".*(<span class=.*>).*", MatchReplace, RegexOptions.Multiline); 
       LyricText = LyricText.Trim();
+    }
+
+    private string MatchReplace(Match match)
+    {
+      return match.Value.Replace(match.Groups[1].Value, "");
     }
 
 
