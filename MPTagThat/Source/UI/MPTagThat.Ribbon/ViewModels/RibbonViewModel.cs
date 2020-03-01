@@ -133,8 +133,8 @@ namespace MPTagThat.Ribbon.ViewModels
         SetProperty(ref _selectedTheme, value);
         //SkinStorage.SetVisualStyle(Application.Current.MainWindow,
         //  (string)Enum.Parse(typeof(VisualStyles), value));
-        SfSkinManager.SetVisualStyle(Application.Current.MainWindow,
-          (VisualStyles) Enum.Parse(typeof(VisualStyles), value));
+        //SfSkinManager.SetVisualStyle(Application.Current.MainWindow,
+        //  (VisualStyles) Enum.Parse(typeof(VisualStyles), value));
       }
     }
 
@@ -145,7 +145,7 @@ namespace MPTagThat.Ribbon.ViewModels
       get => _debugLevel;
       set
       {
-        _languages = value;
+        _debugLevel = value;
         RaisePropertyChanged("DebugLevel");
       }
     }
@@ -159,6 +159,7 @@ namespace MPTagThat.Ribbon.ViewModels
       {
         SetProperty(ref _selectedLogLevel, value);
         log.Level = (LogLevel) Enum.Parse(typeof(LogLevel), value);
+        _options.MainSettings.DebugLevel = value;
       }
     }
     #endregion
