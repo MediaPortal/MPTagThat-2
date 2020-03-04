@@ -54,8 +54,7 @@
                            EnableDataVirtualization="True" 
                            ShowBusyIndicator="True" 
                            AlternatingRowStyle="{StaticResource AlternatingRowStyle}" 
-                           RowStyle="{StaticResource ChangedRowStyle}" 
-                           RowSelectionBrush="Cornsilk" >
+                           RowStyle="{StaticResource ChangedRowStyle}" >
       
       <i:Interaction.Triggers>
         <i:EventTrigger EventName="SelectionChanged">

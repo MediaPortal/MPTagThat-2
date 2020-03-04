@@ -131,10 +131,9 @@ namespace MPTagThat.Ribbon.ViewModels
       set
       {
         SetProperty(ref _selectedTheme, value);
-        //SkinStorage.SetVisualStyle(Application.Current.MainWindow,
-        //  (string)Enum.Parse(typeof(VisualStyles), value));
-        //SfSkinManager.SetVisualStyle(Application.Current.MainWindow,
-        //  (VisualStyles) Enum.Parse(typeof(VisualStyles), value));
+        SfSkinManager.SetVisualStyle(Application.Current.MainWindow,
+          (VisualStyles) Enum.Parse(typeof(VisualStyles), value));
+        _options.MainSettings.Theme = value;
       }
     }
 
@@ -349,8 +348,11 @@ namespace MPTagThat.Ribbon.ViewModels
       logLevels.ForEach(l => DebugLevel.Add(l));
       SelectedLogLevel = _options.MainSettings.DebugLevel;
 
-      var themes = Enum.GetNames(typeof(VisualStyles)).ToList();
-      themes.ForEach(theme => Themes.Add(theme));
+      _themes.Add("Office365");
+      _themes.Add("Office2016Colorful");
+      _themes.Add("Office2016White");
+      _themes.Add("Office2016DarkGray");
+      SelectedTheme = _options.MainSettings.Theme;
 
       log.Trace(">>>");
     }

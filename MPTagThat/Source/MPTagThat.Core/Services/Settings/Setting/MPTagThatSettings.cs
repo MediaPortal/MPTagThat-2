@@ -180,8 +180,8 @@ namespace MPTagThat.Core.Services.Settings.Setting
 
     #region General
 
-    [Setting(SettingScope.User, "1")]
-    public int Theme { get; set; }
+    [Setting(SettingScope.User, "Office2016Colorful")]
+    public string Theme { get; set; }
 
     [Setting(SettingScope.User, "Debug")]
     public string DebugLevel { get; set; }

@@ -334,20 +334,22 @@
                         <RowDefinition/>
                         <RowDefinition/>
                         <RowDefinition/>
+                        <RowDefinition/>
                       </Grid.RowDefinitions>
                       <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="200"/>
                         <ColumnDefinition/>
                       </Grid.ColumnDefinitions>
-                      <Label Grid.Row="0"  Grid.Column="0" Content="{lex:Loc settings_Language}"/>
-                      <ComboBox Grid.Row="0" Grid.Column="1" ItemsSource="{Binding Languages}" Width="200"
+                      <Label Grid.Row="0" Grid.Column="0" Content="{lex:Loc settings_DebugLevel}"/>
+                      <ComboBox Grid.Row="0" Grid.Column="1" ItemsSource="{Binding DebugLevel}" Width="200"
+                                SelectedItem="{Binding SelectedLogLevel, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,0,2" />
+                      <Label Grid.Row="1"  Grid.Column="0" Content="{lex:Loc settings_Language}"/>
+                      <ComboBox Grid.Row="1" Grid.Column="1" ItemsSource="{Binding Languages}" Width="200"
                             SelectedItem="{Binding SelectedLanguage, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,0,2"/>
-                      <Label Grid.Row="1" Grid.Column="0" Content="{lex:Loc settings_Theme}"/>
-                      <ComboBox Grid.Row="1" Grid.Column="1" ItemsSource="{Binding Themes}" Width="200"
+                      <Label Grid.Row="2" Grid.Column="0" Content="{lex:Loc settings_Theme}"/>
+                      <ComboBox Grid.Row="2" Grid.Column="1" ItemsSource="{Binding Themes}" Width="200"
                             SelectedItem="{Binding SelectedTheme, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,0,2"/>
-                      <Label Grid.Row="2" Grid.Column="0" Content="{lex:Loc settings_DebugLevel}"/>
-                      <ComboBox Grid.Row="2" Grid.Column="1" ItemsSource="{Binding DebugLevel}" Width="200"
-                            SelectedItem="{Binding SelectedLogLevel, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,0,2" />
+                      <syncfusion:ColorPicker Grid.Row="3" Grid.Column="1"  IsColorPaletteVisible="True" Width="200"/>
                     </Grid>
                   </GroupBox>
                 </StackPanel>
