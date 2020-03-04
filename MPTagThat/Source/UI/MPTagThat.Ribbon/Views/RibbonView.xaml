@@ -7,6 +7,7 @@
              prism:ViewModelLocator.AutoWireViewModel="True"
              xmlns:syncfusion="http://schemas.syncfusion.com/wpf"
              xmlns:lex="http://wpflocalizeextension.codeplex.com"
+             xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
              lex:LocalizeDictionary.DesignCulture="en"
              lex:ResxLocalizationProvider.DefaultAssembly="MPTagThat"
              lex:ResxLocalizationProvider.DefaultDictionary="Strings"
@@ -335,6 +336,7 @@
                         <RowDefinition/>
                         <RowDefinition/>
                         <RowDefinition/>
+                        <RowDefinition/>
                       </Grid.RowDefinitions>
                       <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="200"/>
@@ -349,7 +351,12 @@
                       <Label Grid.Row="2" Grid.Column="0" Content="{lex:Loc settings_Theme}"/>
                       <ComboBox Grid.Row="2" Grid.Column="1" ItemsSource="{Binding Themes}" Width="200"
                             SelectedItem="{Binding SelectedTheme, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,0,2"/>
-                      <syncfusion:ColorPicker Grid.Row="3" Grid.Column="1"  IsColorPaletteVisible="True" Width="200"/>
+                      <Label Grid.Row="3" Grid.Column="0" Content="{lex:Loc settings_ChangedRowColor}"/>
+                      <syncfusion:ColorPicker Grid.Row="3" Grid.Column="1"  IsColorPaletteVisible="True" Margin="0,0,0,2"
+                                              Color="{Binding ChangedRowColor, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="200" />
+                      <Label Grid.Row="4" Grid.Column="0" Content="{lex:Loc settings_AlternateRowColor}"/>
+                      <syncfusion:ColorPicker Grid.Row="4" Grid.Column="1"  IsColorPaletteVisible="True" Margin="0,0,0,2"
+                                              Color="{Binding AlternateRowColor, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="200" />
                     </Grid>
                   </GroupBox>
                 </StackPanel>

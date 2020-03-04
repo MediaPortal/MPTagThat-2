@@ -1081,4 +1081,10 @@
   <data name="settings_Theme" xml:space="preserve">
     <value>Theme:</value>
   </data>
+  <data name="settings_AlternateRowColor" xml:space="preserve">
+    <value>Alternate Row Color:</value>
+  </data>
+  <data name="settings_ChangedRowColor" xml:space="preserve">
+    <value>Changed Row Color:</value>
+  </data>
 </root>

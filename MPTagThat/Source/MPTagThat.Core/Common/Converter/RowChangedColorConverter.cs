@@ -23,6 +23,8 @@ using System.Globalization;
 using System.Windows;
 using System.Windows.Data;
 using System.Windows.Media;
+using CommonServiceLocator;
+using MPTagThat.Core.Services.Settings;
 
 #endregion
 
@@ -34,10 +36,12 @@ namespace MPTagThat.Core.Common.Converter
   public class RowChangedColorConverter : IValueConverter
   {
 
+    private Color _changedRowColor = (Color) ColorConverter.ConvertFromString((ServiceLocator.Current.GetInstance(typeof(ISettingsManager)) as ISettingsManager)?.GetOptions.MainSettings.ChangedRowColor);
+
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
       if ((bool)value)
-        return new SolidColorBrush(Colors.Yellow);
+        return new SolidColorBrush(_changedRowColor);
 
       return DependencyProperty.UnsetValue;
     }

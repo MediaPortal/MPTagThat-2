@@ -1195,6 +1195,24 @@ namespace MPTagThat.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Alternate Row Color:.
+        /// </summary>
+        public static string settings_AlternateRowColor {
+            get {
+                return ResourceManager.GetString("settings_AlternateRowColor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Changed Row Color:.
+        /// </summary>
+        public static string settings_ChangedRowColor {
+            get {
+                return ResourceManager.GetString("settings_ChangedRowColor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Debug Level:.
         /// </summary>
         public static string settings_DebugLevel {

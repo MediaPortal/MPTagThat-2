@@ -137,6 +137,30 @@ namespace MPTagThat.Ribbon.ViewModels
       }
     }
 
+    private string _changedRowColor;
+
+    public string ChangedRowColor
+    {
+      get => _changedRowColor;
+      set
+      {
+        SetProperty(ref _changedRowColor, value);
+        _options.MainSettings.ChangedRowColor = value;
+      }
+    }
+
+    private string _alternateRowColor;
+
+    public string AlternateRowColor
+    {
+      get => _alternateRowColor;
+      set
+      {
+        SetProperty(ref _alternateRowColor, value);
+        _options.MainSettings.AlternateRowColor = value;
+      }
+    }
+
     private ObservableCollection<string> _debugLevel = new ObservableCollection<string>();
 
     public ObservableCollection<string> DebugLevel
@@ -353,6 +377,9 @@ namespace MPTagThat.Ribbon.ViewModels
       _themes.Add("Office2016White");
       _themes.Add("Office2016DarkGray");
       SelectedTheme = _options.MainSettings.Theme;
+
+      ChangedRowColor = _options.MainSettings.ChangedRowColor;
+      AlternateRowColor = _options.MainSettings.AlternateRowColor;
 
       log.Trace(">>>");
     }

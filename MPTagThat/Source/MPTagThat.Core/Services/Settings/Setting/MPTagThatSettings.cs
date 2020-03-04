@@ -183,6 +183,12 @@ namespace MPTagThat.Core.Services.Settings.Setting
     [Setting(SettingScope.User, "Office2016Colorful")]
     public string Theme { get; set; }
 
+    [Setting(SettingScope.User, "Yellow")]
+    public string ChangedRowColor { get; set; }
+
+    [Setting(SettingScope.User, "LightBlue")]
+    public string AlternateRowColor { get; set; }
+
     [Setting(SettingScope.User, "Debug")]
     public string DebugLevel { get; set; }
 
