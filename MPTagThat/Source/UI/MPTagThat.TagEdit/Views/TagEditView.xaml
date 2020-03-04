@@ -78,7 +78,7 @@
       </Setter>
     </Style>
 
-    <!-- Style fror Group Box without Header -->
+    <!-- Style for Group Box without Header -->
     <Style x:Key="GroupBoxStyleNoHeader" TargetType="{x:Type GroupBox}">
       <Setter Property="BorderBrush" Value="#D5DFE5"/>
       <Setter Property="BorderThickness" Value="1"/>
@@ -460,7 +460,7 @@
                 <syncfusion:SfAccordion SelectionMode="ZeroOrMore" >
                   <syncfusion:SfAccordion.HeaderTemplate>
                     <DataTemplate>
-                      <TextBlock Text="{Binding}" Foreground="White" FontWeight="Bold" FontSize="20" />
+                      <TextBlock Text="{Binding}" FontWeight="Bold" FontSize="20" />
                     </DataTemplate>
                   </syncfusion:SfAccordion.HeaderTemplate>
                   <!-- Setting AccordionButtonStyle -->

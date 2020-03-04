@@ -15,10 +15,10 @@
 
   <UserControl.Resources>
     <!--  AccordionButton Style -->
-    <Style TargetType="syncfusion:AccordionButton" x:Key="expanderButtonStyle">
+    <Style TargetType="{x:Type syncfusion:AccordionButton}" x:Key="expanderButtonStyle">
       <Setter Property="Template">
         <Setter.Value>
-          <ControlTemplate TargetType="syncfusion:AccordionButton">
+          <ControlTemplate TargetType="{x:Type syncfusion:AccordionButton}">
             <Grid Background="Transparent">
               <VisualStateManager.VisualStateGroups>
                 <VisualStateGroup x:Name="ExpansionStates">
@@ -315,10 +315,10 @@
           <syncfusion:BackStageSeparator/>
 
           <syncfusion:BackstageTabItem Header="{lex:Loc settings_Header}">
-            <syncfusion:SfAccordion SelectionMode="OneOrMore" >
+            <syncfusion:SfAccordion SelectionMode="OneOrMore" Margin="5,0,0,0" >
               <syncfusion:SfAccordion.HeaderTemplate>
                 <DataTemplate>
-                  <TextBlock Text="{Binding}" Foreground="White" FontWeight="Bold" FontSize="20" />
+                  <TextBlock Text="{Binding}" FontWeight="Bold" FontSize="20" />
                 </DataTemplate>
               </syncfusion:SfAccordion.HeaderTemplate>
               <!-- Setting AccordionButtonStyle -->
