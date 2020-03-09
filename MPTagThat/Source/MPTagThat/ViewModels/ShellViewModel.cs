@@ -191,7 +191,7 @@ namespace MPTagThat.ViewModels
 
       EventSystem.Subscribe<StatusBarEvent>(UpdateStatusBar);
       EventSystem.Subscribe<ProgressBarEvent>(UpdateProgressBar);
-      //SfSkinManager.ApplyStylesOnApplication = true;
+      SfSkinManager.ApplyStylesOnApplication = true;
 
       WindowCloseCommand = new BaseCommand(WindowClose);
       KeyPressedCommand = new BaseCommand(Keypressed);
