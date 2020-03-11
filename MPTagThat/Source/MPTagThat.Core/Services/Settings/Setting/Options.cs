@@ -264,9 +264,9 @@ namespace MPTagThat.Core.Services.Settings.Setting
 
     public List<SongData> CopyPasteBuffer => _copyPasteBuffer;
 
-    public ArrayList FindBuffer { get; set; }
+    public List<string> FindBuffer { get; set; }
 
-    public ArrayList ReplaceBuffer { get; set; }
+    public List<string> ReplaceBuffer { get; set; }
 
     public int ReadOnlyFileHandling { get; set; }
 

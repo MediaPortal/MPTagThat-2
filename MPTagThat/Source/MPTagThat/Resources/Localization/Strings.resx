@@ -1087,4 +1087,36 @@
   <data name="settings_ChangedRowColor" xml:space="preserve">
     <value>Changed Row Color:</value>
   </data>
+  <data name="findReplace_HeaderFind" xml:space="preserve">
+    <value>Find</value>
+    <comment>The Header for the Find Dialog</comment>
+  </data>
+  <data name="findReplace_HeaderReplace" xml:space="preserve">
+    <value>Replace</value>
+    <comment>The Header for the Replace Dialog</comment>
+  </data>
+  <data name="findReplace_FindNext" xml:space="preserve">
+    <value>Find Next</value>
+  </data>
+  <data name="findReplace_FindWhat" xml:space="preserve">
+    <value>Find what:</value>
+  </data>
+  <data name="findReplace_MatchCase" xml:space="preserve">
+    <value>Match case</value>
+  </data>
+  <data name="findReplace_Replace" xml:space="preserve">
+    <value>Replace</value>
+  </data>
+  <data name="findReplace_ReplaceAll" xml:space="preserve">
+    <value>Replace All</value>
+  </data>
+  <data name="findReplace_ReplaceWith" xml:space="preserve">
+    <value>Replace with:</value>
+  </data>
+  <data name="findReplace_NoMoreOccurencesFound" xml:space="preserve">
+    <value>No more occurences of search string found</value>
+  </data>
+  <data name="findReplace_NotFound" xml:space="preserve">
+    <value>Search string not found</value>
+  </data>
 </root>

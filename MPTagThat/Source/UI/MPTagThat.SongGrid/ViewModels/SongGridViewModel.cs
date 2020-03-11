@@ -113,6 +113,12 @@ namespace MPTagThat.SongGrid.ViewModels
     #region Properties
 
     /// <summary>
+    /// Reference to SongGrid. Set from code behind
+    /// Used e.g in Find / Replace
+    /// </summary>
+    public SfDataGrid SongGrid { get; set; }
+
+    /// <summary>
     /// The columns in the Grid
     /// </summary>
     public Columns DataGridColumns { get; set; }
@@ -675,13 +681,16 @@ namespace MPTagThat.SongGrid.ViewModels
 
         case "command":
 
-          if (SelectedItems.Count == 0)
+          var command = (Action.ActionType) msg.MessageData["command"];
+
+          // Select all songs, except for Find & Replace
+          if (SelectedItems.Count == 0 && (command != Action.ActionType.FIND && command != Action.ActionType.REPLACE))
           {
             Songs.ToList().ForEach(song => SelectedItems.Add(song));
           }
 
           // Run Commands, which don't display a dialog
-          if (_supportedCommands.Contains((Action.ActionType)msg.MessageData["command"]))
+          if (_supportedCommands.Contains(command))
           {
             msg.MessageData.TryGetValue("runasync", out var runAsyncParam);
             var runAsync = true;
@@ -691,7 +700,7 @@ namespace MPTagThat.SongGrid.ViewModels
             }
 
             // If we have Replaygain and mutiple songs selected, we should do Album Gain
-            if ((Action.ActionType)msg.MessageData["command"] == Action.ActionType.REPLAYGAIN && SelectedItems.Count > 1)
+            if (command == Action.ActionType.REPLAYGAIN && SelectedItems.Count > 1)
             {
               msg.MessageData.Add("param", new object[] { "AlbumGain" });
             }
@@ -700,12 +709,12 @@ namespace MPTagThat.SongGrid.ViewModels
             object parameter;
             parameter = param ?? new object[] { };
 
-            ExecuteCommand(Action.ActionToCommand((Action.ActionType)msg.MessageData["command"]), parameter, runAsync);
+            ExecuteCommand(Action.ActionToCommand(command), parameter, runAsync);
             return;
           }
 
           // Refresh the current folder
-          if ((Action.ActionType)msg.MessageData["command"] == Action.ActionType.REFRESH)
+          if (command == Action.ActionType.REFRESH)
           {
             CheckChangesPending();
             FolderScan();
@@ -713,29 +722,50 @@ namespace MPTagThat.SongGrid.ViewModels
           }
 
           // Execute a script
-          if ((Action.ActionType)msg.MessageData["command"] == Action.ActionType.SCRIPTEXECUTE)
+          if (command == Action.ActionType.SCRIPTEXECUTE)
           {
             ExecuteScript(_options.MainSettings.ActiveScript);
             return;
           }
 
-          var songs = SelectedItems.Cast<SongData>().ToList();
+          // Add Commands needing parameters below
+
           var parameters = new DialogParameters();
+
+          if (command == Action.ActionType.FIND)
+          {
+            parameters.Add("method", "Find");
+            parameters.Add("songgrid", SongGrid);
+            _dialogService.ShowDialogInAnotherWindow("FindReplaceView", "DialogWindowView", parameters, null);
+            return;
+          }
+
+          if (command == Action.ActionType.REPLACE)
+          {
+            parameters.Add("method", "Replace");
+            parameters.Add("songgrid", SongGrid);
+            _dialogService.ShowDialogInAnotherWindow("FindReplaceView", "DialogWindowView", parameters, null);
+            return;
+          }
+
+          // If a command needs access to songs add it below
+
+          var songs = SelectedItems.Cast<SongData>().ToList();
           parameters.Add("songs", songs);
 
-          if ((Action.ActionType)msg.MessageData["command"] == Action.ActionType.FILENAME2TAG)
+          if (command == Action.ActionType.FILENAME2TAG)
           {
             _dialogService.ShowDialogInAnotherWindow("FileName2TagView", "DialogWindowView", parameters, null);
             return;
           }
 
-          if ((Action.ActionType)msg.MessageData["command"] == Action.ActionType.TAG2FILENAME)
+          if (command == Action.ActionType.TAG2FILENAME)
           {
             _dialogService.ShowDialogInAnotherWindow("Tag2FileNameView", "DialogWindowView", parameters, null);
             return;
           }
 
-          if ((Action.ActionType)msg.MessageData["command"] == Action.ActionType.GETCOVERART)
+          if (command == Action.ActionType.GETCOVERART)
           {
             if (_options.MainSettings.EmbedFolderThumb && !_options.MainSettings.OnlySaveFolderThumb
                                                        && File.Exists(Path.Combine(songs[0].FilePath, "folder.jpg")))
@@ -777,20 +807,20 @@ namespace MPTagThat.SongGrid.ViewModels
             return;
           }
 
-          if ((Action.ActionType)msg.MessageData["command"] == Action.ActionType.GETLYRICS)
+          if (command == Action.ActionType.GETLYRICS)
           {
             _dialogService.ShowDialogInAnotherWindow("LyricsSearchView", "DialogWindowView", parameters, null);
             return;
           }
 
-          if ((Action.ActionType)msg.MessageData["command"] == Action.ActionType.ORGANISE)
+          if (command == Action.ActionType.ORGANISE)
           {
             parameters.Add("songgridinstance", this);  // We need to reference to the SongGrid using Reflection for a Save all Command
             _dialogService.ShowDialogInAnotherWindow("OrganiseFilesView", "DialogWindowView", parameters, null);
             return;
           }
 
-          if ((Action.ActionType)msg.MessageData["command"] == Action.ActionType.CASECONVERSION)
+          if (command == Action.ActionType.CASECONVERSION)
           {
             _dialogService.ShowDialogInAnotherWindow("CaseConversionView", "DialogWindowView", parameters, null);
             return;

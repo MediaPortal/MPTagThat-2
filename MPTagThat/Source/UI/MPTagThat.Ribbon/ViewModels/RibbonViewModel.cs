@@ -315,6 +315,16 @@ namespace MPTagThat.Ribbon.ViewModels
           type = Action.ActionType.FIXMP3;
           runAsync = false;
           break;
+
+        case "ButtonFind":
+          type = Action.ActionType.FIND;
+          runAsync = false;
+          break;
+
+        case "ButtonReplace":
+          type = Action.ActionType.REPLACE;
+          runAsync = false;
+          break;
       }
 
       if (type != Action.ActionType.INVALID)

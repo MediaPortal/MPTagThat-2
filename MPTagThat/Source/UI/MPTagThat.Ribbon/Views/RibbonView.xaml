@@ -171,7 +171,9 @@
                                   CommandParameter="{Binding Name ,RelativeSource={RelativeSource Self}}">
             <syncfusion:DropDownMenuItem x:Name="ButtonReplace" 
                                          Header="{lex:Loc ribbon_Replace}" 
-                                         Icon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_Replace_32x.png" />
+                                         Icon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_Replace_32x.png"
+                                         Command="{Binding ExecuteRibbonCommand}" 
+                                         CommandParameter="{Binding Name ,RelativeSource={RelativeSource Self}}" />
           </syncfusion:SplitButton>
 
           <syncfusion:SplitButton x:Name="ButtonValidateSong" SizeForm="Large" 

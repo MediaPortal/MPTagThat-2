@@ -24,8 +24,15 @@ using Prism.Services.Dialogs;
 using System;
 using System.ComponentModel;
 using System.Windows;
+using System.Windows.Input;
+using System.Windows.Media;
+using CommonServiceLocator;
 using MPTagThat.Core;
+using MPTagThat.Core.Common;
 using MPTagThat.Core.Events;
+using MPTagThat.Core.Services.Logging;
+using MPTagThat.Core.Services.Settings;
+using MPTagThat.Core.Services.Settings.Setting;
 using Prism.Events;
 
 #endregion
@@ -39,6 +46,9 @@ namespace MPTagThat.Dialogs.ViewModels
   {
     #region Variables
 
+    public readonly Options _options = (ServiceLocator.Current.GetInstance(typeof(ISettingsManager)) as ISettingsManager)?.GetOptions;
+    public readonly NLogLogger log = (ServiceLocator.Current.GetInstance(typeof(ILogger)) as ILogger)?.GetLogger;
+
     private DelegateCommand<string> _closeDialogCommand;
     public DelegateCommand<string> CloseDialogCommand =>
       _closeDialogCommand ?? (_closeDialogCommand = new DelegateCommand<string>(CloseDialog));
@@ -46,6 +56,8 @@ namespace MPTagThat.Dialogs.ViewModels
     #endregion
 
     #region Properties
+
+    public Brush Background => (Brush)new BrushConverter().ConvertFromString(_options.MainSettings.BackGround);
 
     private string _title;
     public string Title
@@ -61,6 +73,21 @@ namespace MPTagThat.Dialogs.ViewModels
     public DialogViewModelBase()
     {
       EventSystem.Subscribe<GenericEvent>(OnMessageReceived, ThreadOption.UIThread);
+      CancelChangesCommand = new BaseCommand(CancelChanges);
+    }
+
+    #endregion
+
+    #region Commands
+
+    /// <summary>
+    /// Cancel Button has been clicked
+    /// </summary>
+    public ICommand CancelChangesCommand { get; }
+
+    private void CancelChanges(object parameters)
+    {
+      CloseDialog("false"); 
     }
 
     #endregion

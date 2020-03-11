@@ -421,6 +421,96 @@ namespace MPTagThat.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Find Next.
+        /// </summary>
+        public static string findReplace_FindNext {
+            get {
+                return ResourceManager.GetString("findReplace_FindNext", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Find what:.
+        /// </summary>
+        public static string findReplace_FindWhat {
+            get {
+                return ResourceManager.GetString("findReplace_FindWhat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Find.
+        /// </summary>
+        public static string findReplace_HeaderFind {
+            get {
+                return ResourceManager.GetString("findReplace_HeaderFind", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Replace.
+        /// </summary>
+        public static string findReplace_HeaderReplace {
+            get {
+                return ResourceManager.GetString("findReplace_HeaderReplace", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Match case.
+        /// </summary>
+        public static string findReplace_MatchCase {
+            get {
+                return ResourceManager.GetString("findReplace_MatchCase", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No more occurences of search string found.
+        /// </summary>
+        public static string findReplace_NoMoreOccurencesFound {
+            get {
+                return ResourceManager.GetString("findReplace_NoMoreOccurencesFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Search string not found.
+        /// </summary>
+        public static string findReplace_NotFound {
+            get {
+                return ResourceManager.GetString("findReplace_NotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Replace.
+        /// </summary>
+        public static string findReplace_Replace {
+            get {
+                return ResourceManager.GetString("findReplace_Replace", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Replace All.
+        /// </summary>
+        public static string findReplace_ReplaceAll {
+            get {
+                return ResourceManager.GetString("findReplace_ReplaceAll", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Replace with:.
+        /// </summary>
+        public static string findReplace_ReplaceWith {
+            get {
+                return ResourceManager.GetString("findReplace_ReplaceWith", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Country.
         /// </summary>
         public static string identifySong_Country {

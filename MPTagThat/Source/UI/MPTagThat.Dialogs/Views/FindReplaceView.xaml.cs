@@ -16,24 +16,31 @@
 // along with MPTagThat. If not, see <http://www.gnu.org/licenses/>.
 #endregion
 
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Controls;
-using MPTagThat.SongGrid.ViewModels;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
+using System.Windows.Shapes;
 
-namespace MPTagThat.SongGrid.Views
+namespace MPTagThat.Dialogs.Views
 {
   /// <summary>
-  /// Interaction logic for SongGridView.xaml
+  /// Interaction logic for FindReplaceView.xaml
   /// </summary>
-  public partial class SongGridView : UserControl
+  public partial class FindReplaceView : UserControl
   {
-    public SongGridView()
+    public FindReplaceView()
     {
       InitializeComponent();
-      var vm = (SongGridViewModel) DataContext;
-      if (vm != null)
-      {
-        vm.SongGrid = this.SongDataGrid;
-      }
     }
   }
 }
