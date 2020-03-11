@@ -123,7 +123,11 @@
                                    Command="{Binding ExecuteRibbonCommand}" 
                                    CommandParameter="{Binding Name ,RelativeSource={RelativeSource Self}}" >
             <syncfusion:RibbonButton.ToolTip>
-              <syncfusion:ScreenTip MinWidth="150" Description="ScreenTip Example" VerticalOffset="10" Content="Represent a ribbon simple buttons" ImageSource="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_TagFromFile_16x.png" />
+              <syncfusion:ScreenTip MinWidth="150" MaxWidth="400" Description="{lex:Loc ribbon_TagFromFile}" VerticalOffset="10" ImageSource="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_TagFromFile_32x.png">
+                <StackPanel Orientation="Vertical" Width="300">
+                  <TextBlock Text="{lex:Loc screentip_TagFromFileText}" TextWrapping="Wrap" />
+                </StackPanel>
+              </syncfusion:ScreenTip>
             </syncfusion:RibbonButton.ToolTip>
           </syncfusion:RibbonButton>
 
@@ -132,14 +136,30 @@
                                    LargeIcon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_IdentifyFile_32x.png" 
                                    SmallIcon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_IdentifyFile_16x.png" 
                                    Command="{Binding ExecuteRibbonCommand}" 
-                                   CommandParameter="{Binding Name ,RelativeSource={RelativeSource Self}}"/>
+                                   CommandParameter="{Binding Name ,RelativeSource={RelativeSource Self}}">
+            <syncfusion:RibbonButton.ToolTip>
+              <syncfusion:ScreenTip MinWidth="150" MaxWidth="400" Description="{lex:Loc ribbon_IdentifyFile}" VerticalOffset="10" ImageSource="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_IdentifyFile_32x.png">
+                <StackPanel Orientation="Vertical" Width="300">
+                  <TextBlock Text="{lex:Loc screentip_IdentifyFileText}" TextWrapping="Wrap" />
+                </StackPanel>
+              </syncfusion:ScreenTip>
+            </syncfusion:RibbonButton.ToolTip>
+          </syncfusion:RibbonButton>
 
           <syncfusion:RibbonButton x:Name="ButtonTagFromInternet" SizeForm="Large" 
                                    Label="{lex:Loc ribbon_TagFromInternet}" 
                                    LargeIcon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_TagFromInternet_32x.png" 
                                    SmallIcon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_TagFromInternet_16x.png" 
                                    Command="{Binding ExecuteRibbonCommand}" 
-                                   CommandParameter="{Binding Name ,RelativeSource={RelativeSource Self}}" />
+                                   CommandParameter="{Binding Name ,RelativeSource={RelativeSource Self}}">
+            <syncfusion:RibbonButton.ToolTip>
+              <syncfusion:ScreenTip MinWidth="150" MaxWidth="400" Description="{lex:Loc ribbon_TagFromInternet}" VerticalOffset="10" ImageSource="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_TagFromInternet_32x.png">
+                <StackPanel Orientation="Vertical" Width="300">
+                  <TextBlock Text="{lex:Loc screentip_TagFromInternetText}" TextWrapping="Wrap" />
+                </StackPanel>
+              </syncfusion:ScreenTip>
+            </syncfusion:RibbonButton.ToolTip>
+          </syncfusion:RibbonButton>
         </syncfusion:RibbonBar>
 
         <syncfusion:RibbonBar Name="RibbonBarEditTags" Header="{lex:Loc ribbon_EditTags}">
@@ -152,6 +172,13 @@
             <syncfusion:DropDownMenuItem x:Name="ButtonCaseConversionOptions" Header="{lex:Loc ribbon_CaseConversionOption}"
                                          Command="{Binding ExecuteRibbonCommand}" 
                                          CommandParameter="{Binding Name ,RelativeSource={RelativeSource Self}}" />
+            <syncfusion:SplitButton.ToolTip>
+              <syncfusion:ScreenTip MinWidth="150" MaxWidth="400" Description="{lex:Loc ribbon_CaseConversionMenu}" VerticalOffset="10" ImageSource="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_CaseConversion_32x.png">
+                <StackPanel Orientation="Vertical" Width="300">
+                  <TextBlock Text="{lex:Loc screentip_CaseConversionText}" TextWrapping="Wrap" />
+                </StackPanel>
+              </syncfusion:ScreenTip>
+            </syncfusion:SplitButton.ToolTip>
           </syncfusion:SplitButton>
 
           <syncfusion:RibbonButton x:Name="ButtonGetLyrics" SizeForm="Large" 
@@ -159,7 +186,15 @@
                                    LargeIcon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_Lyrics_32x.png" 
                                    SmallIcon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_Lyrics_16x.png" 
                                    Command="{Binding ExecuteRibbonCommand}" 
-                                   CommandParameter="{Binding Name ,RelativeSource={RelativeSource Self}}"/>
+                                   CommandParameter="{Binding Name ,RelativeSource={RelativeSource Self}}">
+            <syncfusion:RibbonButton.ToolTip>
+              <syncfusion:ScreenTip MinWidth="150" MaxWidth="400" Description="{lex:Loc ribbon_GetLyrics}" VerticalOffset="10" ImageSource="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_Lyrics_32x.png">
+                <StackPanel Orientation="Vertical" Width="300">
+                  <TextBlock Text="{lex:Loc screentip_GetLyricsText}" TextWrapping="Wrap" />
+                </StackPanel>
+              </syncfusion:ScreenTip>
+            </syncfusion:RibbonButton.ToolTip>
+          </syncfusion:RibbonButton>
 
           <syncfusion:RibbonSeparator/>
 
@@ -174,6 +209,20 @@
                                          Icon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_Replace_32x.png"
                                          Command="{Binding ExecuteRibbonCommand}" 
                                          CommandParameter="{Binding Name ,RelativeSource={RelativeSource Self}}" />
+            <syncfusion:SplitButton.ToolTip>
+              <syncfusion:ScreenTip MinWidth="150" MaxWidth="400" Description="{lex:Loc ribbon_Find}" VerticalOffset="10" ImageSource="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_Find_32x.png">
+                <StackPanel Orientation="Vertical" Width="300">
+                  <TextBlock Text="{lex:Loc screentip_FindText}" TextWrapping="Wrap" />
+                </StackPanel>
+              </syncfusion:ScreenTip>
+            </syncfusion:SplitButton.ToolTip>
+            <syncfusion:SplitButton.ToggleButtonToolTip>
+              <syncfusion:ScreenTip MinWidth="150" MaxWidth="400" Description="{lex:Loc ribbon_Replace}" VerticalOffset="10" ImageSource="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_Replace_16x.png">
+                <StackPanel Orientation="Vertical" Width="300">
+                  <TextBlock Text="{lex:Loc screentip_ReplaceText}" TextWrapping="Wrap" />
+                </StackPanel>
+              </syncfusion:ScreenTip>
+            </syncfusion:SplitButton.ToggleButtonToolTip>
           </syncfusion:SplitButton>
 
           <syncfusion:SplitButton x:Name="ButtonValidateSong" SizeForm="Large" 
@@ -186,6 +235,20 @@
                                          Icon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_FixSong_16x.png"
                                          Command="{Binding ExecuteRibbonCommand}" 
                                          CommandParameter="{Binding Name ,RelativeSource={RelativeSource Self}}"/>
+            <syncfusion:SplitButton.ToolTip>
+              <syncfusion:ScreenTip MinWidth="150" MaxWidth="400" Description="{lex:Loc ribbon_ValidateSong}" VerticalOffset="10" ImageSource="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_BrokenSong_32x.png">
+                <StackPanel Orientation="Vertical" Width="300">
+                  <TextBlock Text="{lex:Loc screentip_ValidateSongText}" TextWrapping="Wrap" />
+                </StackPanel>
+              </syncfusion:ScreenTip>
+            </syncfusion:SplitButton.ToolTip>
+            <syncfusion:SplitButton.ToggleButtonToolTip>
+              <syncfusion:ScreenTip MinWidth="150" MaxWidth="400" Description="{lex:Loc ribbon_FixSong}" VerticalOffset="10" ImageSource="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_FixedSong_32x.png">
+                <StackPanel Orientation="Vertical" Width="300">
+                  <TextBlock Text="{lex:Loc screentip_FixSongText}" TextWrapping="Wrap" />
+                </StackPanel>
+              </syncfusion:ScreenTip>
+            </syncfusion:SplitButton.ToggleButtonToolTip>
           </syncfusion:SplitButton>
 
           <syncfusion:RibbonSeparator/>
@@ -204,6 +267,13 @@
             <syncfusion:DropDownMenuItem x:Name="ButtonDeleteV2Tags" Header="{lex:Loc ribbon_DeleteID3V2Tags}" 
                                          Command="{Binding ExecuteRibbonCommand}" 
                                          CommandParameter="{Binding Name ,RelativeSource={RelativeSource Self}}"/>
+            <syncfusion:SplitButton.ToolTip>
+              <syncfusion:ScreenTip MinWidth="150" MaxWidth="400" Description="{lex:Loc ribbon_DeleteTags}" VerticalOffset="10" ImageSource="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_DeleteTags_32x.png">
+                <StackPanel Orientation="Vertical" Width="300">
+                  <TextBlock Text="{lex:Loc screentip_DeleteTagsText}" TextWrapping="Wrap" />
+                </StackPanel>
+              </syncfusion:ScreenTip>
+            </syncfusion:SplitButton.ToolTip>
           </syncfusion:SplitButton>
 
           <syncfusion:RibbonButton x:Name="ButtonRemoveComments" SizeForm="Large" 
@@ -211,7 +281,15 @@
                                    LargeIcon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_RemoveComments_32x.png" 
                                    SmallIcon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_RemoveComments_16x.png" 
                                    Command="{Binding ExecuteRibbonCommand}" 
-                                   CommandParameter="{Binding Name ,RelativeSource={RelativeSource Self}}" />
+                                   CommandParameter="{Binding Name ,RelativeSource={RelativeSource Self}}">
+            <syncfusion:RibbonButton.ToolTip>
+              <syncfusion:ScreenTip MinWidth="150" MaxWidth="400" Description="{lex:Loc ribbon_RemoveComments}" VerticalOffset="10" ImageSource="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_RemoveComments_32x.png">
+                <StackPanel Orientation="Vertical" Width="300">
+                  <TextBlock Text="{lex:Loc screentip_RemoveCommentsText}" TextWrapping="Wrap" />
+                </StackPanel>
+              </syncfusion:ScreenTip>
+            </syncfusion:RibbonButton.ToolTip>
+          </syncfusion:RibbonButton>
 
           <syncfusion:RibbonSeparator/>
           <syncfusion:RibbonButton x:Name="ButtonGain" SizeForm="Large" 
@@ -219,14 +297,30 @@
                                    LargeIcon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_Gain_32x.png" 
                                    SmallIcon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_Gain_16x.png" 
                                    Command="{Binding ExecuteRibbonCommand}" 
-                                   CommandParameter="{Binding Name ,RelativeSource={RelativeSource Self}}" />
+                                   CommandParameter="{Binding Name ,RelativeSource={RelativeSource Self}}">
+            <syncfusion:RibbonButton.ToolTip>
+              <syncfusion:ScreenTip MinWidth="150" MaxWidth="400" Description="{lex:Loc ribbon_ReplayGain}" VerticalOffset="10" ImageSource="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_Gain_32x.png">
+                <StackPanel Orientation="Vertical" Width="300">
+                  <TextBlock Text="{lex:Loc screentip_ReplayGainText}" TextWrapping="Wrap" />
+                </StackPanel>
+              </syncfusion:ScreenTip>
+            </syncfusion:RibbonButton.ToolTip>
+          </syncfusion:RibbonButton>
 
           <syncfusion:RibbonButton x:Name="ButtonBpm" SizeForm="Large" 
                                    Label="{lex:Loc ribbon_BPM}" 
                                    LargeIcon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_Bpm_32x.png"
                                    SmallIcon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_Bpm_16x.png" 
                                    Command="{Binding ExecuteRibbonCommand}" 
-                                   CommandParameter="{Binding Name ,RelativeSource={RelativeSource Self}}" />
+                                   CommandParameter="{Binding Name ,RelativeSource={RelativeSource Self}}" >
+            <syncfusion:RibbonButton.ToolTip>
+              <syncfusion:ScreenTip MinWidth="150" MaxWidth="400" Description="{lex:Loc ribbon_BPM}" VerticalOffset="10" ImageSource="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_Bpm_32x.png">
+                <StackPanel Orientation="Vertical" Width="300">
+                  <TextBlock Text="{lex:Loc screentip_BPMText}" TextWrapping="Wrap" />
+                </StackPanel>
+              </syncfusion:ScreenTip>
+            </syncfusion:RibbonButton.ToolTip>
+          </syncfusion:RibbonButton>
 
           <syncfusion:RibbonSeparator/>
 
@@ -246,12 +340,36 @@
                                      Label="" SmallIcon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_ScriptExecute_32x.png" 
                                      Height="18" 
                                      Command="{Binding ExecuteRibbonCommand}" 
-                                     CommandParameter="{Binding Name ,RelativeSource={RelativeSource Self}}"/>
+                                     CommandParameter="{Binding Name ,RelativeSource={RelativeSource Self}}">
+              <syncfusion:RibbonButton.ToolTip>
+                <syncfusion:ScreenTip MinWidth="150" MaxWidth="400" Description="{lex:Loc ribbon_ExecuteScript}" VerticalOffset="10" ImageSource="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_ScriptExecute_32x.png">
+                  <StackPanel Orientation="Vertical" Width="300">
+                    <TextBlock Text="{lex:Loc screentip_ExecuteScriptText}" TextWrapping="Wrap" />
+                  </StackPanel>
+                </syncfusion:ScreenTip>
+              </syncfusion:RibbonButton.ToolTip>
+            </syncfusion:RibbonButton>
           </syncfusion:ButtonPanel>
 
           <syncfusion:ButtonPanel SeparatorVisibility="Hidden" Height="25">
-            <syncfusion:RibbonButton x:Name="ButtonAutoNumber" SizeForm="Small" Label="" SmallIcon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_AutoNumber_32x.png" />
-            <syncfusion:RibbonButton x:Name="ButtonNumberOnClick" SizeForm="Small" Label="" SmallIcon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_NumberOnClick_32x.png" />
+            <syncfusion:RibbonButton x:Name="ButtonAutoNumber" SizeForm="Small" Label="" SmallIcon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_AutoNumber_32x.png" >
+              <syncfusion:RibbonButton.ToolTip>
+                <syncfusion:ScreenTip MinWidth="150" MaxWidth="400" Description="{lex:Loc ribbon_AutoNumber}" VerticalOffset="10" ImageSource="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_AutoNumber_32x.png">
+                  <StackPanel Orientation="Vertical" Width="300">
+                    <TextBlock Text="{lex:Loc screentip_AutoNumberText}" TextWrapping="Wrap" />
+                  </StackPanel>
+                </syncfusion:ScreenTip>
+              </syncfusion:RibbonButton.ToolTip>
+            </syncfusion:RibbonButton>
+            <syncfusion:RibbonButton x:Name="ButtonNumberOnClick" SizeForm="Small" Label="" SmallIcon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_NumberOnClick_32x.png" >
+              <syncfusion:RibbonButton.ToolTip>
+                <syncfusion:ScreenTip MinWidth="150" MaxWidth="400" Description="{lex:Loc ribbon_NumberOnClick}" VerticalOffset="10" ImageSource="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_NumberOnClick_32x.png">
+                  <StackPanel Orientation="Vertical" Width="300">
+                    <TextBlock Text="{lex:Loc screentip_NumberOnClickText}" TextWrapping="Wrap" />
+                  </StackPanel>
+                </syncfusion:ScreenTip>
+              </syncfusion:RibbonButton.ToolTip>
+            </syncfusion:RibbonButton>
             <syncfusion:IntegerTextBox x:Name="TextBoxNumberOnClick" HorizontalAlignment="Left" Height="20" VerticalAlignment="Top" Width="25" MinValue="1" MaxValue="99999" />
           </syncfusion:ButtonPanel>
         </syncfusion:RibbonBar>
@@ -264,7 +382,11 @@
                                    Command="{Binding ExecuteRibbonCommand}" 
                                    CommandParameter="{Binding Name ,RelativeSource={RelativeSource Self}}">
             <syncfusion:RibbonButton.ToolTip>
-              <syncfusion:ScreenTip MinWidth="150" Description="ScreenTip Example" VerticalOffset="10" Content="Represent a ribbon simple buttons" ImageSource="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_Rename_16x.png" />
+              <syncfusion:ScreenTip MinWidth="150" MaxWidth="400" Description="{lex:Loc ribbon_RenameFile}" VerticalOffset="10" ImageSource="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_Rename_32x.png">
+                <StackPanel Orientation="Vertical" Width="300">
+                  <TextBlock Text="{lex:Loc screentip_RenameFileText}" TextWrapping="Wrap" />
+                </StackPanel>
+              </syncfusion:ScreenTip>
             </syncfusion:RibbonButton.ToolTip>
           </syncfusion:RibbonButton>
 
@@ -275,17 +397,24 @@
                                    Command="{Binding ExecuteRibbonCommand}" 
                                    CommandParameter="{Binding Name ,RelativeSource={RelativeSource Self}}" >
             <syncfusion:RibbonButton.ToolTip>
-              <syncfusion:ScreenTip MinWidth="150" Description="ScreenTip Example" VerticalOffset="10" Content="Represent a ribbon simple buttons" ImageSource="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_Organise_16x.png" />
+              <syncfusion:ScreenTip MinWidth="150" MaxWidth="400" Description="{lex:Loc ribbon_Organise}" VerticalOffset="10" ImageSource="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_Organise_32x.png">
+                <StackPanel Orientation="Vertical" Width="300">
+                  <TextBlock Text="{lex:Loc screentip_OrganiseText}" TextWrapping="Wrap" />
+                </StackPanel>
+              </syncfusion:ScreenTip>
             </syncfusion:RibbonButton.ToolTip>
           </syncfusion:RibbonButton>
         </syncfusion:RibbonBar>
 
 
       </syncfusion:RibbonTab>
+
+      <!-- Disabled until implemented
       <syncfusion:RibbonTab x:Name="TabRip" Caption="{lex:Loc ribbon_RipTab}"  IsChecked="False"/>
       <syncfusion:RibbonTab x:Name="TabConvert" Caption="{lex:Loc ribbon_ConvertTab}"  IsChecked="False"/>
       <syncfusion:RibbonTab x:Name="TabBurn" Caption="{lex:Loc ribbon_BurnTab}"  IsChecked="False"/>
       <syncfusion:RibbonTab x:Name="TabDatabase" Caption="{lex:Loc ribbon_DatabaseTab}"  IsChecked="False"/>
+      -->
 
       <!-- Quick Access Toolbar  -->
       <syncfusion:Ribbon.QuickAccessToolBar>
@@ -293,11 +422,27 @@
           <syncfusion:RibbonButton x:Name="ButtonSave" SizeForm="ExtraSmall"
                                    SmallIcon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_Save_16x.png" 
                                    Command="{Binding ExecuteRibbonCommand}" 
-                                   CommandParameter="{Binding Name ,RelativeSource={RelativeSource Self}}"/>
+                                   CommandParameter="{Binding Name ,RelativeSource={RelativeSource Self}}">
+            <syncfusion:RibbonButton.ToolTip>
+              <syncfusion:ScreenTip MinWidth="150" MaxWidth="400" Description="{lex:Loc ribbon_Save}" VerticalOffset="10" ImageSource="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_Save_16x.png">
+                <StackPanel Orientation="Vertical" Width="300">
+                  <TextBlock Text="{lex:Loc screentip_SaveText}" TextWrapping="Wrap" />
+                </StackPanel>
+              </syncfusion:ScreenTip>
+            </syncfusion:RibbonButton.ToolTip>
+          </syncfusion:RibbonButton>
           <syncfusion:RibbonButton x:Name="ButtonRefresh" SizeForm="ExtraSmall"
                                    SmallIcon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_Refresh_16x.png" 
                                    Command="{Binding ExecuteRibbonCommand}" 
-                                   CommandParameter="{Binding Name ,RelativeSource={RelativeSource Self}}"/>
+                                   CommandParameter="{Binding Name ,RelativeSource={RelativeSource Self}}">
+            <syncfusion:RibbonButton.ToolTip>
+              <syncfusion:ScreenTip MinWidth="150" MaxWidth="400" Description="{lex:Loc ribbon_Refresh}" VerticalOffset="10" ImageSource="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_Refresh_16x.png">
+                <StackPanel Orientation="Vertical" Width="300">
+                  <TextBlock Text="{lex:Loc screentip_RefreshText}" TextWrapping="Wrap" />
+                </StackPanel>
+              </syncfusion:ScreenTip>
+            </syncfusion:RibbonButton.ToolTip>
+          </syncfusion:RibbonButton>
         </syncfusion:QuickAccessToolBar>
       </syncfusion:Ribbon.QuickAccessToolBar>
 
@@ -308,12 +453,28 @@
                                              Header="{lex:Loc ribbon_Save}"
                                              Icon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_Save_16x.png" 
                                              Command="{Binding ExecuteRibbonCommand}" 
-                                             CommandParameter="{Binding Name ,RelativeSource={RelativeSource Self}}"/>
+                                             CommandParameter="{Binding Name ,RelativeSource={RelativeSource Self}}">
+            <syncfusion:RibbonButton.ToolTip>
+              <syncfusion:ScreenTip MinWidth="150" MaxWidth="400" Description="{lex:Loc ribbon_Save}" VerticalOffset="10" ImageSource="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_Save_16x.png">
+                <StackPanel Orientation="Vertical" Width="300">
+                  <TextBlock Text="{lex:Loc screentip_SaveText}" TextWrapping="Wrap" />
+                </StackPanel>
+              </syncfusion:ScreenTip>
+            </syncfusion:RibbonButton.ToolTip>
+          </syncfusion:BackStageCommandButton>
           <syncfusion:BackStageCommandButton x:Name="ButtonRefreshBackStage"
                                              Header="{lex:Loc ribbon_Refresh}"
                                              Icon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_Refresh_16x.png" 
                                              Command="{Binding ExecuteRibbonCommand}" 
-                                             CommandParameter="{Binding Name ,RelativeSource={RelativeSource Self}}"/>
+                                             CommandParameter="{Binding Name ,RelativeSource={RelativeSource Self}}">
+            <syncfusion:RibbonButton.ToolTip>
+              <syncfusion:ScreenTip MinWidth="150" MaxWidth="400" Description="{lex:Loc ribbon_Refresh}" VerticalOffset="10" ImageSource="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_Refresh_16x.png">
+                <StackPanel Orientation="Vertical" Width="300">
+                  <TextBlock Text="{lex:Loc screentip_RefreshText}" TextWrapping="Wrap" />
+                </StackPanel>
+              </syncfusion:ScreenTip>
+            </syncfusion:RibbonButton.ToolTip>
+          </syncfusion:BackStageCommandButton>
           <syncfusion:BackStageSeparator/>
 
           <syncfusion:BackstageTabItem Header="{lex:Loc settings_Header}">
@@ -375,8 +536,24 @@
           </syncfusion:BackstageTabItem>
 
           <syncfusion:BackStageSeparator/>
-          <syncfusion:BackStageCommandButton Header="{lex:Loc ribbon_ResetLayout}" Command="{Binding ResetLayoutCommand}" Icon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_ResetLayout_32x.png" />
-          <syncfusion:BackStageCommandButton Header="{lex:Loc ribbon_DeleteLayout}" Command="{Binding DeleteLayoutCommand}" Icon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_DeleteLayout_32x.png" />
+          <syncfusion:BackStageCommandButton Header="{lex:Loc ribbon_ResetLayout}" Command="{Binding ResetLayoutCommand}" Icon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_ResetLayout_32x.png" >
+            <syncfusion:RibbonButton.ToolTip>
+              <syncfusion:ScreenTip MinWidth="150" MaxWidth="400" Description="{lex:Loc ribbon_ResetLayout}" VerticalOffset="10" ImageSource="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_ResetLayout_32x.png">
+                <StackPanel Orientation="Vertical" Width="300">
+                  <TextBlock Text="{lex:Loc screentip_ResetLayoutText}" TextWrapping="Wrap" />
+                </StackPanel>
+              </syncfusion:ScreenTip>
+            </syncfusion:RibbonButton.ToolTip>
+          </syncfusion:BackStageCommandButton>
+          <syncfusion:BackStageCommandButton Header="{lex:Loc ribbon_DeleteLayout}" Command="{Binding DeleteLayoutCommand}" Icon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_DeleteLayout_32x.png" >
+            <syncfusion:RibbonButton.ToolTip>
+              <syncfusion:ScreenTip MinWidth="150" MaxWidth="400" Description="{lex:Loc ribbon_DeleteLayout}" VerticalOffset="10" ImageSource="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_DeleteLayout_32x.png">
+                <StackPanel Orientation="Vertical" Width="300">
+                  <TextBlock Text="{lex:Loc screentip_DeleteLayoutText}" TextWrapping="Wrap" />
+                </StackPanel>
+              </syncfusion:ScreenTip>
+            </syncfusion:RibbonButton.ToolTip>
+          </syncfusion:BackStageCommandButton>
           <syncfusion:BackStageSeparator/>
           <syncfusion:BackStageCommandButton Header="{lex:Loc ribbon_Exit}" Command="{Binding ExitCommand}" Icon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_Exit_32x.png" />
         </syncfusion:Backstage>

@@ -1119,4 +1119,70 @@
   <data name="findReplace_NotFound" xml:space="preserve">
     <value>Search string not found</value>
   </data>
+  <data name="screentip_AutoNumberText" xml:space="preserve">
+    <value>The track number of the selected song is set using the value in the text box as the start number.</value>
+  </data>
+  <data name="screentip_BPMText" xml:space="preserve">
+    <value>Analyses the selected file and calculates the Beats per Minute (BPM). The calcualted value is written into the Tags. Note: The file itself is not modified.</value>
+  </data>
+  <data name="screentip_CaseConversionText" xml:space="preserve">
+    <value>Case Conversion Rules, as set in the options, are applied on all selected files.</value>
+  </data>
+  <data name="screentip_DeleteLayoutText" xml:space="preserve">
+    <value>The layout of the regions in the Docking Manager is saved upon exit and reused at the next start of the application. Use this function to return to the default application layout.</value>
+  </data>
+  <data name="screentip_DeleteTagsText" xml:space="preserve">
+    <value>All tags are removed from the selected files.</value>
+  </data>
+  <data name="screentip_ExecuteScriptText" xml:space="preserve">
+    <value>Applies the script in the combo box to the selected files.</value>
+  </data>
+  <data name="screentip_FindText" xml:space="preserve">
+    <value>Opens the find dialog to search for the specified string in the songs displayed in the grid.</value>
+  </data>
+  <data name="screentip_FixSongText" xml:space="preserve">
+    <value>Uses MP3Val to fix errors detected in the selected MP3 File.</value>
+  </data>
+  <data name="screentip_GetLyricsText" xml:space="preserve">
+    <value>Lyrics for the selected songs is searched on various Lyrics sources checked in the dialog.</value>
+  </data>
+  <data name="screentip_IdentifyFileText" xml:space="preserve">
+    <value>A hash is built over the first 30 seconds of the file. This hash is then used to identify the file on MusicBrainz. The tags are then retrieved from MusicBrainz and written to the file.</value>
+  </data>
+  <data name="screentip_NumberOnClickText" xml:space="preserve">
+    <value>While the button is toggled on, a click on a file sets the track number.</value>
+  </data>
+  <data name="screentip_OrganiseText" xml:space="preserve">
+    <value>The files are copied/moved to a new location based on their tag values as specified in the dialog parameters.</value>
+  </data>
+  <data name="screentip_RefreshText" xml:space="preserve">
+    <value>The content of the currently selected folder is reread. If changes are pending, the system asks if the changes should be saved first.</value>
+  </data>
+  <data name="screentip_RemoveCommentsText" xml:space="preserve">
+    <value>All comments found in the selected files are removed.</value>
+  </data>
+  <data name="screentip_RenameFileText" xml:space="preserve">
+    <value>The files are renamed according to the parameters specified in the dialog.</value>
+  </data>
+  <data name="screentip_ReplaceText" xml:space="preserve">
+    <value>Opens the Find / Replace dialog to replace a specified search string in the songs displayed in the grid.</value>
+  </data>
+  <data name="screentip_ReplayGainText" xml:space="preserve">
+    <value>Analyses the selected file and calculates the Replay Gain. The calcualted value is written into the Tags. Note: The file itself is not modified.</value>
+  </data>
+  <data name="screentip_ResetLayoutText" xml:space="preserve">
+    <value>The layout of the regions in the Docking Manager is reset to the Application Default.</value>
+  </data>
+  <data name="screentip_SaveText" xml:space="preserve">
+    <value>Saves pending changes to disk and changes the tags of all selected songs.</value>
+  </data>
+  <data name="screentip_TagFromFileText" xml:space="preserve">
+    <value>Using specific parameters given in the dialog, the various tags like "Track #", "Artist", "Title", etc. are extracted out of the filename.</value>
+  </data>
+  <data name="screentip_TagFromInternetText" xml:space="preserve">
+    <value>The given Artist and Album Name are used for a lookup at online sources, like Discogs, Last.FM and MusicBrainz, trying to match the filenames to the list retrieved from the online sources</value>
+  </data>
+  <data name="screentip_ValidateSongText" xml:space="preserve">
+    <value>Uses MP3Val to validate the correctness of the selected MP3 File. Some errors may be fixed using the "Fix MP3" Button</value>
+  </data>
 </root>

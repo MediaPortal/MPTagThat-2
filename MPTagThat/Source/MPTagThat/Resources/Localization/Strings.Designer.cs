@@ -1285,6 +1285,204 @@ namespace MPTagThat.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The track number of the selected song is set using the value in the text box as the start number..
+        /// </summary>
+        public static string screentip_AutoNumberText {
+            get {
+                return ResourceManager.GetString("screentip_AutoNumberText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Analyses the selected file and calculates the Beats per Minute (BPM). The calcualted value is written into the Tags. Note: The file itself is not modified..
+        /// </summary>
+        public static string screentip_BPMText {
+            get {
+                return ResourceManager.GetString("screentip_BPMText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Case Conversion Rules, as set in the options, are applied on all selected files..
+        /// </summary>
+        public static string screentip_CaseConversionText {
+            get {
+                return ResourceManager.GetString("screentip_CaseConversionText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The layout of the regions in the Docking Manager is saved upon exit and reused at the next start of the application. Use this function to return to the default application layout..
+        /// </summary>
+        public static string screentip_DeleteLayoutText {
+            get {
+                return ResourceManager.GetString("screentip_DeleteLayoutText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to All tags are removed from the selected files..
+        /// </summary>
+        public static string screentip_DeleteTagsText {
+            get {
+                return ResourceManager.GetString("screentip_DeleteTagsText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Applies the script in the combo box to the selected files..
+        /// </summary>
+        public static string screentip_ExecuteScriptText {
+            get {
+                return ResourceManager.GetString("screentip_ExecuteScriptText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Opens the find dialog to search for the specified string in the songs displayed in the grid..
+        /// </summary>
+        public static string screentip_FindText {
+            get {
+                return ResourceManager.GetString("screentip_FindText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Uses MP3Val to fix errors detected in the selected MP3 File..
+        /// </summary>
+        public static string screentip_FixSongText {
+            get {
+                return ResourceManager.GetString("screentip_FixSongText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Lyrics for the selected songs is searched on various Lyrics sources checked in the dialog..
+        /// </summary>
+        public static string screentip_GetLyricsText {
+            get {
+                return ResourceManager.GetString("screentip_GetLyricsText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A hash is built over the first 30 seconds of the file. This hash is then used to identify the file on MusicBrainz. The tags are then retrieved from MusicBrainz and written to the file..
+        /// </summary>
+        public static string screentip_IdentifyFileText {
+            get {
+                return ResourceManager.GetString("screentip_IdentifyFileText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to While the button is toggled on, a click on a file sets the track number..
+        /// </summary>
+        public static string screentip_NumberOnClickText {
+            get {
+                return ResourceManager.GetString("screentip_NumberOnClickText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The files are copied/moved to a new location based on their tag values as specified in the dialog parameters..
+        /// </summary>
+        public static string screentip_OrganiseText {
+            get {
+                return ResourceManager.GetString("screentip_OrganiseText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The content of the currently selected folder is reread. If changes are pending, the system asks if the changes should be saved first..
+        /// </summary>
+        public static string screentip_RefreshText {
+            get {
+                return ResourceManager.GetString("screentip_RefreshText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to All comments found in the selected files are removed..
+        /// </summary>
+        public static string screentip_RemoveCommentsText {
+            get {
+                return ResourceManager.GetString("screentip_RemoveCommentsText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The files are renamed according to the parameters specified in the dialog..
+        /// </summary>
+        public static string screentip_RenameFileText {
+            get {
+                return ResourceManager.GetString("screentip_RenameFileText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Opens the Find / Replace dialog to replace a specified search string in the songs displayed in the grid..
+        /// </summary>
+        public static string screentip_ReplaceText {
+            get {
+                return ResourceManager.GetString("screentip_ReplaceText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Analyses the selected file and calculates the Replay Gain. The calcualted value is written into the Tags. Note: The file itself is not modified..
+        /// </summary>
+        public static string screentip_ReplayGainText {
+            get {
+                return ResourceManager.GetString("screentip_ReplayGainText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The layout of the regions in the Docking Manager is reset to the Application Default..
+        /// </summary>
+        public static string screentip_ResetLayoutText {
+            get {
+                return ResourceManager.GetString("screentip_ResetLayoutText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Saves pending changes to disk and changes the tags of all selected songs..
+        /// </summary>
+        public static string screentip_SaveText {
+            get {
+                return ResourceManager.GetString("screentip_SaveText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Using specific parameters given in the dialog, the various tags like &quot;Track #&quot;, &quot;Artist&quot;, &quot;Title&quot;, etc. are extracted out of the filename..
+        /// </summary>
+        public static string screentip_TagFromFileText {
+            get {
+                return ResourceManager.GetString("screentip_TagFromFileText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The given Artist and Album Name are used for a lookup at online sources, like Discogs, Last.FM and MusicBrainz, trying to match the filenames to the list retrieved from the online sources.
+        /// </summary>
+        public static string screentip_TagFromInternetText {
+            get {
+                return ResourceManager.GetString("screentip_TagFromInternetText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Uses MP3Val to validate the correctness of the selected MP3 File. Some errors may be fixed using the &quot;Fix MP3&quot; Button.
+        /// </summary>
+        public static string screentip_ValidateSongText {
+            get {
+                return ResourceManager.GetString("screentip_ValidateSongText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Alternate Row Color:.
         /// </summary>
         public static string settings_AlternateRowColor {
