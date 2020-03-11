@@ -18,19 +18,10 @@
 
 #region
 
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
-using System.Windows.Media;
-using CommonServiceLocator;
 using MPTagThat.Core.Common;
 using MPTagThat.Core.Common.Song;
-using MPTagThat.Core.Services.Logging;
-using MPTagThat.Core.Services.Settings;
-using MPTagThat.Core.Services.Settings.Setting;
 using Prism.Services.Dialogs;
 using WPFLocalizeExtension.Engine;
 
@@ -42,15 +33,12 @@ namespace MPTagThat.Dialogs.ViewModels
   {
     #region Variables
 
-    private readonly Options _options = (ServiceLocator.Current.GetInstance(typeof(ISettingsManager)) as ISettingsManager)?.GetOptions;
-    private readonly NLogLogger log = (ServiceLocator.Current.GetInstance(typeof(ILogger)) as ILogger)?.GetLogger;
     private List<SongData> _songs;
 
     #endregion
 
     #region Properties
 
-    public Brush Background => (Brush)new BrushConverter().ConvertFromString(_options.MainSettings.BackGround);
 
     // Check Box Checked properties
     private bool _ckConvertTags;
@@ -110,23 +98,12 @@ namespace MPTagThat.Dialogs.ViewModels
     {
       Title = LocalizeDictionary.Instance.GetLocalizedObject("MPTagThat", "Strings", "caseConversion_Header",
         LocalizeDictionary.Instance.Culture).ToString();
-      CancelChangesCommand = new BaseCommand(CancelChanges);
       CaseConversionCommand = new BaseCommand(CaseConversionApply);
     }
 
     #endregion
 
     #region Commands
-
-    /// <summary>
-    /// Cancel Button has been clicked
-    /// </summary>
-    public ICommand CancelChangesCommand { get; }
-
-    private void CancelChanges(object parameters)
-    {
-      CloseDialog("false"); 
-    }
 
     /// <summary>
     /// Apply Button has been clicked

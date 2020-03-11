@@ -24,14 +24,10 @@ using System.Collections.ObjectModel;
 using System.IO;
 using System.Windows;
 using System.Windows.Input;
-using System.Windows.Media;
 using Prism.Services.Dialogs;
-using CommonServiceLocator;
 using MPTagThat.Core.Common;
 using MPTagThat.Core.Common.Song;
 using MPTagThat.Core.Events;
-using MPTagThat.Core.Services.Logging;
-using MPTagThat.Core.Services.Settings;
 using MPTagThat.Core.Services.Settings.Setting;
 using MPTagThat.Core.Utils;
 using Syncfusion.UI.Xaml.Grid;
@@ -46,15 +42,11 @@ namespace MPTagThat.Dialogs.ViewModels
   {
     #region Variables
 
-    private readonly Options _options = (ServiceLocator.Current.GetInstance(typeof(ISettingsManager)) as ISettingsManager)?.GetOptions;
-    private readonly NLogLogger log = (ServiceLocator.Current.GetInstance(typeof(ILogger)) as ILogger)?.GetLogger;
     private List<SongData> _songs;
 
     #endregion
 
     #region Properties
-
-    public Brush Background => (Brush)new BrushConverter().ConvertFromString(_options.MainSettings.BackGround);
 
     /// <summary>
     /// The Binding for the Parameters in the ComboBox
@@ -136,7 +128,6 @@ namespace MPTagThat.Dialogs.ViewModels
     {
       Title = LocalizeDictionary.Instance.GetLocalizedObject("MPTagThat", "Strings", "tagAndRename_Header",
         LocalizeDictionary.Instance.Culture).ToString();
-      CancelChangesCommand = new BaseCommand(CancelChanges);
       LabelClickedCommand = new BaseCommand(LabelClicked);
       FileNameToTagCommand = new BaseCommand(FileNameToTag);
       PreviewChangesCommand = new BaseCommand(PreviewChanges);
@@ -148,13 +139,6 @@ namespace MPTagThat.Dialogs.ViewModels
     #endregion
 
     #region Commands
-
-    public ICommand CancelChangesCommand { get; }
-
-    private void CancelChanges(object parameters)
-    {
-      CloseDialog("false"); 
-    }
 
     public ICommand LabelClickedCommand { get; }
 

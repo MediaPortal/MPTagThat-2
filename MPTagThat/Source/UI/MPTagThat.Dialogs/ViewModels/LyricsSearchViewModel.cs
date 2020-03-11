@@ -28,14 +28,9 @@ using System.Threading;
 using System.Windows;
 using System.Windows.Data;
 using System.Windows.Input;
-using System.Windows.Media;
-using CommonServiceLocator;
 using MPTagThat.Core.Common.Song;
 using MPTagThat.Core.Events;
 using MPTagThat.Core.Lyrics;
-using MPTagThat.Core.Services.Logging;
-using MPTagThat.Core.Services.Settings;
-using MPTagThat.Core.Services.Settings.Setting;
 using MPTagThat.Dialogs.Models;
 using Prism.Services.Dialogs;
 using Syncfusion.UI.Xaml.Utility;
@@ -49,8 +44,6 @@ namespace MPTagThat.Dialogs.ViewModels
   {
     #region Variables
 
-    private readonly NLogLogger log = (ServiceLocator.Current.GetInstance(typeof(ILogger)) as ILogger)?.GetLogger;
-    private readonly Options _options = (ServiceLocator.Current.GetInstance(typeof(ISettingsManager)) as ISettingsManager)?.GetOptions;
     private object _lock = new object();
 
     private const int NrOfCurrentSearchesAllowed = 6;
@@ -95,8 +88,6 @@ namespace MPTagThat.Dialogs.ViewModels
     #endregion
 
     #region Properties
-
-    public Brush Background => (Brush)new BrushConverter().ConvertFromString(_options.MainSettings.BackGround);
 
     /// <summary>
     /// Binding for Wait Cursor

@@ -47,15 +47,11 @@ namespace MPTagThat.Dialogs.ViewModels
   {
     #region Variables
 
-    private readonly Options _options = (ServiceLocator.Current.GetInstance(typeof(ISettingsManager)) as ISettingsManager)?.GetOptions;
-    private readonly NLogLogger log = (ServiceLocator.Current.GetInstance(typeof(ILogger)) as ILogger)?.GetLogger;
     private List<SongData> _songs;
 
     #endregion
 
     #region Properties
-
-    public Brush Background => (Brush)new BrushConverter().ConvertFromString(_options.MainSettings.BackGround);
 
     /// <summary>
     /// The Binding for the Parameters in the ComboBox
@@ -157,7 +153,6 @@ namespace MPTagThat.Dialogs.ViewModels
     {
       Title = LocalizeDictionary.Instance.GetLocalizedObject("MPTagThat", "Strings", "tagAndRename_Header_Rename",
         LocalizeDictionary.Instance.Culture).ToString();
-      CancelChangesCommand = new BaseCommand(CancelChanges);
       LabelClickedCommand = new BaseCommand(LabelClicked);
       Tag2FileNameCommand = new BaseCommand(Tag2FileNameApply);
       PreviewChangesCommand = new BaseCommand(PreviewChanges);
@@ -268,16 +263,6 @@ namespace MPTagThat.Dialogs.ViewModels
         log.Error("Error Replacing parameters in file: {0} stack: {1}", ex.Message, ex.StackTrace);
       }
       return fileName;
-    }
-
-    /// <summary>
-    /// Cancel Button has been clicked
-    /// </summary>
-    public ICommand CancelChangesCommand { get; }
-
-    private void CancelChanges(object parameters)
-    {
-      CloseDialog("false"); 
     }
 
     /// <summary>

@@ -18,10 +18,7 @@
 
 #region
 
-using CommonServiceLocator;
 using MPTagThat.Core.AlbumSearch;
-using MPTagThat.Core.Services.Settings;
-using MPTagThat.Core.Services.Settings.Setting;
 using Prism.Services.Dialogs;
 using System;
 using System.Collections.Generic;
@@ -33,16 +30,12 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Data;
 using System.Windows.Input;
-using System.Windows.Media;
-using Microsoft.VisualBasic.Logging;
 using MPTagThat.Core;
 using MPTagThat.Core.Annotations;
 using MPTagThat.Core.Common;
 using MPTagThat.Core.Common.Song;
 using MPTagThat.Core.Events;
-using MPTagThat.Core.Services.Logging;
 using WPFLocalizeExtension.Engine;
-using Brush = System.Windows.Media.Brush;
 
 #endregion
 
@@ -62,8 +55,6 @@ namespace MPTagThat.Dialogs.ViewModels
 
     #endregion
 
-    private readonly NLogLogger log = (ServiceLocator.Current.GetInstance(typeof(ILogger)) as ILogger)?.GetLogger;
-    private readonly Options _options = (ServiceLocator.Current.GetInstance(typeof(ISettingsManager)) as ISettingsManager)?.GetOptions;
     private readonly DelegateAlbumFound _albumFound;
     private readonly DelegateSearchFinished _searchFinished;
     private object _lock = new object();
@@ -76,8 +67,6 @@ namespace MPTagThat.Dialogs.ViewModels
     #endregion
 
     #region Properties
-
-    public Brush Background => (Brush)new BrushConverter().ConvertFromString(_options.MainSettings.BackGround);
 
     /// <summary>
     /// Binding for the Albums found
