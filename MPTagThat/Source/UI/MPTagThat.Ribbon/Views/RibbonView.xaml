@@ -206,9 +206,12 @@
                                   CommandParameter="{Binding Name ,RelativeSource={RelativeSource Self}}">
             <syncfusion:DropDownMenuItem x:Name="ButtonReplace" 
                                          Header="{lex:Loc ribbon_Replace}" 
-                                         Icon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_Replace_32x.png"
                                          Command="{Binding ExecuteRibbonCommand}" 
-                                         CommandParameter="{Binding Name ,RelativeSource={RelativeSource Self}}" />
+                                         CommandParameter="{Binding Name ,RelativeSource={RelativeSource Self}}" >
+              <syncfusion:DropDownMenuItem.Icon>
+                <Image Source="../Resources/Images/ribbon_Replace_16x.png"/>
+              </syncfusion:DropDownMenuItem.Icon>
+            </syncfusion:DropDownMenuItem>
             <syncfusion:SplitButton.ToolTip>
               <syncfusion:ScreenTip MinWidth="150" MaxWidth="400" Description="{lex:Loc ribbon_Find}" VerticalOffset="10" ImageSource="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_Find_32x.png">
                 <StackPanel Orientation="Vertical" Width="300">
@@ -232,9 +235,12 @@
                                   Command="{Binding ExecuteRibbonCommand}" 
                                   CommandParameter="{Binding Name ,RelativeSource={RelativeSource Self}}">
             <syncfusion:DropDownMenuItem x:Name="ButtonFixSong" Header="{lex:Loc ribbon_FixSong}" 
-                                         Icon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_FixSong_16x.png"
                                          Command="{Binding ExecuteRibbonCommand}" 
-                                         CommandParameter="{Binding Name ,RelativeSource={RelativeSource Self}}"/>
+                                         CommandParameter="{Binding Name ,RelativeSource={RelativeSource Self}}">
+              <syncfusion:DropDownMenuItem.Icon>
+                <Image Source="../Resources/Images/ribbon_FixedSong_32x.png"/>
+              </syncfusion:DropDownMenuItem.Icon>
+            </syncfusion:DropDownMenuItem>
             <syncfusion:SplitButton.ToolTip>
               <syncfusion:ScreenTip MinWidth="150" MaxWidth="400" Description="{lex:Loc ribbon_ValidateSong}" VerticalOffset="10" ImageSource="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_BrokenSong_32x.png">
                 <StackPanel Orientation="Vertical" Width="300">
@@ -260,13 +266,25 @@
                                   CommandParameter="{Binding Name ,RelativeSource={RelativeSource Self}}" >
             <syncfusion:DropDownMenuItem x:Name="ButtonDeleteAllTags" Header="{lex:Loc ribbon_DeleteAllTags}" 
                                          Command="{Binding ExecuteRibbonCommand}" 
-                                         CommandParameter="{Binding Name ,RelativeSource={RelativeSource Self}}" />
+                                         CommandParameter="{Binding Name ,RelativeSource={RelativeSource Self}}" >
+              <syncfusion:DropDownMenuItem.Icon>
+                <Image Source="../Resources/Images/ribbon_DeleteTags_32x.png"/>
+              </syncfusion:DropDownMenuItem.Icon>
+            </syncfusion:DropDownMenuItem>
             <syncfusion:DropDownMenuItem x:Name="ButtonDeleteV1Tags" Header="{lex:Loc ribbon_DeleteID3V1Tags}" 
                                          Command="{Binding ExecuteRibbonCommand}" 
-                                         CommandParameter="{Binding Name ,RelativeSource={RelativeSource Self}}" />
+                                         CommandParameter="{Binding Name ,RelativeSource={RelativeSource Self}}" >
+              <syncfusion:DropDownMenuItem.Icon>
+                <Image Source="../Resources/Images/ribbon_DeleteTagsV1_32x.png"/>
+              </syncfusion:DropDownMenuItem.Icon>
+            </syncfusion:DropDownMenuItem>
             <syncfusion:DropDownMenuItem x:Name="ButtonDeleteV2Tags" Header="{lex:Loc ribbon_DeleteID3V2Tags}" 
                                          Command="{Binding ExecuteRibbonCommand}" 
-                                         CommandParameter="{Binding Name ,RelativeSource={RelativeSource Self}}"/>
+                                         CommandParameter="{Binding Name ,RelativeSource={RelativeSource Self}}">
+              <syncfusion:DropDownMenuItem.Icon>
+                <Image Source="../Resources/Images/ribbon_DeleteTagsV2_32x.png"/>
+              </syncfusion:DropDownMenuItem.Icon>
+            </syncfusion:DropDownMenuItem>
             <syncfusion:SplitButton.ToolTip>
               <syncfusion:ScreenTip MinWidth="150" MaxWidth="400" Description="{lex:Loc ribbon_DeleteTags}" VerticalOffset="10" ImageSource="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_DeleteTags_32x.png">
                 <StackPanel Orientation="Vertical" Width="300">
