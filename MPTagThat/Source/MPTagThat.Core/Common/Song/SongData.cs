@@ -810,24 +810,7 @@ namespace MPTagThat.Core.Common.Song
 
         if (Pictures.Count > 0)
         {
-          try
-          {
-            var bitmapImage = new BitmapImage();
-            using (var stream = new MemoryStream(_pictures[indexFrontCover].Data))
-            {
-              stream.Seek(0, SeekOrigin.Begin);
-              bitmapImage.BeginInit();
-              bitmapImage.StreamSource = stream;
-              bitmapImage.CreateOptions = BitmapCreateOptions.PreservePixelFormat;
-              bitmapImage.CacheOption = BitmapCacheOption.OnLoad;
-              bitmapImage.EndInit();
-              return bitmapImage;
-            }
-          }
-          catch
-          {
-            return null;
-          }
+          return _pictures[indexFrontCover].ImageFromPic();
         }
         return null;
       }

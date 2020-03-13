@@ -172,6 +172,7 @@ namespace MPTagThat.Core.Common.Song
       {
         using (System.Net.WebClient webClient = new System.Net.WebClient())
         {
+          webClient.Headers.Add ("user-agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.132 Safari/537.36");
           using (Stream stream = webClient.OpenRead(url))
           {
             Data = ImageToByte((Image.FromStream(stream)));
@@ -188,7 +189,29 @@ namespace MPTagThat.Core.Common.Song
       return false;
     }
 
+    public BitmapImage ImageFromPic()
+    {
+      try
+      {
+        var bitmapImage = new BitmapImage();
+        using (var stream = new MemoryStream(Data))
+        {
+          stream.Seek(0, SeekOrigin.Begin);
+          bitmapImage.BeginInit();
+          bitmapImage.StreamSource = stream;
+          bitmapImage.CreateOptions = BitmapCreateOptions.PreservePixelFormat;
+          bitmapImage.CacheOption = BitmapCacheOption.OnLoad;
+          bitmapImage.EndInit();
+          return bitmapImage;
+        }
+      }
+      catch
+      {
+        return null;
+      }
+    }
 
+    
     public void Resize (int width)
     {
       FreeImageBitmap bmp = new FreeImageBitmap(ImageFromData(Data));

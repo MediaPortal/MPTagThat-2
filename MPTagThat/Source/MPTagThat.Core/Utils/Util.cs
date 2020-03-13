@@ -22,6 +22,7 @@ using System;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
+using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -373,7 +374,7 @@ namespace MPTagThat.Core.Utils
           var rating = new FrameworkElementFactory(typeof(SfRating));
           rating.SetValue(SfRating.PrecisionProperty, Precision.Standard);
           rating.SetValue(SfRating.ItemsCountProperty, 5);
-          rating.SetBinding(SfRating.ValueProperty, new Binding {Path=new PropertyPath("Rating"), Mode=BindingMode.TwoWay });
+          rating.SetBinding(SfRating.ValueProperty, new Binding { Path = new PropertyPath("Rating"), Mode = BindingMode.TwoWay });
 
           var itemStyle = new Style();
           itemStyle.Setters.Add(new Setter(SfRatingItem.HeightProperty, 17d));
@@ -403,7 +404,7 @@ namespace MPTagThat.Core.Utils
         column.HeaderText = "";
         column.Width = 25;
         column.TextAlignment = TextAlignment.Center;
-        var binding = new Binding("Status") {Converter = new SongStatusToImageConverter()};
+        var binding = new Binding("Status") { Converter = new SongStatusToImageConverter() };
         column.ValueBinding = binding;
 
         // Bind the tooltip for the column to StatusMsg
@@ -416,12 +417,12 @@ namespace MPTagThat.Core.Utils
       {
         case "text":
         case "process":
-        //  column.ValueType = typeof(string);
+          //  column.ValueType = typeof(string);
           break;
         case "number":
         case "check":
         case "rating":
-        //  column.ValueType = typeof(int);
+          //  column.ValueType = typeof(int);
           break;
       }
 
@@ -764,6 +765,66 @@ namespace MPTagThat.Core.Utils
       return ret;
     }
 
+    /// <summary>
+    /// Extracts selected Html fragment string from clipboard data by parsing header information 
+    /// in htmlDataString
+    /// </summary>
+    /// <param name="htmlDataString">
+    /// String representing Html clipboard data. This includes Html header
+    /// </param>
+    /// <returns>
+    /// String containing only the Html selection part of htmlDataString, without header
+    /// </returns>
+    public static string ExtractHtmlFragmentFromClipboardData(string htmlDataString)
+    {
+      // HTML Clipboard Format
+      // (https://msdn.microsoft.com/en-us/library/aa767917(v=vs.85).aspx)
+
+      // The fragment contains valid HTML representing the area the user has selected. This 
+      // includes the information required for basic pasting of an HTML fragment, as follows:
+      //  - Selected text. 
+      //  - Opening tags and attributes of any element that has an end tag within the selected text. 
+      //  - End tags that match the included opening tags. 
+
+      // The fragment should be preceded and followed by the HTML comments <!--StartFragment--> and 
+      // <!--EndFragment--> (no space allowed between the !-- and the text) to indicate where the 
+      // fragment starts and ends. So the start and end of the fragment are indicated by these 
+      // comments as well as by the StartFragment and EndFragment byte counts. Though redundant, 
+      // this makes it easier to find the start of the fragment (from the byte count) and mark the 
+      // position of the fragment directly in the HTML tree.
+
+      // Byte count from the beginning of the clipboard to the start of the fragment.
+      int startFragmentIndex = htmlDataString.IndexOf("StartFragment:");
+      if (startFragmentIndex < 0)
+      {
+        return "ERROR: Unrecognized html header";
+      }
+      // TODO: We assume that indices represented by strictly 10 zeros ("0123456789".Length),
+      // which could be wrong assumption. We need to implement more flrxible parsing here
+      startFragmentIndex = Int32.Parse(htmlDataString.Substring(startFragmentIndex + "StartFragment:".Length, 10));
+      if (startFragmentIndex < 0 || startFragmentIndex > htmlDataString.Length)
+      {
+        return "ERROR: Unrecognized html header";
+      }
+
+      // Byte count from the beginning of the clipboard to the end of the fragment.
+      int endFragmentIndex = htmlDataString.IndexOf("EndFragment:");
+      if (endFragmentIndex < 0)
+      {
+        return "ERROR: Unrecognized html header";
+      }
+      // TODO: We assume that indices represented by strictly 10 zeros ("0123456789".Length),
+      // which could be wrong assumption. We need to implement more flrxible parsing here
+      endFragmentIndex = Int32.Parse(htmlDataString.Substring(endFragmentIndex + "EndFragment:".Length, 10));
+      if (endFragmentIndex > htmlDataString.Length)
+      {
+        endFragmentIndex = htmlDataString.Length;
+      }
+
+      // CF_HTML is entirely text format and uses the transformation format UTF-8
+      byte[] bytes = Encoding.UTF8.GetBytes(htmlDataString);
+      return Encoding.UTF8.GetString(bytes, startFragmentIndex, endFragmentIndex - startFragmentIndex);
+    }
     #endregion
 
     #region Tag And Rename Parameter related methods
@@ -987,7 +1048,7 @@ namespace MPTagThat.Core.Utils
       }
       return label;
     }
-    
+
     /// <summary>
     ///   Replace the given Parameter string with the values from the Track
     /// </summary>
@@ -996,7 +1057,7 @@ namespace MPTagThat.Core.Utils
     /// <returns></returns>
     public static string ReplaceParametersWithTrackValues(string parameter, SongData song)
     {
-      string replacedString = parameter.Trim(new[] {'\\'});
+      string replacedString = parameter.Trim(new[] { '\\' });
 
       try
       {
@@ -1126,8 +1187,8 @@ namespace MPTagThat.Core.Utils
     private static string ReplaceStringWithLengthIndicator(int startIndex, string replaceString, string replaceValue)
     {
       // Check if we have a numeric Parameter as replace value
-      var numberParameters = new string[] {"%t", "%d"};
-      var isNumericParm = Array.IndexOf(numberParameters, replaceString.Substring(startIndex,2), startIndex) == 0;
+      var numberParameters = new string[] { "%t", "%d" };
+      var isNumericParm = Array.IndexOf(numberParameters, replaceString.Substring(startIndex, 2), startIndex) == 0;
       var last = replaceString.IndexOf("%", startIndex + 1);
       var s1 = replaceString.Substring(startIndex, last - startIndex + 1);
       var s2 = replaceString.Substring(replaceString.IndexOf(":") + 1, last - replaceString.IndexOf(":") - 1);
@@ -1199,13 +1260,13 @@ namespace MPTagThat.Core.Utils
           return false;
         }
 
-        index = str.IndexOf("%disc:"); 
+        index = str.IndexOf("%disc:");
         if (index > -1 && !CheckParmWithLengthIndicator(index, str, out str))
         {
           return false;
         }
 
-        index = str.IndexOf("%disctotal:"); 
+        index = str.IndexOf("%disctotal:");
         if (index > -1 && !CheckParmWithLengthIndicator(index, str, out str))
         {
           return false;
@@ -1231,10 +1292,10 @@ namespace MPTagThat.Core.Utils
 
       if (formattype == Options.ParameterFormat.FileNameToTag)
       {
-        str = str.Replace("%x%", "\x0001"); 
+        str = str.Replace("%x%", "\x0001");
       }
 
-      if (str.IndexOf("%") >= 0 || (str.IndexOf("\x0001\x0001") >= 0 && 
+      if (str.IndexOf("%") >= 0 || (str.IndexOf("\x0001\x0001") >= 0 &&
                                      formattype == Options.ParameterFormat.FileNameToTag))
         return false;
 

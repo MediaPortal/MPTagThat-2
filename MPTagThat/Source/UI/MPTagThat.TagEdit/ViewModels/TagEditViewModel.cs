@@ -42,6 +42,7 @@ using MPTagThat.Core.Utils;
 using Prism.Events;
 using Prism.Mvvm;
 using Prism.Regions;
+using Syncfusion.Windows.Shared;
 using TagLib;
 using Action = MPTagThat.Core.Common.Action;
 using File = System.IO.File;
@@ -54,7 +55,7 @@ using TextBox = System.Windows.Controls.TextBox;
 
 namespace MPTagThat.TagEdit.ViewModels
 {
-  public class TagEditViewModel : BindableBase, INavigationAware
+  public class TagEditViewModel : BindableBase, INavigationAware, IDragDropTarget
   {
     #region Variables
 
@@ -1358,7 +1359,7 @@ namespace MPTagThat.TagEdit.ViewModels
     #region Interface
 
     /// <summary>
-    /// This metzhod is invoked, if a song is selected in the Songgrid
+    /// This method is invoked, if a song is selected in the Songgrid
     /// </summary>
     /// <param name="navigationContext"></param>
     public void OnNavigatedTo(NavigationContext navigationContext)
@@ -1389,6 +1390,47 @@ namespace MPTagThat.TagEdit.ViewModels
     public void OnNavigatedFrom(NavigationContext navigationContext)
     {
       // Clear the view
+    }
+
+    public void OnFileDrop(string[] filepaths)
+    {
+      if (filepaths.Length > 0)
+      {
+        var pic = new Picture(filepaths[0]) {Type = PictureType.FrontCover};
+        UpdatePictures(pic);
+      }
+    }
+
+    public void OnHtmlDrop(object html)
+    {
+      var fragment = Util.ExtractHtmlFragmentFromClipboardData((string) html);
+      if (fragment.StartsWith("<img"))
+      {
+        var start = fragment.IndexOf("src=\"", StringComparison.Ordinal);
+        if (start > -1)
+        {
+          start = start + "src=\"".Length;
+          var url = fragment.Substring(start, fragment.IndexOf('"', start) - start);
+          var pic = new Picture {Type = PictureType.FrontCover};
+          if (pic.ImageFromUrl(url))
+          {
+            UpdatePictures(pic);
+          }
+        }
+      }
+    }
+    
+    private void UpdatePictures(Picture pic)
+    {
+      FrontCover = pic.ImageFromPic();
+      foreach (var song in _songs)
+      {
+        if (CkRemovePicturesIsChecked)
+        {
+          song.Pictures.Clear();
+        }
+        song.Pictures.Insert(0, pic);
+      }
     }
 
     #endregion
