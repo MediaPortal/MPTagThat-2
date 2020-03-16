@@ -80,8 +80,9 @@
     <Reference Include="Raven.Database, Version=3.5.5.0, Culture=neutral, PublicKeyToken=37f41c7f99471593, processorArchitecture=MSIL">
       <HintPath>..\packages\RavenDB.Database.3.5.5\lib\net45\Raven.Database.dll</HintPath>
     </Reference>
-    <Reference Include="RestSharp, Version=106.0.0.0, Culture=neutral, PublicKeyToken=598062e77f915f75, processorArchitecture=MSIL">
-      <HintPath>..\packages\RestSharp.106.10.1\lib\net452\RestSharp.dll</HintPath>
+    <Reference Include="RestSharp, Version=106.3.0.0, Culture=neutral, PublicKeyToken=598062e77f915f75, processorArchitecture=MSIL">
+      <HintPath>..\packages\RestSharp.106.3.0\lib\net452\RestSharp.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="RestSharpHelper, Version=1.1.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\RestSharpHelper.1.1.1\lib\net461\RestSharpHelper.dll</HintPath>

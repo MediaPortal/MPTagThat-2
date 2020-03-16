@@ -1357,6 +1357,15 @@ namespace MPTagThat.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Cover Art for the selected songs is search on the various selected sites.
+        /// </summary>
+        public static string screentip_GetCoverArtText {
+            get {
+                return ResourceManager.GetString("screentip_GetCoverArtText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Lyrics for the selected songs is searched on various Lyrics sources checked in the dialog..
         /// </summary>
         public static string screentip_GetLyricsText {

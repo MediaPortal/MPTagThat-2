@@ -163,6 +163,37 @@
         </syncfusion:RibbonBar>
 
         <syncfusion:RibbonBar Name="RibbonBarEditTags" Header="{lex:Loc ribbon_EditTags}">
+
+          <syncfusion:RibbonButton x:Name="ButtonGetCoverArt" SizeForm="Large" 
+                                   Label="{lex:Loc ribbon_GetCoverArt}" 
+                                   LargeIcon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_CoverArt_32x.png" 
+                                   SmallIcon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_CoverArt_16x.png" 
+                                   Command="{Binding ExecuteRibbonCommand}" 
+                                   CommandParameter="{Binding Name ,RelativeSource={RelativeSource Self}}">
+            <syncfusion:RibbonButton.ToolTip>
+              <syncfusion:ScreenTip MinWidth="150" MaxWidth="400" Description="{lex:Loc ribbon_GetCoverArt}" VerticalOffset="10" ImageSource="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_CoverArt_32x.png">
+                <StackPanel Orientation="Vertical" Width="300">
+                  <TextBlock Text="{lex:Loc screentip_GetCoverArtText}" TextWrapping="Wrap" />
+                </StackPanel>
+              </syncfusion:ScreenTip>
+            </syncfusion:RibbonButton.ToolTip>
+          </syncfusion:RibbonButton>
+
+          <syncfusion:RibbonButton x:Name="ButtonGetLyrics" SizeForm="Large" 
+                                   Label="{lex:Loc ribbon_GetLyrics}" 
+                                   LargeIcon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_Lyrics_32x.png" 
+                                   SmallIcon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_Lyrics_16x.png" 
+                                   Command="{Binding ExecuteRibbonCommand}" 
+                                   CommandParameter="{Binding Name ,RelativeSource={RelativeSource Self}}">
+            <syncfusion:RibbonButton.ToolTip>
+              <syncfusion:ScreenTip MinWidth="150" MaxWidth="400" Description="{lex:Loc ribbon_GetLyrics}" VerticalOffset="10" ImageSource="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_Lyrics_32x.png">
+                <StackPanel Orientation="Vertical" Width="300">
+                  <TextBlock Text="{lex:Loc screentip_GetLyricsText}" TextWrapping="Wrap" />
+                </StackPanel>
+              </syncfusion:ScreenTip>
+            </syncfusion:RibbonButton.ToolTip>
+          </syncfusion:RibbonButton>
+          
           <syncfusion:SplitButton x:Name="ButtonCaseConversion" SizeForm="Large" 
                                   Label="{lex:Loc ribbon_CaseConversionMenu}" 
                                   LargeIcon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_CaseConversion_32x.png" 
@@ -180,21 +211,6 @@
               </syncfusion:ScreenTip>
             </syncfusion:SplitButton.ToolTip>
           </syncfusion:SplitButton>
-
-          <syncfusion:RibbonButton x:Name="ButtonGetLyrics" SizeForm="Large" 
-                                   Label="{lex:Loc ribbon_GetLyrics}" 
-                                   LargeIcon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_Lyrics_32x.png" 
-                                   SmallIcon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_Lyrics_16x.png" 
-                                   Command="{Binding ExecuteRibbonCommand}" 
-                                   CommandParameter="{Binding Name ,RelativeSource={RelativeSource Self}}">
-            <syncfusion:RibbonButton.ToolTip>
-              <syncfusion:ScreenTip MinWidth="150" MaxWidth="400" Description="{lex:Loc ribbon_GetLyrics}" VerticalOffset="10" ImageSource="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_Lyrics_32x.png">
-                <StackPanel Orientation="Vertical" Width="300">
-                  <TextBlock Text="{lex:Loc screentip_GetLyricsText}" TextWrapping="Wrap" />
-                </StackPanel>
-              </syncfusion:ScreenTip>
-            </syncfusion:RibbonButton.ToolTip>
-          </syncfusion:RibbonButton>
 
           <syncfusion:RibbonSeparator/>
 

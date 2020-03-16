@@ -1185,4 +1185,7 @@
   <data name="screentip_ValidateSongText" xml:space="preserve">
     <value>Uses MP3Val to validate the correctness of the selected MP3 File. Some errors may be fixed using the "Fix MP3" Button</value>
   </data>
+  <data name="screentip_GetCoverArtText" xml:space="preserve">
+    <value>Cover Art for the selected songs is search on the various selected sites</value>
+  </data>
 </root>

@@ -301,6 +301,10 @@ namespace MPTagThat.Ribbon.ViewModels
           type = Action.ActionType.FILENAME2TAG;
           break;
 
+        case "ButtonGetCoverArt":
+          type = Action.ActionType.GETCOVERART;
+          break;
+
         case "ButtonGetLyrics":
           type = Action.ActionType.GETLYRICS;
           break;
