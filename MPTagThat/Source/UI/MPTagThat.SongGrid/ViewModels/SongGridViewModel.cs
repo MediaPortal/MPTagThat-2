@@ -52,6 +52,7 @@ using MPTagThat.Dialogs.ViewModels;
 using Action = MPTagThat.Core.Common.Action;
 using Prism.Services.Dialogs;
 using Application = System.Windows.Forms.Application;
+using Cursors = System.Windows.Input.Cursors;
 using MessageBox = System.Windows.MessageBox;
 // ReSharper disable ForCanBeConvertedToForeach
 
@@ -78,10 +79,9 @@ namespace MPTagThat.SongGrid.ViewModels
     private bool _progressCancelled = false;
     private bool _folderScanInProgress = false;
 
-    private BackgroundWorker _bgWorker;
+    private readonly System.Windows.Input.Cursor _numberOnClickCursor = new System.Windows.Input.Cursor(System.Windows.Application.GetResourceStream(new Uri("pack://application:,,,/MPTagThat;component/Resources/Images/CursorNumbering.cur")).Stream);
 
-    public delegate void CommandThreadEnd(object sender, EventArgs args);
-    public event CommandThreadEnd CommandThreadEnded;
+    private BackgroundWorker _bgWorker;
 
     #endregion
 
@@ -101,7 +101,7 @@ namespace MPTagThat.SongGrid.ViewModels
 
       _songs = new BindingList<SongData>();
       ItemsSourceDataCommand = new BaseCommand(SetItemsSource);
-      _selectionChangedCommand = new BaseCommand(SelectionChanged);
+      SelectionChangedCommand = new BaseCommand(SelectionChanged);
 
       EventSystem.Subscribe<GenericEvent>(OnMessageReceived, ThreadOption.UIThread);
       BindingOperations.EnableCollectionSynchronization(Songs, _lock);
@@ -111,6 +111,17 @@ namespace MPTagThat.SongGrid.ViewModels
     #endregion
 
     #region Properties
+
+    private System.Windows.Input.Cursor _customCursor;
+
+    /// <summary>
+    /// Custom Cursor object
+    /// </summary>
+    public System.Windows.Input.Cursor CustomCursor
+    {
+      get => _customCursor;
+      set => SetProperty(ref _customCursor, value);
+    }
 
     /// <summary>
     /// Reference to SongGrid. Set from code behind
@@ -171,8 +182,7 @@ namespace MPTagThat.SongGrid.ViewModels
 
     public BaseCommand ItemsSourceDataCommand { get; set; }
 
-    private ICommand _selectionChangedCommand;
-    public ICommand SelectionChangedCommand => _selectionChangedCommand;
+    public ICommand SelectionChangedCommand { get; }
 
     private void SelectionChanged(object param)
     {
@@ -180,6 +190,17 @@ namespace MPTagThat.SongGrid.ViewModels
       {
         SelectedItems = (ObservableCollection<object>)param;
         var songs = SelectedItems.Cast<SongData>().ToList();
+        // Handle Numberonclicked
+        if (_options.NumberOnclick && songs.Count == 1)
+        {
+          songs[0].TrackNumber = (uint) _options.AutoNumber;
+          _options.AutoNumber++;
+          GenericEvent evt = new GenericEvent
+          {
+            Action = "autonumberchanged"
+          };
+          EventSystem.Publish(evt);
+        }
         var parameters = new NavigationParameters();
         parameters.Add("songs", songs);
         _regionManager.RequestNavigate("TagEdit", "TagEditView", parameters);
@@ -621,14 +642,17 @@ namespace MPTagThat.SongGrid.ViewModels
       }
 
       // Do Command Post Processing
-      foreach (var song in Songs)
+      if (commandObj.NeedsPostprocessing)
       {
-        commandObj.PostProcess(song);
+        foreach (var song in Songs)
+        {
+          commandObj.PostProcess(song);
+        }
       }
 
-      if (CommandThreadEnded != null && commandObj.NeedsCallback)
+      if (commandObj.NeedsCallback)
       {
-        CommandThreadEnded(this, new EventArgs());
+        commandObj.CmdCallback();
       }
 
       msg.MinValue = 0;
@@ -663,6 +687,7 @@ namespace MPTagThat.SongGrid.ViewModels
         Action.ActionType.IDENTIFYFILE,
         Action.ActionType.VALIDATEMP3,
         Action.ActionType.FIXMP3,
+        Action.ActionType.AUTONUMBER,
       };
 
     private void OnMessageReceived(GenericEvent msg)
@@ -681,7 +706,21 @@ namespace MPTagThat.SongGrid.ViewModels
 
         case "command":
 
-          var command = (Action.ActionType) msg.MessageData["command"];
+          var command = (Action.ActionType)msg.MessageData["command"];
+
+          if (command == Action.ActionType.NUMBERONCLICK)
+          {
+            if (_options.NumberOnclick)
+            {
+              CustomCursor = _numberOnClickCursor;
+            }
+            else
+            {
+              CustomCursor = Cursors.Arrow;
+            }
+
+            return;
+          }
 
           // Select all songs, except for Find & Replace
           if (SelectedItems.Count == 0 && (command != Action.ActionType.FIND && command != Action.ActionType.REPLACE))

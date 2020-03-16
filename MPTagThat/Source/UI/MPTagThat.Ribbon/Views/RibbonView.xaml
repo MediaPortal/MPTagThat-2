@@ -370,16 +370,10 @@
           </syncfusion:ButtonPanel>
 
           <syncfusion:ButtonPanel SeparatorVisibility="Hidden" Height="25">
-            <syncfusion:RibbonButton x:Name="ButtonAutoNumber" SizeForm="Small" Label="" SmallIcon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_AutoNumber_32x.png" >
-              <syncfusion:RibbonButton.ToolTip>
-                <syncfusion:ScreenTip MinWidth="150" MaxWidth="400" Description="{lex:Loc ribbon_AutoNumber}" VerticalOffset="10" ImageSource="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_AutoNumber_32x.png">
-                  <StackPanel Orientation="Vertical" Width="300">
-                    <TextBlock Text="{lex:Loc screentip_AutoNumberText}" TextWrapping="Wrap" />
-                  </StackPanel>
-                </syncfusion:ScreenTip>
-              </syncfusion:RibbonButton.ToolTip>
-            </syncfusion:RibbonButton>
-            <syncfusion:RibbonButton x:Name="ButtonNumberOnClick" SizeForm="Small" Label="" SmallIcon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_NumberOnClick_32x.png" >
+            <syncfusion:RibbonButton x:Name="ButtonNumberOnClick" SizeForm="Small" Label="" IsToggle="True" IsSelected="{Binding ToggleNumberOnClick, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                     SmallIcon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_NumberOnClick_32x.png"  
+                                     Command="{Binding ExecuteRibbonCommand}" 
+                                     CommandParameter="{Binding Name ,RelativeSource={RelativeSource Self}}">
               <syncfusion:RibbonButton.ToolTip>
                 <syncfusion:ScreenTip MinWidth="150" MaxWidth="400" Description="{lex:Loc ribbon_NumberOnClick}" VerticalOffset="10" ImageSource="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_NumberOnClick_32x.png">
                   <StackPanel Orientation="Vertical" Width="300">
@@ -388,7 +382,21 @@
                 </syncfusion:ScreenTip>
               </syncfusion:RibbonButton.ToolTip>
             </syncfusion:RibbonButton>
-            <syncfusion:IntegerTextBox x:Name="TextBoxNumberOnClick" HorizontalAlignment="Left" Height="20" VerticalAlignment="Top" Width="25" MinValue="1" MaxValue="99999" />
+            <syncfusion:RibbonButton x:Name="ButtonAutoNumber" SizeForm="Small" Label="" 
+                                     SmallIcon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_AutoNumber_32x.png" Margin="2,0,0,0"
+                                     Command="{Binding ExecuteRibbonCommand}" 
+                                     CommandParameter="{Binding Name ,RelativeSource={RelativeSource Self}}" >
+              <syncfusion:RibbonButton.ToolTip>
+                <syncfusion:ScreenTip MinWidth="150" MaxWidth="400" Description="{lex:Loc ribbon_AutoNumber}" VerticalOffset="10" ImageSource="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_AutoNumber_32x.png">
+                  <StackPanel Orientation="Vertical" Width="300">
+                    <TextBlock Text="{lex:Loc screentip_AutoNumberText}" TextWrapping="Wrap" />
+                  </StackPanel>
+                </syncfusion:ScreenTip>
+              </syncfusion:RibbonButton.ToolTip>
+            </syncfusion:RibbonButton>
+            <syncfusion:IntegerTextBox x:Name="TextBoxNumberOnClick" HorizontalAlignment="Left" Height="20" VerticalAlignment="Top" Width="25" 
+                                       Text="{Binding AutoNumberValue, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                       MinValue="1" MaxValue="99999" Margin="2,3,0,0" />
           </syncfusion:ButtonPanel>
         </syncfusion:RibbonBar>
 

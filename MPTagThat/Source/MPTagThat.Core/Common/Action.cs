@@ -51,6 +51,8 @@ namespace MPTagThat.Core.Common
       DELETEV1TAGS = 62,
       DELETEV2TAGS = 63,
       BPM = 64,
+      AUTONUMBER = 65,
+      NUMBERONCLICK = 66,
     }
 
     #endregion
@@ -134,6 +136,10 @@ namespace MPTagThat.Core.Common
         case Action.ActionType.BPM:
           checkSelections = true;
           return "Bpm";
+
+        case Action.ActionType.AUTONUMBER:
+          checkSelections = true;
+          return "AutoNumber";
 
         default:
           return "";

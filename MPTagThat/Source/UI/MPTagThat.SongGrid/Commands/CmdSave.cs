@@ -51,6 +51,7 @@ namespace MPTagThat.SongGrid.Commands
     public CmdSave(object[] parameters)
     {
       Parameters = parameters;
+      NeedsPostprocessing = true;
 
       if ((string)parameters[0] == "SaveAll")
       {

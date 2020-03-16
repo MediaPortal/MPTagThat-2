@@ -114,6 +114,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Commands\CmdAutoNumber.cs" />
     <Compile Include="Commands\CmdBpm.cs" />
     <Compile Include="Commands\CmdCaseConversion.cs" />
     <Compile Include="Commands\CmdDeleteTags.cs" />

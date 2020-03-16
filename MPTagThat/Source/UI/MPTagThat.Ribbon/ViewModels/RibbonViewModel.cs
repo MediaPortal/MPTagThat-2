@@ -32,6 +32,7 @@ using MPTagThat.Core.Services.Logging;
 using MPTagThat.Core.Services.ScriptManager;
 using MPTagThat.Core.Services.Settings;
 using MPTagThat.Core.Services.Settings.Setting;
+using Prism.Events;
 using Prism.Mvvm;
 using Prism.Regions;
 using Syncfusion.SfSkinManager;
@@ -64,6 +65,8 @@ namespace MPTagThat.Ribbon.ViewModels
       DeleteLayoutCommand = new BaseCommand(DeleteLayout);
       ExecuteRibbonCommand = new BaseCommand(RibbonCommand);
       ExitCommand = new BaseCommand(Exit);
+
+      EventSystem.Subscribe<GenericEvent>(OnMessageReceived, ThreadOption.UIThread);
 
       Initialise();
     }
@@ -185,6 +188,27 @@ namespace MPTagThat.Ribbon.ViewModels
         _options.MainSettings.DebugLevel = value;
       }
     }
+
+    private bool _toggleNumberOnClick;
+
+    public bool ToggleNumberOnClick
+    {
+      get => _toggleNumberOnClick;
+      set => SetProperty(ref _toggleNumberOnClick, value);
+    }
+
+    private int _autoNumberValue;
+
+    public int AutoNumberValue
+    {
+      get => _autoNumberValue;
+      set
+      {
+        SetProperty(ref _autoNumberValue, value);
+        _options.AutoNumber = value;
+      }
+    }
+
     #endregion
 
     #region Command Handling
@@ -325,6 +349,18 @@ namespace MPTagThat.Ribbon.ViewModels
           type = Action.ActionType.REPLACE;
           runAsync = false;
           break;
+
+        case "ButtonAutoNumber":
+          type = Action.ActionType.AUTONUMBER;
+          _options.AutoNumber = AutoNumberValue;
+          runAsync = false;
+          break;
+
+        case "ButtonNumberOnClick":
+          _options.NumberOnclick = ToggleNumberOnClick;
+          _options.AutoNumber = AutoNumberValue;
+          type = Action.ActionType.NUMBERONCLICK;
+          break;
       }
 
       if (type != Action.ActionType.INVALID)
@@ -392,6 +428,20 @@ namespace MPTagThat.Ribbon.ViewModels
       AlternateRowColor = _options.MainSettings.AlternateRowColor;
 
       log.Trace(">>>");
+    }
+
+    #endregion
+
+    #region Event Handling
+
+    private void OnMessageReceived(GenericEvent msg)
+    {
+      switch (msg.Action.ToLower())
+      {
+        case "autonumberchanged":
+          AutoNumberValue = _options.AutoNumber;
+          break;
+      }
     }
 
     #endregion

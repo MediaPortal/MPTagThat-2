@@ -53,6 +53,8 @@
                            SelectionMode="Extended" 
                            EnableDataVirtualization="True" 
                            ShowBusyIndicator="True" 
+                           Cursor="{Binding CustomCursor, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                           ForceCursor="True"
                            AlternatingRowStyle="{StaticResource AlternatingRowStyle}" 
                            RowStyle="{StaticResource ChangedRowStyle}" >
       

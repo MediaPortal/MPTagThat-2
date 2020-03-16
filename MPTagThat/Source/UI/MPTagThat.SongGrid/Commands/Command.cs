@@ -44,6 +44,7 @@ namespace MPTagThat.SongGrid.Commands
     #region Public Properties
 
     public bool NeedsPreprocessing { get; set; }
+    public bool NeedsPostprocessing { get; set; }
     public bool NeedsCallback { get; set; }
     public IDialogService DialogService { get; set; }
 
@@ -76,6 +77,11 @@ namespace MPTagThat.SongGrid.Commands
     public virtual bool PostProcess(SongData song)
     {
       return false;
+    }
+
+    public virtual void CmdCallback()
+    {
+
     }
 
     /// <summary>

@@ -49,6 +49,7 @@ namespace MPTagThat.SongGrid.Commands
     #region ctor
     public CmdReplayGain(object[] parameters)
     {
+      NeedsPostprocessing = true;
       Parameters = parameters;
       var commandParmObj = (object[])parameters[1];
       if (commandParmObj.Length > 0)
