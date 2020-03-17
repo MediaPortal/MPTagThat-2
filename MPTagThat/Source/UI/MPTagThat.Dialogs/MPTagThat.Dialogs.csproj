@@ -114,6 +114,7 @@
     <Compile Include="ViewModels\ParameterPart.cs" />
     <Compile Include="ViewModels\Tag2FileNameViewModel.cs" />
     <Compile Include="ViewModels\TagFormat.cs" />
+    <Compile Include="ViewModels\TagFromInternetViewModel.cs" />
     <Compile Include="Views\AlbumCoverSearchView.xaml.cs">
       <DependentUpon>AlbumCoverSearchView.xaml</DependentUpon>
     </Compile>
@@ -140,6 +141,9 @@
     </Compile>
     <Compile Include="Views\Tag2FileNameView.xaml.cs">
       <DependentUpon>Tag2FileNameView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TagFromInternetView.xaml.cs">
+      <DependentUpon>TagFromInternetView.xaml</DependentUpon>
     </Compile>
     <None Include="app.config" />
     <None Include="packages.config" />
@@ -178,6 +182,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Tag2FileNameView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\TagFromInternetView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

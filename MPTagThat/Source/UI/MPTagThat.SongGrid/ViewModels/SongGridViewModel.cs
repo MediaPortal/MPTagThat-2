@@ -865,6 +865,12 @@ namespace MPTagThat.SongGrid.ViewModels
             return;
           }
 
+          if (command == Action.ActionType.TAGFROMINTERNET)
+          {
+            _dialogService.ShowDialogInAnotherWindow("TagFromInternetView", "DialogWindowView", parameters, null);
+            return;
+          }
+
           break;
 
         case "applicationclosing":

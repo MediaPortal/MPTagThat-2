@@ -1,0 +1,180 @@
+﻿<UserControl x:Class="MPTagThat.Dialogs.Views.TagFromInternetView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:prism="http://prismlibrary.com/"
+             prism:ViewModelLocator.AutoWireViewModel="True"
+             xmlns:syncfusion="http://schemas.syncfusion.com/wpf" 
+             xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
+             xmlns:core="clr-namespace:MPTagThat.Core.Common.Converter;assembly=MPTagThat.Core"
+             xmlns:lex="http://wpflocalizeextension.codeplex.com"
+             lex:LocalizeDictionary.DesignCulture="en"
+             lex:ResxLocalizationProvider.DefaultAssembly="MPTagThat"
+             lex:ResxLocalizationProvider.DefaultDictionary="Strings"
+             mc:Ignorable="d" d:DesignWidth="818" d:DesignHeight="822" >
+
+  <prism:Dialog.WindowStyle>
+    <Style TargetType="Window">
+      <Setter Property="prism:Dialog.WindowStartupLocation" Value="CenterScreen" />
+      <Setter Property="ResizeMode" Value="NoResize"/>
+      <Setter Property="ShowInTaskbar" Value="False"/>
+      <Setter Property="SizeToContent" Value="WidthAndHeight"/>
+    </Style>
+  </prism:Dialog.WindowStyle>
+
+  <UserControl.Resources>
+    <core:BusyToCursorConverter x:Key="busyToCursorConverter" />
+    <core:InvertBoolConverter x:Key="invertBoolConverter" />
+  </UserControl.Resources>
+
+  <UserControl.Cursor>
+    <Binding Path="DataContext.IsBusy" RelativeSource="{RelativeSource Self}" Converter="{StaticResource busyToCursorConverter}" />
+  </UserControl.Cursor>
+
+  <Border Background="{Binding Background}"  BorderBrush="LightGray" BorderThickness="3" CornerRadius="5" >
+    <Grid x:Name="LayoutRoot" Margin="5">
+      <Grid.RowDefinitions>
+        <RowDefinition Height="60" />
+        <RowDefinition Height="25" />
+        <RowDefinition Height="Auto" />
+        <RowDefinition Height="400" />
+        <RowDefinition Height="Auto" />
+        <RowDefinition Height="Auto" />
+      </Grid.RowDefinitions>
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width = "800" />
+      </Grid.ColumnDefinitions>
+
+      <!-- Header -->
+      <Canvas x:Name="Logo" Grid.Row="0"  RenderTransformOrigin="0.5,0.5" Margin="5,0,0,0" >
+        <TextBlock Text="{Binding Title}" TextWrapping="NoWrap" Foreground="#FFC4CFD6" FontSize="30" Opacity="0.85" Canvas.Left="0" Canvas.Top="5" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Height="50" TextAlignment="Left" FontWeight="Bold" />
+      </Canvas>
+
+      <!-- Status Line -->
+      <StackPanel  Grid.Row="1" Margin="5,0,0,0" Orientation="Horizontal">
+        <TextBlock  Text="{Binding StatusMsg}"  />
+        <ComboBox ItemsSource="{Binding SitesWithAlbums, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                  SelectedIndex="{Binding SelectedAlbumSite, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                  Width="200" Margin="5,0,0,0" >
+          <b:Interaction.Triggers>
+            <b:EventTrigger EventName="SelectionChanged">
+              <b:InvokeCommandAction Command="{Binding SelectedAlbumSiteChangedCommand}" />
+            </b:EventTrigger>
+          </b:Interaction.Triggers>
+        </ComboBox>
+      </StackPanel>
+
+      <!-- Artist and Album Information -->
+      <Grid Grid.Row="2" Margin="5" >
+        <Grid.RowDefinitions>
+          <RowDefinition/>
+          <RowDefinition/>
+          <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition Width="100"/>
+          <ColumnDefinition Width="350" />
+          <ColumnDefinition Width = "90" />
+        </Grid.ColumnDefinitions>
+        <Label Grid.Row="0" Grid.Column="0" Content="{lex:Loc tagEdit_Artist}" />
+        <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding Artist, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Height="27" />
+
+        <syncfusion:ButtonAdv Grid.Row="0" Grid.Column="2" Label="{lex:Loc dialog_Search}" HorizontalAlignment="Left"  Width="80" Margin="5"
+                              SmallIcon="pack://application:,,,/MPTagThat;component/Resources/Images/Lens_32x.png" 
+                              Command="{Binding SearchCommand}"
+                              IsEnabled="{Binding IsSearchButtonEnabled, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+
+        <Label Grid.Row="1" Grid.Column="0" Content="{lex:Loc tagEdit_Album}" />
+        <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Album, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+
+        <Grid Grid.Row="2" Grid.Column="0" ColumnSpan="3" Margin="0,2,0,0">
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="100"/>
+            <ColumnDefinition Width="100" />
+          </Grid.ColumnDefinitions>
+          <Label Grid.Column="0" Content="{lex:Loc tagEdit_Year}" />
+          <TextBox Grid.Column="1" Text="{Binding Year, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+        </Grid>
+      </Grid>
+
+      <!-- Songs  -->
+      <Grid Grid.Row="3" Margin="5,5,0,5">
+        <Grid.RowDefinitions>
+          <RowDefinition Height="Auto"/>
+          <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition Width="350"/>
+          <ColumnDefinition Width="10"/>
+          <ColumnDefinition Width="350" />
+        </Grid.ColumnDefinitions>
+
+        <Label Grid.Row="0"  Grid.Column="0" Content="{lex:Loc lookup_AlbumTracks}" />
+        <Label Grid.Row="0"  Grid.Column="2" Content="{lex:Loc lookup_SongsToTag}" />
+
+        <syncfusion:SfDataGrid Grid.Row="1" Grid.Column="0"
+                               ItemsSource="{Binding SelectedAlbumSongs}"
+                               AllowSorting="False"
+                               AllowResizingColumns="True" 
+                               AllowDraggingColumns="False" 
+                               AutoGenerateColumns="False"
+                               ShowRowHeader="False"
+                               ColumnSizer="AutoWithLastColumnFill">
+          <syncfusion:SfDataGrid.Columns>
+            <syncfusion:GridTextColumn HeaderText="{lex:Loc songHeader_Track}" MappingName="Number" Width="80"/>
+            <syncfusion:GridTextColumn HeaderText="{lex:Loc songHeader_Title}" MappingName="Title" />
+          </syncfusion:SfDataGrid.Columns>
+        </syncfusion:SfDataGrid>
+
+        <syncfusion:SfDataGrid Grid.Row="1" Grid.Column="2"
+                               x:Name="MatchedSongsGrid"
+                               ItemsSource="{Binding MatchedSongs}"
+                               AllowSorting="False"
+                               AllowResizingColumns="True" 
+                               AllowDraggingRows="True" 
+                               AllowDrop="True"
+                               AutoGenerateColumns="False"
+                               ShowRowHeader="False"
+                               ColumnSizer="AutoWithLastColumnFill">
+          <syncfusion:SfDataGrid.Columns>
+            <syncfusion:GridTextColumn HeaderText="{lex:Loc songHeader_FileName}" MappingName="FileName" />
+          </syncfusion:SfDataGrid.Columns>
+        </syncfusion:SfDataGrid>
+
+      </Grid>
+
+      <StackPanel Grid.Row="4" Orientation="Horizontal" HorizontalAlignment="Left" Margin="5,5,0,5" >
+        <GroupBox Header="{lex:Loc organise_Options}" HorizontalAlignment="Left" VerticalAlignment="Top">
+          <Grid>
+            <Grid.ColumnDefinitions>
+              <ColumnDefinition Width="390"/>
+              <ColumnDefinition Width="390"/>
+            </Grid.ColumnDefinitions>
+
+            <syncfusion:ComboBoxAdv Grid.Row="0" Grid.Column="0" Name="Sites" HorizontalAlignment="Left"
+                                    ItemsSource="{Binding AlbumSearchSites, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                                    DefaultText="{lex:Loc coverSearch_Sites_Watermark}" SelectedValueDelimiter=" | " AllowMultiSelect="True" 
+                                    SelectedItems="{Binding SelectedAlbumSearchSites, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                                    Width="200" />
+
+          </Grid>
+        </GroupBox>
+      </StackPanel>
+
+      <StackPanel Grid.Row="5" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,5,10,5">
+        <syncfusion:ButtonAdv Label="{lex:Loc dialog_Apply}" 
+                              SmallIcon="pack://application:,,,/MPTagThat;component/Resources/Images/Apply_Changes_32x.png" 
+                              Command="{Binding ApplyTagsCommand}" 
+                              IsEnabled="{Binding IsBusy, Converter={StaticResource invertBoolConverter}}"
+                              Width="75" Height="25" 
+                              HorizontalAlignment="Right" Margin="0,5,0,0" />
+        <syncfusion:ButtonAdv Label="{lex:Loc dialog_Cancel}" 
+                              SmallIcon="pack://application:,,,/MPTagThat;component/Resources/Images/Cancel_Changes_32x.png" 
+                              Command="{Binding CloseDialogCommand}" 
+                              Width="75" Height="25" 
+                              HorizontalAlignment="Right" Margin="20,5,0,0" />
+      </StackPanel>
+    </Grid>
+  </Border>
+</UserControl>

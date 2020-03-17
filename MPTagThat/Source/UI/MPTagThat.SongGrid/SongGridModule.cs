@@ -46,6 +46,7 @@ namespace MPTagThat.SongGrid
       containerRegistry.RegisterDialog<CaseConversionView, CaseConversionViewModel>();
       containerRegistry.RegisterDialog<IdentifySongView, IdentifySongViewModel>();
       containerRegistry.RegisterDialog<FindReplaceView, FindReplaceViewModel>();
+      containerRegistry.RegisterDialog<TagFromInternetView, TagFromInternetViewModel>();
       containerRegistry.RegisterDialogWindow<DialogWindowView>(nameof(DialogWindowView));
     }
 

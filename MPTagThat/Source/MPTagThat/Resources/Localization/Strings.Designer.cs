@@ -547,6 +547,60 @@ namespace MPTagThat.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Songs on Album.
+        /// </summary>
+        public static string lookup_AlbumTracks {
+            get {
+                return ResourceManager.GetString("lookup_AlbumTracks", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No album found, please choose another selection criteria..
+        /// </summary>
+        public static string lookup_NoAlbumFound {
+            get {
+                return ResourceManager.GetString("lookup_NoAlbumFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Multiple Albums found. Please select:.
+        /// </summary>
+        public static string lookup_SearchFinished {
+            get {
+                return ResourceManager.GetString("lookup_SearchFinished", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Searching for Albums ... {0} Sites. Remaining: {1}.
+        /// </summary>
+        public static string lookup_SearchStatus {
+            get {
+                return ResourceManager.GetString("lookup_SearchStatus", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Songs to Tag (Use Drag &amp; Drop to reorder).
+        /// </summary>
+        public static string lookup_SongsToTag {
+            get {
+                return ResourceManager.GetString("lookup_SongsToTag", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Internet Lookup.
+        /// </summary>
+        public static string lookup_Title {
+            get {
+                return ResourceManager.GetString("lookup_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Search Finished. Select correct  Lyrics..
         /// </summary>
         public static string lyricsSearch_Finished {

@@ -1185,7 +1185,26 @@
   <data name="screentip_ValidateSongText" xml:space="preserve">
     <value>Uses MP3Val to validate the correctness of the selected MP3 File. Some errors may be fixed using the "Fix MP3" Button</value>
   </data>
+  <data name="lookup_AlbumTracks" xml:space="preserve">
+    <value>Songs on Album</value>
+  </data>
+  <data name="lookup_SearchFinished" xml:space="preserve">
+    <value>Multiple Albums found. Please select:</value>
+  </data>
+  <data name="lookup_NoAlbumFound" xml:space="preserve">
+    <value>No album found, please choose another selection criteria.</value>
+  </data>
+  <data name="lookup_SongsToTag" xml:space="preserve">
+    <value>Songs to Tag (Use Drag &amp; Drop to reorder)</value>
+  </data>
+  <data name="lookup_Title" xml:space="preserve">
+    <value>Internet Lookup</value>
+    <comment>The Header of the Internet Lookup Dialog</comment>
+  </data>
   <data name="screentip_GetCoverArtText" xml:space="preserve">
     <value>Cover Art for the selected songs is search on the various selected sites</value>
+  </data>
+  <data name="lookup_SearchStatus" xml:space="preserve">
+    <value>Searching for Albums ... {0} Sites. Remaining: {1}</value>
   </data>
 </root>

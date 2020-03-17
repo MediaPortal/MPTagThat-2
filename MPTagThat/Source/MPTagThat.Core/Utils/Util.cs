@@ -344,6 +344,46 @@ namespace MPTagThat.Core.Utils
       return new string(chars, 0, count);
     }
 
+    /// <summary>
+    ///   This function matches the Longet Common Substring of the source string found in target string
+    /// </summary>
+    /// <param name = "sourceString">The Source String to match</param>
+    /// <param name = "targetString">The Target String to search within</param>
+    /// <returns>a match ratio</returns>
+    public static double LongestCommonSubstring(string sourceString, string targetString)
+    {
+      if (String.IsNullOrEmpty(sourceString) || String.IsNullOrEmpty(targetString))
+        return 0;
+
+      sourceString = sourceString.ToLower().Replace(",", "").Replace(" ", "").Replace(";", "").Replace("_", "");
+      targetString = targetString.ToLower().Replace(",", "").Replace(" ", "").Replace(";", "").Replace("_", "");
+
+      int[,] num = new int[sourceString.Length,targetString.Length];
+      int maxlen = 0;
+
+      for (int i = 0; i < sourceString.Length; i++)
+      {
+        for (int j = 0; j < targetString.Length; j++)
+        {
+          if (sourceString[i] != targetString[j])
+            num[i, j] = 0;
+          else
+          {
+            if ((i == 0) || (j == 0))
+              num[i, j] = 1;
+            else
+              num[i, j] = 1 + num[i - 1, j - 1];
+
+            if (num[i, j] > maxlen)
+            {
+              maxlen = num[i, j];
+            }
+          }
+        }
+      }
+      return maxlen / (double)sourceString.Length;
+    }
+
     #endregion
 
     #region UI Related Methods
