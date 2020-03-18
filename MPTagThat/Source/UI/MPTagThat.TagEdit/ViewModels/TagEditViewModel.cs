@@ -473,6 +473,21 @@ namespace MPTagThat.TagEdit.ViewModels
           case "titlesort":
             CkTitleSortIsChecked = true;
             break;
+          case "origalbum":
+            CkOriginalAlbumIsChecked = true;
+            break;
+          case "origfilename":
+            CkOriginalFileNameIsChecked = true;
+            break;
+          case "origlyricswriter":
+            CkOriginalLyricsWriterIsChecked = true;
+            break;
+          case "origowner":
+            CkOriginalOwnerIsChecked = true;
+            break;
+          case "origrelease":
+            CkOriginalReleaseIsChecked = true;
+            break;
         }
       }
     }
@@ -955,6 +970,36 @@ namespace MPTagThat.TagEdit.ViewModels
         {
           song.TrackLength = song.DurationTimespan.TotalMilliseconds.ToString();
         }
+
+        if (CkOriginalAlbumIsChecked)
+        {
+          song.OriginalAlbum = songEdit.OriginalAlbum;
+        }
+
+        if (CkOriginalFileNameIsChecked)
+        {
+          song.OriginalFileName = songEdit.OriginalFileName;
+        }
+
+        if (CkOriginalLyricsWriterIsChecked)
+        {
+          song.OriginalLyricsWriter = songEdit.OriginalLyricsWriter;
+        }
+
+        if (CkOriginalArtistIsChecked)
+        {
+          song.OriginalArtist = songEdit.OriginalArtist;
+        }
+
+        if (CkOriginalOwnerIsChecked)
+        {
+          song.OriginalOwner = songEdit.OriginalOwner;
+        }
+
+        if (CkOriginalReleaseIsChecked)
+        {
+          song.OriginalRelease = songEdit.OriginalRelease;
+        }
       }
     }
 
@@ -1199,6 +1244,35 @@ namespace MPTagThat.TagEdit.ViewModels
           SongEdit.TrackLength = i == 0 ? song.TrackLength : "";
         }
 
+        if (SongEdit.OriginalAlbum != song.OriginalAlbum)
+        {
+          SongEdit.OriginalAlbum = i == 0 ? song.OriginalAlbum : "";
+        }
+
+        if (SongEdit.OriginalFileName != song.OriginalFileName)
+        {
+          SongEdit.OriginalFileName = i == 0 ? song.OriginalFileName : "";
+        }
+
+        if (SongEdit.OriginalLyricsWriter != song.OriginalLyricsWriter)
+        {
+          SongEdit.OriginalLyricsWriter = i == 0 ? song.OriginalLyricsWriter : "";
+        }
+
+        if (SongEdit.OriginalArtist != song.OriginalArtist)
+        {
+          SongEdit.OriginalArtist = i == 0 ? song.OriginalArtist : "";
+        }
+
+        if (SongEdit.OriginalOwner != song.OriginalOwner)
+        {
+          SongEdit.OriginalOwner = i == 0 ? song.OriginalOwner : "";
+        }
+
+        if (SongEdit.OriginalRelease != song.OriginalRelease)
+        {
+          SongEdit.OriginalRelease = i == 0 ? song.OriginalRelease : "";
+        }
 
 
         i++;

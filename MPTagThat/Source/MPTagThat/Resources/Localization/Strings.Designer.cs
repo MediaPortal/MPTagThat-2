@@ -2779,6 +2779,60 @@ namespace MPTagThat.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Original Album Title:.
+        /// </summary>
+        public static string tagEdit_OrigAlbum {
+            get {
+                return ResourceManager.GetString("tagEdit_OrigAlbum", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Original Artist:.
+        /// </summary>
+        public static string tagEdit_OrigArtist {
+            get {
+                return ResourceManager.GetString("tagEdit_OrigArtist", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Original File Name:.
+        /// </summary>
+        public static string tagEdit_OrigFileName {
+            get {
+                return ResourceManager.GetString("tagEdit_OrigFileName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Original Lyrics Writer:.
+        /// </summary>
+        public static string tagEdit_OrigLyricsWriter {
+            get {
+                return ResourceManager.GetString("tagEdit_OrigLyricsWriter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Original Owner:.
+        /// </summary>
+        public static string tagEdit_OrigOwner {
+            get {
+                return ResourceManager.GetString("tagEdit_OrigOwner", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Original Release Year:.
+        /// </summary>
+        public static string tagEdit_OrigReleaseYear {
+            get {
+                return ResourceManager.GetString("tagEdit_OrigReleaseYear", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Part of Compilation.
         /// </summary>
         public static string tagEdit_PartOfCompilation {
@@ -2842,6 +2896,15 @@ namespace MPTagThat.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Involved People.
+        /// </summary>
+        public static string tagEdit_TabHeader_Involved_People {
+            get {
+                return ResourceManager.GetString("tagEdit_TabHeader_Involved_People", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Lyrics Details.
         /// </summary>
         public static string tagEdit_TabHeader_Lyrics {
@@ -2860,11 +2923,47 @@ namespace MPTagThat.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Original Information.
+        /// </summary>
+        public static string tagEdit_TabHeader_Original_Information {
+            get {
+                return ResourceManager.GetString("tagEdit_TabHeader_Original_Information", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Picture Details.
         /// </summary>
         public static string tagEdit_TabHeader_Pictures {
             get {
                 return ResourceManager.GetString("tagEdit_TabHeader_Pictures", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Rating.
+        /// </summary>
+        public static string tagEdit_TabHeader_Rating {
+            get {
+                return ResourceManager.GetString("tagEdit_TabHeader_Rating", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Non Standard Frames.
+        /// </summary>
+        public static string tagEdit_TabHeader_UserFrames {
+            get {
+                return ResourceManager.GetString("tagEdit_TabHeader_UserFrames", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Web Information.
+        /// </summary>
+        public static string tagEdit_TabHeader_Web_Information {
+            get {
+                return ResourceManager.GetString("tagEdit_TabHeader_Web_Information", resourceCulture);
             }
         }
         

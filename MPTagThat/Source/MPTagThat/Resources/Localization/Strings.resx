@@ -1207,4 +1207,42 @@
   <data name="lookup_SearchStatus" xml:space="preserve">
     <value>Searching for Albums ... {0} Sites. Remaining: {1}</value>
   </data>
+  <data name="tagEdit_OrigAlbum" xml:space="preserve">
+    <value>Original Album Title:</value>
+  </data>
+  <data name="tagEdit_OrigArtist" xml:space="preserve">
+    <value>Original Artist:</value>
+  </data>
+  <data name="tagEdit_OrigFileName" xml:space="preserve">
+    <value>Original File Name:</value>
+  </data>
+  <data name="tagEdit_OrigLyricsWriter" xml:space="preserve">
+    <value>Original Lyrics Writer:</value>
+  </data>
+  <data name="tagEdit_OrigOwner" xml:space="preserve">
+    <value>Original Owner:</value>
+  </data>
+  <data name="tagEdit_OrigReleaseYear" xml:space="preserve">
+    <value>Original Release Year:</value>
+  </data>
+  <data name="tagEdit_TabHeader_Involved_People" xml:space="preserve">
+    <value>Involved People</value>
+    <comment>The Header for the Involved People Tab</comment>
+  </data>
+  <data name="tagEdit_TabHeader_Original_Information" xml:space="preserve">
+    <value>Original Information</value>
+    <comment>The Header for the Original Information Tab</comment>
+  </data>
+  <data name="tagEdit_TabHeader_Rating" xml:space="preserve">
+    <value>Rating</value>
+    <comment>The Header for the Rating Tab</comment>
+  </data>
+  <data name="tagEdit_TabHeader_UserFrames" xml:space="preserve">
+    <value>Non Standard Frames</value>
+    <comment>The header for the User Defined / Non Standard Frames</comment>
+  </data>
+  <data name="tagEdit_TabHeader_Web_Information" xml:space="preserve">
+    <value>Web Information</value>
+    <comment>The Header for the Web Information Tab</comment>
+  </data>
 </root>
