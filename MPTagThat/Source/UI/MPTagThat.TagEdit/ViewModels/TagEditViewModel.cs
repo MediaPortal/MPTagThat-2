@@ -1014,10 +1014,11 @@ namespace MPTagThat.TagEdit.ViewModels
     private void SetFormBindings(ref List<SongData> songs)
     {
       _isInitializing = true;
+      SongEdit = new SongData();
       FrontCover = null;
       PictureDetail = null;
-      _genres.Clear();
-      SelectedGenres?.Clear();
+      Genres.Clear();
+      SelectedGenres.Clear();
       Genres.AddRange(TagLib.Genres.Audio);
 
       if (songs.Count == 1)
@@ -1043,11 +1044,11 @@ namespace MPTagThat.TagEdit.ViewModels
         return;
       }
 
-      SongEdit = new SongData();
       SongEdit.Init = true;
       var i = 0;
       byte[] picData = new byte[] { };
       var strGenreTemp = "";
+      SelectedGenres.Clear();
       foreach (var song in songs)
       {
         // Don't handle single track for Multitag Edit
@@ -1440,8 +1441,6 @@ namespace MPTagThat.TagEdit.ViewModels
     {
       MultiCheckBoxVisibility = false;
       _songs = navigationContext.Parameters["songs"] as List<SongData>;
-      SelectedGenres.Clear();
-      Genres.Clear();
 
       if (_songs.Count > 0)
       {
