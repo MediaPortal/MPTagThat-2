@@ -1366,8 +1366,8 @@ namespace MPTagThat.TagEdit.ViewModels
     {
       MultiCheckBoxVisibility = false;
       _songs = navigationContext.Parameters["songs"] as List<SongData>;
-      _selectedGenres = new ObservableCollection<string>();
-      _genres = new ObservableCollection<string>();
+      SelectedGenres.Clear();
+      Genres.Clear();
 
       if (_songs.Count > 0)
       {
