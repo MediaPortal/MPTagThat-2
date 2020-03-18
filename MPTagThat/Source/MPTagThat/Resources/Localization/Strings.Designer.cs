@@ -2653,6 +2653,15 @@ namespace MPTagThat.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Commercial Infomation URL:.
+        /// </summary>
+        public static string tagEdit_CommercialInfo {
+            get {
+                return ResourceManager.GetString("tagEdit_CommercialInfo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Composer:.
         /// </summary>
         public static string tagEdit_Composer {
@@ -2685,6 +2694,15 @@ namespace MPTagThat.Resources.Localization {
         public static string tagEdit_Copyright {
             get {
                 return ResourceManager.GetString("tagEdit_Copyright", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Copyright Information URL:.
+        /// </summary>
+        public static string tagEdit_CopyrightInformation {
+            get {
+                return ResourceManager.GetString("tagEdit_CopyrightInformation", resourceCulture);
             }
         }
         
@@ -2775,6 +2793,60 @@ namespace MPTagThat.Resources.Localization {
         public static string tagEdit_MediaTypes {
             get {
                 return ResourceManager.GetString("tagEdit_MediaTypes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Official Artist URL:.
+        /// </summary>
+        public static string tagEdit_OfficialArtist {
+            get {
+                return ResourceManager.GetString("tagEdit_OfficialArtist", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Official Audiofile URL:.
+        /// </summary>
+        public static string tagEdit_OfficialAudiofile {
+            get {
+                return ResourceManager.GetString("tagEdit_OfficialAudiofile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Official Audio Source URL:.
+        /// </summary>
+        public static string tagEdit_OfficialAudioSource {
+            get {
+                return ResourceManager.GetString("tagEdit_OfficialAudioSource", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Official Payment URL:.
+        /// </summary>
+        public static string tagEdit_OfficialPayment {
+            get {
+                return ResourceManager.GetString("tagEdit_OfficialPayment", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Official Publisher URL:.
+        /// </summary>
+        public static string tagEdit_OfficialPublisher {
+            get {
+                return ResourceManager.GetString("tagEdit_OfficialPublisher", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Official Radio Station URL:.
+        /// </summary>
+        public static string tagEdit_OfficialRadioStation {
+            get {
+                return ResourceManager.GetString("tagEdit_OfficialRadioStation", resourceCulture);
             }
         }
         

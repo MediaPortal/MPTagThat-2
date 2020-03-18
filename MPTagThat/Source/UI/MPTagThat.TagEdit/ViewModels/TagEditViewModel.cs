@@ -488,6 +488,30 @@ namespace MPTagThat.TagEdit.ViewModels
           case "origrelease":
             CkOriginalReleaseIsChecked = true;
             break;
+          case "copyrightinformation":
+            CkCopyrightUrlIsChecked = true;
+            break;
+          case "audiofileurl":
+            CkOfficialAudioFileUrlIsChecked = true;
+            break;
+          case "artisturl":
+            CkOfficialArtistUrlIsChecked = true;
+            break;
+          case "audiosourceurl":
+            CkOfficialAudioFileUrlIsChecked = true;
+            break;
+          case "radiourl":
+            CkOfficialInternetRadioUrlIsChecked = true;
+            break;
+          case "paymenturl":
+            CkOfficialPaymentUrlIsChecked = true;
+            break;
+          case "publisherurl":
+            CkOfficialPublisherUrlIsChecked = true;
+            break;
+          case "commercialurl":
+            CkCommercialInformationUrlIsChecked = true;
+            break;
         }
       }
     }
@@ -1000,6 +1024,46 @@ namespace MPTagThat.TagEdit.ViewModels
         {
           song.OriginalRelease = songEdit.OriginalRelease;
         }
+
+        if (CkCopyrightUrlIsChecked)
+        {
+          song.CopyrightInformation = songEdit.CopyrightInformation;
+        }
+
+        if (CkOfficialAudioFileUrlIsChecked)
+        {
+          song.OfficialAudioFileInformation = songEdit.OfficialAudioFileInformation;
+        }
+
+        if (CkOfficialArtistUrlIsChecked)
+        {
+          song.OfficialArtistInformation = songEdit.OfficialArtistInformation;
+        }
+
+        if (CkOfficialAudioSourceUrlIsChecked)
+        {
+          song.OfficialAudioSourceInformation = songEdit.OfficialAudioSourceInformation;
+        }
+
+        if (CkOfficialInternetRadioUrlIsChecked)
+        {
+          song.OfficialInternetRadioInformation = songEdit.OfficialInternetRadioInformation;
+        }
+
+        if (CkOfficialPaymentUrlIsChecked)
+        {
+          song.OfficialPaymentInformation = songEdit.OfficialPaymentInformation;
+        }
+
+        if (CkOfficialPublisherUrlIsChecked)
+        {
+          song.OfficialPublisherInformation = songEdit.OfficialPublisherInformation;
+        }
+
+        if (CkCommercialInformationUrlIsChecked)
+        {
+          song.CommercialInformation = songEdit.CommercialInformation;
+        }
       }
     }
 
@@ -1275,6 +1339,45 @@ namespace MPTagThat.TagEdit.ViewModels
           SongEdit.OriginalRelease = i == 0 ? song.OriginalRelease : "";
         }
 
+        if (SongEdit.CopyrightInformation != song.CopyrightInformation)
+        {
+          SongEdit.CopyrightInformation = i == 0 ? song.CopyrightInformation : "";
+        }
+
+        if (SongEdit.OfficialAudioFileInformation != song.OfficialAudioFileInformation)
+        {
+          SongEdit.OfficialAudioFileInformation = i == 0 ? song.OfficialAudioFileInformation : "";
+        }
+
+        if (SongEdit.OfficialArtistInformation != song.OfficialArtistInformation)
+        {
+          SongEdit.OfficialArtistInformation = i == 0 ? song.OfficialArtistInformation : "";
+        }
+
+        if (SongEdit.OfficialAudioSourceInformation != song.OfficialAudioSourceInformation)
+        {
+          SongEdit.OfficialAudioSourceInformation = i == 0 ? song.OfficialAudioSourceInformation : "";
+        }
+
+        if (SongEdit.OfficialInternetRadioInformation != song.OfficialInternetRadioInformation)
+        {
+          SongEdit.OfficialInternetRadioInformation = i == 0 ? song.OfficialInternetRadioInformation : "";
+        }
+
+        if (SongEdit.OfficialPaymentInformation != song.OfficialPaymentInformation)
+        {
+          SongEdit.OfficialPaymentInformation = i == 0 ? song.OfficialPaymentInformation : "";
+        }
+
+        if (SongEdit.OfficialPublisherInformation != song.OfficialPublisherInformation)
+        {
+          SongEdit.OfficialPublisherInformation = i == 0 ? song.OfficialPublisherInformation : "";
+        }
+
+        if (SongEdit.CommercialInformation != song.CommercialInformation)
+        {
+          SongEdit.CommercialInformation = i == 0 ? song.CommercialInformation : "";
+        }
 
         i++;
       }

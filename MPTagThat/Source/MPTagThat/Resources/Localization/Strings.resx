@@ -1207,6 +1207,30 @@
   <data name="lookup_SearchStatus" xml:space="preserve">
     <value>Searching for Albums ... {0} Sites. Remaining: {1}</value>
   </data>
+  <data name="tagEdit_CommercialInfo" xml:space="preserve">
+    <value>Commercial Infomation URL:</value>
+  </data>
+  <data name="tagEdit_CopyrightInformation" xml:space="preserve">
+    <value>Copyright Information URL:</value>
+  </data>
+  <data name="tagEdit_OfficialArtist" xml:space="preserve">
+    <value>Official Artist URL:</value>
+  </data>
+  <data name="tagEdit_OfficialAudiofile" xml:space="preserve">
+    <value>Official Audiofile URL:</value>
+  </data>
+  <data name="tagEdit_OfficialAudioSource" xml:space="preserve">
+    <value>Official Audio Source URL:</value>
+  </data>
+  <data name="tagEdit_OfficialPayment" xml:space="preserve">
+    <value>Official Payment URL:</value>
+  </data>
+  <data name="tagEdit_OfficialPublisher" xml:space="preserve">
+    <value>Official Publisher URL:</value>
+  </data>
+  <data name="tagEdit_OfficialRadioStation" xml:space="preserve">
+    <value>Official Radio Station URL:</value>
+  </data>
   <data name="tagEdit_OrigAlbum" xml:space="preserve">
     <value>Original Album Title:</value>
   </data>
