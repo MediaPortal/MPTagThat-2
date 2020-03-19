@@ -21,6 +21,7 @@
 using System;
 using System.Collections;
 using System.Collections.ObjectModel;
+using System.Globalization;
 using System.Linq;
 using System.Windows;
 using System.Windows.Input;
@@ -102,9 +103,9 @@ namespace MPTagThat.Ribbon.ViewModels
     }
 
     // Settings related Properties in the Backstage
-    private ObservableCollection<string> _languages = new ObservableCollection<string>();
+    private ObservableCollection<Item> _languages = new ObservableCollection<Item>();
 
-    public ObservableCollection<string> Languages
+    public ObservableCollection<Item> Languages
     {
       get => _languages;
       set
@@ -114,6 +115,21 @@ namespace MPTagThat.Ribbon.ViewModels
       }
     }
 
+    private Item _selectedLanguage;
+
+    public Item SelectedLanguage
+    {
+      get => _selectedLanguage;
+      set
+      {
+        SetProperty(ref _selectedLanguage, value);
+        _options.MainSettings.Language = _selectedLanguage.Name;
+        WPFLocalizeExtension.Engine.LocalizeDictionary.Instance.Culture = new CultureInfo(_options.MainSettings.Language);
+      }
+    }
+
+
+
     private ObservableCollection<string> _themes = new ObservableCollection<string>();
 
     public ObservableCollection<string> Themes
@@ -121,7 +137,7 @@ namespace MPTagThat.Ribbon.ViewModels
       get => _themes;
       set
       {
-        _languages = value;
+        _themes = value;
         RaisePropertyChanged("Themes");
       }
     }
@@ -426,6 +442,12 @@ namespace MPTagThat.Ribbon.ViewModels
       logLevels.ForEach(l => DebugLevel.Add(l));
       SelectedLogLevel = _options.MainSettings.DebugLevel;
 
+      // Languages
+      Languages.Add(new Item("de","Deutsch"));
+      Languages.Add(new Item("en","English"));
+      SelectedLanguage = _languages.First(item => item.Name == _options.MainSettings.Language);
+
+      // Themes
       _themes.Add("Office365");
       _themes.Add("Office2016Colorful");
       _themes.Add("Office2016White");

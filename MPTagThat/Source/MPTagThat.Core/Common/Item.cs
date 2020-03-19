@@ -21,9 +21,9 @@ namespace MPTagThat.Core.Common
   {
     public string Name { get; set; }
     public string ToolTip { get; set; }
-    public object Value { get; set; }
+    public string Value { get; set; }
 
-    public Item(string name, object value)
+    public Item(string name, string value)
     {
       Name = name;
       Value = value;
@@ -31,7 +31,7 @@ namespace MPTagThat.Core.Common
     }
 
 
-    public Item(string name, object value, string tooltip)
+    public Item(string name, string value, string tooltip)
     {
       Name = name;
       Value = value;

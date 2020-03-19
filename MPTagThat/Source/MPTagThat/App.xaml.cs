@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Configuration;
+using System.Globalization;
 using System.IO.MemoryMappedFiles;
 using System.Text;
 using System.Threading;
@@ -80,6 +81,10 @@ namespace MPTagThat
       logger.GetLogger.Debug("Registering Scripting Manager");
       var scripting = new ScriptManager();
       containerRegistry.RegisterInstance<IScriptManager>(scripting);
+
+      var language = (CommonServiceLocator.ServiceLocator.Current.GetInstance(typeof(ISettingsManager)) as ISettingsManager)?.GetOptions
+        .MainSettings.Language;
+      WPFLocalizeExtension.Engine.LocalizeDictionary.Instance.Culture = new CultureInfo(language);
     }
 
     /// <summary>

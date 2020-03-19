@@ -180,6 +180,9 @@ namespace MPTagThat.Core.Services.Settings.Setting
 
     #region General
 
+    [Setting(SettingScope.User, "en")]
+    public string Language { get; set; }
+
     [Setting(SettingScope.User, "Office2016Colorful")]
     public string Theme { get; set; }
 

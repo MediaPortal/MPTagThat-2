@@ -24,6 +24,9 @@ if "%2" == "Debug" (
   xcopy /y %1MPTagThat\bin\%2\MPTagThat.pdb %TARGETPATH%
 )
 
+REM Localization
+xcopy /y %1\MPTagThat\bin\%2\de\* %TARGETPATH%\Localization\de\
+
 REM Copy Core 
 xcopy /y %1\MPTagThat.Core\bin\%2\MPTagThat.Core.* %TARGETPATH%\Bin\
 xcopy /y %1\MPTagThat.Core\bin\%2\NLog.dll %TARGETPATH%\Bin\
