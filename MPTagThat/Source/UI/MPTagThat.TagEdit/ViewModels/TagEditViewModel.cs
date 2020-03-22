@@ -552,12 +552,11 @@ namespace MPTagThat.TagEdit.ViewModels
       if (_songBackup != null && _songs.Count == 1)
       {
         UndoSongedits(_songs[0], _songBackup);
-        SongEdit = _songs[0];
-        _songBackup = null;
       }
 
       _songs.ForEach(s => s.Changed = false);
       SongEdit.Changed = false;
+      SetFormBindings(ref _songs);
     }
 
     /// <summary>
@@ -1078,7 +1077,6 @@ namespace MPTagThat.TagEdit.ViewModels
     private void SetFormBindings(ref List<SongData> songs)
     {
       _isInitializing = true;
-      SongEdit = new SongData();
       FrontCover = null;
       PictureDetail = null;
       Genres.Clear();
@@ -1105,6 +1103,7 @@ namespace MPTagThat.TagEdit.ViewModels
         }
         FrontCover = SongEdit.FrontCover;
         _isInitializing = false;
+        IsApplyButtonEnabled = false;
         return;
       }
 
@@ -1384,6 +1383,7 @@ namespace MPTagThat.TagEdit.ViewModels
 
       _isInitializing = false;
       SongEdit.Init = false;
+      IsApplyButtonEnabled = false;
 
       // We have multiple Songs selected, so show the Checkboxes and
       // decide if they shoud be checked.
@@ -1545,6 +1545,7 @@ namespace MPTagThat.TagEdit.ViewModels
       MultiCheckBoxVisibility = false;
       _songs = navigationContext.Parameters["songs"] as List<SongData>;
 
+      ClearForm();
       if (_songs.Count > 0)
       {
         SetFormBindings(ref _songs); //Set the bindings so that the data is displayed in the View
@@ -1553,7 +1554,6 @@ namespace MPTagThat.TagEdit.ViewModels
       }
       else
       {
-        ClearForm();
         IsEnabled = false;
       }
     }
