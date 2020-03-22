@@ -801,15 +801,14 @@ namespace MPTagThat.Core.Common.Song
     {
       get
       {
-        int indexFrontCover = _pictures
-          .Select((pic, i) => new { Pic = pic, Position = i }).First(m => m.Pic.Type == PictureType.FrontCover).Position;
-        if (indexFrontCover < 0)
-        {
-          indexFrontCover = 0;
-        }
-
         if (Pictures.Count > 0)
         {
+          int indexFrontCover = _pictures
+            .Select((pic, i) => new { Pic = pic, Position = i }).First(m => m.Pic.Type == PictureType.FrontCover).Position;
+          if (indexFrontCover < 0)
+          {
+            indexFrontCover = 0;
+          }
           return _pictures[indexFrontCover].ImageFromPic();
         }
         return null;

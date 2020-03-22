@@ -474,7 +474,113 @@
                       <Setter Property="AccordionButtonStyle"  Value="{StaticResource expanderButtonStyle}"/>
                     </Style>
                   </syncfusion:SfAccordion.ItemContainerStyle>
-                  <syncfusion:SfAccordionItem Header="{lex:Loc tagEdit_TabHeader_Detailed_Information}">
+
+                  <!-- Picture Details -->
+                  <syncfusion:SfAccordionItem Header="{lex:Loc tagEdit_TabHeader_Pictures}">
+                    <StackPanel Margin="5,5,0,5" >
+                      <Grid>
+                        <Grid.RowDefinitions>
+                          <RowDefinition/>
+                          <RowDefinition/>
+                          <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                          <ColumnDefinition Width="40"/>
+                          <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <StackPanel Grid.Row="0" Grid.Column="0" >
+                          <syncfusion:ButtonAdv  Label="" Width="30" Height="30" VerticalAlignment="Top" HorizontalAlignment="Left" 
+                                         SmallIcon="pack://application:,,,/MPTagThat.TagEdit;component/Resources/Images/GetCoverArt_32x.png" 
+                                         Command="{Binding GetCoverCommand}"
+                                         ToolTip="{lex:Loc tagEdit_ToolTip_Picture_GetCoverArt_Internet}" />
+                          <syncfusion:ButtonAdv  Label="" Width="30" Height="30" VerticalAlignment="Top" Margin="0,4,0,0" HorizontalAlignment="Left" 
+                                         SmallIcon="pack://application:,,,/MPTagThat.TagEdit;component/Resources/Images/File_32x.png" 
+                                         Command="{Binding GetCoverFromFileCommand}"
+                                         CommandParameter="{Binding SongEdit}" 
+                                         ToolTip="{lex:Loc tagEdit_ToolTip_Picture_GetCoverArt_File}"/>
+                          <syncfusion:ButtonAdv  Label="" Width="30" Height="30" VerticalAlignment="Top" Margin="0,4,0,0" HorizontalAlignment="Left" 
+                                         SmallIcon="pack://application:,,,/MPTagThat.TagEdit;component/Resources/Images/RemovePictures_32x.png" 
+                                         Command="{Binding RemoveDetailedCoverCommand}"
+                                         ToolTip="{lex:Loc tagEdit_ToolTip_Picture_RemoveDetail_CoverArt}"/>
+                          <syncfusion:ButtonAdv  Label="" Width="30" Height="30" VerticalAlignment="Top" Margin="0,4,0,0" HorizontalAlignment="Left" 
+                                         SmallIcon="pack://application:,,,/MPTagThat.TagEdit;component/Resources/Images/Save_16x.png" 
+                                         Command="{Binding SaveDetailCoverCommand}"
+                                         CommandParameter="{Binding SongEdit}" 
+                                         ToolTip="{lex:Loc tagEdit_ToolTip_Picture_SaveDetail_CoverArt}"/>
+                        </StackPanel>
+                        <Border Grid.Row="0" Grid.Column="1" BorderThickness="1" BorderBrush="#FF000000" VerticalAlignment="Top" HorizontalAlignment="Left" Width="131" Height="131" >
+                          <Image   Source="{Binding PictureDetail}"  Width="128" Height="128" />
+                        </Border>
+                        <CheckBox Grid.Row="1" Grid.Column="1" Content="{lex:Loc tagEdit_Remove_Existing_Pictures}" IsChecked="{Binding CkRemovePicturesIsChecked, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                        <StackPanel Grid.Row="2" Grid.Column="1" Margin="0,5,0,0">
+                          <syncfusion:SfDataGrid x:Name="PictureGrid"
+                                               ItemsSource="{Binding SongEdit.Pictures, Mode=TwoWay}"
+                                               SelectedItems="{Binding SelectedPicture,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                                               SelectionMode="Single"
+                                               ColumnSizer="AutoWithLastColumnFill" 
+                                               AllowResizingColumns="True" 
+                                               AllowDraggingColumns="False" 
+                                               AutoGenerateColumns="False"
+                                               ShowRowHeader="False" 
+                                               AllowEditing="True" 
+                                               RowSelectionBrush="Cornsilk">
+                            <syncfusion:SfDataGrid.Columns>
+                              <syncfusion:GridComboBoxColumn ItemsSource="{Binding PictureTypes}" MappingName="Type" IsEditable="False"/>
+                              <syncfusion:GridTextColumn MappingName="Description" />
+                            </syncfusion:SfDataGrid.Columns>
+                            <i:Interaction.Triggers>
+                              <i:EventTrigger EventName="SelectionChanged">
+                                <i:InvokeCommandAction Command="{Binding PictureSelectionChangedCommand}" />
+                              </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                          </syncfusion:SfDataGrid>
+                        </StackPanel>
+                      </Grid>
+                    </StackPanel>
+                  </syncfusion:SfAccordionItem>
+
+                  <!-- Lyrics Details -->
+                  <syncfusion:SfAccordionItem Header="{lex:Loc tagEdit_TabHeader_Lyrics}">
+                    <StackPanel Margin="5,5,0,5" >
+                      <Grid>
+                        <Grid.RowDefinitions>
+                          <RowDefinition/>
+                          <RowDefinition/>
+                          <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                          <ColumnDefinition Width="40"/>
+                          <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <StackPanel Grid.Row="0" Grid.Column="0" >
+                          <syncfusion:ButtonAdv  Label="" Width="30" Height="30" VerticalAlignment="Top" HorizontalAlignment="Left" 
+                                         SmallIcon="pack://application:,,,/MPTagThat.TagEdit;component/Resources/Images/GetLyrics_32x.png" 
+                                         Command="{Binding GetLyricsCommand}"
+                                         ToolTip="{lex:Loc tagEdit_ToolTip_Lyrics_GetInternet}" />
+                          <syncfusion:ButtonAdv  Label="" Width="30" Height="30" VerticalAlignment="Top" Margin="0,4,0,0" HorizontalAlignment="Left" 
+                                         SmallIcon="pack://application:,,,/MPTagThat.TagEdit;component/Resources/Images/File_32x.png" 
+                                         Command="{Binding GetLyricsFromFileCommand}"
+                                         CommandParameter="{Binding SongEdit}" 
+                                         ToolTip="{lex:Loc tagEdit_ToolTip_Lyrics_GetFile}"/>
+                          <syncfusion:ButtonAdv  Label="" Width="30" Height="30" VerticalAlignment="Top" Margin="0,4,0,0" HorizontalAlignment="Left" 
+                                         SmallIcon="pack://application:,,,/MPTagThat.TagEdit;component/Resources/Images/RemoveLyrics_32x.png" 
+                                         Command="{Binding RemoveLyricsCommand}"
+                                         ToolTip="{lex:Loc tagEdit_ToolTip_Lyrics_Remove}"/>
+                        </StackPanel>
+                        <TextBox Grid.Row="0" Grid.Column="1" Name="Lyrics" 
+                               Text="{Binding SongEdit.Lyrics, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                               TextWrapping="Wrap" 
+                               AcceptsReturn="True" 
+                               VerticalScrollBarVisibility="Auto" 
+                               MaxHeight="400" >
+
+                        </TextBox>
+                      </Grid>
+                    </StackPanel>
+                  </syncfusion:SfAccordionItem>
+
+                  <!-- Detailed Information -->
+                  <syncfusion:SfAccordionItem Header="{lex:Loc tagEdit_TabHeader_Detailed_Information}" IsEnabled="{Binding SongEdit.IsMp3}" >
                     <Grid>
                       <Grid.RowDefinitions>
                         <RowDefinition/>
@@ -751,119 +857,15 @@
                     </Grid>
                   </syncfusion:SfAccordionItem>
 
-                  <!-- Picture Details -->
-                  <syncfusion:SfAccordionItem Header="{lex:Loc tagEdit_TabHeader_Pictures}">
-                    <StackPanel Margin="5,5,0,5" >
-                      <Grid>
-                        <Grid.RowDefinitions>
-                          <RowDefinition/>
-                          <RowDefinition/>
-                          <RowDefinition/>
-                        </Grid.RowDefinitions>
-                        <Grid.ColumnDefinitions>
-                          <ColumnDefinition Width="40"/>
-                          <ColumnDefinition/>
-                        </Grid.ColumnDefinitions>
-                        <StackPanel Grid.Row="0" Grid.Column="0" >
-                          <syncfusion:ButtonAdv  Label="" Width="30" Height="30" VerticalAlignment="Top" HorizontalAlignment="Left" 
-                                         SmallIcon="pack://application:,,,/MPTagThat.TagEdit;component/Resources/Images/GetCoverArt_32x.png" 
-                                         Command="{Binding GetCoverCommand}"
-                                         ToolTip="{lex:Loc tagEdit_ToolTip_Picture_GetCoverArt_Internet}" />
-                          <syncfusion:ButtonAdv  Label="" Width="30" Height="30" VerticalAlignment="Top" Margin="0,4,0,0" HorizontalAlignment="Left" 
-                                         SmallIcon="pack://application:,,,/MPTagThat.TagEdit;component/Resources/Images/File_32x.png" 
-                                         Command="{Binding GetCoverFromFileCommand}"
-                                         CommandParameter="{Binding SongEdit}" 
-                                         ToolTip="{lex:Loc tagEdit_ToolTip_Picture_GetCoverArt_File}"/>
-                          <syncfusion:ButtonAdv  Label="" Width="30" Height="30" VerticalAlignment="Top" Margin="0,4,0,0" HorizontalAlignment="Left" 
-                                         SmallIcon="pack://application:,,,/MPTagThat.TagEdit;component/Resources/Images/RemovePictures_32x.png" 
-                                         Command="{Binding RemoveDetailedCoverCommand}"
-                                         ToolTip="{lex:Loc tagEdit_ToolTip_Picture_RemoveDetail_CoverArt}"/>
-                          <syncfusion:ButtonAdv  Label="" Width="30" Height="30" VerticalAlignment="Top" Margin="0,4,0,0" HorizontalAlignment="Left" 
-                                         SmallIcon="pack://application:,,,/MPTagThat.TagEdit;component/Resources/Images/Save_16x.png" 
-                                         Command="{Binding SaveDetailCoverCommand}"
-                                         CommandParameter="{Binding SongEdit}" 
-                                         ToolTip="{lex:Loc tagEdit_ToolTip_Picture_SaveDetail_CoverArt}"/>
-                        </StackPanel>
-                        <Border Grid.Row="0" Grid.Column="1" BorderThickness="1" BorderBrush="#FF000000" VerticalAlignment="Top" HorizontalAlignment="Left" Width="131" Height="131" >
-                          <Image   Source="{Binding PictureDetail}"  Width="128" Height="128" />
-                        </Border>
-                        <CheckBox Grid.Row="1" Grid.Column="1" Content="{lex:Loc tagEdit_Remove_Existing_Pictures}" IsChecked="{Binding CkRemovePicturesIsChecked, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                        <StackPanel Grid.Row="2" Grid.Column="1" Margin="0,5,0,0">
-                          <syncfusion:SfDataGrid x:Name="PictureGrid"
-                                               ItemsSource="{Binding SongEdit.Pictures, Mode=TwoWay}"
-                                               SelectedItems="{Binding SelectedPicture,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
-                                               SelectionMode="Single"
-                                               ColumnSizer="AutoWithLastColumnFill" 
-                                               AllowResizingColumns="True" 
-                                               AllowDraggingColumns="False" 
-                                               AutoGenerateColumns="False"
-                                               ShowRowHeader="False" 
-                                               AllowEditing="True" 
-                                               RowSelectionBrush="Cornsilk">
-                            <syncfusion:SfDataGrid.Columns>
-                              <syncfusion:GridComboBoxColumn ItemsSource="{Binding PictureTypes}" MappingName="Type" IsEditable="False"/>
-                              <syncfusion:GridTextColumn MappingName="Description" />
-                            </syncfusion:SfDataGrid.Columns>
-                            <i:Interaction.Triggers>
-                              <i:EventTrigger EventName="SelectionChanged">
-                                <i:InvokeCommandAction Command="{Binding PictureSelectionChangedCommand}" />
-                              </i:EventTrigger>
-                            </i:Interaction.Triggers>
-                          </syncfusion:SfDataGrid>
-                        </StackPanel>
-                      </Grid>
-                    </StackPanel>
-                  </syncfusion:SfAccordionItem>
-
-                  <!-- Lyrics Details -->
-                  <syncfusion:SfAccordionItem Header="{lex:Loc tagEdit_TabHeader_Lyrics}">
-                    <StackPanel Margin="5,5,0,5" >
-                      <Grid>
-                        <Grid.RowDefinitions>
-                          <RowDefinition/>
-                          <RowDefinition/>
-                          <RowDefinition/>
-                        </Grid.RowDefinitions>
-                        <Grid.ColumnDefinitions>
-                          <ColumnDefinition Width="40"/>
-                          <ColumnDefinition/>
-                        </Grid.ColumnDefinitions>
-                        <StackPanel Grid.Row="0" Grid.Column="0" >
-                          <syncfusion:ButtonAdv  Label="" Width="30" Height="30" VerticalAlignment="Top" HorizontalAlignment="Left" 
-                                         SmallIcon="pack://application:,,,/MPTagThat.TagEdit;component/Resources/Images/GetLyrics_32x.png" 
-                                         Command="{Binding GetLyricsCommand}"
-                                         ToolTip="{lex:Loc tagEdit_ToolTip_Lyrics_GetInternet}" />
-                          <syncfusion:ButtonAdv  Label="" Width="30" Height="30" VerticalAlignment="Top" Margin="0,4,0,0" HorizontalAlignment="Left" 
-                                         SmallIcon="pack://application:,,,/MPTagThat.TagEdit;component/Resources/Images/File_32x.png" 
-                                         Command="{Binding GetLyricsFromFileCommand}"
-                                         CommandParameter="{Binding SongEdit}" 
-                                         ToolTip="{lex:Loc tagEdit_ToolTip_Lyrics_GetFile}"/>
-                          <syncfusion:ButtonAdv  Label="" Width="30" Height="30" VerticalAlignment="Top" Margin="0,4,0,0" HorizontalAlignment="Left" 
-                                         SmallIcon="pack://application:,,,/MPTagThat.TagEdit;component/Resources/Images/RemoveLyrics_32x.png" 
-                                         Command="{Binding RemoveLyricsCommand}"
-                                         ToolTip="{lex:Loc tagEdit_ToolTip_Lyrics_Remove}"/>
-                        </StackPanel>
-                        <TextBox Grid.Row="0" Grid.Column="1" Name="Lyrics" 
-                               Text="{Binding SongEdit.Lyrics, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
-                               TextWrapping="Wrap" 
-                               AcceptsReturn="True" 
-                               VerticalScrollBarVisibility="Auto" 
-                               MaxHeight="400" >
-
-                        </TextBox>
-                      </Grid>
-                    </StackPanel>
-                  </syncfusion:SfAccordionItem>
-
                   <!-- Rating -->
-                  <syncfusion:SfAccordionItem Header="{lex:Loc tagEdit_TabHeader_Rating}">
+                  <syncfusion:SfAccordionItem Header="{lex:Loc tagEdit_TabHeader_Rating}" IsEnabled="{Binding SongEdit.IsMp3}">
                     <Grid>
 
                     </Grid>
                   </syncfusion:SfAccordionItem>
 
                   <!-- Original Information -->
-                  <syncfusion:SfAccordionItem Header="{lex:Loc tagEdit_TabHeader_Original_Information}">
+                  <syncfusion:SfAccordionItem Header="{lex:Loc tagEdit_TabHeader_Original_Information}" IsEnabled="{Binding SongEdit.IsMp3}">
                     <Grid>
                       <GroupBox Background="Transparent" Style="{DynamicResource GroupBoxStyleNoHeader}">
                         <StackPanel>
@@ -980,7 +982,7 @@
                   </syncfusion:SfAccordionItem>
 
                   <!-- Web Information -->
-                  <syncfusion:SfAccordionItem Header="{lex:Loc tagEdit_TabHeader_Web_Information}">
+                  <syncfusion:SfAccordionItem Header="{lex:Loc tagEdit_TabHeader_Web_Information}" IsEnabled="{Binding SongEdit.IsMp3}" >
                     <Grid>
                       <GroupBox Background="Transparent" Style="{DynamicResource GroupBoxStyleNoHeader}">
                         <StackPanel>
@@ -1134,14 +1136,14 @@
                   </syncfusion:SfAccordionItem>
 
                   <!-- Involved People -->
-                  <syncfusion:SfAccordionItem Header="{lex:Loc tagEdit_TabHeader_Involved_People}">
+                  <syncfusion:SfAccordionItem Header="{lex:Loc tagEdit_TabHeader_Involved_People}" IsEnabled="{Binding SongEdit.IsMp3}">
                     <Grid>
 
                     </Grid>
                   </syncfusion:SfAccordionItem>
 
                   <!-- User Defined Frames -->
-                  <syncfusion:SfAccordionItem Header="{lex:Loc tagEdit_TabHeader_UserFrames}">
+                  <syncfusion:SfAccordionItem Header="{lex:Loc tagEdit_TabHeader_UserFrames}" IsEnabled="{Binding SongEdit.IsMp3}">
                     <Grid>
 
                     </Grid>
