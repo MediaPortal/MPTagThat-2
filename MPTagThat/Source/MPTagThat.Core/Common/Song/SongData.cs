@@ -85,7 +85,7 @@ namespace MPTagThat.Core.Common.Song
     private List<string> _pictureHashList = new List<string>();
     private List<Comment> _comments = new List<Comment>();
     private List<Lyric> _lyrics = new List<Lyric>();
-    private List<PopmFrame> _popmframes = new List<PopmFrame>();
+    private ObservableCollection<PopmFrame> _popmframes = new ObservableCollection<PopmFrame>();
     private List<TagLib.TagTypes> _removedTagTypes = null;
 
     #endregion
@@ -897,9 +897,10 @@ namespace MPTagThat.Core.Common.Song
       }
     }
 
-    public List<PopmFrame> Ratings
+    public ObservableCollection<PopmFrame> Ratings
     {
       get => _popmframes;
+      set => SetProperty(ref _popmframes, value);
     }
 
     public string ReplayGainTrack

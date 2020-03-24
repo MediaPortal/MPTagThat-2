@@ -1080,7 +1080,7 @@ namespace MPTagThat.TagEdit.ViewModels
       FrontCover = null;
       PictureDetail = null;
       Genres.Clear();
-      SelectedGenres.Clear();
+      SelectedGenres?.Clear();
       Genres.AddRange(TagLib.Genres.Audio);
 
       if (songs.Count == 1)

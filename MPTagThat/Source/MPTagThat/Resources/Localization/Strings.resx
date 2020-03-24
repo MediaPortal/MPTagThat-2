@@ -1269,4 +1269,7 @@
     <value>Web Information</value>
     <comment>The Header for the Web Information Tab</comment>
   </data>
+  <data name="tagEdit_RatingUser" xml:space="preserve">
+    <value>User (email):</value>
+  </data>
 </root>

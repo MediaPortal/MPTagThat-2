@@ -2923,6 +2923,15 @@ namespace MPTagThat.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to User (email):.
+        /// </summary>
+        public static string tagEdit_RatingUser {
+            get {
+                return ResourceManager.GetString("tagEdit_RatingUser", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Remove existing pictures.
         /// </summary>
         public static string tagEdit_Remove_Existing_Pictures {
