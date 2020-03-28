@@ -1207,6 +1207,8 @@ namespace MPTagThat.Core.Common.Song
       try
       {
         // Clone all Lists individually
+
+        // ObservableCollections have to be handled differently to Lists
         songClone._pictures = new ObservableCollection<Picture>();
         var picList = new List<Picture>();
         for (var i = 0; i < _pictures.Count; i++)
@@ -1216,6 +1218,16 @@ namespace MPTagThat.Core.Common.Song
         }
         songClone._pictures.AddRange(picList);
 
+        songClone._popmframes = new ObservableCollection<PopmFrame>();
+        var popmList = new List<PopmFrame>();
+        for (var i = 0; i < this._popmframes.Count; i++)
+        {
+          var popmframe = new PopmFrame(this._popmframes[i]);
+          popmList.Add(popmframe);
+        }
+        songClone._popmframes.AddRange(popmList);
+
+        // Handle Lists
         for (var i = 0; i < this._lyrics.Count; i++)
         {
           var lyric = new Lyric(this._lyrics[i]);
@@ -1232,12 +1244,6 @@ namespace MPTagThat.Core.Common.Song
         {
           var comment = new Comment(this._comments[i]);
           songClone._comments.Add(comment);
-        }
-
-        for (var i = 0; i < this._popmframes.Count; i++)
-        {
-          var popmframe = new PopmFrame(this._popmframes[i]);
-          songClone._popmframes.Add(popmframe);
         }
       }
       catch (Exception)

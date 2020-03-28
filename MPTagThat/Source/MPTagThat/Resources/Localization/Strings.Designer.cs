@@ -2923,7 +2923,49 @@ namespace MPTagThat.Resources.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to User (email):.
+        ///   Looks up a localized string similar to Add Rating.
+        /// </summary>
+        public static string tagEdit_Rating_Add {
+            get {
+                return ResourceManager.GetString("tagEdit_Rating_Add", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Delete Rating.
+        /// </summary>
+        public static string tagEdit_Rating_Delete {
+            get {
+                return ResourceManager.GetString("tagEdit_Rating_Delete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to As per ID3 standard the rating is 1-255 where 1 is worst and 255 is best. 0 is unknown.
+        ///
+        ///Many programs have their own rating and may redefine the ID3 standard, like a Star Rating from 1 - 5 that is used by MPTagThat.
+        /// 
+        ///If no personal counter is wanted it may be omitted.
+        ///
+        ///To change the order of the ratings drag the rows..
+        /// </summary>
+        public static string tagEdit_Rating_Note {
+            get {
+                return ResourceManager.GetString("tagEdit_Rating_Note", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Play Count.
+        /// </summary>
+        public static string tagEdit_RatingPlayCount {
+            get {
+                return ResourceManager.GetString("tagEdit_RatingPlayCount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to User (email).
         /// </summary>
         public static string tagEdit_RatingUser {
             get {

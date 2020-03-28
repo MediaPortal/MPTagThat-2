@@ -137,6 +137,8 @@
     <Resource Include="Resources\Images\File_32x.png" />
     <Resource Include="Resources\Images\RemoveLyrics_32x.png" />
     <Resource Include="Resources\Images\GetLyrics_32x.png" />
+    <Resource Include="Resources\Images\Rating_Add_32x.png" />
+    <Resource Include="Resources\Images\Rating_Delete_32x.png" />
     <Content Include="x64\FreeImage.dll" />
     <Content Include="x86\FreeImage.dll" />
   </ItemGroup>

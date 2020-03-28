@@ -42,6 +42,7 @@ using MPTagThat.Core.Utils;
 using Prism.Events;
 using Prism.Mvvm;
 using Prism.Regions;
+using Syncfusion.UI.Xaml.Grid;
 using Syncfusion.Windows.Shared;
 using TagLib;
 using Action = MPTagThat.Core.Common.Action;
@@ -202,6 +203,22 @@ namespace MPTagThat.TagEdit.ViewModels
       get => _pictureDetail;
       set => SetProperty(ref _pictureDetail, value);
     }
+
+    /// <summary>
+    /// The Selected Rating in the Ratings
+    /// </summary>
+    private ObservableCollection<object> _selectedRating = new ObservableCollection<object>();
+
+    public ObservableCollection<object> SelectedRating
+    {
+      get => _selectedRating;
+      set => SetProperty(ref _selectedRating, value);
+    }
+
+    /// <summary>
+    /// A reference to the Ratings Grid to be used for Drag & Drop operation
+    /// </summary>
+    public SfDataGrid RatingsGrid;
 
     #region Check Box Checked properties
     private bool _ckTrackIsChecked;
@@ -373,9 +390,10 @@ namespace MPTagThat.TagEdit.ViewModels
       GetLyricsCommand = new BaseCommand(GetLyrics);
       GetLyricsFromFileCommand = new BaseCommand(GetLyricsFromFile);
       RemoveLyricsCommand = new BaseCommand(RemoveLyrics);
+      AddRatingCommand = new BaseCommand(AddRating);
+      DeleteRatingCommand = new BaseCommand(DeleteRating);
 
-
-      SelectedGenres.CollectionChanged += SelectedGenres_CollectionChanged;
+        SelectedGenres.CollectionChanged += SelectedGenres_CollectionChanged;
 
       MediaTypes.AddRange(_options.MediaTypes);
 
@@ -628,6 +646,7 @@ namespace MPTagThat.TagEdit.ViewModels
           {
             CkPicturesIsChecked = true;
           }
+          IsApplyButtonEnabled = true;
         }
         catch (Exception ex)
         {
@@ -654,6 +673,7 @@ namespace MPTagThat.TagEdit.ViewModels
       {
         CkPicturesIsChecked = true;
       }
+      IsApplyButtonEnabled = true;
     }
 
     /// <summary>
@@ -666,6 +686,7 @@ namespace MPTagThat.TagEdit.ViewModels
       if (SelectedPicture.Count > 0)
       {
         SongEdit.Pictures.Remove((Picture)SelectedPicture[0]);
+        IsApplyButtonEnabled = true;
       }
     }
 
@@ -782,6 +803,7 @@ namespace MPTagThat.TagEdit.ViewModels
       };
       evt.MessageData.Add("command", Action.ActionType.GETLYRICS);
       EventSystem.Publish(evt);
+      IsApplyButtonEnabled = true;
     }
 
     /// <summary>
@@ -801,6 +823,7 @@ namespace MPTagThat.TagEdit.ViewModels
         try
         {
           SongEdit.Lyrics = File.ReadAllText(oFd.FileName, Encoding.UTF8);
+          IsApplyButtonEnabled = true;
         }
         catch (Exception ex)
         {
@@ -828,6 +851,40 @@ namespace MPTagThat.TagEdit.ViewModels
       {
         SongEdit.Lyrics = "";
       }
+      IsApplyButtonEnabled = true;
+    }
+
+    #endregion
+
+    #region Rating related Commands
+
+    /// <summary>
+    /// Add a Rating
+    /// </summary>
+    public ICommand AddRatingCommand { get; }
+
+    private void AddRating(object param)
+    {
+      var mptagthatUser = SongEdit.Ratings.FirstOrDefault(r => r.User.ToLowerInvariant() == "mptagthat");
+      var user = mptagthatUser?.User.ToLowerInvariant() == "mptagthat" ? "" : "MPTagThat"; 
+      SongEdit.Ratings.Add(new PopmFrame(user,0,0));
+      SongEdit.Changed = true;
+      IsApplyButtonEnabled = true;
+    }
+
+    /// <summary>
+    /// Delete a Rating
+    /// </summary>
+    public ICommand DeleteRatingCommand { get; }
+
+    private void DeleteRating(object param)
+    {
+      if (SelectedRating.Count > 0)
+      {
+        SongEdit.Ratings.Remove((PopmFrame)SelectedRating[0]);
+        SongEdit.Changed = true;
+        IsApplyButtonEnabled = true;
+      }
     }
 
     #endregion
@@ -841,6 +898,7 @@ namespace MPTagThat.TagEdit.ViewModels
     {
       var song = (SongData)param;
       song.TrackLength = song.DurationTimespan.TotalMilliseconds.ToString();
+      IsApplyButtonEnabled = true;
     }
 
     /// <summary>
@@ -1518,6 +1576,7 @@ namespace MPTagThat.TagEdit.ViewModels
       original.Publisher = backup.Publisher;
       original.Pictures = backup.Pictures;
       original.Rating = backup.Rating;
+      original.Ratings = backup.Ratings;
       original.ReplayGainTrack = backup.ReplayGainTrack;
       original.ReplayGainTrackPeak = backup.ReplayGainTrackPeak;
       original.ReplayGainAlbum = backup.ReplayGainAlbum;
@@ -1532,6 +1591,45 @@ namespace MPTagThat.TagEdit.ViewModels
       original.Init = false;
     }
 
+    /// <summary>
+    /// Handle Drag & Drop on Ratings Grid
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    private void RatingsGrid_OnDropped(object sender, GridRowDroppedEventArgs e)
+    {
+      if (e.DropPosition != DropPosition.None)
+      {
+        // Get Dragging records
+        ObservableCollection<object> draggingRecords = e.Data.GetData("Records") as ObservableCollection<object>;
+
+        // Gets the TargetRecord from the underlying collection using record index of the TargetRecord (e.TargetRecord)
+        var targetRecord = SongEdit.Ratings[(int)e.TargetRecord];
+
+        // Use Batch update to avoid data operations in SfDataGrid during records removing and inserting
+        RatingsGrid.BeginInit();
+
+        // Removes the dragging records from the underlying collection
+        foreach (var item in draggingRecords)
+        {
+          SongEdit.Ratings.Remove(item as PopmFrame);
+        }
+
+        // Find the target record index after removing the records
+        int targetIndex = SongEdit.Ratings.IndexOf(targetRecord);
+        int insertionIndex = e.DropPosition == DropPosition.DropAbove ? targetIndex : targetIndex + 1;
+        insertionIndex = insertionIndex < 0 ? 0 : insertionIndex;
+
+        // Insert dragging records to the target position
+        for (int i = draggingRecords.Count - 1; i >= 0; i--)
+        {
+          SongEdit.Ratings.Insert(insertionIndex, draggingRecords[i] as PopmFrame);
+        }
+        RatingsGrid.EndInit();
+      }
+    }
+
+
     #endregion
 
     #region Interface
@@ -1542,6 +1640,8 @@ namespace MPTagThat.TagEdit.ViewModels
     /// <param name="navigationContext"></param>
     public void OnNavigatedTo(NavigationContext navigationContext)
     {
+      RatingsGrid.RowDragDropController.Dropped += RatingsGrid_OnDropped;
+
       MultiCheckBoxVisibility = false;
       _songs = navigationContext.Parameters["songs"] as List<SongData>;
 
@@ -1566,6 +1666,7 @@ namespace MPTagThat.TagEdit.ViewModels
     public void OnNavigatedFrom(NavigationContext navigationContext)
     {
       // Clear the view
+      RatingsGrid.RowDragDropController.Dropped -= RatingsGrid_OnDropped;
     }
 
     public void OnFileDrop(string[] filepaths)

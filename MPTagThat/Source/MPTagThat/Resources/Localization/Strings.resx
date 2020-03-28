@@ -1270,6 +1270,26 @@
     <comment>The Header for the Web Information Tab</comment>
   </data>
   <data name="tagEdit_RatingUser" xml:space="preserve">
-    <value>User (email):</value>
+    <value>User (email)</value>
+  </data>
+  <data name="tagEdit_RatingPlayCount" xml:space="preserve">
+    <value>Play Count</value>
+  </data>
+  <data name="tagEdit_Rating_Add" xml:space="preserve">
+    <value>Add Rating</value>
+    <comment>The Add Rating Button</comment>
+  </data>
+  <data name="tagEdit_Rating_Delete" xml:space="preserve">
+    <value>Delete Rating</value>
+    <comment>The Delete Rating Buttom</comment>
+  </data>
+  <data name="tagEdit_Rating_Note" xml:space="preserve">
+    <value>As per ID3 standard the rating is 1-255 where 1 is worst and 255 is best. 0 is unknown.
+
+Many programs have their own rating and may redefine the ID3 standard, like a Star Rating from 1 - 5 that is used by MPTagThat.
+ 
+If no personal counter is wanted it may be omitted.
+
+To change the order of the ratings drag the rows.</value>
   </data>
 </root>

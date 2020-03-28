@@ -853,22 +853,39 @@
                   <syncfusion:SfAccordionItem Header="{lex:Loc tagEdit_TabHeader_Rating}" AccordionButtonStyle="{StaticResource expanderButtonStyle}" IsEnabled="{Binding SongEdit.IsMp3}">
                     <Grid>
                       <GroupBox Background="Transparent" Style="{DynamicResource GroupBoxStyleNoHeader}">
-                        <StackPanel>
+                        <StackPanel Orientation="Vertical">
                           <syncfusion:SfDataGrid x:Name="RatingGrid"
                                                  ItemsSource="{Binding SongEdit.Ratings}"
+                                                 SelectedItems="{Binding SelectedRating,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                                                  SelectionMode="Single"
                                                  ColumnSizer="AutoWithLastColumnFill" 
                                                  AllowResizingColumns="True" 
                                                  AllowDraggingColumns="False" 
                                                  AutoGenerateColumns="False"
+                                                 AllowDraggingRows="True"
+                                                 AllowDrop="True"
                                                  ShowRowHeader="False" 
                                                  AllowEditing="True" >
                             <syncfusion:SfDataGrid.Columns>
-                              <syncfusion:GridTextColumn MappingName="User" Width="300" />
-                              <syncfusion:GridNumericColumn MappingName="Rating" Width="100"  NumberDecimalDigits="0" />
-                              <syncfusion:GridNumericColumn MappingName="PlayCount" Width="100" NumberDecimalDigits="0" />
+                              <syncfusion:GridTextColumn HeaderText="{lex:Loc tagEdit_RatingUser}" MappingName="User" Width="200" />
+                              <syncfusion:GridNumericColumn HeaderText="{lex:Loc songHeader_Rating}" MappingName="Rating" Width="80"  NumberDecimalDigits="0" />
+                              <syncfusion:GridNumericColumn HeaderText="{lex:Loc tagEdit_RatingPlayCount}" MappingName="PlayCount" Width="80" NumberDecimalDigits="0" />
                             </syncfusion:SfDataGrid.Columns>
                           </syncfusion:SfDataGrid>
+                          <StackPanel Orientation="Horizontal">
+                            <syncfusion:ButtonAdv Label="{lex:Loc tagEdit_Rating_Add}" 
+                                                  SmallIcon="pack://application:,,,/MPTagThat.TagEdit;component/Resources/Images/Rating_Add_32x.png" 
+                                                  Command="{Binding AddRatingCommand}" 
+                                                  Width="Auto" Height="25" 
+                                                  Margin="0,5,0,0" />
+
+                            <syncfusion:ButtonAdv Label="{lex:Loc tagEdit_Rating_Delete}" 
+                                                  SmallIcon="pack://application:,,,/MPTagThat.TagEdit;component/Resources/Images/Rating_Delete_32x.png" 
+                                                  Command="{Binding DeleteRatingCommand}" 
+                                                  Width="Auto" Height="25" 
+                                                  Margin="20,5,0,0" />
+                          </StackPanel>
+                            <TextBlock Text="{lex:Loc tagEdit_Rating_Note}" TextWrapping="Wrap" Margin="5,5,0,1"  Width="350"/>
                         </StackPanel>
                       </GroupBox>
                     </Grid>

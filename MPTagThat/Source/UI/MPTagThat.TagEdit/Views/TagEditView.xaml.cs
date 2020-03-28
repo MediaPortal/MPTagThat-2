@@ -13,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using MPTagThat.TagEdit.ViewModels;
 using Syncfusion.Windows.Tools.Controls;
 
 namespace MPTagThat.TagEdit.Views
@@ -25,6 +26,11 @@ namespace MPTagThat.TagEdit.Views
     public TagEditView()
     {
       InitializeComponent();
+      var vm = (TagEditViewModel) DataContext;
+      if (vm != null)
+      {
+        vm.RatingsGrid = this.RatingGrid;
+      }
     }
 
 

@@ -300,8 +300,10 @@ namespace MPTagThat.Dialogs.ViewModels
 
     private void AlbumSiteSelected(object param)
     {
-      _selectedAlbum = Albums[SelectedAlbumSite];
+      MatchedSongs.Clear();
       SelectedAlbumSongs.Clear();
+      
+      _selectedAlbum = Albums[SelectedAlbumSite];
       Artist = _selectedAlbum.Artist;
       Album = _selectedAlbum.Title;
       Year = _selectedAlbum.Year;
@@ -418,7 +420,7 @@ namespace MPTagThat.Dialogs.ViewModels
         // Gets the TargetRecord from the underlying collection using record index of the TargetRecord (e.TargetRecord)
         var targetRecord = MatchedSongs[(int)e.TargetRecord];
 
-        // Use Batch update to avoid data operatons in SfDataGrid during records removing and inserting
+        // Use Batch update to avoid data operations in SfDataGrid during records removing and inserting
         MatchedSongsGrid.BeginInit();
 
         // Removes the dragging records from the underlying collection
