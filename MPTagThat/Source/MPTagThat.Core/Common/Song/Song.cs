@@ -697,6 +697,7 @@ namespace MPTagThat.Core.Common.Song
             file.Tag.Lyrics = song.Lyrics;
             if (song.IsMp3)
             {
+              id3v2tag.RemoveFrames("USLT");
               foreach (Lyric lyric in song.LyricsFrames)
               {
                 UnsynchronisedLyricsFrame lyricframe = UnsynchronisedLyricsFrame.Get(id3v2tag, lyric.Description,
@@ -720,6 +721,7 @@ namespace MPTagThat.Core.Common.Song
 
           if (song.IsMp3)
           {
+            id3v2tag.RemoveFrames("POPM");
             if (song.Ratings.Count > 0)
             {
               foreach (PopmFrame rating in song.Ratings)
@@ -728,10 +730,6 @@ namespace MPTagThat.Core.Common.Song
                 popmFrame.Rating = Convert.ToByte(rating.Rating);
                 popmFrame.PlayCount = Convert.ToUInt32(rating.PlayCount);
               }
-            }
-            else
-            {
-              id3v2tag.RemoveFrames("POPM");
             }
           }
           else if (song.TagType == "ogg" || song.TagType == "flac")
