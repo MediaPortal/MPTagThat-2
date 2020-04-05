@@ -81,7 +81,9 @@
     <Reference Include="System.Xaml">
       <RequiredTargetFramework>4.0</RequiredTargetFramework>
     </Reference>
-    <Reference Include="taglib-sharp, Version=2.1.0.5, Culture=neutral, PublicKeyToken=db62eba44689b5b0" />
+    <Reference Include="TagLibSharp, Version=2.2.0.1, Culture=neutral, PublicKeyToken=db62eba44689b5b0, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\MediaPortal.TagLib.2.2.0.1\lib\TagLibSharp.dll</HintPath>
+    </Reference>
     <Reference Include="UIAutomationProvider" />
     <Reference Include="UIAutomationTypes" />
     <Reference Include="WindowsBase" />

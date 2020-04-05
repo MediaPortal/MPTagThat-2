@@ -242,6 +242,11 @@ namespace MPTagThat.Core.Common.Song
     public bool IsMp3 => TagType.ToLower() == "mp3";
 
     /// <summary>
+    /// Do we have a V2.4 MP3 File?
+    /// </summary>
+    public bool IsMp3V4 => TagType.ToLower() == "mp3" && ID3Version == 4;
+
+    /// <summary>
     /// Number of Pictures in File
     /// </summary>
     public int NumPics => Pictures.Count > 0 ? Pictures.Count : PictureHashList.Count;

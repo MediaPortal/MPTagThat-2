@@ -2230,6 +2230,15 @@ namespace MPTagThat.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        public static string String1 {
+            get {
+                return ResourceManager.GetString("String1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Add Format To List.
         /// </summary>
         public static string tagAndRename_AddFormat {
@@ -2779,6 +2788,51 @@ namespace MPTagThat.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Add Person.
+        /// </summary>
+        public static string tagEdit_InvolvedPerson_Add {
+            get {
+                return ResourceManager.GetString("tagEdit_InvolvedPerson_Add", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Delete Person.
+        /// </summary>
+        public static string tagEdit_InvolvedPerson_Delete {
+            get {
+                return ResourceManager.GetString("tagEdit_InvolvedPerson_Delete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Function.
+        /// </summary>
+        public static string tagEdit_InvolvedPerson_Function {
+            get {
+                return ResourceManager.GetString("tagEdit_InvolvedPerson_Function", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Involved Person.
+        /// </summary>
+        public static string tagEdit_InvolvedPerson_Header {
+            get {
+                return ResourceManager.GetString("tagEdit_InvolvedPerson_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Name.
+        /// </summary>
+        public static string tagEdit_InvolvedPerson_Name {
+            get {
+                return ResourceManager.GetString("tagEdit_InvolvedPerson_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Media Type:.
         /// </summary>
         public static string tagEdit_MediaType {
@@ -2793,6 +2847,42 @@ namespace MPTagThat.Resources.Localization {
         public static string tagEdit_MediaTypes {
             get {
                 return ResourceManager.GetString("tagEdit_MediaTypes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add Musician.
+        /// </summary>
+        public static string tagEdit_MusicCreditList_Add {
+            get {
+                return ResourceManager.GetString("tagEdit_MusicCreditList_Add", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Delete Musician.
+        /// </summary>
+        public static string tagEdit_MusicCreditList_Delete {
+            get {
+                return ResourceManager.GetString("tagEdit_MusicCreditList_Delete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Music Credit List (ID3 V2.4 only).
+        /// </summary>
+        public static string tagEdit_MusicCreditList_Header {
+            get {
+                return ResourceManager.GetString("tagEdit_MusicCreditList_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Instrument.
+        /// </summary>
+        public static string tagEdit_MusicCreditList_Instrument {
+            get {
+                return ResourceManager.GetString("tagEdit_MusicCreditList_Instrument", resourceCulture);
             }
         }
         

@@ -39,6 +39,7 @@ using MPTagThat.Core.Services.Logging;
 using MPTagThat.Core.Services.Settings;
 using MPTagThat.Core.Services.Settings.Setting;
 using MPTagThat.Core.Utils;
+using MPTagThat.TagEdit.Models;
 using Prism.Events;
 using Prism.Mvvm;
 using Prism.Regions;
@@ -220,6 +221,45 @@ namespace MPTagThat.TagEdit.ViewModels
     /// </summary>
     public SfDataGrid RatingsGrid;
 
+
+    private ObservableCollection<Person> _involvedPersons = new ObservableCollection<Person>();
+
+    public ObservableCollection<Person> InvolvedPersons
+    {
+      get => _involvedPersons;
+      set => SetProperty(ref _involvedPersons, value);
+    }
+
+    /// <summary>
+    /// The Selected Person in the Involved Person
+    /// </summary>
+    private ObservableCollection<object> _selectedPerson = new ObservableCollection<object>();
+
+    public ObservableCollection<object> SelectedPerson
+    {
+      get => _selectedPerson;
+      set => SetProperty(ref _selectedPerson, value);
+    }
+
+    private ObservableCollection<Person> _involvedMusicians = new ObservableCollection<Person>();
+
+    public ObservableCollection<Person> InvolvedMusicians
+    {
+      get => _involvedMusicians;
+      set => SetProperty(ref _involvedMusicians, value);
+    }
+
+    /// <summary>
+    /// The Selected Person in the Involved Person
+    /// </summary>
+    private ObservableCollection<object> _selectedMusician = new ObservableCollection<object>();
+
+    public ObservableCollection<object> SelectedMusician
+    {
+      get => _selectedMusician;
+      set => SetProperty(ref _selectedMusician, value);
+    }
+
     #region Check Box Checked properties
     private bool _ckTrackIsChecked;
     public bool CkTrackIsChecked { get => _ckTrackIsChecked; set => SetProperty(ref _ckTrackIsChecked, value); }
@@ -392,9 +432,12 @@ namespace MPTagThat.TagEdit.ViewModels
       RemoveLyricsCommand = new BaseCommand(RemoveLyrics);
       AddRatingCommand = new BaseCommand(AddRating);
       DeleteRatingCommand = new BaseCommand(DeleteRating);
+      AddPersonCommand = new BaseCommand(AddPerson);
+      DeletePersonCommand = new BaseCommand(DeletePerson);
+      AddMusicianCommand = new BaseCommand(AddMusician);
+      DeleteMusicianCommand = new BaseCommand(DeleteMusician);
 
-        SelectedGenres.CollectionChanged += SelectedGenres_CollectionChanged;
-
+      SelectedGenres.CollectionChanged += SelectedGenres_CollectionChanged;
       MediaTypes.AddRange(_options.MediaTypes);
 
       EventSystem.Subscribe<GenericEvent>(OnMessageReceived, ThreadOption.UIThread);
@@ -889,6 +932,64 @@ namespace MPTagThat.TagEdit.ViewModels
 
     #endregion
 
+    #region Involed People / Musicians Commands
+
+    /// <summary>
+    /// Add a involved Person
+    /// </summary>
+    public ICommand AddPersonCommand { get; }
+
+    private void AddPerson(Object param)
+    {
+      InvolvedPersons.Add(new Person {Function = "", Name = ""});
+      UpdateInvolvedPersons(SongEdit);
+      IsApplyButtonEnabled = true;
+    }
+
+    /// <summary>
+    /// Delete a Person
+    /// </summary>
+    public ICommand DeletePersonCommand { get; }
+
+    private void DeletePerson(Object param)
+    {
+      if (SelectedPerson.Count > 0)
+      {
+        InvolvedPersons.Remove((Person) SelectedPerson[0]);
+        UpdateInvolvedPersons(SongEdit);
+        IsApplyButtonEnabled = true;
+      }
+    }
+  
+    /// <summary>
+    /// Add a Musician
+    /// </summary>
+    public ICommand AddMusicianCommand { get; }
+
+    private void AddMusician(Object param)
+    {
+      InvolvedMusicians.Add(new Person {Function = "", Name = ""});
+      UpdateMusicians(SongEdit);
+      IsApplyButtonEnabled = true;
+    }
+    
+    /// <summary>
+    /// Delete a Musician
+    /// </summary>
+    public ICommand DeleteMusicianCommand { get; }
+
+    private void DeleteMusician(Object param)
+    {
+      if (SelectedMusician.Count > 0)
+      {
+        InvolvedMusicians.Remove((Person) SelectedMusician[0]);
+        UpdateMusicians(SongEdit);
+        IsApplyButtonEnabled = true;
+      }
+    }
+
+    #endregion
+
     /// <summary>
     /// Set the Song Length from file
     /// </summary>
@@ -919,6 +1020,8 @@ namespace MPTagThat.TagEdit.ViewModels
       // If we got only one song, then the changes have been applied already through binding
       if (_songs.Count == 1)
       {
+        UpdateInvolvedPersons(_songs[0]);
+        UpdateMusicians(_songs[0]);
         return;
       }
 
@@ -1156,9 +1259,10 @@ namespace MPTagThat.TagEdit.ViewModels
             SelectedIndexMediaType = j;
             break;
           }
-
           j++;
         }
+        FillInvolvedPersonsGrid(SongEdit);
+        FillMusicianGrid(SongEdit);
         FrontCover = SongEdit.FrontCover;
         _isInitializing = false;
         IsApplyButtonEnabled = false;
@@ -1169,7 +1273,7 @@ namespace MPTagThat.TagEdit.ViewModels
       var i = 0;
       byte[] picData = new byte[] { };
       var strGenreTemp = "";
-      SelectedGenres.Clear();
+      SelectedGenres?.Clear();
       foreach (var song in songs)
       {
         // Don't handle single track for Multitag Edit
@@ -1463,11 +1567,88 @@ namespace MPTagThat.TagEdit.ViewModels
       }
     }
 
+    /// <summary>
+    /// Fill the Grid with the Involved Persons
+    /// </summary>
+    /// <param name="song"></param>
+    private void FillInvolvedPersonsGrid(SongData song)
+    {
+      // A IPLS is delimited with "\0"
+      // A TIPL is delimited with ";"
+      var ipls = song.InvolvedPeople.Split(new[] { '\0', ';' });
+      for (var j = 0; j < ipls.Length - 1; j += 2)
+      {
+        InvolvedPersons.Add(new Person { Name = ipls[j].Trim(), Function = ipls[j + 1].Trim() });
+      }
+    }
+
+    /// <summary>
+    /// Update the Involved Persons Frame
+    /// </summary>
+    /// <param name="song"></param>
+    private void UpdateInvolvedPersons(SongData song)
+    {
+      var delimiter = ";";
+      if (song.ID3Version == 3)
+      {
+        delimiter = new string(new char[1]{'\0'});
+      }
+
+      var involvedpersons = "";
+      foreach (var person in InvolvedPersons)
+      {
+        involvedpersons += $"{person.Name}{delimiter}{person.Function}{delimiter}";
+      }
+
+      involvedpersons = involvedpersons.Trim(new[] {';', '\0'});
+      song.InvolvedPeople = involvedpersons;
+    }
+
+    /// <summary>
+    /// Fill the Grid with the Musicians
+    /// </summary>
+    /// <param name="song"></param>
+    private void FillMusicianGrid(SongData song)
+    {
+      // A TMCL is delimited with ";"
+      var tmcl = song.MusicCreditList.Split(new[] { ';' });
+      for (var j = 0; j < tmcl.Length - 1; j += 2)
+      {
+        InvolvedMusicians.Add(new Person { Function = tmcl[j].Trim(), Name = tmcl[j + 1].Trim() });
+      }
+    }
+
+    /// <summary>
+    /// Update the MusicCreditList Frame
+    /// </summary>
+    /// <param name="song"></param>
+    private void UpdateMusicians(SongData song)
+    {
+      if (song.ID3Version == 3)
+      {
+        return;
+      }
+      var delimiter = ";";
+      var musicians = "";
+      foreach (var person in InvolvedMusicians)
+      {
+        musicians += $"{person.Function}{delimiter}{person.Name}{delimiter}";
+      }
+
+      musicians = musicians.Trim(new[] {';'});
+      song.InvolvedPeople = musicians;
+    }
+
+
+    /// <summary>
+    /// Clear the form
+    /// </summary>
     private void ClearForm()
     {
       SongEdit = new SongData();
       UncheckCheckboxes();
       SelectedGenres?.Clear();
+      InvolvedPersons?.Clear();
       SelectedIndexMediaType = 0;
       FrontCover = null;
       PictureDetail = null;
@@ -1476,9 +1657,8 @@ namespace MPTagThat.TagEdit.ViewModels
     }
 
     /// <summary>
-    /// Changes the Checkboxes behind the input fields to visible / Invisble
+    /// Clears the Checkboxes behind the input fields
     /// </summary>
-    /// <param name="visible"></param>
     private void UncheckCheckboxes()
     {
       CkTrackIsChecked = false;

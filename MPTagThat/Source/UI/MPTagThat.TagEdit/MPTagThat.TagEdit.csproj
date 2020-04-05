@@ -88,8 +88,8 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
-    <Reference Include="taglib-sharp, Version=2.1.0.5, Culture=neutral, PublicKeyToken=db62eba44689b5b0, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\MediaPortal.TagLib.2.1.0.5\lib\taglib-sharp.dll</HintPath>
+    <Reference Include="TagLibSharp, Version=2.2.0.1, Culture=neutral, PublicKeyToken=db62eba44689b5b0, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\MediaPortal.TagLib.2.2.0.1\lib\TagLibSharp.dll</HintPath>
     </Reference>
     <Reference Include="UIAutomationProvider" />
     <Reference Include="UIAutomationTypes" />
@@ -103,6 +103,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Models\Person.cs" />
     <Compile Include="TagEditModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\TagEditViewModel.cs" />
@@ -139,9 +140,14 @@
     <Resource Include="Resources\Images\GetLyrics_32x.png" />
     <Resource Include="Resources\Images\Rating_Add_32x.png" />
     <Resource Include="Resources\Images\Rating_Delete_32x.png" />
+    <Resource Include="Resources\Images\Person_Add_32x.png" />
+    <Resource Include="Resources\Images\Person_Delete_32x.png" />
+    <Resource Include="Resources\Images\Musician_Add_32x.png" />
+    <Resource Include="Resources\Images\Musician_Delete_32x.png" />
     <Content Include="x64\FreeImage.dll" />
     <Content Include="x86\FreeImage.dll" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\..\packages\MediaPortal.FreeImageNET.3.18.3\build\MediaPortal.FreeImageNET.targets" Condition="Exists('..\..\packages\MediaPortal.FreeImageNET.3.18.3\build\MediaPortal.FreeImageNET.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

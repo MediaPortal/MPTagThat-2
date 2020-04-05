@@ -1164,9 +1164,71 @@
 
                   <!-- Involved People -->
                   <syncfusion:SfAccordionItem Header="{lex:Loc tagEdit_TabHeader_Involved_People}" AccordionButtonStyle="{StaticResource expanderButtonStyle}" IsEnabled="{Binding SongEdit.IsMp3}">
-                    <Grid>
+                    <StackPanel Orientation="Vertical">
+                      <GroupBox Background="Transparent" Header="{lex:Loc tagEdit_InvolvedPerson_Header}" >
+                        <StackPanel Orientation="Vertical">
+                          <syncfusion:SfDataGrid ItemsSource="{Binding InvolvedPersons,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                                                 SelectedItems="{Binding SelectedPerson,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                                                 SelectionMode="Single"
+                                                 ColumnSizer="AutoWithLastColumnFill" 
+                                                 AllowResizingColumns="True" 
+                                                 AllowDraggingColumns="False" 
+                                                 AutoGenerateColumns="False"
+                                                 ShowRowHeader="False" 
+                                                 AllowEditing="True" >
+                            <syncfusion:SfDataGrid.Columns>
+                              <syncfusion:GridTextColumn HeaderText="{lex:Loc tagEdit_InvolvedPerson_Name}" MappingName="Name" Width="180" />
+                              <syncfusion:GridTextColumn HeaderText="{lex:Loc tagEdit_InvolvedPerson_Function}" MappingName="Function" Width="180" />
+                            </syncfusion:SfDataGrid.Columns>
+                          </syncfusion:SfDataGrid>
+                          <StackPanel Orientation="Horizontal">
+                            <syncfusion:ButtonAdv Label="{lex:Loc tagEdit_InvolvedPerson_Add}" 
+                                                  SmallIcon="pack://application:,,,/MPTagThat.TagEdit;component/Resources/Images/Person_Add_32x.png" 
+                                                  Command="{Binding AddPersonCommand}" 
+                                                  Width="Auto" Height="25" 
+                                                  Margin="0,5,0,0" />
 
-                    </Grid>
+                            <syncfusion:ButtonAdv Label="{lex:Loc tagEdit_InvolvedPerson_Delete}" 
+                                                  SmallIcon="pack://application:,,,/MPTagThat.TagEdit;component/Resources/Images/Person_Delete_32x.png" 
+                                                  Command="{Binding DeletePersonCommand}" 
+                                                  Width="Auto" Height="25" 
+                                                  Margin="20,5,0,0" />
+                          </StackPanel>
+                        </StackPanel>
+                      </GroupBox>
+
+                      <GroupBox Background="Transparent" Header="{lex:Loc tagEdit_MusicCreditList_Header}" IsEnabled="{Binding SongEdit.IsMp3V4}" >
+                        <StackPanel Orientation="Vertical">
+                          <syncfusion:SfDataGrid ItemsSource="{Binding InvolvedMusicians,Mode=TwoWay}"
+                                                 SelectedItems="{Binding SelectedMusician,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                                                 SelectionMode="Single"
+                                                 ColumnSizer="AutoWithLastColumnFill" 
+                                                 AllowResizingColumns="True" 
+                                                 AllowDraggingColumns="False" 
+                                                 AutoGenerateColumns="False"
+                                                 ShowRowHeader="False" 
+                                                 AllowEditing="True" >
+                            <syncfusion:SfDataGrid.Columns>
+                              <syncfusion:GridTextColumn HeaderText="{lex:Loc tagEdit_MusicCreditList_Instrument}" MappingName="Function" Width="180" />
+                              <syncfusion:GridTextColumn HeaderText="{lex:Loc tagEdit_InvolvedPerson_Name}" MappingName="Name" Width="180" />
+                            </syncfusion:SfDataGrid.Columns>
+                          </syncfusion:SfDataGrid>
+                          <StackPanel Orientation="Horizontal">
+                            <syncfusion:ButtonAdv Label="{lex:Loc tagEdit_MusicCreditList_Add}" 
+                                                  SmallIcon="pack://application:,,,/MPTagThat.TagEdit;component/Resources/Images/Musician_Add_32x.png" 
+                                                  Command="{Binding AddMusicianCommand}" 
+                                                  Width="Auto" Height="25" 
+                                                  Margin="0,5,0,0" />
+
+                            <syncfusion:ButtonAdv Label="{lex:Loc tagEdit_MusicCreditList_Delete}" 
+                                                  SmallIcon="pack://application:,,,/MPTagThat.TagEdit;component/Resources/Images/Musician_Delete_32x.png" 
+                                                  Command="{Binding DeleteMusicianCommand}" 
+                                                  Width="Auto" Height="25" 
+                                                  Margin="20,5,0,0" />
+                          </StackPanel>
+                        </StackPanel>
+                      </GroupBox>
+                    </StackPanel>
                   </syncfusion:SfAccordionItem>
 
                   <!-- User Defined Frames -->

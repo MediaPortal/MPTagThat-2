@@ -179,8 +179,8 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
-    <Reference Include="taglib-sharp, Version=2.1.0.5, Culture=neutral, PublicKeyToken=db62eba44689b5b0, processorArchitecture=MSIL">
-      <HintPath>..\packages\MediaPortal.TagLib.2.1.0.5\lib\taglib-sharp.dll</HintPath>
+    <Reference Include="TagLibSharp, Version=2.2.0.1, Culture=neutral, PublicKeyToken=db62eba44689b5b0, processorArchitecture=MSIL">
+      <HintPath>..\packages\MediaPortal.TagLib.2.2.0.1\lib\TagLibSharp.dll</HintPath>
     </Reference>
     <Reference Include="WindowsBase" />
     <Reference Include="WPFLocalizeExtension, Version=3.4.0.0, Culture=neutral, PublicKeyToken=c726e0262981a1eb, processorArchitecture=MSIL">

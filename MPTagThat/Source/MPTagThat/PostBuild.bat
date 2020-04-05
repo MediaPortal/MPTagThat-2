@@ -30,7 +30,7 @@ xcopy /y %1\MPTagThat\bin\%2\de\* %TARGETPATH%\Localization\de\
 REM Copy Core 
 xcopy /y %1\MPTagThat.Core\bin\%2\MPTagThat.Core.* %TARGETPATH%\Bin\
 xcopy /y %1\MPTagThat.Core\bin\%2\NLog.dll %TARGETPATH%\Bin\
-xcopy /y %1\MPTagThat.Core\bin\%2\taglib-sharp.dll %TARGETPATH%\Bin\
+xcopy /y %1\MPTagThat.Core\bin\%2\taglibsharp.dll %TARGETPATH%\Bin\
 xcopy /y %1\MPTagThat.Core\bin\%2\NewtonSoft.Json.dll %TARGETPATH%\Bin\
 xcopy /y %1\MPTagThat.Core\bin\%2\FreeImageNET.dll %TARGETPATH%\Bin\
 xcopy /y %1\MPTagThat.Core\bin\%2\x64\FreeImage.dll %TARGETPATH%\Bin\x64\

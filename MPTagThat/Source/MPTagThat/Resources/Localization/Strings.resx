@@ -1292,4 +1292,41 @@ If no personal counter is wanted it may be omitted.
 
 To change the order of the ratings drag the rows.</value>
   </data>
+  <data name="String1" xml:space="preserve">
+    <value />
+  </data>
+  <data name="tagEdit_InvolvedPerson_Add" xml:space="preserve">
+    <value>Add Person</value>
+    <comment>The Button Text of the Involved Person Add</comment>
+  </data>
+  <data name="tagEdit_InvolvedPerson_Delete" xml:space="preserve">
+    <value>Delete Person</value>
+    <comment>The Button Text of the Involved Person Delete</comment>
+  </data>
+  <data name="tagEdit_InvolvedPerson_Function" xml:space="preserve">
+    <value>Function</value>
+  </data>
+  <data name="tagEdit_InvolvedPerson_Header" xml:space="preserve">
+    <value>Involved Person</value>
+    <comment>The Header of the Involved Person Groupbox</comment>
+  </data>
+  <data name="tagEdit_InvolvedPerson_Name" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="tagEdit_MusicCreditList_Add" xml:space="preserve">
+    <value>Add Musician</value>
+    <comment>Button to Add a Musician</comment>
+  </data>
+  <data name="tagEdit_MusicCreditList_Delete" xml:space="preserve">
+    <value>Delete Musician</value>
+    <comment>Button to Delete a Musician</comment>
+  </data>
+  <data name="tagEdit_MusicCreditList_Header" xml:space="preserve">
+    <value>Music Credit List (ID3 V2.4 only)</value>
+    <comment>The Header for the Music Credit List GroupBox</comment>
+  </data>
+  <data name="tagEdit_MusicCreditList_Instrument" xml:space="preserve">
+    <value>Instrument</value>
+    <comment>Column Header for Music Credit List</comment>
+  </data>
 </root>
