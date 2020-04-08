@@ -458,9 +458,11 @@
               </Grid.RowDefinitions>
               <Grid.ColumnDefinitions>
                 <ColumnDefinition Width = "Auto" />
+                <ColumnDefinition Width = "5" />
+                <ColumnDefinition Width = "Auto" />
               </Grid.ColumnDefinitions>
 
-              <StackPanel Grid.Row="0" Margin="0,5,0,0">
+              <StackPanel Grid.Row="0" >
                 <syncfusion:SfAccordion SelectionMode="ZeroOrMore" >
                   <syncfusion:SfAccordion.HeaderTemplate>
                     <DataTemplate>
@@ -1019,13 +1021,50 @@
                       </GroupBox>
                     </Grid>
                   </syncfusion:SfAccordionItem>
+                </syncfusion:SfAccordion>
+                </StackPanel>
 
-                  <!-- Rating -->
-                  <syncfusion:SfAccordionItem Header="{lex:Loc tagEdit_TabHeader_Rating}" AccordionButtonStyle="{StaticResource expanderButtonStyle}" IsEnabled="{Binding SongEdit.IsMp3}">
-                    <Grid>
-                      <GroupBox Background="Transparent" Style="{DynamicResource GroupBoxStyleNoHeader}">
-                        <StackPanel Orientation="Vertical">
-                          <syncfusion:SfDataGrid x:Name="RatingGrid"
+                <StackPanel  x:Name="AccordionPanel" Grid.Row="1" Grid.Column="0" >
+
+                  <!-- Layout Changes -->
+                  <VisualStateManager.VisualStateGroups>
+                    <VisualStateGroup x:Name="AccordionPanelStates">
+                      <VisualState x:Name="AccordionNarrow">
+                        <Storyboard>
+                          <Int32Animation Storyboard.Target="{Binding ElementName=AccordionPanel}"
+                                          Storyboard.TargetProperty="(Grid.Row)" 
+                                          From="0" To="1"/>
+                          <Int32Animation Storyboard.Target="{Binding ElementName=AccordionPanel}"
+                                          Storyboard.TargetProperty="(Grid.Column)" 
+                                          From="2" To="0"/>
+                        </Storyboard>
+                      </VisualState>
+
+                      <VisualState x:Name="AccordionWide">
+                        <Storyboard>
+                          <Int32Animation Storyboard.Target="{Binding ElementName=AccordionPanel}"
+                                          Storyboard.TargetProperty="(Grid.Row)" 
+                                          From="1" To="0"/>
+                          <Int32Animation Storyboard.Target="{Binding ElementName=AccordionPanel}"
+                                          Storyboard.TargetProperty="(Grid.Column)" 
+                                          From="0" To="2"/>
+                        </Storyboard>
+                      </VisualState>
+                    </VisualStateGroup>
+                  </VisualStateManager.VisualStateGroups>
+
+                  <syncfusion:SfAccordion SelectionMode="ZeroOrMore" >
+                    <syncfusion:SfAccordion.HeaderTemplate>
+                      <DataTemplate>
+                        <TextBlock Text="{Binding}" FontWeight="Bold" FontSize="20" />
+                      </DataTemplate>
+                    </syncfusion:SfAccordion.HeaderTemplate>
+                    <!-- Rating -->
+                    <syncfusion:SfAccordionItem Header="{lex:Loc tagEdit_TabHeader_Rating}" AccordionButtonStyle="{StaticResource expanderButtonStyle}" IsEnabled="{Binding SongEdit.IsMp3}">
+                      <Grid>
+                        <GroupBox Background="Transparent" Style="{DynamicResource GroupBoxStyleNoHeader}">
+                          <StackPanel Orientation="Vertical">
+                            <syncfusion:SfDataGrid x:Name="RatingGrid"
                                                  ItemsSource="{Binding SongEdit.Ratings}"
                                                  SelectedItems="{Binding SelectedRating,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                                                  SelectionMode="Single"
@@ -1037,308 +1076,308 @@
                                                  AllowDrop="True"
                                                  ShowRowHeader="False" 
                                                  AllowEditing="True" >
-                            <syncfusion:SfDataGrid.Columns>
-                              <syncfusion:GridTextColumn HeaderText="{lex:Loc tagEdit_RatingUser}" MappingName="User" Width="200" />
-                              <syncfusion:GridNumericColumn HeaderText="{lex:Loc songHeader_Rating}" MappingName="Rating" Width="80"  NumberDecimalDigits="0" />
-                              <syncfusion:GridNumericColumn HeaderText="{lex:Loc tagEdit_RatingPlayCount}" MappingName="PlayCount" Width="80" NumberDecimalDigits="0" />
-                            </syncfusion:SfDataGrid.Columns>
-                          </syncfusion:SfDataGrid>
-                          <StackPanel Orientation="Horizontal">
-                            <syncfusion:ButtonAdv Label="{lex:Loc tagEdit_Rating_Add}" 
+                              <syncfusion:SfDataGrid.Columns>
+                                <syncfusion:GridTextColumn HeaderText="{lex:Loc tagEdit_RatingUser}" MappingName="User" Width="200" />
+                                <syncfusion:GridNumericColumn HeaderText="{lex:Loc songHeader_Rating}" MappingName="Rating" Width="80"  NumberDecimalDigits="0" />
+                                <syncfusion:GridNumericColumn HeaderText="{lex:Loc tagEdit_RatingPlayCount}" MappingName="PlayCount" Width="80" NumberDecimalDigits="0" />
+                              </syncfusion:SfDataGrid.Columns>
+                            </syncfusion:SfDataGrid>
+                            <StackPanel Orientation="Horizontal">
+                              <syncfusion:ButtonAdv Label="{lex:Loc tagEdit_Rating_Add}" 
                                                   SmallIcon="pack://application:,,,/MPTagThat.TagEdit;component/Resources/Images/Rating_Add_32x.png" 
                                                   Command="{Binding AddRatingCommand}" 
                                                   Width="Auto" Height="25" 
                                                   Margin="0,5,0,0" />
 
-                            <syncfusion:ButtonAdv Label="{lex:Loc tagEdit_Rating_Delete}" 
+                              <syncfusion:ButtonAdv Label="{lex:Loc tagEdit_Rating_Delete}" 
                                                   SmallIcon="pack://application:,,,/MPTagThat.TagEdit;component/Resources/Images/Rating_Delete_32x.png" 
                                                   Command="{Binding DeleteRatingCommand}" 
                                                   Width="Auto" Height="25" 
                                                   Margin="20,5,0,0" />
+                            </StackPanel>
+                            <TextBlock Text="{lex:Loc tagEdit_Rating_Note}" TextWrapping="Wrap" Margin="5,5,0,1"  Width="350"/>
                           </StackPanel>
-                          <TextBlock Text="{lex:Loc tagEdit_Rating_Note}" TextWrapping="Wrap" Margin="5,5,0,1"  Width="350"/>
-                        </StackPanel>
-                      </GroupBox>
-                    </Grid>
-                  </syncfusion:SfAccordionItem>
+                        </GroupBox>
+                      </Grid>
+                    </syncfusion:SfAccordionItem>
 
-                  <!-- Original Information -->
-                  <syncfusion:SfAccordionItem Header="{lex:Loc tagEdit_TabHeader_Original_Information}" AccordionButtonStyle="{StaticResource expanderButtonStyle}" IsEnabled="{Binding SongEdit.IsMp3}">
-                    <Grid>
-                      <GroupBox Background="Transparent" Style="{DynamicResource GroupBoxStyleNoHeader}">
-                        <StackPanel>
-                          <!-- Original Artist -->
-                          <Grid Margin="5">
-                            <Grid.ColumnDefinitions>
-                              <ColumnDefinition Width="130"/>
-                              <ColumnDefinition Width="240"/>
-                              <ColumnDefinition Width="20"/>
-                            </Grid.ColumnDefinitions>
-                            <Label Grid.Column="0" Content="{lex:Loc tagEdit_OrigArtist}" />
-                            <TextBox Grid.Column="1" Name="OrigArtist" Text="{Binding SongEdit.OriginalArtist, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" MaxWidth="250" HorizontalAlignment="Stretch" >
-                              <i:Interaction.Triggers>
-                                <i:EventTrigger EventName="TextChanged">
-                                  <prism:InvokeCommandAction Command="{Binding TextChangedCommand}"/>
-                                </i:EventTrigger>
-                              </i:Interaction.Triggers>
-                            </TextBox>
-                            <CheckBox Grid.Column="2" VerticalAlignment="Center" Margin="2,0,0,0" IsChecked="{Binding CkOriginalArtistIsChecked, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Visibility="{Binding MultiCheckBoxVisibility, Converter={StaticResource BooleanToVisibilityConverter}}" />
-                          </Grid>
+                    <!-- Original Information -->
+                    <syncfusion:SfAccordionItem Header="{lex:Loc tagEdit_TabHeader_Original_Information}" AccordionButtonStyle="{StaticResource expanderButtonStyle}" IsEnabled="{Binding SongEdit.IsMp3}">
+                      <Grid>
+                        <GroupBox Background="Transparent" Style="{DynamicResource GroupBoxStyleNoHeader}">
+                          <StackPanel>
+                            <!-- Original Artist -->
+                            <Grid Margin="5">
+                              <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="130"/>
+                                <ColumnDefinition Width="240"/>
+                                <ColumnDefinition Width="20"/>
+                              </Grid.ColumnDefinitions>
+                              <Label Grid.Column="0" Content="{lex:Loc tagEdit_OrigArtist}" />
+                              <TextBox Grid.Column="1" Name="OrigArtist" Text="{Binding SongEdit.OriginalArtist, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" MaxWidth="250" HorizontalAlignment="Stretch" >
+                                <i:Interaction.Triggers>
+                                  <i:EventTrigger EventName="TextChanged">
+                                    <prism:InvokeCommandAction Command="{Binding TextChangedCommand}"/>
+                                  </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                              </TextBox>
+                              <CheckBox Grid.Column="2" VerticalAlignment="Center" Margin="2,0,0,0" IsChecked="{Binding CkOriginalArtistIsChecked, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Visibility="{Binding MultiCheckBoxVisibility, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                            </Grid>
 
-                          <!-- Original Album Title -->
-                          <Grid Margin="5">
-                            <Grid.ColumnDefinitions>
-                              <ColumnDefinition Width="130"/>
-                              <ColumnDefinition Width="240"/>
-                              <ColumnDefinition Width="20"/>
-                            </Grid.ColumnDefinitions>
-                            <Label Grid.Column="0" Content="{lex:Loc tagEdit_OrigAlbum}" />
-                            <TextBox Grid.Column="1" Name="OrigAlbum" Text="{Binding SongEdit.OriginalAlbum, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" MaxWidth="250" HorizontalAlignment="Stretch" >
-                              <i:Interaction.Triggers>
-                                <i:EventTrigger EventName="TextChanged">
-                                  <prism:InvokeCommandAction Command="{Binding TextChangedCommand}"/>
-                                </i:EventTrigger>
-                              </i:Interaction.Triggers>
-                            </TextBox>
-                            <CheckBox Grid.Column="2" VerticalAlignment="Center" Margin="2,0,0,0" IsChecked="{Binding CkOriginalAlbumIsChecked, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Visibility="{Binding MultiCheckBoxVisibility, Converter={StaticResource BooleanToVisibilityConverter}}" />
-                          </Grid>
+                            <!-- Original Album Title -->
+                            <Grid Margin="5">
+                              <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="130"/>
+                                <ColumnDefinition Width="240"/>
+                                <ColumnDefinition Width="20"/>
+                              </Grid.ColumnDefinitions>
+                              <Label Grid.Column="0" Content="{lex:Loc tagEdit_OrigAlbum}" />
+                              <TextBox Grid.Column="1" Name="OrigAlbum" Text="{Binding SongEdit.OriginalAlbum, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" MaxWidth="250" HorizontalAlignment="Stretch" >
+                                <i:Interaction.Triggers>
+                                  <i:EventTrigger EventName="TextChanged">
+                                    <prism:InvokeCommandAction Command="{Binding TextChangedCommand}"/>
+                                  </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                              </TextBox>
+                              <CheckBox Grid.Column="2" VerticalAlignment="Center" Margin="2,0,0,0" IsChecked="{Binding CkOriginalAlbumIsChecked, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Visibility="{Binding MultiCheckBoxVisibility, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                            </Grid>
 
-                          <!-- Original FileName -->
-                          <Grid Margin="5">
-                            <Grid.ColumnDefinitions>
-                              <ColumnDefinition Width="130"/>
-                              <ColumnDefinition Width="240"/>
-                              <ColumnDefinition Width="20"/>
-                            </Grid.ColumnDefinitions>
-                            <Label Grid.Column="0" Content="{lex:Loc tagEdit_OrigFileName}" />
-                            <TextBox Grid.Column="1" Name="OrigFileName" Text="{Binding SongEdit.OriginalFileName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" MaxWidth="250" HorizontalAlignment="Stretch" >
-                              <i:Interaction.Triggers>
-                                <i:EventTrigger EventName="TextChanged">
-                                  <prism:InvokeCommandAction Command="{Binding TextChangedCommand}"/>
-                                </i:EventTrigger>
-                              </i:Interaction.Triggers>
-                            </TextBox>
-                            <CheckBox Grid.Column="2" VerticalAlignment="Center" Margin="2,0,0,0" IsChecked="{Binding CkOriginalFileNameIsChecked, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Visibility="{Binding MultiCheckBoxVisibility, Converter={StaticResource BooleanToVisibilityConverter}}" />
-                          </Grid>
+                            <!-- Original FileName -->
+                            <Grid Margin="5">
+                              <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="130"/>
+                                <ColumnDefinition Width="240"/>
+                                <ColumnDefinition Width="20"/>
+                              </Grid.ColumnDefinitions>
+                              <Label Grid.Column="0" Content="{lex:Loc tagEdit_OrigFileName}" />
+                              <TextBox Grid.Column="1" Name="OrigFileName" Text="{Binding SongEdit.OriginalFileName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" MaxWidth="250" HorizontalAlignment="Stretch" >
+                                <i:Interaction.Triggers>
+                                  <i:EventTrigger EventName="TextChanged">
+                                    <prism:InvokeCommandAction Command="{Binding TextChangedCommand}"/>
+                                  </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                              </TextBox>
+                              <CheckBox Grid.Column="2" VerticalAlignment="Center" Margin="2,0,0,0" IsChecked="{Binding CkOriginalFileNameIsChecked, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Visibility="{Binding MultiCheckBoxVisibility, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                            </Grid>
 
-                          <!-- Original Lyrics Writer -->
-                          <Grid Margin="5">
-                            <Grid.ColumnDefinitions>
-                              <ColumnDefinition Width="130"/>
-                              <ColumnDefinition Width="240"/>
-                              <ColumnDefinition Width="20"/>
-                            </Grid.ColumnDefinitions>
-                            <Label Grid.Column="0" Content="{lex:Loc tagEdit_OrigLyricsWriter}" />
-                            <TextBox Grid.Column="1" Name="OrigLyricsWriter" Text="{Binding SongEdit.OriginalLyricsWriter, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" MaxWidth="250" HorizontalAlignment="Stretch" >
-                              <i:Interaction.Triggers>
-                                <i:EventTrigger EventName="TextChanged">
-                                  <prism:InvokeCommandAction Command="{Binding TextChangedCommand}"/>
-                                </i:EventTrigger>
-                              </i:Interaction.Triggers>
-                            </TextBox>
-                            <CheckBox Grid.Column="2" VerticalAlignment="Center" Margin="2,0,0,0" IsChecked="{Binding CkOriginalLyricsWriterIsChecked, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Visibility="{Binding MultiCheckBoxVisibility, Converter={StaticResource BooleanToVisibilityConverter}}" />
-                          </Grid>
+                            <!-- Original Lyrics Writer -->
+                            <Grid Margin="5">
+                              <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="130"/>
+                                <ColumnDefinition Width="240"/>
+                                <ColumnDefinition Width="20"/>
+                              </Grid.ColumnDefinitions>
+                              <Label Grid.Column="0" Content="{lex:Loc tagEdit_OrigLyricsWriter}" />
+                              <TextBox Grid.Column="1" Name="OrigLyricsWriter" Text="{Binding SongEdit.OriginalLyricsWriter, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" MaxWidth="250" HorizontalAlignment="Stretch" >
+                                <i:Interaction.Triggers>
+                                  <i:EventTrigger EventName="TextChanged">
+                                    <prism:InvokeCommandAction Command="{Binding TextChangedCommand}"/>
+                                  </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                              </TextBox>
+                              <CheckBox Grid.Column="2" VerticalAlignment="Center" Margin="2,0,0,0" IsChecked="{Binding CkOriginalLyricsWriterIsChecked, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Visibility="{Binding MultiCheckBoxVisibility, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                            </Grid>
 
-                          <!-- Original Owner -->
-                          <Grid Margin="5">
-                            <Grid.ColumnDefinitions>
-                              <ColumnDefinition Width="130"/>
-                              <ColumnDefinition Width="240"/>
-                              <ColumnDefinition Width="20"/>
-                            </Grid.ColumnDefinitions>
-                            <Label Grid.Column="0" Content="{lex:Loc tagEdit_OrigOwner}" />
-                            <TextBox Grid.Column="1" Name="OrigOwner" Text="{Binding SongEdit.OriginalOwner, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" MaxWidth="250" HorizontalAlignment="Stretch" >
-                              <i:Interaction.Triggers>
-                                <i:EventTrigger EventName="TextChanged">
-                                  <prism:InvokeCommandAction Command="{Binding TextChangedCommand}"/>
-                                </i:EventTrigger>
-                              </i:Interaction.Triggers>
-                            </TextBox>
-                            <CheckBox Grid.Column="2" VerticalAlignment="Center" Margin="2,0,0,0" IsChecked="{Binding CkOriginalOwnerIsChecked, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Visibility="{Binding MultiCheckBoxVisibility, Converter={StaticResource BooleanToVisibilityConverter}}" />
-                          </Grid>
+                            <!-- Original Owner -->
+                            <Grid Margin="5">
+                              <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="130"/>
+                                <ColumnDefinition Width="240"/>
+                                <ColumnDefinition Width="20"/>
+                              </Grid.ColumnDefinitions>
+                              <Label Grid.Column="0" Content="{lex:Loc tagEdit_OrigOwner}" />
+                              <TextBox Grid.Column="1" Name="OrigOwner" Text="{Binding SongEdit.OriginalOwner, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" MaxWidth="250" HorizontalAlignment="Stretch" >
+                                <i:Interaction.Triggers>
+                                  <i:EventTrigger EventName="TextChanged">
+                                    <prism:InvokeCommandAction Command="{Binding TextChangedCommand}"/>
+                                  </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                              </TextBox>
+                              <CheckBox Grid.Column="2" VerticalAlignment="Center" Margin="2,0,0,0" IsChecked="{Binding CkOriginalOwnerIsChecked, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Visibility="{Binding MultiCheckBoxVisibility, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                            </Grid>
 
-                          <!-- Original Release Year -->
-                          <Grid Margin="5">
-                            <Grid.ColumnDefinitions>
-                              <ColumnDefinition Width="130"/>
-                              <ColumnDefinition Width="80"/>
-                              <ColumnDefinition Width="20"/>
-                            </Grid.ColumnDefinitions>
-                            <Label Grid.Column="0" Content="{lex:Loc tagEdit_OrigReleaseYear}" />
-                            <TextBox Grid.Column="1" Name="OrigRelease" Text="{Binding SongEdit.OriginalRelease, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" MaxWidth="250" HorizontalAlignment="Stretch" >
-                              <i:Interaction.Triggers>
-                                <i:EventTrigger EventName="TextChanged">
-                                  <prism:InvokeCommandAction Command="{Binding TextChangedCommand}"/>
-                                </i:EventTrigger>
-                              </i:Interaction.Triggers>
-                            </TextBox>
-                            <CheckBox Grid.Column="2" VerticalAlignment="Center" Margin="2,0,0,0" IsChecked="{Binding CkOriginalReleaseIsChecked, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Visibility="{Binding MultiCheckBoxVisibility, Converter={StaticResource BooleanToVisibilityConverter}}" />
-                          </Grid>
-                        </StackPanel>
-                      </GroupBox>
-                    </Grid>
-                  </syncfusion:SfAccordionItem>
+                            <!-- Original Release Year -->
+                            <Grid Margin="5">
+                              <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="130"/>
+                                <ColumnDefinition Width="80"/>
+                                <ColumnDefinition Width="20"/>
+                              </Grid.ColumnDefinitions>
+                              <Label Grid.Column="0" Content="{lex:Loc tagEdit_OrigReleaseYear}" />
+                              <TextBox Grid.Column="1" Name="OrigRelease" Text="{Binding SongEdit.OriginalRelease, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" MaxWidth="250" HorizontalAlignment="Stretch" >
+                                <i:Interaction.Triggers>
+                                  <i:EventTrigger EventName="TextChanged">
+                                    <prism:InvokeCommandAction Command="{Binding TextChangedCommand}"/>
+                                  </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                              </TextBox>
+                              <CheckBox Grid.Column="2" VerticalAlignment="Center" Margin="2,0,0,0" IsChecked="{Binding CkOriginalReleaseIsChecked, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Visibility="{Binding MultiCheckBoxVisibility, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                            </Grid>
+                          </StackPanel>
+                        </GroupBox>
+                      </Grid>
+                    </syncfusion:SfAccordionItem>
 
-                  <!-- Web Information -->
-                  <syncfusion:SfAccordionItem Header="{lex:Loc tagEdit_TabHeader_Web_Information}"  AccordionButtonStyle="{StaticResource expanderButtonStyle}" IsEnabled="{Binding SongEdit.IsMp3}" >
-                    <Grid>
-                      <GroupBox Background="Transparent" Style="{DynamicResource GroupBoxStyleNoHeader}">
-                        <StackPanel>
-                          <!-- Copyright Information -->
-                          <Grid Margin="5">
-                            <Grid.ColumnDefinitions>
-                              <ColumnDefinition Width="180"/>
-                              <ColumnDefinition Width="190"/>
-                              <ColumnDefinition Width="20"/>
-                            </Grid.ColumnDefinitions>
-                            <Label Grid.Column="0" Content="{lex:Loc tagEdit_CopyrightInformation}" />
-                            <TextBox Grid.Column="1" Name="CopyrightInformation" Text="{Binding SongEdit.CopyrightInformation, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" MaxWidth="250" HorizontalAlignment="Stretch" >
-                              <i:Interaction.Triggers>
-                                <i:EventTrigger EventName="TextChanged">
-                                  <prism:InvokeCommandAction Command="{Binding TextChangedCommand}"/>
-                                </i:EventTrigger>
-                              </i:Interaction.Triggers>
-                            </TextBox>
-                            <CheckBox Grid.Column="2" VerticalAlignment="Center" Margin="2,0,0,0" IsChecked="{Binding CkCopyrightUrlIsChecked, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Visibility="{Binding MultiCheckBoxVisibility, Converter={StaticResource BooleanToVisibilityConverter}}" />
-                          </Grid>
+                    <!-- Web Information -->
+                    <syncfusion:SfAccordionItem Header="{lex:Loc tagEdit_TabHeader_Web_Information}"  AccordionButtonStyle="{StaticResource expanderButtonStyle}" IsEnabled="{Binding SongEdit.IsMp3}" >
+                      <Grid>
+                        <GroupBox Background="Transparent" Style="{DynamicResource GroupBoxStyleNoHeader}">
+                          <StackPanel>
+                            <!-- Copyright Information -->
+                            <Grid Margin="5">
+                              <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="180"/>
+                                <ColumnDefinition Width="190"/>
+                                <ColumnDefinition Width="20"/>
+                              </Grid.ColumnDefinitions>
+                              <Label Grid.Column="0" Content="{lex:Loc tagEdit_CopyrightInformation}" />
+                              <TextBox Grid.Column="1" Name="CopyrightInformation" Text="{Binding SongEdit.CopyrightInformation, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" MaxWidth="250" HorizontalAlignment="Stretch" >
+                                <i:Interaction.Triggers>
+                                  <i:EventTrigger EventName="TextChanged">
+                                    <prism:InvokeCommandAction Command="{Binding TextChangedCommand}"/>
+                                  </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                              </TextBox>
+                              <CheckBox Grid.Column="2" VerticalAlignment="Center" Margin="2,0,0,0" IsChecked="{Binding CkCopyrightUrlIsChecked, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Visibility="{Binding MultiCheckBoxVisibility, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                            </Grid>
 
-                          <!-- Official Audio File -->
-                          <Grid Margin="5">
-                            <Grid.ColumnDefinitions>
-                              <ColumnDefinition Width="180"/>
-                              <ColumnDefinition Width="190"/>
-                              <ColumnDefinition Width="20"/>
-                            </Grid.ColumnDefinitions>
-                            <Label Grid.Column="0" Content="{lex:Loc tagEdit_OfficialAudiofile}" />
-                            <TextBox Grid.Column="1" Name="AudioFileURL" Text="{Binding SongEdit.OfficialAudioFileInformation, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" MaxWidth="250" HorizontalAlignment="Stretch" >
-                              <i:Interaction.Triggers>
-                                <i:EventTrigger EventName="TextChanged">
-                                  <prism:InvokeCommandAction Command="{Binding TextChangedCommand}"/>
-                                </i:EventTrigger>
-                              </i:Interaction.Triggers>
-                            </TextBox>
-                            <CheckBox Grid.Column="2" VerticalAlignment="Center" Margin="2,0,0,0" IsChecked="{Binding CkOfficialAudioFileUrlIsChecked, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Visibility="{Binding MultiCheckBoxVisibility, Converter={StaticResource BooleanToVisibilityConverter}}" />
-                          </Grid>
+                            <!-- Official Audio File -->
+                            <Grid Margin="5">
+                              <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="180"/>
+                                <ColumnDefinition Width="190"/>
+                                <ColumnDefinition Width="20"/>
+                              </Grid.ColumnDefinitions>
+                              <Label Grid.Column="0" Content="{lex:Loc tagEdit_OfficialAudiofile}" />
+                              <TextBox Grid.Column="1" Name="AudioFileURL" Text="{Binding SongEdit.OfficialAudioFileInformation, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" MaxWidth="250" HorizontalAlignment="Stretch" >
+                                <i:Interaction.Triggers>
+                                  <i:EventTrigger EventName="TextChanged">
+                                    <prism:InvokeCommandAction Command="{Binding TextChangedCommand}"/>
+                                  </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                              </TextBox>
+                              <CheckBox Grid.Column="2" VerticalAlignment="Center" Margin="2,0,0,0" IsChecked="{Binding CkOfficialAudioFileUrlIsChecked, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Visibility="{Binding MultiCheckBoxVisibility, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                            </Grid>
 
-                          <!-- Official Artist -->
-                          <Grid Margin="5">
-                            <Grid.ColumnDefinitions>
-                              <ColumnDefinition Width="180"/>
-                              <ColumnDefinition Width="190"/>
-                              <ColumnDefinition Width="20"/>
-                            </Grid.ColumnDefinitions>
-                            <Label Grid.Column="0" Content="{lex:Loc tagEdit_OfficialArtist}" />
-                            <TextBox Grid.Column="1" Name="ArtistURL" Text="{Binding SongEdit.OfficialArtistInformation, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" MaxWidth="250" HorizontalAlignment="Stretch" >
-                              <i:Interaction.Triggers>
-                                <i:EventTrigger EventName="TextChanged">
-                                  <prism:InvokeCommandAction Command="{Binding TextChangedCommand}"/>
-                                </i:EventTrigger>
-                              </i:Interaction.Triggers>
-                            </TextBox>
-                            <CheckBox Grid.Column="2" VerticalAlignment="Center" Margin="2,0,0,0" IsChecked="{Binding CkOfficialArtistUrlIsChecked, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Visibility="{Binding MultiCheckBoxVisibility, Converter={StaticResource BooleanToVisibilityConverter}}" />
-                          </Grid>
+                            <!-- Official Artist -->
+                            <Grid Margin="5">
+                              <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="180"/>
+                                <ColumnDefinition Width="190"/>
+                                <ColumnDefinition Width="20"/>
+                              </Grid.ColumnDefinitions>
+                              <Label Grid.Column="0" Content="{lex:Loc tagEdit_OfficialArtist}" />
+                              <TextBox Grid.Column="1" Name="ArtistURL" Text="{Binding SongEdit.OfficialArtistInformation, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" MaxWidth="250" HorizontalAlignment="Stretch" >
+                                <i:Interaction.Triggers>
+                                  <i:EventTrigger EventName="TextChanged">
+                                    <prism:InvokeCommandAction Command="{Binding TextChangedCommand}"/>
+                                  </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                              </TextBox>
+                              <CheckBox Grid.Column="2" VerticalAlignment="Center" Margin="2,0,0,0" IsChecked="{Binding CkOfficialArtistUrlIsChecked, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Visibility="{Binding MultiCheckBoxVisibility, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                            </Grid>
 
-                          <!-- Official Audio source -->
-                          <Grid Margin="5">
-                            <Grid.ColumnDefinitions>
-                              <ColumnDefinition Width="180"/>
-                              <ColumnDefinition Width="190"/>
-                              <ColumnDefinition Width="20"/>
-                            </Grid.ColumnDefinitions>
-                            <Label Grid.Column="0" Content="{lex:Loc tagEdit_OfficialAudioSource}" />
-                            <TextBox Grid.Column="1" Name="AudioSourceURL" Text="{Binding SongEdit.OfficialAudioSourceInformation, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" MaxWidth="250" HorizontalAlignment="Stretch" >
-                              <i:Interaction.Triggers>
-                                <i:EventTrigger EventName="TextChanged">
-                                  <prism:InvokeCommandAction Command="{Binding TextChangedCommand}"/>
-                                </i:EventTrigger>
-                              </i:Interaction.Triggers>
-                            </TextBox>
-                            <CheckBox Grid.Column="2" VerticalAlignment="Center" Margin="2,0,0,0" IsChecked="{Binding CkOfficialAudioSourceUrlIsChecked, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Visibility="{Binding MultiCheckBoxVisibility, Converter={StaticResource BooleanToVisibilityConverter}}" />
-                          </Grid>
+                            <!-- Official Audio source -->
+                            <Grid Margin="5">
+                              <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="180"/>
+                                <ColumnDefinition Width="190"/>
+                                <ColumnDefinition Width="20"/>
+                              </Grid.ColumnDefinitions>
+                              <Label Grid.Column="0" Content="{lex:Loc tagEdit_OfficialAudioSource}" />
+                              <TextBox Grid.Column="1" Name="AudioSourceURL" Text="{Binding SongEdit.OfficialAudioSourceInformation, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" MaxWidth="250" HorizontalAlignment="Stretch" >
+                                <i:Interaction.Triggers>
+                                  <i:EventTrigger EventName="TextChanged">
+                                    <prism:InvokeCommandAction Command="{Binding TextChangedCommand}"/>
+                                  </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                              </TextBox>
+                              <CheckBox Grid.Column="2" VerticalAlignment="Center" Margin="2,0,0,0" IsChecked="{Binding CkOfficialAudioSourceUrlIsChecked, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Visibility="{Binding MultiCheckBoxVisibility, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                            </Grid>
 
-                          <!-- Official Radio Station -->
-                          <Grid Margin="5">
-                            <Grid.ColumnDefinitions>
-                              <ColumnDefinition Width="180"/>
-                              <ColumnDefinition Width="190"/>
-                              <ColumnDefinition Width="20"/>
-                            </Grid.ColumnDefinitions>
-                            <Label Grid.Column="0" Content="{lex:Loc tagEdit_OfficialRadioStation}" />
-                            <TextBox Grid.Column="1" Name="RadioURL" Text="{Binding SongEdit.OfficialInternetRadioInformation, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" MaxWidth="250" HorizontalAlignment="Stretch" >
-                              <i:Interaction.Triggers>
-                                <i:EventTrigger EventName="TextChanged">
-                                  <prism:InvokeCommandAction Command="{Binding TextChangedCommand}"/>
-                                </i:EventTrigger>
-                              </i:Interaction.Triggers>
-                            </TextBox>
-                            <CheckBox Grid.Column="2" VerticalAlignment="Center" Margin="2,0,0,0" IsChecked="{Binding CkOfficialInternetRadioUrlIsChecked, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Visibility="{Binding MultiCheckBoxVisibility, Converter={StaticResource BooleanToVisibilityConverter}}" />
-                          </Grid>
+                            <!-- Official Radio Station -->
+                            <Grid Margin="5">
+                              <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="180"/>
+                                <ColumnDefinition Width="190"/>
+                                <ColumnDefinition Width="20"/>
+                              </Grid.ColumnDefinitions>
+                              <Label Grid.Column="0" Content="{lex:Loc tagEdit_OfficialRadioStation}" />
+                              <TextBox Grid.Column="1" Name="RadioURL" Text="{Binding SongEdit.OfficialInternetRadioInformation, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" MaxWidth="250" HorizontalAlignment="Stretch" >
+                                <i:Interaction.Triggers>
+                                  <i:EventTrigger EventName="TextChanged">
+                                    <prism:InvokeCommandAction Command="{Binding TextChangedCommand}"/>
+                                  </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                              </TextBox>
+                              <CheckBox Grid.Column="2" VerticalAlignment="Center" Margin="2,0,0,0" IsChecked="{Binding CkOfficialInternetRadioUrlIsChecked, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Visibility="{Binding MultiCheckBoxVisibility, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                            </Grid>
 
-                          <!-- Official Payment -->
-                          <Grid Margin="5">
-                            <Grid.ColumnDefinitions>
-                              <ColumnDefinition Width="180"/>
-                              <ColumnDefinition Width="190"/>
-                              <ColumnDefinition Width="20"/>
-                            </Grid.ColumnDefinitions>
-                            <Label Grid.Column="0" Content="{lex:Loc tagEdit_OfficialPayment}" />
-                            <TextBox Grid.Column="1" Name="PaymentURL" Text="{Binding SongEdit.OfficialPaymentInformation, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" MaxWidth="250" HorizontalAlignment="Stretch" >
-                              <i:Interaction.Triggers>
-                                <i:EventTrigger EventName="TextChanged">
-                                  <prism:InvokeCommandAction Command="{Binding TextChangedCommand}"/>
-                                </i:EventTrigger>
-                              </i:Interaction.Triggers>
-                            </TextBox>
-                            <CheckBox Grid.Column="2" VerticalAlignment="Center" Margin="2,0,0,0" IsChecked="{Binding CkOfficialPaymentUrlIsChecked, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Visibility="{Binding MultiCheckBoxVisibility, Converter={StaticResource BooleanToVisibilityConverter}}" />
-                          </Grid>
+                            <!-- Official Payment -->
+                            <Grid Margin="5">
+                              <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="180"/>
+                                <ColumnDefinition Width="190"/>
+                                <ColumnDefinition Width="20"/>
+                              </Grid.ColumnDefinitions>
+                              <Label Grid.Column="0" Content="{lex:Loc tagEdit_OfficialPayment}" />
+                              <TextBox Grid.Column="1" Name="PaymentURL" Text="{Binding SongEdit.OfficialPaymentInformation, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" MaxWidth="250" HorizontalAlignment="Stretch" >
+                                <i:Interaction.Triggers>
+                                  <i:EventTrigger EventName="TextChanged">
+                                    <prism:InvokeCommandAction Command="{Binding TextChangedCommand}"/>
+                                  </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                              </TextBox>
+                              <CheckBox Grid.Column="2" VerticalAlignment="Center" Margin="2,0,0,0" IsChecked="{Binding CkOfficialPaymentUrlIsChecked, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Visibility="{Binding MultiCheckBoxVisibility, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                            </Grid>
 
-                          <!-- Official Publisher -->
-                          <Grid Margin="5">
-                            <Grid.ColumnDefinitions>
-                              <ColumnDefinition Width="180"/>
-                              <ColumnDefinition Width="190"/>
-                              <ColumnDefinition Width="20"/>
-                            </Grid.ColumnDefinitions>
-                            <Label Grid.Column="0" Content="{lex:Loc tagEdit_OfficialPublisher}" />
-                            <TextBox Grid.Column="1" Name="PublisherURL" Text="{Binding SongEdit.OfficialPublisherInformation, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" MaxWidth="250" HorizontalAlignment="Stretch" >
-                              <i:Interaction.Triggers>
-                                <i:EventTrigger EventName="TextChanged">
-                                  <prism:InvokeCommandAction Command="{Binding TextChangedCommand}"/>
-                                </i:EventTrigger>
-                              </i:Interaction.Triggers>
-                            </TextBox>
-                            <CheckBox Grid.Column="2" VerticalAlignment="Center" Margin="2,0,0,0" IsChecked="{Binding CkOfficialPublisherUrlIsChecked, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Visibility="{Binding MultiCheckBoxVisibility, Converter={StaticResource BooleanToVisibilityConverter}}" />
-                          </Grid>
+                            <!-- Official Publisher -->
+                            <Grid Margin="5">
+                              <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="180"/>
+                                <ColumnDefinition Width="190"/>
+                                <ColumnDefinition Width="20"/>
+                              </Grid.ColumnDefinitions>
+                              <Label Grid.Column="0" Content="{lex:Loc tagEdit_OfficialPublisher}" />
+                              <TextBox Grid.Column="1" Name="PublisherURL" Text="{Binding SongEdit.OfficialPublisherInformation, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" MaxWidth="250" HorizontalAlignment="Stretch" >
+                                <i:Interaction.Triggers>
+                                  <i:EventTrigger EventName="TextChanged">
+                                    <prism:InvokeCommandAction Command="{Binding TextChangedCommand}"/>
+                                  </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                              </TextBox>
+                              <CheckBox Grid.Column="2" VerticalAlignment="Center" Margin="2,0,0,0" IsChecked="{Binding CkOfficialPublisherUrlIsChecked, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Visibility="{Binding MultiCheckBoxVisibility, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                            </Grid>
 
-                          <!-- Commercial information -->
-                          <Grid Margin="5">
-                            <Grid.ColumnDefinitions>
-                              <ColumnDefinition Width="180"/>
-                              <ColumnDefinition Width="190"/>
-                              <ColumnDefinition Width="20"/>
-                            </Grid.ColumnDefinitions>
-                            <Label Grid.Column="0" Content="{lex:Loc tagEdit_CommercialInfo}" />
-                            <TextBox Grid.Column="1" Name="CommercialURL" Text="{Binding SongEdit.CommercialInformation, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" MaxWidth="250" HorizontalAlignment="Stretch" >
-                              <i:Interaction.Triggers>
-                                <i:EventTrigger EventName="TextChanged">
-                                  <prism:InvokeCommandAction Command="{Binding TextChangedCommand}"/>
-                                </i:EventTrigger>
-                              </i:Interaction.Triggers>
-                            </TextBox>
-                            <CheckBox Grid.Column="2" VerticalAlignment="Center" Margin="2,0,0,0" IsChecked="{Binding CkCommercialInformationUrlIsChecked, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Visibility="{Binding MultiCheckBoxVisibility, Converter={StaticResource BooleanToVisibilityConverter}}" />
-                          </Grid>
+                            <!-- Commercial information -->
+                            <Grid Margin="5">
+                              <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="180"/>
+                                <ColumnDefinition Width="190"/>
+                                <ColumnDefinition Width="20"/>
+                              </Grid.ColumnDefinitions>
+                              <Label Grid.Column="0" Content="{lex:Loc tagEdit_CommercialInfo}" />
+                              <TextBox Grid.Column="1" Name="CommercialURL" Text="{Binding SongEdit.CommercialInformation, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" MaxWidth="250" HorizontalAlignment="Stretch" >
+                                <i:Interaction.Triggers>
+                                  <i:EventTrigger EventName="TextChanged">
+                                    <prism:InvokeCommandAction Command="{Binding TextChangedCommand}"/>
+                                  </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                              </TextBox>
+                              <CheckBox Grid.Column="2" VerticalAlignment="Center" Margin="2,0,0,0" IsChecked="{Binding CkCommercialInformationUrlIsChecked, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Visibility="{Binding MultiCheckBoxVisibility, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                            </Grid>
 
-                        </StackPanel>
-                      </GroupBox>
-                    </Grid>
-                  </syncfusion:SfAccordionItem>
+                          </StackPanel>
+                        </GroupBox>
+                      </Grid>
+                    </syncfusion:SfAccordionItem>
 
-                  <!-- Involved People -->
-                  <syncfusion:SfAccordionItem Header="{lex:Loc tagEdit_TabHeader_Involved_People}" AccordionButtonStyle="{StaticResource expanderButtonStyle}" IsEnabled="{Binding SongEdit.IsMp3}">
-                    <StackPanel Orientation="Vertical">
-                      <GroupBox Background="Transparent" Header="{lex:Loc tagEdit_InvolvedPerson_Header}" >
-                        <StackPanel Orientation="Vertical">
-                          <syncfusion:SfDataGrid ItemsSource="{Binding InvolvedPersons,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                    <!-- Involved People -->
+                    <syncfusion:SfAccordionItem Header="{lex:Loc tagEdit_TabHeader_Involved_People}" AccordionButtonStyle="{StaticResource expanderButtonStyle}" IsEnabled="{Binding SongEdit.IsMp3}">
+                      <StackPanel Orientation="Vertical">
+                        <GroupBox Background="Transparent" Header="{lex:Loc tagEdit_InvolvedPerson_Header}" >
+                          <StackPanel Orientation="Vertical">
+                            <syncfusion:SfDataGrid ItemsSource="{Binding InvolvedPersons,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                                                  SelectedItems="{Binding SelectedPerson,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                                                  SelectionMode="Single"
                                                  ColumnSizer="AutoWithLastColumnFill" 
@@ -1347,30 +1386,30 @@
                                                  AutoGenerateColumns="False"
                                                  ShowRowHeader="False" 
                                                  AllowEditing="True" >
-                            <syncfusion:SfDataGrid.Columns>
-                              <syncfusion:GridTextColumn HeaderText="{lex:Loc tagEdit_InvolvedPerson_Name}" MappingName="Name" Width="180" />
-                              <syncfusion:GridTextColumn HeaderText="{lex:Loc tagEdit_InvolvedPerson_Function}" MappingName="Function" Width="180" />
-                            </syncfusion:SfDataGrid.Columns>
-                          </syncfusion:SfDataGrid>
-                          <StackPanel Orientation="Horizontal">
-                            <syncfusion:ButtonAdv Label="{lex:Loc tagEdit_InvolvedPerson_Add}" 
+                              <syncfusion:SfDataGrid.Columns>
+                                <syncfusion:GridTextColumn HeaderText="{lex:Loc tagEdit_InvolvedPerson_Name}" MappingName="Name" Width="180" />
+                                <syncfusion:GridTextColumn HeaderText="{lex:Loc tagEdit_InvolvedPerson_Function}" MappingName="Function" Width="180" />
+                              </syncfusion:SfDataGrid.Columns>
+                            </syncfusion:SfDataGrid>
+                            <StackPanel Orientation="Horizontal">
+                              <syncfusion:ButtonAdv Label="{lex:Loc tagEdit_InvolvedPerson_Add}" 
                                                   SmallIcon="pack://application:,,,/MPTagThat.TagEdit;component/Resources/Images/Person_Add_32x.png" 
                                                   Command="{Binding AddPersonCommand}" 
                                                   Width="Auto" Height="25" 
                                                   Margin="0,5,0,0" />
 
-                            <syncfusion:ButtonAdv Label="{lex:Loc tagEdit_InvolvedPerson_Delete}" 
+                              <syncfusion:ButtonAdv Label="{lex:Loc tagEdit_InvolvedPerson_Delete}" 
                                                   SmallIcon="pack://application:,,,/MPTagThat.TagEdit;component/Resources/Images/Person_Delete_32x.png" 
                                                   Command="{Binding DeletePersonCommand}" 
                                                   Width="Auto" Height="25" 
                                                   Margin="20,5,0,0" />
+                            </StackPanel>
                           </StackPanel>
-                        </StackPanel>
-                      </GroupBox>
+                        </GroupBox>
 
-                      <GroupBox Background="Transparent" Header="{lex:Loc tagEdit_MusicCreditList_Header}" IsEnabled="{Binding SongEdit.IsMp3V4}" >
-                        <StackPanel Orientation="Vertical">
-                          <syncfusion:SfDataGrid ItemsSource="{Binding InvolvedMusicians,Mode=TwoWay}"
+                        <GroupBox Background="Transparent" Header="{lex:Loc tagEdit_MusicCreditList_Header}" IsEnabled="{Binding SongEdit.IsMp3V4}" >
+                          <StackPanel Orientation="Vertical">
+                            <syncfusion:SfDataGrid ItemsSource="{Binding InvolvedMusicians,Mode=TwoWay}"
                                                  SelectedItems="{Binding SelectedMusician,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                                                  SelectionMode="Single"
                                                  ColumnSizer="AutoWithLastColumnFill" 
@@ -1379,37 +1418,37 @@
                                                  AutoGenerateColumns="False"
                                                  ShowRowHeader="False" 
                                                  AllowEditing="True" >
-                            <syncfusion:SfDataGrid.Columns>
-                              <syncfusion:GridTextColumn HeaderText="{lex:Loc tagEdit_MusicCreditList_Instrument}" MappingName="Function" Width="180" />
-                              <syncfusion:GridTextColumn HeaderText="{lex:Loc tagEdit_InvolvedPerson_Name}" MappingName="Name" Width="180" />
-                            </syncfusion:SfDataGrid.Columns>
-                          </syncfusion:SfDataGrid>
-                          <StackPanel Orientation="Horizontal">
-                            <syncfusion:ButtonAdv Label="{lex:Loc tagEdit_MusicCreditList_Add}" 
+                              <syncfusion:SfDataGrid.Columns>
+                                <syncfusion:GridTextColumn HeaderText="{lex:Loc tagEdit_MusicCreditList_Instrument}" MappingName="Function" Width="180" />
+                                <syncfusion:GridTextColumn HeaderText="{lex:Loc tagEdit_InvolvedPerson_Name}" MappingName="Name" Width="180" />
+                              </syncfusion:SfDataGrid.Columns>
+                            </syncfusion:SfDataGrid>
+                            <StackPanel Orientation="Horizontal">
+                              <syncfusion:ButtonAdv Label="{lex:Loc tagEdit_MusicCreditList_Add}" 
                                                   SmallIcon="pack://application:,,,/MPTagThat.TagEdit;component/Resources/Images/Musician_Add_32x.png" 
                                                   Command="{Binding AddMusicianCommand}" 
                                                   Width="Auto" Height="25" 
                                                   Margin="0,5,0,0" />
 
-                            <syncfusion:ButtonAdv Label="{lex:Loc tagEdit_MusicCreditList_Delete}" 
+                              <syncfusion:ButtonAdv Label="{lex:Loc tagEdit_MusicCreditList_Delete}" 
                                                   SmallIcon="pack://application:,,,/MPTagThat.TagEdit;component/Resources/Images/Musician_Delete_32x.png" 
                                                   Command="{Binding DeleteMusicianCommand}" 
                                                   Width="Auto" Height="25" 
                                                   Margin="20,5,0,0" />
+                            </StackPanel>
                           </StackPanel>
-                        </StackPanel>
-                      </GroupBox>
-                    </StackPanel>
-                  </syncfusion:SfAccordionItem>
+                        </GroupBox>
+                      </StackPanel>
+                    </syncfusion:SfAccordionItem>
 
-                  <!-- User Defined Frames -->
-                  <syncfusion:SfAccordionItem Header="{lex:Loc tagEdit_TabHeader_UserFrames}" AccordionButtonStyle="{StaticResource expanderButtonStyle}" IsEnabled="{Binding SongEdit.IsMp3}">
-                    <Grid>
+                    <!-- User Defined Frames -->
+                    <syncfusion:SfAccordionItem Header="{lex:Loc tagEdit_TabHeader_UserFrames}" AccordionButtonStyle="{StaticResource expanderButtonStyle}" IsEnabled="{Binding SongEdit.IsMp3}">
+                      <Grid>
 
-                    </Grid>
-                  </syncfusion:SfAccordionItem>
-                </syncfusion:SfAccordion>
-              </StackPanel>
+                      </Grid>
+                    </syncfusion:SfAccordionItem>
+                  </syncfusion:SfAccordion>
+                </StackPanel>
             </Grid>
           </ScrollViewer>
         </syncfusion:TabNavigationItem.Content>

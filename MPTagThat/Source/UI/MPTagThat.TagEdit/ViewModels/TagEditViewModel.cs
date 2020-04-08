@@ -1351,7 +1351,7 @@ namespace MPTagThat.TagEdit.ViewModels
         SongEdit = songs[0];
         _songBackup = SongEdit.Clone();
         UpdateGenres(SongEdit);
-        SelectedGenres.AddRange(SongEdit.Genre.Split(';'));
+        SelectedGenres?.AddRange(SongEdit.Genre.Split(';'));
         var j = 0;
         foreach (var mediatype in MediaTypes)
         {
@@ -1365,10 +1365,6 @@ namespace MPTagThat.TagEdit.ViewModels
         FillInvolvedPersonsGrid(SongEdit);
         FillMusicianGrid(SongEdit);
         FrontCover = SongEdit.FrontCover;
-        if (SongEdit.Pictures.Count > 0)
-        {
-          SelectedPicture.Add(SongEdit.Pictures[0]);
-        }
         _isInitializing = false;
         IsApplyButtonEnabled = false;
         return;

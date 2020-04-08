@@ -44,10 +44,12 @@ namespace MPTagThat.TagEdit.Views
       if (e.NewSize.Height < 300.00 || e.NewSize.Width > 600)
       {
         VisualStateManager.GoToElementState(GenrePanel, "Wide", false);
+        VisualStateManager.GoToElementState(AccordionPanel, "AccordionWide", false);
       }
       else
       {
         VisualStateManager.GoToElementState(GenrePanel, "Narrow", false);
+        VisualStateManager.GoToElementState(AccordionPanel, "AccordionNarrow", false);
       }
     }
   }
