@@ -1342,6 +1342,7 @@ namespace MPTagThat.TagEdit.ViewModels
       PictureDetail = null;
       Genres.Clear();
       SelectedGenres?.Clear();
+      SelectedPicture?.Clear();
       Genres.AddRange(TagLib.Genres.Audio);
 
       if (songs.Count == 1)
@@ -1364,6 +1365,10 @@ namespace MPTagThat.TagEdit.ViewModels
         FillInvolvedPersonsGrid(SongEdit);
         FillMusicianGrid(SongEdit);
         FrontCover = SongEdit.FrontCover;
+        if (SongEdit.Pictures.Count > 0)
+        {
+          SelectedPicture.Add(SongEdit.Pictures[0]);
+        }
         _isInitializing = false;
         IsApplyButtonEnabled = false;
         return;
