@@ -16,16 +16,6 @@
 // along with MPTagThat. If not, see <http://www.gnu.org/licenses/>.
 #endregion
 
-#region
-
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-#endregion
-
 namespace MPTagThat.Dialogs.Models
 {
   public class MusicBrainzRecording
@@ -40,6 +30,8 @@ namespace MPTagThat.Dialogs.Models
     public string Title { get; set; }
 
     public string Artist { get; set; }
+
+    public string ArtistId { get; set; }
 
     public string Duration { get; set; }
 

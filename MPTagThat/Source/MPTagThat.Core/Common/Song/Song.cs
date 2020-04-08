@@ -148,6 +148,16 @@ namespace MPTagThat.Core.Common.Song
         song.Title = file.Tag.Title ?? "";
         song.TitleSortName = file.Tag.TitleSort ?? "";
 
+        song.MusicBrainzArtistId = file.Tag.MusicBrainzArtistId ?? "";
+        song.MusicBrainzDiscId = file.Tag.MusicBrainzDiscId ?? "";
+        song.MusicBrainzReleaseArtistId = file.Tag.MusicBrainzReleaseArtistId ?? "";
+        song.MusicBrainzReleaseCountry = file.Tag.MusicBrainzReleaseCountry ?? "";
+        song.MusicBrainzReleaseGroupId = file.Tag.MusicBrainzReleaseGroupId ?? "";
+        song.MusicBrainzReleaseId = file.Tag.MusicBrainzReleaseId ?? "";
+        song.MusicBrainzReleaseStatus = file.Tag.MusicBrainzReleaseStatus ?? "";
+        song.MusicBrainzTrackId = file.Tag.MusicBrainzTrackId ?? "";
+        song.MusicBrainzReleaseType = file.Tag.MusicBrainzReleaseType ?? "";
+
         song.ReplayGainTrack = double.IsNaN(file.Tag.ReplayGainTrackGain) ? "" : file.Tag.ReplayGainTrackGain.ToString(CultureInfo.InvariantCulture);
         song.ReplayGainTrackPeak = double.IsNaN(file.Tag.ReplayGainTrackPeak) ? "" : file.Tag.ReplayGainTrackPeak.ToString(CultureInfo.InvariantCulture);
         song.ReplayGainAlbum = double.IsNaN(file.Tag.ReplayGainAlbumGain) ? "" : file.Tag.ReplayGainAlbumGain.ToString(CultureInfo.InvariantCulture);
@@ -637,6 +647,20 @@ namespace MPTagThat.Core.Common.Song
           {
             file.Tag.ReplayGainAlbumPeak = gain;
           }
+
+          #endregion
+
+          #region MusicBrainz
+
+          file.Tag.MusicBrainzArtistId = song.MusicBrainzArtistId;
+          file.Tag.MusicBrainzDiscId = song.MusicBrainzDiscId;
+          file.Tag.MusicBrainzReleaseArtistId = song.MusicBrainzReleaseArtistId;
+          file.Tag.MusicBrainzReleaseCountry = song.MusicBrainzReleaseCountry;
+          file.Tag.MusicBrainzReleaseGroupId = song.MusicBrainzReleaseGroupId;
+          file.Tag.MusicBrainzReleaseId = song.MusicBrainzReleaseId;
+          file.Tag.MusicBrainzReleaseStatus = song.MusicBrainzReleaseStatus;
+          file.Tag.MusicBrainzTrackId = song.MusicBrainzTrackId;
+          file.Tag.MusicBrainzReleaseType = song.MusicBrainzReleaseType;
 
           #endregion
 

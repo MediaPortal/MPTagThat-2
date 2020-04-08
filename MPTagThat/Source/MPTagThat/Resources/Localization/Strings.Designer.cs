@@ -2230,15 +2230,6 @@ namespace MPTagThat.Resources.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
-        /// </summary>
-        public static string String1 {
-            get {
-                return ResourceManager.GetString("String1", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Add Format To List.
         /// </summary>
         public static string tagAndRename_AddFormat {
@@ -2851,6 +2842,87 @@ namespace MPTagThat.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Artist Id:.
+        /// </summary>
+        public static string tagEdit_MusicBrainzArtistId {
+            get {
+                return ResourceManager.GetString("tagEdit_MusicBrainzArtistId", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Disc Id:.
+        /// </summary>
+        public static string tagEdit_MusicBrainzDiscId {
+            get {
+                return ResourceManager.GetString("tagEdit_MusicBrainzDiscId", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Release Artist Id:.
+        /// </summary>
+        public static string tagEdit_MusicBrainzReleaseArtistId {
+            get {
+                return ResourceManager.GetString("tagEdit_MusicBrainzReleaseArtistId", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Release Country:.
+        /// </summary>
+        public static string tagEdit_MusicBrainzReleaseCountry {
+            get {
+                return ResourceManager.GetString("tagEdit_MusicBrainzReleaseCountry", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Release Group Id:.
+        /// </summary>
+        public static string tagEdit_MusicBrainzReleaseGroupId {
+            get {
+                return ResourceManager.GetString("tagEdit_MusicBrainzReleaseGroupId", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Release Id:.
+        /// </summary>
+        public static string tagEdit_MusicBrainzReleaseId {
+            get {
+                return ResourceManager.GetString("tagEdit_MusicBrainzReleaseId", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Release Status:.
+        /// </summary>
+        public static string tagEdit_MusicBrainzReleaseStatus {
+            get {
+                return ResourceManager.GetString("tagEdit_MusicBrainzReleaseStatus", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Track Id:.
+        /// </summary>
+        public static string tagEdit_MusicBrainzReleaseTrackId {
+            get {
+                return ResourceManager.GetString("tagEdit_MusicBrainzReleaseTrackId", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Release Type:.
+        /// </summary>
+        public static string tagEdit_MusicBrainzReleaseType {
+            get {
+                return ResourceManager.GetString("tagEdit_MusicBrainzReleaseType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Add Musician.
         /// </summary>
         public static string tagEdit_MusicCreditList_Add {
@@ -3132,6 +3204,15 @@ namespace MPTagThat.Resources.Localization {
         public static string tagEdit_TabHeader_Main {
             get {
                 return ResourceManager.GetString("tagEdit_TabHeader_Main", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to MusicBrainz Information.
+        /// </summary>
+        public static string tagEdit_TabHeader_MusicBrainz {
+            get {
+                return ResourceManager.GetString("tagEdit_TabHeader_MusicBrainz", resourceCulture);
             }
         }
         

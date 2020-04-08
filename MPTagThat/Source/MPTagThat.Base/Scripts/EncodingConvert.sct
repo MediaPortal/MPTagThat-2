@@ -2,7 +2,7 @@
 // Description: This script Converts the encoding of ID3 Text Frames. Can be run in Batch or Interactive Mode
 //
 // ------------ Don't change anything in the following block -------
-//css_ref bin\taglib-sharp.dll; 
+//css_ref bin\taglibsharp.dll; 
 //css_ref bin\MPTagThat.Core.dll; 
 using System;
 using System.Collections.Generic;

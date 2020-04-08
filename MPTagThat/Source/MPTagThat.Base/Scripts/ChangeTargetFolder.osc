@@ -2,7 +2,7 @@
 // Description: Change the Target Folder for the Organise function based on Tag Values
 //
 // ------------ Don't change anything in the following block -------
-//css_ref bin\taglib-sharp.dll; 
+//css_ref bin\taglibsharp.dll; 
 //css_ref bin\MPTagThat.Core.dll; 
 using System;
 using System.Collections.Generic;

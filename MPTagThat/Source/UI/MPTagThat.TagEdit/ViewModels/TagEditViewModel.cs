@@ -407,6 +407,34 @@ namespace MPTagThat.TagEdit.ViewModels
 
     private bool _ckPicturesIsChecked;
     public bool CkPicturesIsChecked { get => _ckPicturesIsChecked; set => SetProperty(ref _ckPicturesIsChecked, value); }
+    
+    private bool _ckMbArtistIdIsChecked;
+    public bool CkMbArtistIdIsChecked { get => _ckMbArtistIdIsChecked; set => SetProperty(ref _ckMbArtistIdIsChecked, value); }
+
+    private bool _ckMbReleaseArtistIdIsChecked;
+    public bool CkMbReleaseArtistIdIsChecked { get => _ckMbReleaseArtistIdIsChecked; set => SetProperty(ref _ckMbReleaseArtistIdIsChecked, value); }
+
+    private bool _ckMbReleaseIdIsChecked;
+    public bool CkMbReleaseIdIsChecked { get => _ckMbReleaseIdIsChecked; set => SetProperty(ref _ckMbReleaseIdIsChecked, value); }
+
+    private bool _ckMbReleaseGroupIdIsChecked;
+    public bool CkMbReleaseGroupIdIsChecked { get => _ckMbReleaseGroupIdIsChecked; set => SetProperty(ref _ckMbReleaseGroupIdIsChecked, value); }
+
+    private bool _ckMbReleaseCountryIsChecked;
+    public bool CkMbReleaseCountryIsChecked { get => _ckMbReleaseCountryIsChecked; set => SetProperty(ref _ckMbReleaseCountryIsChecked, value); }
+
+    private bool _ckMbDiscIdIsChecked;
+    public bool CkMbDiscIdIsChecked { get => _ckMbDiscIdIsChecked; set => SetProperty(ref _ckMbDiscIdIsChecked, value); }
+
+    private bool _ckMbReleaseStatusIsChecked;
+    public bool CkMbReleaseStatusIsChecked { get => _ckMbReleaseStatusIsChecked; set => SetProperty(ref _ckMbReleaseStatusIsChecked, value); }
+
+    private bool _ckMbReleaseTypeIsChecked;
+    public bool CkMbReleaseTypeIsChecked { get => _ckMbReleaseTypeIsChecked; set => SetProperty(ref _ckMbReleaseTypeIsChecked, value); }
+
+    private bool _ckMbTrackIdIsChecked;
+    public bool CkMbTrackIdIsChecked { get => _ckMbTrackIdIsChecked; set => SetProperty(ref _ckMbTrackIdIsChecked, value); }
+
     #endregion
 
     #endregion
@@ -572,6 +600,33 @@ namespace MPTagThat.TagEdit.ViewModels
             break;
           case "commercialurl":
             CkCommercialInformationUrlIsChecked = true;
+            break;
+          case "mbartistid":
+            CkMbArtistIdIsChecked = true;
+            break;
+          case "mbreleaseartistid":
+            CkMbReleaseArtistIdIsChecked = true;
+            break;
+          case "mbreleaseid":
+            CkMbReleaseIdIsChecked = true;
+            break;
+          case "mbreleasegroupid":
+            CkMbReleaseGroupIdIsChecked = true;
+            break;
+          case "mbreleasecountry":
+            CkMbReleaseCountryIsChecked = true;
+            break;
+          case "mbdiscid":
+            CkMbDiscIdIsChecked = true;
+            break;
+          case "mbreleasestatus":
+            CkMbReleaseStatusIsChecked = true;
+            break;
+          case "mbreleasetype":
+            CkMbReleaseTypeIsChecked = true;
+            break;
+          case "mbtrackid":
+            CkMbTrackIdIsChecked = true;
             break;
         }
       }
@@ -1224,6 +1279,51 @@ namespace MPTagThat.TagEdit.ViewModels
         {
           song.CommercialInformation = songEdit.CommercialInformation;
         }
+
+        if (CkMbArtistIdIsChecked)
+        {
+          song.MusicBrainzArtistId = songEdit.MusicBrainzArtistId;
+        }
+
+        if (CkMbReleaseArtistIdIsChecked)
+        {
+          song.MusicBrainzReleaseArtistId = songEdit.MusicBrainzReleaseArtistId;
+        }
+
+        if (CkMbDiscIdIsChecked)
+        {
+          song.MusicBrainzDiscId = songEdit.MusicBrainzDiscId;
+        }
+
+        if (CkMbReleaseCountryIsChecked)
+        {
+          song.MusicBrainzReleaseCountry = songEdit.MusicBrainzReleaseCountry;
+        }
+
+        if (CkMbReleaseIdIsChecked)
+        {
+          song.MusicBrainzReleaseId = songEdit.MusicBrainzReleaseId;
+        }
+
+        if (CkMbReleaseStatusIsChecked)
+        {
+          song.MusicBrainzReleaseStatus = songEdit.MusicBrainzReleaseStatus;
+        }
+
+        if (CkMbTrackIdIsChecked)
+        {
+          song.MusicBrainzTrackId = songEdit.MusicBrainzTrackId;
+        }
+
+        if (CkMbReleaseTypeIsChecked)
+        {
+          song.MusicBrainzReleaseType = songEdit.MusicBrainzReleaseType;
+        }
+
+        if (CkMbReleaseGroupIdIsChecked)
+        {
+          song.MusicBrainzReleaseGroupId = songEdit.MusicBrainzReleaseGroupId;
+        }
       }
     }
 
@@ -1539,6 +1639,51 @@ namespace MPTagThat.TagEdit.ViewModels
         {
           SongEdit.CommercialInformation = i == 0 ? song.CommercialInformation : "";
         }
+        
+        if (SongEdit.MusicBrainzArtistId != song.MusicBrainzArtistId)
+        {
+          SongEdit.MusicBrainzArtistId = i == 0 ? song.MusicBrainzArtistId : "";
+        }
+
+        if (SongEdit.MusicBrainzReleaseArtistId != song.MusicBrainzReleaseArtistId)
+        {
+          SongEdit.MusicBrainzReleaseArtistId = i == 0 ? song.MusicBrainzReleaseArtistId : "";
+        }
+
+        if (SongEdit.MusicBrainzDiscId != song.MusicBrainzDiscId)
+        {
+          SongEdit.MusicBrainzDiscId = i == 0 ? song.MusicBrainzDiscId : "";
+        }
+
+        if (SongEdit.MusicBrainzReleaseCountry != song.MusicBrainzReleaseCountry)
+        {
+          SongEdit.MusicBrainzReleaseCountry = i == 0 ? song.MusicBrainzReleaseCountry : "";
+        }
+
+        if (SongEdit.MusicBrainzReleaseId != song.MusicBrainzReleaseId)
+        {
+          SongEdit.MusicBrainzReleaseId = i == 0 ? song.MusicBrainzReleaseId : "";
+        }
+
+        if (SongEdit.MusicBrainzReleaseStatus != song.MusicBrainzReleaseStatus)
+        {
+          SongEdit.MusicBrainzReleaseStatus = i == 0 ? song.MusicBrainzReleaseStatus : "";
+        }
+
+        if (SongEdit.MusicBrainzTrackId != song.MusicBrainzTrackId)
+        {
+          SongEdit.MusicBrainzTrackId = i == 0 ? song.MusicBrainzTrackId : "";
+        }
+
+        if (SongEdit.MusicBrainzReleaseType != song.MusicBrainzReleaseType)
+        {
+          SongEdit.MusicBrainzReleaseType = i == 0 ? song.MusicBrainzReleaseType : "";
+        }
+
+        if (SongEdit.MusicBrainzReleaseGroupId != song.MusicBrainzReleaseGroupId)
+        {
+          SongEdit.MusicBrainzReleaseGroupId = i == 0 ? song.MusicBrainzReleaseGroupId : "";
+        }
 
         i++;
       }
@@ -1704,6 +1849,15 @@ namespace MPTagThat.TagEdit.ViewModels
       CkMediaTypeIsChecked = false;
       CkTrackLengthIsChecked = false;
       CkPicturesIsChecked = false;
+      CkMbArtistIdIsChecked = false;
+      CkMbReleaseArtistIdIsChecked = false;
+      CkMbDiscIdIsChecked = false;
+      CkMbReleaseCountryIsChecked = false;
+      CkMbReleaseIdIsChecked = false;
+      CkMbReleaseStatusIsChecked = false;
+      CkMbTrackIdIsChecked = false;
+      CkMbReleaseTypeIsChecked = false;
+      CkMbReleaseGroupIdIsChecked = false;
     }
 
     /// <summary>
@@ -1740,6 +1894,15 @@ namespace MPTagThat.TagEdit.ViewModels
       original.InvolvedPeople = backup.InvolvedPeople;
       original.Lyrics = backup.Lyrics;
       original.MediaType = backup.MediaType;
+      original.MusicBrainzArtistId = backup.MusicBrainzArtistId;
+      original.MusicBrainzDiscId = backup.MusicBrainzDiscId;
+      original.MusicBrainzReleaseArtistId = backup.MusicBrainzReleaseArtistId;
+      original.MusicBrainzReleaseCountry = backup.MusicBrainzReleaseCountry;
+      original.MusicBrainzReleaseGroupId = backup.MusicBrainzReleaseGroupId;
+      original.MusicBrainzReleaseId = backup.MusicBrainzReleaseId;
+      original.MusicBrainzReleaseStatus = backup.MusicBrainzReleaseStatus;
+      original.MusicBrainzTrackId = backup.MusicBrainzTrackId;
+      original.MusicBrainzReleaseType = backup.MusicBrainzReleaseType;
       original.MusicCreditList = backup.MusicCreditList;
       original.OfficialAudioFileInformation = backup.OfficialAudioFileInformation;
       original.OfficialArtistInformation = backup.OfficialArtistInformation;

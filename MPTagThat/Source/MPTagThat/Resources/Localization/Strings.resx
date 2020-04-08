@@ -1292,9 +1292,6 @@ If no personal counter is wanted it may be omitted.
 
 To change the order of the ratings drag the rows.</value>
   </data>
-  <data name="String1" xml:space="preserve">
-    <value />
-  </data>
   <data name="tagEdit_InvolvedPerson_Add" xml:space="preserve">
     <value>Add Person</value>
     <comment>The Button Text of the Involved Person Add</comment>
@@ -1328,5 +1325,35 @@ To change the order of the ratings drag the rows.</value>
   <data name="tagEdit_MusicCreditList_Instrument" xml:space="preserve">
     <value>Instrument</value>
     <comment>Column Header for Music Credit List</comment>
+  </data>
+  <data name="tagEdit_MusicBrainzArtistId" xml:space="preserve">
+    <value>Artist Id:</value>
+  </data>
+  <data name="tagEdit_MusicBrainzDiscId" xml:space="preserve">
+    <value>Disc Id:</value>
+  </data>
+  <data name="tagEdit_MusicBrainzReleaseArtistId" xml:space="preserve">
+    <value>Release Artist Id:</value>
+  </data>
+  <data name="tagEdit_MusicBrainzReleaseCountry" xml:space="preserve">
+    <value>Release Country:</value>
+  </data>
+  <data name="tagEdit_MusicBrainzReleaseGroupId" xml:space="preserve">
+    <value>Release Group Id:</value>
+  </data>
+  <data name="tagEdit_MusicBrainzReleaseId" xml:space="preserve">
+    <value>Release Id:</value>
+  </data>
+  <data name="tagEdit_MusicBrainzReleaseStatus" xml:space="preserve">
+    <value>Release Status:</value>
+  </data>
+  <data name="tagEdit_MusicBrainzReleaseTrackId" xml:space="preserve">
+    <value>Track Id:</value>
+  </data>
+  <data name="tagEdit_MusicBrainzReleaseType" xml:space="preserve">
+    <value>Release Type:</value>
+  </data>
+  <data name="tagEdit_TabHeader_MusicBrainz" xml:space="preserve">
+    <value>MusicBrainz Information</value>
   </data>
 </root>

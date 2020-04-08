@@ -23,9 +23,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
-using System.Runtime.Serialization.Formatters.Binary;
 using System.Windows.Media.Imaging;
-using FreeImageAPI;
 using MPTagThat.Core.Utils;
 using Prism.Mvvm;
 using Raven.Abstractions.Extensions;
@@ -69,6 +67,17 @@ namespace MPTagThat.Core.Common.Song
     private string _replayGainTrackPeak;
     private string _replayGainAlbumPeak;
     private int _year;
+
+    private string _mbArtistId;
+    private string _mbDiscId;
+    private string _mbReleaseArtistId;
+    private string _mbReleaseCountry;
+    private string _mbReleaseGroupId;
+    private string _mbReleaseId;
+    private string _mbReleaseStatus;
+    private string _mbReleaseType;
+    private string _mbTrackId;
+
 
     private TimeSpan _durationTimeSpan;
     private string _fileSize;
@@ -605,6 +614,96 @@ namespace MPTagThat.Core.Common.Song
         SetText("TMED", value);
         RaisePropertyChanged("MediaType");
       }
+    }
+
+    /// <summary>
+    /// MusicBrainzArtistId
+    /// ID3: TXXX
+    /// </summary>
+    public string MusicBrainzArtistId
+    {
+      get => _mbArtistId;
+      set => SetProperty(ref _mbArtistId, value ?? "");
+    }
+
+    /// <summary>
+    /// MusicBrainzDiscId
+    /// ID3: TXXX
+    /// </summary>
+    public string MusicBrainzDiscId
+    {
+      get => _mbDiscId;
+      set => SetProperty(ref _mbDiscId, value ?? "");
+    }
+
+    /// <summary>
+    /// MusicBrainzReleaseArtistId
+    /// ID3: TXXX
+    /// </summary>
+    public string MusicBrainzReleaseArtistId
+    {
+      get => _mbReleaseArtistId;
+      set => SetProperty(ref _mbReleaseArtistId, value ?? "");
+    }
+
+    /// <summary>
+    /// MusicBrainzReleaseCountry
+    /// ID3: TXXX
+    /// </summary>
+    public string MusicBrainzReleaseCountry
+    {
+      get => _mbReleaseCountry;
+      set => SetProperty(ref _mbReleaseCountry, value ?? "");
+    }
+
+    /// <summary>
+    /// MusicBrainzReleaseGroupId
+    /// ID3: TXXX
+    /// </summary>
+    public string MusicBrainzReleaseGroupId
+    {
+      get => _mbReleaseGroupId;
+      set => SetProperty(ref _mbReleaseGroupId, value ?? "");
+    }
+
+    /// <summary>
+    /// MusicBrainzReleaseId
+    /// ID3: TXXX
+    /// </summary>
+    public string MusicBrainzReleaseId
+    {
+      get => _mbReleaseId;
+      set => SetProperty(ref _mbReleaseId, value ?? "");
+    }
+
+    /// <summary>
+    /// MusicBrainzReleaseStatus
+    /// ID3: TXXX
+    /// </summary>
+    public string MusicBrainzReleaseStatus
+    {
+      get => _mbReleaseStatus;
+      set => SetProperty(ref _mbReleaseStatus, value ?? "");
+    }
+
+    /// <summary>
+    /// MusicBrainzReleaseType
+    /// ID3: TXXX
+    /// </summary>
+    public string MusicBrainzReleaseType
+    {
+      get => _mbReleaseType;
+      set => SetProperty(ref _mbReleaseType, value ?? "");
+    }
+
+    /// <summary>
+    /// MusicBrainzTrackId
+    /// ID3: TXXX
+    /// </summary>
+    public string MusicBrainzTrackId
+    {
+      get => _mbTrackId;
+      set => SetProperty(ref _mbTrackId, value ?? "");
     }
 
     /// <summary>
@@ -1181,6 +1280,15 @@ namespace MPTagThat.Core.Common.Song
       songClone.Grouping = this.Grouping;
       songClone.InvolvedPeople = this.InvolvedPeople;
       songClone.MediaType = this.MediaType;
+      songClone.MusicBrainzArtistId = this.MusicBrainzArtistId;
+      songClone.MusicBrainzDiscId = this.MusicBrainzDiscId;
+      songClone.MusicBrainzReleaseArtistId = this.MusicBrainzReleaseArtistId;
+      songClone.MusicBrainzReleaseCountry = this.MusicBrainzReleaseCountry;
+      songClone.MusicBrainzReleaseGroupId = this.MusicBrainzReleaseGroupId;
+      songClone.MusicBrainzReleaseId = this.MusicBrainzReleaseId;
+      songClone.MusicBrainzReleaseStatus = this.MusicBrainzReleaseStatus;
+      songClone.MusicBrainzTrackId = this.MusicBrainzTrackId;
+      songClone.MusicBrainzReleaseType = this.MusicBrainzReleaseType;
       songClone.MusicCreditList = this.MusicCreditList;
       songClone.OfficialAudioFileInformation = this.OfficialAudioFileInformation;
       songClone.OfficialArtistInformation = this.OfficialArtistInformation;

@@ -571,6 +571,177 @@
                     </StackPanel>
                   </syncfusion:SfAccordionItem>
 
+                  <!-- MusicBrainz Information -->
+                  <syncfusion:SfAccordionItem Header="{lex:Loc tagEdit_TabHeader_MusicBrainz}" AccordionButtonStyle="{StaticResource expanderButtonStyle}" >
+                    <Grid>
+                      <GroupBox Background="Transparent" Style="{DynamicResource GroupBoxStyleNoHeader}">
+                        <StackPanel>
+                          <!-- MusicBrainz Artist ID -->
+                          <Grid Margin="5">
+                            <Grid.ColumnDefinitions>
+                              <ColumnDefinition Width="130"/>
+                              <ColumnDefinition Width="240"/>
+                              <ColumnDefinition Width="20"/>
+                            </Grid.ColumnDefinitions>
+                            <Label Grid.Column="0" Content="{lex:Loc tagEdit_MusicBrainzArtistId}" />
+                            <TextBox Grid.Column="1" Name="MBArtistId" Text="{Binding SongEdit.MusicBrainzArtistId, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" MaxWidth="250" HorizontalAlignment="Stretch" >
+                              <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="TextChanged">
+                                  <prism:InvokeCommandAction Command="{Binding TextChangedCommand}"/>
+                                </i:EventTrigger>
+                              </i:Interaction.Triggers>
+                            </TextBox>
+                            <CheckBox Grid.Column="2" VerticalAlignment="Center" Margin="2,0,0,0" IsChecked="{Binding CkMbArtistIdIsChecked, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Visibility="{Binding MultiCheckBoxVisibility, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                          </Grid>
+
+                          <!-- MusicBrainz Release Artist ID -->
+                          <Grid Margin="5">
+                            <Grid.ColumnDefinitions>
+                              <ColumnDefinition Width="130"/>
+                              <ColumnDefinition Width="240"/>
+                              <ColumnDefinition Width="20"/>
+                            </Grid.ColumnDefinitions>
+                            <Label Grid.Column="0" Content="{lex:Loc tagEdit_MusicBrainzReleaseArtistId}" />
+                            <TextBox Grid.Column="1" Name="MBReleaseArtistId" Text="{Binding SongEdit.MusicBrainzReleaseArtistId, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" MaxWidth="250" HorizontalAlignment="Stretch" >
+                              <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="TextChanged">
+                                  <prism:InvokeCommandAction Command="{Binding TextChangedCommand}"/>
+                                </i:EventTrigger>
+                              </i:Interaction.Triggers>
+                            </TextBox>
+                            <CheckBox Grid.Column="2" VerticalAlignment="Center" Margin="2,0,0,0" IsChecked="{Binding CkMbReleaseArtistIdIsChecked, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Visibility="{Binding MultiCheckBoxVisibility, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                          </Grid>
+
+                          <!-- MusicBrainz Release ID -->
+                          <Grid Margin="5">
+                            <Grid.ColumnDefinitions>
+                              <ColumnDefinition Width="130"/>
+                              <ColumnDefinition Width="240"/>
+                              <ColumnDefinition Width="20"/>
+                            </Grid.ColumnDefinitions>
+                            <Label Grid.Column="0" Content="{lex:Loc tagEdit_MusicBrainzReleaseId}" />
+                            <TextBox Grid.Column="1" Name="MBReleaseId" Text="{Binding SongEdit.MusicBrainzReleaseId, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" MaxWidth="250" HorizontalAlignment="Stretch" >
+                              <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="TextChanged">
+                                  <prism:InvokeCommandAction Command="{Binding TextChangedCommand}"/>
+                                </i:EventTrigger>
+                              </i:Interaction.Triggers>
+                            </TextBox>
+                            <CheckBox Grid.Column="2" VerticalAlignment="Center" Margin="2,0,0,0" IsChecked="{Binding CkMbReleaseIdIsChecked, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Visibility="{Binding MultiCheckBoxVisibility, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                          </Grid>
+
+                          <!-- MusicBrainz Release Group ID -->
+                          <Grid Margin="5">
+                            <Grid.ColumnDefinitions>
+                              <ColumnDefinition Width="130"/>
+                              <ColumnDefinition Width="240"/>
+                              <ColumnDefinition Width="20"/>
+                            </Grid.ColumnDefinitions>
+                            <Label Grid.Column="0" Content="{lex:Loc tagEdit_MusicBrainzReleaseGroupId}" />
+                            <TextBox Grid.Column="1" Name="MBReleaseGroupId" Text="{Binding SongEdit.MusicBrainzReleaseGroupId, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" MaxWidth="250" HorizontalAlignment="Stretch" >
+                              <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="TextChanged">
+                                  <prism:InvokeCommandAction Command="{Binding TextChangedCommand}"/>
+                                </i:EventTrigger>
+                              </i:Interaction.Triggers>
+                            </TextBox>
+                            <CheckBox Grid.Column="2" VerticalAlignment="Center" Margin="2,0,0,0" IsChecked="{Binding CkMbReleaseGroupIdIsChecked, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Visibility="{Binding MultiCheckBoxVisibility, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                          </Grid>
+
+                          <!-- MusicBrainz Release Country -->
+                          <Grid Margin="5">
+                            <Grid.ColumnDefinitions>
+                              <ColumnDefinition Width="130"/>
+                              <ColumnDefinition Width="240"/>
+                              <ColumnDefinition Width="20"/>
+                            </Grid.ColumnDefinitions>
+                            <Label Grid.Column="0" Content="{lex:Loc tagEdit_MusicBrainzReleaseCountry}" />
+                            <TextBox Grid.Column="1" Name="MBReleaseCountry" Text="{Binding SongEdit.MusicBrainzReleaseCountry, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" MaxWidth="250" HorizontalAlignment="Stretch" >
+                              <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="TextChanged">
+                                  <prism:InvokeCommandAction Command="{Binding TextChangedCommand}"/>
+                                </i:EventTrigger>
+                              </i:Interaction.Triggers>
+                            </TextBox>
+                            <CheckBox Grid.Column="2" VerticalAlignment="Center" Margin="2,0,0,0" IsChecked="{Binding CkMbReleaseCountryIsChecked, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Visibility="{Binding MultiCheckBoxVisibility, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                          </Grid>
+
+                          <!-- MusicBrainz Disc Id -->
+                          <Grid Margin="5">
+                            <Grid.ColumnDefinitions>
+                              <ColumnDefinition Width="130"/>
+                              <ColumnDefinition Width="240"/>
+                              <ColumnDefinition Width="20"/>
+                            </Grid.ColumnDefinitions>
+                            <Label Grid.Column="0" Content="{lex:Loc tagEdit_MusicBrainzDiscId}" />
+                            <TextBox Grid.Column="1" Name="MBDiscId" Text="{Binding SongEdit.MusicBrainzDiscId, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" MaxWidth="250" HorizontalAlignment="Stretch" >
+                              <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="TextChanged">
+                                  <prism:InvokeCommandAction Command="{Binding TextChangedCommand}"/>
+                                </i:EventTrigger>
+                              </i:Interaction.Triggers>
+                            </TextBox>
+                            <CheckBox Grid.Column="2" VerticalAlignment="Center" Margin="2,0,0,0" IsChecked="{Binding CkMbDiscIdIsChecked, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Visibility="{Binding MultiCheckBoxVisibility, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                          </Grid>
+
+                          <!-- MusicBrainz Release Status -->
+                          <Grid Margin="5">
+                            <Grid.ColumnDefinitions>
+                              <ColumnDefinition Width="130"/>
+                              <ColumnDefinition Width="240"/>
+                              <ColumnDefinition Width="20"/>
+                            </Grid.ColumnDefinitions>
+                            <Label Grid.Column="0" Content="{lex:Loc tagEdit_MusicBrainzReleaseStatus}" />
+                            <TextBox Grid.Column="1" Name="MBReleaseStatus" Text="{Binding SongEdit.MusicBrainzReleaseStatus, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" MaxWidth="250" HorizontalAlignment="Stretch" >
+                              <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="TextChanged">
+                                  <prism:InvokeCommandAction Command="{Binding TextChangedCommand}"/>
+                                </i:EventTrigger>
+                              </i:Interaction.Triggers>
+                            </TextBox>
+                            <CheckBox Grid.Column="2" VerticalAlignment="Center" Margin="2,0,0,0" IsChecked="{Binding CkMbReleaseStatusIsChecked, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Visibility="{Binding MultiCheckBoxVisibility, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                          </Grid>
+
+                          <!-- MusicBrainz Release Type -->
+                          <Grid Margin="5">
+                            <Grid.ColumnDefinitions>
+                              <ColumnDefinition Width="130"/>
+                              <ColumnDefinition Width="240"/>
+                              <ColumnDefinition Width="20"/>
+                            </Grid.ColumnDefinitions>
+                            <Label Grid.Column="0" Content="{lex:Loc tagEdit_MusicBrainzReleaseType}" />
+                            <TextBox Grid.Column="1" Name="MBReleaseType" Text="{Binding SongEdit.MusicBrainzReleaseType, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" MaxWidth="250" HorizontalAlignment="Stretch" >
+                              <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="TextChanged">
+                                  <prism:InvokeCommandAction Command="{Binding TextChangedCommand}"/>
+                                </i:EventTrigger>
+                              </i:Interaction.Triggers>
+                            </TextBox>
+                            <CheckBox Grid.Column="2" VerticalAlignment="Center" Margin="2,0,0,0" IsChecked="{Binding CkMbReleaseTypeIsChecked, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Visibility="{Binding MultiCheckBoxVisibility, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                          </Grid>
+
+                          <!-- MusicBrainz Release Track Id -->
+                          <Grid Margin="5">
+                            <Grid.ColumnDefinitions>
+                              <ColumnDefinition Width="130"/>
+                              <ColumnDefinition Width="240"/>
+                              <ColumnDefinition Width="20"/>
+                            </Grid.ColumnDefinitions>
+                            <Label Grid.Column="0" Content="{lex:Loc tagEdit_MusicBrainzReleaseTrackId}" />
+                            <TextBox Grid.Column="1" Name="MBTrackId" Text="{Binding SongEdit.MusicBrainzTrackId, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" MaxWidth="250" HorizontalAlignment="Stretch" >
+                              <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="TextChanged">
+                                  <prism:InvokeCommandAction Command="{Binding TextChangedCommand}"/>
+                                </i:EventTrigger>
+                              </i:Interaction.Triggers>
+                            </TextBox>
+                            <CheckBox Grid.Column="2" VerticalAlignment="Center" Margin="2,0,0,0" IsChecked="{Binding CkMbReleaseTrackIdIsChecked, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Visibility="{Binding MultiCheckBoxVisibility, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                          </Grid>
+                        </StackPanel>
+                      </GroupBox>
+                    </Grid>
+                  </syncfusion:SfAccordionItem>
+
                   <!-- Detailed Information -->
                   <syncfusion:SfAccordionItem Header="{lex:Loc tagEdit_TabHeader_Detailed_Information}" AccordionButtonStyle="{StaticResource expanderButtonStyle}" IsEnabled="{Binding SongEdit.IsMp3}" >
                     <Grid>
@@ -885,7 +1056,7 @@
                                                   Width="Auto" Height="25" 
                                                   Margin="20,5,0,0" />
                           </StackPanel>
-                            <TextBlock Text="{lex:Loc tagEdit_Rating_Note}" TextWrapping="Wrap" Margin="5,5,0,1"  Width="350"/>
+                          <TextBlock Text="{lex:Loc tagEdit_Rating_Note}" TextWrapping="Wrap" Margin="5,5,0,1"  Width="350"/>
                         </StackPanel>
                       </GroupBox>
                     </Grid>

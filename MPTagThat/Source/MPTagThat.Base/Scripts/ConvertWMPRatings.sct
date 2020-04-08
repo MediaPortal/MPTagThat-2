@@ -2,7 +2,7 @@
 // Description: This script Converts Windows Media Player Ratings to Star Ratings from 1 - 5
 //
 // ------------ Don't change anything in the following block -------
-//css_ref bin\taglib-sharp.dll; 
+//css_ref bin\taglibsharp.dll; 
 //css_ref bin\MPTagThat.Core.dll; 
 using System;
 using System.Collections.Generic;

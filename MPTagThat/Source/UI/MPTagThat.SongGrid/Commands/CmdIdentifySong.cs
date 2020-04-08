@@ -94,6 +94,7 @@ namespace MPTagThat.SongGrid.Commands
                 Title = recording.Title,
                 Duration = $"{TimeSpan.FromMilliseconds((int) recording.Length).Hours:D2}:{TimeSpan.FromMilliseconds((int) recording.Length).Minutes:D2}:{TimeSpan.FromMilliseconds((int) recording.Length).Seconds:D2}",
                 AlbumId = release.Id,
+                ArtistId = (recording.Credits != null && recording.Credits.Count > 0) ? recording.Credits[0].Artist.Id : "",
                 AlbumTitle = release.Title,
                 Country = release.Country,
                 Date = release.Date
@@ -161,7 +162,14 @@ namespace MPTagThat.SongGrid.Commands
           song.DiscNumber = (uint)_album.Media[0].Position;
           song.TrackCount = (uint)_album.Media[0].TrackCount;
           song.TrackNumber = (uint)_album.Media[0].Tracks.First(t => t.Id == selectedRecording.TrackId).Position;
+          song.MusicBrainzDiscId = _album.Media[0].Discs != null ? _album.Media[0].Discs[0].Id : "";
         }
+
+        // MusicBrainz Properties
+        song.MusicBrainzArtistId = selectedRecording.ArtistId;
+        song.MusicBrainzReleaseId = selectedRecording.AlbumId;
+        song.MusicBrainzTrackId = selectedRecording.TrackId;
+        song.MusicBrainzReleaseCountry = selectedRecording.Country;
       }
 
       var coverArtUrl = _album.CoverArtArchive != null && _album.CoverArtArchive.Front
