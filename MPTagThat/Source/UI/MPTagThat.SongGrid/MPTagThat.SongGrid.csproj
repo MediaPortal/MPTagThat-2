@@ -120,6 +120,7 @@
     <Compile Include="Commands\CmdDeleteTags.cs" />
     <Compile Include="Commands\CmdFixMp3File.cs" />
     <Compile Include="Commands\CmdIdentifySong.cs" />
+    <Compile Include="Commands\CmdMusicBrainzInfo.cs" />
     <Compile Include="Commands\CmdRemoveComments.cs" />
     <Compile Include="Commands\CmdRemoveCoverArt.cs" />
     <Compile Include="Commands\CmdReplayGain.cs" />

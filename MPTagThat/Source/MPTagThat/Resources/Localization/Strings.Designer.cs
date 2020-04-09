@@ -2860,6 +2860,15 @@ namespace MPTagThat.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Get from MusicBrainz.
+        /// </summary>
+        public static string tagEdit_MusicBrainzInfo {
+            get {
+                return ResourceManager.GetString("tagEdit_MusicBrainzInfo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Release Artist Id:.
         /// </summary>
         public static string tagEdit_MusicBrainzReleaseArtistId {

@@ -44,6 +44,7 @@ namespace MPTagThat.Core.Common
       FIND = 34,
       REPLACE = 35,
       REPLAYGAIN = 38,
+      MusicBrainzInfo = 39,
       
       // Actions which don't have a Key assigned
       CASECONVERSION = 60,
@@ -140,6 +141,10 @@ namespace MPTagThat.Core.Common
         case Action.ActionType.AUTONUMBER:
           checkSelections = true;
           return "AutoNumber";
+
+        case Action.ActionType.MusicBrainzInfo:
+          checkSelections = true;
+          return "MusicBrainzInfo";
 
         default:
           return "";

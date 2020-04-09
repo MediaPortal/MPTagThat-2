@@ -620,6 +620,7 @@ namespace MPTagThat.SongGrid.ViewModels
           if (result.Changed)
           {
             song = result.song;
+            song.Changed = true;
           }
 
           // Has the file be renamed during save?
@@ -688,6 +689,7 @@ namespace MPTagThat.SongGrid.ViewModels
         Action.ActionType.VALIDATEMP3,
         Action.ActionType.FIXMP3,
         Action.ActionType.AUTONUMBER,
+        Action.ActionType.MusicBrainzInfo,
       };
 
     private void OnMessageReceived(GenericEvent msg)

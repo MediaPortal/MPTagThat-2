@@ -48,6 +48,7 @@ namespace MPTagThat.SongGrid.Commands
       typeof (CmdValidateMp3File),
       typeof (CmdFixMp3File),
       typeof (CmdAutoNumber),
+      typeof (CmdMusicBrainzInfo),
       /*
             
       

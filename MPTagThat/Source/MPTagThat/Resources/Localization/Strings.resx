@@ -1356,4 +1356,8 @@ To change the order of the ratings drag the rows.</value>
   <data name="tagEdit_TabHeader_MusicBrainz" xml:space="preserve">
     <value>MusicBrainz Information</value>
   </data>
+  <data name="tagEdit_MusicBrainzInfo" xml:space="preserve">
+    <value>Get from MusicBrainz</value>
+    <comment>The Get MusicBrainz Info Button</comment>
+  </data>
 </root>

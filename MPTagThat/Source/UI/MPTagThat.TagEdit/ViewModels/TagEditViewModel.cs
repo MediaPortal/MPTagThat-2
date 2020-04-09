@@ -464,6 +464,7 @@ namespace MPTagThat.TagEdit.ViewModels
       DeletePersonCommand = new BaseCommand(DeletePerson);
       AddMusicianCommand = new BaseCommand(AddMusician);
       DeleteMusicianCommand = new BaseCommand(DeleteMusician);
+      MusicBrainzCommand = new BaseCommand(GetFromMusicBrainz);
 
       SelectedGenres.CollectionChanged += SelectedGenres_CollectionChanged;
       MediaTypes.AddRange(_options.MediaTypes);
@@ -1044,6 +1045,24 @@ namespace MPTagThat.TagEdit.ViewModels
     }
 
     #endregion
+
+    public ICommand MusicBrainzCommand { get; }
+
+    /// <summary>
+    /// Get Song Information from MusicBrainz
+    /// </summary>
+    /// <param name="param"></param>
+    private void GetFromMusicBrainz(object param)
+    {
+      // Send out the Event with the action
+      var evt = new GenericEvent
+      {
+        Action = "Command"
+      };
+      evt.MessageData.Add("command", Action.ActionType.MusicBrainzInfo);
+      evt.MessageData.Add("runasync", false);
+      EventSystem.Publish(evt);
+    }
 
     /// <summary>
     /// Set the Song Length from file

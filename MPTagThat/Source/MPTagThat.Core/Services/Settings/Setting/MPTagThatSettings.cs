@@ -163,6 +163,9 @@ namespace MPTagThat.Core.Services.Settings.Setting
     [Setting(SettingScope.User, "")]
     public List<string> CustomGenres { get; set; } = new List<string>();
 
+    [Setting(SettingScope.User, "")]
+    public List<string> PreferredMusicBrainzCountries { get; set; } = new List<string>() { "DE", "XE", "US" };
+
     #endregion
 
     #region Lyrics

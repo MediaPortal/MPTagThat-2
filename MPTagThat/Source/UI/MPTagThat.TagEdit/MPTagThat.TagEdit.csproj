@@ -144,6 +144,7 @@
     <Resource Include="Resources\Images\Person_Delete_32x.png" />
     <Resource Include="Resources\Images\Musician_Add_32x.png" />
     <Resource Include="Resources\Images\Musician_Delete_32x.png" />
+    <Resource Include="Resources\Images\MusicBrainz_32x.png" />
     <Content Include="x64\FreeImage.dll" />
     <Content Include="x86\FreeImage.dll" />
   </ItemGroup>
