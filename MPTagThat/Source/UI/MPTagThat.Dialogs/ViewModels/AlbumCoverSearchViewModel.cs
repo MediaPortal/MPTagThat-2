@@ -425,7 +425,11 @@ namespace MPTagThat.Dialogs.ViewModels
       }
 
       _songs = parameters.GetValue<List<SongData>>("songs");
-      if (_songs.GroupBy(s => s.Artist).Count() == 1)
+      if (_songs.GroupBy(s => s.AlbumArtist).Count() == 1)
+      {
+        Artist = _songs[0].AlbumArtist;
+      }
+      else if (_songs.GroupBy(s => s.Artist).Count() == 1)
       {
         Artist = _songs[0].Artist;
       }
