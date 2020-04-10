@@ -105,9 +105,10 @@ namespace MPTagThat.Core.Common.Song
     {
       _mp3ValError = Util.MP3Error.NoError;
       Frames = new List<Frame>();
-      UserFrames = new List<Frame>();
+      UserFrames = new ObservableCollection<Frame>();
 
       Pictures.CollectionChanged += Pictures_CollectionChanged;
+      UserFrames.CollectionChanged += UserFrames_CollectionChanged;
     }
 
     #endregion
@@ -130,17 +131,17 @@ namespace MPTagThat.Core.Common.Song
     /// <summary>
     /// The Extended Frames included in the file
     /// </summary>
-    public List<Common.Song.Frame> Frames { get; set; }
+    public List<Frame> Frames { get; set; }
 
     /// <summary>
     /// The User Defined Frames included in the file
     /// </summary>
-    public List<Common.Song.Frame> UserFrames { get; set; }
+    public ObservableCollection<Frame> UserFrames { get; set; }
 
     /// <summary>
     /// The User Defined Frames that we have read before modification
     /// </summary>
-    public List<Common.Song.Frame> SavedUserFrames { get; set; }
+    public List<Frame> SavedUserFrames { get; set; }
 
     /// <summary>
     /// Current Status of Track, as indicated in Column 0 of grid
@@ -1340,6 +1341,15 @@ namespace MPTagThat.Core.Common.Song
         }
         songClone._popmframes.AddRange(popmList);
 
+        songClone.UserFrames = new ObservableCollection<Frame>();
+        var userFrameList = new List<Frame>();
+        for (var i = 0; i < this.UserFrames.Count; i++)
+        {
+          var userFrame = new Frame(this.UserFrames[i].Id, this.UserFrames[i].Description, this.UserFrames[i].Value);
+          userFrameList.Add(userFrame);
+        }
+        songClone.UserFrames.AddRange(userFrameList);
+
         // Handle Lists
         for (var i = 0; i < this._lyrics.Count; i++)
         {
@@ -1421,7 +1431,11 @@ namespace MPTagThat.Core.Common.Song
       RaisePropertyChanged($"Pictures");
     }
 
-
+    private void UserFrames_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+    {
+      RaisePropertyChanged($"UserFrames");
+    }
+    
     #endregion
 
     #region overrides

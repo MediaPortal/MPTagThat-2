@@ -3388,6 +3388,60 @@ namespace MPTagThat.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Add Frame.
+        /// </summary>
+        public static string tagEdit_UserFrames_Add {
+            get {
+                return ResourceManager.GetString("tagEdit_UserFrames_Add", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Delete All Frames.
+        /// </summary>
+        public static string tagEdit_UserFrames_DeleteAllFrames {
+            get {
+                return ResourceManager.GetString("tagEdit_UserFrames_DeleteAllFrames", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Delete Frame(s).
+        /// </summary>
+        public static string tagEdit_UserFrames_DeleteFrame {
+            get {
+                return ResourceManager.GetString("tagEdit_UserFrames_DeleteFrame", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Description.
+        /// </summary>
+        public static string tagEdit_UserFrames_Description {
+            get {
+                return ResourceManager.GetString("tagEdit_UserFrames_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Frame ID.
+        /// </summary>
+        public static string tagEdit_UserFrames_FrameId {
+            get {
+                return ResourceManager.GetString("tagEdit_UserFrames_FrameId", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Frame Value.
+        /// </summary>
+        public static string tagEdit_UserFrames_Text {
+            get {
+                return ResourceManager.GetString("tagEdit_UserFrames_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Year:.
         /// </summary>
         public static string tagEdit_Year {

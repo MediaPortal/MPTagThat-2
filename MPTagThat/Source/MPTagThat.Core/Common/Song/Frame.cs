@@ -15,30 +15,44 @@
 // You should have received a copy of the GNU General Public License
 // along with MPTagThat. If not, see <http://www.gnu.org/licenses/>.
 #endregion
+
+#region
+
+using Prism.Mvvm;
+
+#endregion
+
 namespace MPTagThat.Core.Common.Song
 {
-  public class Frame
+  public class Frame : BindableBase
   {
+    #region Variables
+
+    private string _id;
+    private string _description;
+    private string _value;
+
+    #endregion
+
+    #region Properties
+
+    public string Id { get => _id; set => SetProperty(ref _id, value); }
+    public string Description { get => _description; set => SetProperty(ref _description, value); }
+    public string Value { get => _value; set => SetProperty(ref _value, value); }
+
+    #endregion
+
     #region ctor
-    public Frame()
+    public Frame() 
     {
     }
     
-
     public Frame(string id, string description, string value)
     {
       Id = id;
       Description = description;
       Value = value;
     }
-
-    #endregion
-
-    #region Properties
-
-    public string Id { get; set; }
-    public string Description { get; set; }
-    public string Value { get; set; }
 
     #endregion
   }

@@ -48,6 +48,7 @@ using Syncfusion.Windows.Shared;
 using TagLib;
 using Action = MPTagThat.Core.Common.Action;
 using File = System.IO.File;
+using Frame = MPTagThat.Core.Common.Song.Frame;
 using Picture = MPTagThat.Core.Common.Song.Picture;
 using TextBox = System.Windows.Controls.TextBox;
 
@@ -260,6 +261,16 @@ namespace MPTagThat.TagEdit.ViewModels
       set => SetProperty(ref _selectedMusician, value);
     }
 
+    /// <summary>
+    /// The Selected User Frame(s)
+    /// </summary>
+    private ObservableCollection<object> _selectedUserFrames = new ObservableCollection<object>();
+    public ObservableCollection<object> SelectedUserFrames
+    {
+      get => _selectedUserFrames;
+      set => SetProperty(ref _selectedUserFrames, value);
+    }
+
     #region Check Box Checked properties
     private bool _ckTrackIsChecked;
     public bool CkTrackIsChecked { get => _ckTrackIsChecked; set => SetProperty(ref _ckTrackIsChecked, value); }
@@ -465,6 +476,9 @@ namespace MPTagThat.TagEdit.ViewModels
       AddMusicianCommand = new BaseCommand(AddMusician);
       DeleteMusicianCommand = new BaseCommand(DeleteMusician);
       MusicBrainzCommand = new BaseCommand(GetFromMusicBrainz);
+      AddUserFrameCommand = new BaseCommand(AddUserFrame);
+      DeleteUserFrameCommand = new BaseCommand(DeleteUserFrame);
+      DeleteAllUserFramesCommand = new BaseCommand(DeleteAllUserFrames);
 
       SelectedGenres.CollectionChanged += SelectedGenres_CollectionChanged;
       MediaTypes.AddRange(_options.MediaTypes);
@@ -1046,6 +1060,42 @@ namespace MPTagThat.TagEdit.ViewModels
 
     #endregion
 
+    #region User Frame Commands
+
+    public ICommand AddUserFrameCommand { get; }
+
+    private void AddUserFrame(object param)
+    {
+      SongEdit.UserFrames.Add(new Frame("TXXX", "", ""));
+      SongEdit.Changed = true;
+      IsApplyButtonEnabled = true;
+    }
+
+    public ICommand DeleteUserFrameCommand { get; }
+
+    private void DeleteUserFrame(object param)
+    {
+      // Can't use a foreach here, since it modifies the collection
+      while(SelectedUserFrames.Count > 0)
+      {
+        SongEdit.UserFrames.Remove((Frame)SelectedUserFrames[0]);
+      }
+      SongEdit.Changed = true;
+      IsApplyButtonEnabled = true;
+    }
+
+    public ICommand DeleteAllUserFramesCommand { get; }
+
+    private void DeleteAllUserFrames(object param)
+    {
+      SongEdit.UserFrames.Clear();
+      SongEdit.Changed = true;
+      IsApplyButtonEnabled = true;
+    }
+
+    #endregion
+
+    #region MusicBrainz Commands
     public ICommand MusicBrainzCommand { get; }
 
     /// <summary>
@@ -1063,6 +1113,8 @@ namespace MPTagThat.TagEdit.ViewModels
       evt.MessageData.Add("runasync", false);
       EventSystem.Publish(evt);
     }
+
+    #endregion
 
     /// <summary>
     /// Set the Song Length from file
@@ -1951,6 +2003,7 @@ namespace MPTagThat.TagEdit.ViewModels
       original.Track = backup.Track;
       original.TrackLength = backup.TrackLength;
       original.Year = backup.Year;
+      original.UserFrames = backup.UserFrames;
       original.Init = false;
     }
 

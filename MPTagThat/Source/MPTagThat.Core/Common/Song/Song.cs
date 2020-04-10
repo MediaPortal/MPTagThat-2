@@ -324,8 +324,8 @@ namespace MPTagThat.Core.Common.Song
             {
               if ((Type)frame.GetType() == typeof(UserTextInformationFrame))
               {
-                // Don't add Replaygain frames, as they are handled in taglib tags
-                if (!Util.IsReplayGain((frame as UserTextInformationFrame)?.Description))
+                // Don't add special user frames, like replay gain or musicbrainz, as they are handled in taglib tags
+                if (!Util.IsSpecialUserFrame((frame as UserTextInformationFrame)?.Description))
                 {
                   song.UserFrames.Add(new Frame(id, (frame as UserTextInformationFrame)?.Description ?? "",
                                                (frame as UserTextInformationFrame)?.Text.Length == 0
@@ -432,6 +432,7 @@ namespace MPTagThat.Core.Common.Song
       song.TextWriter = "";
       song.TitleSortName = "";
       song.TrackLength = "";
+      song.UserFrames.Clear();
       
       return song;
     }
@@ -777,7 +778,7 @@ namespace MPTagThat.Core.Common.Song
 
               if (frame.Id == "TXXX")
               {
-                //id3v2tag.SetUserTextAsString(frame.Description, "");
+                id3v2tag.SetUserTextAsString(frame.Description, "", true);
               }
               else
               {
@@ -799,7 +800,7 @@ namespace MPTagThat.Core.Common.Song
 
               if (frame.Id == "TXXX")
               {
-                //id3v2tag.SetUserTextAsString(frame.Description, "");
+                id3v2tag.SetUserTextAsString(frame.Description, "", true);
               }
               else
               {
@@ -819,8 +820,8 @@ namespace MPTagThat.Core.Common.Song
             {
               if (frame.Description != "")
               {
-                //id3v2tag.SetUserTextAsString(frame.Description, "");
-                //id3v2tag.SetUserTextAsString(frame.Description, frame.Value);
+                id3v2tag.SetUserTextAsString(frame.Description, "", true);
+                id3v2tag.SetUserTextAsString(frame.Description, frame.Value, true);
               }
             }
             else

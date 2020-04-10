@@ -306,7 +306,7 @@ namespace MPTagThat.Core.Utils
       "IPLS", "TMED", "TMCL", "WOAF", "WOAR", "WOAS", "WORS",
       "WPAY", "WPUB", "TOAL", "TOFN", "TOLY", "TOPE", "TOWN",
       "TDOR", "TORY", "TPUB", "TIT3", "TEXT","TSOT", "TLEN",
-      "TCMP", "TSO2"
+      "TCMP", "TSO2", "UFID"
     };
 
     #endregion
@@ -484,11 +484,11 @@ namespace MPTagThat.Core.Utils
     #region Tag related methods
 
     /// <summary>
-    /// Checks, if we got a replaygain frame
+    /// Checks, if we got a Spacial Userframe
     /// </summary>
     /// <param name="description"></param>
     /// <returns></returns>
-    public static bool IsReplayGain(string description)
+    public static bool IsSpecialUserFrame(string description)
     {
       switch (description.ToLowerInvariant())
       {
@@ -496,6 +496,14 @@ namespace MPTagThat.Core.Utils
         case "replaygain_track_peak":
         case "replaygain_album_gain":
         case "replaygain_album_peak":
+        case "musicbrainz artist id":
+        case "musicbrainz release group id":
+        case "musicbrainz album id":
+        case "musicbrainz album artist id":
+        case "musicbrainz disc id":
+        case "musicbrainz album status":
+        case "musicbrainz album type":
+        case "musicbrainz album release country":
           return true;
       }
       return false;

@@ -1457,7 +1457,41 @@
                   <!-- User Defined Frames -->
                   <syncfusion:SfAccordionItem Header="{lex:Loc tagEdit_TabHeader_UserFrames}" AccordionButtonStyle="{StaticResource expanderButtonStyle}" IsEnabled="{Binding SongEdit.IsMp3}">
                     <Grid>
+                      <GroupBox Background="Transparent" Style="{DynamicResource GroupBoxStyleNoHeader}">
+                        <StackPanel Orientation="Vertical">
+                          <syncfusion:SfDataGrid ItemsSource="{Binding SongEdit.UserFrames,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                 SelectedItems="{Binding SelectedUserFrames}"
+                                                 SelectionMode="Extended"
+                                                 ColumnSizer="AutoWithLastColumnFill" 
+                                                 AllowResizingColumns="True" 
+                                                 AllowDraggingColumns="False" 
+                                                 AutoGenerateColumns="False"
+                                                 ShowRowHeader="False" 
+                                                 AllowEditing="True" >
+                            <syncfusion:SfDataGrid.Columns>
+                              <syncfusion:GridTextColumn HeaderText="{lex:Loc tagEdit_UserFrames_FrameId}" MappingName="Id" Width="80" />
+                              <syncfusion:GridTextColumn HeaderText="{lex:Loc tagEdit_UserFrames_Description}" MappingName="Description" Width="180" />
+                              <syncfusion:GridTextColumn HeaderText="{lex:Loc tagEdit_UserFrames_Text}" MappingName="Value" Width="180" />
+                            </syncfusion:SfDataGrid.Columns>
+                          </syncfusion:SfDataGrid>
+                          <StackPanel Orientation="Horizontal">
+                            <Button Content="{lex:Loc tagEdit_UserFrames_Add}" 
+                                    Command="{Binding AddUserFrameCommand}" 
+                                    Width="Auto" Height="25" 
+                                    Margin="0,5,0,0" />
 
+                            <Button Content="{lex:Loc tagEdit_UserFrames_DeleteFrame}" 
+                                    Command="{Binding DeleteUserFrameCommand}" 
+                                    Width="Auto" Height="25" 
+                                    Margin="20,5,0,0" />
+
+                            <Button Content="{lex:Loc tagEdit_UserFrames_DeleteAllFrames}" 
+                                    Command="{Binding DeleteAllUserFramesCommand}" 
+                                    Width="Auto" Height="25" 
+                                    Margin="20,5,0,0" />
+                          </StackPanel>
+                        </StackPanel>
+                      </GroupBox>
                     </Grid>
                   </syncfusion:SfAccordionItem>
                 </syncfusion:SfAccordion>

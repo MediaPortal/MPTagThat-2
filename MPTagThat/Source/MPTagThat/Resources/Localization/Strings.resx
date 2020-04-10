@@ -1360,4 +1360,28 @@ To change the order of the ratings drag the rows.</value>
     <value>Get from MusicBrainz</value>
     <comment>The Get MusicBrainz Info Button</comment>
   </data>
+  <data name="tagEdit_UserFrames_Add" xml:space="preserve">
+    <value>Add Frame</value>
+    <comment>Button Text</comment>
+  </data>
+  <data name="tagEdit_UserFrames_DeleteAllFrames" xml:space="preserve">
+    <value>Delete All Frames</value>
+    <comment>Button Text</comment>
+  </data>
+  <data name="tagEdit_UserFrames_DeleteFrame" xml:space="preserve">
+    <value>Delete Frame(s)</value>
+    <comment>Button Text</comment>
+  </data>
+  <data name="tagEdit_UserFrames_Description" xml:space="preserve">
+    <value>Description</value>
+    <comment>The Description header in the User Frame Grid</comment>
+  </data>
+  <data name="tagEdit_UserFrames_FrameId" xml:space="preserve">
+    <value>Frame ID</value>
+    <comment>The FrameID header in the User Frame Grid</comment>
+  </data>
+  <data name="tagEdit_UserFrames_Text" xml:space="preserve">
+    <value>Frame Value</value>
+    <comment>The Text header in the User Frame Grid</comment>
+  </data>
 </root>
