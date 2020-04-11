@@ -1,0 +1,169 @@
+﻿{
+  "KeyMap": [
+    {
+      "Id": 1,
+      "Key": "Ctrl-S",
+      "Description": "Save the selected files"
+    },
+    {
+      "Id": 3,
+      "Key": "Ctrl-F",
+      "Description": "Filename to Tag"
+    },
+    {
+      "Id": 4,
+      "Key": "Ctrl-R",
+      "Description": "Rename File Based on Tag"
+    },
+    {
+      "Id": 5,
+      "Key": "Ctrl-A",
+      "Description": "Select All"
+    },
+    {
+      "Id": 6,
+      "Key": "Ctrl-C",
+      "Description": "Copy Cell Content"
+    },
+    {
+      "Id": 7,
+      "Key": "Ctrl-P",
+      "Description": "Paste Cell Content"
+    },
+    {
+      "Id": 8,
+      "Key": "Ctrl-E",
+      "Description": "Execute active script"
+    },
+    {
+      "Id": 9,
+      "Key": "Ctrl-F5",
+      "Description": "Refresh Treeview"
+    },
+    {
+      "Id": 10,
+      "Key": "Shift-Delete",
+      "Description": "Delete Folder"
+    },
+    {
+      "Id": 11,
+      "Key": "F6",
+      "Description": "Case Conversion"
+    },
+    {
+      "Id": 12,
+      "Key": "F5",
+      "Description": "Refresh"
+    },
+    {
+      "Id": 13,
+      "Key": "F12",
+      "Description": "Options dialogue"
+    },
+    {
+      "Id": 14,
+      "Key": "Delete",
+      "Description": "Delete selected file"
+    },
+    {
+      "Id": 20,
+      "Key": "Ctrl-O",
+      "Description": "Organise Files"
+    },
+    {
+      "Id": 21,
+      "Key": "Ctrl-I",
+      "Description": "Identify Files"
+    },
+    {
+      "Id": 22,
+      "Key": "Ctrl-B",
+      "Description": "Get Coverart"
+    },
+    {
+      "Id": 23,
+      "Key": "Ctrl-L",
+      "Description": "Get Lyrics"
+    },
+    {
+      "Id": 24,
+      "Key": "Alt-F4",
+      "Description": "Exit"
+    },
+    {
+      "Id": 25,
+      "Key": "F1",
+      "Description": "Help"
+    },
+    {
+      "Id": 26,
+      "Key": "Ctrl-K",
+      "Description": "Internet Lookup"
+    },
+    {
+      "Id": 27,
+      "Key": "F11",
+      "Description": "Toggle Treeview Panel"
+    },
+    {
+      "Id": 28,
+      "Key": "F4",
+      "Description": "Remove all Comments"
+    },
+    {
+      "Id": 29,
+      "Key": "F3",
+      "Description": "Remove all Pictures"
+    },
+    {
+      "Id": 30,
+      "Key": "Ctrl-Shift-S",
+      "Description": "Save All"
+    },
+    {
+      "Id": 31,
+      "Key": "F9",
+      "Description": "Toggle Database Panel"
+    },
+    {
+      "Id": 32,
+      "Key": "Ctrl-Shift-V",
+      "Description": "Validate MP3 Files"
+    },
+    {
+      "Id": 33,
+      "Key": "Ctrl-Shift-F",
+      "Description": "Fix MP3 Files"
+    },
+    {
+      "Id": 34,
+      "Key": "Ctrl-Alt-F",
+      "Description": "Find"
+    },
+    {
+      "Id": 35,
+      "Key": "Ctrl-H",
+      "Description": "Replace"
+    },
+    {
+      "Id": 36,
+      "Key": "Ctrl-F11",
+      "Description": "Toggle Quickedit Panel"
+    },
+    {
+      "Id": 37,
+      "Key": "Alt-F11",
+      "Description": "Toggle MiscFile Panel"
+    },
+    {
+      "Id": 38,
+      "Key": "Ctrl-G",
+      "Description": "Replay Gain"
+    },
+    {
+      "Id": 39,
+      "Key": "Ctrl-M",
+      "Description": "Music Brainz Information"
+    }
+  ]
+}

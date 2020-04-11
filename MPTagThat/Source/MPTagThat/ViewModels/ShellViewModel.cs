@@ -12,6 +12,7 @@ using MPTagThat.Core.Events;
 using MPTagThat.Core.Services.Logging;
 using MPTagThat.Core.Services.Settings;
 using MPTagThat.Core.Services.Settings.Setting;
+using Newtonsoft.Json;
 using Prism.Mvvm;
 using Prism.Regions;
 using Syncfusion.SfSkinManager;
@@ -249,50 +250,28 @@ namespace MPTagThat.ViewModels
     /// <summary>
     ///   Loads the keymap file and creates the mapping.
     /// </summary>
-    /// <returns>True if the load was successfull, false if it failed.</returns>
     private void LoadKeyMap()
     {
-      var strFilename = $@"{_options.ConfigDir}\\keymap.xml";
+      var strFilename = $@"{_options.ConfigDir}\\keymap.json";
       if (!File.Exists(strFilename))
       {
-        strFilename = $@"{AppDomain.CurrentDomain.BaseDirectory}\bin\keymap.xml";
+        strFilename = $@"{AppDomain.CurrentDomain.BaseDirectory}\bin\keymap.json";
       }
       log.Info($"Load key mapping from {strFilename}");
       try
       {
-        // Load the XML file
-        var doc = new XmlDocument();
-        doc.Load(strFilename);
-        // Check if it is a keymap
-        if (doc.DocumentElement == null)
+        // Load and deserialize the Json File
+        var json = File.ReadAllText(strFilename);
+        var keyMap = JsonConvert.DeserializeObject<KeyMaps>(json);
+        if (keyMap == null)
         {
-          log.Error($"Exception loading keymap. No Root Element found");
-          return;
-        }
-        var strRoot = doc.DocumentElement.Name;
-        if (strRoot != "keymap")
-        {
-          log.Error($"Exception loading keymap. Root Element is not a Keymap");
+          log.Error($"Exception loading keymap.");
           return;
         }
 
-        // For each window
-        XmlNodeList listWindows = doc.DocumentElement.SelectNodes("/keymap/window");
-        foreach (XmlNode nodeWindow in listWindows)
+        foreach (var keyDef in keyMap.KeyMap)
         {
-          var windowId = nodeWindow.SelectSingleNode("id");
-          if (windowId != null && windowId.InnerText == "0")
-          {          
-            var actionNodes = nodeWindow.SelectNodes("action");
-            // Create a list of key/actiontype mappings
-            foreach (XmlNode node in actionNodes)
-            {
-              var nodeActionId = node.SelectSingleNode("id");
-              var nodeKey = node.SelectSingleNode("key");
-              var nodeRibbonKey = node.SelectSingleNode("ribbon");
-              MapAction(nodeActionId, nodeKey, nodeRibbonKey);
-            }
-          }
+          MapAction(keyDef);
         }
       }
       catch (Exception ex)
@@ -304,23 +283,16 @@ namespace MPTagThat.ViewModels
     /// <summary>
     ///   Map an action in a windowmap based on the id and key xml nodes.
     /// </summary>
-    /// <param name = "nodeId">The id of the action</param>
-    /// <param name = "nodeKey">The key corresponding to the mapping.</param>
-    private void MapAction(XmlNode nodeId, XmlNode nodeKey, XmlNode nodeRibbonKey)
+    /// <param name = "keyDef">The key defintion</param>
+    private void MapAction(KeyDef keyDef)
     {
-      if (nodeId == null) return;
       var kb = new KeyBinding();
       kb.Command = KeyPressedCommand;
-      kb.CommandParameter = (Action.ActionType)Int32.Parse(nodeId.InnerText);
+      kb.CommandParameter = (Action.ActionType)(keyDef.Id);
 
-      if (nodeRibbonKey != null)
+      if (keyDef.Key != null)
       {
-        // Define later
-      }
-
-      if (nodeKey != null)
-      {
-        var keys = nodeKey.InnerText.Split('-');
+        var keys = keyDef.Key.Split('-');
         for (int i = 0; i < keys.Length - 1; i++)
         {
           if (keys[i] == "Alt")
@@ -343,7 +315,7 @@ namespace MPTagThat.ViewModels
         }
         catch (ArgumentException)
         {
-          log.Error($"Invalid buttons for action {nodeId.InnerText}");
+          log.Error($"Invalid buttons for action {keyDef.Id}");
         }
       }
     }

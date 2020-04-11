@@ -212,6 +212,7 @@
     <Compile Include="Common\Converter\SongStatusToImageConverter.cs" />
     <Compile Include="Common\GridViewColumn.cs" />
     <Compile Include="Common\Item.cs" />
+    <Compile Include="Common\KeyMaps.cs" />
     <Compile Include="Common\Song\CaseConversion.cs" />
     <Compile Include="Common\Song\Comment.cs" />
     <Compile Include="Common\Song\Frame.cs" />
