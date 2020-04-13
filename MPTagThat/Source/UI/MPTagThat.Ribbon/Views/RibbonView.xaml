@@ -193,7 +193,7 @@
               </syncfusion:ScreenTip>
             </syncfusion:RibbonButton.ToolTip>
           </syncfusion:RibbonButton>
-          
+
           <syncfusion:SplitButton x:Name="ButtonCaseConversion" SizeForm="Large" 
                                   Label="{lex:Loc ribbon_CaseConversionMenu}" 
                                   LargeIcon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_CaseConversion_32x.png" 
@@ -565,7 +565,52 @@
               <syncfusion:SfAccordionItem Header="{lex:Loc settings_Keys}" AccordionButtonStyle="{StaticResource expanderButtonStyle}" >
                 <StackPanel Width="600" Margin="10,10,0,10" HorizontalAlignment="Left">
                   <GroupBox Background="Transparent" Style="{StaticResource GroupBoxStyleNoHeader}" >
-
+                    <StackPanel Orientation="Vertical" Margin="0,10,0,0">
+                      <syncfusion:SfDataGrid ItemsSource="{Binding KeyMap}"
+                                             SelectedItem="{Binding SelectedKeyMap,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                                             SelectionMode="Single"
+                                             ColumnSizer="AutoWithLastColumnFill" 
+                                             AllowResizingColumns="True" 
+                                             AllowDraggingColumns="False" 
+                                             AutoGenerateColumns="False"
+                                             ShowRowHeader="False" 
+                                             AllowEditing="False" 
+                                             Height="300" >
+                        <syncfusion:SfDataGrid.Columns>
+                          <syncfusion:GridTextColumn HeaderText="{lex:Loc settings_Keys_Header_Id}" MappingName="Id" Width="50" />
+                          <syncfusion:GridTextColumn HeaderText="{lex:Loc settings_Keys_Header_Description}" MappingName="Description" Width="300" />
+                          <syncfusion:GridTextColumn HeaderText="{lex:Loc settings_Keys_Header_Keys}" MappingName="Key" Width="150" />
+                        </syncfusion:SfDataGrid.Columns>
+                      </syncfusion:SfDataGrid>
+                      <GroupBox Background="Transparent" Style="{StaticResource GroupBoxStyleNoHeader}" Margin="0,10,0,0" IsEnabled="{Binding KeyChangeGroupBoxEnabled, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                        <Grid Margin="0,10,0,0">
+                        <Grid.RowDefinitions>
+                          <RowDefinition/>
+                          <RowDefinition/>
+                          <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                          <ColumnDefinition Width="200"/>
+                          <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Label Grid.Row="0" Grid.Column="0" Content="{lex:Loc settings_Keys_Description}" />
+                        <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding KeyMapDescription, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="300" HorizontalAlignment="Left" />
+                        <Label Grid.Row="1" Grid.Column="0" Content="{lex:Loc settings_Keys_ShortCut}" />
+                        <StackPanel Grid.Row="1" Grid.Column="1"  Margin="0,10,0,0" Orientation="Horizontal">
+                          <CheckBox Content="Ctrl" IsChecked="{Binding CtrlKey, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="0,5,0,0" Height="15"/>
+                          <CheckBox Content="Alt" IsChecked="{Binding AltKey, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="10,5,0,0" Height="15" />
+                          <CheckBox Content="Shift" IsChecked="{Binding ShiftKey, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="10,5,0,0" Height="15"/>
+                          <TextBox Text="{Binding KeyValue, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="100" Margin="10,5,0,0" />
+                        </StackPanel>
+                        <StackPanel Grid.Row="2" Grid.Column="1" Margin="0,5,0,0" Orientation="Horizontal">
+                        <syncfusion:ButtonAdv Label="{lex:Loc dialog_Apply}" HorizontalAlignment="Left"  Width="75" 
+                                              SmallIcon="pack://application:,,,/MPTagThat;component/Resources/Images/Apply_Changes_32x.png" 
+                                              Command="{Binding ApplyKeyChangeCommand}" />
+                        <Label Content="{lex:Loc settings_Keys_Restart}"/>
+                        </StackPanel>
+                        </Grid>
+                      </GroupBox>
+                    </StackPanel>
                   </GroupBox>
                 </StackPanel>
               </syncfusion:SfAccordionItem>

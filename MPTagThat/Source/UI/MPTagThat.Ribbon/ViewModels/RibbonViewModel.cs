@@ -22,9 +22,12 @@ using System;
 using System.Collections;
 using System.Collections.ObjectModel;
 using System.Globalization;
+using System.IO;
 using System.Linq;
+using System.Text;
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Navigation;
 using CommonServiceLocator;
 using MPTagThat.Core;
 using MPTagThat.Core.Common;
@@ -33,6 +36,7 @@ using MPTagThat.Core.Services.Logging;
 using MPTagThat.Core.Services.ScriptManager;
 using MPTagThat.Core.Services.Settings;
 using MPTagThat.Core.Services.Settings.Setting;
+using Newtonsoft.Json;
 using Prism.Events;
 using Prism.Mvvm;
 using Prism.Regions;
@@ -66,6 +70,7 @@ namespace MPTagThat.Ribbon.ViewModels
       DeleteLayoutCommand = new BaseCommand(DeleteLayout);
       ExecuteRibbonCommand = new BaseCommand(RibbonCommand);
       ExitCommand = new BaseCommand(Exit);
+      ApplyKeyChangeCommand = new BaseCommand(ApplyKeyChange);
 
       EventSystem.Subscribe<GenericEvent>(OnMessageReceived, ThreadOption.UIThread);
 
@@ -102,7 +107,30 @@ namespace MPTagThat.Ribbon.ViewModels
       }
     }
 
-    // Settings related Properties in the Backstage
+    private bool _toggleNumberOnClick;
+
+    public bool ToggleNumberOnClick
+    {
+      get => _toggleNumberOnClick;
+      set => SetProperty(ref _toggleNumberOnClick, value);
+    }
+
+    private int _autoNumberValue;
+
+    public int AutoNumberValue
+    {
+      get => _autoNumberValue;
+      set
+      {
+        SetProperty(ref _autoNumberValue, value);
+        _options.AutoNumber = value;
+      }
+    }
+
+    #region Settings related Properties in the Backstage
+
+    #region General Settings
+
     private ObservableCollection<Item> _languages = new ObservableCollection<Item>();
 
     public ObservableCollection<Item> Languages
@@ -127,8 +155,6 @@ namespace MPTagThat.Ribbon.ViewModels
         WPFLocalizeExtension.Engine.LocalizeDictionary.Instance.Culture = new CultureInfo(_options.MainSettings.Language);
       }
     }
-
-
 
     private ObservableCollection<string> _themes = new ObservableCollection<string>();
 
@@ -205,25 +231,92 @@ namespace MPTagThat.Ribbon.ViewModels
       }
     }
 
-    private bool _toggleNumberOnClick;
+    #endregion
 
-    public bool ToggleNumberOnClick
+    #region Key Mapping
+
+    private ObservableCollection<KeyDef> _keymap = new ObservableCollection<KeyDef>();
+
+    public ObservableCollection<KeyDef> KeyMap
     {
-      get => _toggleNumberOnClick;
-      set => SetProperty(ref _toggleNumberOnClick, value);
-    }
-
-    private int _autoNumberValue;
-
-    public int AutoNumberValue
-    {
-      get => _autoNumberValue;
+      get => _keymap;
       set
       {
-        SetProperty(ref _autoNumberValue, value);
-        _options.AutoNumber = value;
+        _keymap = value;
+        RaisePropertyChanged("KeyMap");
       }
     }
+
+    private KeyDef _selectedKeyMap;
+    public KeyDef SelectedKeyMap
+    {
+      get => _selectedKeyMap;
+      set
+      {
+        KeyChangeGroupBoxEnabled = true;
+        SetProperty(ref _selectedKeyMap, value);
+        KeyMapDescription = value.Description;
+
+        AltKey = CtrlKey = ShiftKey = false;
+        var buttons = value.Key.Split('-');
+        for (var i = 0; i < buttons.Length - 1; i++)
+        {
+          if (buttons[i] == "Alt")
+            AltKey = true;
+          else if (buttons[i] == "Ctrl")
+            CtrlKey = true;
+          else if (buttons[i] == "Shift")
+            ShiftKey = true;
+        }
+        KeyValue =  buttons[buttons.Length - 1];
+      }
+    }
+
+    private string _keyMapDescription;
+    public string KeyMapDescription
+    {
+      get => _keyMapDescription;
+      set => SetProperty(ref _keyMapDescription, value);
+    }
+
+    private bool _altKey;
+    public bool AltKey
+    {
+      get => _altKey;
+      set => SetProperty(ref _altKey, value);
+    }
+
+    private bool _ctrlKey;
+    public bool CtrlKey
+    {
+      get => _ctrlKey;
+      set => SetProperty(ref _ctrlKey, value);
+    }
+
+    private bool _shiftKey;
+    public bool ShiftKey
+    {
+      get => _shiftKey;
+      set => SetProperty(ref _shiftKey, value);
+    }
+
+    private string _keyValue;
+    public string KeyValue
+    {
+      get => _keyValue;
+      set => SetProperty(ref _keyValue, value);
+    }
+
+    private bool _keyChangeGroupBoxEnabled;
+    public bool KeyChangeGroupBoxEnabled
+    {
+      get => _keyChangeGroupBoxEnabled;
+      set => SetProperty(ref _keyChangeGroupBoxEnabled, value);
+    }
+
+    #endregion
+
+    #endregion
 
     #endregion
 
@@ -231,7 +324,7 @@ namespace MPTagThat.Ribbon.ViewModels
 
     public ICommand ResetLayoutCommand { get; }
     /// <summary>
-    /// The Selected Item has Changed. 
+    /// Reset the Layout to the Default Layout
     /// </summary>
     /// <param name="param"></param>
     private void ResetLayout(object param)
@@ -243,9 +336,10 @@ namespace MPTagThat.Ribbon.ViewModels
       EventSystem.Publish(evt);
     }
 
+
     public ICommand DeleteLayoutCommand { get; }
     /// <summary>
-    /// The Selected Item has Changed. 
+    /// Delete the current Layout
     /// </summary>
     /// <param name="param"></param>
     private void DeleteLayout(object param)
@@ -259,13 +353,64 @@ namespace MPTagThat.Ribbon.ViewModels
 
     public ICommand ExitCommand { get; }
 
+    /// <summary>
+    /// Exit the Application
+    /// </summary>
+    /// <param name="parm"></param>
     private void Exit(object parm)
     {
       Application.Current.Shutdown();
     }
 
-    public ICommand ExecuteRibbonCommand { get; }
+    public ICommand ApplyKeyChangeCommand { get; }
+    /// <summary>
+    /// A Keyboard Layout has changed, reset the layout
+    /// </summary>
+    /// <param name="param"></param>
+    private void ApplyKeyChange(object param)
+    {
+      var currentKeyDef = SelectedKeyMap;
+      currentKeyDef.Description = KeyMapDescription;
+      if (KeyValue.IsNullOrWhiteSpace())
+      {
+        return;
+      }
 
+      var key = KeyValue;
+      if (ShiftKey)
+      {
+        key = "Shift-" + key;
+      }
+
+      if (AltKey)
+      {
+        key = "Alt-" + key;
+      }
+
+      if (CtrlKey)
+      {
+        key = "Ctrl-" + key;
+      }
+      currentKeyDef.Key = key;
+
+      try
+      {
+        _options.KeyMap.KeyMap = KeyMap.ToList();
+        var strFilename = $@"{_options.ConfigDir}\\keymap.json";
+        var json = JsonConvert.SerializeObject(_options.KeyMap, Formatting.Indented);
+        File.WriteAllText(strFilename, json, Encoding.UTF8);
+      }
+      catch (Exception)
+      {
+        log.Error("Settings: Error saving keymap file");
+      }
+    }
+
+    public ICommand ExecuteRibbonCommand { get; }
+    /// <summary>
+    /// A Ribbon Command should be executed
+    /// </summary>
+    /// <param name="param"></param>
     private void RibbonCommand(object param)
     {
       if (param == null)
@@ -456,6 +601,8 @@ namespace MPTagThat.Ribbon.ViewModels
 
       ChangedRowColor = _options.MainSettings.ChangedRowColor;
       AlternateRowColor = _options.MainSettings.AlternateRowColor;
+
+      KeyMap.AddRange(_options.KeyMap.KeyMap);
 
       log.Trace(">>>");
     }

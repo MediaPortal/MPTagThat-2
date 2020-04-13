@@ -279,6 +279,8 @@ namespace MPTagThat.Core.Services.Settings.Setting
     public bool NumberOnclick { get; set; } = false;
 
     public int AutoNumber { get; set; }
+
+    public KeyMaps KeyMap { get; set; }
     #endregion
 
     #region ctor

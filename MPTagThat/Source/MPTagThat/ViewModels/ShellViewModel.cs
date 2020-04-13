@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Drawing;
 using System.Globalization;
 using System.IO;
@@ -13,6 +14,7 @@ using MPTagThat.Core.Services.Logging;
 using MPTagThat.Core.Services.Settings;
 using MPTagThat.Core.Services.Settings.Setting;
 using Newtonsoft.Json;
+using Prism.Events;
 using Prism.Mvvm;
 using Prism.Regions;
 using Syncfusion.SfSkinManager;
@@ -36,7 +38,7 @@ namespace MPTagThat.ViewModels
     /// <summary>
     /// The Binding for handling the Keypress
     /// </summary>
-    public List<InputBinding> InputBindings { get; } = new List<InputBinding>();
+    public ObservableCollection<InputBinding> InputBindings { get; } = new ObservableCollection<InputBinding>();
 
     /// <summary>
     /// The Window Height
@@ -273,6 +275,8 @@ namespace MPTagThat.ViewModels
         {
           MapAction(keyDef);
         }
+
+        _options.KeyMap = keyMap;
       }
       catch (Exception ex)
       {
@@ -281,14 +285,12 @@ namespace MPTagThat.ViewModels
     }
 
     /// <summary>
-    ///   Map an action in a windowmap based on the id and key xml nodes.
+    ///   Map an action based on the id and key.
     /// </summary>
-    /// <param name = "keyDef">The key defintion</param>
+    /// <param name = "keyDef">The key definition</param>
     private void MapAction(KeyDef keyDef)
     {
-      var kb = new KeyBinding();
-      kb.Command = KeyPressedCommand;
-      kb.CommandParameter = (Action.ActionType)(keyDef.Id);
+      var kb = new KeyBinding {Command = KeyPressedCommand, CommandParameter = (Action.ActionType) (keyDef.Id)};
 
       if (keyDef.Key != null)
       {
@@ -324,6 +326,10 @@ namespace MPTagThat.ViewModels
 
     #region Event Handling
 
+    /// <summary>
+    /// Update the status bar with information from the StatusBar Event
+    /// </summary>
+    /// <param name="msg"></param>
     private void UpdateStatusBar(StatusBarEvent msg)
     {
       switch (msg.Type)
@@ -345,6 +351,10 @@ namespace MPTagThat.ViewModels
       }
     }
 
+    /// <summary>
+    /// Update the progress bar with information from ProgressBar Event
+    /// </summary>
+    /// <param name="msg"></param>
     private void UpdateProgressBar(ProgressBarEvent msg)
     {
       ProgressBarIsIndeterminate = false;

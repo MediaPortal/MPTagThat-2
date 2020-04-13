@@ -23,7 +23,7 @@
         Top="{Binding WindowTop, Mode=TwoWay}" 
         Closing="Window_Closing" 
         Loaded="Window_Loaded"
-        local:InputBindingsBehavior.InputBindings="{Binding InputBindings}"
+        local:InputBindingsBehavior.InputBindings="{Binding InputBindings, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
         >
 
   <!-- Handle the Close of the Window -->

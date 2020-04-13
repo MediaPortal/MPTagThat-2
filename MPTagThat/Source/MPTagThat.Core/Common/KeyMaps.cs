@@ -19,6 +19,7 @@
 #region 
 
 using System.Collections.Generic;
+using Prism.Mvvm;
 
 #endregion
 
@@ -29,10 +30,14 @@ namespace MPTagThat.Core.Common
     public List<KeyDef> KeyMap { get; set; }
   }
 
-  public class KeyDef
+  public class KeyDef : BindableBase
   {
     public int Id { get; set; }
-    public string Key { get; set; }
-    public string Description { get; set; }
+
+    private string _key;
+    public string Key { get => _key; set => SetProperty(ref _key, value); }
+
+    private string _description;
+    public string Description { get => _description; set => SetProperty(ref _description, value); }
   }
 }

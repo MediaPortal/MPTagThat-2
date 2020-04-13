@@ -1600,6 +1600,60 @@ namespace MPTagThat.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Description:.
+        /// </summary>
+        public static string settings_Keys_Description {
+            get {
+                return ResourceManager.GetString("settings_Keys_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Description.
+        /// </summary>
+        public static string settings_Keys_Header_Description {
+            get {
+                return ResourceManager.GetString("settings_Keys_Header_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ID.
+        /// </summary>
+        public static string settings_Keys_Header_Id {
+            get {
+                return ResourceManager.GetString("settings_Keys_Header_Id", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Key(s).
+        /// </summary>
+        public static string settings_Keys_Header_Keys {
+            get {
+                return ResourceManager.GetString("settings_Keys_Header_Keys", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Restart of the application is required.
+        /// </summary>
+        public static string settings_Keys_Restart {
+            get {
+                return ResourceManager.GetString("settings_Keys_Restart", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Key Short Cut:.
+        /// </summary>
+        public static string settings_Keys_ShortCut {
+            get {
+                return ResourceManager.GetString("settings_Keys_ShortCut", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Language:.
         /// </summary>
         public static string settings_Language {

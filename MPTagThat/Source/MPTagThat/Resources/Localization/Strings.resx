@@ -1384,4 +1384,27 @@ To change the order of the ratings drag the rows.</value>
     <value>Frame Value</value>
     <comment>The Text header in the User Frame Grid</comment>
   </data>
+  <data name="settings_Keys_Description" xml:space="preserve">
+    <value>Description:</value>
+    <comment>The Description Label</comment>
+  </data>
+  <data name="settings_Keys_Header_Description" xml:space="preserve">
+    <value>Description</value>
+    <comment>The Header in te Key Map Grid</comment>
+  </data>
+  <data name="settings_Keys_Header_Id" xml:space="preserve">
+    <value>ID</value>
+    <comment>The Header in te Key Map Grid</comment>
+  </data>
+  <data name="settings_Keys_Header_Keys" xml:space="preserve">
+    <value>Key(s)</value>
+    <comment>The Header in te Key Map Grid</comment>
+  </data>
+  <data name="settings_Keys_Restart" xml:space="preserve">
+    <value>Restart of the application is required</value>
+  </data>
+  <data name="settings_Keys_ShortCut" xml:space="preserve">
+    <value>Key Short Cut:</value>
+    <comment>The Key Short Cut Label</comment>
+  </data>
 </root>
