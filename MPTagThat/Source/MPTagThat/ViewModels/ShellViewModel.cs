@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Drawing;
 using System.Globalization;
 using System.IO;
+using System.Windows;
 using System.Windows.Input;
 using System.Xml;
 using CommonServiceLocator;
@@ -20,6 +20,8 @@ using Prism.Regions;
 using Syncfusion.SfSkinManager;
 using WPFLocalizeExtension.Engine;
 using Action = MPTagThat.Core.Common.Action;
+using Point = System.Drawing.Point;
+using Size = System.Drawing.Size;
 
 namespace MPTagThat.ViewModels
 {
@@ -39,6 +41,16 @@ namespace MPTagThat.ViewModels
     /// The Binding for handling the Keypress
     /// </summary>
     public ObservableCollection<InputBinding> InputBindings { get; } = new ObservableCollection<InputBinding>();
+
+    /// <summary>
+    /// The State of the MainWindow
+    /// </summary>
+    private WindowState _windowState;
+    public WindowState WindowState
+    {
+      get => _windowState;
+      set => SetProperty(ref _windowState, value);
+    }
 
     /// <summary>
     /// The Window Height
@@ -209,6 +221,7 @@ namespace MPTagThat.ViewModels
       WindowHeight = _options.MainSettings.FormSize.Height;
       WindowLeft = _options.MainSettings.FormLocation.X;
       WindowTop = _options.MainSettings.FormLocation.Y;
+      WindowState = _options.MainSettings.FormIsMaximized ? WindowState.Maximized : WindowState.Normal;
       log.Trace("<<<");
     }
     #endregion
@@ -225,6 +238,7 @@ namespace MPTagThat.ViewModels
       log.Trace(">>>");
       _options.MainSettings.FormSize = new Size(WindowWidth, WindowHeight);
       _options.MainSettings.FormLocation = new Point(WindowLeft, WindowTop);
+      _options.MainSettings.FormIsMaximized = WindowState == WindowState.Maximized ? true : false;
 
       log.Info("Saving Settings");
       _options.SaveAllSettings();
