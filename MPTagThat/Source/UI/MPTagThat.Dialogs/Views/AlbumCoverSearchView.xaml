@@ -127,16 +127,16 @@
                                     SelectedItems="{Binding SelectedAlbumSearchSites, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
                                     Width="200" />
 
-            <CheckBox Grid.Row="0" Grid.Column="1" Content="{lex:Loc coverSearch_CreateMissingFolderThumb}" 
+            <CheckBox Grid.Row="0" Grid.Column="1" Content="{lex:Loc coverSearch_CreateMissingFolderThumb}" Height="15"
                       IsChecked="{Binding CreateFolderThumb, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
 
-            <CheckBox Grid.Row="1" Grid.Column="0" Content="{lex:Loc coverSearch_EmbedExistingThumb}" Margin="0,7,0,0"
+            <CheckBox Grid.Row="1" Grid.Column="0" Content="{lex:Loc coverSearch_EmbedExistingThumb}" Margin="0,7,0,0" Height="15"
                       IsChecked="{Binding EmbedFolderThumb, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/> 
 
-            <CheckBox Grid.Row="1" Grid.Column="1" Content="{lex:Loc coverSearch_OverwriteExistingCover}" Margin="0,7,0,0"
+            <CheckBox Grid.Row="1" Grid.Column="1" Content="{lex:Loc coverSearch_OverwriteExistingCover}" Margin="0,7,0,0" Height="15"
                       IsChecked="{Binding OverwriteExistingCovers, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
 
-            <CheckBox Grid.Row="2" Grid.Column="0" Content="{lex:Loc coverSearch_OnlySaveFolderThumb}" Margin="0,7,0,0"
+            <CheckBox Grid.Row="2" Grid.Column="0" Content="{lex:Loc coverSearch_OnlySaveFolderThumb}" Margin="0,7,0,0" Height="15"
                       IsChecked="{Binding OnlySaveFolderThumb, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
 
             <Grid Grid.Row="2" Grid.Column="1" Margin="0,7,0,0">
@@ -145,18 +145,13 @@
                 <ColumnDefinition Width="Auto"/>
               </Grid.ColumnDefinitions>
 
-              <CheckBox Content="{lex:Loc coverSearch_ChangeCoverSize}" 
+              <CheckBox Content="{lex:Loc coverSearch_ChangeCoverSize}" Height="15"
                         IsChecked="{Binding ChangeCoverSize, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
               <TextBox Grid.Column="1"  Width="40" Margin="3,0,0,0" Text="{Binding MaxCoverWidth, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center"/>
             </Grid>
 
           </Grid>
         </GroupBox>
-
-
-
-
-
       </StackPanel>
 
       <StackPanel Grid.Row="5" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,5,10,5">
