@@ -134,9 +134,6 @@ namespace MPTagThat.Core.Services.Settings.Setting
     [Setting(SettingScope.User, "false")]
     public bool MP3AutoFix { get; set; }
 
-    [Setting(SettingScope.User, "de")]
-    public string DefaultAlbumSite { get; set; }
-
     [Setting(SettingScope.User, "")]
     public List<string> AlbumInfoSites { get; set; } = new List<string>() { "MusicBrainz", "Discogs", "LastFM" };
 

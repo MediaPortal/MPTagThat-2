@@ -98,24 +98,23 @@ namespace MPTagThat.Core.AlbumSearch.AlbumSites
       var albums = await Release.SearchAsync(query);
 
       // First look for Albums from the selected countries
-      var mbAlbum = albums.Items.FirstOrDefault(r => (r.Title != null && r.Title.ToLower() == albumName.ToLower()) && (r.Country != null && r.Country.ToLower() == _options.MainSettings.DefaultAlbumSite.ToLower()));
-      if (mbAlbum == null)
+      Release mbAlbum = null;
+      foreach (var country in _options.MainSettings.PreferredMusicBrainzCountries)
       {
-        // Look for European wide release
-        mbAlbum = albums.Items.FirstOrDefault(r => (r.Title != null && r.Title.ToLower() == albumName.ToLower()) && (r.Country != null && r.Country.ToLower() == "xe"));
-        if (mbAlbum == null)
+        mbAlbum = albums.Items.FirstOrDefault(r => r.Country == country);
+        if (mbAlbum != null)
         {
-          // Look for US release
-          mbAlbum = albums.Items.FirstOrDefault(r => (r.Title != null && r.Title.ToLower() == albumName.ToLower()) && (r.Country != null && r.Country.ToLower() == "us"));
-          if (mbAlbum == null)
-          {
-            mbAlbum = albums.Items.Count > 0 ? albums.Items[0] : null;
-            if (mbAlbum == null)
-            {
-              return null;
-            }
-          }
+          break;
         }
+      }
+
+      if (mbAlbum == null && albums.Items.Count > 0)
+      {
+        mbAlbum = albums.Items[0];
+      }
+      else
+      {
+        return null;
       }
 
       var release = await Release.GetAsync(mbAlbum.Id, new[] { "recordings", "media", "artists", "discids" });
