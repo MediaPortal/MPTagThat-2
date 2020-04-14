@@ -1407,4 +1407,8 @@ To change the order of the ratings drag the rows.</value>
     <value>Key Short Cut:</value>
     <comment>The Key Short Cut Label</comment>
   </data>
+  <data name="lyricsSearch_SwitchArtist" xml:space="preserve">
+    <value>Switch Artist before submit</value>
+    <comment>The Switch Artist Check Box</comment>
+  </data>
 </root>

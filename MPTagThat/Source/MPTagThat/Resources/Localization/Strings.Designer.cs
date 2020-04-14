@@ -646,6 +646,15 @@ namespace MPTagThat.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Switch Artist before submit.
+        /// </summary>
+        public static string lyricsSearch_SwitchArtist {
+            get {
+                return ResourceManager.GetString("lyricsSearch_SwitchArtist", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Lyrics Search.
         /// </summary>
         public static string lyricsSearch_Title {

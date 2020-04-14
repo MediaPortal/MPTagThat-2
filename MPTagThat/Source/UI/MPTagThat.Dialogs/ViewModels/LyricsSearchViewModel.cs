@@ -139,6 +139,14 @@ namespace MPTagThat.Dialogs.ViewModels
       set => SetProperty(ref _statusMsg, value);
     }
 
+
+
+    private bool _switchArtistChecked;
+    public bool SwitchArtistChecked
+    {
+      get => _switchArtistChecked;
+      set => SetProperty(ref _switchArtistChecked, value);
+    }
     #endregion
 
     #region ctor
@@ -200,6 +208,7 @@ namespace MPTagThat.Dialogs.ViewModels
       }
 
       _options.MainSettings.SelectedLyricSites = SelectedLyricsSearchSites.ToList();
+      _options.MainSettings.SwitchArtist = SwitchArtistChecked;
       CloseDialog("true");
 
       log.Trace("<<<");
@@ -236,8 +245,8 @@ namespace MPTagThat.Dialogs.ViewModels
       var row = 0;
       foreach (var song in _songs)
       {
-        var switchedArtist = SwitchArtist(song.Artist);
-        var lyricsModel = new LyricsModel { ArtistAndTitle = $"{row+1:D2}. {switchedArtist} - {song.Title}", Site = "", Lyric = "", Row = row };
+        var artist = _options.MainSettings.SwitchArtist ? SwitchArtist(song.Artist) : song.Artist;
+        var lyricsModel = new LyricsModel { ArtistAndTitle = $"{row+1:D2}. {artist} - {song.Title}", Site = "", Lyric = "", Row = row };
         Lyrics.Add(lyricsModel);
         row++;
         string[] lyricId = new string[] { song.Artist, song.Title };
@@ -499,6 +508,7 @@ namespace MPTagThat.Dialogs.ViewModels
       log.Trace(">>>");
       LyricsSearchSites.AddRange(_options.MainSettings.LyricSites);
       SelectedLyricsSearchSites.AddRange(_options.MainSettings.SelectedLyricSites);
+      SwitchArtistChecked = _options.MainSettings.SwitchArtist;
       _songs = parameters.GetValue<List<SongData>>("songs");
       DoSearchLyrics();
       log.Trace("<<<");

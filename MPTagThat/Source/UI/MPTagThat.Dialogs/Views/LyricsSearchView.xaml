@@ -12,48 +12,48 @@
              lex:LocalizeDictionary.DesignCulture="en"
              lex:ResxLocalizationProvider.DefaultAssembly="MPTagThat"
              lex:ResxLocalizationProvider.DefaultDictionary="Strings"
-             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="630" >
+             mc:Ignorable="d" d:DesignWidth="802" d:DesignHeight="649" >
 
-  <prism:Dialog.WindowStyle>
-    <Style TargetType="Window">
-      <Setter Property="prism:Dialog.WindowStartupLocation" Value="CenterScreen" />
-      <Setter Property="ResizeMode" Value="NoResize"/>
-      <Setter Property="ShowInTaskbar" Value="False"/>
-      <Setter Property="SizeToContent" Value="WidthAndHeight"/>
-    </Style>
-  </prism:Dialog.WindowStyle>
+    <prism:Dialog.WindowStyle>
+        <Style TargetType="Window">
+            <Setter Property="prism:Dialog.WindowStartupLocation" Value="CenterScreen" />
+            <Setter Property="ResizeMode" Value="NoResize"/>
+            <Setter Property="ShowInTaskbar" Value="False"/>
+            <Setter Property="SizeToContent" Value="WidthAndHeight"/>
+        </Style>
+    </prism:Dialog.WindowStyle>
 
-  <UserControl.Resources>
-    <core:BusyToCursorConverter x:Key="busyToCursorConverter" />
-    <core:InvertBoolConverter x:Key="invertBoolConverter" />
-  </UserControl.Resources>
+    <UserControl.Resources>
+        <core:BusyToCursorConverter x:Key="busyToCursorConverter" />
+        <core:InvertBoolConverter x:Key="invertBoolConverter" />
+    </UserControl.Resources>
 
-  <UserControl.Cursor>
-    <Binding Path="DataContext.IsBusy" RelativeSource="{RelativeSource Self}" Converter="{StaticResource busyToCursorConverter}" />
-  </UserControl.Cursor>
+    <UserControl.Cursor>
+        <Binding Path="DataContext.IsBusy" RelativeSource="{RelativeSource Self}" Converter="{StaticResource busyToCursorConverter}" />
+    </UserControl.Cursor>
 
-  <Border Background="{Binding Background}"  BorderBrush="LightGray" BorderThickness="3" CornerRadius="5" >
-    <Grid>
-      <Grid.RowDefinitions>
-        <RowDefinition Height="60" />
-        <RowDefinition Height="25" />
-        <RowDefinition Height="500" />
-        <RowDefinition Height="Auto"/>
-      </Grid.RowDefinitions>
-      <Grid.ColumnDefinitions>
-        <ColumnDefinition Width = "800" />
-      </Grid.ColumnDefinitions>
+    <Border Background="{Binding Background}"  BorderBrush="LightGray" BorderThickness="3" CornerRadius="5" >
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="60" />
+                <RowDefinition Height="25" />
+                <RowDefinition Height="500" />
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width = "800" />
+            </Grid.ColumnDefinitions>
 
-      <!-- Header -->
-      <Canvas x:Name="Logo" Grid.Row="0"  RenderTransformOrigin="0.5,0.5" Margin="5,0,0,0" >
-        <TextBlock Text="{Binding Title}" TextWrapping="NoWrap" Foreground="#FFC4CFD6" FontSize="30" Opacity="0.85" Canvas.Left="0" Canvas.Top="5" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Height="50" TextAlignment="Left" FontWeight="Bold" />
-      </Canvas>
+            <!-- Header -->
+            <Canvas x:Name="Logo" Grid.Row="0"  RenderTransformOrigin="0.5,0.5" Margin="5,0,0,0" >
+                <TextBlock Text="{Binding Title}" TextWrapping="NoWrap" Foreground="#FFC4CFD6" FontSize="30" Opacity="0.85" Canvas.Left="0" Canvas.Top="5" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Height="50" TextAlignment="Left" FontWeight="Bold" />
+            </Canvas>
 
-      <!-- Status Message -->
-      <TextBlock Grid.Row="1" Text="{Binding StatusMsg}" Margin="5,0,0,0" />
+            <!-- Status Message -->
+            <TextBlock Grid.Row="1" Text="{Binding StatusMsg}" Margin="5,0,0,0" />
 
-      <!-- Lyrics Grid-->
-      <syncfusion:SfDataGrid Grid.Row="2" x:Name="LyricsGrid"
+            <!-- Lyrics Grid-->
+            <syncfusion:SfDataGrid Grid.Row="2" x:Name="LyricsGrid"
                            Margin="5,0,0,0"
                            AllowFrozenGroupHeaders="True"                                   
                            AutoGenerateColumns="False"
@@ -65,59 +65,62 @@
                            AutoExpandGroups="True"
                            ShowBusyIndicator="True" >
 
-        <syncfusion:SfDataGrid.GroupColumnDescriptions>
-          <syncfusion:GroupColumnDescription ColumnName="ArtistAndTitle" />
-        </syncfusion:SfDataGrid.GroupColumnDescriptions>
+                <syncfusion:SfDataGrid.GroupColumnDescriptions>
+                    <syncfusion:GroupColumnDescription ColumnName="ArtistAndTitle" />
+                </syncfusion:SfDataGrid.GroupColumnDescriptions>
 
-        <syncfusion:SfDataGrid.Columns>
-          <syncfusion:GridCheckBoxColumn MappingName="IsSelected" Width="40" HeaderText="" AllowEditing="True" />
-          <syncfusion:GridTextColumn MappingName="Site" Width="100" />
-          <syncfusion:GridTemplateColumn MappingName="Lyric" AllowEditing="True" >
-            <syncfusion:GridTemplateColumn.CellTemplate>
-              <DataTemplate>
-                <TextBlock Text="{Binding Lyric}" TextWrapping="Wrap" ScrollViewer.VerticalScrollBarVisibility="Auto" />
-              </DataTemplate>
-            </syncfusion:GridTemplateColumn.CellTemplate>
+                <syncfusion:SfDataGrid.Columns>
+                    <syncfusion:GridCheckBoxColumn MappingName="IsSelected" Width="40" HeaderText="" AllowEditing="True" />
+                    <syncfusion:GridTextColumn MappingName="Site" Width="100" />
+                    <syncfusion:GridTemplateColumn MappingName="Lyric" AllowEditing="True" >
+                        <syncfusion:GridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Lyric}" TextWrapping="Wrap" ScrollViewer.VerticalScrollBarVisibility="Auto" />
+                            </DataTemplate>
+                        </syncfusion:GridTemplateColumn.CellTemplate>
 
-            <syncfusion:GridTemplateColumn.EditTemplate>
-              <DataTemplate>
-                <TextBox Text="{Binding Lyric, Mode=TwoWay}"
+                        <syncfusion:GridTemplateColumn.EditTemplate>
+                            <DataTemplate>
+                                <TextBox Text="{Binding Lyric, Mode=TwoWay}"
                          ScrollViewer.VerticalScrollBarVisibility="Auto"
                          syncfusion:FocusManagerHelper.FocusedElement="True"
                          AcceptsReturn="True"
                          TextWrapping="Wrap" />
-              </DataTemplate>
-            </syncfusion:GridTemplateColumn.EditTemplate>
-          </syncfusion:GridTemplateColumn>
-          <syncfusion:GridTextColumn MappingName="ArtistAndTitle" />
-        </syncfusion:SfDataGrid.Columns>
-      </syncfusion:SfDataGrid>
+                            </DataTemplate>
+                        </syncfusion:GridTemplateColumn.EditTemplate>
+                    </syncfusion:GridTemplateColumn>
+                    <syncfusion:GridTextColumn MappingName="ArtistAndTitle" />
+                </syncfusion:SfDataGrid.Columns>
+            </syncfusion:SfDataGrid>
 
-      <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Left" Margin="10,5,0,5" >
-        <syncfusion:ComboBoxAdv Name="Sites" ItemsSource="{Binding LyricsSearchSites, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
-                                DefaultText="{lex:Loc lyricsSearch_Sites_Watermark}" SelectedValueDelimiter=" | " AllowMultiSelect="True" 
-                                SelectedItems="{Binding SelectedLyricsSearchSites, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
-                                Height="25"  />
-      </StackPanel>
+            <StackPanel Grid.Row="3" Orientation="Vertical" HorizontalAlignment="Left" Margin="10,5,0,5" >
+              <CheckBox Content="{lex:Loc lyricsSearch_SwitchArtist}" Height="15"
+                        IsChecked="{Binding SwitchArtistChecked, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
 
-      <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Right"  Margin="0,5,10,5" >
-        <syncfusion:ButtonAdv Label="{lex:Loc dialog_Search}" 
+              <syncfusion:ComboBoxAdv Name="Sites" ItemsSource="{Binding LyricsSearchSites, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                                      DefaultText="{lex:Loc lyricsSearch_Sites_Watermark}" SelectedValueDelimiter=" | " AllowMultiSelect="True" 
+                                      SelectedItems="{Binding SelectedLyricsSearchSites, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                                      Height="25"   Margin="0,5,0,0" />
+            </StackPanel>
+
+            <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Right"  Margin="0,5,10,5" >
+                <syncfusion:ButtonAdv Label="{lex:Loc dialog_Search}" 
                               SmallIcon="pack://application:,,,/MPTagThat;component/Resources/Images/Lens_32x.png" 
                               Command="{Binding SearchLyricsCommand}" 
                               IsEnabled="{Binding IsBusy, Converter={StaticResource invertBoolConverter}}"
                               Width="75" Height="25" 
                               HorizontalAlignment="Right" Margin="0,5,0,0" />
-        <syncfusion:ButtonAdv Label="{lex:Loc dialog_Apply}" 
+                <syncfusion:ButtonAdv Label="{lex:Loc dialog_Apply}" 
                               SmallIcon="pack://application:,,,/MPTagThat;component/Resources/Images/Apply_Changes_32x.png" 
                               Command="{Binding ApplyLyricsCommand}" 
                               Width="75" Height="25" 
                               HorizontalAlignment="Right" Margin="20,5,0,0" />
-        <syncfusion:ButtonAdv Label="{lex:Loc dialog_Cancel}" 
+                <syncfusion:ButtonAdv Label="{lex:Loc dialog_Cancel}" 
                               SmallIcon="pack://application:,,,/MPTagThat;component/Resources/Images/Cancel_Changes_32x.png" 
                               Command="{Binding CloseDialogCommand}" 
                               Width="75" Height="25" 
                               HorizontalAlignment="Right" Margin="20,5,0,0" />
-      </StackPanel>
-    </Grid>
-  </Border>
+            </StackPanel>
+        </Grid>
+    </Border>
 </UserControl>

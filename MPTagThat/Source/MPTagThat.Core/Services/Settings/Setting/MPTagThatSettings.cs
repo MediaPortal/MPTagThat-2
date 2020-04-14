@@ -38,12 +38,10 @@ namespace MPTagThat.Core.Services.Settings.Setting
     #region Properties
 
     #region Layout
-
-
+    
     [Setting(SettingScope.User, "#FFFFFF")]
     public string BackGround { get; set; }
-
-
+    
     [Setting(SettingScope.User, "")]
     public string LastFolderUsed { get; set; } = "";
 
@@ -126,9 +124,6 @@ namespace MPTagThat.Core.Services.Settings.Setting
 
     [Setting(SettingScope.User, "true")]
     public bool OverwriteExistingCovers { get; set; }
-
-    [Setting(SettingScope.User, "true")]
-    public bool OverwriteExistingLyrics { get; set; }
 
     [Setting(SettingScope.User, "false")]
     public bool AutoFillNumberOfTracks { get; set; }
