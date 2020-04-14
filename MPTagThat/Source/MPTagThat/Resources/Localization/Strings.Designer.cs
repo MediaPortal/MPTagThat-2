@@ -1672,6 +1672,69 @@ namespace MPTagThat.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Tags Settings.
+        /// </summary>
+        public static string settings_Tags {
+            get {
+                return ResourceManager.GetString("settings_Tags", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Auto Fill &quot;Number of Tracks&quot; on Multiple Tag Edit.
+        /// </summary>
+        public static string settings_Tags_AutoFillNumberTracks {
+            get {
+                return ResourceManager.GetString("settings_Tags_AutoFillNumberTracks", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Use case conversion settings on Save.
+        /// </summary>
+        public static string settings_Tags_CaseConversion {
+            get {
+                return ResourceManager.GetString("settings_Tags_CaseConversion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Change Readonly Attributte on Save.
+        /// </summary>
+        public static string settings_Tags_ChangeReadOnly {
+            get {
+                return ResourceManager.GetString("settings_Tags_ChangeReadOnly", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Copy Artist to AlbumArtist when empty.
+        /// </summary>
+        public static string settings_Tags_CopyArtist {
+            get {
+                return ResourceManager.GetString("settings_Tags_CopyArtist", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tags General.
+        /// </summary>
+        public static string settings_Tags_General {
+            get {
+                return ResourceManager.GetString("settings_Tags_General", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Preferred countries for MusicBrainz Search:.
+        /// </summary>
+        public static string settings_Tags_PreferredCountries {
+            get {
+                return ResourceManager.GetString("settings_Tags_PreferredCountries", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Theme:.
         /// </summary>
         public static string settings_Theme {

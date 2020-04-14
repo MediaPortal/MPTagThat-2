@@ -316,6 +316,67 @@ namespace MPTagThat.Ribbon.ViewModels
 
     #endregion
 
+    #region Tags General
+
+    private bool _copyArtist;
+    public bool CopyArtist
+    {
+      get => _copyArtist;
+      set
+      {
+        SetProperty(ref _copyArtist, value);
+        _options.MainSettings.CopyArtist = value;
+      }
+    }
+
+    private bool _autoFillNumTracks;
+    public bool AutoFillNumberOfTracks
+    {
+      get => _autoFillNumTracks;
+      set
+      {
+        SetProperty(ref _autoFillNumTracks, value);
+        _options.MainSettings.AutoFillNumberOfTracks = value;
+      }
+    }
+
+    private bool _useCaseConversion;
+    public bool UseCaseConversion
+    {
+      get => _useCaseConversion;
+      set
+      {
+        SetProperty(ref _useCaseConversion, value);
+        _options.MainSettings.UseCaseConversion = value;
+      }
+    }
+
+    private bool _changeReadonlyAttribute;
+    public bool ChangeReadOnlyAttribute
+    {
+      get => _changeReadonlyAttribute;
+      set
+      {
+        SetProperty(ref _changeReadonlyAttribute, value);
+        _options.MainSettings.ChangeReadOnlyAttribute = value;
+      }
+    }
+
+    private string _preferredMusicBrainzCountries;
+    public string PreferredMusicBrainzCountries
+    {
+      get => _preferredMusicBrainzCountries;
+      set
+      {
+        SetProperty(ref _preferredMusicBrainzCountries, value);
+        var countries = value.Split(',');
+        _options.MainSettings.PreferredMusicBrainzCountries.Clear();
+        _options.MainSettings.PreferredMusicBrainzCountries = countries.ToList();
+      }
+    }
+
+
+    #endregion
     #endregion
 
     #endregion
@@ -603,6 +664,13 @@ namespace MPTagThat.Ribbon.ViewModels
       AlternateRowColor = _options.MainSettings.AlternateRowColor;
 
       KeyMap.AddRange(_options.KeyMap.KeyMap);
+
+      // Tags
+      CopyArtist = _options.MainSettings.CopyArtist;
+      AutoFillNumberOfTracks = _options.MainSettings.AutoFillNumberOfTracks;
+      UseCaseConversion = _options.MainSettings.UseCaseConversion;
+      ChangeReadOnlyAttribute = _options.MainSettings.ChangeReadOnlyAttribute;
+      PreferredMusicBrainzCountries = string.Join(",", _options.MainSettings.PreferredMusicBrainzCountries);
 
       log.Trace(">>>");
     }

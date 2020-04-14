@@ -483,7 +483,7 @@ namespace MPTagThat.Core.Common.Song
 
       if (song.Readonly)
       {
-        if (!options.MainSettings.ChangeReadOnlyAttributte && options.ReadOnlyFileHandling > 1)
+        if (!options.MainSettings.ChangeReadOnlyAttribute && options.ReadOnlyFileHandling > 1)
         {
           errorMessage = "File is readonly";
           return false;

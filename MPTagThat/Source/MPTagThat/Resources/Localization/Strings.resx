@@ -1411,4 +1411,27 @@ To change the order of the ratings drag the rows.</value>
     <value>Switch Artist before submit</value>
     <comment>The Switch Artist Check Box</comment>
   </data>
+  <data name="settings_Tags" xml:space="preserve">
+    <value>Tags Settings</value>
+    <comment>The Header for the Tags Settings</comment>
+  </data>
+  <data name="settings_Tags_AutoFillNumberTracks" xml:space="preserve">
+    <value>Auto Fill "Number of Tracks" on Multiple Tag Edit</value>
+  </data>
+  <data name="settings_Tags_CaseConversion" xml:space="preserve">
+    <value>Use case conversion settings on Save</value>
+  </data>
+  <data name="settings_Tags_ChangeReadOnly" xml:space="preserve">
+    <value>Change Readonly Attributte on Save</value>
+  </data>
+  <data name="settings_Tags_CopyArtist" xml:space="preserve">
+    <value>Copy Artist to AlbumArtist when empty</value>
+  </data>
+  <data name="settings_Tags_General" xml:space="preserve">
+    <value>Tags General</value>
+    <comment>The GroupBox Header for Tags General</comment>
+  </data>
+  <data name="settings_Tags_PreferredCountries" xml:space="preserve">
+    <value>Preferred countries for MusicBrainz Search:</value>
+  </data>
 </root>

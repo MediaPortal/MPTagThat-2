@@ -78,7 +78,7 @@ namespace MPTagThat.Core.Services.Settings.Setting
     public List<string> RecentFolders { get; set; } = new List<string>();
 
     [Setting(SettingScope.User, "false")]
-    public bool ChangeReadOnlyAttributte { get; set; }
+    public bool ChangeReadOnlyAttribute { get; set; }
 
     [Setting(SettingScope.User, "")]
     public List<string> MusicShares { get; set; } = new List<string>();
