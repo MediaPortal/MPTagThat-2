@@ -1600,6 +1600,177 @@ namespace MPTagThat.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Add Genre.
+        /// </summary>
+        public static string settings_Id3_AddGenre {
+            get {
+                return ResourceManager.GetString("settings_Id3_AddGenre", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Clear User Defined Frames on Save.
+        /// </summary>
+        public static string settings_Id3_ClearUserFrames {
+            get {
+                return ResourceManager.GetString("settings_Id3_ClearUserFrames", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Encoding when saving Tags:.
+        /// </summary>
+        public static string settings_Id3_Encoding {
+            get {
+                return ResourceManager.GetString("settings_Id3_Encoding", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Automatically fix errorneous Mp3 Files.
+        /// </summary>
+        public static string settings_Id3_FixMp3 {
+            get {
+                return ResourceManager.GetString("settings_Id3_FixMp3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ID3.
+        /// </summary>
+        public static string settings_Id3_Header {
+            get {
+                return ResourceManager.GetString("settings_Id3_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Custom Genres.
+        /// </summary>
+        public static string settings_Id3_Header_CustomGenres {
+            get {
+                return ResourceManager.GetString("settings_Id3_Header_CustomGenres", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to MP3 File Validation.
+        /// </summary>
+        public static string settings_Id3_Header_MP3Validation {
+            get {
+                return ResourceManager.GetString("settings_Id3_Header_MP3Validation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Update.
+        /// </summary>
+        public static string settings_Id3_Header_Update {
+            get {
+                return ResourceManager.GetString("settings_Id3_Header_Update", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Remove Genre(s).
+        /// </summary>
+        public static string settings_Id3_RemoveGenre {
+            get {
+                return ResourceManager.GetString("settings_Id3_RemoveGenre", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save Genre(s).
+        /// </summary>
+        public static string settings_Id3_SaveGenre {
+            get {
+                return ResourceManager.GetString("settings_Id3_SaveGenre", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Remove ID3 V1.
+        /// </summary>
+        public static string settings_Id3_UpdateRemoveV1 {
+            get {
+                return ResourceManager.GetString("settings_Id3_UpdateRemoveV1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Remove ID3 V2.
+        /// </summary>
+        public static string settings_Id3_UpdateRemoveV2 {
+            get {
+                return ResourceManager.GetString("settings_Id3_UpdateRemoveV2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ID3V1.
+        /// </summary>
+        public static string settings_Id3_UpdateV1 {
+            get {
+                return ResourceManager.GetString("settings_Id3_UpdateV1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ID3 V1 and ID3 V2.
+        /// </summary>
+        public static string settings_Id3_UpdateV1V2 {
+            get {
+                return ResourceManager.GetString("settings_Id3_UpdateV1V2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ID3 V2.
+        /// </summary>
+        public static string settings_Id3_UpdateV2 {
+            get {
+                return ResourceManager.GetString("settings_Id3_UpdateV2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Use APE and ID3 V1 Tags.
+        /// </summary>
+        public static string settings_Id3_UseApe {
+            get {
+                return ResourceManager.GetString("settings_Id3_UseApe", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Use Version 2.3 for ID3 V2 Tags.
+        /// </summary>
+        public static string settings_Id3_UseV3 {
+            get {
+                return ResourceManager.GetString("settings_Id3_UseV3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Use Version 2.4 for ID3 V2 Tags.
+        /// </summary>
+        public static string settings_Id3_UseV4 {
+            get {
+                return ResourceManager.GetString("settings_Id3_UseV4", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Validate Mp3 Files while scanning the folder / database.
+        /// </summary>
+        public static string settings_Id3_ValidateMp3 {
+            get {
+                return ResourceManager.GetString("settings_Id3_ValidateMp3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Keyboard Shortcuts.
         /// </summary>
         public static string settings_Keys {

@@ -625,9 +625,91 @@
                       <CheckBox Content="{lex:Loc settings_Tags_ChangeReadOnly}" IsChecked="{Binding ChangeReadOnlyAttribute, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="0,10,0,0" Height="15"/>
                       <StackPanel Orientation="Horizontal" Margin="0,10,0,0" >
                         <Label Content="{lex:Loc settings_Tags_PreferredCountries}"/>
-                        <TextBox Text="{Binding PreferredMusicBrainzCountries, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="200" />
+                        <TextBox Text="{Binding PreferredMusicBrainzCountries, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="200" Margin="10,0,0,0"/>
                       </StackPanel>
                     </StackPanel>
+                  </GroupBox>
+
+                  <GroupBox Background="Transparent" Header="{lex:Loc settings_Id3_Header}" Margin="0,10,0,0" >
+                    <StackPanel>
+                      <StackPanel Orientation="Horizontal">
+                        <Label Content="{lex:Loc settings_Id3_Encoding}"/>
+                        <ComboBox ItemsSource="{Binding Id3Encoding}" Width="200" Margin="10,0,0,0"
+                                  SelectedItem="{Binding SelectedEncoding, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                      </StackPanel>
+                      <StackPanel Orientation="Vertical" Margin="0,10,0,0">
+                        <RadioButton Content="{lex:Loc settings_Id3_UseV3}"  IsChecked="{Binding ID3UseV3, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="0,5,0,0" />
+                        <RadioButton Content="{lex:Loc settings_Id3_UseV4}" IsChecked="{Binding ID3UseV4, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="0,5,0,0"/>
+                        <RadioButton Content="{lex:Loc settings_Id3_UseApe}" IsChecked="{Binding ID3UseApe, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="0,5,0,0"/>
+
+                        <GroupBox Background="Transparent" Header="{lex:Loc settings_Id3_Header_Update}"  Margin="5,0,0,0">
+                          <Grid>
+                            <Grid.ColumnDefinitions>
+                              <ColumnDefinition />
+                              <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+                            <StackPanel Grid.Column="0" Orientation="Vertical">
+                              <RadioButton Content="{lex:Loc settings_Id3_UpdateV1}"  IsChecked="{Binding ID3UpdateV1, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="0,5,0,0" />
+                              <RadioButton Content="{lex:Loc settings_Id3_UpdateV2}" IsChecked="{Binding ID3UpdateV2, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="0,5,0,0"/>
+                              <RadioButton Content="{lex:Loc settings_Id3_UpdateV1V2}" IsChecked="{Binding ID3UpdateV1V2, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="0,5,0,0"/>
+                            </StackPanel>
+                            <StackPanel Grid.Column="1" Orientation="Vertical">
+                              <CheckBox Content="{lex:Loc settings_Id3_UpdateRemoveV2}" IsChecked="{Binding ID3RemoveV2, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding ID3RemoveV2Enabled, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Height="15" Margin="0,5,0,0"/>
+                              <CheckBox Content="{lex:Loc settings_Id3_UpdateRemoveV1}" IsChecked="{Binding ID3RemoveV1, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding ID3RemoveV1Enabled, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Height="15" Margin="0,5,0,0"/>
+                            </StackPanel>
+                          </Grid>
+                        </GroupBox>
+
+                        <CheckBox Content="{lex:Loc settings_Id3_ClearUserFrames}" IsChecked="{Binding ClearUserFrames, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="0,5,0,0" Height="15"/>
+                      </StackPanel>
+                    </StackPanel>
+                  </GroupBox>
+
+                  <GroupBox Background="Transparent" Header="{lex:Loc settings_Id3_Header_MP3Validation}" Margin="0,10,0,0">
+                    <StackPanel>
+                      <CheckBox Content="{lex:Loc settings_Id3_ValidateMp3}" IsChecked="{Binding ValidateMp3, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Height="15" Margin="0,5,0,0" />
+                      <CheckBox Content="{lex:Loc settings_Id3_FixMp3}" IsChecked="{Binding FixMp3, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Height="15" Margin="0,10,0,0"/>
+                    </StackPanel>
+                  </GroupBox>
+
+                  <GroupBox Background="Transparent" Header="{lex:Loc settings_Id3_Header_CustomGenres}" Margin="0,10,0,0" >
+                    <Grid>
+                      <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="210" />
+                        <ColumnDefinition Width="150" />
+                      </Grid.ColumnDefinitions>
+                      <syncfusion:SfDataGrid Grid.Column="0" HeaderRowHeight="0"
+                                             ItemsSource="{Binding CustomGenres,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                             SelectedItems="{Binding SelectedGenres}"
+                                             SelectionMode="Extended"
+                                             ColumnSizer="AutoWithLastColumnFill" 
+                                             AllowResizingColumns="False" 
+                                             AllowDraggingColumns="False" 
+                                             AutoGenerateColumns="False"
+                                             ShowRowHeader="False" 
+                                             AllowEditing="True" 
+                                             Height="200" >
+                        <syncfusion:SfDataGrid.Columns>
+                          <syncfusion:GridTextColumn HeaderText="{lex:Loc tagEdit_UserFrames_FrameId}" MappingName="Name" Width="205" />
+                        </syncfusion:SfDataGrid.Columns>
+                      </syncfusion:SfDataGrid>
+                      <StackPanel Grid.Column="1" Orientation="Vertical">
+                        <Button Content="{lex:Loc settings_Id3_AddGenre}" 
+                                Command="{Binding AddGenreCommand}" 
+                                Width="Auto" Height="25" 
+                                Margin="20,5,0,0" />
+
+                        <Button Content="{lex:Loc settings_Id3_RemoveGenre}" 
+                                Command="{Binding DeleteGenreCommand}" 
+                                Width="Auto" Height="25" 
+                                Margin="20,5,0,0" />
+
+                        <Button Content="{lex:Loc settings_Id3_SaveGenre}" 
+                                Command="{Binding SaveGenreCommand}" 
+                                Width="Auto" Height="25" 
+                                Margin="20,5,0,0" />
+                      </StackPanel>
+                    </Grid>
                   </GroupBox>
                 </StackPanel>
               </syncfusion:SfAccordionItem>

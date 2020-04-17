@@ -843,23 +843,23 @@ namespace MPTagThat.Core.Common.Song
             TagLib.Id3v2.Tag.ForceDefaultEncoding = true;
             switch (options.MainSettings.CharacterEncoding)
             {
-              case 0:
+              case "Latin1":
                 TagLib.Id3v2.Tag.DefaultEncoding = StringType.Latin1;
                 break;
 
-              case 1:
+              case "UTF16":
                 TagLib.Id3v2.Tag.DefaultEncoding = StringType.UTF16;
                 break;
 
-              case 2:
+              case "UTF16-BE":
                 TagLib.Id3v2.Tag.DefaultEncoding = StringType.UTF16BE;
                 break;
 
-              case 3:
+              case "UTF8":
                 TagLib.Id3v2.Tag.DefaultEncoding = StringType.UTF8;
                 break;
 
-              case 4:
+              case "UTF16-LE":
                 TagLib.Id3v2.Tag.DefaultEncoding = StringType.UTF16LE;
                 break;
             }

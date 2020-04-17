@@ -1434,4 +1434,65 @@ To change the order of the ratings drag the rows.</value>
   <data name="settings_Tags_PreferredCountries" xml:space="preserve">
     <value>Preferred countries for MusicBrainz Search:</value>
   </data>
+  <data name="settings_Id3_Encoding" xml:space="preserve">
+    <value>Encoding when saving Tags:</value>
+  </data>
+  <data name="settings_Id3_Header" xml:space="preserve">
+    <value>ID3</value>
+    <comment>The Header of the ID3 Settings</comment>
+  </data>
+  <data name="settings_Id3_UseApe" xml:space="preserve">
+    <value>Use APE and ID3 V1 Tags</value>
+  </data>
+  <data name="settings_Id3_UseV3" xml:space="preserve">
+    <value>Use Version 2.3 for ID3 V2 Tags</value>
+  </data>
+  <data name="settings_Id3_UseV4" xml:space="preserve">
+    <value>Use Version 2.4 for ID3 V2 Tags</value>
+  </data>
+  <data name="settings_Id3_AddGenre" xml:space="preserve">
+    <value>Add Genre</value>
+  </data>
+  <data name="settings_Id3_ClearUserFrames" xml:space="preserve">
+    <value>Clear User Defined Frames on Save</value>
+  </data>
+  <data name="settings_Id3_FixMp3" xml:space="preserve">
+    <value>Automatically fix errorneous Mp3 Files</value>
+  </data>
+  <data name="settings_Id3_Header_CustomGenres" xml:space="preserve">
+    <value>Custom Genres</value>
+    <comment>The Header for the Id3 Custom Genres Group Box</comment>
+  </data>
+  <data name="settings_Id3_Header_MP3Validation" xml:space="preserve">
+    <value>MP3 File Validation</value>
+    <comment>The Header for the Id3 MP3 Validation Group Box</comment>
+  </data>
+  <data name="settings_Id3_Header_Update" xml:space="preserve">
+    <value>Update</value>
+    <comment>The Header for the ID3 Update Group Box</comment>
+  </data>
+  <data name="settings_Id3_RemoveGenre" xml:space="preserve">
+    <value>Remove Genre(s)</value>
+  </data>
+  <data name="settings_Id3_SaveGenre" xml:space="preserve">
+    <value>Save Genre(s)</value>
+  </data>
+  <data name="settings_Id3_UpdateRemoveV1" xml:space="preserve">
+    <value>Remove ID3 V1</value>
+  </data>
+  <data name="settings_Id3_UpdateRemoveV2" xml:space="preserve">
+    <value>Remove ID3 V2</value>
+  </data>
+  <data name="settings_Id3_UpdateV1" xml:space="preserve">
+    <value>ID3V1</value>
+  </data>
+  <data name="settings_Id3_UpdateV1V2" xml:space="preserve">
+    <value>ID3 V1 and ID3 V2</value>
+  </data>
+  <data name="settings_Id3_UpdateV2" xml:space="preserve">
+    <value>ID3 V2</value>
+  </data>
+  <data name="settings_Id3_ValidateMp3" xml:space="preserve">
+    <value>Validate Mp3 Files while scanning the folder / database</value>
+  </data>
 </root>

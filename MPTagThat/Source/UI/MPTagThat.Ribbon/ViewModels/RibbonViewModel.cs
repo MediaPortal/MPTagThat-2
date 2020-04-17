@@ -71,6 +71,9 @@ namespace MPTagThat.Ribbon.ViewModels
       ExecuteRibbonCommand = new BaseCommand(RibbonCommand);
       ExitCommand = new BaseCommand(Exit);
       ApplyKeyChangeCommand = new BaseCommand(ApplyKeyChange);
+      AddGenreCommand = new BaseCommand(AddGenre);
+      DeleteGenreCommand = new BaseCommand(DeleteGenre);
+      SaveGenreCommand = new BaseCommand(SaveGenre);
 
       EventSystem.Subscribe<GenericEvent>(OnMessageReceived, ThreadOption.UIThread);
 
@@ -377,6 +380,226 @@ namespace MPTagThat.Ribbon.ViewModels
 
 
     #endregion
+
+    #region Tags ID3
+
+    private ObservableCollection<string> _id3Encoding = new ObservableCollection<string>();
+
+    public ObservableCollection<string> Id3Encoding
+    {
+      get => _id3Encoding;
+      set
+      {
+        _id3Encoding = value;
+        RaisePropertyChanged("Id3Encoding");
+      }
+    }
+
+    private string _selectedEncoding;
+
+    public string SelectedEncoding
+    {
+      get => _selectedEncoding;
+      set
+      {
+        SetProperty(ref _selectedEncoding, value);
+        _options.MainSettings.CharacterEncoding = value;
+      }
+    }
+
+    private bool _id3UseV3;
+    public bool ID3UseV3
+    {
+      get => _id3UseV3;
+      set
+      {
+        SetProperty(ref _id3UseV3, value);
+        if (value)
+        {
+          _options.MainSettings.ID3V2Version = 3;
+        }
+      }
+    }
+
+    private bool _id3UseV4;
+    public bool ID3UseV4
+    {
+      get => _id3UseV4;
+      set
+      {
+        SetProperty(ref _id3UseV4, value);
+        if (value)
+        {
+          _options.MainSettings.ID3V2Version = 4;
+        }
+      }
+    }
+
+    private bool _id3UseApe;
+    public bool ID3UseApe
+    {
+      get => _id3UseApe;
+      set
+      {
+        SetProperty(ref _id3UseApe, value);
+        if (value)
+        {
+          _options.MainSettings.ID3V2Version = 0;
+        }
+      }
+    }
+
+    private bool _id3UpdateV1;
+    public bool ID3UpdateV1
+    {
+      get => _id3UpdateV1;
+      set
+      {
+        SetProperty(ref _id3UpdateV1, value);
+        if (value)
+        {
+          _options.MainSettings.ID3Version = 1;
+          ID3RemoveV1Enabled = false;
+          ID3RemoveV2Enabled = true;
+          ID3RemoveV1 = false;
+        }
+      }
+    }
+
+    private bool _id3UpdateV2;
+    public bool ID3UpdateV2
+    {
+      get => _id3UpdateV2;
+      set
+      {
+        SetProperty(ref _id3UpdateV2, value);
+        if (value)
+        {
+          _options.MainSettings.ID3Version = 2;
+          ID3RemoveV1Enabled = true;
+          ID3RemoveV2Enabled = false;
+          ID3RemoveV2 = false;
+        }
+      }
+    }
+
+    private bool _id3UpdateV1V2;
+    public bool ID3UpdateV1V2
+    {
+      get => _id3UpdateV1V2;
+      set
+      {
+        SetProperty(ref _id3UpdateV1V2, value);
+        if (value)
+        {
+          _options.MainSettings.ID3Version = 3;
+          ID3RemoveV1Enabled = true;
+          ID3RemoveV2Enabled = true;
+        }
+      }
+    }
+
+    private bool _id3RemoveV2;
+    public bool ID3RemoveV2
+    {
+      get => _id3RemoveV2;
+      set
+      {
+        SetProperty(ref _id3RemoveV2, value);
+        _options.MainSettings.RemoveID3V2 = value;
+      }
+    }
+
+    private bool _id3RemoveV1;
+    public bool ID3RemoveV1
+    {
+      get => _id3RemoveV1;
+      set
+      {
+        SetProperty(ref _id3RemoveV1, value);
+        _options.MainSettings.RemoveID3V1 = value;
+      }
+    }
+
+    private bool _id3RemoveV1Enabled;
+    public bool ID3RemoveV1Enabled
+    {
+      get => _id3RemoveV1Enabled;
+      set
+      {
+        SetProperty(ref _id3RemoveV1Enabled, value);
+      }
+    }
+
+    private bool _id3RemoveV2Enabled;
+    public bool ID3RemoveV2Enabled
+    {
+      get => _id3RemoveV2Enabled;
+      set
+      {
+        SetProperty(ref _id3RemoveV2Enabled, value);
+      }
+    }
+
+    private bool _clearUserFrames;
+    public bool ClearUserFrames
+    {
+      get => _clearUserFrames;
+      set
+      {
+        SetProperty(ref _clearUserFrames, value);
+        _options.MainSettings.ClearUserFrames = value;
+      }
+    }
+
+    private bool _validateMp3;
+    public bool ValidateMp3
+    {
+      get => _validateMp3;
+      set
+      {
+        SetProperty(ref _validateMp3, value);
+        _options.MainSettings.MP3Validate = value;
+      }
+    }
+
+    private bool _fixMp3;
+    public bool FixMp3
+    {
+      get => _fixMp3;
+      set
+      {
+        SetProperty(ref _fixMp3, value);
+        _options.MainSettings.MP3AutoFix = value;
+      }
+    }
+
+    private ObservableCollection<Item> _customGenres = new ObservableCollection<Item>();
+
+    public ObservableCollection<Item> CustomGenres
+    {
+      get => _customGenres;
+      set
+      {
+        _customGenres = value;
+        RaisePropertyChanged("CustomGenres");
+      }
+    }
+
+    private ObservableCollection<object> _selectedGenres = new ObservableCollection<object>();
+
+    public ObservableCollection<object> SelectedGenres
+    {
+      get => _selectedGenres;
+      set
+      {
+        SetProperty(ref _selectedGenres, value);
+      }
+    }
+
+
+    #endregion
+
     #endregion
 
     #endregion
@@ -421,6 +644,35 @@ namespace MPTagThat.Ribbon.ViewModels
     private void Exit(object parm)
     {
       Application.Current.Shutdown();
+    }
+
+    public ICommand AddGenreCommand { get; }
+
+    private void AddGenre(object param)
+    {
+      CustomGenres.Add(new Item("",""));
+    }
+
+    public ICommand DeleteGenreCommand { get; }
+
+    private void DeleteGenre(object param)
+    {
+      // Can't use a foreach here, since it modifies the collection
+      while(SelectedGenres.Count > 0)
+      {
+        SelectedGenres.Remove((string)SelectedGenres[0]);
+      }
+    }
+    
+    public ICommand SaveGenreCommand { get; }
+
+    private void SaveGenre(object param)
+    {
+      _options.MainSettings.CustomGenres.Clear();
+      foreach (var item in CustomGenres)
+      {
+        _options.MainSettings.CustomGenres.Add(item.Name);
+      }
     }
 
     public ICommand ApplyKeyChangeCommand { get; }
@@ -671,6 +923,56 @@ namespace MPTagThat.Ribbon.ViewModels
       UseCaseConversion = _options.MainSettings.UseCaseConversion;
       ChangeReadOnlyAttribute = _options.MainSettings.ChangeReadOnlyAttribute;
       PreferredMusicBrainzCountries = string.Join(",", _options.MainSettings.PreferredMusicBrainzCountries);
+
+      Id3Encoding.Add("Latin1");
+      Id3Encoding.Add("UTF8");
+      Id3Encoding.Add("UTF16");
+      Id3Encoding.Add("UTF16-BE");
+      Id3Encoding.Add("UTF16-LE");
+      SelectedEncoding = _options.MainSettings.CharacterEncoding;
+
+      switch (_options.MainSettings.ID3V2Version)
+      {
+        case 0: // APE Tags embedded in mp3
+          ID3UseApe = true;
+          break;
+
+        case 3:
+          ID3UseV3 = true;
+          break;
+
+        case 4:
+          ID3UseV4 = true;
+          break;
+      }
+
+      switch (_options.MainSettings.ID3Version)
+      {
+        case 1: 
+          ID3UpdateV1 = true;
+          break;
+
+        case 2:
+          ID3UpdateV2 = true;
+          break;
+
+        case 3:
+          ID3UpdateV1V2 = true;
+          break;
+      }
+
+      ID3RemoveV1 = _options.MainSettings.RemoveID3V1;
+      ID3RemoveV2 = _options.MainSettings.RemoveID3V2;
+
+      ClearUserFrames = _options.MainSettings.ClearUserFrames;
+
+      ValidateMp3 = _options.MainSettings.MP3Validate;
+      FixMp3 = _options.MainSettings.MP3AutoFix;
+
+      foreach(var genre in _options.MainSettings.CustomGenres)
+      {
+        CustomGenres.Add(new Item(genre, ""));
+      }
 
       log.Trace(">>>");
     }

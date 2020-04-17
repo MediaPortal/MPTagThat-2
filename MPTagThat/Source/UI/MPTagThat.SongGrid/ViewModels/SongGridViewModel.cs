@@ -376,12 +376,19 @@ namespace MPTagThat.SongGrid.ViewModels
                      msg.CurrentFile = fi.FullName;
                      log.Trace($"Retrieving file: {fi.FullName}");
                      // Read the Tag
-                     SongData track = Song.Create(fi.FullName);
-                     if (track != null)
+                     var song = Song.Create(fi.FullName);
+                     if (song != null)
                      {
                        //if (ApplyTagFilter(track))
                        //{
-                       Songs.Add(track);
+                       if (_options.MainSettings.MP3Validate && song.IsMp3)
+                       {
+                         log.Info($"Validating file {song.FullFileName}");
+                         song.MP3ValidationError = Mp3Val.ValidateMp3File(song.FullFileName, out var strError);
+                         song.StatusMsg = strError;
+                         song.Status = song.MP3ValidationError != Util.MP3Error.NoError ? 3 : -1;
+                       }
+                       Songs.Add(song);
                        count++;
                        msg.NumberOfFiles = count;
                        EventSystem.Publish(msg);
@@ -443,15 +450,6 @@ namespace MPTagThat.SongGrid.ViewModels
              {
              }
 
-             /*
-
-           // If MP3 Validation is turned on, set the color
-           if (Options.MainSettings.MP3Validate)
-           {
-             ChangeErrorRowColor();
-           }
-
-           */
              _folderScanInProgress = false;
              log.Trace("<<<");
            }, null);
