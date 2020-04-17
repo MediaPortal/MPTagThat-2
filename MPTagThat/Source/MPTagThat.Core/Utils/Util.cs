@@ -288,10 +288,53 @@ namespace MPTagThat.Core.Utils
     };
 
     /// <summary>
+    /// Standard Genres
+    /// </summary>
+    public static string[] Genres { get; } =
+    {
+      "Pop", "Rock", "Classic Rock", "Dance",
+      "Rap", "Techno", "Blues", "Country",
+      "Punk Rock", "Punk", "R&B", "Metal",
+      "Folk", "Folk/Rock", "A Cappella", "Acid Jazz",
+      "Acid Punk", "Acid", "Acoustic", "Alternative Rock",
+      "Alternative", "Ambient", "Anime", "Avantgarde",
+      "Ballad", "Bass", "Beat", "Bebob",
+      "Big Band", "Black Metal", "Bluegrass", "Booty Bass",
+      "BritPop", "Cabaret", "Celtic", "Chamber Music",
+      "Chanson", "Chorus", "Christian Gangsta Rap", "Christian Rap",
+      "Christian Rock", "Classical", "Club", "Club-House",
+      "Comedy", "Contemporary Christian", "Crossover", "Cult",
+      "Dance Hall", "Darkwave", "Death Metal", "Disco",
+      "Dream", "Drum & Bass", "Drum Solo", "Duet",
+      "Easy Listening", "Electronic", "Ethnic", "Euro-House",
+      "Euro-Techno", "Eurodance", "Folklore", "Freestyle",
+      "Funk", "Fusion", "Fusion", "Game",
+      "Gangsta", "Goa", "Gospel", "Gothic Rock",
+      "Gothic", "Grunge", "Hard Rock", "Hardcore",
+      "Heavy Metal", "Hip-Hop", "House", "Humour",
+      "Indie", "Industrial", "Instrumental Pop", "Instrumental Rock",
+      "Instrumental", "Jazz", "Jazz+Funk", "Jpop",
+      "Jungle", "Latin", "Lo-Fi", "Meditative",
+      "Merengue", "Musical", "National Folk", "Native American",
+      "Negerpunk", "New Age", "New Wave", "Noise",
+      "Oldies", "Opera", "Other", "Polka",
+      "Polsk Punk", "Pop-Folk", "Pop/Funk", "Porn Groove",
+      "Power Ballad", "Pranks", "Primus", "Progressive Rock",
+      "Psychedelic Rock", "Psychedelic", "Rave", "Reggae",
+      "Retro", "Revival", "Rhythmic Soul", "Rock & Roll",
+      "Salsa", "Samba", "Satire", "Showtunes",
+      "Ska", "Slow Jam", "Slow Rock", "Sonata",
+      "Soul", "Sound Clip", "Soundtrack", "Southern Rock",
+      "Space", "Speech", "Swing", "Symphonic Rock",
+      "Symphony", "Synthpop", "Tango", "Techno-Industrial",
+      "Terror", "Thrash Metal", "Top 40", "Trailer",
+      "Trance", "Tribal", "Trip-Hop", "Vocal"
+    };
+
+    /// <summary>
     /// The standard ID3 Frames directly supported by TagLib #
     /// </summary>
-    public static string[] StandardFrames { get; } = new[]
-    {
+    public static string[] StandardFrames { get; } = {
       "TPE1", "TPE2", "TALB", "TBPM", "COMM", "TCOM",
       "TPE3", "TCOP", "TPOS", "TCON", "TIT1", "USLT", "APIC",
       "POPM", "TIT2", "TRCK", "TYER", "TDRC"
@@ -300,8 +343,7 @@ namespace MPTagThat.Core.Utils
     /// <summary>
     /// The extended ID3 Frames 
     /// </summary>
-    public static string[] ExtendedFrames { get; } = new[]
-    {
+    public static string[] ExtendedFrames { get; } = {
       "TSOP", "TSOA", "WCOM", "WCOP", "TENC", "TPE4", "TIPL",
       "IPLS", "TMED", "TMCL", "WOAF", "WOAR", "WOAS", "WORS",
       "WPAY", "WPUB", "TOAL", "TOFN", "TOLY", "TOPE", "TOWN",

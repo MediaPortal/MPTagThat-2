@@ -1415,7 +1415,7 @@ namespace MPTagThat.TagEdit.ViewModels
       SelectedGenres?.Clear();
       SelectedPicture?.Clear();
       Genres.AddRange(_options.MainSettings.CustomGenres);
-      Genres.AddRange(TagLib.Genres.Audio);
+      Genres.AddRange(Util.Genres);
 
       if (songs.Count == 1)
       {
