@@ -722,8 +722,8 @@ namespace MPTagThat.SongGrid.ViewModels
             return;
           }
 
-          // Select all songs, except for Find & Replace
-          if (SelectedItems.Count == 0 && (command != Action.ActionType.FIND && command != Action.ActionType.REPLACE))
+          // Select all songs, except for Find & Replace and Help
+          if (SelectedItems.Count == 0 && (command != Action.ActionType.FIND && command != Action.ActionType.REPLACE && command != Action.ActionType.HELP))
           {
             Songs.ToList().ForEach(song => SelectedItems.Add(song));
           }
@@ -770,6 +770,12 @@ namespace MPTagThat.SongGrid.ViewModels
           // Add Commands needing parameters below
 
           var parameters = new DialogParameters();
+
+          if (command == Action.ActionType.HELP)
+          {
+            _dialogService.ShowDialogInAnotherWindow("AboutView", "DialogWindowView", parameters, null);
+            return;
+          }
 
           if (command == Action.ActionType.FIND)
           {

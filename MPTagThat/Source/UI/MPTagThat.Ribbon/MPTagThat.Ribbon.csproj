@@ -218,6 +218,9 @@
     <Resource Include="Resources\Images\ribbon_DeleteTagsV1_32x.png" />
     <Resource Include="Resources\Images\ribbon_DeleteTagsV2_32x.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\ribbon_About_32x.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>

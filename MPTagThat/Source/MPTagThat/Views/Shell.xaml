@@ -24,6 +24,7 @@
         WindowState="{Binding WindowState, Mode=TwoWay}"
         Closing="Window_Closing" 
         Loaded="Window_Loaded"
+        ShowHelpButton="False"
         local:InputBindingsBehavior.InputBindings="{Binding InputBindings, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
         >
 

@@ -736,6 +736,10 @@ namespace MPTagThat.Ribbon.ViewModels
       var runAsync = true;
       switch (elementName)
       {
+        case "ButtonAbout":
+          type = Action.ActionType.HELP;
+          break;
+
         case "ButtonSave":
         case "ButtonSaveBackStage":
           type = Action.ActionType.SAVE;

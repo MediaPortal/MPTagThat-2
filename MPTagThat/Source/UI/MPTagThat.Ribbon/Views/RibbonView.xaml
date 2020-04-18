@@ -11,7 +11,8 @@
              lex:LocalizeDictionary.DesignCulture="en"
              lex:ResxLocalizationProvider.DefaultAssembly="MPTagThat"
              lex:ResxLocalizationProvider.DefaultDictionary="Strings"
-             mc:Ignorable="d">
+             mc:Ignorable="d"
+             >
 
   <UserControl.Resources>
     <!--  AccordionButton Style -->
@@ -448,7 +449,15 @@
           </syncfusion:RibbonButton>
         </syncfusion:RibbonBar>
 
-
+        <syncfusion:RibbonBar Header="{lex:Loc ribbon_Bar_About}" >
+          <syncfusion:RibbonButton x:Name="ButtonAbout" SizeForm="Large" 
+                                 Label="{lex:Loc ribbon_About}" 
+                                 LargeIcon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_About_32x.png" 
+                                 SmallIcon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_About_32x.png" 
+                                 Command="{Binding ExecuteRibbonCommand}" 
+                                 CommandParameter="{Binding Name ,RelativeSource={RelativeSource Self}}" >
+          </syncfusion:RibbonButton>
+        </syncfusion:RibbonBar>
       </syncfusion:RibbonTab>
 
       <!-- Disabled until implemented
@@ -458,7 +467,11 @@
       <syncfusion:RibbonTab x:Name="TabDatabase" Caption="{lex:Loc ribbon_DatabaseTab}"  IsChecked="False"/>
       -->
 
-      <!-- Quick Access Toolbar  -->
+      <!-- 
+      /*   
+      /*   Quick Access Toolbar
+      /*
+      -->
       <syncfusion:Ribbon.QuickAccessToolBar>
         <syncfusion:QuickAccessToolBar QATDropDownVisiblity="Hidden">
           <syncfusion:RibbonButton x:Name="ButtonSave" SizeForm="ExtraSmall"
@@ -488,7 +501,11 @@
         </syncfusion:QuickAccessToolBar>
       </syncfusion:Ribbon.QuickAccessToolBar>
 
-
+      <!-- 
+      /*   
+      /*   Back Stage
+      /*
+      -->
       <syncfusion:Ribbon.BackStage>
         <syncfusion:Backstage>
           <syncfusion:BackStageCommandButton x:Name="ButtonSaveBackStage" 

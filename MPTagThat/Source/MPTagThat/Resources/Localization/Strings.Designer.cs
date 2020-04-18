@@ -898,6 +898,15 @@ namespace MPTagThat.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to About MPTagThat.
+        /// </summary>
+        public static string ribbon_About {
+            get {
+                return ResourceManager.GetString("ribbon_About", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Add to Burner.
         /// </summary>
         public static string ribbon_AddBurner {
@@ -930,6 +939,15 @@ namespace MPTagThat.Resources.Localization {
         public static string ribbon_AutoNumber {
             get {
                 return ResourceManager.GetString("ribbon_AutoNumber", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to About.
+        /// </summary>
+        public static string ribbon_Bar_About {
+            get {
+                return ResourceManager.GetString("ribbon_Bar_About", resourceCulture);
             }
         }
         

@@ -1450,6 +1450,12 @@ To change the order of the ratings drag the rows.</value>
   <data name="settings_Id3_UseV4" xml:space="preserve">
     <value>Use Version 2.4 for ID3 V2 Tags</value>
   </data>
+  <data name="ribbon_About" xml:space="preserve">
+    <value>About MPTagThat</value>
+  </data>
+  <data name="ribbon_Bar_About" xml:space="preserve">
+    <value>About</value>
+  </data>
   <data name="settings_Id3_AddGenre" xml:space="preserve">
     <value>Add Genre</value>
   </data>

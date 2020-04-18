@@ -24,9 +24,9 @@ using System.Reflection;
 
 #endregion
 
-namespace MPTagThat.ViewModels
+namespace MPTagThat.Dialogs.ViewModels
 {
-  public class SplashScreenViewModel
+  public class AboutViewModel : DialogViewModelBase
   {
     #region Propertties
 
@@ -37,7 +37,7 @@ namespace MPTagThat.ViewModels
 
     #region ctor
 
-    public SplashScreenViewModel()
+    public AboutViewModel()
     {
       CultureInfo.CurrentCulture = new CultureInfo("de-AT", false);
       var assembly = Assembly.GetExecutingAssembly();
@@ -47,5 +47,8 @@ namespace MPTagThat.ViewModels
     }
 
     #endregion
+
+
+
   }
 }
