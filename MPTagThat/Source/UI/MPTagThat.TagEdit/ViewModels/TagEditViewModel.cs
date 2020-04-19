@@ -115,8 +115,8 @@ namespace MPTagThat.TagEdit.ViewModels
     /// <summary>
     /// The Selected Genres
     /// </summary>
-    private ObservableCollection<string> _selectedGenres = new ObservableCollection<string>();
-    public ObservableCollection<string> SelectedGenres
+    private ObservableCollection<object> _selectedGenres = new ObservableCollection<object>();
+    public ObservableCollection<object> SelectedGenres
     {
       get => _selectedGenres;
       set => SetProperty(ref _selectedGenres, value);
@@ -666,7 +666,7 @@ namespace MPTagThat.TagEdit.ViewModels
         CkGenreIsChecked = true;
       }
 
-      if (SongEdit != null && (_songs != null && _songs.Count == 1))
+      if (SongEdit != null && (_songs != null && _songs.Count > 0))
       {
         SongEdit.Genre = string.Join(";", SelectedGenres);
       }

@@ -134,19 +134,23 @@ namespace MPTagThat.SongGrid.Commands
             if (!File.Exists(fileName) &&
                 options.MainSettings.CreateFolderThumb)
             {
-              int indexFrontCover = song.Pictures
-                .Select((pic, i) => new { Pic = pic, Position = i}).First(m => m.Pic.Type == PictureType.FrontCover).Position;
-              if (indexFrontCover < 0)
+              if (song.Pictures.Count > 0)
               {
-                indexFrontCover = 0;
-              }
+                int indexFrontCover = song.Pictures
+                  .Select((pic, i) => new {Pic = pic, Position = i}).First(m => m.Pic.Type == PictureType.FrontCover)
+                  .Position;
+                if (indexFrontCover < 0)
+                {
+                  indexFrontCover = 0;
+                }
 
-              Util.SavePicture(song.Pictures[indexFrontCover], fileName);
-              var miscfileevt = new GenericEvent
-              {
-                Action = "miscfileschanged"
-              };
-              EventSystem.Publish(miscfileevt);
+                Util.SavePicture(song.Pictures[indexFrontCover], fileName);
+                var miscfileevt = new GenericEvent
+                {
+                  Action = "miscfileschanged"
+                };
+                EventSystem.Publish(miscfileevt);
+              }
             }
 
             // TODO: Update the Music Database

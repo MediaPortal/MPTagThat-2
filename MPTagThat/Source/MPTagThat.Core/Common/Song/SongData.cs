@@ -1442,7 +1442,7 @@ namespace MPTagThat.Core.Common.Song
 
     protected override void OnPropertyChanged(PropertyChangedEventArgs args)
     {
-      if (!Init && args.PropertyName != "Changed" && args.PropertyName != "Status" && args.PropertyName != "StatusMsg" && args.PropertyName != "Genre")
+      if (!Init && args.PropertyName != "Changed" && args.PropertyName != "Status" && args.PropertyName != "StatusMsg")
       {
         Changed = true;
       }
