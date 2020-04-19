@@ -286,6 +286,45 @@ namespace MPTagThat.MiscFiles.ViewModels
             imgFailure = true;
           }
         }
+        if (nonPicFile || imgFailure)
+        {
+          // For a non Picture file or if we had troubles creating the thumb, see if we have a file specific icon
+          var defaultName = "";
+          var extension = Path.GetExtension(file).Trim('.');
+          var f = new MiscFile
+          {
+            FileName = Path.GetFileName(file),
+            FullFileName = file
+          };
+          if (extension.Length > 0)
+          {
+            try
+            {
+              defaultName = $@"{Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)}\MPTagThat2\Fileicons\{extension}.png";
+            }
+            catch (Exception) {}
+          }
+          if (File.Exists(defaultName))
+          {
+            var bmi = GetImageFromFile(defaultName, out var size);
+            if (bmi != null)
+            {
+              f.ImageData = bmi;
+              f.Size = size;
+              MiscFiles.Add(f);
+            }
+          }
+          else
+          {
+            var bmi = GetImageFromFile( $@"{Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)}\MPTagThat2\Fileicons\unknown.png", out var size);
+            if (bmi != null)
+            {
+              f.ImageData = bmi;
+              f.Size = size;
+              MiscFiles.Add(f);
+            }
+          }
+        }
       }
     }
 

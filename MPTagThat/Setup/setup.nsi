@@ -138,6 +138,10 @@ Section -Main SEC0000
     !define ROAMINGDATA "$APPDATA\MPTagThat2"
     SetOutPath ${ROAMINGDATA}\Scripts
     File /r ${BASEFOLDER}\MPTagThat.Base\Scripts\*
+
+    # File Icons
+    SetOutPath ${ROAMINGDATA}\Fileicons
+    File /r ${BASEFOLDER}\MPTagThat.Base\Fileicons\*
     
     # Base Files
     SetOutPath $INSTDIR
