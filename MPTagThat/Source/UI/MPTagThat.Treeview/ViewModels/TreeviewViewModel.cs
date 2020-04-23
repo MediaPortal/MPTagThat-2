@@ -21,9 +21,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Configuration;
 using System.IO;
-using System.Linq;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Threading;
@@ -32,9 +30,10 @@ using MPTagThat.Core;
 using MPTagThat.Core.Events;
 using MPTagThat.Core.Services.Settings;
 using MPTagThat.Core.Services.Settings.Setting;
-using MPTagThat.Core.Utils;
 using MPTagThat.Treeview.Model;
+using MPTagThat.Treeview.Model.Win32;
 using Prism.Events;
+using Prism.Mvvm;
 using Syncfusion.Windows.Shared;
 using Syncfusion.Windows.Tools.Controls;
 
@@ -43,14 +42,16 @@ using Syncfusion.Windows.Tools.Controls;
 namespace MPTagThat.Treeview.ViewModels
 {
   // This is the Viewmodel to handle Treeview related display of Folders
-  public class TreeviewViewModel : NotificationObject
+  public class TreeviewViewModel : BindableBase
   {
     #region Variables
 
     private Options _options;
     private object _selectedItem;
     private DispatcherTimer _timer;
-    
+    private readonly TreeViewFolderBrowserHelper _helper;
+    private ITreeviewDataProvider _dataProvider;
+
     #endregion
 
     #region Properies
@@ -63,20 +64,10 @@ namespace MPTagThat.Treeview.ViewModels
       get => _selectedItem;
       set
       {
-        _selectedItem = value;
-        RaisePropertyChanged(() => SelectedItem);
+        SetProperty(ref _selectedItem, value);
 
         // Prepare Event to be published
-        var selecteditem = "";
-        if (_selectedItem is DriveItem)
-        {
-          selecteditem = (_selectedItem as DriveInfo)?.Name;
-        }
-        else if (_selectedItem is FolderItem)
-        {
-          selecteditem = (_selectedItem as FolderItem)?.FullPathName;
-        }
-
+        var selecteditem = (_selectedItem as NavTreeItem)?.Path;
         if (!string.IsNullOrEmpty(selecteditem))
         {
           _options.MainSettings.LastFolderUsed = selecteditem;
@@ -99,7 +90,7 @@ namespace MPTagThat.Treeview.ViewModels
     public void SelectedItemChanged(object param)
     {
       var args = (RoutedPropertyChangedEventArgs<object>)param;
-      if (args.NewValue is INavTreeItem item)
+      if (args.NewValue is NavTreeItem item)
       {
         this.SelectedItem = item;
       }
@@ -114,47 +105,36 @@ namespace MPTagThat.Treeview.ViewModels
     private void LoadFolderOnDemand(object parameter)
     {
       TreeViewItemAdv treeitem = (parameter as LoadonDemandEventArgs).TreeViewItem;
-      if (treeitem != null)
+      if (treeitem != null && treeitem.DataContext is NavTreeItem node)
       {
+        if (node.Children.Count == 0)
+        {
+          _dataProvider.RequestSubDirs(_helper, node);
+        }
         treeitem.IsLoadOnDemand = false;
       }
     }
 
-
-    private NavTreeItem _rootItem;
-
-    public NavTreeItem RootItem
+    private Environment.SpecialFolder _rootFolder;
+    public Environment.SpecialFolder RootFolder
     {
-      get => _rootItem;
-      set
-      {
-        _rootItem = value;
-        RaisePropertyChanged(() => RootItem);
-      } 
+      get => _rootFolder;
+      set { SetProperty(ref _rootFolder, value); }
     }
 
-
-    private int _rootNr;
-    public int RootNr
+    // Nodes are used to bind to TreeView
+    private ObservableCollection<NavTreeItem> _nodes = new ObservableCollection<NavTreeItem>();
+    public ObservableCollection<NavTreeItem> Nodes
     {
-      get => _rootNr;
-      set
-      {
-        _rootNr = value;
-        RaisePropertyChanged(() => RootNr);
-      }
+      get => _nodes;
+      set { SetProperty(ref _nodes, value); }
     }
 
-    // RootChildren are used to bind to TreeView
-    private ObservableCollection<INavTreeItem> _rootChildren = new ObservableCollection<INavTreeItem> { };
-    public ObservableCollection<INavTreeItem> RootChildren
+    private Enums.DriveTypes _driveTypes;
+    public Enums.DriveTypes DriveTypes
     {
-      get => _rootChildren;
-      set
-      {
-        _rootChildren = value;
-        RaisePropertyChanged(() => RootChildren);
-      }
+      get => _driveTypes;
+      set { SetProperty(ref _driveTypes, value); }
     }
     #endregion
 
@@ -166,10 +146,11 @@ namespace MPTagThat.Treeview.ViewModels
 
       EventSystem.Subscribe<GenericEvent>(OnMessageReceived, ThreadOption.UIThread);
 
-      // create a new RootItem given rootNumber using convention
-      RootNr = 0;
-      //NavTreeItem treeRootItem = NavTreeUtils.ReturnRootItem(RootNr);
-      RootItem = NavTreeUtils.ReturnRootItem(RootNr);
+      _helper = new TreeViewFolderBrowserHelper(this);
+      DriveTypes = Enums.DriveTypes.LocalDisk | Enums.DriveTypes.NetworkDrive | Enums.DriveTypes.RemovableDisk |
+                   Enums.DriveTypes.CompactDisc;
+      RootFolder = Environment.SpecialFolder.Desktop;
+      _dataProvider = new TreeViewFolderBrowserDataProvider();
 
       SelectedItemChangedCommand = new DelegateCommand<object>(SelectedItemChanged);
       LoadFolderOnDemandCommand = new DelegateCommand<object>(LoadFolderOnDemand);
@@ -180,7 +161,7 @@ namespace MPTagThat.Treeview.ViewModels
       _timer = new DispatcherTimer();
       _timer.Interval = new TimeSpan(0, 0, 0, 0, 200);
       _timer.Tick += new EventHandler(SetCurrentFolder);
-      _timer.Tag = RootItem;
+      _timer.Tag = RootFolder;
       _timer.Start();
     }
 
@@ -190,12 +171,7 @@ namespace MPTagThat.Treeview.ViewModels
 
     private void RefreshTreeview()
     {
-      RootItem = NavTreeUtils.ReturnRootItem(RootNr);
-      RootChildren.Clear();
-
-      foreach (INavTreeItem item in RootItem.Children) {
-        RootChildren.Add(item); 
-      }
+      _dataProvider.RequestRoot(_helper);
     }
 
 
@@ -217,6 +193,7 @@ namespace MPTagThat.Treeview.ViewModels
         return;
       }
 
+      /*
       //var treeRootItem = ((DispatcherTimer)sender).Tag as NavTreeItem;
       //var treeRootItem = RootItem;
 
@@ -240,10 +217,11 @@ namespace MPTagThat.Treeview.ViewModels
         currentDir.Add(tmpStr);
       }
       NavTreeUtils.ExpandCurrentFolder(currentDir, RootItem);
-      
+
       // Set the Selected Item, because we will get a null value from the XAML Event
       var item = new FolderItem { FullPathName = currentFolder };
       SelectedItem = item;
+      */
     }
 
     #endregion

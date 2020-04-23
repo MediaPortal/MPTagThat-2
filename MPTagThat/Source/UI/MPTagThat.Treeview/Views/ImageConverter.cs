@@ -23,6 +23,7 @@ using System.IO;
 using System.Linq;
 using System.Windows.Data;
 using System.Windows.Media.Imaging;
+using MPTagThat.Treeview.Model.Win32;
 
 #endregion
 
@@ -33,7 +34,7 @@ namespace MPTagThat.Treeview.Views
 
     public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
     {
-      if (value is DriveInfo driveInfo)
+      if (value is Logicaldisk driveInfo)
       {
         return Core.Utils.ShellIcon.GetSmallIcon(driveInfo.Name, true);
       }

@@ -1,5 +1,5 @@
-﻿#region Copyright (C) 2017 Team MediaPortal
-// Copyright (C) 2017 Team MediaPortal
+﻿#region Copyright (C) 2020 Team MediaPortal
+// Copyright (C) 2020 Team MediaPortal
 // http://www.team-mediaportal.com
 // 
 // MPTagThat is free software: you can redistribute it and/or modify
@@ -20,76 +20,81 @@
 
 using System.ComponentModel;
 using System.Collections.ObjectModel;
+using System.Configuration;
+using Prism.Mvvm;
 
 #endregion
 
 namespace MPTagThat.Treeview.Model
 {
-  public abstract class NavTreeItem : INavTreeItem, INotifyPropertyChanged
-  {
-    public string Name { get; set; }
-
-    public object Info { get; set; }
-
-    public string FullPathName { get; set; }
-
-    protected ObservableCollection<INavTreeItem> children;
-    public ObservableCollection<INavTreeItem> Children
+    public class NavTreeItem : BindableBase
     {
-      get => children ?? (children = GetMyChildren());
-      set {
-        children = value;
-        OnPropertyChanged("Children");
-      }
-    }
+        #region Properties
 
-    private bool _isExpanded;
-    public bool IsExpanded
-    {
-      get => _isExpanded;
-      set
-      {
-        _isExpanded = value;
-        OnPropertyChanged("IsExpanded");
-      }
-    }
+        public string Name { get; set; }
 
-    private bool _isSelected;
-    public bool IsSelected
-    {
-      get => _isSelected;
-      set
-      {
-        _isSelected = value;
-        OnPropertyChanged("IsSelected");
-      }
-    }
+        public object Item { get; set; }
 
-    public abstract ObservableCollection<INavTreeItem> GetMyChildren();
+        public string Path { get; set; }
 
-
-    // DeleteChildren, used to 
-    // 1) remove old tree 2) set children=null, so a new tree is build
-    public void DeleteChildren()
-    {
-      if (children != null)
-      {
-        for (int i = children.Count - 1; i >= 0; i--)
+        protected ObservableCollection<NavTreeItem> _children = new ObservableCollection<NavTreeItem>();
+        public ObservableCollection<NavTreeItem> Children
         {
-          children[i].DeleteChildren();
-          children[i] = null;
-          children.RemoveAt(i);
+            get => _children;
+            set
+            {
+                SetProperty(ref _children, value);
+            }
         }
 
-        children = null;
-      }
-    }
+        private bool _isSpecialFolder;
+        public bool IsSpecialFolder
+        {
+            get => _isSpecialFolder;
+            set { SetProperty(ref _isSpecialFolder, value); }
+        }
 
-    public void OnPropertyChanged(string propertyname)
-    {
-      PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyname));
-    }
+        private bool _isExpanded;
+        public bool IsExpanded
+        {
+            get => _isExpanded;
+            set { SetProperty(ref _isExpanded, value); }
+        }
 
-    public event PropertyChangedEventHandler PropertyChanged;
-  }
+        private bool _isSelected;
+        public bool IsSelected
+        {
+            get => _isSelected;
+            set { SetProperty(ref _isSelected, value); }
+        }
+
+        // DeleteChildren, used to 
+        // 1) remove old tree 2) set children=null, so a new tree is build
+        public void DeleteChildren()
+        {
+            if (_children != null)
+            {
+                for (int i = _children.Count - 1; i >= 0; i--)
+                {
+                    _children[i].DeleteChildren();
+                    _children[i] = null;
+                    _children.RemoveAt(i);
+                }
+
+                _children = null;
+            }
+        }
+
+        #endregion
+
+        #region ctor
+
+        public NavTreeItem(string text, bool isSpecialFolder)
+        {
+            Name = text;
+            _isSpecialFolder = isSpecialFolder;
+        }
+
+        #endregion
+    }
 }
