@@ -193,35 +193,52 @@ namespace MPTagThat.Treeview.ViewModels
         return;
       }
 
-      /*
-      //var treeRootItem = ((DispatcherTimer)sender).Tag as NavTreeItem;
-      //var treeRootItem = RootItem;
+      var requestNetwork = currentFolder.StartsWith(@"\\");
+      var nodeCol = _dataProvider.RequestDriveCollection(_helper, requestNetwork);
 
-      var splitFolder = currentFolder.Split(new char[] { '\\' });
-      var currentDir = new List<string>();
+      var dirInfo = new DirectoryInfo(currentFolder);
+      
+      // get path tokens
+      var dirs = new List<string> {dirInfo.FullName};
 
-      // We need to constrict something like this:
-      // "D:", "D:[+]D:\\Music", "D:[+]D:\\Music[+]D:\\Music\\Eagles, The", "D:[+]D:\\Music[+]D:\\Music\\Eagles, The[+]D:\\Music\\Eagles, The\\Long Road Out Of Eden"
-      for (int i = 0; i < splitFolder.Length; i++)
+      while (dirInfo.Parent != null)
       {
-        var tmpStr = splitFolder[0];
-        if (i > 0)
-        {
-          tmpStr = currentDir[i - 1] + "[+]";
-          for (int j = 0; j <= i; j++)
-          {
-            tmpStr += splitFolder[j] + "\\";
-          }
-          tmpStr = tmpStr.Substring(0, tmpStr.Length - 1);
-        }
-        currentDir.Add(tmpStr);
+        dirs.Add(dirInfo.Parent.FullName);
+        dirInfo = dirInfo.Parent;
       }
-      NavTreeUtils.ExpandCurrentFolder(currentDir, RootItem);
+      // For network we should add also the server to the dir list
+      if (requestNetwork)
+      {
+        dirs.Add(dirInfo.FullName.Substring(0, dirInfo.FullName.LastIndexOf(@"\")));
+      }
 
-      // Set the Selected Item, because we will get a null value from the XAML Event
-      var item = new FolderItem { FullPathName = currentFolder };
-      SelectedItem = item;
-      */
+      if (nodeCol.Count > 0)
+      {
+        _helper.TreeView.Nodes[0].IsExpanded = true;
+        _helper.TreeView.Nodes[0].Children[1].IsExpanded = true;
+      }
+      for (var i = dirs.Count - 1; i >= 0; i--)
+      {
+        foreach (var n in nodeCol)
+        {
+          if (string.Compare(n.Path.ToLower(), dirs[i].ToLower(), StringComparison.Ordinal) == 0)
+          {
+            if (i == 0)
+            {
+              n.IsSelected = true;
+              // Set the Selected Item, because we will get a null value from the XAML Event
+              SelectedItem = n;
+            }
+            else
+            {
+              n.IsExpanded = true;
+              _dataProvider.RequestSubDirs(_helper, n);
+              nodeCol = n.Children;
+            }
+            break;
+          }
+        }
+      }
     }
 
     #endregion

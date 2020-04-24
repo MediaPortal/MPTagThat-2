@@ -45,7 +45,7 @@ namespace MPTagThat.Treeview.Model
             switch (helper.TreeView.RootFolder)
             {
                 case Environment.SpecialFolder.Desktop:
-                    return helper.TreeView.Nodes[0].Children;
+                    return helper.TreeView.Nodes[0].Children[1].Children;
                 default:
                     return helper.TreeView.Nodes;
             }
