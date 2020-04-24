@@ -18,16 +18,14 @@
 
 #region
 
-using System.ComponentModel;
 using System.Collections.ObjectModel;
-using System.Configuration;
 using Prism.Mvvm;
 
 #endregion
 
 namespace MPTagThat.Treeview.Model
 {
-    public class NavTreeItem : BindableBase
+    public class TreeItem : BindableBase
     {
         #region Properties
 
@@ -37,8 +35,8 @@ namespace MPTagThat.Treeview.Model
 
         public string Path { get; set; }
 
-        protected ObservableCollection<NavTreeItem> _nodes = new ObservableCollection<NavTreeItem>();
-        public ObservableCollection<NavTreeItem> Nodes
+        private ObservableCollection<TreeItem> _nodes = new ObservableCollection<TreeItem>();
+        public ObservableCollection<TreeItem> Nodes
         {
             get => _nodes;
             set
@@ -89,7 +87,7 @@ namespace MPTagThat.Treeview.Model
 
         #region ctor
 
-        public NavTreeItem(string text, bool isSpecialFolder)
+        public TreeItem(string text, bool isSpecialFolder)
         {
             Name = text;
             _isSpecialFolder = isSpecialFolder;

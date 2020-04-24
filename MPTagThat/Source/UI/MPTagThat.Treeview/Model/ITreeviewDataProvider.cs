@@ -32,24 +32,24 @@ namespace MPTagThat.Treeview.Model
         /// </summary>
         /// <param name = "helper">The helper instance which provides method's and properties related to create and get nodes.</param>
         /// <param name = "node">The node on which the context menu was requested.</param>
-        void QueryContextMenuItems(TreeViewFolderBrowserHelper helper, NavTreeItem node);
+        void QueryContextMenuItems(TreeViewHelper helper, TreeItem node);
 
         /// <summary>
         ///   Fill the root level.
         /// </summary>
         /// <param name = "helper">The helper instance which provides method's and properties related to create and get nodes.</param>
-        void RequestRoot(TreeViewFolderBrowserHelper helper);
+        void RequestRoot(TreeViewHelper helper);
 
         /// <summary>
         ///   Fill the Directory structure for a given path.
         /// </summary>
         /// <param name = "helper">The helper instance which provides method's and properties related to create and get nodes.</param>
         /// <param name = "parent">The expanding node.</param>
-        void RequestSubDirs(TreeViewFolderBrowserHelper helper, NavTreeItem parent);
+        void RequestSubDirs(TreeViewHelper helper, TreeItem parent);
 
         /// <summary>
         ///   Gets the tree node collection which holds the drive node's. The requested collection is than used to search a specific node.
         /// </summary>
-        ObservableCollection<NavTreeItem> RequestDriveCollection(TreeViewFolderBrowserHelper helper, bool isNetwork);
+        ObservableCollection<TreeItem> RequestDriveCollection(TreeViewHelper helper, bool isNetwork);
     }
 }

@@ -49,7 +49,7 @@ namespace MPTagThat.Treeview.ViewModels
     private Options _options;
     private object _selectedItem;
     private DispatcherTimer _timer;
-    private readonly TreeViewFolderBrowserHelper _helper;
+    private readonly TreeViewHelper _helper;
     private ITreeviewDataProvider _dataProvider;
 
     #endregion
@@ -67,7 +67,7 @@ namespace MPTagThat.Treeview.ViewModels
         SetProperty(ref _selectedItem, value);
 
         // Prepare Event to be published
-        var selecteditem = (_selectedItem as NavTreeItem)?.Path;
+        var selecteditem = (_selectedItem as TreeItem)?.Path;
         if (!string.IsNullOrEmpty(selecteditem))
         {
           _options.MainSettings.LastFolderUsed = selecteditem;
@@ -90,7 +90,7 @@ namespace MPTagThat.Treeview.ViewModels
     public void SelectedItemChanged(object param)
     {
       var args = (RoutedPropertyChangedEventArgs<object>)param;
-      if (args.NewValue is NavTreeItem item)
+      if (args.NewValue is TreeItem item)
       {
         this.SelectedItem = item;
       }
@@ -104,8 +104,8 @@ namespace MPTagThat.Treeview.ViewModels
     /// <param name="parameter"></param>
     private void LoadFolderOnDemand(object parameter)
     {
-      TreeViewItemAdv treeitem = (parameter as LoadonDemandEventArgs).TreeViewItem;
-      if (treeitem != null && treeitem.DataContext is NavTreeItem node)
+      TreeViewItemAdv treeitem = (parameter as LoadonDemandEventArgs)?.TreeViewItem;
+      if (treeitem != null && treeitem.DataContext is TreeItem node)
       {
         if (node.Nodes.Count == 0)
         {
@@ -123,8 +123,8 @@ namespace MPTagThat.Treeview.ViewModels
     }
 
     // Nodes are used to bind to TreeView
-    private ObservableCollection<NavTreeItem> _nodes = new ObservableCollection<NavTreeItem>();
-    public ObservableCollection<NavTreeItem> Nodes
+    private ObservableCollection<TreeItem> _nodes = new ObservableCollection<TreeItem>();
+    public ObservableCollection<TreeItem> Nodes
     {
       get => _nodes;
       set { SetProperty(ref _nodes, value); }
@@ -142,14 +142,14 @@ namespace MPTagThat.Treeview.ViewModels
 
     public TreeviewViewModel()
     {
-      _options = (ServiceLocator.Current.GetInstance(typeof(ISettingsManager)) as ISettingsManager).GetOptions;
+      _options = (ServiceLocator.Current.GetInstance(typeof(ISettingsManager)) as ISettingsManager)?.GetOptions;
 
       EventSystem.Subscribe<GenericEvent>(OnMessageReceived, ThreadOption.UIThread);
 
-      _helper = new TreeViewFolderBrowserHelper(this);
+      _helper = new TreeViewHelper(this);
       DriveTypes = Enums.DriveTypes.LocalDisk | Enums.DriveTypes.NetworkDrive | Enums.DriveTypes.RemovableDisk;
       RootFolder = Environment.SpecialFolder.Desktop;
-      _dataProvider = new TreeViewFolderBrowserDataProvider();
+      _dataProvider = new TreeViewDataProvider();
 
       SelectedItemChangedCommand = new DelegateCommand<object>(SelectedItemChanged);
       LoadFolderOnDemandCommand = new DelegateCommand<object>(LoadFolderOnDemand);
@@ -159,7 +159,7 @@ namespace MPTagThat.Treeview.ViewModels
       // Work around the problem with Load On Demand being called from the Constructor.
       _timer = new DispatcherTimer();
       _timer.Interval = new TimeSpan(0, 0, 0, 0, 200);
-      _timer.Tick += new EventHandler(SetCurrentFolder);
+      _timer.Tick += SetCurrentFolder;
       _timer.Tag = RootFolder;
       _timer.Start();
     }
@@ -187,7 +187,7 @@ namespace MPTagThat.Treeview.ViewModels
         _timer.Stop();
       }
       var currentFolder = _options.MainSettings.LastFolderUsed;
-      if (!System.IO.Directory.Exists(currentFolder))
+      if (!Directory.Exists(currentFolder))
       {
         return;
       }
@@ -210,7 +210,7 @@ namespace MPTagThat.Treeview.ViewModels
       // For network we should add also the server to the dir list
       if (requestNetwork)
       {
-        dirs.Add(dirInfo.FullName.Substring(0, dirInfo.FullName.LastIndexOf(@"\")));
+        dirs.Add(dirInfo.FullName.Substring(0, dirInfo.FullName.LastIndexOf(@"\", StringComparison.Ordinal)));
       }
       for (var i = dirs.Count - 1; i >= 0; i--)
       {

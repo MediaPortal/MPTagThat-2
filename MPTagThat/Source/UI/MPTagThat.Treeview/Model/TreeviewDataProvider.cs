@@ -19,28 +19,25 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.IO;
-using System.Linq;
-using System.Security.Permissions;
 using MPTagThat.Treeview.Model.Win32;
 using MPTagThat.Treeview.ViewModels;
 using Shell32;
 
 namespace MPTagThat.Treeview.Model
 {
-  public class TreeViewFolderBrowserDataProvider : ITreeviewDataProvider
+  public class TreeViewDataProvider : ITreeviewDataProvider
   {
     #region fields
 
     /// <summary>
-    ///   drive tree node (mycomputer) root collection
+    ///   drive tree node (My computer) root collection
     /// </summary>
-    private ObservableCollection<NavTreeItem> _rootCollection = new ObservableCollection<NavTreeItem>();
+    private ObservableCollection<TreeItem> _rootCollection = new ObservableCollection<TreeItem>();
 
     /// <summary>
     ///   drive tree node (Network) root collection
     /// </summary>
-    private ObservableCollection<NavTreeItem> _rootCollectionNetwork = new ObservableCollection<NavTreeItem>();
+    private ObservableCollection<TreeItem> _rootCollectionNetwork = new ObservableCollection<TreeItem>();
 
     /// <summary>
     ///   Shell32 Com Object
@@ -51,15 +48,15 @@ namespace MPTagThat.Treeview.Model
     /// <summary>
     ///   show only filesystem
     /// </summary>
-    private bool _showAllShellObjects;
+    private bool _showAllShellObjects = false;
 
     #endregion
 
     #region ITreeViewFolderBrowserDataProvider Members
 
-    public virtual void QueryContextMenuItems(TreeViewFolderBrowserHelper helper, NavTreeItem node) { }
+    public virtual void QueryContextMenuItems(TreeViewHelper helper, TreeItem node) { }
 
-    public virtual ObservableCollection<NavTreeItem> RequestDriveCollection(TreeViewFolderBrowserHelper helper, bool isNetwork)
+    public virtual ObservableCollection<TreeItem> RequestDriveCollection(TreeViewHelper helper, bool isNetwork)
     {
       if (isNetwork)
       {
@@ -68,7 +65,7 @@ namespace MPTagThat.Treeview.Model
       return _rootCollection;
     }
 
-    public virtual void RequestSubDirs(TreeViewFolderBrowserHelper helper, NavTreeItem parent)
+    public virtual void RequestSubDirs(TreeViewHelper helper, TreeItem parent)
     {
       FolderItem2 folderItem = ((FolderItem2)parent.Item);
 
@@ -78,7 +75,7 @@ namespace MPTagThat.Treeview.Model
       }
       else
       {
-        var nodes = new List<NavTreeItem>();
+        var nodes = new List<TreeItem>();
         foreach (FolderItem2 fi in ((Folder2) folderItem.GetFolder).Items())
         {
           if (!_showAllShellObjects && !fi.IsFileSystem || !fi.IsFolder) continue;
@@ -95,7 +92,7 @@ namespace MPTagThat.Treeview.Model
       }
     }
 
-    public virtual void RequestRoot(TreeViewFolderBrowserHelper helper)
+    public virtual void RequestRoot(TreeViewHelper helper)
     {
       // setup up root node collection
       switch (helper.TreeView.RootFolder)
@@ -146,14 +143,14 @@ namespace MPTagThat.Treeview.Model
 
     #region internal interface
 
-    protected virtual void FillMyComputer(FolderItem folderItem, ObservableCollection<NavTreeItem> parentCollection,
-      TreeViewFolderBrowserHelper helper)
+    protected virtual void FillMyComputer(FolderItem folderItem, ObservableCollection<TreeItem> parentCollection,
+      TreeViewHelper helper)
     {
       _rootCollection = parentCollection;
       Logicaldisk.LogicaldiskCollection logicalDisks = null;
       // get wmi logical disk's if we have to 			
       if (helper.TreeView.DriveTypes != Enums.DriveTypes.All)
-        logicalDisks = Logicaldisk.GetInstances(null, GetWMIQueryStatement(helper.TreeView));
+        logicalDisks = Logicaldisk.GetInstances(null, GetWmiQueryStatement(helper.TreeView));
       //
       foreach (FolderItem fi in ((Folder)folderItem.GetFolder).Items())
       {
@@ -189,17 +186,17 @@ namespace MPTagThat.Treeview.Model
     /// <param name="isSpecialFolder"></param>
     /// <param name="item"></param>
     /// <returns></returns>
-    protected virtual NavTreeItem CreateTreeNode(TreeViewFolderBrowserHelper helper, string text, string path,
+    protected virtual TreeItem CreateTreeNode(TreeViewHelper helper, string text, string path,
                                                   bool isSpecialFolder, object item)
     {
-      return new NavTreeItem(text, isSpecialFolder) { Path = path, Item = item };
+      return new TreeItem(text, isSpecialFolder) { Path = path, Item = item };
     }
 
     /// <summary>
     ///   Gets the WMI query string based on the current drive types.
     /// </summary>
     /// <returns></returns>
-    protected virtual string GetWMIQueryStatement(TreeviewViewModel treeView)
+    protected virtual string GetWmiQueryStatement(TreeviewViewModel treeView)
     {
       if ((treeView.DriveTypes & Enums.DriveTypes.All) == Enums.DriveTypes.All) return string.Empty;
       var where = string.Empty;

@@ -25,7 +25,7 @@ using MPTagThat.Treeview.ViewModels;
 
 namespace MPTagThat.Treeview.Model
 {
- public class TreeViewFolderBrowserHelper
+ public class TreeViewHelper
   {
     #region fields
 
@@ -39,10 +39,10 @@ namespace MPTagThat.Treeview.Model
     #region constructors
 
     /// <summary>
-    ///   Initialize a new instance of TreeViewFolderBrowserHelper for the specified TreeViewFolderBrowser instance.
+    ///   Initialize a new instance of TreeViewHelper for the specified TreeViewFolderBrowser instance.
     /// </summary>
     /// <param name = "treeView"></param>
-    internal TreeViewFolderBrowserHelper(TreeviewViewModel treeView)
+    internal TreeViewHelper(TreeviewViewModel treeView)
     {
       _treeView = treeView;
     }
