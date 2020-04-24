@@ -37,13 +37,13 @@ namespace MPTagThat.Treeview.Model
 
         public string Path { get; set; }
 
-        protected ObservableCollection<NavTreeItem> _children = new ObservableCollection<NavTreeItem>();
-        public ObservableCollection<NavTreeItem> Children
+        protected ObservableCollection<NavTreeItem> _nodes = new ObservableCollection<NavTreeItem>();
+        public ObservableCollection<NavTreeItem> Nodes
         {
-            get => _children;
+            get => _nodes;
             set
             {
-                SetProperty(ref _children, value);
+                SetProperty(ref _nodes, value);
             }
         }
 
@@ -72,16 +72,16 @@ namespace MPTagThat.Treeview.Model
         // 1) remove old tree 2) set children=null, so a new tree is build
         public void DeleteChildren()
         {
-            if (_children != null)
+            if (_nodes != null)
             {
-                for (int i = _children.Count - 1; i >= 0; i--)
+                for (int i = _nodes.Count - 1; i >= 0; i--)
                 {
-                    _children[i].DeleteChildren();
-                    _children[i] = null;
-                    _children.RemoveAt(i);
+                    _nodes[i].DeleteChildren();
+                    _nodes[i] = null;
+                    _nodes.RemoveAt(i);
                 }
 
-                _children = null;
+                _nodes = null;
             }
         }
 

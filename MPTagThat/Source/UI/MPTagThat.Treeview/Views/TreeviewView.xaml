@@ -18,7 +18,7 @@
   <UserControl.Resources>
       <local:ImageConverter x:Key="Converter"/>        
 
-      <HierarchicalDataTemplate ItemsSource="{Binding Children}" x:Key="template">
+      <HierarchicalDataTemplate ItemsSource="{Binding Nodes}" x:Key="template">
         <TextBlock Text="{Binding Name}" />
       </HierarchicalDataTemplate>
           

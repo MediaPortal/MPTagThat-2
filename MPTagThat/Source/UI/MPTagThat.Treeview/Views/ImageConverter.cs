@@ -24,6 +24,7 @@ using System.Linq;
 using System.Windows.Data;
 using System.Windows.Media.Imaging;
 using MPTagThat.Treeview.Model.Win32;
+using Shell32;
 
 #endregion
 
@@ -34,34 +35,31 @@ namespace MPTagThat.Treeview.Views
 
     public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
     {
-      if (value is Logicaldisk driveInfo)
+      if (value is FolderItem folderItem)
       {
-        return Core.Utils.ShellIcon.GetSmallIcon(driveInfo.Name, true);
-      }
-
-      if (value is DirectoryInfo dirInfo)
-      {
-        try
+        if (folderItem.Type.ToLower() == "file folder")
         {
-          var folderIcons = Directory.GetFiles(dirInfo.FullName, "*.*", SearchOption.TopDirectoryOnly)
-            .Where(s => s.ToLower().EndsWith("folder.jpg") ||  s.ToLower().EndsWith("folder.png") ||  s.ToLower().EndsWith("albumartsmall.jpg")).ToList();
-          if (folderIcons.Count > 0)
+          try
           {
-            var bitmap = new BitmapImage();
-            bitmap.BeginInit();
-            bitmap.UriSource = new Uri(folderIcons.First());
-            bitmap.CacheOption = BitmapCacheOption.OnLoad;
-            bitmap.EndInit();
-            return bitmap;
+            var folderIcons = Directory.GetFiles(folderItem.Path, "*.*", SearchOption.TopDirectoryOnly)
+              .Where(s => s.ToLower().EndsWith("folder.jpg") ||  s.ToLower().EndsWith("folder.png") ||  s.ToLower().EndsWith("albumartsmall.jpg")).ToList();
+            if (folderIcons.Count > 0)
+            {
+              var bitmap = new BitmapImage();
+              bitmap.BeginInit();
+              bitmap.UriSource = new Uri(folderIcons.First());
+              bitmap.CacheOption = BitmapCacheOption.OnLoad;
+              bitmap.EndInit();
+              return bitmap;
+            }
+          }
+          catch
+          {
+            // On Purpose empty
           }
         }
-        catch
-        {
-          // On Purpose empty
-        }
-        return Core.Utils.ShellIcon.GetSmallIcon(dirInfo.FullName, true);
-      }
-
+        return Core.Utils.ShellIcon.GetSmallIcon(folderItem.Path, true);
+      } 
       return new BitmapImage();
     }
 

@@ -107,7 +107,7 @@ namespace MPTagThat.Treeview.ViewModels
       TreeViewItemAdv treeitem = (parameter as LoadonDemandEventArgs).TreeViewItem;
       if (treeitem != null && treeitem.DataContext is NavTreeItem node)
       {
-        if (node.Children.Count == 0)
+        if (node.Nodes.Count == 0)
         {
           _dataProvider.RequestSubDirs(_helper, node);
         }
@@ -147,8 +147,7 @@ namespace MPTagThat.Treeview.ViewModels
       EventSystem.Subscribe<GenericEvent>(OnMessageReceived, ThreadOption.UIThread);
 
       _helper = new TreeViewFolderBrowserHelper(this);
-      DriveTypes = Enums.DriveTypes.LocalDisk | Enums.DriveTypes.NetworkDrive | Enums.DriveTypes.RemovableDisk |
-                   Enums.DriveTypes.CompactDisc;
+      DriveTypes = Enums.DriveTypes.LocalDisk | Enums.DriveTypes.NetworkDrive | Enums.DriveTypes.RemovableDisk;
       RootFolder = Environment.SpecialFolder.Desktop;
       _dataProvider = new TreeViewFolderBrowserDataProvider();
 
@@ -193,6 +192,8 @@ namespace MPTagThat.Treeview.ViewModels
         return;
       }
 
+      _helper.TreeView.Nodes[0].IsExpanded = true;
+      _helper.TreeView.Nodes[0].Nodes[0].IsExpanded = true;
       var requestNetwork = currentFolder.StartsWith(@"\\");
       var nodeCol = _dataProvider.RequestDriveCollection(_helper, requestNetwork);
 
@@ -211,12 +212,6 @@ namespace MPTagThat.Treeview.ViewModels
       {
         dirs.Add(dirInfo.FullName.Substring(0, dirInfo.FullName.LastIndexOf(@"\")));
       }
-
-      if (nodeCol.Count > 0)
-      {
-        _helper.TreeView.Nodes[0].IsExpanded = true;
-        _helper.TreeView.Nodes[0].Children[1].IsExpanded = true;
-      }
       for (var i = dirs.Count - 1; i >= 0; i--)
       {
         foreach (var n in nodeCol)
@@ -233,7 +228,7 @@ namespace MPTagThat.Treeview.ViewModels
             {
               n.IsExpanded = true;
               _dataProvider.RequestSubDirs(_helper, n);
-              nodeCol = n.Children;
+              nodeCol = n.Nodes;
             }
             break;
           }
