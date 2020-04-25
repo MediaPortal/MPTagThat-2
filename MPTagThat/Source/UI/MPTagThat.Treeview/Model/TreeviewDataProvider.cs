@@ -25,6 +25,9 @@ using Shell32;
 
 namespace MPTagThat.Treeview.Model
 {
+  /// <summary>
+  /// Data Provider for supporting Folders in Tree views
+  /// </summary>
   public class TreeViewDataProvider : ITreeviewDataProvider
   {
     #region fields
@@ -48,14 +51,25 @@ namespace MPTagThat.Treeview.Model
     /// <summary>
     ///   show only filesystem
     /// </summary>
-    private bool _showAllShellObjects = false;
+    private readonly bool _showAllShellObjects = true;
 
     #endregion
 
     #region ITreeViewFolderBrowserDataProvider Members
 
+    /// <summary>
+    /// Supporting Context menus
+    /// </summary>
+    /// <param name="helper"></param>
+    /// <param name="node"></param>
     public virtual void QueryContextMenuItems(TreeViewHelper helper, TreeItem node) { }
 
+    /// <summary>
+    /// Return the Drives for My Computer or Network
+    /// </summary>
+    /// <param name="helper"></param>
+    /// <param name="isNetwork"></param>
+    /// <returns></returns>
     public virtual ObservableCollection<TreeItem> RequestDriveCollection(TreeViewHelper helper, bool isNetwork)
     {
       if (isNetwork)
@@ -65,6 +79,11 @@ namespace MPTagThat.Treeview.Model
       return _rootCollection;
     }
 
+    /// <summary>
+    /// Read Sub Folders of the selected Parent Node
+    /// </summary>
+    /// <param name="helper"></param>
+    /// <param name="parent"></param>
     public virtual void RequestSubDirs(TreeViewHelper helper, TreeItem parent)
     {
       FolderItem2 folderItem = ((FolderItem2)parent.Item);
@@ -78,7 +97,10 @@ namespace MPTagThat.Treeview.Model
         var nodes = new List<TreeItem>();
         foreach (FolderItem2 fi in ((Folder2) folderItem.GetFolder).Items())
         {
-          if (!_showAllShellObjects && !fi.IsFileSystem || !fi.IsFolder) continue;
+          if (!_showAllShellObjects && !fi.IsFileSystem || !fi.IsFolder)
+          {
+            continue;
+          }
           var node = CreateTreeNode(helper, fi.Name, fi.Path, false, fi);
           nodes.Add(node);
         }
@@ -92,6 +114,10 @@ namespace MPTagThat.Treeview.Model
       }
     }
 
+    /// <summary>
+    /// Create the Root Collection when building the Tree View
+    /// </summary>
+    /// <param name="helper"></param>
     public virtual void RequestRoot(TreeViewHelper helper)
     {
       // setup up root node collection
@@ -105,29 +131,45 @@ namespace MPTagThat.Treeview.Model
           helper.TreeView.Nodes.Add(desktopNode);
           foreach (FolderItem fi in desktopFolder.Items())
           {
-            // Don't list Non-Folders, Control Panel and Waste BAsket
-            if (!fi.IsFolder) continue;
-            if (_shell.Shell.NameSpace(ShellSpecialFolderConstants.ssfBITBUCKET).Title == fi.Name) continue;
-            if (fi.Path == "::{26EE0668-A00A-44D7-9371-BEB064C98683}") continue;
+            // Don't list Non-Folders, Control Panel and Waste Basket
+            if (!fi.IsFolder)
+            {
+              continue;
+            }
 
+            if (_shell.Shell.NameSpace(ShellSpecialFolderConstants.ssfBITBUCKET).Title == fi.Name)
+            {
+              continue;
+            }
+
+            if (fi.Path == "::{26EE0668-A00A-44D7-9371-BEB064C98683}")
+            {
+              continue;
+            }
+
+            // Create the Tree Node
             var node = CreateTreeNode(helper, fi.Name, fi.Path, true, fi);
             desktopNode.Nodes.Add(node);
 
+            // Handle My Computer
             if (_shell.Shell.NameSpace(ShellSpecialFolderConstants.ssfDRIVES).Title == fi.Name)
             {
               FillMyComputer(fi, node.Nodes, helper);
             }
 
+            // Add to Network Node
             if (fi.Path == "::{F02C1A0D-BE21-4350-88B0-7367FC96EF3C}")
             {
               _rootCollectionNetwork = node.Nodes;
             }
           }
           break;
+
         case Environment.SpecialFolder.MyComputer:
           FillMyComputer(((Folder2)_shell.Shell.NameSpace(ShellSpecialFolderConstants.ssfDRIVES)).Self,
             helper.TreeView.Nodes, helper);
           break;
+
         default:
           // create root node with specified SpecialFolder
           Folder2 root = (Folder3)_shell.Shell.NameSpace(helper.TreeView.RootFolder);
@@ -143,19 +185,32 @@ namespace MPTagThat.Treeview.Model
 
     #region internal interface
 
+    /// <summary>
+    /// Fill the "My Computer" or "This Pc" collection 
+    /// </summary>
+    /// <param name="folderItem"></param>
+    /// <param name="parentCollection"></param>
+    /// <param name="helper"></param>
     protected virtual void FillMyComputer(FolderItem folderItem, ObservableCollection<TreeItem> parentCollection,
       TreeViewHelper helper)
     {
       _rootCollection = parentCollection;
       Logicaldisk.LogicaldiskCollection logicalDisks = null;
+      
       // get wmi logical disk's if we have to 			
       if (helper.TreeView.DriveTypes != Enums.DriveTypes.All)
+      {
         logicalDisks = Logicaldisk.GetInstances(null, GetWmiQueryStatement(helper.TreeView));
-      //
+      }
+      
       foreach (FolderItem fi in ((Folder)folderItem.GetFolder).Items())
       {
         // only File System shell objects ?
-        if (!_showAllShellObjects && !fi.IsFileSystem) continue;
+        if (!_showAllShellObjects && !fi.IsFileSystem)
+        {
+          continue;
+        }
+        
         // check drive type 
         if (fi.IsFileSystem && logicalDisks != null)
         {
@@ -168,7 +223,11 @@ namespace MPTagThat.Treeview.Model
               break;
             }
           }
-          if (skipDrive) continue;
+
+          if (skipDrive)
+          {
+            continue;
+          }
         }
         // create new node
         var node = CreateTreeNode(helper, fi.Name, fi.Path, false, fi);
@@ -198,7 +257,11 @@ namespace MPTagThat.Treeview.Model
     /// <returns></returns>
     protected virtual string GetWmiQueryStatement(TreeviewViewModel treeView)
     {
-      if ((treeView.DriveTypes & Enums.DriveTypes.All) == Enums.DriveTypes.All) return string.Empty;
+      if ((treeView.DriveTypes & Enums.DriveTypes.All) == Enums.DriveTypes.All)
+      {
+        return string.Empty;
+      }
+
       var where = string.Empty;
       var array = Enum.GetValues(typeof(Enums.DriveTypes));
       foreach (Enums.DriveTypes type in array)
@@ -219,7 +282,7 @@ namespace MPTagThat.Treeview.Model
           }
         }
       }
-      //
+      
       return where;
     }
 
