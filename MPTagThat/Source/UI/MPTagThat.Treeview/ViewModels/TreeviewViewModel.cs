@@ -47,7 +47,7 @@ namespace MPTagThat.Treeview.ViewModels
     #region Variables
 
     private Options _options;
-    private object _selectedItem;
+    
     private DispatcherTimer _timer;
     private readonly TreeViewHelper _helper;
     private ITreeviewDataProvider _dataProvider;
@@ -59,6 +59,7 @@ namespace MPTagThat.Treeview.ViewModels
     /// <summary>
     /// A new Item has been selected. Send a notification to list the content of the folder
     /// </summary>
+    private object _selectedItem;
     public object SelectedItem
     {
       get => _selectedItem;
@@ -116,14 +117,19 @@ namespace MPTagThat.Treeview.ViewModels
     }
 
     private Environment.SpecialFolder _rootFolder;
+    /// <summary>
+    /// The RootFolder to start display from
+    /// </summary>
     public Environment.SpecialFolder RootFolder
     {
       get => _rootFolder;
       set { SetProperty(ref _rootFolder, value); }
     }
 
-    // Nodes are used to bind to TreeView
     private ObservableCollection<TreeItem> _nodes = new ObservableCollection<TreeItem>();
+    /// <summary>
+    /// Nodes bound to TreeView
+    /// </summary>
     public ObservableCollection<TreeItem> Nodes
     {
       get => _nodes;
@@ -131,11 +137,25 @@ namespace MPTagThat.Treeview.ViewModels
     }
 
     private Enums.DriveTypes _driveTypes;
+    /// <summary>
+    /// Available Drive Types to be shown
+    /// </summary>
     public Enums.DriveTypes DriveTypes
     {
       get => _driveTypes;
       set { SetProperty(ref _driveTypes, value); }
     }
+
+    private Cursor _cursor = Cursors.Arrow;
+    /// <summary>
+    /// The State of the cursor
+    /// </summary>
+    public Cursor Cursor
+    {
+      get => _cursor;
+      set => SetProperty(ref _cursor, value);
+    }
+
     #endregion
 
     #region ctor
@@ -192,6 +212,7 @@ namespace MPTagThat.Treeview.ViewModels
         return;
       }
 
+      Cursor = Cursors.Wait;
       _helper.TreeView.Nodes[0].IsExpanded = true;
       _helper.TreeView.Nodes[0].Nodes[0].IsExpanded = true;
       var requestNetwork = currentFolder.StartsWith(@"\\");
@@ -234,6 +255,7 @@ namespace MPTagThat.Treeview.ViewModels
           }
         }
       }
+      Cursor = Cursors.Arrow;
     }
 
     #endregion

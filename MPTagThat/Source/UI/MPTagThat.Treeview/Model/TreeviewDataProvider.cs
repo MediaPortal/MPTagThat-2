@@ -19,6 +19,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Windows.Input;
 using MPTagThat.Treeview.Model.Win32;
 using MPTagThat.Treeview.ViewModels;
 using Shell32;
@@ -86,6 +87,8 @@ namespace MPTagThat.Treeview.Model
     /// <param name="parent"></param>
     public virtual void RequestSubDirs(TreeViewHelper helper, TreeItem parent)
     {
+      helper.TreeView.Cursor = Cursors.Wait;
+
       FolderItem2 folderItem = ((FolderItem2)parent.Item);
 
       if (_shell.Shell.NameSpace(ShellSpecialFolderConstants.ssfDRIVES).Title == folderItem.Name)
@@ -111,6 +114,7 @@ namespace MPTagThat.Treeview.Model
           (p1, p2) => string.CompareOrdinal(p1.Name, p2.Name));
 
         parent.Nodes.AddRange(nodesArray);
+        helper.TreeView.Cursor = Cursors.Arrow;
       }
     }
 

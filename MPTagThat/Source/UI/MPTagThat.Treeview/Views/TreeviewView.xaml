@@ -13,7 +13,8 @@
              xmlns:local="clr-namespace:MPTagThat.Treeview.Views"
              xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
+             d:DesignHeight="300" d:DesignWidth="300"
+             Cursor="{Binding Cursor}" >
 
   <UserControl.Resources>
       <local:ImageConverter x:Key="Converter"/>        
@@ -42,7 +43,7 @@
                               ShowRootLines="False"
                               BorderThickness="0 0 1 0" 
                               IsScrollOnExpand="False"
-                              ScrollViewer.VerticalScrollBarVisibility="Visible" >
+                              ScrollViewer.VerticalScrollBarVisibility="Visible">
       <i:Interaction.Triggers>
         <i:EventTrigger EventName="LoadOnDemand">
           <prism:InvokeCommandAction Command="{Binding LoadFolderOnDemandCommand}" />
