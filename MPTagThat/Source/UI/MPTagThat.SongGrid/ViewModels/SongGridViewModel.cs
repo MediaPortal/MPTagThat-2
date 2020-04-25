@@ -722,6 +722,14 @@ namespace MPTagThat.SongGrid.ViewModels
             return;
           }
 
+          // Refresh the current folder
+          if (command == Action.ActionType.REFRESH)
+          {
+            CheckChangesPending();
+            FolderScan();
+            return;
+          }
+
           // Select all songs, except for Find & Replace and Help
           if (SelectedItems.Count == 0 && (command != Action.ActionType.FIND && command != Action.ActionType.REPLACE && command != Action.ActionType.HELP))
           {
@@ -749,14 +757,6 @@ namespace MPTagThat.SongGrid.ViewModels
             parameter = param ?? new object[] { };
 
             ExecuteCommand(Action.ActionToCommand(command), parameter, runAsync);
-            return;
-          }
-
-          // Refresh the current folder
-          if (command == Action.ActionType.REFRESH)
-          {
-            CheckChangesPending();
-            FolderScan();
             return;
           }
 
