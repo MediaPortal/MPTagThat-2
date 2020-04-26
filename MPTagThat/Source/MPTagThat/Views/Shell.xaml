@@ -96,7 +96,10 @@
         <WrapPanel Grid.Column="3" HorizontalAlignment="Right">
           <Border BorderThickness="1,0,0,0" Width="3" Margin="5,0,0,0" BorderBrush="#FFC5C5C5"/>
           <ProgressBar Width="200" Margin="10,2,2,2" Height="15" Value="{Binding ProgressBarValue}"  Minimum="{Binding ProgressBarMinimum}" Maximum="{Binding ProgressBarMaximum}" IsIndeterminate="{Binding ProgressBarIsIndeterminate}"/>
-          <Button x:Name="StatusBarButtonCancel" Margin="0,2,5,2" Width="20"></Button>
+          <syncfusion:ButtonAdv x:Name="StatusBarButtonCancel" Label=""
+                                SmallIcon="pack://application:,,,/MPTagThat;component/Resources/Images/Cancel_FolderScan.png" 
+                                Command="{Binding CancelFolderScanCommand}"
+                                Margin="0,2,5,2" Width="30"/>
         </WrapPanel>
       </Grid>
     </syncfusion:RibbonStatusBar>

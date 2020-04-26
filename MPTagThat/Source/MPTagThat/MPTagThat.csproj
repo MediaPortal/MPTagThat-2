@@ -285,6 +285,7 @@
     <Resource Include="Resources\Images\Status_BrokenSong.png" />
     <Resource Include="Resources\Images\Status_FixedSong.png" />
     <Resource Include="Resources\Images\CursorNumbering.cur" />
+    <Resource Include="Resources\Images\Cancel_FolderScan.png" />
     <Content Include="x64\bass.dll" />
     <Content Include="x64\bassasio.dll" />
     <Content Include="x64\basscd.dll" />

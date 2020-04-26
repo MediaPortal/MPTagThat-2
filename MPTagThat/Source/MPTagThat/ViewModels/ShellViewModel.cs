@@ -211,6 +211,7 @@ namespace MPTagThat.ViewModels
 
       WindowCloseCommand = new BaseCommand(WindowClose);
       KeyPressedCommand = new BaseCommand(Keypressed);
+      CancelFolderScanCommand = new BaseCommand(CancelFolderScan);
 
       _options = (ServiceLocator.Current.GetInstance(typeof(ISettingsManager)) as ISettingsManager).GetOptions;
 
@@ -246,6 +247,9 @@ namespace MPTagThat.ViewModels
       log.Trace("<<<");
     }
 
+    /// <summary>
+    /// Handle Keypress
+    /// </summary>
     public ICommand KeyPressedCommand { get; }
 
     private void Keypressed(object param)
@@ -256,6 +260,21 @@ namespace MPTagThat.ViewModels
         Action = "Command"
       };
       evt.MessageData.Add("command", (Action.ActionType)param);
+      EventSystem.Publish(evt);
+    }
+
+    /// <summary>
+    /// Handle the canceling of Folder Scan
+    /// </summary>
+    public ICommand CancelFolderScanCommand { get; }
+
+    private void CancelFolderScan(object param)
+    {
+      // Send out the Event with the action
+      var evt = new GenericEvent
+      {
+        Action = "CancelFolderScan"
+      };
       EventSystem.Publish(evt);
     }
 

@@ -76,12 +76,10 @@ namespace MPTagThat.SongGrid.ViewModels
     private string _filterFileMask = "*.*";
 
     private List<string> _nonMusicFiles = new List<string>();
-    private bool _progressCancelled = false;
-    private bool _folderScanInProgress = false;
+    private bool _progressCancelled;
+    private bool _folderScanInProgress;
 
     private readonly System.Windows.Input.Cursor _numberOnClickCursor = new System.Windows.Input.Cursor(System.Windows.Application.GetResourceStream(new Uri("pack://application:,,,/MPTagThat;component/Resources/Images/CursorNumbering.cur")).Stream);
-
-    private BackgroundWorker _bgWorker;
 
     #endregion
 
@@ -329,14 +327,15 @@ namespace MPTagThat.SongGrid.ViewModels
              log.Trace(">>>");
              if (String.IsNullOrEmpty(_selectedFolder))
              {
-               log.Info("FolderScan: No folder selected");
+               log.Info("No folder selected");
                return;
              }
 
-             log.Info($"FolderScan: Scanning folder: {_selectedFolder}");
+             log.Info($"Scanning folder: {_selectedFolder}");
 
              IsBusy = true;
              _folderScanInProgress = true;
+             _progressCancelled = false;
              Songs.Clear();
              _nonMusicFiles = new List<string>();
              GC.Collect();
@@ -363,6 +362,7 @@ namespace MPTagThat.SongGrid.ViewModels
                  Application.DoEvents();
                  if (_progressCancelled)
                  {
+                   log.Info("Cancel of folder scan requested. Aborting process.");
                    IsBusy = false;
                    break;
                  }
@@ -693,7 +693,7 @@ namespace MPTagThat.SongGrid.ViewModels
       switch (msg.Action.ToLower())
       {
         case "selectedfolderchanged":
-          log.Trace("SongGrid: Command SelectedFolderChanged");
+          log.Trace("Action SelectedFolderChanged");
           CheckChangesPending();
           if (msg.MessageData.ContainsKey("folder"))
           {
@@ -703,10 +703,15 @@ namespace MPTagThat.SongGrid.ViewModels
           }
           break;
 
+        case "cancelfolderscan":
+          log.Trace("Action CancelFolderScan");
+          _progressCancelled = true;
+          break;
+
         case "command":
 
           var command = (Action.ActionType)msg.MessageData["command"];
-          log.Trace($"SongGrid: Command {command}");
+          log.Trace($"Command {command}");
           
           if (command == Action.ActionType.NUMBERONCLICK)
           {
