@@ -1501,4 +1501,13 @@ To change the order of the ratings drag the rows.</value>
   <data name="settings_Id3_ValidateMp3" xml:space="preserve">
     <value>Validate Mp3 Files while scanning the folder / database</value>
   </data>
+  <data name="settings_Keys_Alt" xml:space="preserve">
+    <value>Alt</value>
+  </data>
+  <data name="settings_Keys_Ctrl" xml:space="preserve">
+    <value>Ctrl</value>
+  </data>
+  <data name="settings_Keys_Shift" xml:space="preserve">
+    <value>Shift</value>
+  </data>
 </root>

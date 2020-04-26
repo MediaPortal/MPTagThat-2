@@ -440,6 +440,117 @@
   <data name="tagEdit_Conductor" xml:space="preserve">
     <value>Dirigent:</value>
   </data>
+  <data name="tagEdit_OrigReleaseYear" xml:space="preserve">
+    <value>Original Erscheinungsjahr:</value>
+  </data>
+  <data name="tagEdit_OrigOwner" xml:space="preserve">
+    <value>Original Besitzer:</value>
+  </data>
+  <data name="tagEdit_OrigArtist" xml:space="preserve">
+    <value>Original Interpret:</value>
+  </data>
+  <data name="tagEdit_OrigLyricsWriter" xml:space="preserve">
+    <value>Original Text Autor:</value>
+  </data>
+  <data name="tagEdit_OrigFileName" xml:space="preserve">
+    <value>Original Dateiname:</value>
+  </data>
+  <data name="tagEdit_OrigAlbum" xml:space="preserve">
+    <value>Original Album Titel:</value>
+  </data>
+  <data name="tagEdit_MusicCreditList_Delete" xml:space="preserve">
+    <value>Musiker entfernen</value>
+  </data>
+  <data name="tagEdit_MusicCreditList_Add" xml:space="preserve">
+    <value>Musiker hinzufügen</value>
+  </data>
+  <data name="tagEdit_MusicCreditList_Instrument" xml:space="preserve">
+    <value>Instrument</value>
+  </data>
+  <data name="tagEdit_InvolvedPerson_Delete" xml:space="preserve">
+    <value>Person entfernen</value>
+  </data>
+  <data name="tagEdit_InvolvedPerson_Add" xml:space="preserve">
+    <value>Person hinzufügen</value>
+  </data>
+  <data name="tagEdit_InvolvedPerson_Function" xml:space="preserve">
+    <value>Beteiligte Person Funktion:</value>
+  </data>
+  <data name="tagEdit_InvolvedPerson_Name" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="tagEdit_CommercialInfo" xml:space="preserve">
+    <value>Kommerzielle Information URL:</value>
+  </data>
+  <data name="tagEdit_OfficialPublisher" xml:space="preserve">
+    <value>Offizieller Herausgeber URL:</value>
+  </data>
+  <data name="tagEdit_OfficialPayment" xml:space="preserve">
+    <value>Offizielle Bezahlungs URL:</value>
+  </data>
+  <data name="tagEdit_OfficialRadioStation" xml:space="preserve">
+    <value>Offizielle Internet Radio Stat. URL:</value>
+  </data>
+  <data name="tagEdit_OfficialAudioSource" xml:space="preserve">
+    <value>Offizielle Audioquelle URL:</value>
+  </data>
+  <data name="tagEdit_OfficialArtist" xml:space="preserve">
+    <value>Offizielle Interpret URL:</value>
+  </data>
+  <data name="tagEdit_OfficialAudiofile" xml:space="preserve">
+    <value>Offizielle Audiodatei URL:</value>
+  </data>
+  <data name="tagEdit_CopyrightInformation" xml:space="preserve">
+    <value>Copyright Information URL:</value>
+  </data>
+  <data name="tagEdit_Rating_Note" xml:space="preserve">
+    <value>Die Wertung geht von 1-255. 1 ist am schlechstesten, 255 am besten. 0 bedeutet unbekannt.\n\nAchtung: Viele Programme haben ihr eigene Wertung und ignorieren den ID3-Standart. Wenn keine eigene Wertung gewünscht ist kann diese ignoriert werden.</value>
+  </data>
+  <data name="tagEdit_RatingPlayCount" xml:space="preserve">
+    <value>Abspielzähler:</value>
+  </data>
+  <data name="tagEdit_Rating_Delete" xml:space="preserve">
+    <value>Bewertung entfernen</value>
+  </data>
+  <data name="tagEdit_Rating_Add" xml:space="preserve">
+    <value>Bewertung hinzufügen</value>
+  </data>
+  <data name="tagEdit_RatingUser" xml:space="preserve">
+    <value>Benutzer (eMail):</value>
+  </data>
+  <data name="tagEdit_TabHeader_UserFrames" xml:space="preserve">
+    <value>Benutzereinträge</value>
+  </data>
+  <data name="tagEdit_TabHeader_Rating" xml:space="preserve">
+    <value>Bewertung</value>
+  </data>
+  <data name="tagEdit_TabHeader_Web_Information" xml:space="preserve">
+    <value>Web Information</value>
+  </data>
+  <data name="tagEdit_TabHeader_Involved_People" xml:space="preserve">
+    <value>Beteiligte Personen</value>
+  </data>
+  <data name="tagEdit_TabHeader_Original_Information" xml:space="preserve">
+    <value>Original Information</value>
+  </data>
+  <data name="tagEdit_UserFrames_FrameId" xml:space="preserve">
+    <value>Frame Id</value>
+  </data>
+  <data name="tagEdit_UserFrames_Description" xml:space="preserve">
+    <value>Beschreibung</value>
+  </data>
+  <data name="tagEdit_UserFrames_Text" xml:space="preserve">
+    <value>Text</value>
+  </data>
+  <data name="tagEdit_UserFrames_Add" xml:space="preserve">
+    <value>Eintrag hinzufügen</value>
+  </data>
+  <data name="tagEdit_UserFrames_DeleteFrame" xml:space="preserve">
+    <value>Eintrag löschen</value>
+  </data>
+  <data name="tagEdit_UserFrames_DeleteAllFrames" xml:space="preserve">
+    <value>Alle Einträge löschen</value>
+  </data>
   <data name="lyricsSearch_Title" xml:space="preserve">
     <value>Suche Liedtext für {0} - {1}</value>
   </data>
@@ -729,10 +840,10 @@
     <value>Bitrate</value>
   </data>
   <data name="tagAndRename_FirstNofArtist" xml:space="preserve">
-    <value>Die ersten \"n\" Zeichen des Interpreten</value>
+    <value>= Die ersten \"n\" Zeichen des Interpreten</value>
   </data>
   <data name="tagAndRename_FirstNofAlbumArtist" xml:space="preserve">
-    <value>Die ersten \"n\" Zeichen des Album Interpreten</value>
+    <value>= Die ersten \"n\" Zeichen des Album Interpreten</value>
   </data>
   <data name="tagAndRename_StartAt" xml:space="preserve">
     <value>Start bei</value>
@@ -873,6 +984,21 @@ verschieben/kopieren</value>
   <data name="settings_Keys" xml:space="preserve">
     <value>Tastatur Shortcuts</value>
   </data>
+  <data name="settings_Keys_Shift" xml:space="preserve">
+    <value>Umsch</value>
+  </data>
+  <data name="settings_Keys_Ctrl" xml:space="preserve">
+    <value>Strg</value>
+  </data>
+  <data name="settings_Keys_Alt" xml:space="preserve">
+    <value>Alt</value>
+  </data>
+  <data name="settings_Keys_Description" xml:space="preserve">
+    <value>Beschreibung:</value>
+  </data>
+  <data name="settings_Keys_ShortCut" xml:space="preserve">
+    <value>Tastaturkurzbefehl:</value>
+  </data>
   <data name="settings_DebugLevel" xml:space="preserve">
     <value>Debug Stufe:</value>
   </data>
@@ -881,6 +1007,12 @@ verschieben/kopieren</value>
   </data>
   <data name="settings_Language" xml:space="preserve">
     <value>Sprache:</value>
+  </data>
+  <data name="settings_Tags" xml:space="preserve">
+    <value>Tags</value>
+  </data>
+  <data name="settings_Id3_Header" xml:space="preserve">
+    <value>ID3</value>
   </data>
   <data name="coverSearch_OverwriteExistingCover" xml:space="preserve">
     <value>Existierende Bilder beim automatischen Taggen überschreiben</value>
@@ -894,11 +1026,92 @@ verschieben/kopieren</value>
   <data name="coverSearch_ChangeCoverSize" xml:space="preserve">
     <value>Speichern von Bildern mit einer maximalen Pixel Breite von:</value>
   </data>
-  <data name="settings_General" xml:space="preserve">
+  <data name="lyricsSearch_SwitchArtist" xml:space="preserve">
+    <value>Interpret (Nachname, Vorname)  vor Durchführung tauschen</value>
+  </data>
+  <data name="settings_Tags_General" xml:space="preserve">
     <value>Generell</value>
+  </data>
+  <data name="settings_Tags_CopyArtist" xml:space="preserve">
+    <value>Interpret nach Album Interpret kopieren, wenn leer</value>
+  </data>
+  <data name="settings_Tags_AutoFillNumberTracks" xml:space="preserve">
+    <value>\"Anzahl von Tracks\" bei merfach editieren automatisch füllen</value>
+  </data>
+  <data name="settings_Tags_CaseConversion" xml:space="preserve">
+    <value>Einstellungen für Groß- und Kleinschreibung beim Speichern verwenden</value>
+  </data>
+  <data name="settings_Tags_ChangeReadOnly" xml:space="preserve">
+    <value>Change Readonly Attributte on Save</value>
+  </data>
+  <data name="settings_Id3_Encoding" xml:space="preserve">
+    <value>Verwendeter Zeichensatz beim Speichern der Tags:</value>
   </data>
   <data name="coverSearch_CreateMissingFolderThumb" xml:space="preserve">
     <value>Erstelle fehlende Ordnervorschau (folder.jpg) beim Speichern</value>
+  </data>
+  <data name="settings_Id3_Header" xml:space="preserve">
+    <value>ID3</value>
+  </data>
+  <data name="settings_Id3_UseV4" xml:space="preserve">
+    <value>Version 2.4 für ID3 V2 Tags benutzen</value>
+  </data>
+  <data name="settings_Id3_UseV3" xml:space="preserve">
+    <value>Version 2.3 für ID3 V2 Tags benutzen</value>
+  </data>
+  <data name="settings_Id3_UseApe" xml:space="preserve">
+    <value>APE und ID3 V1 Tags benutzen</value>
+  </data>
+  <data name="settings_Id3_Header_Update" xml:space="preserve">
+    <value>Bei Änderung</value>
+  </data>
+  <data name="settings_Id3_UpdateRemoveV1" xml:space="preserve">
+    <value>ID3 V1 entfernen</value>
+  </data>
+  <data name="settings_Id3_UpdateRemoveV2" xml:space="preserve">
+    <value>ID3 V2 entfernen</value>
+  </data>
+  <data name="settings_Id3_UpdateV1V2" xml:space="preserve">
+    <value>ID3V1 und ID3V2 schreiben</value>
+  </data>
+  <data name="settings_Id3_UpdateV2" xml:space="preserve">
+    <value>ID3 V2</value>
+  </data>
+  <data name="settings_Id3_UpdateV1" xml:space="preserve">
+    <value>ID3 V1</value>
+  </data>
+  <data name="settings_Id3_ClearUserFrames" xml:space="preserve">
+    <value>Benutzerdefinierte Frames beim Speichern löschen</value>
+  </data>
+  <data name="settings_Id3_Header_MP3Validation" xml:space="preserve">
+    <value>MP3 Dateiformatprüfung</value>
+  </data>
+  <data name="settings_Id3_ValidateMp3" xml:space="preserve">
+    <value>Überprüfe MP3 Dateien beim Einlesen von Verzeichnis / Datenbank</value>
+  </data>
+  <data name="settings_Id3_FixMp3" xml:space="preserve">
+    <value>Fehlerhafte MP3 Dateien automatisch korrigieren</value>
+  </data>
+  <data name="settings_Id3_Header_CustomGenres" xml:space="preserve">
+    <value>Benutzer Genres</value>
+  </data>
+  <data name="settings_Id3_AddGenre" xml:space="preserve">
+    <value>Genre Hinzufügen</value>
+  </data>
+  <data name="settings_Id3_RemoveGenre" xml:space="preserve">
+    <value>Genre Löschen</value>
+  </data>
+  <data name="lookup_Title" xml:space="preserve">
+    <value>Internet Lookup - Bitte Artist / Album eingeben</value>
+  </data>
+  <data name="lookup_NoAlbumFound" xml:space="preserve">
+    <value>Kein Album gefunden. Bitte eine neue Auswahl treffen.</value>
+  </data>
+  <data name="lookup_SearchFinished" xml:space="preserve">
+    <value>Mehrere Alben gefunden. Bitte auswählen ...</value>
+  </data>
+  <data name="lookup_AlbumTracks" xml:space="preserve">
+    <value>Titel auf Album</value>
   </data>
   <data name="message_Error_Title" xml:space="preserve">
     <value>Fehler</value>

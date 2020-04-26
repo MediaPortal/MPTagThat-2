@@ -158,11 +158,6 @@
       <DependentUpon>Strings.resx</DependentUpon>
     </Compile>
     <Compile Include="InputBindingsBehavior.cs" />
-    <Compile Include="Resources\Localization\Strings.de.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Strings.de.resx</DependentUpon>
-    </Compile>
     <Compile Include="ViewModels\SplashScreenViewModel.cs" />
     <Compile Include="Views\Shell.xaml.cs">
       <DependentUpon>Shell.xaml</DependentUpon>

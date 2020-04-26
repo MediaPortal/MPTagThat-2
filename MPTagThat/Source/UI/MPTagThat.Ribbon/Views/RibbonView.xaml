@@ -614,9 +614,9 @@
                           <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding KeyMapDescription, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="300" HorizontalAlignment="Left" />
                           <Label Grid.Row="1" Grid.Column="0" Content="{lex:Loc settings_Keys_ShortCut}" />
                           <StackPanel Grid.Row="1" Grid.Column="1"  Margin="0,10,0,0" Orientation="Horizontal">
-                            <CheckBox Content="Ctrl" IsChecked="{Binding CtrlKey, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="0,5,0,0" Height="15"/>
-                            <CheckBox Content="Alt" IsChecked="{Binding AltKey, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="10,5,0,0" Height="15" />
-                            <CheckBox Content="Shift" IsChecked="{Binding ShiftKey, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="10,5,0,0" Height="15"/>
+                            <CheckBox Content="{lex:Loc settings_Keys_Ctrl}" IsChecked="{Binding CtrlKey, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="0,5,0,0" Height="15"/>
+                            <CheckBox Content="{lex:Loc settings_Keys_Alt}" IsChecked="{Binding AltKey, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="10,5,0,0" Height="15" />
+                            <CheckBox Content="{lex:Loc settings_Keys_Shift}" IsChecked="{Binding ShiftKey, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="10,5,0,0" Height="15"/>
                             <TextBox Text="{Binding KeyValue, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="100" Margin="10,5,0,0" />
                           </StackPanel>
                           <StackPanel Grid.Row="2" Grid.Column="1" Margin="0,5,0,0" Orientation="Horizontal">

@@ -1798,6 +1798,24 @@ namespace MPTagThat.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Alt.
+        /// </summary>
+        public static string settings_Keys_Alt {
+            get {
+                return ResourceManager.GetString("settings_Keys_Alt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ctrl.
+        /// </summary>
+        public static string settings_Keys_Ctrl {
+            get {
+                return ResourceManager.GetString("settings_Keys_Ctrl", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Description:.
         /// </summary>
         public static string settings_Keys_Description {
@@ -1839,6 +1857,15 @@ namespace MPTagThat.Resources.Localization {
         public static string settings_Keys_Restart {
             get {
                 return ResourceManager.GetString("settings_Keys_Restart", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Shift.
+        /// </summary>
+        public static string settings_Keys_Shift {
+            get {
+                return ResourceManager.GetString("settings_Keys_Shift", resourceCulture);
             }
         }
         
