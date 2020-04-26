@@ -28,6 +28,7 @@ using System.Windows.Threading;
 using CommonServiceLocator;
 using MPTagThat.Core;
 using MPTagThat.Core.Events;
+using MPTagThat.Core.Services.Logging;
 using MPTagThat.Core.Services.Settings;
 using MPTagThat.Core.Services.Settings.Setting;
 using MPTagThat.Treeview.Model;
@@ -47,7 +48,8 @@ namespace MPTagThat.Treeview.ViewModels
     #region Variables
 
     private Options _options;
-    
+    private readonly NLogLogger log;
+
     private DispatcherTimer _timer;
     private readonly TreeViewHelper _helper;
     private ITreeviewDataProvider _dataProvider;
@@ -65,6 +67,7 @@ namespace MPTagThat.Treeview.ViewModels
       get => _selectedItem;
       set
       {
+        log.Trace(">>>");
         SetProperty(ref _selectedItem, value);
 
         // Prepare Event to be published
@@ -80,6 +83,7 @@ namespace MPTagThat.Treeview.ViewModels
           evt.MessageData.Add("folder", selecteditem);
           EventSystem.Publish(evt);
         }
+        log.Trace("<<<");
       }
     }
 
@@ -108,6 +112,7 @@ namespace MPTagThat.Treeview.ViewModels
       TreeViewItemAdv treeitem = (parameter as LoadonDemandEventArgs)?.TreeViewItem;
       if (treeitem != null && treeitem.DataContext is TreeItem node)
       {
+        log.Trace($"Expanding node {node.Name}");
         if (node.Nodes.Count == 0)
         {
           _dataProvider.RequestSubDirs(_helper, node);
@@ -162,6 +167,8 @@ namespace MPTagThat.Treeview.ViewModels
 
     public TreeviewViewModel()
     {
+      log = (ServiceLocator.Current.GetInstance(typeof(ILogger)) as ILogger)?.GetLogger;
+      log.Trace(">>>");
       _options = (ServiceLocator.Current.GetInstance(typeof(ISettingsManager)) as ISettingsManager)?.GetOptions;
 
       EventSystem.Subscribe<GenericEvent>(OnMessageReceived, ThreadOption.UIThread);
@@ -182,6 +189,7 @@ namespace MPTagThat.Treeview.ViewModels
       _timer.Tick += SetCurrentFolder;
       _timer.Tag = RootFolder;
       _timer.Start();
+      log.Trace("<<<");
     }
 
     #endregion
@@ -190,7 +198,9 @@ namespace MPTagThat.Treeview.ViewModels
 
     private void RefreshTreeview()
     {
+      log.Trace(">>>");
       _dataProvider.RequestRoot(_helper);
+      log.Trace("<<<");
     }
 
 
@@ -202,6 +212,7 @@ namespace MPTagThat.Treeview.ViewModels
     /// <param name="e"></param>
     private void SetCurrentFolder(object sender, EventArgs e)
     {
+      log.Trace(">>>");
       if (_timer != null && _timer.IsEnabled)
       {
         _timer.Stop();
@@ -211,6 +222,8 @@ namespace MPTagThat.Treeview.ViewModels
       {
         return;
       }
+
+      log.Info($"Set current folder to {currentFolder}");
 
       Cursor = Cursors.Wait;
       _helper.TreeView.Nodes[0].IsExpanded = true;
@@ -256,6 +269,7 @@ namespace MPTagThat.Treeview.ViewModels
         }
       }
       Cursor = Cursors.Arrow;
+      log.Trace("<<<");
     }
 
     #endregion

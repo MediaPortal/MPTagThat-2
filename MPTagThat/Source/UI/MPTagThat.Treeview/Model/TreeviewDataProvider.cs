@@ -20,6 +20,8 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
+using CommonServiceLocator;
+using MPTagThat.Core.Services.Logging;
 using MPTagThat.Treeview.Model.Win32;
 using MPTagThat.Treeview.ViewModels;
 using Shell32;
@@ -32,6 +34,8 @@ namespace MPTagThat.Treeview.Model
   public class TreeViewDataProvider : ITreeviewDataProvider
   {
     #region fields
+
+    private readonly NLogLogger log = (ServiceLocator.Current.GetInstance(typeof(ILogger)) as ILogger)?.GetLogger;
 
     /// <summary>
     ///   drive tree node (My computer) root collection
@@ -73,10 +77,12 @@ namespace MPTagThat.Treeview.Model
     /// <returns></returns>
     public virtual ObservableCollection<TreeItem> RequestDriveCollection(TreeViewHelper helper, bool isNetwork)
     {
+      log.Trace(">>>");
       if (isNetwork)
       {
         return _rootCollectionNetwork;
       }
+      log.Trace("<<<");
       return _rootCollection;
     }
 
@@ -87,9 +93,12 @@ namespace MPTagThat.Treeview.Model
     /// <param name="parent"></param>
     public virtual void RequestSubDirs(TreeViewHelper helper, TreeItem parent)
     {
+      log.Trace(">>>");
       helper.TreeView.Cursor = Cursors.Wait;
 
       FolderItem2 folderItem = ((FolderItem2)parent.Item);
+
+      log.Trace($"Requesting Subfolders of {folderItem.Name}");
 
       if (_shell.Shell.NameSpace(ShellSpecialFolderConstants.ssfDRIVES).Title == folderItem.Name)
       {
@@ -116,6 +125,7 @@ namespace MPTagThat.Treeview.Model
         parent.Nodes.AddRange(nodesArray);
         helper.TreeView.Cursor = Cursors.Arrow;
       }
+      log.Trace("<<<");
     }
 
     /// <summary>
@@ -124,6 +134,7 @@ namespace MPTagThat.Treeview.Model
     /// <param name="helper"></param>
     public virtual void RequestRoot(TreeViewHelper helper)
     {
+      log.Trace(">>>");
       // setup up root node collection
       switch (helper.TreeView.RootFolder)
       {
@@ -135,6 +146,7 @@ namespace MPTagThat.Treeview.Model
           helper.TreeView.Nodes.Add(desktopNode);
           foreach (FolderItem fi in desktopFolder.Items())
           {
+            log.Trace($"Folder: {fi.Name} | Type: {fi.Type} | IsFolder: {fi.IsFolder} | IsFileSystem: {fi.IsFileSystem}");
             // Don't list Non-Folders, Control Panel and Waste Basket
             if (!fi.IsFolder)
             {
@@ -183,6 +195,7 @@ namespace MPTagThat.Treeview.Model
           _rootCollection = rootNode.Nodes;
           break;
       }
+      log.Trace("<<<");
     }
 
     #endregion
@@ -198,6 +211,7 @@ namespace MPTagThat.Treeview.Model
     protected virtual void FillMyComputer(FolderItem folderItem, ObservableCollection<TreeItem> parentCollection,
       TreeViewHelper helper)
     {
+      log.Trace(">>>");
       _rootCollection = parentCollection;
       Logicaldisk.LogicaldiskCollection logicalDisks = null;
       
@@ -209,6 +223,7 @@ namespace MPTagThat.Treeview.Model
       
       foreach (FolderItem fi in ((Folder)folderItem.GetFolder).Items())
       {
+        log.Trace($"Folder: {fi.Name} | Type: {fi.Type} | IsFolder: {fi.IsFolder} | IsFileSystem: {fi.IsFileSystem}");
         // only File System shell objects ?
         if (!_showAllShellObjects && !fi.IsFileSystem)
         {
@@ -237,6 +252,7 @@ namespace MPTagThat.Treeview.Model
         var node = CreateTreeNode(helper, fi.Name, fi.Path, false, fi);
         parentCollection.Add(node);
       }
+      log.Trace("<<<");
     }
 
 

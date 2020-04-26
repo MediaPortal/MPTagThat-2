@@ -676,6 +676,7 @@ namespace MPTagThat.TagEdit.ViewModels
 
     private void CancelEdit(object param)
     {
+      log.Trace(">>>");
       ClearForm();
       if (_songBackup != null && _songs.Count == 1)
       {
@@ -685,6 +686,7 @@ namespace MPTagThat.TagEdit.ViewModels
       _songs.ForEach(s => s.Changed = false);
       SongEdit.Changed = false;
       SetFormBindings(ref _songs);
+      log.Trace("<<<");
     }
 
     /// <summary>
@@ -709,6 +711,7 @@ namespace MPTagThat.TagEdit.ViewModels
 
     private void GetCover(object param)
     {
+      log.Trace(">>>");
       GenericEvent evt = new GenericEvent()
       {
         Action = "Command"
@@ -716,6 +719,7 @@ namespace MPTagThat.TagEdit.ViewModels
       evt.MessageData.Add("command", Action.ActionType.GETCOVERART);
       evt.MessageData.Add("removeexistingpictures", "true");
       EventSystem.Publish(evt);
+      log.Trace("<<<");
     }
 
     /// <summary>
@@ -729,6 +733,7 @@ namespace MPTagThat.TagEdit.ViewModels
       {
         return;
       }
+      log.Trace(">>>");
 
       var oFd = new OpenFileDialog
       {
@@ -763,6 +768,7 @@ namespace MPTagThat.TagEdit.ViewModels
           log.Error("Exception Loading picture: {0} {1}", oFd.FileName, ex.Message);
         }
       }
+      log.Trace("<<<");
     }
     
     /// <summary>
@@ -772,6 +778,7 @@ namespace MPTagThat.TagEdit.ViewModels
 
     private void RemoveCover(object param)
     {
+      log.Trace(">>>");
       GenericEvent evt = new GenericEvent()
       {
         Action = "Command"
@@ -784,6 +791,7 @@ namespace MPTagThat.TagEdit.ViewModels
         CkPicturesIsChecked = true;
       }
       IsApplyButtonEnabled = true;
+      log.Trace("<<<");
     }
 
     /// <summary>
@@ -793,11 +801,13 @@ namespace MPTagThat.TagEdit.ViewModels
 
     private void RemoveDetailCover(object param)
     {
+      log.Trace(">>>");
       if (SelectedPicture.Count > 0)
       {
         SongEdit.Pictures.Remove((Picture)SelectedPicture[0]);
         IsApplyButtonEnabled = true;
       }
+      log.Trace("<<<");
     }
 
     /// <summary>
@@ -807,6 +817,7 @@ namespace MPTagThat.TagEdit.ViewModels
 
     private void SaveCover(object param)
     {
+      log.Trace(">>>");
       log.Info("Saving Folder Thumb");
       var song = (SongData)param;
       // Do we have multiple Songs selected and a Front Cover exists?
@@ -831,6 +842,7 @@ namespace MPTagThat.TagEdit.ViewModels
         Action = "miscfileschanged"
       };
       EventSystem.Publish(miscfileevt);
+      log.Trace("<<<");
     }
 
     /// <summary>
@@ -840,6 +852,7 @@ namespace MPTagThat.TagEdit.ViewModels
 
     private void SaveDetailCover(object param)
     {
+      log.Trace(">>>");
       log.Info("Saving Picture as file");
       if (SelectedPicture.Count > 0)
       {
@@ -860,6 +873,7 @@ namespace MPTagThat.TagEdit.ViewModels
           EventSystem.Publish(miscfileevt);
         }
       }
+      log.Trace("<<<");
     }
 
     /// <summary>
@@ -907,6 +921,7 @@ namespace MPTagThat.TagEdit.ViewModels
 
     public void GetLyrics(object param)
     {
+      log.Trace(">>>");
       var evt = new GenericEvent
       {
         Action = "Command"
@@ -914,6 +929,7 @@ namespace MPTagThat.TagEdit.ViewModels
       evt.MessageData.Add("command", Action.ActionType.GETLYRICS);
       EventSystem.Publish(evt);
       IsApplyButtonEnabled = true;
+      log.Trace("<<<");
     }
 
     /// <summary>
@@ -923,6 +939,7 @@ namespace MPTagThat.TagEdit.ViewModels
 
     public void GetLyricsFromFile(object param)
     {
+      log.Trace(">>>");
       var oFd = new OpenFileDialog
       {
         Filter = "Text Files|*.txt|All Files|*.*",
@@ -940,6 +957,7 @@ namespace MPTagThat.TagEdit.ViewModels
           log.Error($"Error reading Lyrics text {ex.Message}");
         }
       }
+      log.Trace("<<<");
     }
 
     /// <summary>
@@ -949,6 +967,7 @@ namespace MPTagThat.TagEdit.ViewModels
 
     public void RemoveLyrics(object param)
     {
+      log.Trace(">>>");
       // Do we have multiple Songs selected
       if (_songs.Count > 1)
       {
@@ -962,6 +981,7 @@ namespace MPTagThat.TagEdit.ViewModels
         SongEdit.Lyrics = "";
       }
       IsApplyButtonEnabled = true;
+      log.Trace("<<<");
     }
 
     #endregion
@@ -975,11 +995,13 @@ namespace MPTagThat.TagEdit.ViewModels
 
     private void AddRating(object param)
     {
+      log.Trace(">>>");
       var mptagthatUser = SongEdit.Ratings.FirstOrDefault(r => r.User.ToLowerInvariant() == "mptagthat");
       var user = mptagthatUser?.User.ToLowerInvariant() == "mptagthat" ? "" : "MPTagThat"; 
       SongEdit.Ratings.Add(new PopmFrame(user,0,0));
       SongEdit.Changed = true;
       IsApplyButtonEnabled = true;
+      log.Trace("<<<");
     }
 
     /// <summary>
@@ -989,12 +1011,14 @@ namespace MPTagThat.TagEdit.ViewModels
 
     private void DeleteRating(object param)
     {
+      log.Trace(">>>");
       if (SelectedRating.Count > 0)
       {
         SongEdit.Ratings.Remove((PopmFrame)SelectedRating[0]);
         SongEdit.Changed = true;
         IsApplyButtonEnabled = true;
       }
+      log.Trace("<<<");
     }
 
     #endregion
@@ -1063,15 +1087,18 @@ namespace MPTagThat.TagEdit.ViewModels
 
     private void AddUserFrame(object param)
     {
+      log.Trace(">>>");
       SongEdit.UserFrames.Add(new Frame("TXXX", "", ""));
       SongEdit.Changed = true;
       IsApplyButtonEnabled = true;
+      log.Trace("<<<");
     }
 
     public ICommand DeleteUserFrameCommand { get; }
 
     private void DeleteUserFrame(object param)
     {
+      log.Trace(">>>");
       // Can't use a foreach here, since it modifies the collection
       while(SelectedUserFrames.Count > 0)
       {
@@ -1079,15 +1106,18 @@ namespace MPTagThat.TagEdit.ViewModels
       }
       SongEdit.Changed = true;
       IsApplyButtonEnabled = true;
+      log.Trace("<<<");
     }
 
     public ICommand DeleteAllUserFramesCommand { get; }
 
     private void DeleteAllUserFrames(object param)
     {
+      log.Trace(">>>");
       SongEdit.UserFrames.Clear();
       SongEdit.Changed = true;
       IsApplyButtonEnabled = true;
+      log.Trace("<<<");
     }
 
     #endregion
@@ -1101,6 +1131,7 @@ namespace MPTagThat.TagEdit.ViewModels
     /// <param name="param"></param>
     private void GetFromMusicBrainz(object param)
     {
+      log.Trace(">>>");
       // Send out the Event with the action
       var evt = new GenericEvent
       {
@@ -1109,6 +1140,7 @@ namespace MPTagThat.TagEdit.ViewModels
       evt.MessageData.Add("command", Action.ActionType.MusicBrainzInfo);
       evt.MessageData.Add("runasync", false);
       EventSystem.Publish(evt);
+      log.Trace("<<<");
     }
 
     #endregion
@@ -1133,6 +1165,7 @@ namespace MPTagThat.TagEdit.ViewModels
 
     private void ApplyEdit(object param)
     {
+      log.Trace(">>>");
       var songEdit = (SongData)param;
 
       if (_songs == null)
@@ -1145,6 +1178,7 @@ namespace MPTagThat.TagEdit.ViewModels
       {
         UpdateInvolvedPersons(_songs[0]);
         UpdateMusicians(_songs[0]);
+        log.Trace("<<<");
         return;
       }
 
@@ -1393,6 +1427,7 @@ namespace MPTagThat.TagEdit.ViewModels
           song.MusicBrainzReleaseGroupId = songEdit.MusicBrainzReleaseGroupId;
         }
       }
+      log.Trace("<<<");
     }
 
     #endregion
@@ -1405,11 +1440,13 @@ namespace MPTagThat.TagEdit.ViewModels
     /// <param name="songs"></param>
     private void SetFormBindings(ref List<SongData> songs)
     {
+      log.Trace(">>>");
       ClearForm();
       _isInitializing = true;
 
       if (songs.Count == 1)
       {
+        log.Trace("Single song selected");
         UncheckCheckboxes();
         SongEdit = songs[0];
         _songBackup = SongEdit.Clone();
@@ -1430,9 +1467,11 @@ namespace MPTagThat.TagEdit.ViewModels
         FrontCover = SongEdit.FrontCover;
         _isInitializing = false;
         IsApplyButtonEnabled = false;
+        log.Trace("<<<");
         return;
       }
 
+      log.Trace($"{songs.Count} songs selected");
       SongEdit.Init = true;
       var i = 0;
       byte[] picData = new byte[] { };
@@ -1759,6 +1798,7 @@ namespace MPTagThat.TagEdit.ViewModels
       // We have multiple Songs selected, so show the Checkboxes and
       // decide if they should be checked.
       MultiCheckBoxVisibility = true;
+      log.Trace("<<<");
     }
 
     /// <summary>
@@ -1854,6 +1894,7 @@ namespace MPTagThat.TagEdit.ViewModels
     /// </summary>
     private void ClearForm()
     {
+      log.Trace(">>>");
       _isInitializing = true;
       SongEdit = new SongData();
       UncheckCheckboxes();
@@ -1869,6 +1910,7 @@ namespace MPTagThat.TagEdit.ViewModels
       MultiCheckBoxVisibility = false;
       IsApplyButtonEnabled = false;
       _isInitializing = false;
+      log.Trace("<<<");
     }
 
     /// <summary>
@@ -2054,6 +2096,7 @@ namespace MPTagThat.TagEdit.ViewModels
     /// <param name="navigationContext"></param>
     public void OnNavigatedTo(NavigationContext navigationContext)
     {
+      log.Trace(">>>");
       _isInitializing = true;
       RatingsGrid.RowDragDropController.Dropped += RatingsGrid_OnDropped;
 
@@ -2071,6 +2114,7 @@ namespace MPTagThat.TagEdit.ViewModels
       {
         IsEnabled = false;
       }
+      log.Trace("<<<");
     }
 
     public bool IsNavigationTarget(NavigationContext navigationContext)
@@ -2086,15 +2130,18 @@ namespace MPTagThat.TagEdit.ViewModels
 
     public void OnFileDrop(string[] filepaths)
     {
+      log.Trace(">>>");
       if (filepaths.Length > 0)
       {
         var pic = new Picture(filepaths[0]) {Type = PictureType.FrontCover};
         UpdatePictures(pic);
       }
+      log.Trace("<<<");
     }
 
     public void OnHtmlDrop(object html)
     {
+      log.Trace(">>>");
       var fragment = Util.ExtractHtmlFragmentFromClipboardData((string) html);
       if (fragment.StartsWith("<img"))
       {
@@ -2110,10 +2157,12 @@ namespace MPTagThat.TagEdit.ViewModels
           }
         }
       }
+      log.Trace("<<<");
     }
     
     private void UpdatePictures(Picture pic)
     {
+      log.Trace(">>>");
       FrontCover = pic.ImageFromPic();
       foreach (var song in _songs)
       {
@@ -2123,6 +2172,7 @@ namespace MPTagThat.TagEdit.ViewModels
         }
         song.Pictures.Insert(0, pic);
       }
+      log.Trace("<<<");
     }
 
     #endregion

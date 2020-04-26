@@ -221,16 +221,14 @@ namespace MPTagThat.SongGrid.ViewModels
     /// </summary>
     private void CreateColumns()
     {
-      log.Trace(">>>");
-
+      log.Trace($"SongGrid: Creating Columns");
+      
       DataGridColumns = new Columns();
       // Now create the columns 
       foreach (GridViewColumn column in _gridColumns.Settings.Columns)
       {
         DataGridColumns.Add(Util.FormatGridColumn(column));
       }
-
-      log.Trace("<<<");
     }
 
     /// <summary>
@@ -261,7 +259,7 @@ namespace MPTagThat.SongGrid.ViewModels
     /// <param name = "scriptFile"></param>
     public void ExecuteScript(string scriptFile)
     {
-      log.Trace(">>>");
+      log.Trace("SongGrid: Executing script");
       Assembly assembly = (ServiceLocator.Current.GetInstance(typeof(IScriptManager)) as IScriptManager)?.Load(scriptFile);
 
       var count = 0;
@@ -314,8 +312,6 @@ namespace MPTagThat.SongGrid.ViewModels
       EventSystem.Publish(msg);
 
       IsBusy = false;
-
-      log.Trace("<<<");
     }
 
     #endregion
@@ -336,6 +332,8 @@ namespace MPTagThat.SongGrid.ViewModels
                log.Info("FolderScan: No folder selected");
                return;
              }
+
+             log.Info($"FolderScan: Scanning folder: {_selectedFolder}");
 
              IsBusy = true;
              _folderScanInProgress = true;
@@ -695,6 +693,7 @@ namespace MPTagThat.SongGrid.ViewModels
       switch (msg.Action.ToLower())
       {
         case "selectedfolderchanged":
+          log.Trace("SongGrid: Command SelectedFolderChanged");
           CheckChangesPending();
           if (msg.MessageData.ContainsKey("folder"))
           {
@@ -707,7 +706,8 @@ namespace MPTagThat.SongGrid.ViewModels
         case "command":
 
           var command = (Action.ActionType)msg.MessageData["command"];
-
+          log.Trace($"SongGrid: Command {command}");
+          
           if (command == Action.ActionType.NUMBERONCLICK)
           {
             if (_options.NumberOnclick)
