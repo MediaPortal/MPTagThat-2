@@ -21,7 +21,6 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -29,7 +28,6 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
 using CommonServiceLocator;
-using FreeImageAPI;
 using Microsoft.Win32;
 using MPTagThat.Core;
 using MPTagThat.Core.Common;
@@ -44,7 +42,6 @@ using Prism.Events;
 using Prism.Mvvm;
 using Prism.Regions;
 using Syncfusion.UI.Xaml.Grid;
-using Syncfusion.Windows.Shared;
 using TagLib;
 using Action = MPTagThat.Core.Common.Action;
 using File = System.IO.File;
@@ -64,9 +61,9 @@ namespace MPTagThat.TagEdit.ViewModels
 
     private readonly NLogLogger log = (ServiceLocator.Current.GetInstance(typeof(ILogger)) as ILogger)?.GetLogger;
     private readonly Options _options = (ServiceLocator.Current.GetInstance(typeof(ISettingsManager)) as ISettingsManager)?.GetOptions;
-    private List<SongData> _songs = null;
-    private SongData _songBackup = null;
-    private bool _isInitializing = false;
+    private List<SongData> _songs;
+    private SongData _songBackup;
+    private bool _isInitializing;
 
     #endregion
 
@@ -170,7 +167,7 @@ namespace MPTagThat.TagEdit.ViewModels
 
         if (!_isInitializing)
         {
-          SongEdit.MediaType = MediaTypes[value].Value.ToString();
+          SongEdit.MediaType = MediaTypes[value].Value;
           IsApplyButtonEnabled = true;
         }
         SetProperty(ref _selectedMediaTypeText, value);
@@ -180,7 +177,7 @@ namespace MPTagThat.TagEdit.ViewModels
     /// <summary>
     /// The Picture Types shown in the Picture Details Grid
     /// </summary>
-    public List<string> PictureTypes => Enum.GetNames(typeof(TagLib.PictureType)).ToList();
+    public List<string> PictureTypes => Enum.GetNames(typeof(PictureType)).ToList();
 
     /// <summary>
     /// The selected Picture in the Picture Details
@@ -666,7 +663,7 @@ namespace MPTagThat.TagEdit.ViewModels
         CkGenreIsChecked = true;
       }
 
-      if (SongEdit != null && (_songs != null && _songs.Count > 0))
+      if (SongEdit != null && (_songs != null && _songs.Count > 0) && !_isInitializing)
       {
         SongEdit.Genre = string.Join(";", SelectedGenres);
       }
@@ -1408,14 +1405,8 @@ namespace MPTagThat.TagEdit.ViewModels
     /// <param name="songs"></param>
     private void SetFormBindings(ref List<SongData> songs)
     {
+      ClearForm();
       _isInitializing = true;
-      FrontCover = null;
-      PictureDetail = null;
-      Genres.Clear();
-      SelectedGenres?.Clear();
-      SelectedPicture?.Clear();
-      Genres.AddRange(_options.MainSettings.CustomGenres);
-      Genres.AddRange(Util.Genres);
 
       if (songs.Count == 1)
       {
@@ -1766,7 +1757,7 @@ namespace MPTagThat.TagEdit.ViewModels
       IsApplyButtonEnabled = false;
 
       // We have multiple Songs selected, so show the Checkboxes and
-      // decide if they shoud be checked.
+      // decide if they should be checked.
       MultiCheckBoxVisibility = true;
     }
 
@@ -1863,15 +1854,21 @@ namespace MPTagThat.TagEdit.ViewModels
     /// </summary>
     private void ClearForm()
     {
+      _isInitializing = true;
       SongEdit = new SongData();
       UncheckCheckboxes();
-      SelectedGenres?.Clear();
-      InvolvedPersons?.Clear();
-      SelectedIndexMediaType = 0;
       FrontCover = null;
       PictureDetail = null;
+      Genres.Clear();
+      SelectedGenres?.Clear();
+      SelectedPicture?.Clear();
+      Genres.AddRange(_options.MainSettings.CustomGenres);
+      Genres.AddRange(Util.Genres);
+      InvolvedPersons?.Clear();
+      SelectedIndexMediaType = 0;
       MultiCheckBoxVisibility = false;
       IsApplyButtonEnabled = false;
+      _isInitializing = false;
     }
 
     /// <summary>
@@ -2057,6 +2054,7 @@ namespace MPTagThat.TagEdit.ViewModels
     /// <param name="navigationContext"></param>
     public void OnNavigatedTo(NavigationContext navigationContext)
     {
+      _isInitializing = true;
       RatingsGrid.RowDragDropController.Dropped += RatingsGrid_OnDropped;
 
       MultiCheckBoxVisibility = false;
@@ -2135,10 +2133,12 @@ namespace MPTagThat.TagEdit.ViewModels
     {
       switch (msg.Action.ToLower())
       {
-        // Clear the Tagedit Panel on Folder change
+        // Clear the Tag Edit Panel on Folder change
         case "selectedfolderchanged":
+          _isInitializing = true;
           ClearForm();
           IsEnabled = false;
+          _isInitializing = false;
           break;
 
         // Covers have been changed because of a Cover Search
