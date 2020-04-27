@@ -119,8 +119,10 @@ namespace DeployTool
     /// <returns></returns>
     public string GetStatus(string directory)
     {
+      string gitDir = GetGitDir(directory);
+
       using (
-        var proc = RunGitCommand($" status"))
+        var proc = RunGitCommand($"--git-dir=\"{gitDir}\" status"))
       {
         if (proc != null)
         {
@@ -136,10 +138,12 @@ namespace DeployTool
     /// </summary>
     /// <param name="fileName"></param>
     /// <returns></returns>
-    public bool RevertChange(string fileName)
+    public bool RevertChange(string fileName, string directory)
     {
+      string gitDir = GetGitDir(directory);
+
       using (
-        var proc = RunGitCommand($" checkout -- {fileName}"))
+        var proc = RunGitCommand($"--git-dir=\"{gitDir}\" checkout -- {fileName}"))
       {
         if (proc != null)
         {

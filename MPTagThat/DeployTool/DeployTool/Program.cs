@@ -145,7 +145,7 @@ namespace DeployTool
           var file = match.Groups[1].Value;
           if (file.EndsWith("AssemblyInfo.cs"))
           {
-            git.RevertChange(file);
+            git.RevertChange(file, gitDir);
             Console.WriteLine($"Reverted changes to {file}");
           }
         }
