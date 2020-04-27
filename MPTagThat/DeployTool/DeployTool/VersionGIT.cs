@@ -98,10 +98,12 @@ namespace DeployTool
     /// </summary>
     /// <param name="gitDir"></param>
     /// <returns></returns>
-    private string GetCurrentBuild(string gitDir)
+    private string GetCurrentBuild(string directory)
     {
+      string gitDir = GetGitDir(directory);
+
       using (
-        var proc = RunGitCommand($"--git-dir=\"{gitDir}\" rev-list HEAD --count "))
+        var proc = RunGitCommand($"-C {directory} --git-dir=\"{gitDir}\" rev-list HEAD --count "))
       {
         if (proc != null)
         {
@@ -122,7 +124,7 @@ namespace DeployTool
       string gitDir = GetGitDir(directory);
 
       using (
-        var proc = RunGitCommand($"--git-dir=\"{gitDir}\" status"))
+        var proc = RunGitCommand($"-C {directory} --git-dir=\"{gitDir}\" status"))
       {
         if (proc != null)
         {
@@ -143,7 +145,7 @@ namespace DeployTool
       string gitDir = GetGitDir(directory);
 
       using (
-        var proc = RunGitCommand($"--git-dir=\"{gitDir}\" checkout -- {fileName}"))
+        var proc = RunGitCommand($"-C {directory} --git-dir=\"{gitDir}\" checkout -- {fileName}"))
       {
         if (proc != null)
         {
@@ -162,9 +164,7 @@ namespace DeployTool
     /// <returns></returns>
     public bool ReadBuild(string directory)
     {
-      string gitDir = GetGitDir(directory);
-
-      _build = GetCurrentBuild(gitDir);
+      _build = GetCurrentBuild(directory);
       if (_build != null)
       {
         return true;
