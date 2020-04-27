@@ -118,20 +118,17 @@
 
   <DockPanel LastChildFill="True">
     <Grid DockPanel.Dock="Top" Margin="10,10,0,10">
-      <Grid.ColumnDefinitions>
-        <ColumnDefinition Width = "90" />
-        <ColumnDefinition Width = "90" />
-        <ColumnDefinition Width = "Auto" />
-      </Grid.ColumnDefinitions>
-      <syncfusion:ButtonAdv Grid.Column="0" Label="{lex:Loc dialog_Apply}" HorizontalAlignment="Left"  Width="75" 
+      <StackPanel Orientation="Horizontal">
+      <syncfusion:ButtonAdv Label="{lex:Loc dialog_Apply}" HorizontalAlignment="Left"  Width="Auto" 
                             SmallIcon="pack://application:,,,/MPTagThat;component/Resources/Images/Apply_Changes_32x.png" 
                             Command="{Binding ApplyEditCommand}"
                             CommandParameter="{Binding SongEdit}" 
                             IsEnabled="{Binding IsApplyButtonEnabled, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 
-      <syncfusion:ButtonAdv Grid.Column="1" Label="{lex:Loc dialog_Cancel}" HorizontalAlignment="Left"  Width="75" 
+      <syncfusion:ButtonAdv Label="{lex:Loc dialog_Cancel}" HorizontalAlignment="Left"  Width="Auto" Margin="10,0,0,0"
                             SmallIcon="pack://application:,,,/MPTagThat;component/Resources/Images/Cancel_Changes_32x.png" 
                             Command="{Binding CancelEditCommand}" />
+      </StackPanel>
     </Grid>
     <syncfusion:TabNavigationControl TabStripVisibility="Visible" SelectedIndex="0" >
       <syncfusion:TabNavigationItem Header="{lex:Loc tagEdit_TabHeader_Main}" >
@@ -472,7 +469,7 @@
 
                   <!-- Picture Details -->
                   <syncfusion:SfAccordionItem Header="{lex:Loc tagEdit_TabHeader_Pictures}" AccordionButtonStyle="{StaticResource expanderButtonStyle}" >
-                    <StackPanel Margin="5,5,0,5" >
+                    <StackPanel Margin="5,10,0,5" >
                       <Grid>
                         <Grid.RowDefinitions>
                           <RowDefinition/>
@@ -535,7 +532,7 @@
 
                   <!-- Lyrics Details -->
                   <syncfusion:SfAccordionItem Header="{lex:Loc tagEdit_TabHeader_Lyrics}" AccordionButtonStyle="{StaticResource expanderButtonStyle}">
-                    <StackPanel Margin="5,5,0,5" >
+                    <StackPanel Margin="5,10,0,5" >
                       <Grid>
                         <Grid.RowDefinitions>
                           <RowDefinition/>
@@ -576,7 +573,7 @@
                   <!-- MusicBrainz Information -->
                   <syncfusion:SfAccordionItem Header="{lex:Loc tagEdit_TabHeader_MusicBrainz}" AccordionButtonStyle="{StaticResource expanderButtonStyle}" >
                     <Grid>
-                      <GroupBox Background="Transparent" Style="{DynamicResource GroupBoxStyleNoHeader}">
+                      <GroupBox Background="Transparent" Style="{DynamicResource GroupBoxStyleNoHeader}" Margin="5,10,0,5">
                         <StackPanel>
                           <Grid Margin="5">
                             <Grid.ColumnDefinitions>
@@ -766,7 +763,7 @@
                         <RowDefinition/>
                         <RowDefinition/>
                       </Grid.RowDefinitions>
-                      <GroupBox Grid.Row="0" Background="Transparent" Style="{DynamicResource GroupBoxStyleNoHeader}">
+                      <GroupBox Grid.Row="0" Background="Transparent" Style="{DynamicResource GroupBoxStyleNoHeader}" Margin="5,10,0,5">
                         <StackPanel>
                           <!-- Interpreted By -->
                           <Grid Margin="5">
@@ -1075,7 +1072,7 @@
                   <!-- Rating -->
                   <syncfusion:SfAccordionItem Header="{lex:Loc tagEdit_TabHeader_Rating}" AccordionButtonStyle="{StaticResource expanderButtonStyle}" IsEnabled="{Binding SongEdit.IsMp3}">
                     <Grid>
-                      <GroupBox Background="Transparent" Style="{DynamicResource GroupBoxStyleNoHeader}">
+                      <GroupBox Background="Transparent" Style="{DynamicResource GroupBoxStyleNoHeader}" Margin="5,10,0,5">
                         <StackPanel Orientation="Vertical">
                           <syncfusion:SfDataGrid x:Name="RatingGrid"
                                                  ItemsSource="{Binding SongEdit.Ratings}"
@@ -1108,7 +1105,7 @@
                                                   Width="Auto" Height="25" 
                                                   Margin="20,5,0,0" />
                           </StackPanel>
-                          <TextBlock Text="{lex:Loc tagEdit_Rating_Note}" TextWrapping="Wrap" Margin="5,5,0,1"  Width="350"/>
+                          <TextBlock Text="{lex:Loc tagEdit_Rating_Note}" HorizontalAlignment="Left" TextWrapping="Wrap" Margin="5,5,0,1"  Width="350"/>
                         </StackPanel>
                       </GroupBox>
                     </Grid>
@@ -1117,7 +1114,7 @@
                   <!-- Original Information -->
                   <syncfusion:SfAccordionItem Header="{lex:Loc tagEdit_TabHeader_Original_Information}" AccordionButtonStyle="{StaticResource expanderButtonStyle}" IsEnabled="{Binding SongEdit.IsMp3}">
                     <Grid>
-                      <GroupBox Background="Transparent" Style="{DynamicResource GroupBoxStyleNoHeader}">
+                      <GroupBox Background="Transparent" Style="{DynamicResource GroupBoxStyleNoHeader}" Margin="5,10,0,5">
                         <StackPanel>
                           <!-- Original Artist -->
                           <Grid Margin="5">
@@ -1234,7 +1231,7 @@
                   <!-- Web Information -->
                   <syncfusion:SfAccordionItem Header="{lex:Loc tagEdit_TabHeader_Web_Information}"  AccordionButtonStyle="{StaticResource expanderButtonStyle}" IsEnabled="{Binding SongEdit.IsMp3}" >
                     <Grid>
-                      <GroupBox Background="Transparent" Style="{DynamicResource GroupBoxStyleNoHeader}">
+                      <GroupBox Background="Transparent" Style="{DynamicResource GroupBoxStyleNoHeader}" Margin="5,10,0,5">
                         <StackPanel>
                           <!-- Copyright Information -->
                           <Grid Margin="5">
@@ -1388,7 +1385,7 @@
                   <!-- Involved People -->
                   <syncfusion:SfAccordionItem Header="{lex:Loc tagEdit_TabHeader_Involved_People}" AccordionButtonStyle="{StaticResource expanderButtonStyle}" IsEnabled="{Binding SongEdit.IsMp3}">
                     <StackPanel Orientation="Vertical">
-                      <GroupBox Background="Transparent" Header="{lex:Loc tagEdit_InvolvedPerson_Header}" >
+                      <GroupBox Background="Transparent" Header="{lex:Loc tagEdit_InvolvedPerson_Header}" Margin="5,10,0,5" >
                         <StackPanel Orientation="Vertical">
                           <syncfusion:SfDataGrid ItemsSource="{Binding InvolvedPersons,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                                                  SelectedItems="{Binding SelectedPerson,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
@@ -1420,7 +1417,7 @@
                         </StackPanel>
                       </GroupBox>
 
-                      <GroupBox Background="Transparent" Header="{lex:Loc tagEdit_MusicCreditList_Header}" IsEnabled="{Binding SongEdit.IsMp3V4}" >
+                      <GroupBox Background="Transparent" Header="{lex:Loc tagEdit_MusicCreditList_Header}" IsEnabled="{Binding SongEdit.IsMp3V4}" Margin="5,10,0,5">
                         <StackPanel Orientation="Vertical">
                           <syncfusion:SfDataGrid ItemsSource="{Binding InvolvedMusicians,Mode=TwoWay}"
                                                  SelectedItems="{Binding SelectedMusician,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
@@ -1457,7 +1454,7 @@
                   <!-- User Defined Frames -->
                   <syncfusion:SfAccordionItem Header="{lex:Loc tagEdit_TabHeader_UserFrames}" AccordionButtonStyle="{StaticResource expanderButtonStyle}" IsEnabled="{Binding SongEdit.IsMp3}">
                     <Grid>
-                      <GroupBox Background="Transparent" Style="{DynamicResource GroupBoxStyleNoHeader}">
+                      <GroupBox Background="Transparent" Style="{DynamicResource GroupBoxStyleNoHeader}" Margin="5,10,0,5">
                         <StackPanel Orientation="Vertical">
                           <syncfusion:SfDataGrid ItemsSource="{Binding SongEdit.UserFrames,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                                  SelectedItems="{Binding SelectedUserFrames}"

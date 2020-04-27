@@ -89,7 +89,7 @@
         <syncfusion:ButtonAdv Label="{lex:Loc dialog_Close}" 
                               SmallIcon="pack://application:,,,/MPTagThat;component/Resources/Images/Status_ok.png" 
                               Command="{Binding CloseDialogCommand}" 
-                              Width="75" Height="25" 
+                              Width="Auto" Height="25" 
                               HorizontalAlignment="Center" Margin="0,30,0,30" />
       </StackPanel>
     </Grid>
