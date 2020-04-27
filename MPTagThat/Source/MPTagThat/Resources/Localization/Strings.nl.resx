@@ -1,0 +1,1181 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>  <data name="ApplicationName" xml:space="preserve">
+    <value>MPTagThat de MediaPortal Tag Editor</value>
+  </data>
+  <data name="treeview_Header" xml:space="preserve">
+    <value>Mappen</value>
+  </data>
+  <data name="statusBar_FilterActive" xml:space="preserve">
+    <value>Tagfilter: Actief</value>
+  </data>
+  <data name="statusBar_FilterInactive" xml:space="preserve">
+    <value>Tagfilter: Inactief</value>
+  </data>
+  <data name="miscFiles_Header" xml:space="preserve">
+    <value>Niet-muziekbestanden</value>
+  </data>
+  <data name="miscFiles_Menu_Rename" xml:space="preserve">
+    <value>Hernoem naar \"folder,jpg\"</value>
+  </data>
+  <data name="miscFiles_Menu_DeleteFiles" xml:space="preserve">
+    <value>Verwijder geselecteerd(e) bestand(en)</value>
+  </data>
+  <data name="statusBar_NumberOfFiles" xml:space="preserve">
+    <value>Bestanden: {0} (Geselecteerd: {1})</value>
+  </data>
+  <data name="ribbon_Refresh" xml:space="preserve">
+    <value>Ververs</value>
+  </data>
+  <data name="ribbon_Save" xml:space="preserve">
+    <value>Opslaan</value>
+  </data>
+  <data name="ribbon_Exit" xml:space="preserve">
+    <value>Afsluiten</value>
+  </data>
+  <data name="ribbon_TagTab" xml:space="preserve">
+    <value>Tags</value>
+  </data>
+  <data name="ribbon_TagFromFile" xml:space="preserve">
+    <value>Tag van Betandsnaam</value>
+  </data>
+  <data name="ribbon_RenameFile" xml:space="preserve">
+    <value>Hernoem Bestand</value>
+  </data>
+  <data name="ribbon_RenameFileMenu" xml:space="preserve">
+    <value>Hernoem Bestand</value>
+  </data>
+  <data name="ribbon_RenameFileOptions" xml:space="preserve">
+    <value>Hernoem Bestand Opties</value>
+  </data>
+  <data name="ribbon_IdentifyFile" xml:space="preserve">
+    <value>Identificeer Bestand</value>
+  </data>
+  <data name="ribbon_TagFromInternet" xml:space="preserve">
+    <value>Tag van Internet</value>
+  </data>
+  <data name="ribbon_SingleTagEdit" xml:space="preserve">
+    <value>Enkele Tag Bewerk</value>
+  </data>
+  <data name="ribbon_MultiTagEdit" xml:space="preserve">
+    <value>Meerdere Tags Bewerk</value>
+  </data>
+  <data name="ribbon_GetCoverArt" xml:space="preserve">
+    <value>Verkrijg Cover Art</value>
+  </data>
+  <data name="ribbon_GetLyrics" xml:space="preserve">
+    <value>Verkrijg Lyrics</value>
+  </data>
+  <data name="ribbon_AutoNumber" xml:space="preserve">
+    <value>Auto Nummering</value>
+  </data>
+  <data name="ribbon_NumberOnClick" xml:space="preserve">
+    <value>Nummer bij Klikken</value>
+  </data>
+  <data name="ribbon_Find" xml:space="preserve">
+    <value>Zoek</value>
+  </data>
+  <data name="ribbon_Replace" xml:space="preserve">
+    <value>Vervang</value>
+  </data>
+  <data name="ribbon_ValidateSong" xml:space="preserve">
+    <value>Valideer MP3</value>
+  </data>
+  <data name="ribbon_FixSong" xml:space="preserve">
+    <value>Repareer MP3</value>
+  </data>
+  <data name="ribbon_ReplayGain" xml:space="preserve">
+    <value>Replay Gain</value>
+  </data>
+  <data name="ribbon_BPM" xml:space="preserve">
+    <value>BPM Detect</value>
+  </data>
+  <data name="ribbon_RemoveCommentPicture" xml:space="preserve">
+    <value>Verwijder:</value>
+  </data>
+  <data name="ribbon_RemoveComments" xml:space="preserve">
+    <value>Verwijder alle commentaar</value>
+  </data>
+  <data name="ribbon_RemovePictures" xml:space="preserve">
+    <value>Verwijder alle afbeeldingen</value>
+  </data>
+  <data name="ribbon_CaseConversion" xml:space="preserve">
+    <value>Kapitaal Omzetting</value>
+  </data>
+  <data name="ribbon_CaseConversionMenu" xml:space="preserve">
+    <value>Kapitaal omzetting</value>
+  </data>
+  <data name="ribbon_CaseConversionOption" xml:space="preserve">
+    <value>Kapitaal omzettings opties</value>
+  </data>
+  <data name="ribbon_DeleteTags" xml:space="preserve">
+    <value>Verwijder Tags</value>
+  </data>
+  <data name="ribbon_DeleteAllTags" xml:space="preserve">
+    <value>Verwijder alle Tags</value>
+  </data>
+  <data name="ribbon_DeleteID3V1Tags" xml:space="preserve">
+    <value>Verwijder alleen ID3 V1 Tags</value>
+  </data>
+  <data name="ribbon_DeleteID3V2Tags" xml:space="preserve">
+    <value>Verwijder alleen ID3 V2 Tags</value>
+  </data>
+  <data name="ribbon_EditTags" xml:space="preserve">
+    <value>Bewerk Tags</value>
+  </data>
+  <data name="ribbon_RetrieveTags" xml:space="preserve">
+    <value>Tags ophalen</value>
+  </data>
+  <data name="ribbon_OrganiseFiles" xml:space="preserve">
+    <value>Organiseer</value>
+  </data>
+  <data name="ribbon_SaveFolderThumb" xml:space="preserve">
+    <value>Opslaan als map miniatuur</value>
+  </data>
+  <data name="ribbon_ExecuteScript" xml:space="preserve">
+    <value>Uitvoeren Script</value>
+  </data>
+  <data name="ribbon_Picture" xml:space="preserve">
+    <value>Albumhoes</value>
+  </data>
+  <data name="ribbon_Organise" xml:space="preserve">
+    <value>Organiseer bestanden</value>
+  </data>
+  <data name="ribbon_AddBurner" xml:space="preserve">
+    <value>Toevoegen aan Brander</value>
+  </data>
+  <data name="ribbon_AddConvert" xml:space="preserve">
+    <value>Toevoegen aan Omzetting</value>
+  </data>
+  <data name="ribbon_AddPlaylist" xml:space="preserve">
+    <value>Toevoegen aan Afspeellijst</value>
+  </data>
+  <data name="ribbon_Other" xml:space="preserve">
+    <value>Andere</value>
+  </data>
+  <data name="ribbon_RipTab" xml:space="preserve">
+    <value>Rippen</value>
+  </data>
+  <data name="ribbon_ConvertTab" xml:space="preserve">
+    <value>Omzetten</value>
+  </data>
+  <data name="ribbon_BurnTab" xml:space="preserve">
+    <value>Branden</value>
+  </data>
+  <data name="ribbon_DatabaseContextualTab" xml:space="preserve">
+    <value>Database</value>
+  </data>
+  <data name="ribbon_DatabaseTab" xml:space="preserve">
+    <value>Database</value>
+  </data>
+  <data name="screentip_RefreshText" xml:space="preserve">
+    <value>De inhoud van de geselecteerde map wordt opnieuw ingelezen.
+Als er niet opgeslagen wijzigingen zijn zal het systeem eerst vragen of deze moeten worden opgeslagen.</value>
+  </data>
+  <data name="screentip_SaveText" xml:space="preserve">
+    <value>Slaat de wijzigingen op schijf op door de tags van de geselecteerde bestanden aan te passen.</value>
+  </data>
+  <data name="screentip_TagFromFileText" xml:space="preserve">
+    <value>Door specifieke parameters uit het dialoog te gebruiken, worden tags zoals \"Track #\", \"Artist\", \"Title\", etc. uit de bestandsnaam overgenomen.</value>
+  </data>
+  <data name="screentip_IdentifyFileText" xml:space="preserve">
+    <value>Er wordt een hash gemaakt van de eerste 30 seconden van het bestand. Deze hash word gebruikt om het bestand te identificeren op MusicBrainz. De tags worden van MusicBrainz gehaald en in het bestand geschreven.</value>
+  </data>
+  <data name="screentip_TagFromInternetText" xml:space="preserve">
+    <value>De gegeven Artiest en Album naam worden gebruikt om te zoeken op Amazon, terwijl geprobeerd word de bestandsnamen te matchen met de lijst van Amazon.</value>
+  </data>
+  <data name="screentip_GetLyricsText" xml:space="preserve">
+    <value>De Lyricsengine haalt de teksten voor de geselecteerde bestanden uit de Lyrics bronnen geselecteerd in de voorkeuren.</value>
+  </data>
+  <data name="screentip_AutoNumberText" xml:space="preserve">
+    <value>Het nummer van de geselecteerde bestanden word ingesteld door de waarde in het tekstvenster te gebruiken als start nummer.</value>
+  </data>
+  <data name="screentip_NumberOnClickText" xml:space="preserve">
+    <value>Zolang de knop aan staat zal het tracknummer worden ingesteld als er op een bestand wordt geclickt.</value>
+  </data>
+  <data name="screentip_RemoveCommentsText" xml:space="preserve">
+    <value>Alle commentaar in de geselecteerde bestanden zal worden verwijderd.</value>
+  </data>
+  <data name="screentip_CaseConversionText" xml:space="preserve">
+    <value>Het vervangen van hoofdletters, zoals ingesteld in de Opties, word toegepast op de geselecteerde bestanden.</value>
+  </data>
+  <data name="screentip_DeleteTagsText" xml:space="preserve">
+    <value>Alle tags worden verwijderd uit de geselecteerde bestanden</value>
+  </data>
+  <data name="screentip_RenameFileText" xml:space="preserve">
+    <value>De bestanden worden hernoemd volgens de gespecificeerde parameters uit het venster.</value>
+  </data>
+  <data name="screentip_OrganiseText" xml:space="preserve">
+    <value>De bestanden worden gekopieerd/verplaatst naar een nieuwe locatie, gebaseerd op de tags gespecificeerd in de venster parameters.</value>
+  </data>
+  <data name="screentip_ExecuteScriptText" xml:space="preserve">
+    <value>Past het script toe uit de keuzelijst van de geselecteerde bestanden.</value>
+  </data>
+  <data name="screentip_FindText" xml:space="preserve">
+    <value>Open het zoekventers om specifieke strings te zoeken in de geselecteerde Nummers.</value>
+  </data>
+  <data name="screentip_ReplaceText" xml:space="preserve">
+    <value>Opent het zoek/vervang venster om een gespecificeerde zoekopdracht te vervangen in de geselecteerde Nummers.</value>
+  </data>
+  <data name="screentip_ValidateSongText" xml:space="preserve">
+    <value>Gebruikt MP3Val om de juistheid van de geselecteerde MP3 bestanden te controleren. Sommige fouten kunnen opgelost worden met de \"Repareer MP3\" knop.</value>
+  </data>
+  <data name="screentip_FixSongText" xml:space="preserve">
+    <value>Gebruikt MP3Val om fouten in de geselecteerde MP3 bestanden  te detecteren.</value>
+  </data>
+  <data name="screentip_ReplayGainText" xml:space="preserve">
+    <value>Analiseer de geselecteerde bestanden en calculeer de Replay Gain. De waarde word in de Tags geschreven. Opmerking: Het bestand zelf word niet aangepast.</value>
+  </data>
+  <data name="screentip_BPMText" xml:space="preserve">
+    <value>Analyseert de geselecteerde bestanden en berekend het aantal Beats per Minuut (BPM). De waarde word in de Tags geschreven. Let op: Het bestand zelf blijft ongewijzigd.</value>
+  </data>
+  <data name="tagEdit_TabHeader_Lyrics" xml:space="preserve">
+    <value>Liedteksten</value>
+  </data>
+  <data name="tagEdit_TabHeader_Detailed_Information" xml:space="preserve">
+    <value>gedetaileerde Informatie</value>
+  </data>
+  <data name="tagEdit_TabHeader_Main" xml:space="preserve">
+    <value>Hoofd Tags</value>
+  </data>
+  <data name="tagEdit_TabHeader_Pictures" xml:space="preserve">
+    <value>Afbeeldingen</value>
+  </data>
+  <data name="tagEdit_AlbumArtist" xml:space="preserve">
+    <value>AlbumArtiest:</value>
+  </data>
+  <data name="tagEdit_Track" xml:space="preserve">
+    <value>Nummer:</value>
+  </data>
+  <data name="tagEdit_Artist" xml:space="preserve">
+    <value>Artiest:</value>
+  </data>
+  <data name="tagEdit_Year" xml:space="preserve">
+    <value>Jaar:</value>
+  </data>
+  <data name="tagEdit_Title" xml:space="preserve">
+    <value>Titel:</value>
+  </data>
+  <data name="tagEdit_Album" xml:space="preserve">
+    <value>Album:</value>
+  </data>
+  <data name="tagEdit_PartOfCompilation" xml:space="preserve">
+    <value>Onderdeel van compilatie</value>
+  </data>
+  <data name="tagEdit_Comment" xml:space="preserve">
+    <value>Commentaar:</value>
+  </data>
+  <data name="tagEdit_Genre" xml:space="preserve">
+    <value>Genre:</value>
+  </data>
+  <data name="tagEdit_Disc" xml:space="preserve">
+    <value>Disk:</value>
+  </data>
+  <data name="tagEdit_Remove_Existing_Pictures" xml:space="preserve">
+    <value>Bestaande afbeeldingen eerst verwijderen</value>
+  </data>
+  <data name="tagEdit_GetTrackLength_Checkbox" xml:space="preserve">
+    <value>Ophalen uit bestand</value>
+  </data>
+  <data name="tagEdit_GetTrackLength" xml:space="preserve">
+    <value>Haal nummer duur uit bestand</value>
+  </data>
+  <data name="tagEdit_Songlength" xml:space="preserve">
+    <value>Duur nummer (ms):</value>
+  </data>
+  <data name="tagEdit_MediaType" xml:space="preserve">
+    <value>Media Type:</value>
+  </data>
+  <data name="tagEdit_TitleSort" xml:space="preserve">
+    <value>Titel Sortering:</value>
+  </data>
+  <data name="tagEdit_AlbumSort" xml:space="preserve">
+    <value>Album Sortering:</value>
+  </data>
+  <data name="tagEdit_ArtistSort" xml:space="preserve">
+    <value>Artiest Sortering:</value>
+  </data>
+  <data name="tagEdit_AlbumArtistSort" xml:space="preserve">
+    <value>AlbumArtiest Sortering:</value>
+  </data>
+  <data name="tagEdit_SubTitle" xml:space="preserve">
+    <value>Subtitel:</value>
+  </data>
+  <data name="tagEdit_Content_Group" xml:space="preserve">
+    <value>Groepering:</value>
+  </data>
+  <data name="tagEdit_Copyright" xml:space="preserve">
+    <value>Copyright:</value>
+  </data>
+  <data name="tagEdit_EncodedBy" xml:space="preserve">
+    <value>Geëncodeerd door:</value>
+  </data>
+  <data name="tagEdit_Publisher" xml:space="preserve">
+    <value>Uitgever:</value>
+  </data>
+  <data name="tagEdit_TextWriter" xml:space="preserve">
+    <value>Liedteksten / Tekst Schrijver:</value>
+  </data>
+  <data name="tagEdit_InterpretedBy" xml:space="preserve">
+    <value>Geïnterpreteerd door:</value>
+  </data>
+  <data name="tagEdit_Composer" xml:space="preserve">
+    <value>Componist:</value>
+  </data>
+  <data name="tagEdit_Conductor" xml:space="preserve">
+    <value>Dirigent:</value>
+  </data>
+  <data name="tagEdit_OrigReleaseYear" xml:space="preserve">
+    <value>Oorspronkelijk jaar van uitgave:</value>
+  </data>
+  <data name="tagEdit_OrigOwner" xml:space="preserve">
+    <value>Oorspronkelijk Eigenaar:</value>
+  </data>
+  <data name="tagEdit_OrigArtist" xml:space="preserve">
+    <value>Oorspronkelijk Artiest:</value>
+  </data>
+  <data name="tagEdit_OrigLyricsWriter" xml:space="preserve">
+    <value>Oorspronkelijk Liedtekst schrijver:</value>
+  </data>
+  <data name="tagEdit_OrigFileName" xml:space="preserve">
+    <value>Oorspronkelijke Bestandsnaam:</value>
+  </data>
+  <data name="tagEdit_OrigAlbum" xml:space="preserve">
+    <value>Oorspronkelijke Album Titel:</value>
+  </data>
+  <data name="tagEdit_MusicCreditList_Delete" xml:space="preserve">
+    <value>Muzikant verwijderen</value>
+  </data>
+  <data name="tagEdit_MusicCreditList_Add" xml:space="preserve">
+    <value>Muzikant Toevoegen</value>
+  </data>
+  <data name="tagEdit_MusicCreditList_Instrument" xml:space="preserve">
+    <value>Instrument</value>
+  </data>
+  <data name="tagEdit_InvolvedPerson_Delete" xml:space="preserve">
+    <value>Persoon verwijderen</value>
+  </data>
+  <data name="tagEdit_InvolvedPerson_Add" xml:space="preserve">
+    <value>Persoon toevoegen</value>
+  </data>
+  <data name="tagEdit_InvolvedPerson_Function" xml:space="preserve">
+    <value>Functie betrokken persoon:</value>
+  </data>
+  <data name="tagEdit_InvolvedPerson_Name" xml:space="preserve">
+    <value>Naam</value>
+  </data>
+  <data name="tagEdit_CommercialInfo" xml:space="preserve">
+    <value>URL Commerciële Informatie:</value>
+  </data>
+  <data name="tagEdit_OfficialPublisher" xml:space="preserve">
+    <value>URL Officiële Uitgever:</value>
+  </data>
+  <data name="tagEdit_OfficialPayment" xml:space="preserve">
+    <value>URL Officiële Betaling:</value>
+  </data>
+  <data name="tagEdit_OfficialRadioStation" xml:space="preserve">
+    <value>Officiële Internet Radio Stat. URL:</value>
+  </data>
+  <data name="tagEdit_OfficialAudioSource" xml:space="preserve">
+    <value>URL Officiële Audiobron:</value>
+  </data>
+  <data name="tagEdit_OfficialArtist" xml:space="preserve">
+    <value>URL Officiële Artiest:</value>
+  </data>
+  <data name="tagEdit_OfficialAudiofile" xml:space="preserve">
+    <value>URL Officiëel Audiobetand:</value>
+  </data>
+  <data name="tagEdit_CopyrightInformation" xml:space="preserve">
+    <value>URL Copyright Informatie:</value>
+  </data>
+  <data name="tagEdit_Rating_Note" xml:space="preserve">
+    <value>De waardering is 1-255 waar 1 is het slechtst en 255 is het beste. 0 is onbekend. Opmerking: Veel programma\'s hebben hun eigen waardering en definiëren de ID3 standaard anders. Wanneer geen tegenspraak wordt gegeven kan deze worden toegevoegd.</value>
+  </data>
+  <data name="tagEdit_RatingPlayCount" xml:space="preserve">
+    <value>Afspeel teller:</value>
+  </data>
+  <data name="tagEdit_Rating_Delete" xml:space="preserve">
+    <value>Waardering verwijderen</value>
+  </data>
+  <data name="tagEdit_Rating_Add" xml:space="preserve">
+    <value>Waardering toevoegen</value>
+  </data>
+  <data name="tagEdit_RatingUser" xml:space="preserve">
+    <value>Gebruiker (e-Mail):</value>
+  </data>
+  <data name="tagEdit_TabHeader_UserFrames" xml:space="preserve">
+    <value>Gebruiker gedefiniëerd</value>
+  </data>
+  <data name="tagEdit_TabHeader_Rating" xml:space="preserve">
+    <value>Waardering</value>
+  </data>
+  <data name="tagEdit_TabHeader_Web_Information" xml:space="preserve">
+    <value>Web Informatie</value>
+  </data>
+  <data name="tagEdit_TabHeader_Involved_People" xml:space="preserve">
+    <value>Betrokken personen</value>
+  </data>
+  <data name="tagEdit_TabHeader_Original_Information" xml:space="preserve">
+    <value>Originele Informatie</value>
+  </data>
+  <data name="tagEdit_UserFrames_FrameId" xml:space="preserve">
+    <value>Frame Id</value>
+  </data>
+  <data name="tagEdit_UserFrames_Description" xml:space="preserve">
+    <value>Beschrijving</value>
+  </data>
+  <data name="tagEdit_UserFrames_Text" xml:space="preserve">
+    <value>Tekst</value>
+  </data>
+  <data name="tagEdit_UserFrames_Add" xml:space="preserve">
+    <value>Voeg Frame toe</value>
+  </data>
+  <data name="tagEdit_UserFrames_DeleteFrame" xml:space="preserve">
+    <value>Verwijder Frame(s)</value>
+  </data>
+  <data name="tagEdit_UserFrames_DeleteAllFrames" xml:space="preserve">
+    <value>Verwijder alle Frames</value>
+  </data>
+  <data name="lyricsSearch_Title" xml:space="preserve">
+    <value>Vind een liedtekst voor {0} - {1}</value>
+  </data>
+  <data name="lyricsSearch_Status" xml:space="preserve">
+    <value>Zoeken naar Liedtekst ... Even geduld a.u.b.</value>
+  </data>
+  <data name="lyricsSearch_Finished" xml:space="preserve">
+    <value>Zoeken voltooid. Deselecteer nummers met incorrecte Liedteksten.</value>
+  </data>
+  <data name="lyricsSearch_NothingToSearch" xml:space="preserve">
+    <value>Er is niets om naar te zoeken</value>
+  </data>
+  <data name="coverSearch_Title" xml:space="preserve">
+    <value>Zoek Album</value>
+  </data>
+  <data name="identifySong_Title" xml:space="preserve">
+    <value>Op Internet opzoeken</value>
+  </data>
+  <data name="identifySong_GroupBox_Identified" xml:space="preserve">
+    <value>Geïdentificeerd Nummer</value>
+  </data>
+  <data name="identifySong_Country" xml:space="preserve">
+    <value>land</value>
+  </data>
+  <data name="identifySong_GroupBox_Results" xml:space="preserve">
+    <value>Het nummer is beschikbaar op meerdere albums. A.u.b. één selecteren</value>
+  </data>
+  <data name="songHeader_FileName" xml:space="preserve">
+    <value>Bestandsnaam</value>
+  </data>
+  <data name="songHeader_FilePath" xml:space="preserve">
+    <value>Pad</value>
+  </data>
+  <data name="songHeader_NewFileName" xml:space="preserve">
+    <value>Nieuwe Bestandsnaam</value>
+  </data>
+  <data name="songHeader_Status" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="songHeader_Track" xml:space="preserve">
+    <value>Nummer</value>
+  </data>
+  <data name="songHeader_NumTracks" xml:space="preserve">
+    <value>Nummer #</value>
+  </data>
+  <data name="songHeader_Title" xml:space="preserve">
+    <value>Titel</value>
+  </data>
+  <data name="songHeader_Artist" xml:space="preserve">
+    <value>Artiest</value>
+  </data>
+  <data name="songHeader_AlbumArtist" xml:space="preserve">
+    <value>Album Artiest</value>
+  </data>
+  <data name="songHeader_Album" xml:space="preserve">
+    <value>Album</value>
+  </data>
+  <data name="songHeader_Year" xml:space="preserve">
+    <value>Jaar</value>
+  </data>
+  <data name="songHeader_Genre" xml:space="preserve">
+    <value>Genre</value>
+  </data>
+  <data name="songHeader_CreationTime" xml:space="preserve">
+    <value>Productiedatum</value>
+  </data>
+  <data name="songHeader_LastWriteTime" xml:space="preserve">
+    <value>Veranderd</value>
+  </data>
+  <data name="songHeader_TagType" xml:space="preserve">
+    <value>Type</value>
+  </data>
+  <data name="songHeader_Disc" xml:space="preserve">
+    <value>Disk #</value>
+  </data>
+  <data name="songHeader_NumDisc" xml:space="preserve">
+    <value>Genum. Disks</value>
+  </data>
+  <data name="songHeader_BPM" xml:space="preserve">
+    <value>BPM</value>
+  </data>
+  <data name="songHeader_Rating" xml:space="preserve">
+    <value>Waardering</value>
+  </data>
+  <data name="songHeader_ReplayGainTrack" xml:space="preserve">
+    <value>Track Gain</value>
+  </data>
+  <data name="songHeader_ReplayGainTrackPeak" xml:space="preserve">
+    <value>Track Peak</value>
+  </data>
+  <data name="songHeader_ReplayGainAlbum" xml:space="preserve">
+    <value>Album Gain</value>
+  </data>
+  <data name="songHeader_ReplayGainAlbumPeak" xml:space="preserve">
+    <value>Album Peak</value>
+  </data>
+  <data name="songHeader_Comment" xml:space="preserve">
+    <value>Commentaar</value>
+  </data>
+  <data name="songHeader_Composer" xml:space="preserve">
+    <value>Component</value>
+  </data>
+  <data name="songHeader_Conductor" xml:space="preserve">
+    <value>Dirigent</value>
+  </data>
+  <data name="songHeader_NumPics" xml:space="preserve">
+    <value># Afbeelding</value>
+  </data>
+  <data name="songHeader_Picture" xml:space="preserve">
+    <value>Afbeelding</value>
+  </data>
+  <data name="songHeader_ArtistSortName" xml:space="preserve">
+    <value>Sorteer op Artiest</value>
+  </data>
+  <data name="songHeader_AlbumSortName" xml:space="preserve">
+    <value>Sorteer op =Albumnaam</value>
+  </data>
+  <data name="songHeader_CommercialInformation" xml:space="preserve">
+    <value>Commerciële Informatie</value>
+  </data>
+  <data name="songHeader_Copyright" xml:space="preserve">
+    <value>Copyright</value>
+  </data>
+  <data name="songHeader_CopyrightInformation" xml:space="preserve">
+    <value>Copyright Informatie</value>
+  </data>
+  <data name="songHeader_EncodedBy" xml:space="preserve">
+    <value>Gecodeerd door</value>
+  </data>
+  <data name="songHeader_Interpreter" xml:space="preserve">
+    <value>Geïnterpreteerd door</value>
+  </data>
+  <data name="songHeader_Grouping" xml:space="preserve">
+    <value>Gegroepeerd</value>
+  </data>
+  <data name="songHeader_Lyrics" xml:space="preserve">
+    <value>Liedteksten</value>
+  </data>
+  <data name="songHeader_MediaType" xml:space="preserve">
+    <value>Media Type</value>
+  </data>
+  <data name="songHeader_OfficialAudioFileInformation" xml:space="preserve">
+    <value>Off. Audiobestand Informatie</value>
+  </data>
+  <data name="songHeader_OfficialArtistInformation" xml:space="preserve">
+    <value>Off. Artiest Informatie</value>
+  </data>
+  <data name="songHeader_OfficialAudioSourceInformation" xml:space="preserve">
+    <value>Off. Audiobron Informatie</value>
+  </data>
+  <data name="songHeader_OfficialInternetRadioInformation" xml:space="preserve">
+    <value>Off. Internet Radio Informatie</value>
+  </data>
+  <data name="songHeader_OfficialPaymentInformation" xml:space="preserve">
+    <value>Off. Betalings Informatie</value>
+  </data>
+  <data name="songHeader_OfficialPublisherInformation" xml:space="preserve">
+    <value>Off. Uitgevers Informatie</value>
+  </data>
+  <data name="songHeader_OriginalAlbum" xml:space="preserve">
+    <value>Origineel Album</value>
+  </data>
+  <data name="songHeader_OriginalFileName" xml:space="preserve">
+    <value>Originele Bestandsnaam</value>
+  </data>
+  <data name="songHeader_OriginalLyricsWriter" xml:space="preserve">
+    <value>Originele Tekstschrijver</value>
+  </data>
+  <data name="songHeader_OriginalArtist" xml:space="preserve">
+    <value>Originele Artiest</value>
+  </data>
+  <data name="songHeader_OriginalOwner" xml:space="preserve">
+    <value>Originele Eigenaar</value>
+  </data>
+  <data name="songHeader_OriginalRelease" xml:space="preserve">
+    <value>Originele Uitgave</value>
+  </data>
+  <data name="songHeader_Publisher" xml:space="preserve">
+    <value>Uitgever</value>
+  </data>
+  <data name="songHeader_SubTitle" xml:space="preserve">
+    <value>Subtitel</value>
+  </data>
+  <data name="songHeader_TextWriter" xml:space="preserve">
+    <value>Tekstschrijver</value>
+  </data>
+  <data name="songHeader_TitleSortName" xml:space="preserve">
+    <value>Sorteer op Titelnaam</value>
+  </data>
+  <data name="songHeader_Duration" xml:space="preserve">
+    <value>Duur</value>
+  </data>
+  <data name="songHeader_FileSize" xml:space="preserve">
+    <value>Grootte (kb)</value>
+  </data>
+  <data name="songHeader_BitRate" xml:space="preserve">
+    <value>Bitrate</value>
+  </data>
+  <data name="songHeader_SampleRate" xml:space="preserve">
+    <value>Samplerate</value>
+  </data>
+  <data name="songHeader_Channels" xml:space="preserve">
+    <value>Kanalen</value>
+  </data>
+  <data name="songHeader_Version" xml:space="preserve">
+    <value>Codec</value>
+  </data>
+  <data name="tagAndRename_Header" xml:space="preserve">
+    <value>Tag van Bestandsnaam</value>
+  </data>
+  <data name="tagAndRename_GroupBoxFormat" xml:space="preserve">
+    <value>Formaat:</value>
+  </data>
+  <data name="tagAndRename_RemoveFormat" xml:space="preserve">
+    <value>Verwijder Formaat uit lijst</value>
+  </data>
+  <data name="tagAndRename_AddFormat" xml:space="preserve">
+    <value>Voeg Formaat toe aan lijst</value>
+  </data>
+  <data name="tagAndRename_GroupBoxParam" xml:space="preserve">
+    <value>Parameters (klik om aan lijst toe te voegen)</value>
+  </data>
+  <data name="tagAndRename_Folder" xml:space="preserve">
+    <value>\ = Map: om te specificeren dat parameters moeten gehaald uit de bestandsstruktuur.</value>
+  </data>
+  <data name="tagAndRename_Unused" xml:space="preserve">
+    <value>Negeren</value>
+  </data>
+  <data name="tagAndRename_Comment" xml:space="preserve">
+    <value>Commentaar</value>
+  </data>
+  <data name="tagAndRename_AlbumArtist" xml:space="preserve">
+    <value>Orkest / Album Artiest</value>
+  </data>
+  <data name="tagAndRename_Genre" xml:space="preserve">
+    <value>Genre</value>
+  </data>
+  <data name="tagAndRename_DiscTotal" xml:space="preserve">
+    <value>Totaal aantal disks</value>
+  </data>
+  <data name="tagAndRename_Disc" xml:space="preserve">
+    <value>Disk Nummer</value>
+  </data>
+  <data name="tagAndRename_TrackTotal" xml:space="preserve">
+    <value>Totaal aantal Nummers</value>
+  </data>
+  <data name="tagAndRename_Track" xml:space="preserve">
+    <value>Nummer</value>
+  </data>
+  <data name="tagAndRename_Year" xml:space="preserve">
+    <value>Jaar</value>
+  </data>
+  <data name="tagAndRename_Album" xml:space="preserve">
+    <value>Album</value>
+  </data>
+  <data name="tagAndRename_Title" xml:space="preserve">
+    <value>Titel</value>
+  </data>
+  <data name="tagAndRename_Artist" xml:space="preserve">
+    <value>Artiest</value>
+  </data>
+  <data name="tagAndRename_Conductor" xml:space="preserve">
+    <value>Dirigent</value>
+  </data>
+  <data name="tagAndRename_Composer" xml:space="preserve">
+    <value>Componist</value>
+  </data>
+  <data name="tagAndRename_Group" xml:space="preserve">
+    <value>Groeptype</value>
+  </data>
+  <data name="tagAndRename_SubTitle" xml:space="preserve">
+    <value>SubTitel</value>
+  </data>
+  <data name="tagAndRename_BPM" xml:space="preserve">
+    <value>BPM</value>
+  </data>
+  <data name="tagAndRename_ModifiedBy" xml:space="preserve">
+    <value>Aangepast / geremixed door</value>
+  </data>
+  <data name="tagAndRename_Filename" xml:space="preserve">
+    <value>Huidige bestandsnaam</value>
+  </data>
+  <data name="tagAndRename_Enumerate" xml:space="preserve">
+    <value>Bestands opsomming</value>
+  </data>
+  <data name="tagAndRename_BitRate" xml:space="preserve">
+    <value>Bitrate</value>
+  </data>
+  <data name="tagAndRename_FirstNofArtist" xml:space="preserve">
+    <value>= Eerste \"n\" karakters van Artiest</value>
+  </data>
+  <data name="tagAndRename_FirstNofAlbumArtist" xml:space="preserve">
+    <value>= Eerste \"n\" karakters van Album Artist</value>
+  </data>
+  <data name="tagAndRename_StartAt" xml:space="preserve">
+    <value>Start vanaf</value>
+  </data>
+  <data name="tagAndRename_NumberDigits" xml:space="preserve">
+    <value>Aantal tekens</value>
+  </data>
+  <data name="tagAndRename_NameTooLong" xml:space="preserve">
+    <value>Bestandsnaam te lang. A.u.b. aanpassen.</value>
+  </data>
+  <data name="tagAndRename_FileExists" xml:space="preserve">
+    <value>Bestand bestaat al. Gemeenschappelijke Tags gebruikt?</value>
+  </data>
+  <data name="tagAndRename_Header_Rename" xml:space="preserve">
+    <value>Kan bestandsnaam niet aanpassen {0}: {1}</value>
+  </data>
+  <data name="tagAndRename_InvalidParm" xml:space="preserve">
+    <value>Ongeldig Parameter Formaat. A.u.b. corrigeren.</value>
+  </data>
+  <data name="tagAndRename_Original" xml:space="preserve">
+    <value>Origineel:</value>
+  </data>
+  <data name="tagAndRename_PreviewChanges" xml:space="preserve">
+    <value>Voorbeeld</value>
+  </data>
+  <data name="tagAndRename_TabHeader_Parameter" xml:space="preserve">
+    <value>Parameters</value>
+  </data>
+  <data name="caseConversion_Header" xml:space="preserve">
+    <value>Kapitaal Omzetting</value>
+  </data>
+  <data name="caseConversion_Tab_Settings" xml:space="preserve">
+    <value>Instellingen</value>
+  </data>
+  <data name="caseConversion_Options" xml:space="preserve">
+    <value>Opties</value>
+  </data>
+  <data name="caseConversion_AlwaysUpperCaseFirstLetter" xml:space="preserve">
+    <value>Eerste letter altijd kapitaal</value>
+  </data>
+  <data name="caseConversion_ReplaceSpaceByUnderscore" xml:space="preserve">
+    <value>Vervang Spatie door \"_\"</value>
+  </data>
+  <data name="caseConversion_ReplaceUnderScoreBySpace" xml:space="preserve">
+    <value>Vervang \"_\" door Spatie</value>
+  </data>
+  <data name="caseConversion_ReplaceSpaceBy20" xml:space="preserve">
+    <value>Vervang Spatie door \"%20\"</value>
+  </data>
+  <data name="caseConversion_Replace20bySpace" xml:space="preserve">
+    <value>Vervang \"%20\" door Spatie</value>
+  </data>
+  <data name="caseConversion_GroupBox_Method" xml:space="preserve">
+    <value>Conversiemethode</value>
+  </data>
+  <data name="caseConversion_AllFirstLetterUpperCase" xml:space="preserve">
+    <value>Alle eerste letters kapitaal</value>
+  </data>
+  <data name="caseConversion_FirstLetterUpperCase" xml:space="preserve">
+    <value>Eerste letter kapitaal</value>
+  </data>
+  <data name="caseConversion_AllUpperCase" xml:space="preserve">
+    <value>Alles kapitaal</value>
+  </data>
+  <data name="caseConversion_AllLowerCase" xml:space="preserve">
+    <value>Alles kleine letter</value>
+  </data>
+  <data name="caseConversion_GroupBoxTags" xml:space="preserve">
+    <value>Converteer Tags naar ...</value>
+  </data>
+  <data name="caseConversion_Comment" xml:space="preserve">
+    <value>Commentaar</value>
+  </data>
+  <data name="caseConversion_Title" xml:space="preserve">
+    <value>Titel</value>
+  </data>
+  <data name="caseConversion_Album" xml:space="preserve">
+    <value>Album</value>
+  </data>
+  <data name="caseConversion_AlbumArtist" xml:space="preserve">
+    <value>AlbumArtiest</value>
+  </data>
+  <data name="caseConversion_Artist" xml:space="preserve">
+    <value>Artiest</value>
+  </data>
+  <data name="caseConversion_Tags" xml:space="preserve">
+    <value>Converteer Tags</value>
+  </data>
+  <data name="caseConversion_FileName" xml:space="preserve">
+    <value>Bestandsnaam converteren</value>
+  </data>
+  <data name="caseConversion_Exceptions" xml:space="preserve">
+    <value>Uitzonderingen</value>
+  </data>
+  <data name="caseConversion_Exception_Remove" xml:space="preserve">
+    <value>Verwijderen</value>
+  </data>
+  <data name="caseConversion_Exception_Add" xml:space="preserve">
+    <value>Toevoegen</value>
+  </data>
+  <data name="organise_Header" xml:space="preserve">
+    <value>Organiseer Bestanden</value>
+  </data>
+  <data name="organise_TargetPath" xml:space="preserve">
+    <value>Doel Root Directory:</value>
+  </data>
+  <data name="organise_Override_TargetPath" xml:space="preserve">
+    <value>Overschrijf Target Root Directory met behulp van Script:</value>
+  </data>
+  <data name="organise_BrowseFolder" xml:space="preserve">
+    <value>Doorzoeken</value>
+  </data>
+  <data name="organise_OverWrite_Files" xml:space="preserve">
+    <value>Overschrijf bestaande bestanden</value>
+  </data>
+  <data name="organise_Copy_Files" xml:space="preserve">
+    <value>Kopiëer bestanden i.p.v. deze te verplaatsen</value>
+  </data>
+  <data name="organise_Copy_NonMusic_Files" xml:space="preserve">
+    <value>Kopiëer/Verplaats Non-Muziek bestanden (Afbeeldingen, etc.)</value>
+  </data>
+  <data name="organise_FileExists" xml:space="preserve">
+    <value>Bestand bestaat al, wordt niet vervangen</value>
+  </data>
+  <data name="organise_SameFile" xml:space="preserve">
+    <value>Bron en doelbestand zijn dezelfde. Bestand overgeslagen</value>
+  </data>
+  <data name="organise_Options" xml:space="preserve">
+    <value>Optie</value>
+  </data>
+  <data name="organise_Folder" xml:space="preserve">
+    <value>\ = Folder: om aan te geven dat parameters ervoor gebruikt worden als subfolder naam binnen de doelmap</value>
+  </data>
+  <data name="settings_Header" xml:space="preserve">
+    <value>Instellingen</value>
+  </data>
+  <data name="settings_Keys" xml:space="preserve">
+    <value>Toetsenbord sneltoetsen</value>
+  </data>
+  <data name="settings_Keys_Shift" xml:space="preserve">
+    <value>Shift</value>
+  </data>
+  <data name="settings_Keys_Ctrl" xml:space="preserve">
+    <value>Ctrl</value>
+  </data>
+  <data name="settings_Keys_Alt" xml:space="preserve">
+    <value>Alt</value>
+  </data>
+  <data name="settings_Keys_Description" xml:space="preserve">
+    <value>Beschrijving:</value>
+  </data>
+  <data name="settings_Keys_ShortCut" xml:space="preserve">
+    <value>Toets snelkoppeling:</value>
+  </data>
+  <data name="settings_DebugLevel" xml:space="preserve">
+    <value>Debug niveau:</value>
+  </data>
+  <data name="settings_Theme" xml:space="preserve">
+    <value>Thema:</value>
+  </data>
+  <data name="settings_Language" xml:space="preserve">
+    <value>Taal:</value>
+  </data>
+  <data name="settings_Tags" xml:space="preserve">
+    <value>Tags</value>
+  </data>
+  <data name="settings_Id3_Header" xml:space="preserve">
+    <value>ID3</value>
+  </data>
+  <data name="coverSearch_OverwriteExistingCover" xml:space="preserve">
+    <value>Overschrijf bestaande omslag(en) bij automatisch Taggen</value>
+  </data>
+  <data name="coverSearch_EmbedExistingThumb" xml:space="preserve">
+    <value>Bestaande miniatuur inbedden(folder.jpg) bij zoeken naar omslag.</value>
+  </data>
+  <data name="coverSearch_OnlySaveFolderThumb" xml:space="preserve">
+    <value>Sla albumhoes alleen als mapminiatuur op. Pas het muziekbestand niet aan.</value>
+  </data>
+  <data name="coverSearch_ChangeCoverSize" xml:space="preserve">
+    <value>Sla albumhoezen op met een maximale breedte (in pixels):</value>
+  </data>
+  <data name="lyricsSearch_SwitchArtist" xml:space="preserve">
+    <value>Wissel Artiest voor doorvoeren aapassing</value>
+  </data>
+  <data name="settings_Tags_General" xml:space="preserve">
+    <value>Algemeen</value>
+  </data>
+  <data name="settings_Tags_CopyArtist" xml:space="preserve">
+    <value>Kopie Artiest naar AlbumArtiest wanneer leeg</value>
+  </data>
+  <data name="settings_Tags_AutoFillNumberTracks" xml:space="preserve">
+    <value>Bij bewerken van meer dan één nummer automatisch nummering toevoegen aan de nummers</value>
+  </data>
+  <data name="settings_Tags_CaseConversion" xml:space="preserve">
+    <value>Gebruik kapitaal omzettingsinstellingen bij opslaan</value>
+  </data>
+  <data name="settings_Tags_ChangeReadOnly" xml:space="preserve">
+    <value>Verander alleen-lezen attribuut bij opslaan</value>
+  </data>
+  <data name="settings_Id3_Encoding" xml:space="preserve">
+    <value>Encodering voor het opslaan van tags:</value>
+  </data>
+  <data name="coverSearch_CreateMissingFolderThumb" xml:space="preserve">
+    <value>Maak missende map miniatuur (folder.jpg) bij opslaan</value>
+  </data>
+  <data name="settings_Id3_Header" xml:space="preserve">
+    <value>ID3</value>
+  </data>
+  <data name="settings_Id3_UseV4" xml:space="preserve">
+    <value>Gebruik Versie 2.4 voor ID3 V2 Tags</value>
+  </data>
+  <data name="settings_Id3_UseV3" xml:space="preserve">
+    <value>Gebruik Versie 2.3 voor ID3 V2 Tags</value>
+  </data>
+  <data name="settings_Id3_UseApe" xml:space="preserve">
+    <value>Gebruik APE en ID3 V1 Tags</value>
+  </data>
+  <data name="settings_Id3_Header_Update" xml:space="preserve">
+    <value>Bijwerken</value>
+  </data>
+  <data name="settings_Id3_UpdateRemoveV1" xml:space="preserve">
+    <value>Verwijder ID3V1</value>
+  </data>
+  <data name="settings_Id3_UpdateRemoveV2" xml:space="preserve">
+    <value>Verwijder ID3V2</value>
+  </data>
+  <data name="settings_Id3_UpdateV1V2" xml:space="preserve">
+    <value>ID3V1 en ID3V2</value>
+  </data>
+  <data name="settings_Id3_UpdateV2" xml:space="preserve">
+    <value>ID3V2</value>
+  </data>
+  <data name="settings_Id3_UpdateV1" xml:space="preserve">
+    <value>ID3V1</value>
+  </data>
+  <data name="settings_Id3_ClearUserFrames" xml:space="preserve">
+    <value>Verwijder Gebruiker Gedefinieerde Frames bij Opslaan.</value>
+  </data>
+  <data name="settings_Id3_Header_MP3Validation" xml:space="preserve">
+    <value>MP3 bestandformaat controle</value>
+  </data>
+  <data name="settings_Id3_ValidateMp3" xml:space="preserve">
+    <value>Valideer MP3 bestand bij inlezen van beschrijving / Database</value>
+  </data>
+  <data name="settings_Id3_FixMp3" xml:space="preserve">
+    <value>Beschadigde MP3 data automatisch corrigeren</value>
+  </data>
+  <data name="settings_Id3_Header_CustomGenres" xml:space="preserve">
+    <value>Aangepaste Genres</value>
+  </data>
+  <data name="settings_Id3_AddGenre" xml:space="preserve">
+    <value>Genre toevoegen</value>
+  </data>
+  <data name="settings_Id3_RemoveGenre" xml:space="preserve">
+    <value>Genre verwijderen</value>
+  </data>
+  <data name="lookup_Title" xml:space="preserve">
+    <value>Internet zoekaktie - voer Artiest / Album in</value>
+  </data>
+  <data name="lookup_NoAlbumFound" xml:space="preserve">
+    <value>Geen album gevonden, kies a.u.b. andere collectie criteria.</value>
+  </data>
+  <data name="lookup_SearchFinished" xml:space="preserve">
+    <value>Meerdere Albums gevonden. Selecteer ...</value>
+  </data>
+  <data name="lookup_AlbumTracks" xml:space="preserve">
+    <value>Nummers op Album</value>
+  </data>
+  <data name="message_Error_Title" xml:space="preserve">
+    <value>Fout</value>
+  </data>
+  <data name="message_Save_Changes" xml:space="preserve">
+    <value>Wijzigingen zijn niet opgeslagen. Wilt u de wijzigingen opslaan?</value>
+  </data>
+  <data name="message_Save_Changes_Title" xml:space="preserve">
+    <value>Wijzigingen opslaan</value>
+  </data>
+  <data name="message_Script_Compile_Failed" xml:space="preserve">
+    <value>Het compileren van het script is mislukt. 
+Kijk in het log bestand voor de foutmelding en corrigeer het.</value>
+  </data>
+  <data name="message_OutOfMemory" xml:space="preserve">
+    <value>Te veel bestanden geanalyseerd, het geheugen raakt vol.
+Analyze wordt afgebroken.</value>
+  </data>
+  <data name="message_ErrorResetAttr" xml:space="preserve">
+    <value>Het alleen-lezen attribuut kan niet gereset worden</value>
+  </data>
+  <data name="message_CorruptFile" xml:space="preserve">
+    <value>Corrupt bestand</value>
+  </data>
+  <data name="message_UnsupportedFormat" xml:space="preserve">
+    <value>Niet ondersteund formaat</value>
+  </data>
+  <data name="message_NonExistingFile" xml:space="preserve">
+    <value>Bestand bestaat niet meer!</value>
+  </data>
+  <data name="message_ErrorReadingFile" xml:space="preserve">
+    <value>Fout bij lezen van bestand: {0}</value>
+  </data>
+  <data name="message_ErrorSave" xml:space="preserve">
+    <value>Fout bij opslaan van bestand: {0}</value>
+  </data>
+  <data name="findReplace_HeaderFind" xml:space="preserve">
+    <value>Zoek</value>
+  </data>
+  <data name="findReplace_NotFound" xml:space="preserve">
+    <value>Zoekwoord niet gevonden</value>
+  </data>
+  <data name="findReplace_NoMoreOccurencesFound" xml:space="preserve">
+    <value>Geen resultaten meer voor zoekwoord</value>
+  </data>
+  <data name="findReplace_FindWhat" xml:space="preserve">
+    <value>Zoek op:</value>
+  </data>
+  <data name="findReplace_MatchCase" xml:space="preserve">
+    <value>Hoofdletter gevoelig</value>
+  </data>
+  <data name="findReplace_FindNext" xml:space="preserve">
+    <value>Volgende zoeken</value>
+  </data>
+  <data name="findReplace_HeaderReplace" xml:space="preserve">
+    <value>Vervang</value>
+  </data>
+  <data name="findReplace_ReplaceWith" xml:space="preserve">
+    <value>Vervang met:</value>
+  </data>
+  <data name="findReplace_Replace" xml:space="preserve">
+    <value>Vervang</value>
+  </data>
+  <data name="findReplace_ReplaceAll" xml:space="preserve">
+    <value>Vervang alle</value>
+  </data>
+</root>

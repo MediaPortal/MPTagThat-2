@@ -1,0 +1,9 @@
+[main]
+host = https://www.transifex.com
+
+[mptagthat2.mptagthat]
+file_filter = ../Source/MpTagThat/Resources/Localization/Strings.<lang>.resx
+source_file = ../Source/MpTagThat/Resources/Localization/Strings.resx
+source_lang = en
+type = RESX
+

@@ -1,0 +1,1145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>  <data name="ApplicationName" xml:space="preserve">
+    <value>MPTagThat - MediaPortal Tag Editor\'en</value>
+  </data>
+  <data name="treeview_Header" xml:space="preserve">
+    <value>Folders</value>
+  </data>
+  <data name="statusBar_FilterActive" xml:space="preserve">
+    <value>Tagfilter: Aktive</value>
+  </data>
+  <data name="statusBar_FilterInactive" xml:space="preserve">
+    <value>Tagfilter: Inaktive</value>
+  </data>
+  <data name="miscFiles_Header" xml:space="preserve">
+    <value>Non-musik filer</value>
+  </data>
+  <data name="miscFiles_Menu_Rename" xml:space="preserve">
+    <value>Omdøb til \"folder.jpg\"</value>
+  </data>
+  <data name="miscFiles_Menu_DeleteFiles" xml:space="preserve">
+    <value>Slet valgte fil(er)</value>
+  </data>
+  <data name="statusBar_NumberOfFiles" xml:space="preserve">
+    <value>Filer: {0} (Valgt: {1})</value>
+  </data>
+  <data name="ribbon_Refresh" xml:space="preserve">
+    <value>Genopfrisk</value>
+  </data>
+  <data name="ribbon_Save" xml:space="preserve">
+    <value>Gem</value>
+  </data>
+  <data name="ribbon_Exit" xml:space="preserve">
+    <value>Exit</value>
+  </data>
+  <data name="ribbon_TagTab" xml:space="preserve">
+    <value>Tags</value>
+  </data>
+  <data name="ribbon_TagFromFile" xml:space="preserve">
+    <value>Tag fra filnavn</value>
+  </data>
+  <data name="ribbon_RenameFile" xml:space="preserve">
+    <value>Omdøb fil</value>
+  </data>
+  <data name="ribbon_RenameFileMenu" xml:space="preserve">
+    <value>Omdøb fil</value>
+  </data>
+  <data name="ribbon_RenameFileOptions" xml:space="preserve">
+    <value>Omdøb fil muligheder</value>
+  </data>
+  <data name="ribbon_IdentifyFile" xml:space="preserve">
+    <value>Identificer fil</value>
+  </data>
+  <data name="ribbon_TagFromInternet" xml:space="preserve">
+    <value>Tag fra Internet</value>
+  </data>
+  <data name="ribbon_SingleTagEdit" xml:space="preserve">
+    <value>Enkel Tag redigering</value>
+  </data>
+  <data name="ribbon_MultiTagEdit" xml:space="preserve">
+    <value>Flere Tag redigering</value>
+  </data>
+  <data name="ribbon_GetCoverArt" xml:space="preserve">
+    <value>Hent Cover billede</value>
+  </data>
+  <data name="ribbon_GetLyrics" xml:space="preserve">
+    <value>Hent lyrik</value>
+  </data>
+  <data name="ribbon_AutoNumber" xml:space="preserve">
+    <value>Auto nummer</value>
+  </data>
+  <data name="ribbon_NumberOnClick" xml:space="preserve">
+    <value>Nummer ved klik</value>
+  </data>
+  <data name="ribbon_Find" xml:space="preserve">
+    <value>Find</value>
+  </data>
+  <data name="ribbon_Replace" xml:space="preserve">
+    <value>Erstat</value>
+  </data>
+  <data name="ribbon_ValidateSong" xml:space="preserve">
+    <value>Kontroller MP3</value>
+  </data>
+  <data name="ribbon_FixSong" xml:space="preserve">
+    <value>Fix MP3</value>
+  </data>
+  <data name="ribbon_ReplayGain" xml:space="preserve">
+    <value>Genspil Gain</value>
+  </data>
+  <data name="ribbon_RemoveCommentPicture" xml:space="preserve">
+    <value>Fjern:</value>
+  </data>
+  <data name="ribbon_RemoveComments" xml:space="preserve">
+    <value>Fjern alle kommentarer</value>
+  </data>
+  <data name="ribbon_RemovePictures" xml:space="preserve">
+    <value>Fjern alle billeder</value>
+  </data>
+  <data name="ribbon_CaseConversion" xml:space="preserve">
+    <value>Case konvertering</value>
+  </data>
+  <data name="ribbon_CaseConversionMenu" xml:space="preserve">
+    <value>Case konvertering</value>
+  </data>
+  <data name="ribbon_CaseConversionOption" xml:space="preserve">
+    <value>Case konverterings muligheder</value>
+  </data>
+  <data name="ribbon_DeleteTags" xml:space="preserve">
+    <value>Slet Tags</value>
+  </data>
+  <data name="ribbon_DeleteAllTags" xml:space="preserve">
+    <value>Slet alle Tags</value>
+  </data>
+  <data name="ribbon_DeleteID3V1Tags" xml:space="preserve">
+    <value>Slet kun ID3 V1 Tags</value>
+  </data>
+  <data name="ribbon_DeleteID3V2Tags" xml:space="preserve">
+    <value>Slet kun ID3 V2 Tags</value>
+  </data>
+  <data name="ribbon_EditTags" xml:space="preserve">
+    <value>Rediger Tags</value>
+  </data>
+  <data name="ribbon_RetrieveTags" xml:space="preserve">
+    <value>Hent Tags</value>
+  </data>
+  <data name="ribbon_OrganiseFiles" xml:space="preserve">
+    <value>Organiser</value>
+  </data>
+  <data name="ribbon_SaveFolderThumb" xml:space="preserve">
+    <value>Gem som folder Thumb</value>
+  </data>
+  <data name="ribbon_ExecuteScript" xml:space="preserve">
+    <value>Udfør script</value>
+  </data>
+  <data name="ribbon_Picture" xml:space="preserve">
+    <value>Coverart</value>
+  </data>
+  <data name="ribbon_Organise" xml:space="preserve">
+    <value>Organiser filer</value>
+  </data>
+  <data name="ribbon_AddBurner" xml:space="preserve">
+    <value>Tilføj til brænder</value>
+  </data>
+  <data name="ribbon_AddConvert" xml:space="preserve">
+    <value>Tilføj til konvertering</value>
+  </data>
+  <data name="ribbon_AddPlaylist" xml:space="preserve">
+    <value>Tilføj til Playlist</value>
+  </data>
+  <data name="ribbon_Other" xml:space="preserve">
+    <value>Andre</value>
+  </data>
+  <data name="ribbon_RipTab" xml:space="preserve">
+    <value>Rip</value>
+  </data>
+  <data name="ribbon_ConvertTab" xml:space="preserve">
+    <value>Konverter</value>
+  </data>
+  <data name="ribbon_BurnTab" xml:space="preserve">
+    <value>Brænd</value>
+  </data>
+  <data name="ribbon_DatabaseContextualTab" xml:space="preserve">
+    <value>Database</value>
+  </data>
+  <data name="ribbon_DatabaseTab" xml:space="preserve">
+    <value>Database</value>
+  </data>
+  <data name="screentip_SaveText" xml:space="preserve">
+    <value>Gemmer afventende ændringer til disk, ved at ændre tags på alle valgte filer.</value>
+  </data>
+  <data name="screentip_TagFromFileText" xml:space="preserve">
+    <value>Ved hjælp af konkrete parametrene i dialogen, de forskellige tags som \"Track #\", \"Artist\", \"Title\", osv. er udtrukket af filnavnet.</value>
+  </data>
+  <data name="screentip_TagFromInternetText" xml:space="preserve">
+    <value>Den givne kunstner og album navn bruges til et opslag på Amazon i et forsøger at matche filnavnene med listen, der hentes fra Amazon.</value>
+  </data>
+  <data name="screentip_GetLyricsText" xml:space="preserve">
+    <value>Lyrics modulet henter teksterne til de valgte filer fra Lyrics kilder valgt i præferencer.</value>
+  </data>
+  <data name="screentip_AutoNumberText" xml:space="preserve">
+    <value>De valgte filer får fortløbende nummer startende med værdien i tekstfeltet.</value>
+  </data>
+  <data name="screentip_NumberOnClickText" xml:space="preserve">
+    <value>Mens knappen holddes ned vil et klik på en fil sætte track nummeret.</value>
+  </data>
+  <data name="screentip_RemoveCommentsText" xml:space="preserve">
+    <value>Alle kommentarer i de valgte filer bliver fjernet.</value>
+  </data>
+  <data name="screentip_CaseConversionText" xml:space="preserve">
+    <value>STORE/små bogstav regler, som fastsat i muligheder anvendes på alle valgte filer.</value>
+  </data>
+  <data name="screentip_DeleteTagsText" xml:space="preserve">
+    <value>Alle tags fjernes fra de valgte filer.</value>
+  </data>
+  <data name="screentip_RenameFileText" xml:space="preserve">
+    <value>Filerne omdøbes i henhold til de parametre, der er angivet i dialogboksen.</value>
+  </data>
+  <data name="screentip_OrganiseText" xml:space="preserve">
+    <value>Filerne kopieres / flyttes til en ny placering baseret på deres tag-værdier som angivet i dialogen parametre.</value>
+  </data>
+  <data name="screentip_ExecuteScriptText" xml:space="preserve">
+    <value>Anvender scriptet i combo-boksen til de valgte filer.</value>
+  </data>
+  <data name="screentip_FindText" xml:space="preserve">
+    <value>Åbner dialogen Find for at søge efter den angivne streng i de udvalgte tracks.</value>
+  </data>
+  <data name="screentip_ReplaceText" xml:space="preserve">
+    <value>Åbner Find / Erstat dialogen for at erstatte en bestemt søgestreng i de valgte spor.</value>
+  </data>
+  <data name="screentip_ValidateSongText" xml:space="preserve">
+    <value>Bruger MP3val at validere rigtigheden af den valgte MP3-fil. Nogle fejl kan rettes ved hjælp af \"Fix MP3\" knappen.</value>
+  </data>
+  <data name="screentip_FixSongText" xml:space="preserve">
+    <value>Bruger MP3val til at rette fejl fundet i den valgte MP3-fil.</value>
+  </data>
+  <data name="tagEdit_TabHeader_Lyrics" xml:space="preserve">
+    <value>Tekster</value>
+  </data>
+  <data name="tagEdit_TabHeader_Detailed_Information" xml:space="preserve">
+    <value>Detaljerede oplysninger</value>
+  </data>
+  <data name="tagEdit_TabHeader_Main" xml:space="preserve">
+    <value>Vigtigste Tags</value>
+  </data>
+  <data name="tagEdit_TabHeader_Pictures" xml:space="preserve">
+    <value>Billeder</value>
+  </data>
+  <data name="tagEdit_AlbumArtist" xml:space="preserve">
+    <value>Album kunstner:</value>
+  </data>
+  <data name="tagEdit_Track" xml:space="preserve">
+    <value>Spor:</value>
+  </data>
+  <data name="tagEdit_Artist" xml:space="preserve">
+    <value>Kunstner:</value>
+  </data>
+  <data name="tagEdit_Year" xml:space="preserve">
+    <value>År:</value>
+  </data>
+  <data name="tagEdit_Title" xml:space="preserve">
+    <value>Title:</value>
+  </data>
+  <data name="tagEdit_Album" xml:space="preserve">
+    <value>Album:</value>
+  </data>
+  <data name="tagEdit_PartOfCompilation" xml:space="preserve">
+    <value>Del af en opsamling</value>
+  </data>
+  <data name="tagEdit_Comment" xml:space="preserve">
+    <value>Kommentar:</value>
+  </data>
+  <data name="tagEdit_Genre" xml:space="preserve">
+    <value>Genre:</value>
+  </data>
+  <data name="tagEdit_Disc" xml:space="preserve">
+    <value>Disk:</value>
+  </data>
+  <data name="tagEdit_Remove_Existing_Pictures" xml:space="preserve">
+    <value>Fjern eksisterende billeder først</value>
+  </data>
+  <data name="tagEdit_GetTrackLength_Checkbox" xml:space="preserve">
+    <value>Hent fra fil</value>
+  </data>
+  <data name="tagEdit_GetTrackLength" xml:space="preserve">
+    <value>Hent track længde fra fil</value>
+  </data>
+  <data name="tagEdit_Songlength" xml:space="preserve">
+    <value>Track længde (ms):</value>
+  </data>
+  <data name="tagEdit_MediaType" xml:space="preserve">
+    <value>Medie Type:</value>
+  </data>
+  <data name="tagEdit_TitleSort" xml:space="preserve">
+    <value>Title Sort:</value>
+  </data>
+  <data name="tagEdit_AlbumSort" xml:space="preserve">
+    <value>Album Sort:</value>
+  </data>
+  <data name="tagEdit_ArtistSort" xml:space="preserve">
+    <value>Kunstner Sort:</value>
+  </data>
+  <data name="tagEdit_AlbumArtistSort" xml:space="preserve">
+    <value>Album Artist Sort:</value>
+  </data>
+  <data name="tagEdit_SubTitle" xml:space="preserve">
+    <value>Undertekst:</value>
+  </data>
+  <data name="tagEdit_Content_Group" xml:space="preserve">
+    <value>Indhold gruppe:</value>
+  </data>
+  <data name="tagEdit_Copyright" xml:space="preserve">
+    <value>Copyright:</value>
+  </data>
+  <data name="tagEdit_EncodedBy" xml:space="preserve">
+    <value>Kodet af:</value>
+  </data>
+  <data name="tagEdit_Publisher" xml:space="preserve">
+    <value>Publisher:</value>
+  </data>
+  <data name="tagEdit_TextWriter" xml:space="preserve">
+    <value>Sang / tekst forfatter:</value>
+  </data>
+  <data name="tagEdit_InterpretedBy" xml:space="preserve">
+    <value>Tolket af:</value>
+  </data>
+  <data name="tagEdit_Composer" xml:space="preserve">
+    <value>Komponist:</value>
+  </data>
+  <data name="tagEdit_Conductor" xml:space="preserve">
+    <value>Dirigent:</value>
+  </data>
+  <data name="tagEdit_OrigReleaseYear" xml:space="preserve">
+    <value>Oprindelig udg. år:</value>
+  </data>
+  <data name="tagEdit_OrigOwner" xml:space="preserve">
+    <value>Original ejer:</value>
+  </data>
+  <data name="tagEdit_OrigArtist" xml:space="preserve">
+    <value>Original Artist:</value>
+  </data>
+  <data name="tagEdit_OrigLyricsWriter" xml:space="preserve">
+    <value>Original sang forfatter:</value>
+  </data>
+  <data name="tagEdit_OrigFileName" xml:space="preserve">
+    <value>Original filnavn:</value>
+  </data>
+  <data name="tagEdit_OrigAlbum" xml:space="preserve">
+    <value>Original Album Titel:</value>
+  </data>
+  <data name="tagEdit_MusicCreditList_Delete" xml:space="preserve">
+    <value>Fjern Musiker</value>
+  </data>
+  <data name="tagEdit_MusicCreditList_Add" xml:space="preserve">
+    <value>Tilføj Musiker</value>
+  </data>
+  <data name="tagEdit_MusicCreditList_Instrument" xml:space="preserve">
+    <value>Instrument</value>
+  </data>
+  <data name="tagEdit_InvolvedPerson_Delete" xml:space="preserve">
+    <value>Fjern person</value>
+  </data>
+  <data name="tagEdit_InvolvedPerson_Add" xml:space="preserve">
+    <value>Tilføj person</value>
+  </data>
+  <data name="tagEdit_InvolvedPerson_Function" xml:space="preserve">
+    <value>Medvirkendes rolle:</value>
+  </data>
+  <data name="tagEdit_InvolvedPerson_Name" xml:space="preserve">
+    <value>Navn</value>
+  </data>
+  <data name="tagEdit_CommercialInfo" xml:space="preserve">
+    <value>Kommerciel Information URL:</value>
+  </data>
+  <data name="tagEdit_OfficialPublisher" xml:space="preserve">
+    <value>Officiel Udgiver URL:</value>
+  </data>
+  <data name="tagEdit_OfficialPayment" xml:space="preserve">
+    <value>Officiel Betalings URL:</value>
+  </data>
+  <data name="tagEdit_OfficialRadioStation" xml:space="preserve">
+    <value>Officiel Internet Radio Stat. URL:</value>
+  </data>
+  <data name="tagEdit_OfficialAudioSource" xml:space="preserve">
+    <value>Officiel Lydkilde URL:</value>
+  </data>
+  <data name="tagEdit_OfficialArtist" xml:space="preserve">
+    <value>Officiel kunstnerURL:</value>
+  </data>
+  <data name="tagEdit_OfficialAudiofile" xml:space="preserve">
+    <value>Officiel lydfil URL:</value>
+  </data>
+  <data name="tagEdit_CopyrightInformation" xml:space="preserve">
+    <value>Copyright Information URL:</value>
+  </data>
+  <data name="tagEdit_RatingPlayCount" xml:space="preserve">
+    <value>Afspilningstæller:</value>
+  </data>
+  <data name="tagEdit_Rating_Delete" xml:space="preserve">
+    <value>Fjern vurdering</value>
+  </data>
+  <data name="tagEdit_Rating_Add" xml:space="preserve">
+    <value>Tilføj vurdering</value>
+  </data>
+  <data name="tagEdit_RatingUser" xml:space="preserve">
+    <value>Bruger (eMail):</value>
+  </data>
+  <data name="tagEdit_TabHeader_UserFrames" xml:space="preserve">
+    <value>Brugerdefineret</value>
+  </data>
+  <data name="tagEdit_TabHeader_Rating" xml:space="preserve">
+    <value>Rating</value>
+  </data>
+  <data name="tagEdit_TabHeader_Web_Information" xml:space="preserve">
+    <value>Web Information</value>
+  </data>
+  <data name="tagEdit_TabHeader_Involved_People" xml:space="preserve">
+    <value>Involverede personer</value>
+  </data>
+  <data name="tagEdit_TabHeader_Original_Information" xml:space="preserve">
+    <value>Original Information</value>
+  </data>
+  <data name="tagEdit_UserFrames_FrameId" xml:space="preserve">
+    <value>Frame Id</value>
+  </data>
+  <data name="tagEdit_UserFrames_Description" xml:space="preserve">
+    <value>Beskrivelse</value>
+  </data>
+  <data name="tagEdit_UserFrames_Text" xml:space="preserve">
+    <value>Tekst</value>
+  </data>
+  <data name="tagEdit_UserFrames_Add" xml:space="preserve">
+    <value>Tilføj frame</value>
+  </data>
+  <data name="tagEdit_UserFrames_DeleteFrame" xml:space="preserve">
+    <value>Slet frame(s)</value>
+  </data>
+  <data name="tagEdit_UserFrames_DeleteAllFrames" xml:space="preserve">
+    <value>Slet alle frames</value>
+  </data>
+  <data name="lyricsSearch_Title" xml:space="preserve">
+    <value>Find en tekst til {0} - {1}</value>
+  </data>
+  <data name="lyricsSearch_Status" xml:space="preserve">
+    <value>Søger efter tekster ... Vent venligst</value>
+  </data>
+  <data name="lyricsSearch_Finished" xml:space="preserve">
+    <value>Søgning Færdig. Fravælg tracks med forkerte tekster.</value>
+  </data>
+  <data name="lyricsSearch_NothingToSearch" xml:space="preserve">
+    <value>Der er intet at søge efter</value>
+  </data>
+  <data name="coverSearch_Title" xml:space="preserve">
+    <value>Søg efter album</value>
+  </data>
+  <data name="identifySong_Title" xml:space="preserve">
+    <value>Internet opslag</value>
+  </data>
+  <data name="identifySong_GroupBox_Identified" xml:space="preserve">
+    <value>identificeret Track</value>
+  </data>
+  <data name="identifySong_Country" xml:space="preserve">
+    <value>land</value>
+  </data>
+  <data name="identifySong_GroupBox_Results" xml:space="preserve">
+    <value>Nummeret er tilgængelig på flere album. vælg venligst</value>
+  </data>
+  <data name="songHeader_FileName" xml:space="preserve">
+    <value>Filnavn</value>
+  </data>
+  <data name="songHeader_FilePath" xml:space="preserve">
+    <value>Sti</value>
+  </data>
+  <data name="songHeader_NewFileName" xml:space="preserve">
+    <value>Nyt filnavn</value>
+  </data>
+  <data name="songHeader_Status" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="songHeader_Track" xml:space="preserve">
+    <value>Track</value>
+  </data>
+  <data name="songHeader_NumTracks" xml:space="preserve">
+    <value>Num. Tracks</value>
+  </data>
+  <data name="songHeader_Title" xml:space="preserve">
+    <value>Titel</value>
+  </data>
+  <data name="songHeader_Artist" xml:space="preserve">
+    <value>Kunstner</value>
+  </data>
+  <data name="songHeader_AlbumArtist" xml:space="preserve">
+    <value>Album kunstner</value>
+  </data>
+  <data name="songHeader_Album" xml:space="preserve">
+    <value>Album</value>
+  </data>
+  <data name="songHeader_Year" xml:space="preserve">
+    <value>År</value>
+  </data>
+  <data name="songHeader_Genre" xml:space="preserve">
+    <value>Genre</value>
+  </data>
+  <data name="songHeader_CreationTime" xml:space="preserve">
+    <value>Oprettet</value>
+  </data>
+  <data name="songHeader_LastWriteTime" xml:space="preserve">
+    <value>Ændret</value>
+  </data>
+  <data name="songHeader_TagType" xml:space="preserve">
+    <value>Type</value>
+  </data>
+  <data name="songHeader_Disc" xml:space="preserve">
+    <value>Disc #</value>
+  </data>
+  <data name="songHeader_NumDisc" xml:space="preserve">
+    <value>Num. Discs</value>
+  </data>
+  <data name="songHeader_BPM" xml:space="preserve">
+    <value>BPM</value>
+  </data>
+  <data name="songHeader_Rating" xml:space="preserve">
+    <value>Rating</value>
+  </data>
+  <data name="songHeader_ReplayGainTrack" xml:space="preserve">
+    <value>Track Gain</value>
+  </data>
+  <data name="songHeader_ReplayGainTrackPeak" xml:space="preserve">
+    <value>Track Peak</value>
+  </data>
+  <data name="songHeader_ReplayGainAlbum" xml:space="preserve">
+    <value>Album Gain</value>
+  </data>
+  <data name="songHeader_ReplayGainAlbumPeak" xml:space="preserve">
+    <value>Album Peak</value>
+  </data>
+  <data name="songHeader_Comment" xml:space="preserve">
+    <value>Kommentar</value>
+  </data>
+  <data name="songHeader_Composer" xml:space="preserve">
+    <value>Komponist</value>
+  </data>
+  <data name="songHeader_Conductor" xml:space="preserve">
+    <value>Dirigent</value>
+  </data>
+  <data name="songHeader_NumPics" xml:space="preserve">
+    <value># Bil</value>
+  </data>
+  <data name="songHeader_Picture" xml:space="preserve">
+    <value>Billede</value>
+  </data>
+  <data name="songHeader_ArtistSortName" xml:space="preserve">
+    <value>Kunstner sorteringsnavn</value>
+  </data>
+  <data name="songHeader_AlbumSortName" xml:space="preserve">
+    <value>Album  sorteringsnavn</value>
+  </data>
+  <data name="songHeader_CommercialInformation" xml:space="preserve">
+    <value>Kommerciel information</value>
+  </data>
+  <data name="songHeader_Copyright" xml:space="preserve">
+    <value>Copyright</value>
+  </data>
+  <data name="songHeader_CopyrightInformation" xml:space="preserve">
+    <value>Copyright Information</value>
+  </data>
+  <data name="songHeader_EncodedBy" xml:space="preserve">
+    <value>Kodet af</value>
+  </data>
+  <data name="songHeader_Interpreter" xml:space="preserve">
+    <value>Tolket af</value>
+  </data>
+  <data name="songHeader_Grouping" xml:space="preserve">
+    <value>Gruppering</value>
+  </data>
+  <data name="songHeader_Lyrics" xml:space="preserve">
+    <value>Tekster</value>
+  </data>
+  <data name="songHeader_MediaType" xml:space="preserve">
+    <value>Medie Type</value>
+  </data>
+  <data name="songHeader_OfficialAudioFileInformation" xml:space="preserve">
+    <value>Off. lydfil Information</value>
+  </data>
+  <data name="songHeader_OfficialArtistInformation" xml:space="preserve">
+    <value>Off. kunstner Information</value>
+  </data>
+  <data name="songHeader_OfficialAudioSourceInformation" xml:space="preserve">
+    <value>Off. lydkilde Information</value>
+  </data>
+  <data name="songHeader_OfficialInternetRadioInformation" xml:space="preserve">
+    <value>Off. Internet Radio Information</value>
+  </data>
+  <data name="songHeader_OfficialPaymentInformation" xml:space="preserve">
+    <value>Off. betalingsInformation</value>
+  </data>
+  <data name="songHeader_OfficialPublisherInformation" xml:space="preserve">
+    <value>Off. udgiver information</value>
+  </data>
+  <data name="songHeader_OriginalAlbum" xml:space="preserve">
+    <value>Original Album</value>
+  </data>
+  <data name="songHeader_OriginalFileName" xml:space="preserve">
+    <value>Original Filnavn</value>
+  </data>
+  <data name="songHeader_OriginalLyricsWriter" xml:space="preserve">
+    <value>Original tekstforfatter</value>
+  </data>
+  <data name="songHeader_OriginalArtist" xml:space="preserve">
+    <value>Original kunstner</value>
+  </data>
+  <data name="songHeader_OriginalOwner" xml:space="preserve">
+    <value>Original ejer</value>
+  </data>
+  <data name="songHeader_OriginalRelease" xml:space="preserve">
+    <value>Original frigivelse</value>
+  </data>
+  <data name="songHeader_Publisher" xml:space="preserve">
+    <value>Publisher</value>
+  </data>
+  <data name="songHeader_SubTitle" xml:space="preserve">
+    <value>Undertekst</value>
+  </data>
+  <data name="songHeader_TextWriter" xml:space="preserve">
+    <value>Tekstforfatter</value>
+  </data>
+  <data name="songHeader_TitleSortName" xml:space="preserve">
+    <value>Titel sorteringsnavn</value>
+  </data>
+  <data name="songHeader_Duration" xml:space="preserve">
+    <value>Varighed</value>
+  </data>
+  <data name="songHeader_FileSize" xml:space="preserve">
+    <value>Størrelse (kb)</value>
+  </data>
+  <data name="songHeader_BitRate" xml:space="preserve">
+    <value>Bitrate</value>
+  </data>
+  <data name="songHeader_SampleRate" xml:space="preserve">
+    <value>Samplerate</value>
+  </data>
+  <data name="songHeader_Channels" xml:space="preserve">
+    <value>Kanaler</value>
+  </data>
+  <data name="songHeader_Version" xml:space="preserve">
+    <value>Codec</value>
+  </data>
+  <data name="tagAndRename_Header" xml:space="preserve">
+    <value>Tag fra Fielnavn</value>
+  </data>
+  <data name="tagAndRename_GroupBoxFormat" xml:space="preserve">
+    <value>Format:</value>
+  </data>
+  <data name="tagAndRename_RemoveFormat" xml:space="preserve">
+    <value>Fjern format fra liste</value>
+  </data>
+  <data name="tagAndRename_AddFormat" xml:space="preserve">
+    <value>Tilføj format til liste</value>
+  </data>
+  <data name="tagAndRename_GroupBoxParam" xml:space="preserve">
+    <value>Parametre (Klik for at tilføje til listen)</value>
+  </data>
+  <data name="tagAndRename_Folder" xml:space="preserve">
+    <value>\ = Folder: angiver, at parametrene foran det skal tages fra foldernavn</value>
+  </data>
+  <data name="tagAndRename_Unused" xml:space="preserve">
+    <value>Ikke brugt</value>
+  </data>
+  <data name="tagAndRename_Comment" xml:space="preserve">
+    <value>Kommentar</value>
+  </data>
+  <data name="tagAndRename_AlbumArtist" xml:space="preserve">
+    <value>orkester / albumkunstner</value>
+  </data>
+  <data name="tagAndRename_Genre" xml:space="preserve">
+    <value>Genre</value>
+  </data>
+  <data name="tagAndRename_DiscTotal" xml:space="preserve">
+    <value>Total # af discs</value>
+  </data>
+  <data name="tagAndRename_Disc" xml:space="preserve">
+    <value>Disc Nummer</value>
+  </data>
+  <data name="tagAndRename_TrackTotal" xml:space="preserve">
+    <value>Total # af tracks</value>
+  </data>
+  <data name="tagAndRename_Track" xml:space="preserve">
+    <value>Track nummer</value>
+  </data>
+  <data name="tagAndRename_Year" xml:space="preserve">
+    <value>År</value>
+  </data>
+  <data name="tagAndRename_Album" xml:space="preserve">
+    <value>Album</value>
+  </data>
+  <data name="tagAndRename_Title" xml:space="preserve">
+    <value>Title</value>
+  </data>
+  <data name="tagAndRename_Artist" xml:space="preserve">
+    <value>Kunstner</value>
+  </data>
+  <data name="tagAndRename_Conductor" xml:space="preserve">
+    <value>Dirigent</value>
+  </data>
+  <data name="tagAndRename_Composer" xml:space="preserve">
+    <value>Komponist</value>
+  </data>
+  <data name="tagAndRename_Group" xml:space="preserve">
+    <value>Indholdsgruppe</value>
+  </data>
+  <data name="tagAndRename_SubTitle" xml:space="preserve">
+    <value>Undertekst</value>
+  </data>
+  <data name="tagAndRename_BPM" xml:space="preserve">
+    <value>BPM</value>
+  </data>
+  <data name="tagAndRename_ModifiedBy" xml:space="preserve">
+    <value>Modifiseret / remixed af</value>
+  </data>
+  <data name="tagAndRename_Filename" xml:space="preserve">
+    <value>Nuv. filnavn</value>
+  </data>
+  <data name="tagAndRename_Enumerate" xml:space="preserve">
+    <value>Fortegnelsesfiler</value>
+  </data>
+  <data name="tagAndRename_BitRate" xml:space="preserve">
+    <value>Bitrate</value>
+  </data>
+  <data name="tagAndRename_FirstNofArtist" xml:space="preserve">
+    <value>= Første \"n\" tegn af kunstner</value>
+  </data>
+  <data name="tagAndRename_FirstNofAlbumArtist" xml:space="preserve">
+    <value>= Første \"n\" tegn af album kunstner</value>
+  </data>
+  <data name="tagAndRename_StartAt" xml:space="preserve">
+    <value>Start ved</value>
+  </data>
+  <data name="tagAndRename_NumberDigits" xml:space="preserve">
+    <value>Antal cifre</value>
+  </data>
+  <data name="tagAndRename_NameTooLong" xml:space="preserve">
+    <value>Filnavn for lang. Venligst ændre det.</value>
+  </data>
+  <data name="tagAndRename_FileExists" xml:space="preserve">
+    <value>Filen allerede eksisterer. Fælles tags brugt?</value>
+  </data>
+  <data name="tagAndRename_Header_Rename" xml:space="preserve">
+    <value>Kan ikke omdøbe fil {0}: {1}</value>
+  </data>
+  <data name="tagAndRename_InvalidParm" xml:space="preserve">
+    <value>Ugyldigt parameter Format. Venligst Ret.</value>
+  </data>
+  <data name="tagAndRename_Original" xml:space="preserve">
+    <value>Original:</value>
+  </data>
+  <data name="tagAndRename_PreviewChanges" xml:space="preserve">
+    <value>Preview</value>
+  </data>
+  <data name="tagAndRename_TabHeader_Parameter" xml:space="preserve">
+    <value>Parametre</value>
+  </data>
+  <data name="caseConversion_Header" xml:space="preserve">
+    <value>Case konvertering</value>
+  </data>
+  <data name="caseConversion_Tab_Settings" xml:space="preserve">
+    <value>Indstilllinger</value>
+  </data>
+  <data name="caseConversion_Options" xml:space="preserve">
+    <value>Muligheder</value>
+  </data>
+  <data name="caseConversion_AlwaysUpperCaseFirstLetter" xml:space="preserve">
+    <value>Altid første bogstav med stort</value>
+  </data>
+  <data name="caseConversion_ReplaceSpaceByUnderscore" xml:space="preserve">
+    <value>Erstat blank med \"_\"</value>
+  </data>
+  <data name="caseConversion_ReplaceUnderScoreBySpace" xml:space="preserve">
+    <value>Erstat \"_\" med blank</value>
+  </data>
+  <data name="caseConversion_ReplaceSpaceBy20" xml:space="preserve">
+    <value>Erstat blank med \"%20\"</value>
+  </data>
+  <data name="caseConversion_Replace20bySpace" xml:space="preserve">
+    <value>Erstat \"%20\" med blank</value>
+  </data>
+  <data name="caseConversion_GroupBox_Method" xml:space="preserve">
+    <value>Konverteringsmetode</value>
+  </data>
+  <data name="caseConversion_AllFirstLetterUpperCase" xml:space="preserve">
+    <value>Altid 1. bogstav med stort</value>
+  </data>
+  <data name="caseConversion_FirstLetterUpperCase" xml:space="preserve">
+    <value>1, bogst. med stort</value>
+  </data>
+  <data name="caseConversion_AllUpperCase" xml:space="preserve">
+    <value>Alt med store bogst.</value>
+  </data>
+  <data name="caseConversion_AllLowerCase" xml:space="preserve">
+    <value>Alt med små bogst.</value>
+  </data>
+  <data name="caseConversion_GroupBoxTags" xml:space="preserve">
+    <value>Konverter Tags til ...</value>
+  </data>
+  <data name="caseConversion_Comment" xml:space="preserve">
+    <value>Kommentar</value>
+  </data>
+  <data name="caseConversion_Title" xml:space="preserve">
+    <value>Titel</value>
+  </data>
+  <data name="caseConversion_Album" xml:space="preserve">
+    <value>Album</value>
+  </data>
+  <data name="caseConversion_AlbumArtist" xml:space="preserve">
+    <value>Album kunstner</value>
+  </data>
+  <data name="caseConversion_Artist" xml:space="preserve">
+    <value>Kunstner</value>
+  </data>
+  <data name="caseConversion_Tags" xml:space="preserve">
+    <value>C Tags</value>
+  </data>
+  <data name="caseConversion_FileName" xml:space="preserve">
+    <value>Konverter filnavn</value>
+  </data>
+  <data name="caseConversion_Exceptions" xml:space="preserve">
+    <value>Undtagelser</value>
+  </data>
+  <data name="caseConversion_Exception_Remove" xml:space="preserve">
+    <value>Fjern</value>
+  </data>
+  <data name="caseConversion_Exception_Add" xml:space="preserve">
+    <value>Tilføj</value>
+  </data>
+  <data name="organise_Header" xml:space="preserve">
+    <value>Organiser filer</value>
+  </data>
+  <data name="organise_TargetPath" xml:space="preserve">
+    <value>Target Root Directory:</value>
+  </data>
+  <data name="organise_Override_TargetPath" xml:space="preserve">
+    <value>Overskriv Target Root Directory vha Script:</value>
+  </data>
+  <data name="organise_BrowseFolder" xml:space="preserve">
+    <value>Gennemse</value>
+  </data>
+  <data name="organise_OverWrite_Files" xml:space="preserve">
+    <value>Overskriv eksisterende filer</value>
+  </data>
+  <data name="organise_Copy_Files" xml:space="preserve">
+    <value>Kopier filer i stedet for at flytte dem</value>
+  </data>
+  <data name="organise_Copy_NonMusic_Files" xml:space="preserve">
+    <value>Kopieringen / flytningen Non-musikfiler (billeder osv.)</value>
+  </data>
+  <data name="organise_FileExists" xml:space="preserve">
+    <value>Filen eksisterer allerede. Vil ikke blive erstattet</value>
+  </data>
+  <data name="organise_SameFile" xml:space="preserve">
+    <value>Kilde og Target File er de samme. File sprunget over</value>
+  </data>
+  <data name="organise_Options" xml:space="preserve">
+    <value>Muligheder</value>
+  </data>
+  <data name="organise_Folder" xml:space="preserve">
+    <value>\ = Folder: Til definering af parametrene foran vil blive brugt som subfoldernavn i target folder</value>
+  </data>
+  <data name="settings_Header" xml:space="preserve">
+    <value>Indstilllinger</value>
+  </data>
+  <data name="settings_Keys" xml:space="preserve">
+    <value>Tastatur genveje</value>
+  </data>
+  <data name="settings_Keys_Shift" xml:space="preserve">
+    <value>Skift</value>
+  </data>
+  <data name="settings_Keys_Ctrl" xml:space="preserve">
+    <value>Ctrl</value>
+  </data>
+  <data name="settings_Keys_Alt" xml:space="preserve">
+    <value>Alt</value>
+  </data>
+  <data name="settings_Keys_Description" xml:space="preserve">
+    <value>Beskrivelse:</value>
+  </data>
+  <data name="settings_Keys_ShortCut" xml:space="preserve">
+    <value>Taste genvej:</value>
+  </data>
+  <data name="settings_DebugLevel" xml:space="preserve">
+    <value>Debug niveau:</value>
+  </data>
+  <data name="settings_Theme" xml:space="preserve">
+    <value>Tema:</value>
+  </data>
+  <data name="settings_Language" xml:space="preserve">
+    <value>Sprog:</value>
+  </data>
+  <data name="settings_Tags" xml:space="preserve">
+    <value>Tags</value>
+  </data>
+  <data name="settings_Id3_Header" xml:space="preserve">
+    <value>ID3</value>
+  </data>
+  <data name="coverSearch_OverwriteExistingCover" xml:space="preserve">
+    <value>Overskriv eksisterende Cover (r) ved automatiske tagging</value>
+  </data>
+  <data name="coverSearch_EmbedExistingThumb" xml:space="preserve">
+    <value>Integrer eksisterende folder thumb (folder.jpg) ved cover søgning</value>
+  </data>
+  <data name="coverSearch_OnlySaveFolderThumb" xml:space="preserve">
+    <value>Gem Cover Art kun i folder thumb. Rør ikke musikfilen</value>
+  </data>
+  <data name="coverSearch_ChangeCoverSize" xml:space="preserve">
+    <value>Gem cover med en maksimal pixel bredde på:</value>
+  </data>
+  <data name="lyricsSearch_SwitchArtist" xml:space="preserve">
+    <value>Skift kunstner før indsendelse</value>
+  </data>
+  <data name="settings_Tags_General" xml:space="preserve">
+    <value>General</value>
+  </data>
+  <data name="settings_Tags_CopyArtist" xml:space="preserve">
+    <value>Kopier Kunstner til Album kunstner, når den er tom</value>
+  </data>
+  <data name="settings_Tags_AutoFillNumberTracks" xml:space="preserve">
+    <value>Auto fyld \"Antal Tracks\" ved redigering af flere tags</value>
+  </data>
+  <data name="settings_Tags_CaseConversion" xml:space="preserve">
+    <value>Brug STORE/små bogstav konverteringsindstillinger ved Gem</value>
+  </data>
+  <data name="settings_Tags_ChangeReadOnly" xml:space="preserve">
+    <value>Skift Readonly Attribut på Gem</value>
+  </data>
+  <data name="settings_Id3_Encoding" xml:space="preserve">
+    <value>Kodning, der bruges til at gemme Tags:</value>
+  </data>
+  <data name="coverSearch_CreateMissingFolderThumb" xml:space="preserve">
+    <value>Opret manglende folder thumb (folder.jpg) ved Gem</value>
+  </data>
+  <data name="settings_Id3_Header" xml:space="preserve">
+    <value>ID3</value>
+  </data>
+  <data name="settings_Id3_UseV4" xml:space="preserve">
+    <value>Brug Version 2.4 til ID3 V2 Tags</value>
+  </data>
+  <data name="settings_Id3_UseV3" xml:space="preserve">
+    <value>Brug Version 2.3 til ID3 V2 Tags</value>
+  </data>
+  <data name="settings_Id3_UseApe" xml:space="preserve">
+    <value>Brug APE og ID3 V1 Tags</value>
+  </data>
+  <data name="settings_Id3_Header_Update" xml:space="preserve">
+    <value>Opdater</value>
+  </data>
+  <data name="settings_Id3_UpdateRemoveV1" xml:space="preserve">
+    <value>FJern ID3V1</value>
+  </data>
+  <data name="settings_Id3_UpdateRemoveV2" xml:space="preserve">
+    <value>Fjern D3V2</value>
+  </data>
+  <data name="settings_Id3_UpdateV1V2" xml:space="preserve">
+    <value>ID3V1 og ID3V2</value>
+  </data>
+  <data name="settings_Id3_UpdateV2" xml:space="preserve">
+    <value>ID3V2</value>
+  </data>
+  <data name="settings_Id3_UpdateV1" xml:space="preserve">
+    <value>ID3V1</value>
+  </data>
+  <data name="settings_Id3_ClearUserFrames" xml:space="preserve">
+    <value>Fjern bruger definerede Frames ved Gem</value>
+  </data>
+  <data name="settings_Id3_Header_MP3Validation" xml:space="preserve">
+    <value>MP3 Fil validering</value>
+  </data>
+  <data name="settings_Id3_ValidateMp3" xml:space="preserve">
+    <value>Valider MP3-filer under scanning af folder / database</value>
+  </data>
+  <data name="settings_Id3_FixMp3" xml:space="preserve">
+    <value>Automatisk fix MP3-filer med fejl</value>
+  </data>
+  <data name="lookup_Title" xml:space="preserve">
+    <value>Internet opslag - Angiv Kunstner / Album</value>
+  </data>
+  <data name="lookup_NoAlbumFound" xml:space="preserve">
+    <value>Intet album fundet, vælg venligst et andet udvælgelseskriterier.</value>
+  </data>
+  <data name="lookup_SearchFinished" xml:space="preserve">
+    <value>Flere Albums fundet. Vælg ...</value>
+  </data>
+  <data name="lookup_AlbumTracks" xml:space="preserve">
+    <value>Tracks på Album</value>
+  </data>
+  <data name="message_Error_Title" xml:space="preserve">
+    <value>Fejl</value>
+  </data>
+  <data name="message_Save_Changes" xml:space="preserve">
+    <value>Ændringer er ikke blevet gemt. Ønsker du at gemme ændringerne?</value>
+  </data>
+  <data name="message_Save_Changes_Title" xml:space="preserve">
+    <value>Gem ændringer</value>
+  </data>
+  <data name="message_ErrorResetAttr" xml:space="preserve">
+    <value>Kan ikke nulstille skrivebeskyttet attribut</value>
+  </data>
+  <data name="message_CorruptFile" xml:space="preserve">
+    <value>Ødelagt fil</value>
+  </data>
+  <data name="message_UnsupportedFormat" xml:space="preserve">
+    <value>Ikke-understøttet format</value>
+  </data>
+  <data name="message_NonExistingFile" xml:space="preserve">
+    <value>Fil eksistere ikke længere !</value>
+  </data>
+  <data name="message_ErrorReadingFile" xml:space="preserve">
+    <value>Fejl ved læsning af fil: {0}</value>
+  </data>
+  <data name="message_ErrorSave" xml:space="preserve">
+    <value>Fejl ved gemmening af fil: {0}</value>
+  </data>
+  <data name="findReplace_HeaderFind" xml:space="preserve">
+    <value>Find</value>
+  </data>
+  <data name="findReplace_NotFound" xml:space="preserve">
+    <value>Søgestreng ikke fundet</value>
+  </data>
+  <data name="findReplace_NoMoreOccurencesFound" xml:space="preserve">
+    <value>Ikke flere forekomster af søgestrengen fundet</value>
+  </data>
+  <data name="findReplace_FindWhat" xml:space="preserve">
+    <value>Find hvad:</value>
+  </data>
+  <data name="findReplace_MatchCase" xml:space="preserve">
+    <value>Match Case</value>
+  </data>
+  <data name="findReplace_FindNext" xml:space="preserve">
+    <value>Find næste</value>
+  </data>
+  <data name="findReplace_HeaderReplace" xml:space="preserve">
+    <value>Erstat</value>
+  </data>
+  <data name="findReplace_ReplaceWith" xml:space="preserve">
+    <value>Erstat med:</value>
+  </data>
+  <data name="findReplace_Replace" xml:space="preserve">
+    <value>Erstat</value>
+  </data>
+  <data name="findReplace_ReplaceAll" xml:space="preserve">
+    <value>Erstat alle</value>
+  </data>
+</root>

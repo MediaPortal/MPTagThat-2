@@ -1,0 +1,410 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>  <data name="ApplicationName" xml:space="preserve">
+    <value>MPTagThat MediaPortalin Tagi Editori</value>
+  </data>
+  <data name="treeview_Header" xml:space="preserve">
+    <value>Kansiot</value>
+  </data>
+  <data name="statusBar_FilterActive" xml:space="preserve">
+    <value>Tagi suodatin: Aktiivinen</value>
+  </data>
+  <data name="miscFiles_Header" xml:space="preserve">
+    <value>Ei-musiikki tiedostot</value>
+  </data>
+  <data name="miscFiles_Menu_Rename" xml:space="preserve">
+    <value>Nimeä uudelleen \"folder.jpg\"</value>
+  </data>
+  <data name="miscFiles_Menu_DeleteFiles" xml:space="preserve">
+    <value>Poista valitut tiedosto(t)\"</value>
+  </data>
+  <data name="statusBar_NumberOfFiles" xml:space="preserve">
+    <value>Tiedostoja: {0} (Valittu: {1})</value>
+  </data>
+  <data name="ribbon_Refresh" xml:space="preserve">
+    <value>Päivitä</value>
+  </data>
+  <data name="ribbon_Save" xml:space="preserve">
+    <value>Tallenna</value>
+  </data>
+  <data name="ribbon_Exit" xml:space="preserve">
+    <value>Poistu</value>
+  </data>
+  <data name="ribbon_TagTab" xml:space="preserve">
+    <value>Tagit</value>
+  </data>
+  <data name="ribbon_TagFromFile" xml:space="preserve">
+    <value>Tagi tiedostonimestä</value>
+  </data>
+  <data name="ribbon_RenameFile" xml:space="preserve">
+    <value>Nimeä tiedosto uudelleen</value>
+  </data>
+  <data name="ribbon_RenameFileMenu" xml:space="preserve">
+    <value>Nimeä tiedosto uudelleen</value>
+  </data>
+  <data name="ribbon_RenameFileOptions" xml:space="preserve">
+    <value>Nimeä tiedosto uudelleen valinnat</value>
+  </data>
+  <data name="ribbon_IdentifyFile" xml:space="preserve">
+    <value>Tunnista tiedosto</value>
+  </data>
+  <data name="ribbon_TagFromInternet" xml:space="preserve">
+    <value>Tagi internetistä</value>
+  </data>
+  <data name="ribbon_SingleTagEdit" xml:space="preserve">
+    <value>Yksittäinen tagin muokkaus</value>
+  </data>
+  <data name="ribbon_MultiTagEdit" xml:space="preserve">
+    <value>Useiden tagien muokkaus</value>
+  </data>
+  <data name="ribbon_AutoNumber" xml:space="preserve">
+    <value>Automaattinen numero</value>
+  </data>
+  <data name="ribbon_NumberOnClick" xml:space="preserve">
+    <value>Numero klikattaessa</value>
+  </data>
+  <data name="ribbon_Find" xml:space="preserve">
+    <value>Etsi</value>
+  </data>
+  <data name="ribbon_Replace" xml:space="preserve">
+    <value>Korvaa</value>
+  </data>
+  <data name="ribbon_ValidateSong" xml:space="preserve">
+    <value>Vahvista MP3</value>
+  </data>
+  <data name="ribbon_FixSong" xml:space="preserve">
+    <value>Korjaa MP3</value>
+  </data>
+  <data name="ribbon_ReplayGain" xml:space="preserve">
+    <value>Uudelleen katsonnan vahvistus</value>
+  </data>
+  <data name="ribbon_RemoveCommentPicture" xml:space="preserve">
+    <value>Poista:</value>
+  </data>
+  <data name="ribbon_RemoveComments" xml:space="preserve">
+    <value>Poista kaikki kommentit</value>
+  </data>
+  <data name="ribbon_RemovePictures" xml:space="preserve">
+    <value>Poista kaikki kuvat</value>
+  </data>
+  <data name="ribbon_CaseConversion" xml:space="preserve">
+    <value>Poista tagit</value>
+  </data>
+  <data name="ribbon_CaseConversionMenu" xml:space="preserve">
+    <value>Poista tagit</value>
+  </data>
+  <data name="ribbon_DeleteTags" xml:space="preserve">
+    <value>Poista tagit</value>
+  </data>
+  <data name="ribbon_DeleteAllTags" xml:space="preserve">
+    <value>Poista kaikki tagit</value>
+  </data>
+  <data name="ribbon_DeleteID3V1Tags" xml:space="preserve">
+    <value>Poista ID3 V1 tagit ainoastaan</value>
+  </data>
+  <data name="ribbon_DeleteID3V2Tags" xml:space="preserve">
+    <value>Poista ID3 V2 tagit ainoastaan</value>
+  </data>
+  <data name="ribbon_EditTags" xml:space="preserve">
+    <value>Muokkaa tageja</value>
+  </data>
+  <data name="ribbon_RetrieveTags" xml:space="preserve">
+    <value>Hae tageja</value>
+  </data>
+  <data name="ribbon_OrganiseFiles" xml:space="preserve">
+    <value>Organisoi</value>
+  </data>
+  <data name="ribbon_ExecuteScript" xml:space="preserve">
+    <value>Suorita komentosarja</value>
+  </data>
+  <data name="ribbon_Organise" xml:space="preserve">
+    <value>Organisoi tiedostot</value>
+  </data>
+  <data name="ribbon_AddBurner" xml:space="preserve">
+    <value>Lisää poltettavaksi</value>
+  </data>
+  <data name="ribbon_AddConvert" xml:space="preserve">
+    <value>Lisää muunnokseen</value>
+  </data>
+  <data name="ribbon_AddPlaylist" xml:space="preserve">
+    <value>Lisää soittolistalle</value>
+  </data>
+  <data name="ribbon_Other" xml:space="preserve">
+    <value>Muut</value>
+  </data>
+  <data name="ribbon_RipTab" xml:space="preserve">
+    <value>Rippaa</value>
+  </data>
+  <data name="ribbon_ConvertTab" xml:space="preserve">
+    <value>Muunna</value>
+  </data>
+  <data name="ribbon_BurnTab" xml:space="preserve">
+    <value>Polta</value>
+  </data>
+  <data name="ribbon_DatabaseContextualTab" xml:space="preserve">
+    <value>Tietokanta</value>
+  </data>
+  <data name="ribbon_DatabaseTab" xml:space="preserve">
+    <value>Tietokanta</value>
+  </data>
+  <data name="screentip_DeleteTagsText" xml:space="preserve">
+    <value>Kaikki tagit on poistettu valituista tiedostoista.</value>
+  </data>
+  <data name="tagEdit_TabHeader_Lyrics" xml:space="preserve">
+    <value>Lyriikat</value>
+  </data>
+  <data name="tagEdit_TabHeader_Detailed_Information" xml:space="preserve">
+    <value>Tarkemmat tiedot</value>
+  </data>
+  <data name="tagEdit_TabHeader_Pictures" xml:space="preserve">
+    <value>Kuvat</value>
+  </data>
+  <data name="tagEdit_Track" xml:space="preserve">
+    <value>Kappale:</value>
+  </data>
+  <data name="tagEdit_Artist" xml:space="preserve">
+    <value>Artisti:</value>
+  </data>
+  <data name="tagEdit_Year" xml:space="preserve">
+    <value>Vuosi:</value>
+  </data>
+  <data name="tagEdit_Title" xml:space="preserve">
+    <value>Otsikko:</value>
+  </data>
+  <data name="tagEdit_Album" xml:space="preserve">
+    <value>Albumi:</value>
+  </data>
+  <data name="tagEdit_Comment" xml:space="preserve">
+    <value>Kommentti:</value>
+  </data>
+  <data name="tagEdit_Genre" xml:space="preserve">
+    <value>Lajityyppi:</value>
+  </data>
+  <data name="tagEdit_Disc" xml:space="preserve">
+    <value>Levy:</value>
+  </data>
+  <data name="tagEdit_Remove_Existing_Pictures" xml:space="preserve">
+    <value>Poista olemassa olevat kuvat ensimmäisenä</value>
+  </data>
+  <data name="tagEdit_GetTrackLength_Checkbox" xml:space="preserve">
+    <value>Hae tiedostosta</value>
+  </data>
+  <data name="tagEdit_TabHeader_UserFrames" xml:space="preserve">
+    <value>Käyttäjän määrittämä</value>
+  </data>
+  <data name="tagEdit_TabHeader_Rating" xml:space="preserve">
+    <value>Arvostelu</value>
+  </data>
+  <data name="tagEdit_TabHeader_Web_Information" xml:space="preserve">
+    <value>Internet tiedot</value>
+  </data>
+  <data name="tagEdit_TabHeader_Involved_People" xml:space="preserve">
+    <value>Mukana olevat ihmiset</value>
+  </data>
+  <data name="tagEdit_TabHeader_Original_Information" xml:space="preserve">
+    <value>Alkuperäiset tiedot</value>
+  </data>
+  <data name="songHeader_Title" xml:space="preserve">
+    <value>Otsikko</value>
+  </data>
+  <data name="songHeader_Artist" xml:space="preserve">
+    <value>Artisti</value>
+  </data>
+  <data name="songHeader_Album" xml:space="preserve">
+    <value>Albumi</value>
+  </data>
+  <data name="songHeader_Rating" xml:space="preserve">
+    <value>Arvostelu</value>
+  </data>
+  <data name="songHeader_Comment" xml:space="preserve">
+    <value>Kommentti</value>
+  </data>
+  <data name="songHeader_Picture" xml:space="preserve">
+    <value>Kuva</value>
+  </data>
+  <data name="songHeader_Lyrics" xml:space="preserve">
+    <value>Lyriikat</value>
+  </data>
+  <data name="caseConversion_Header" xml:space="preserve">
+    <value>Poista tagit</value>
+  </data>
+  <data name="caseConversion_Tab_Settings" xml:space="preserve">
+    <value>Asetukset</value>
+  </data>
+  <data name="caseConversion_Options" xml:space="preserve">
+    <value>Valinnat</value>
+  </data>
+  <data name="caseConversion_Comment" xml:space="preserve">
+    <value>Kommentti</value>
+  </data>
+  <data name="caseConversion_Title" xml:space="preserve">
+    <value>Otsikko</value>
+  </data>
+  <data name="caseConversion_Album" xml:space="preserve">
+    <value>Albumi</value>
+  </data>
+  <data name="caseConversion_Artist" xml:space="preserve">
+    <value>Artisti</value>
+  </data>
+  <data name="organise_Header" xml:space="preserve">
+    <value>Organisoi tiedostot</value>
+  </data>
+  <data name="organise_Options" xml:space="preserve">
+    <value>Valinnat</value>
+  </data>
+  <data name="settings_Header" xml:space="preserve">
+    <value>Asetukset</value>
+  </data>
+  <data name="settings_Tags" xml:space="preserve">
+    <value>Tagit</value>
+  </data>
+  <data name="message_Error_Title" xml:space="preserve">
+    <value>Virhe</value>
+  </data>
+  <data name="message_Save_Changes" xml:space="preserve">
+    <value>Muutoksia ei ole tallennettu. Haluatko tallentaa?</value>
+  </data>
+  <data name="message_Save_Changes_Title" xml:space="preserve">
+    <value>Tallenna muutokset</value>
+  </data>
+  <data name="message_ErrorReadingFile" xml:space="preserve">
+    <value>Virhe luettaessa tiedostoa: {0}</value>
+  </data>
+  <data name="message_ErrorSave" xml:space="preserve">
+    <value>Virhe tallennettaessa tiedostoa: {0}</value>
+  </data>
+  <data name="findReplace_HeaderFind" xml:space="preserve">
+    <value>Etsi</value>
+  </data>
+  <data name="findReplace_FindWhat" xml:space="preserve">
+    <value>Mitä etsit:</value>
+  </data>
+  <data name="findReplace_FindNext" xml:space="preserve">
+    <value>Etsi seuraava</value>
+  </data>
+  <data name="findReplace_HeaderReplace" xml:space="preserve">
+    <value>Korvaa</value>
+  </data>
+  <data name="findReplace_Replace" xml:space="preserve">
+    <value>Korvaa</value>
+  </data>
+  <data name="findReplace_ReplaceAll" xml:space="preserve">
+    <value>Korvaa kaikki</value>
+  </data>
+</root>

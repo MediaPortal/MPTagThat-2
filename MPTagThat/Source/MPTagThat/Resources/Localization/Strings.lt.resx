@@ -1,0 +1,1157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>  <data name="ApplicationName" xml:space="preserve">
+    <value>MPTagThat yra MediaPortal Žymų redaktorius</value>
+  </data>
+  <data name="treeview_Header" xml:space="preserve">
+    <value>Aplankai</value>
+  </data>
+  <data name="statusBar_FilterActive" xml:space="preserve">
+    <value>Žymos filtras: aktyvus</value>
+  </data>
+  <data name="statusBar_FilterInactive" xml:space="preserve">
+    <value>Žymos filtras: neaktyvus</value>
+  </data>
+  <data name="miscFiles_Header" xml:space="preserve">
+    <value>Ne muzikos failai</value>
+  </data>
+  <data name="miscFiles_Menu_Rename" xml:space="preserve">
+    <value>Pervadinti į \"folder.jpg\"</value>
+  </data>
+  <data name="miscFiles_Menu_DeleteFiles" xml:space="preserve">
+    <value>Ištrinti pasirinktą failą (us)</value>
+  </data>
+  <data name="statusBar_NumberOfFiles" xml:space="preserve">
+    <value>Failai: {0} (Pasirinkta: {1})</value>
+  </data>
+  <data name="ribbon_Refresh" xml:space="preserve">
+    <value>Atnaujinti</value>
+  </data>
+  <data name="ribbon_Save" xml:space="preserve">
+    <value>Išsaugoti</value>
+  </data>
+  <data name="ribbon_Exit" xml:space="preserve">
+    <value>Išeiti</value>
+  </data>
+  <data name="ribbon_TagTab" xml:space="preserve">
+    <value>Žymos</value>
+  </data>
+  <data name="ribbon_TagFromFile" xml:space="preserve">
+    <value>Žyma pagal failo vardą</value>
+  </data>
+  <data name="ribbon_RenameFile" xml:space="preserve">
+    <value>Pervadinti failą</value>
+  </data>
+  <data name="ribbon_RenameFileMenu" xml:space="preserve">
+    <value>Pervadinti failą</value>
+  </data>
+  <data name="ribbon_RenameFileOptions" xml:space="preserve">
+    <value>Failo pervadinimo pasirinkimai</value>
+  </data>
+  <data name="ribbon_IdentifyFile" xml:space="preserve">
+    <value>Nustatyti failą</value>
+  </data>
+  <data name="ribbon_TagFromInternet" xml:space="preserve">
+    <value>Žyma iš interneto</value>
+  </data>
+  <data name="ribbon_SingleTagEdit" xml:space="preserve">
+    <value>Vienos žymos redagavimas</value>
+  </data>
+  <data name="ribbon_MultiTagEdit" xml:space="preserve">
+    <value>Keletos žymų redagavimas</value>
+  </data>
+  <data name="ribbon_GetCoverArt" xml:space="preserve">
+    <value>Gauti viršelius</value>
+  </data>
+  <data name="ribbon_GetLyrics" xml:space="preserve">
+    <value>Gauti dainos žodžius</value>
+  </data>
+  <data name="ribbon_AutoNumber" xml:space="preserve">
+    <value>Auto numeravimas</value>
+  </data>
+  <data name="ribbon_NumberOnClick" xml:space="preserve">
+    <value>Numeris paspaudus</value>
+  </data>
+  <data name="ribbon_Find" xml:space="preserve">
+    <value>Rasti</value>
+  </data>
+  <data name="ribbon_Replace" xml:space="preserve">
+    <value>Pakeisti</value>
+  </data>
+  <data name="ribbon_ValidateSong" xml:space="preserve">
+    <value>Patvirtinti MP3</value>
+  </data>
+  <data name="ribbon_FixSong" xml:space="preserve">
+    <value>Pataisyti MP3</value>
+  </data>
+  <data name="ribbon_ReplayGain" xml:space="preserve">
+    <value>Garso stiprumo žyma</value>
+  </data>
+  <data name="ribbon_BPM" xml:space="preserve">
+    <value>Aptikti BPM</value>
+  </data>
+  <data name="ribbon_RemoveCommentPicture" xml:space="preserve">
+    <value>Pašalinti:</value>
+  </data>
+  <data name="ribbon_RemoveComments" xml:space="preserve">
+    <value>Pašalinti visus komentarus</value>
+  </data>
+  <data name="ribbon_RemovePictures" xml:space="preserve">
+    <value>Pašalinti visus vaizdus</value>
+  </data>
+  <data name="ribbon_CaseConversion" xml:space="preserve">
+    <value>Didelių mažų raidžių konvertavimas</value>
+  </data>
+  <data name="ribbon_CaseConversionMenu" xml:space="preserve">
+    <value>Didelių mažų raidžių konvertavimas</value>
+  </data>
+  <data name="ribbon_CaseConversionOption" xml:space="preserve">
+    <value>Didelių mažų raidžių konvertavimo pasirinkimai</value>
+  </data>
+  <data name="ribbon_DeleteTags" xml:space="preserve">
+    <value>Ištrinti žymas</value>
+  </data>
+  <data name="ribbon_DeleteAllTags" xml:space="preserve">
+    <value>Ištrinti visas žymas</value>
+  </data>
+  <data name="ribbon_DeleteID3V1Tags" xml:space="preserve">
+    <value>Ištrinti tik ID3 V1 žymas</value>
+  </data>
+  <data name="ribbon_DeleteID3V2Tags" xml:space="preserve">
+    <value>Ištrinti tik ID3 V2 žymas</value>
+  </data>
+  <data name="ribbon_EditTags" xml:space="preserve">
+    <value>Redaguoti žymas</value>
+  </data>
+  <data name="ribbon_RetrieveTags" xml:space="preserve">
+    <value>Nuskaityti žymas</value>
+  </data>
+  <data name="ribbon_OrganiseFiles" xml:space="preserve">
+    <value>Tvarkyti</value>
+  </data>
+  <data name="ribbon_SaveFolderThumb" xml:space="preserve">
+    <value>Išsaugoti kaip aplanko miniatiūrą</value>
+  </data>
+  <data name="ribbon_ExecuteScript" xml:space="preserve">
+    <value>Paleisti skriptą</value>
+  </data>
+  <data name="ribbon_Picture" xml:space="preserve">
+    <value>Viršelis</value>
+  </data>
+  <data name="ribbon_Organise" xml:space="preserve">
+    <value>Tvarkyti failus</value>
+  </data>
+  <data name="ribbon_AddBurner" xml:space="preserve">
+    <value>Pridėti į kepyklą</value>
+  </data>
+  <data name="ribbon_AddConvert" xml:space="preserve">
+    <value>Pridėti į Konvertavimui</value>
+  </data>
+  <data name="ribbon_AddPlaylist" xml:space="preserve">
+    <value>Pridėti į Grojaraštį</value>
+  </data>
+  <data name="ribbon_Other" xml:space="preserve">
+    <value>Kiti</value>
+  </data>
+  <data name="ribbon_RipTab" xml:space="preserve">
+    <value>Ripinti</value>
+  </data>
+  <data name="ribbon_ConvertTab" xml:space="preserve">
+    <value>Konvertuoti</value>
+  </data>
+  <data name="ribbon_BurnTab" xml:space="preserve">
+    <value>Įrašyti</value>
+  </data>
+  <data name="ribbon_DatabaseContextualTab" xml:space="preserve">
+    <value>Duomenų bazė</value>
+  </data>
+  <data name="ribbon_DatabaseTab" xml:space="preserve">
+    <value>Duomenų bazė</value>
+  </data>
+  <data name="screentip_SaveText" xml:space="preserve">
+    <value>Pakeisti visas pažymėtas žymas ir išsaugoti pokyčius į diską.</value>
+  </data>
+  <data name="screentip_TagFromFileText" xml:space="preserve">
+    <value>Naudojant specialiuosius parametrus nurodytus dialoge, įvairios žymos kaip \"Takelis #\", \"Atlikėjas\", \"Antraštė\" ir t.t. bus paimtos iš failo pavadinimo.</value>
+  </data>
+  <data name="screentip_TagFromInternetText" xml:space="preserve">
+    <value>Duotas Atlikėjo ir Albumo pavadinimas naudojamas Amazon paieškai bandand sulyginti failo pavadinimą su gautu iš Amazon sąrašu.</value>
+  </data>
+  <data name="screentip_GetLyricsText" xml:space="preserve">
+    <value>Dainos žodžių variklis ieško žodžių pasirinktiems failams Dainos žodžių šaltiniuose nurodytuose nustatymuose.</value>
+  </data>
+  <data name="screentip_AutoNumberText" xml:space="preserve">
+    <value>Pasirinkto failo dainos numeris nustatytas naudojant tekstinio įrašo verte kaip pradžios numerį.</value>
+  </data>
+  <data name="screentip_NumberOnClickText" xml:space="preserve">
+    <value>Kai šis mygtukas įjungtas, paspaudžiant ant failo nustatomas takelio numeris.</value>
+  </data>
+  <data name="screentip_RemoveCommentsText" xml:space="preserve">
+    <value>Visi pasirinktų failų komentarai panaikinti.</value>
+  </data>
+  <data name="screentip_CaseConversionText" xml:space="preserve">
+    <value>Didelių/mažų raidžių taisyklės pagal nustatymus pritaikytos visiems pasirinktiems failams.</value>
+  </data>
+  <data name="screentip_DeleteTagsText" xml:space="preserve">
+    <value>Visos pasirinktų failų žymės panaikintos.</value>
+  </data>
+  <data name="screentip_RenameFileText" xml:space="preserve">
+    <value>Failai pervadinti pagal dialoge nurodytus parametrus.</value>
+  </data>
+  <data name="screentip_OrganiseText" xml:space="preserve">
+    <value>Failai nukopijuoti/perkelti 5 naują vietą pagal žymas nurodytas dialogų parametruose.</value>
+  </data>
+  <data name="screentip_ExecuteScriptText" xml:space="preserve">
+    <value>Taiko skriptą pasirinkimo langelyje pažymėtiems failams.</value>
+  </data>
+  <data name="screentip_FindText" xml:space="preserve">
+    <value>Atveria paieškos dialogą pasirinktiems Takeliams pagal numatytą užklausą.</value>
+  </data>
+  <data name="screentip_ReplaceText" xml:space="preserve">
+    <value>Atveria Ieškoti/Pakeisti dialogą, kad būtų pakeista numatytoji užklausą pasirinktiems Takeliams.</value>
+  </data>
+  <data name="screentip_ValidateSongText" xml:space="preserve">
+    <value>Naudoti MP3Val, kad būtų patvirtintas pasirinktų MP3 failų teisingumas. Kai kurios klaidos gali būti pataisytos naudojant \"Pataisyti MP3\" mygtuku.</value>
+  </data>
+  <data name="screentip_FixSongText" xml:space="preserve">
+    <value>Naudoja MP3Val, kad pataisyti klaidas aptiktas pasirinktame MP3 faile.</value>
+  </data>
+  <data name="tagEdit_TabHeader_Lyrics" xml:space="preserve">
+    <value>Dainos žodžiai</value>
+  </data>
+  <data name="tagEdit_TabHeader_Detailed_Information" xml:space="preserve">
+    <value>Detali informacija</value>
+  </data>
+  <data name="tagEdit_TabHeader_Main" xml:space="preserve">
+    <value>Pagrindinės žymos</value>
+  </data>
+  <data name="tagEdit_TabHeader_Pictures" xml:space="preserve">
+    <value>Vaizdai</value>
+  </data>
+  <data name="tagEdit_AlbumArtist" xml:space="preserve">
+    <value>AlbumoAtlikėjas:</value>
+  </data>
+  <data name="tagEdit_Track" xml:space="preserve">
+    <value>Takelis:</value>
+  </data>
+  <data name="tagEdit_Artist" xml:space="preserve">
+    <value>Atlikėjas:</value>
+  </data>
+  <data name="tagEdit_Year" xml:space="preserve">
+    <value>Metai:</value>
+  </data>
+  <data name="tagEdit_Title" xml:space="preserve">
+    <value>Antraštė:</value>
+  </data>
+  <data name="tagEdit_Album" xml:space="preserve">
+    <value>Albumas:</value>
+  </data>
+  <data name="tagEdit_PartOfCompilation" xml:space="preserve">
+    <value>Rinkinio dalis</value>
+  </data>
+  <data name="tagEdit_Comment" xml:space="preserve">
+    <value>Komentaras:</value>
+  </data>
+  <data name="tagEdit_Genre" xml:space="preserve">
+    <value>Žanras:</value>
+  </data>
+  <data name="tagEdit_Disc" xml:space="preserve">
+    <value>Diskas:</value>
+  </data>
+  <data name="tagEdit_Remove_Existing_Pictures" xml:space="preserve">
+    <value>Pirma pašalinti esamus vaizdus</value>
+  </data>
+  <data name="tagEdit_GetTrackLength_Checkbox" xml:space="preserve">
+    <value>Gauti iš failo</value>
+  </data>
+  <data name="tagEdit_GetTrackLength" xml:space="preserve">
+    <value>Gauti takelio trukmę iš failo</value>
+  </data>
+  <data name="tagEdit_Songlength" xml:space="preserve">
+    <value>Takelio trukmė (ms):</value>
+  </data>
+  <data name="tagEdit_MediaType" xml:space="preserve">
+    <value>Medijos tipas:</value>
+  </data>
+  <data name="tagEdit_TitleSort" xml:space="preserve">
+    <value>Rūšiuoti antraštes:</value>
+  </data>
+  <data name="tagEdit_AlbumSort" xml:space="preserve">
+    <value>Rūtiuoti albumus:</value>
+  </data>
+  <data name="tagEdit_ArtistSort" xml:space="preserve">
+    <value>Rūšiuoti atlikėjus:</value>
+  </data>
+  <data name="tagEdit_AlbumArtistSort" xml:space="preserve">
+    <value>Rūšiuoti albumų atlikėjus:</value>
+  </data>
+  <data name="tagEdit_SubTitle" xml:space="preserve">
+    <value>Subtitrai:</value>
+  </data>
+  <data name="tagEdit_Content_Group" xml:space="preserve">
+    <value>Grupuoti turinį:</value>
+  </data>
+  <data name="tagEdit_Copyright" xml:space="preserve">
+    <value>Autorinės teisės:</value>
+  </data>
+  <data name="tagEdit_EncodedBy" xml:space="preserve">
+    <value>Kodavo:</value>
+  </data>
+  <data name="tagEdit_Publisher" xml:space="preserve">
+    <value>Leidėjas:</value>
+  </data>
+  <data name="tagEdit_TextWriter" xml:space="preserve">
+    <value>Dainos žodžių/teksto autorius:</value>
+  </data>
+  <data name="tagEdit_InterpretedBy" xml:space="preserve">
+    <value>Išaiškino:</value>
+  </data>
+  <data name="tagEdit_Composer" xml:space="preserve">
+    <value>Kompozitorius:</value>
+  </data>
+  <data name="tagEdit_Conductor" xml:space="preserve">
+    <value>Dirigentas:</value>
+  </data>
+  <data name="tagEdit_OrigReleaseYear" xml:space="preserve">
+    <value>Originalo leidimo metai:</value>
+  </data>
+  <data name="tagEdit_OrigOwner" xml:space="preserve">
+    <value>Originalus šeimininkas:</value>
+  </data>
+  <data name="tagEdit_OrigArtist" xml:space="preserve">
+    <value>Originalus atlikėjas:</value>
+  </data>
+  <data name="tagEdit_OrigLyricsWriter" xml:space="preserve">
+    <value>Originalus žodžių autorius:</value>
+  </data>
+  <data name="tagEdit_OrigFileName" xml:space="preserve">
+    <value>Originalus failo vardas:</value>
+  </data>
+  <data name="tagEdit_OrigAlbum" xml:space="preserve">
+    <value>Originali albumo antraštė:</value>
+  </data>
+  <data name="tagEdit_MusicCreditList_Delete" xml:space="preserve">
+    <value>Pašalinti muzikantą</value>
+  </data>
+  <data name="tagEdit_MusicCreditList_Add" xml:space="preserve">
+    <value>Pridėti muzikantą</value>
+  </data>
+  <data name="tagEdit_MusicCreditList_Instrument" xml:space="preserve">
+    <value>Instrumentas</value>
+  </data>
+  <data name="tagEdit_InvolvedPerson_Delete" xml:space="preserve">
+    <value>Pašalinti asmenį</value>
+  </data>
+  <data name="tagEdit_InvolvedPerson_Add" xml:space="preserve">
+    <value>Pridėti asmenį</value>
+  </data>
+  <data name="tagEdit_InvolvedPerson_Function" xml:space="preserve">
+    <value>Įtraukto asmens funkcija:</value>
+  </data>
+  <data name="tagEdit_InvolvedPerson_Name" xml:space="preserve">
+    <value>Vardas</value>
+  </data>
+  <data name="tagEdit_CommercialInfo" xml:space="preserve">
+    <value>Komercinės informacijos URL:</value>
+  </data>
+  <data name="tagEdit_OfficialPublisher" xml:space="preserve">
+    <value>Oficialaus leidėjo URL:</value>
+  </data>
+  <data name="tagEdit_OfficialPayment" xml:space="preserve">
+    <value>Oficialus mokėjimo URL:</value>
+  </data>
+  <data name="tagEdit_OfficialRadioStation" xml:space="preserve">
+    <value>Oficialios interneto radijo stoties URL:</value>
+  </data>
+  <data name="tagEdit_OfficialAudioSource" xml:space="preserve">
+    <value>Oficialaus audio šaltinio URL:</value>
+  </data>
+  <data name="tagEdit_OfficialArtist" xml:space="preserve">
+    <value>Oficialus atlikėjo URL:</value>
+  </data>
+  <data name="tagEdit_OfficialAudiofile" xml:space="preserve">
+    <value>Oficialus audio failo URL:</value>
+  </data>
+  <data name="tagEdit_CopyrightInformation" xml:space="preserve">
+    <value>Autorinių teisių informacijos URL:</value>
+  </data>
+  <data name="tagEdit_RatingPlayCount" xml:space="preserve">
+    <value>Grojimo skaitklis:</value>
+  </data>
+  <data name="tagEdit_Rating_Delete" xml:space="preserve">
+    <value>Pašalinti vertinimą</value>
+  </data>
+  <data name="tagEdit_Rating_Add" xml:space="preserve">
+    <value>Pridėti vertinimą</value>
+  </data>
+  <data name="tagEdit_RatingUser" xml:space="preserve">
+    <value>Vartotojas (epaštas):</value>
+  </data>
+  <data name="tagEdit_TabHeader_UserFrames" xml:space="preserve">
+    <value>Numatyta vartotojo</value>
+  </data>
+  <data name="tagEdit_TabHeader_Rating" xml:space="preserve">
+    <value>Vertinimas</value>
+  </data>
+  <data name="tagEdit_TabHeader_Web_Information" xml:space="preserve">
+    <value>Žiniatinklio informacija</value>
+  </data>
+  <data name="tagEdit_TabHeader_Involved_People" xml:space="preserve">
+    <value>Įtraukti žmonės</value>
+  </data>
+  <data name="tagEdit_TabHeader_Original_Information" xml:space="preserve">
+    <value>Originali informacija</value>
+  </data>
+  <data name="tagEdit_UserFrames_FrameId" xml:space="preserve">
+    <value>Kadro ID</value>
+  </data>
+  <data name="tagEdit_UserFrames_Description" xml:space="preserve">
+    <value>Aprašymas</value>
+  </data>
+  <data name="tagEdit_UserFrames_Text" xml:space="preserve">
+    <value>Tekstas</value>
+  </data>
+  <data name="tagEdit_UserFrames_Add" xml:space="preserve">
+    <value>Pridėti langelį</value>
+  </data>
+  <data name="tagEdit_UserFrames_DeleteFrame" xml:space="preserve">
+    <value>Trinti langelį (ius)</value>
+  </data>
+  <data name="tagEdit_UserFrames_DeleteAllFrames" xml:space="preserve">
+    <value>Trinti visus langelius</value>
+  </data>
+  <data name="lyricsSearch_Title" xml:space="preserve">
+    <value>Rasti žodžius {0} - {1}</value>
+  </data>
+  <data name="lyricsSearch_Status" xml:space="preserve">
+    <value>Ieškoma žodžių ... prašome palaukti</value>
+  </data>
+  <data name="lyricsSearch_Finished" xml:space="preserve">
+    <value>Paieška baigta. Nuimkite netinkamų žodžių pasirinkimus .</value>
+  </data>
+  <data name="lyricsSearch_NothingToSearch" xml:space="preserve">
+    <value>Nėra ką ieškoti</value>
+  </data>
+  <data name="coverSearch_Title" xml:space="preserve">
+    <value>Albumo paieška</value>
+  </data>
+  <data name="identifySong_Title" xml:space="preserve">
+    <value>Interneto užklausa</value>
+  </data>
+  <data name="identifySong_GroupBox_Identified" xml:space="preserve">
+    <value>Nustatytas takelis</value>
+  </data>
+  <data name="identifySong_Country" xml:space="preserve">
+    <value>žemės</value>
+  </data>
+  <data name="identifySong_GroupBox_Results" xml:space="preserve">
+    <value>Takelis yra keliuose albumuose. Prašome pasirinkti</value>
+  </data>
+  <data name="songHeader_FileName" xml:space="preserve">
+    <value>Failo vardas</value>
+  </data>
+  <data name="songHeader_FilePath" xml:space="preserve">
+    <value>Failo kelias</value>
+  </data>
+  <data name="songHeader_NewFileName" xml:space="preserve">
+    <value>Naujas failo vardas</value>
+  </data>
+  <data name="songHeader_Status" xml:space="preserve">
+    <value>Būsena</value>
+  </data>
+  <data name="songHeader_Track" xml:space="preserve">
+    <value>Takelis</value>
+  </data>
+  <data name="songHeader_NumTracks" xml:space="preserve">
+    <value>Takelių num.</value>
+  </data>
+  <data name="songHeader_Title" xml:space="preserve">
+    <value>Antraštė</value>
+  </data>
+  <data name="songHeader_Artist" xml:space="preserve">
+    <value>Atlikėjas</value>
+  </data>
+  <data name="songHeader_AlbumArtist" xml:space="preserve">
+    <value>Albumo atlikėjas</value>
+  </data>
+  <data name="songHeader_Album" xml:space="preserve">
+    <value>Albumas</value>
+  </data>
+  <data name="songHeader_Year" xml:space="preserve">
+    <value>Metai</value>
+  </data>
+  <data name="songHeader_Genre" xml:space="preserve">
+    <value>Žanras</value>
+  </data>
+  <data name="songHeader_CreationTime" xml:space="preserve">
+    <value>Sukurta</value>
+  </data>
+  <data name="songHeader_LastWriteTime" xml:space="preserve">
+    <value>Pakeista</value>
+  </data>
+  <data name="songHeader_TagType" xml:space="preserve">
+    <value>Tipas</value>
+  </data>
+  <data name="songHeader_Disc" xml:space="preserve">
+    <value>Diskas #</value>
+  </data>
+  <data name="songHeader_NumDisc" xml:space="preserve">
+    <value>Disko num.</value>
+  </data>
+  <data name="songHeader_BPM" xml:space="preserve">
+    <value>BPM</value>
+  </data>
+  <data name="songHeader_Rating" xml:space="preserve">
+    <value>Vertinimas</value>
+  </data>
+  <data name="songHeader_ReplayGainTrack" xml:space="preserve">
+    <value>Takelio garso lygis</value>
+  </data>
+  <data name="songHeader_ReplayGainTrackPeak" xml:space="preserve">
+    <value>Takelio garso pikas</value>
+  </data>
+  <data name="songHeader_ReplayGainAlbum" xml:space="preserve">
+    <value>Albumo garso normalizavimas</value>
+  </data>
+  <data name="songHeader_ReplayGainAlbumPeak" xml:space="preserve">
+    <value>Albumo garso pikas</value>
+  </data>
+  <data name="songHeader_Comment" xml:space="preserve">
+    <value>Komentaras</value>
+  </data>
+  <data name="songHeader_Composer" xml:space="preserve">
+    <value>Kompozitorius</value>
+  </data>
+  <data name="songHeader_Conductor" xml:space="preserve">
+    <value>Dirigentas</value>
+  </data>
+  <data name="songHeader_NumPics" xml:space="preserve">
+    <value># Vaizdų</value>
+  </data>
+  <data name="songHeader_Picture" xml:space="preserve">
+    <value>Vaizdas</value>
+  </data>
+  <data name="songHeader_ArtistSortName" xml:space="preserve">
+    <value>Atlikėjų rušiavimo žodis</value>
+  </data>
+  <data name="songHeader_AlbumSortName" xml:space="preserve">
+    <value>Albumų rūšiavimo žodis</value>
+  </data>
+  <data name="songHeader_CommercialInformation" xml:space="preserve">
+    <value>Komercinė informacija</value>
+  </data>
+  <data name="songHeader_Copyright" xml:space="preserve">
+    <value>Autorinės teisės</value>
+  </data>
+  <data name="songHeader_CopyrightInformation" xml:space="preserve">
+    <value>Autorinių teisių informacija</value>
+  </data>
+  <data name="songHeader_EncodedBy" xml:space="preserve">
+    <value>Kodavo</value>
+  </data>
+  <data name="songHeader_Interpreter" xml:space="preserve">
+    <value>Išaiškino</value>
+  </data>
+  <data name="songHeader_Grouping" xml:space="preserve">
+    <value>Grupavimas</value>
+  </data>
+  <data name="songHeader_Lyrics" xml:space="preserve">
+    <value>Dainos žodžiai</value>
+  </data>
+  <data name="songHeader_MediaType" xml:space="preserve">
+    <value>Medijos tipas</value>
+  </data>
+  <data name="songHeader_OfficialAudioFileInformation" xml:space="preserve">
+    <value>Oficiali audio failo informacija</value>
+  </data>
+  <data name="songHeader_OfficialArtistInformation" xml:space="preserve">
+    <value>Oficiali atlikėjo informacija</value>
+  </data>
+  <data name="songHeader_OfficialAudioSourceInformation" xml:space="preserve">
+    <value>Oficiali audio šaltinio informacija</value>
+  </data>
+  <data name="songHeader_OfficialInternetRadioInformation" xml:space="preserve">
+    <value>Oficiali interneto radijo informacija</value>
+  </data>
+  <data name="songHeader_OfficialPaymentInformation" xml:space="preserve">
+    <value>Oficiali mokėjimo informacija</value>
+  </data>
+  <data name="songHeader_OfficialPublisherInformation" xml:space="preserve">
+    <value>Oficiali leidėjo informacija</value>
+  </data>
+  <data name="songHeader_OriginalAlbum" xml:space="preserve">
+    <value>Originalus albumas</value>
+  </data>
+  <data name="songHeader_OriginalFileName" xml:space="preserve">
+    <value>Originalus failo vardas</value>
+  </data>
+  <data name="songHeader_OriginalLyricsWriter" xml:space="preserve">
+    <value>Originalus žodžių autorius</value>
+  </data>
+  <data name="songHeader_OriginalArtist" xml:space="preserve">
+    <value>Originalus atlikėjas</value>
+  </data>
+  <data name="songHeader_OriginalOwner" xml:space="preserve">
+    <value>Originalus šeimininkas</value>
+  </data>
+  <data name="songHeader_OriginalRelease" xml:space="preserve">
+    <value>Originalus leidimas</value>
+  </data>
+  <data name="songHeader_Publisher" xml:space="preserve">
+    <value>Leidėjas</value>
+  </data>
+  <data name="songHeader_SubTitle" xml:space="preserve">
+    <value>Subtitrai</value>
+  </data>
+  <data name="songHeader_TextWriter" xml:space="preserve">
+    <value>Teksto autorius</value>
+  </data>
+  <data name="songHeader_TitleSortName" xml:space="preserve">
+    <value>Antraščių rūšiavimo žodis</value>
+  </data>
+  <data name="songHeader_Duration" xml:space="preserve">
+    <value>Trukmė</value>
+  </data>
+  <data name="songHeader_FileSize" xml:space="preserve">
+    <value>Dydis (kB)</value>
+  </data>
+  <data name="songHeader_BitRate" xml:space="preserve">
+    <value>Garso kokybė</value>
+  </data>
+  <data name="songHeader_SampleRate" xml:space="preserve">
+    <value>Samplo kokybė</value>
+  </data>
+  <data name="songHeader_Channels" xml:space="preserve">
+    <value>Kanalai</value>
+  </data>
+  <data name="songHeader_Version" xml:space="preserve">
+    <value>Kodekas</value>
+  </data>
+  <data name="tagAndRename_Header" xml:space="preserve">
+    <value>Žyma pagal failo vardą</value>
+  </data>
+  <data name="tagAndRename_GroupBoxFormat" xml:space="preserve">
+    <value>Formatas:</value>
+  </data>
+  <data name="tagAndRename_RemoveFormat" xml:space="preserve">
+    <value>Pašalinti sąrašo formatavimą</value>
+  </data>
+  <data name="tagAndRename_AddFormat" xml:space="preserve">
+    <value>Pritaikyti sąrašui formatavimą</value>
+  </data>
+  <data name="tagAndRename_GroupBoxParam" xml:space="preserve">
+    <value>Parametrai (paspaudžianti pridėti į sąrašą)</value>
+  </data>
+  <data name="tagAndRename_Folder" xml:space="preserve">
+    <value>\ = Katalogas: nustatyti šiuos parametrus pradžioje pagal katalogo vardą</value>
+  </data>
+  <data name="tagAndRename_Unused" xml:space="preserve">
+    <value>Nenaudojamas</value>
+  </data>
+  <data name="tagAndRename_Comment" xml:space="preserve">
+    <value>Komentaras</value>
+  </data>
+  <data name="tagAndRename_AlbumArtist" xml:space="preserve">
+    <value>Orkestras/Albumo atlikėjas</value>
+  </data>
+  <data name="tagAndRename_Genre" xml:space="preserve">
+    <value>Žanras</value>
+  </data>
+  <data name="tagAndRename_DiscTotal" xml:space="preserve">
+    <value>Iš viso diskų #</value>
+  </data>
+  <data name="tagAndRename_Disc" xml:space="preserve">
+    <value>Disko numeris</value>
+  </data>
+  <data name="tagAndRename_TrackTotal" xml:space="preserve">
+    <value>Iš viso takelių #</value>
+  </data>
+  <data name="tagAndRename_Track" xml:space="preserve">
+    <value>Takelio numeris</value>
+  </data>
+  <data name="tagAndRename_Year" xml:space="preserve">
+    <value>Metai</value>
+  </data>
+  <data name="tagAndRename_Album" xml:space="preserve">
+    <value>Albumas</value>
+  </data>
+  <data name="tagAndRename_Title" xml:space="preserve">
+    <value>Antrašatė</value>
+  </data>
+  <data name="tagAndRename_Artist" xml:space="preserve">
+    <value>Atlikėjas</value>
+  </data>
+  <data name="tagAndRename_Conductor" xml:space="preserve">
+    <value>Dirigentas</value>
+  </data>
+  <data name="tagAndRename_Composer" xml:space="preserve">
+    <value>Kompozitorius</value>
+  </data>
+  <data name="tagAndRename_Group" xml:space="preserve">
+    <value>Turinio grupavimas</value>
+  </data>
+  <data name="tagAndRename_SubTitle" xml:space="preserve">
+    <value>Subtitrai</value>
+  </data>
+  <data name="tagAndRename_BPM" xml:space="preserve">
+    <value>BPM</value>
+  </data>
+  <data name="tagAndRename_ModifiedBy" xml:space="preserve">
+    <value>Modifikuota/remiksuota</value>
+  </data>
+  <data name="tagAndRename_Filename" xml:space="preserve">
+    <value>Esamas failo vardas</value>
+  </data>
+  <data name="tagAndRename_Enumerate" xml:space="preserve">
+    <value>Numeruoja failus</value>
+  </data>
+  <data name="tagAndRename_BitRate" xml:space="preserve">
+    <value>Kokybė</value>
+  </data>
+  <data name="tagAndRename_FirstNofArtist" xml:space="preserve">
+    <value>= Pirmas \"n\" atlikėjo simbolis</value>
+  </data>
+  <data name="tagAndRename_FirstNofAlbumArtist" xml:space="preserve">
+    <value>= Pirmas \"n\" albumo atlikėjo simbolis</value>
+  </data>
+  <data name="tagAndRename_StartAt" xml:space="preserve">
+    <value>Pradėti nuo</value>
+  </data>
+  <data name="tagAndRename_NumberDigits" xml:space="preserve">
+    <value>Skaitmenų kiekis</value>
+  </data>
+  <data name="tagAndRename_NameTooLong" xml:space="preserve">
+    <value>Failo vardas per ilgas. Prašome pakeisti.</value>
+  </data>
+  <data name="tagAndRename_FileExists" xml:space="preserve">
+    <value>Failas jau egzistuoja. Naudojamos Bendrosios Žymos?</value>
+  </data>
+  <data name="tagAndRename_Header_Rename" xml:space="preserve">
+    <value>Negalima pervardinti failo {0}: {1}</value>
+  </data>
+  <data name="tagAndRename_InvalidParm" xml:space="preserve">
+    <value>Negalimas formato parametras. Prašome pakoreguoti.</value>
+  </data>
+  <data name="tagAndRename_Original" xml:space="preserve">
+    <value>Originalus:</value>
+  </data>
+  <data name="tagAndRename_PreviewChanges" xml:space="preserve">
+    <value>Peržiūra</value>
+  </data>
+  <data name="tagAndRename_TabHeader_Parameter" xml:space="preserve">
+    <value>Parametrai</value>
+  </data>
+  <data name="caseConversion_Header" xml:space="preserve">
+    <value>Didelių mažų raidžių konvertavimas</value>
+  </data>
+  <data name="caseConversion_Tab_Settings" xml:space="preserve">
+    <value>Nustatymai</value>
+  </data>
+  <data name="caseConversion_Options" xml:space="preserve">
+    <value>Pasirinkimai</value>
+  </data>
+  <data name="caseConversion_AlwaysUpperCaseFirstLetter" xml:space="preserve">
+    <value>Visada naudoti pirmąją didžiąją raidę</value>
+  </data>
+  <data name="caseConversion_ReplaceSpaceByUnderscore" xml:space="preserve">
+    <value>Pakeisti tarpą \"_\"</value>
+  </data>
+  <data name="caseConversion_ReplaceUnderScoreBySpace" xml:space="preserve">
+    <value>Pakeisti \"_\" tarpu</value>
+  </data>
+  <data name="caseConversion_ReplaceSpaceBy20" xml:space="preserve">
+    <value>Pakeisti tarpą \"%20\"</value>
+  </data>
+  <data name="caseConversion_Replace20bySpace" xml:space="preserve">
+    <value>Pakeisti \"%20\" tarpu</value>
+  </data>
+  <data name="caseConversion_GroupBox_Method" xml:space="preserve">
+    <value>Konvertavimo būdas</value>
+  </data>
+  <data name="caseConversion_AllFirstLetterUpperCase" xml:space="preserve">
+    <value>Visos pirmosios raidės didžiosios</value>
+  </data>
+  <data name="caseConversion_FirstLetterUpperCase" xml:space="preserve">
+    <value>Pirma raidė didžioji</value>
+  </data>
+  <data name="caseConversion_AllUpperCase" xml:space="preserve">
+    <value>Viskas didžiosiomis raidėmis</value>
+  </data>
+  <data name="caseConversion_AllLowerCase" xml:space="preserve">
+    <value>Viskas mažosiomis raidėmis</value>
+  </data>
+  <data name="caseConversion_GroupBoxTags" xml:space="preserve">
+    <value>Konvertuoti žymas ...</value>
+  </data>
+  <data name="caseConversion_Comment" xml:space="preserve">
+    <value>Komentaras</value>
+  </data>
+  <data name="caseConversion_Title" xml:space="preserve">
+    <value>Antraštė</value>
+  </data>
+  <data name="caseConversion_Album" xml:space="preserve">
+    <value>Albumas</value>
+  </data>
+  <data name="caseConversion_AlbumArtist" xml:space="preserve">
+    <value>AlbumoAtlikėjas</value>
+  </data>
+  <data name="caseConversion_Artist" xml:space="preserve">
+    <value>Atlikėjas</value>
+  </data>
+  <data name="caseConversion_Tags" xml:space="preserve">
+    <value>Konvertuoti žymas</value>
+  </data>
+  <data name="caseConversion_FileName" xml:space="preserve">
+    <value>Konvertuoti failo vardą</value>
+  </data>
+  <data name="caseConversion_Exceptions" xml:space="preserve">
+    <value>Išimtys</value>
+  </data>
+  <data name="caseConversion_Exception_Remove" xml:space="preserve">
+    <value>Pašalinti</value>
+  </data>
+  <data name="caseConversion_Exception_Add" xml:space="preserve">
+    <value>Pridėti</value>
+  </data>
+  <data name="organise_Header" xml:space="preserve">
+    <value>Tvarkyti failus</value>
+  </data>
+  <data name="organise_TargetPath" xml:space="preserve">
+    <value>Objekto šakninė direktorija:</value>
+  </data>
+  <data name="organise_Override_TargetPath" xml:space="preserve">
+    <value>Nepaisyti objekto šakninės direktorijos naudojant skriptą:</value>
+  </data>
+  <data name="organise_BrowseFolder" xml:space="preserve">
+    <value>Naršyti</value>
+  </data>
+  <data name="organise_OverWrite_Files" xml:space="preserve">
+    <value>Užrašyti ant esamų failų</value>
+  </data>
+  <data name="organise_Copy_Files" xml:space="preserve">
+    <value>Kopijuoti failus vietoje perkėlimo</value>
+  </data>
+  <data name="organise_Copy_NonMusic_Files" xml:space="preserve">
+    <value>Kopijuoti/perkelti ne muzikos failus (vaizdus ir kt.)</value>
+  </data>
+  <data name="organise_FileExists" xml:space="preserve">
+    <value>Failas jau egzistuoja. Nebus keičiama</value>
+  </data>
+  <data name="organise_SameFile" xml:space="preserve">
+    <value>Šaltinio ir Rezultato failai sutampa. Failas praleistas</value>
+  </data>
+  <data name="organise_Options" xml:space="preserve">
+    <value>Pasirinkimai</value>
+  </data>
+  <data name="organise_Folder" xml:space="preserve">
+    <value>\ = Katalogas: nustatyti šiuos parametrus pradžioje pagal subkatalogo vardą</value>
+  </data>
+  <data name="settings_Header" xml:space="preserve">
+    <value>Nustatymai</value>
+  </data>
+  <data name="settings_Keys" xml:space="preserve">
+    <value>Klaviatūros nuoroda</value>
+  </data>
+  <data name="settings_Keys_Shift" xml:space="preserve">
+    <value>Shift</value>
+  </data>
+  <data name="settings_Keys_Ctrl" xml:space="preserve">
+    <value>Ctrl</value>
+  </data>
+  <data name="settings_Keys_Alt" xml:space="preserve">
+    <value>Alt</value>
+  </data>
+  <data name="settings_Keys_Description" xml:space="preserve">
+    <value>Aprašymas:</value>
+  </data>
+  <data name="settings_Keys_ShortCut" xml:space="preserve">
+    <value>Greitasis mygtukas:</value>
+  </data>
+  <data name="settings_DebugLevel" xml:space="preserve">
+    <value>Debug lygis:</value>
+  </data>
+  <data name="settings_Theme" xml:space="preserve">
+    <value>Tema:</value>
+  </data>
+  <data name="settings_Language" xml:space="preserve">
+    <value>Kalba:</value>
+  </data>
+  <data name="settings_Tags" xml:space="preserve">
+    <value>Žymos</value>
+  </data>
+  <data name="settings_Id3_Header" xml:space="preserve">
+    <value>ID3</value>
+  </data>
+  <data name="coverSearch_OverwriteExistingCover" xml:space="preserve">
+    <value>Automatiškai žymint bus užrašyti esamiems viršeliams ant viršaus.</value>
+  </data>
+  <data name="coverSearch_EmbedExistingThumb" xml:space="preserve">
+    <value>Įdėti esamą katalogo miniatiūrą (folder.jpg) ieškant viršelio</value>
+  </data>
+  <data name="coverSearch_OnlySaveFolderThumb" xml:space="preserve">
+    <value>Išsaugoti tiktai viršelį į katalogo miniatiūras. Neliesti muzikinio failo</value>
+  </data>
+  <data name="coverSearch_ChangeCoverSize" xml:space="preserve">
+    <value>Išsaugoti viršelius didžiausiu pikselių pločiu:</value>
+  </data>
+  <data name="lyricsSearch_SwitchArtist" xml:space="preserve">
+    <value>Keisti atlikėją prieš pateikiant</value>
+  </data>
+  <data name="settings_Tags_General" xml:space="preserve">
+    <value>Bendras</value>
+  </data>
+  <data name="settings_Tags_CopyArtist" xml:space="preserve">
+    <value>Kopijuoti Atlikėja į Albumo atlikėją jei tuščia</value>
+  </data>
+  <data name="settings_Tags_AutoFillNumberTracks" xml:space="preserve">
+    <value>Automatiškai pridėti \"Takelių skaičius\" redaguojant daug žymų</value>
+  </data>
+  <data name="settings_Tags_CaseConversion" xml:space="preserve">
+    <value>Išsaugojant naudoti raidžių dydžių keitimo nustatymus</value>
+  </data>
+  <data name="settings_Tags_ChangeReadOnly" xml:space="preserve">
+    <value>Išsaugojant keisti Tik Skaityti atributą</value>
+  </data>
+  <data name="settings_Id3_Encoding" xml:space="preserve">
+    <value>Kodavimas naudotas saugojant Žymas:</value>
+  </data>
+  <data name="coverSearch_CreateMissingFolderThumb" xml:space="preserve">
+    <value>Sukurti trukstamą katalogo miniatiūrą (folder.jpg) išsaugojant</value>
+  </data>
+  <data name="settings_Id3_Header" xml:space="preserve">
+    <value>ID3</value>
+  </data>
+  <data name="settings_Id3_UseV4" xml:space="preserve">
+    <value>ID3 V žymoms naudoti 2.4 versiją</value>
+  </data>
+  <data name="settings_Id3_UseV3" xml:space="preserve">
+    <value>ID3 V žymoms naudoti 2.3 versiją</value>
+  </data>
+  <data name="settings_Id3_UseApe" xml:space="preserve">
+    <value>Naudoti APE ir ID3 V1 žymas</value>
+  </data>
+  <data name="settings_Id3_Header_Update" xml:space="preserve">
+    <value>Atnaujinti</value>
+  </data>
+  <data name="settings_Id3_UpdateRemoveV1" xml:space="preserve">
+    <value>Pašalinti ID3V1</value>
+  </data>
+  <data name="settings_Id3_UpdateRemoveV2" xml:space="preserve">
+    <value>Pašalinti ID3V2</value>
+  </data>
+  <data name="settings_Id3_UpdateV1V2" xml:space="preserve">
+    <value>ID3V1 ir ID3V2</value>
+  </data>
+  <data name="settings_Id3_UpdateV2" xml:space="preserve">
+    <value>ID3V2</value>
+  </data>
+  <data name="settings_Id3_UpdateV1" xml:space="preserve">
+    <value>ID3V1</value>
+  </data>
+  <data name="settings_Id3_ClearUserFrames" xml:space="preserve">
+    <value>Išsaugojant išvalyti vartotojo numatytus kadrus</value>
+  </data>
+  <data name="settings_Id3_Header_MP3Validation" xml:space="preserve">
+    <value>MP3 failo patvirtinimas</value>
+  </data>
+  <data name="settings_Id3_ValidateMp3" xml:space="preserve">
+    <value>Patvirtinti MP3 failus kai skenuojamas katalogas/duomenų bazė</value>
+  </data>
+  <data name="settings_Id3_FixMp3" xml:space="preserve">
+    <value>Automatiškai taisyti klaidingus MP3 failus</value>
+  </data>
+  <data name="settings_Id3_Header_CustomGenres" xml:space="preserve">
+    <value>Tinkinami žanrai</value>
+  </data>
+  <data name="settings_Id3_AddGenre" xml:space="preserve">
+    <value>Pridėti žanrą</value>
+  </data>
+  <data name="settings_Id3_RemoveGenre" xml:space="preserve">
+    <value>Trinti žanrą</value>
+  </data>
+  <data name="lookup_Title" xml:space="preserve">
+    <value>Interneto paieška - Nurodykite Atlikėją/Albumą</value>
+  </data>
+  <data name="lookup_NoAlbumFound" xml:space="preserve">
+    <value>Nerastas joks albumas, prašome pasirinkti kitą atrankos kriterijų</value>
+  </data>
+  <data name="lookup_SearchFinished" xml:space="preserve">
+    <value>Rasta keletas albumų. Prašome pasirinkti ..</value>
+  </data>
+  <data name="lookup_AlbumTracks" xml:space="preserve">
+    <value>Takelių albume</value>
+  </data>
+  <data name="message_Error_Title" xml:space="preserve">
+    <value>Klaida</value>
+  </data>
+  <data name="message_Save_Changes" xml:space="preserve">
+    <value>Pakeitimai neišsaugoti. ar norite išsaugoti pakeitimus?</value>
+  </data>
+  <data name="message_Save_Changes_Title" xml:space="preserve">
+    <value>Išsaugoti pakeitimus</value>
+  </data>
+  <data name="message_ErrorResetAttr" xml:space="preserve">
+    <value>Negalima atšaukti tik-skaitymui atributo</value>
+  </data>
+  <data name="message_CorruptFile" xml:space="preserve">
+    <value>Sugadintas failas</value>
+  </data>
+  <data name="message_UnsupportedFormat" xml:space="preserve">
+    <value>Nepalaikomas formatas</value>
+  </data>
+  <data name="message_NonExistingFile" xml:space="preserve">
+    <value>Failo nebėra!</value>
+  </data>
+  <data name="message_ErrorReadingFile" xml:space="preserve">
+    <value>Klaida nuskaitant failą: {0}</value>
+  </data>
+  <data name="message_ErrorSave" xml:space="preserve">
+    <value>Klaida išsaugant failą: {0}</value>
+  </data>
+  <data name="findReplace_HeaderFind" xml:space="preserve">
+    <value>Rasti</value>
+  </data>
+  <data name="findReplace_NotFound" xml:space="preserve">
+    <value>Paieškos eilutė nerast</value>
+  </data>
+  <data name="findReplace_NoMoreOccurencesFound" xml:space="preserve">
+    <value>Daugiau nerasta paieškos eilučių</value>
+  </data>
+  <data name="findReplace_FindWhat" xml:space="preserve">
+    <value>Rasti tai:</value>
+  </data>
+  <data name="findReplace_MatchCase" xml:space="preserve">
+    <value>Lyginti pagal raidžių dydžius</value>
+  </data>
+  <data name="findReplace_FindNext" xml:space="preserve">
+    <value>Ieškoti toliau</value>
+  </data>
+  <data name="findReplace_HeaderReplace" xml:space="preserve">
+    <value>Pakeisti</value>
+  </data>
+  <data name="findReplace_ReplaceWith" xml:space="preserve">
+    <value>Pakeisti:</value>
+  </data>
+  <data name="findReplace_Replace" xml:space="preserve">
+    <value>Pakeisti</value>
+  </data>
+  <data name="findReplace_ReplaceAll" xml:space="preserve">
+    <value>Pakeisti visus</value>
+  </data>
+</root>
