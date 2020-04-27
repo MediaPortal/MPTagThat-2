@@ -59,46 +59,46 @@
             : using a System.ComponentModel.TypeConverter
             : and then encoded with base64 encoding.
     -->
-  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
-    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+  <xsd:schema xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" id="root">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace"/>
     <xsd:element name="root" msdata:IsDataSet="true">
       <xsd:complexType>
         <xsd:choice maxOccurs="unbounded">
           <xsd:element name="metadata">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0"/>
               </xsd:sequence>
-              <xsd:attribute name="name" use="required" type="xsd:string" />
-              <xsd:attribute name="type" type="xsd:string" />
-              <xsd:attribute name="mimetype" type="xsd:string" />
-              <xsd:attribute ref="xml:space" />
+              <xsd:attribute name="name" use="required" type="xsd:string"/>
+              <xsd:attribute name="type" type="xsd:string"/>
+              <xsd:attribute name="mimetype" type="xsd:string"/>
+              <xsd:attribute ref="xml:space"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="assembly">
             <xsd:complexType>
-              <xsd:attribute name="alias" type="xsd:string" />
-              <xsd:attribute name="name" type="xsd:string" />
+              <xsd:attribute name="alias" type="xsd:string"/>
+              <xsd:attribute name="name" type="xsd:string"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="data">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
-                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2"/>
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
-              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
-              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
-              <xsd:attribute ref="xml:space" />
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1"/>
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3"/>
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4"/>
+              <xsd:attribute ref="xml:space"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="resheader">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" />
+              <xsd:attribute name="name" type="xsd:string" use="required"/>
             </xsd:complexType>
           </xsd:element>
         </xsd:choice>
@@ -116,44 +116,18 @@
   </resheader>
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </resheader>  <data name="ApplicationName" xml:space="preserve">
+  </resheader>
+  <data name="ApplicationName" xml:space="preserve">
     <value>MPTagThat der MediaPortal Tag Editor</value>
-  </data>
-  <data name="treeview_Header" xml:space="preserve">
-    <value>Verzeichnisse</value>
-  </data>
-  <data name="statusBar_FilterActive" xml:space="preserve">
-    <value>Tagfilter: Aktiv</value>
-  </data>
-  <data name="statusBar_FilterInactive" xml:space="preserve">
-    <value>Tagfilter: Inaktiv</value>
-  </data>
-  <data name="miscFiles_Header" xml:space="preserve">
-    <value>Übrige Dateien</value>
-  </data>
-  <data name="miscFiles_Menu_Rename" xml:space="preserve">
-    <value>Umbenennen zu \"folder.jpg\"</value>
-  </data>
-  <data name="miscFiles_Menu_DeleteFiles" xml:space="preserve">
-    <value>Markierte Datei(en) löschen\"</value>
-  </data>
-  <data name="statusBar_NumberOfFiles" xml:space="preserve">
-    <value>Dateien: {0} (Ausgewählt: {1})</value>
-  </data>
-  <data name="ribbon_Refresh" xml:space="preserve">
-    <value>Refresh</value>
-  </data>
-  <data name="ribbon_Save" xml:space="preserve">
-    <value>Abspeichern</value>
-  </data>
-  <data name="ribbon_Exit" xml:space="preserve">
-    <value>Beenden</value>
+    <comment>Name of the Application</comment>
   </data>
   <data name="ribbon_TagTab" xml:space="preserve">
     <value>Tags</value>
+    <comment>Ribbon Tags Tab</comment>
   </data>
   <data name="ribbon_TagFromFile" xml:space="preserve">
     <value>Tag von Dateiname</value>
+    <comment>Button: Tag from File </comment>
   </data>
   <data name="ribbon_RenameFile" xml:space="preserve">
     <value>Datei umbenennen</value>
@@ -165,10 +139,12 @@
     <value>Datei umbenennen Einstellungen</value>
   </data>
   <data name="ribbon_IdentifyFile" xml:space="preserve">
-    <value>Datei Identifizieren</value>
+    <value>Automatisches Tagging</value>
+    <comment>Button Auto Tagging</comment>
   </data>
   <data name="ribbon_TagFromInternet" xml:space="preserve">
     <value>Tag von Internet</value>
+    <comment>Button: Tag from Internet</comment>
   </data>
   <data name="ribbon_SingleTagEdit" xml:space="preserve">
     <value>Einzeln editieren</value>
@@ -181,6 +157,7 @@
   </data>
   <data name="ribbon_GetLyrics" xml:space="preserve">
     <value>Liedtext holen</value>
+    <comment>Button: Get Lyrics</comment>
   </data>
   <data name="ribbon_AutoNumber" xml:space="preserve">
     <value>Automatisch nummerieren</value>
@@ -190,15 +167,19 @@
   </data>
   <data name="ribbon_Find" xml:space="preserve">
     <value>Suchen</value>
+    <comment>Button: Find</comment>
   </data>
   <data name="ribbon_Replace" xml:space="preserve">
     <value>Ersetzen</value>
+    <comment>Button: Replace</comment>
   </data>
   <data name="ribbon_ValidateSong" xml:space="preserve">
     <value>Überprüfen MP3</value>
+    <comment>Button: Validate Song</comment>
   </data>
   <data name="ribbon_FixSong" xml:space="preserve">
     <value>Korrigieren MP3</value>
+    <comment>Button: Fix Song</comment>
   </data>
   <data name="ribbon_ReplayGain" xml:space="preserve">
     <value>Replay Gain Analyse</value>
@@ -211,6 +192,7 @@
   </data>
   <data name="ribbon_RemoveComments" xml:space="preserve">
     <value>Alle Kommentare entfernen</value>
+    <comment>Button: Remove All Comments</comment>
   </data>
   <data name="ribbon_RemovePictures" xml:space="preserve">
     <value>Alle Bilder entfernen</value>
@@ -220,27 +202,35 @@
   </data>
   <data name="ribbon_CaseConversionMenu" xml:space="preserve">
     <value>Groß-/ Kleinschreibung</value>
+    <comment>Button: Case Conversion</comment>
   </data>
   <data name="ribbon_CaseConversionOption" xml:space="preserve">
     <value>Groß-/ Kleinschreibung Einstellungen</value>
+    <comment>Button: SubItem of Case Conversion</comment>
   </data>
   <data name="ribbon_DeleteTags" xml:space="preserve">
     <value>Tags löschen</value>
+    <comment>Button: Delete Tags</comment>
   </data>
   <data name="ribbon_DeleteAllTags" xml:space="preserve">
     <value>Alle Tags löschen</value>
+    <comment>Button: Delete All Tags</comment>
   </data>
   <data name="ribbon_DeleteID3V1Tags" xml:space="preserve">
     <value>Nur ID3 V1 Tags löschen</value>
+    <comment>Button: Delete Id3 V1</comment>
   </data>
   <data name="ribbon_DeleteID3V2Tags" xml:space="preserve">
     <value>Nur ID3 V2 Tags löschen</value>
+    <comment>Button: Delete ID3 V2</comment>
   </data>
   <data name="ribbon_EditTags" xml:space="preserve">
     <value>Tags editieren</value>
+    <comment>The second Ribbon Bar</comment>
   </data>
   <data name="ribbon_RetrieveTags" xml:space="preserve">
     <value>Tags holen</value>
+    <comment>The first Ribon Bar</comment>
   </data>
   <data name="ribbon_OrganiseFiles" xml:space="preserve">
     <value>Organisieren</value>
@@ -253,6 +243,7 @@
   </data>
   <data name="ribbon_Picture" xml:space="preserve">
     <value>Coverart</value>
+    <comment>The Third Ribbon Bar</comment>
   </data>
   <data name="ribbon_Organise" xml:space="preserve">
     <value>Dateien organisieren</value>
@@ -269,314 +260,323 @@
   <data name="ribbon_Other" xml:space="preserve">
     <value>Verschiedenes</value>
   </data>
-  <data name="ribbon_RipTab" xml:space="preserve">
-    <value>Rip</value>
-  </data>
-  <data name="ribbon_ConvertTab" xml:space="preserve">
-    <value>Konvertieren</value>
-  </data>
-  <data name="ribbon_BurnTab" xml:space="preserve">
-    <value>Brenner</value>
+  <data name="ribbon_DatabaseTab" xml:space="preserve">
+    <value>Datenbank</value>
+    <comment>Ribbon Database Tab</comment>
   </data>
   <data name="ribbon_DatabaseContextualTab" xml:space="preserve">
     <value>Datenbank</value>
+    <comment>Ribbon Database Contextual Tab</comment>
   </data>
-  <data name="ribbon_DatabaseTab" xml:space="preserve">
-    <value>Datenbank</value>
+  <data name="ribbon_BurnTab" xml:space="preserve">
+    <value>Brenner</value>
+    <comment>Ribbon Burn Tab</comment>
   </data>
-  <data name="screentip_RefreshText" xml:space="preserve">
-    <value>Der Inhalt des ausgewählten Verzeichnisses wird neu eingelesen.\nWenn Änderungen anstehen, fragt das System, ob diese vorher gespeichert werden sollen.</value>
+  <data name="ribbon_ConvertTab" xml:space="preserve">
+    <value>Konvertieren</value>
+    <comment>Ribbon Convert Tab</comment>
   </data>
-  <data name="screentip_SaveText" xml:space="preserve">
-    <value>Ausstehende Änderungen an Dateien werden auf die disk zurückgeschrieben.</value>
+  <data name="ribbon_RipTab" xml:space="preserve">
+    <value>Rip</value>
+    <comment>Ribbon Rip Tab</comment>
   </data>
-  <data name="screentip_TagFromFileText" xml:space="preserve">
-    <value>Unter Verwendung der Parameter aus dem Dialog werden die verschiedenen tags wie z.B. \"Track #\", \"Interpret\", \"Titel\", etc. aus dem Dateinamen extrahiert.</value>
+  <data name="statusBar_FilterActive" xml:space="preserve">
+    <value>Tagfilter: Aktiv</value>
+    <comment>The TagFilter is Active</comment>
   </data>
-  <data name="screentip_IdentifyFileText" xml:space="preserve">
-    <value>Es wird ein hash-Wert aus den ersten 30 Sekunden der Datei erzeugt. Dieser Wert wird benutzt, um die Datei bei MusicBrainz zu identifizieren.\nDie Tags werden dann von MusicBrainz geholt und in die Datei geschrieben.</value>
+  <data name="statusBar_FilterInactive" xml:space="preserve">
+    <value>Tagfilter: Inaktiv</value>
+    <comment>The TagFilter is Inactive</comment>
   </data>
-  <data name="screentip_TagFromInternetText" xml:space="preserve">
-    <value>Der Interpret und Album Name werden für eine Suche bei Amazon verwendet. Es wird versucht einen Bezug zwischen dem Dateinamen und der Titelliste des Albums herzustellen.</value>
+  <data name="message_CorruptFile" xml:space="preserve">
+    <value>Beschädigte Datei</value>
   </data>
-  <data name="screentip_GetLyricsText" xml:space="preserve">
-    <value>In den, in den Einstellungen ausgewählten, Quellen wird nach den Liedtexten gesucht.</value>
+  <data name="message_ErrorReadingFile" xml:space="preserve">
+    <value>Fehler beim Lesen: {0}</value>
   </data>
-  <data name="screentip_AutoNumberText" xml:space="preserve">
-    <value>Die Track Nummer der ausgewählten Dateien wird automatisch nummeriert.</value>
+  <data name="message_ErrorResetAttr" xml:space="preserve">
+    <value>Schreibschutz Attribut nicht zurückgesetzt</value>
   </data>
-  <data name="screentip_NumberOnClickText" xml:space="preserve">
-    <value>Während die Schaltfläche aktiv ist, wird bei einem click auf den Titel, die Track Nummer gesetzt.</value>
+  <data name="message_ErrorSave" xml:space="preserve">
+    <value>Fehler beim Speichern: {0}</value>
   </data>
-  <data name="screentip_RemoveCommentsText" xml:space="preserve">
-    <value>Alle Kommentare in den selektierten Dateien werden entfernt.</value>
+  <data name="message_Error_Title" xml:space="preserve">
+    <value>Fehler</value>
   </data>
-  <data name="screentip_CaseConversionText" xml:space="preserve">
-    <value>Groß-/ Kleinschreibung Regeln, wie sie in den Optionen gesetzt wurden, werden auf die ausgewählten Datein angewendet.</value>
+  <data name="message_NonExistingFile" xml:space="preserve">
+    <value>Datei existiert nicht mehr</value>
   </data>
-  <data name="screentip_DeleteTagsText" xml:space="preserve">
-    <value>Alle Tags in den selektierten Dateien werden gelöscht.</value>
+  <data name="message_OutOfMemory" xml:space="preserve">
+    <value>Zuviele Files gescanned. Kein verfügbarer Speicherplatz.\r\nDer Scan wird abgebrochen.</value>
   </data>
-  <data name="screentip_RenameFileText" xml:space="preserve">
-    <value>Die Dateien werden basierend auf den Dialogparametern umbenannt.</value>
+  <data name="message_UnsupportedFormat" xml:space="preserve">
+    <value>Format nicht unterstützt</value>
   </data>
-  <data name="screentip_OrganiseText" xml:space="preserve">
-    <value>Die Dateien werden nach ihren Tag Werten an eine neue Lokation kopiert/verschoben.</value>
+  <data name="statusBar_NumberOfFiles" xml:space="preserve">
+    <value>Dateien: {0}</value>
+    <comment>Number of Songs scanned</comment>
   </data>
-  <data name="screentip_ExecuteScriptText" xml:space="preserve">
-    <value>Das Script, welches in der Combo Box ausgewählt wurde, wird auf die selektierten Dateien angewendet.</value>
+  <data name="statusBar_NumberOfSelectedFiles" xml:space="preserve">
+    <value>(Ausgewählt: {0})</value>
+    <comment>Number of Songs selected</comment>
   </data>
-  <data name="screentip_FindText" xml:space="preserve">
-    <value>Öffnet den Suchdialog und sucht nach dem angegebenen Text in den ausgewählten Dateien.</value>
+  <data name="miscFiles_Header" xml:space="preserve">
+    <value>Übrige Dateien</value>
+    <comment>The Header of the Misc Files Control</comment>
   </data>
-  <data name="screentip_ReplaceText" xml:space="preserve">
-    <value>Öfffnet den Suchen- / Ersetzendialog, um einen eingegebenen Text durch einen anderen Text zu ersetzen.</value>
+  <data name="treeview_Header" xml:space="preserve">
+    <value>Verzeichnisse</value>
+    <comment>The Header of the Treeview Control</comment>
   </data>
-  <data name="screentip_ValidateSongText" xml:space="preserve">
-    <value>Verwendet MP3Val, um die ausgewählte MP3 Datei auf Fehler zu untersuchen. Manche Fehler können mit der \"Korrigieren MP3\" Funktion behoben werden.</value>
+  <data name="miscFiles_Menu_DeleteFiles" xml:space="preserve">
+    <value>Markierte Datei(en) löschen</value>
+    <comment>Deletes the selected files</comment>
   </data>
-  <data name="screentip_FixSongText" xml:space="preserve">
-    <value>Verwendet MP3Val um Fehler in der MP3 Datei zu korrigieren.</value>
+  <data name="miscFiles_Menu_Rename" xml:space="preserve">
+    <value>Umbenennen zu "folder.jpg"</value>
+    <comment>Renames the selected file to folder.jpg</comment>
   </data>
-  <data name="screentip_ReplayGainText" xml:space="preserve">
-    <value>Analysiert die ausgewählte Datei und errechnet die Wiedergabeverstärkung. Der Wert wird in die Metadaten geschrieben.\nDie Datei selbst wird nicht geändert.</value>
+  <data name="ribbon_DeleteLayout" xml:space="preserve">
+    <value>Layout Löschen</value>
   </data>
-  <data name="screentip_BPMText" xml:space="preserve">
-    <value>Analysiert die ausgewählte Datei und errechnet die Beats per Minute (BPM). Der Wert wird in die Metadaten geschrieben.\nDie Datei selbst wird nicht geändert.</value>
-  </data>
-  <data name="tagEdit_TabHeader_Lyrics" xml:space="preserve">
-    <value>Liedtexte</value>
-  </data>
-  <data name="tagEdit_TabHeader_Detailed_Information" xml:space="preserve">
-    <value>Detailierte Information</value>
-  </data>
-  <data name="tagEdit_TabHeader_Main" xml:space="preserve">
-    <value>Haupteinträge</value>
-  </data>
-  <data name="tagEdit_TabHeader_Pictures" xml:space="preserve">
-    <value>Bilder</value>
+  <data name="ribbon_ResetLayout" xml:space="preserve">
+    <value>Layout zurücksetzen</value>
   </data>
   <data name="tagEdit_AlbumArtist" xml:space="preserve">
     <value>Album Interpret:</value>
-  </data>
-  <data name="tagEdit_Track" xml:space="preserve">
-    <value>Tracknummer:</value>
+    <comment>The AlbumArtist Tag</comment>
   </data>
   <data name="tagEdit_Artist" xml:space="preserve">
     <value>Interpret:</value>
-  </data>
-  <data name="tagEdit_Year" xml:space="preserve">
-    <value>Jahr:</value>
-  </data>
-  <data name="tagEdit_Title" xml:space="preserve">
-    <value>Titel:</value>
-  </data>
-  <data name="tagEdit_Album" xml:space="preserve">
-    <value>Album:</value>
-  </data>
-  <data name="tagEdit_PartOfCompilation" xml:space="preserve">
-    <value>Teil eines Samplers</value>
-  </data>
-  <data name="tagEdit_Comment" xml:space="preserve">
-    <value>Kommentar:</value>
-  </data>
-  <data name="tagEdit_Genre" xml:space="preserve">
-    <value>Genre:</value>
+    <comment>The Artist Tag</comment>
   </data>
   <data name="tagEdit_Disc" xml:space="preserve">
     <value>Mediennummer:</value>
+    <comment>The Disc Number</comment>
   </data>
-  <data name="tagEdit_Remove_Existing_Pictures" xml:space="preserve">
-    <value>Vorhandene Bilder zuerst entfernen</value>
+  <data name="tagEdit_FrontCover" xml:space="preserve">
+    <value>Album Cover:</value>
+    <comment>The Cover Tag</comment>
   </data>
-  <data name="tagEdit_GetTrackLength_Checkbox" xml:space="preserve">
-    <value>Aus Datei lesen</value>
+  <data name="tagEdit_Track" xml:space="preserve">
+    <value>Tracknummer:</value>
+    <comment>The Track Number</comment>
   </data>
-  <data name="tagEdit_GetTrackLength" xml:space="preserve">
-    <value>Länge auslesen</value>
+  <data name="tagEdit_Album" xml:space="preserve">
+    <value>Album:</value>
+    <comment>The Album Tag</comment>
   </data>
-  <data name="tagEdit_Songlength" xml:space="preserve">
-    <value>Dauer (ms):</value>
+  <data name="tagEdit_Comment" xml:space="preserve">
+    <value>Kommentar:</value>
+    <comment>The Comment Tag</comment>
   </data>
-  <data name="tagEdit_MediaType" xml:space="preserve">
-    <value>Medien Typ:</value>
+  <data name="tagEdit_Genre" xml:space="preserve">
+    <value>Genre:</value>
+    <comment>The Genre Tag</comment>
   </data>
-  <data name="tagEdit_TitleSort" xml:space="preserve">
-    <value>Titel Sortierung:</value>
+  <data name="tagEdit_Genre_Watermark" xml:space="preserve">
+    <value>Ausgewählte(s) Genre</value>
+    <comment>The Help Text displayed in empty Genre Combobox</comment>
   </data>
-  <data name="tagEdit_AlbumSort" xml:space="preserve">
-    <value>Album Sortierung:</value>
+  <data name="tagEdit_PartOfCompilation" xml:space="preserve">
+    <value>Teil eines Samplers</value>
+    <comment>The part of Compilation Tag</comment>
   </data>
-  <data name="tagEdit_ArtistSort" xml:space="preserve">
-    <value>Interpret Sortierung:</value>
+  <data name="tagEdit_Year" xml:space="preserve">
+    <value>Jahr:</value>
+    <comment>The Year Tag</comment>
   </data>
-  <data name="tagEdit_AlbumArtistSort" xml:space="preserve">
-    <value>Album Interpret Sortierung:</value>
+  <data name="tagEdit_Title" xml:space="preserve">
+    <value>Titel:</value>
+    <comment>The Title Tag</comment>
   </data>
-  <data name="tagEdit_SubTitle" xml:space="preserve">
-    <value>Untertitel:</value>
+  <data name="dialog_Close" xml:space="preserve">
+    <value>Schließen</value>
+    <comment>The Close Button of the Dialog</comment>
   </data>
-  <data name="tagEdit_Content_Group" xml:space="preserve">
-    <value>Gruppierung:</value>
+  <data name="coverSearch_Title" xml:space="preserve">
+    <value>Album Suche</value>
+    <comment>The Title of the Cover Search Dialog</comment>
   </data>
-  <data name="tagEdit_Copyright" xml:space="preserve">
-    <value>Copyright:</value>
+  <data name="dialog_Search" xml:space="preserve">
+    <value>Suchen</value>
+    <comment>A Search Button in a Dialog</comment>
   </data>
-  <data name="tagEdit_EncodedBy" xml:space="preserve">
-    <value>Enkodiert von:</value>
+  <data name="tagAndRename_AddFormat" xml:space="preserve">
+    <value>Format zu Liste hinzufügen</value>
+    <comment>The  Add Format button</comment>
   </data>
-  <data name="tagEdit_Publisher" xml:space="preserve">
-    <value>Herausgeber:</value>
+  <data name="tagAndRename_GroupBoxFormat" xml:space="preserve">
+    <value>Format:</value>
+    <comment>The Header of the Groupbox Format</comment>
   </data>
-  <data name="tagEdit_TextWriter" xml:space="preserve">
-    <value>Text Autor:</value>
+  <data name="tagAndRename_GroupBoxParam" xml:space="preserve">
+    <value>Parameter (Maus-Klick fügt zur Liste hinzu)</value>
+    <comment>The Header of the Parameter GroupBox</comment>
   </data>
-  <data name="tagEdit_InterpretedBy" xml:space="preserve">
-    <value>Interpretiert von:</value>
+  <data name="tagAndRename_Header" xml:space="preserve">
+    <value>Tag von Dateiname</value>
+    <comment>The Header of FileName2Tag</comment>
   </data>
-  <data name="tagEdit_Composer" xml:space="preserve">
-    <value>Komponist:</value>
+  <data name="tagAndRename_PreviewChanges" xml:space="preserve">
+    <value>Vorschau</value>
+    <comment>The Preview Changes Button</comment>
   </data>
-  <data name="tagEdit_Conductor" xml:space="preserve">
-    <value>Dirigent:</value>
+  <data name="tagAndRename_RemoveFormat" xml:space="preserve">
+    <value>Format aus Liste entfernen</value>
+    <comment>The Remove Format Button</comment>
   </data>
-  <data name="tagEdit_OrigReleaseYear" xml:space="preserve">
-    <value>Original Erscheinungsjahr:</value>
+  <data name="tagAndRename_TabHeader_Parameter" xml:space="preserve">
+    <value>Parameter</value>
+    <comment>The Tab Header for the Parameters</comment>
   </data>
-  <data name="tagEdit_OrigOwner" xml:space="preserve">
-    <value>Original Besitzer:</value>
+  <data name="tagAndRename_TabHeader_Preview" xml:space="preserve">
+    <value>Vorschau</value>
+    <comment>The Tab Header for the Preview Tab</comment>
   </data>
-  <data name="tagEdit_OrigArtist" xml:space="preserve">
-    <value>Original Interpret:</value>
-  </data>
-  <data name="tagEdit_OrigLyricsWriter" xml:space="preserve">
-    <value>Original Text Autor:</value>
-  </data>
-  <data name="tagEdit_OrigFileName" xml:space="preserve">
-    <value>Original Dateiname:</value>
-  </data>
-  <data name="tagEdit_OrigAlbum" xml:space="preserve">
-    <value>Original Album Titel:</value>
-  </data>
-  <data name="tagEdit_MusicCreditList_Delete" xml:space="preserve">
-    <value>Musiker entfernen</value>
-  </data>
-  <data name="tagEdit_MusicCreditList_Add" xml:space="preserve">
-    <value>Musiker hinzufügen</value>
-  </data>
-  <data name="tagEdit_MusicCreditList_Instrument" xml:space="preserve">
-    <value>Instrument</value>
-  </data>
-  <data name="tagEdit_InvolvedPerson_Delete" xml:space="preserve">
-    <value>Person entfernen</value>
-  </data>
-  <data name="tagEdit_InvolvedPerson_Add" xml:space="preserve">
-    <value>Person hinzufügen</value>
-  </data>
-  <data name="tagEdit_InvolvedPerson_Function" xml:space="preserve">
-    <value>Beteiligte Person Funktion:</value>
-  </data>
-  <data name="tagEdit_InvolvedPerson_Name" xml:space="preserve">
-    <value>Name</value>
-  </data>
-  <data name="tagEdit_CommercialInfo" xml:space="preserve">
-    <value>Kommerzielle Information URL:</value>
-  </data>
-  <data name="tagEdit_OfficialPublisher" xml:space="preserve">
-    <value>Offizieller Herausgeber URL:</value>
-  </data>
-  <data name="tagEdit_OfficialPayment" xml:space="preserve">
-    <value>Offizielle Bezahlungs URL:</value>
-  </data>
-  <data name="tagEdit_OfficialRadioStation" xml:space="preserve">
-    <value>Offizielle Internet Radio Stat. URL:</value>
-  </data>
-  <data name="tagEdit_OfficialAudioSource" xml:space="preserve">
-    <value>Offizielle Audioquelle URL:</value>
-  </data>
-  <data name="tagEdit_OfficialArtist" xml:space="preserve">
-    <value>Offizielle Interpret URL:</value>
-  </data>
-  <data name="tagEdit_OfficialAudiofile" xml:space="preserve">
-    <value>Offizielle Audiodatei URL:</value>
-  </data>
-  <data name="tagEdit_CopyrightInformation" xml:space="preserve">
-    <value>Copyright Information URL:</value>
-  </data>
-  <data name="tagEdit_Rating_Note" xml:space="preserve">
-    <value>Die Wertung geht von 1-255. 1 ist am schlechstesten, 255 am besten. 0 bedeutet unbekannt.\n\nAchtung: Viele Programme haben ihr eigene Wertung und ignorieren den ID3-Standart. Wenn keine eigene Wertung gewünscht ist kann diese ignoriert werden.</value>
-  </data>
-  <data name="tagEdit_RatingPlayCount" xml:space="preserve">
-    <value>Abspielzähler:</value>
-  </data>
-  <data name="tagEdit_Rating_Delete" xml:space="preserve">
-    <value>Bewertung entfernen</value>
-  </data>
-  <data name="tagEdit_Rating_Add" xml:space="preserve">
-    <value>Bewertung hinzufügen</value>
-  </data>
-  <data name="tagEdit_RatingUser" xml:space="preserve">
-    <value>Benutzer (eMail):</value>
-  </data>
-  <data name="tagEdit_TabHeader_UserFrames" xml:space="preserve">
-    <value>Benutzereinträge</value>
-  </data>
-  <data name="tagEdit_TabHeader_Rating" xml:space="preserve">
-    <value>Bewertung</value>
-  </data>
-  <data name="tagEdit_TabHeader_Web_Information" xml:space="preserve">
-    <value>Web Information</value>
-  </data>
-  <data name="tagEdit_TabHeader_Involved_People" xml:space="preserve">
-    <value>Beteiligte Personen</value>
-  </data>
-  <data name="tagEdit_TabHeader_Original_Information" xml:space="preserve">
-    <value>Original Information</value>
-  </data>
-  <data name="tagEdit_UserFrames_FrameId" xml:space="preserve">
-    <value>Frame Id</value>
-  </data>
-  <data name="tagEdit_UserFrames_Description" xml:space="preserve">
-    <value>Beschreibung</value>
-  </data>
-  <data name="tagEdit_UserFrames_Text" xml:space="preserve">
-    <value>Text</value>
-  </data>
-  <data name="tagEdit_UserFrames_Add" xml:space="preserve">
-    <value>Eintrag hinzufügen</value>
-  </data>
-  <data name="tagEdit_UserFrames_DeleteFrame" xml:space="preserve">
-    <value>Eintrag löschen</value>
-  </data>
-  <data name="tagEdit_UserFrames_DeleteAllFrames" xml:space="preserve">
-    <value>Alle Einträge löschen</value>
+  <data name="tagEdit_TabHeader_Main" xml:space="preserve">
+    <value>Haupteinträge</value>
+    <comment>The Header for the Main Tags Tab</comment>
   </data>
   <data name="lyricsSearch_Title" xml:space="preserve">
-    <value>Suche Liedtext für {0} - {1}</value>
+    <value>Liedtext Suche</value>
+    <comment>The Title of the Lyrics Search Dialog</comment>
   </data>
-  <data name="lyricsSearch_Status" xml:space="preserve">
-    <value>Suche von Liedtexten ... Bitte warten</value>
+  <data name="tagAndRename_InvalidParm" xml:space="preserve">
+    <value>Falsches Parameter Format. Bitte ändern</value>
+    <comment>The Error message for Invalid Parms</comment>
   </data>
-  <data name="lyricsSearch_Finished" xml:space="preserve">
-    <value>Suche beendet. Lieder mit falschen Texten abwählen.</value>
+  <data name="dialog_Apply" xml:space="preserve">
+    <value>Anwenden</value>
+    <comment>The Text of the Apply Button in a Dialog</comment>
+  </data>
+  <data name="dialog_Cancel" xml:space="preserve">
+    <value>Abbrechen</value>
+    <comment>The Text of the Cancel Button in a Dialog</comment>
+  </data>
+  <data name="dialog_Ok" xml:space="preserve">
+    <value>Ok</value>
+    <comment>The Text of the OK Button in a Dialog</comment>
+  </data>
+  <data name="lyricsSearch_NoSites_Selected" xml:space="preserve">
+    <value>Bitte mindestens eine Liedtext Suchseite auswählen</value>
+    <comment>The Error message, when no Lyrics Search Site is selected.</comment>
   </data>
   <data name="lyricsSearch_NothingToSearch" xml:space="preserve">
     <value>Nichts zu suchen</value>
   </data>
-  <data name="coverSearch_Title" xml:space="preserve">
-    <value>Album Suche</value>
+  <data name="lyricsSearch_Sites_Watermark" xml:space="preserve">
+    <value>Liedtext Suchseite(n) auswählen</value>
+    <comment>The Help text displayed in empty Lyrics Search Combobox</comment>
   </data>
-  <data name="identifySong_Title" xml:space="preserve">
-    <value>Internet Suche</value>
+  <data name="coverSearch_Finished" xml:space="preserve">
+    <value>Suche beendet. Bild auswählen (Doppelclick oder Anwenden)</value>
+    <comment>The Cover Art Search has finished</comment>
   </data>
-  <data name="identifySong_GroupBox_Identified" xml:space="preserve">
-    <value>Identifizierte Lieder</value>
+  <data name="coverSearch_Status" xml:space="preserve">
+    <value>Suche nach Bildern ... {0} Seiten. Verbleibend {1}</value>
+    <comment>The Cover Search Status Message</comment>
   </data>
-  <data name="identifySong_Country" xml:space="preserve">
-    <value>Land</value>
+  <data name="lyricsSearch_Finished" xml:space="preserve">
+    <value>Suche beendet. Lieder mit gewünschten Texten auswählen.</value>
+    <comment>The Lyrics Search has finished</comment>
   </data>
-  <data name="identifySong_GroupBox_Results" xml:space="preserve">
-    <value>Das identifizierte Lied ist auf mehreren Alben verfügbar. Bitte auswählen</value>
+  <data name="lyricsSearch_Status" xml:space="preserve">
+    <value>Suche von Liedtexten ... Bitte warten {0} Seiten x {1} Lieder = {2} Lieder in der Liste. Gefunden {3} Nicht gefunden {4} Verbleibend {5}</value>
+    <comment>The Lyrics Search Status Message</comment>
+  </data>
+  <data name="tagAndRename_Album" xml:space="preserve">
+    <value>Album</value>
+  </data>
+  <data name="tagAndRename_AlbumArtist" xml:space="preserve">
+    <value>Orchester / Album Interpret</value>
+  </data>
+  <data name="tagAndRename_Artist" xml:space="preserve">
+    <value>Interpret</value>
+  </data>
+  <data name="tagAndRename_BitRate" xml:space="preserve">
+    <value>Bitrate</value>
+  </data>
+  <data name="tagAndRename_BPM" xml:space="preserve">
+    <value>BPM</value>
+  </data>
+  <data name="tagAndRename_Comment" xml:space="preserve">
+    <value>Kommentar</value>
+  </data>
+  <data name="tagAndRename_Composer" xml:space="preserve">
+    <value>Komponist</value>
+  </data>
+  <data name="tagAndRename_Conductor" xml:space="preserve">
+    <value>Dirigent</value>
+  </data>
+  <data name="tagAndRename_Disc" xml:space="preserve">
+    <value>Mediennummer</value>
+  </data>
+  <data name="tagAndRename_DiscTotal" xml:space="preserve">
+    <value>Gesamt # an Medien</value>
+  </data>
+  <data name="tagAndRename_Enumerate" xml:space="preserve">
+    <value>Nummerierung in Dateien</value>
+  </data>
+  <data name="tagAndRename_FileExists" xml:space="preserve">
+    <value>Datei existiert bereits. Wurden zu allgemeine Tags verwendet?</value>
+  </data>
+  <data name="tagAndRename_Filename" xml:space="preserve">
+    <value>Aktueller Dateiname</value>
+  </data>
+  <data name="tagAndRename_FirstNofAlbumArtist" xml:space="preserve">
+    <value>Die ersten "n" Zeichen des Album Interpreten</value>
+  </data>
+  <data name="tagAndRename_FirstNofArtist" xml:space="preserve">
+    <value>Die ersten "n" Zeichen des Interpreten</value>
+  </data>
+  <data name="tagAndRename_Folder" xml:space="preserve">
+    <value>\ = Verzeichnis: Parameter vor dem Indikator werden aus der Verzeichnisstruktur übernommen.</value>
+  </data>
+  <data name="tagAndRename_Genre" xml:space="preserve">
+    <value>Genre</value>
+  </data>
+  <data name="tagAndRename_Group" xml:space="preserve">
+    <value>Gruppierung</value>
+  </data>
+  <data name="tagAndRename_Header_Rename" xml:space="preserve">
+    <value>Datei umbenennen</value>
+  </data>
+  <data name="tagAndRename_ModifiedBy" xml:space="preserve">
+    <value>Modifiziert / Remixed von</value>
+  </data>
+  <data name="tagAndRename_NameTooLong" xml:space="preserve">
+    <value>Dateiname zu lang. Bitte ändern</value>
+  </data>
+  <data name="tagAndRename_NumberDigits" xml:space="preserve">
+    <value>Anzahl von Stellen</value>
+  </data>
+  <data name="tagAndRename_Original" xml:space="preserve">
+    <value>Original:</value>
+  </data>
+  <data name="tagAndRename_Rename" xml:space="preserve">
+    <value>Kann Datei nicht umbenennen: {0} {1}</value>
+  </data>
+  <data name="tagAndRename_StartAt" xml:space="preserve">
+    <value>Start bei</value>
+  </data>
+  <data name="tagAndRename_SubTitle" xml:space="preserve">
+    <value>Untertitel</value>
+  </data>
+  <data name="tagAndRename_Title" xml:space="preserve">
+    <value>Titel</value>
+  </data>
+  <data name="tagAndRename_Track" xml:space="preserve">
+    <value>Tracknummer</value>
+  </data>
+  <data name="tagAndRename_TrackTotal" xml:space="preserve">
+    <value>Gesamt # von Tracks</value>
+  </data>
+  <data name="tagAndRename_Unused" xml:space="preserve">
+    <value>Ignorieren</value>
+  </data>
+  <data name="tagAndRename_Year" xml:space="preserve">
+    <value>Jahr</value>
   </data>
   <data name="songHeader_FileName" xml:space="preserve">
     <value>Dateiname</value>
@@ -758,206 +758,51 @@
   <data name="songHeader_Version" xml:space="preserve">
     <value>Codec</value>
   </data>
-  <data name="tagAndRename_Header" xml:space="preserve">
-    <value>Tag von Dateiname</value>
+  <data name="songHeader_DiscCount" xml:space="preserve">
+    <value># Medien</value>
   </data>
-  <data name="tagAndRename_GroupBoxFormat" xml:space="preserve">
-    <value>Format:</value>
+  <data name="songHeader_Enumerate" xml:space="preserve">
+    <value>Aufzählen</value>
   </data>
-  <data name="tagAndRename_RemoveFormat" xml:space="preserve">
-    <value>Format aus Liste entfernen</value>
+  <data name="songHeader_TrackCount" xml:space="preserve">
+    <value># Tracks</value>
   </data>
-  <data name="tagAndRename_AddFormat" xml:space="preserve">
-    <value>Format zu Liste hinzufügen</value>
+  <data name="songHeader_Unused" xml:space="preserve">
+    <value>Unbenutzt</value>
   </data>
-  <data name="tagAndRename_GroupBoxParam" xml:space="preserve">
-    <value>Parameter (Maus-Klick fügt zur Liste hinzu)</value>
+  <data name="message_Script_Compile_Failed" xml:space="preserve">
+    <value>Das Script enthält Fehler.\n\nDie genaue Fehlerursache ist im Log zu finden</value>
   </data>
-  <data name="tagAndRename_Folder" xml:space="preserve">
-    <value>\ = Verzeichnis: Parameter vor dem Indikator werden aus der Verzeichnisstruktur übernommen.</value>
+  <data name="coverSearch_NoSites_Selected" xml:space="preserve">
+    <value>Bitte mindestens eine Album Suchseite auswählen</value>
   </data>
-  <data name="tagAndRename_Unused" xml:space="preserve">
-    <value>Ignorieren</value>
+  <data name="coverSearch_Sites_Watermark" xml:space="preserve">
+    <value>Album Suchseite(n) auswählen</value>
+    <comment>The Help Text displayed for the Album Search Combo</comment>
   </data>
-  <data name="tagAndRename_Comment" xml:space="preserve">
-    <value>Kommentar</value>
+  <data name="message_Save_Changes" xml:space="preserve">
+    <value>Änderungen nicht abgespeichert.
+Wollen Sie die änderungen speichern?</value>
   </data>
-  <data name="tagAndRename_AlbumArtist" xml:space="preserve">
-    <value>Orchester / Album Interpret</value>
-  </data>
-  <data name="tagAndRename_Genre" xml:space="preserve">
-    <value>Genre</value>
-  </data>
-  <data name="tagAndRename_DiscTotal" xml:space="preserve">
-    <value>Gesamt # an Medien</value>
-  </data>
-  <data name="tagAndRename_Disc" xml:space="preserve">
-    <value>Mediennummer</value>
-  </data>
-  <data name="tagAndRename_TrackTotal" xml:space="preserve">
-    <value>Gesamt # von Tracks</value>
-  </data>
-  <data name="tagAndRename_Track" xml:space="preserve">
-    <value>Tracknummer</value>
-  </data>
-  <data name="tagAndRename_Year" xml:space="preserve">
-    <value>Jahr</value>
-  </data>
-  <data name="tagAndRename_Album" xml:space="preserve">
-    <value>Album</value>
-  </data>
-  <data name="tagAndRename_Title" xml:space="preserve">
-    <value>Titel</value>
-  </data>
-  <data name="tagAndRename_Artist" xml:space="preserve">
-    <value>Interpret</value>
-  </data>
-  <data name="tagAndRename_Conductor" xml:space="preserve">
-    <value>Dirigent</value>
-  </data>
-  <data name="tagAndRename_Composer" xml:space="preserve">
-    <value>Komponist</value>
-  </data>
-  <data name="tagAndRename_Group" xml:space="preserve">
-    <value>Gruppierung</value>
-  </data>
-  <data name="tagAndRename_SubTitle" xml:space="preserve">
-    <value>Untertitel</value>
-  </data>
-  <data name="tagAndRename_BPM" xml:space="preserve">
-    <value>BPM</value>
-  </data>
-  <data name="tagAndRename_ModifiedBy" xml:space="preserve">
-    <value>Modifiziert / Remixed von</value>
-  </data>
-  <data name="tagAndRename_Filename" xml:space="preserve">
-    <value>Aktueller Dateiname</value>
-  </data>
-  <data name="tagAndRename_Enumerate" xml:space="preserve">
-    <value>Nummerierung in Dateien</value>
-  </data>
-  <data name="tagAndRename_BitRate" xml:space="preserve">
-    <value>Bitrate</value>
-  </data>
-  <data name="tagAndRename_FirstNofArtist" xml:space="preserve">
-    <value>= Die ersten \"n\" Zeichen des Interpreten</value>
-  </data>
-  <data name="tagAndRename_FirstNofAlbumArtist" xml:space="preserve">
-    <value>= Die ersten \"n\" Zeichen des Album Interpreten</value>
-  </data>
-  <data name="tagAndRename_StartAt" xml:space="preserve">
-    <value>Start bei</value>
-  </data>
-  <data name="tagAndRename_NumberDigits" xml:space="preserve">
-    <value>Anzahl von Stellen</value>
-  </data>
-  <data name="tagAndRename_NameTooLong" xml:space="preserve">
-    <value>Dateiname zu lang. Bitte ändern</value>
-  </data>
-  <data name="tagAndRename_FileExists" xml:space="preserve">
-    <value>Datei existiert bereits. Wurden zu allgemeine Tags verwendet?</value>
-  </data>
-  <data name="tagAndRename_Header_Rename" xml:space="preserve">
-    <value>Kann Datei nicht umbenennen {0}: {1}</value>
-  </data>
-  <data name="tagAndRename_InvalidParm" xml:space="preserve">
-    <value>Falsches Parameter Format. Bitte ändern</value>
-  </data>
-  <data name="tagAndRename_Original" xml:space="preserve">
-    <value>Original:</value>
-  </data>
-  <data name="tagAndRename_PreviewChanges" xml:space="preserve">
-    <value>Vorschau</value>
-  </data>
-  <data name="tagAndRename_TabHeader_Parameter" xml:space="preserve">
-    <value>Parameter</value>
-  </data>
-  <data name="caseConversion_Header" xml:space="preserve">
-    <value>Groß- / Kleinschreibung umwandeln</value>
-  </data>
-  <data name="caseConversion_Tab_Settings" xml:space="preserve">
-    <value>Einstellungen</value>
-  </data>
-  <data name="caseConversion_Options" xml:space="preserve">
-    <value>Optionen</value>
-  </data>
-  <data name="caseConversion_AlwaysUpperCaseFirstLetter" xml:space="preserve">
-    <value>Erster Buchstabe immer groß</value>
-  </data>
-  <data name="caseConversion_ReplaceSpaceByUnderscore" xml:space="preserve">
-    <value>Ersetze Leerzeichen durch \"_\"</value>
-  </data>
-  <data name="caseConversion_ReplaceUnderScoreBySpace" xml:space="preserve">
-    <value>Ersetze \"_\" durch Leerzeichen</value>
-  </data>
-  <data name="caseConversion_ReplaceSpaceBy20" xml:space="preserve">
-    <value>Ersetze Leerzeichen durch \"%20\"</value>
-  </data>
-  <data name="caseConversion_Replace20bySpace" xml:space="preserve">
-    <value>Ersetze \"%20\" durch Leerzeichen</value>
-  </data>
-  <data name="caseConversion_GroupBox_Method" xml:space="preserve">
-    <value>Konvertierungs-Methode</value>
-  </data>
-  <data name="caseConversion_AllFirstLetterUpperCase" xml:space="preserve">
-    <value>Alle Anfangsbuchstaben in Großschreibung</value>
-  </data>
-  <data name="caseConversion_FirstLetterUpperCase" xml:space="preserve">
-    <value>Erster Buchstabe in Großschreibung</value>
-  </data>
-  <data name="caseConversion_AllUpperCase" xml:space="preserve">
-    <value>Alles in Großschreibung</value>
-  </data>
-  <data name="caseConversion_AllLowerCase" xml:space="preserve">
-    <value>Alles in Kleinschreibung</value>
-  </data>
-  <data name="caseConversion_GroupBoxTags" xml:space="preserve">
-    <value>Konvertiere folgende Tags ...</value>
-  </data>
-  <data name="caseConversion_Comment" xml:space="preserve">
-    <value>Kommentar</value>
-  </data>
-  <data name="caseConversion_Title" xml:space="preserve">
-    <value>Titel</value>
-  </data>
-  <data name="caseConversion_Album" xml:space="preserve">
-    <value>Album</value>
-  </data>
-  <data name="caseConversion_AlbumArtist" xml:space="preserve">
-    <value>Album Interpret</value>
-  </data>
-  <data name="caseConversion_Artist" xml:space="preserve">
-    <value>Interpret</value>
-  </data>
-  <data name="caseConversion_Tags" xml:space="preserve">
-    <value>Konvertiere Tags</value>
-  </data>
-  <data name="caseConversion_FileName" xml:space="preserve">
-    <value>Konvertiere Dateiname</value>
-  </data>
-  <data name="caseConversion_Exceptions" xml:space="preserve">
-    <value>Ausnahmen</value>
-  </data>
-  <data name="caseConversion_Exception_Remove" xml:space="preserve">
-    <value>Entfernen</value>
-  </data>
-  <data name="caseConversion_Exception_Add" xml:space="preserve">
-    <value>Hinzufügen</value>
-  </data>
-  <data name="organise_Header" xml:space="preserve">
-    <value>Dateien organisieren</value>
-  </data>
-  <data name="organise_TargetPath" xml:space="preserve">
-    <value>Ziel-Pfad:</value>
-  </data>
-  <data name="organise_Override_TargetPath" xml:space="preserve">
-    <value>Ziel-Pfad durch Skript bestimmen:</value>
+  <data name="message_Save_Changes_Title" xml:space="preserve">
+    <value>Änderungen speichern.</value>
   </data>
   <data name="organise_BrowseFolder" xml:space="preserve">
     <value>Durchsuchen</value>
   </data>
-  <data name="organise_OverWrite_Files" xml:space="preserve">
-    <value>Existierende Dateien überschreiben</value>
+  <data name="organise_Folder" xml:space="preserve">
+    <value>\ = Verzeichnis: Parameter vor dem Indikator werden als Name für das Unterverzeichnis verwendet</value>
+    <comment>The Text of the Browse button</comment>
+  </data>
+  <data name="organise_Format" xml:space="preserve">
+    <value>Format</value>
+  </data>
+  <data name="organise_Options" xml:space="preserve">
+    <value>Optionen</value>
+    <comment>The Title of the Options GroupBox</comment>
+  </data>
+  <data name="organise_TargetPath" xml:space="preserve">
+    <value>Ziel-Pfad:</value>
   </data>
   <data name="organise_Copy_Files" xml:space="preserve">
     <value>Dateien kopieren statt zu verschieben</value>
@@ -969,53 +814,98 @@ verschieben/kopieren</value>
   <data name="organise_FileExists" xml:space="preserve">
     <value>Datei existiert bereits. Wird nicht ersetzt</value>
   </data>
+  <data name="organise_Header" xml:space="preserve">
+    <value>Dateien organisieren</value>
+  </data>
+  <data name="organise_Override_TargetPath" xml:space="preserve">
+    <value>Ziel-Pfad durch Skript bestimmen:</value>
+  </data>
+  <data name="organise_OverWrite_Files" xml:space="preserve">
+    <value>Existierende Dateien überschreiben</value>
+  </data>
   <data name="organise_SameFile" xml:space="preserve">
     <value>Quell- und Ziel Datei sind ident. Datei übersprungen</value>
   </data>
-  <data name="organise_Options" xml:space="preserve">
-    <value>Optionen</value>
+  <data name="tagEdit_Remove_Existing_Pictures" xml:space="preserve">
+    <value>Vorhandene Bilder zuerst entfernen</value>
   </data>
-  <data name="organise_Folder" xml:space="preserve">
-    <value>\ = Verzeichnis: Parameter vor dem Indikator werden als Name für das Unterverzeichnis verwendet</value>
+  <data name="tagEdit_AlbumArtistSort" xml:space="preserve">
+    <value>Album Interpret Sortierung:</value>
+    <comment>The Album Artist Sort Tag</comment>
   </data>
-  <data name="settings_Header" xml:space="preserve">
-    <value>Einstellungen</value>
+  <data name="tagEdit_AlbumSort" xml:space="preserve">
+    <value>Album Sortierung:</value>
+    <comment>The Album Sort Tag</comment>
   </data>
-  <data name="settings_Keys" xml:space="preserve">
-    <value>Tastatur Shortcuts</value>
+  <data name="tagEdit_ArtistSort" xml:space="preserve">
+    <value>Interpret Sortierung:</value>
+    <comment>The Artist Sort Tag</comment>
   </data>
-  <data name="settings_Keys_Shift" xml:space="preserve">
-    <value>Umsch</value>
+  <data name="tagEdit_Composer" xml:space="preserve">
+    <value>Komponist:</value>
+    <comment>The Composer Tag</comment>
   </data>
-  <data name="settings_Keys_Ctrl" xml:space="preserve">
-    <value>Strg</value>
+  <data name="tagEdit_Conductor" xml:space="preserve">
+    <value>Dirigent:</value>
+    <comment>The Conductor Tag</comment>
   </data>
-  <data name="settings_Keys_Alt" xml:space="preserve">
-    <value>Alt</value>
+  <data name="tagEdit_Content_Group" xml:space="preserve">
+    <value>Gruppierung:</value>
+    <comment>The Content Group Tag</comment>
   </data>
-  <data name="settings_Keys_Description" xml:space="preserve">
-    <value>Beschreibung:</value>
+  <data name="tagEdit_Copyright" xml:space="preserve">
+    <value>Copyright:</value>
+    <comment>The Copyright Tag</comment>
   </data>
-  <data name="settings_Keys_ShortCut" xml:space="preserve">
-    <value>Tastaturkurzbefehl:</value>
+  <data name="tagEdit_EncodedBy" xml:space="preserve">
+    <value>Enkodiert von:</value>
+    <comment>The Encoded Tag</comment>
   </data>
-  <data name="settings_DebugLevel" xml:space="preserve">
-    <value>Debug Stufe:</value>
+  <data name="tagEdit_InterpretedBy" xml:space="preserve">
+    <value>Interpretiert von:</value>
+    <comment>The Interpreted / Remixed Tag</comment>
   </data>
-  <data name="settings_Theme" xml:space="preserve">
-    <value>Farbschema:</value>
+  <data name="tagEdit_MediaType" xml:space="preserve">
+    <value>Medien Typ:</value>
+    <comment>The Media Type Tag</comment>
   </data>
-  <data name="settings_Language" xml:space="preserve">
-    <value>Sprache:</value>
+  <data name="tagEdit_Publisher" xml:space="preserve">
+    <value>Herausgeber:</value>
+    <comment>The Publisher Tag</comment>
   </data>
-  <data name="settings_Tags" xml:space="preserve">
-    <value>Tags</value>
+  <data name="tagEdit_Songlength" xml:space="preserve">
+    <value>Dauer (ms):</value>
+    <comment>The Song Length Tag</comment>
   </data>
-  <data name="settings_Id3_Header" xml:space="preserve">
-    <value>ID3</value>
+  <data name="tagEdit_SubTitle" xml:space="preserve">
+    <value>Untertitel:</value>
+    <comment>The Subtitle Tag</comment>
   </data>
-  <data name="coverSearch_OverwriteExistingCover" xml:space="preserve">
-    <value>Existierende Bilder beim automatischen Taggen überschreiben</value>
+  <data name="tagEdit_TabHeader_Additional" xml:space="preserve">
+    <value>Zusätzliche Tags</value>
+    <comment>The Header for the additional Tags Tab</comment>
+  </data>
+  <data name="tagEdit_TabHeader_Detailed_Information" xml:space="preserve">
+    <value>Detailierte Information</value>
+    <comment>The Header for Detailed Information</comment>
+  </data>
+  <data name="tagEdit_TextWriter" xml:space="preserve">
+    <value>Text Autor:</value>
+    <comment>The Text Writer Tag</comment>
+  </data>
+  <data name="tagEdit_TitleSort" xml:space="preserve">
+    <value>Titel Sortierung:</value>
+    <comment>The Title Sort Tag</comment>
+  </data>
+  <data name="tagEdit_MediaTypes" xml:space="preserve">
+    <value>Medien Typen</value>
+    <comment>The Media Types Tag</comment>
+  </data>
+  <data name="coverSearch_ChangeCoverSize" xml:space="preserve">
+    <value>Speichern von Bildern mit einer maximalen Pixel Breite von:</value>
+  </data>
+  <data name="coverSearch_CreateMissingFolderThumb" xml:space="preserve">
+    <value>Erstelle fehlende Ordnervorschau (folder.jpg) beim Speichern</value>
   </data>
   <data name="coverSearch_EmbedExistingThumb" xml:space="preserve">
     <value>Existierende Ordnervorschau (folder.jpg) bei Bildersuche verwenden</value>
@@ -1023,17 +913,509 @@ verschieben/kopieren</value>
   <data name="coverSearch_OnlySaveFolderThumb" xml:space="preserve">
     <value>Nur Orndervorschau speichern. Nicht die Musikdatei verändern</value>
   </data>
-  <data name="coverSearch_ChangeCoverSize" xml:space="preserve">
-    <value>Speichern von Bildern mit einer maximalen Pixel Breite von:</value>
+  <data name="coverSearch_OverwriteExistingCover" xml:space="preserve">
+    <value>Existierende Bilder beim automatischen Taggen überschreiben</value>
+  </data>
+  <data name="tagEdit_GetTrackLength" xml:space="preserve">
+    <value>Länge auslesen</value>
+    <comment>The Button Text</comment>
+  </data>
+  <data name="tagEdit_GetTrackLength_Checkbox" xml:space="preserve">
+    <value>Aus Datei lesen</value>
+    <comment>The Check Box Text</comment>
+  </data>
+  <data name="tagEdit_TabHeader_Pictures" xml:space="preserve">
+    <value>Bilder</value>
+    <comment>The Header for the Pictures Information</comment>
+  </data>
+  <data name="tagEdit_ToolTip_Picture_GetCoverArt_File" xml:space="preserve">
+    <value>Hole Bilder von Datei</value>
+    <comment>The Tool Tip for the Get Cover Art from File Button</comment>
+  </data>
+  <data name="tagEdit_ToolTip_Picture_GetCoverArt_Internet" xml:space="preserve">
+    <value>Hole Bilder online</value>
+    <comment>The Tool Tip for the Get Cover Art Button</comment>
+  </data>
+  <data name="tagEdit_ToolTip_Picture_Remove_CoverArt" xml:space="preserve">
+    <value>Bilder entfernen</value>
+    <comment>The Tool Tip for the Remove Cover Art Button</comment>
+  </data>
+  <data name="tagEdit_ToolTip_Picture_Save_CoverArt" xml:space="preserve">
+    <value>Speichere Bild in folder.jpg </value>
+    <comment>The Tool Tip for the Save Cover Art to File Button</comment>
+  </data>
+  <data name="tagEdit_ToolTip_Picture_RemoveDetail_CoverArt" xml:space="preserve">
+    <value>Bild entfernen</value>
+    <comment>The Tooltip to remove a single cover art</comment>
+  </data>
+  <data name="tagEdit_ToolTip_Picture_SaveDetail_CoverArt" xml:space="preserve">
+    <value>Bild in Datei speichern</value>
+  </data>
+  <data name="tagEdit_TabHeader_Lyrics" xml:space="preserve">
+    <value>Liedtexte</value>
+    <comment>The Header for the Lyrics Tab</comment>
+  </data>
+  <data name="tagEdit_ToolTip_Lyrics_GetFile" xml:space="preserve">
+    <value>Lese Liedtext aus Datei</value>
+    <comment>The Tool Tip to get Lyrics from File</comment>
+  </data>
+  <data name="tagEdit_ToolTip_Lyrics_GetInternet" xml:space="preserve">
+    <value>Hole Liedtext online</value>
+    <comment>The Tool Tip to get Lyrics from Internet</comment>
+  </data>
+  <data name="tagEdit_ToolTip_Lyrics_Remove" xml:space="preserve">
+    <value>Entferne Liedtext</value>
+    <comment>The Tool Tip to remove the Lyrics</comment>
+  </data>
+  <data name="caseConversion_Album" xml:space="preserve">
+    <value>Album</value>
+  </data>
+  <data name="caseConversion_AlbumArtist" xml:space="preserve">
+    <value>Album Interpret</value>
+  </data>
+  <data name="caseConversion_AllFirstLetterUpperCase" xml:space="preserve">
+    <value>Alle Anfangsbuchstaben in Großschreibung</value>
+  </data>
+  <data name="caseConversion_AllLowerCase" xml:space="preserve">
+    <value>Alles in Kleinschreibung</value>
+  </data>
+  <data name="caseConversion_AllUpperCase" xml:space="preserve">
+    <value>Alles in Großschreibung</value>
+  </data>
+  <data name="caseConversion_AlwaysUpperCaseFirstLetter" xml:space="preserve">
+    <value>Erster Buchstabe immer groß</value>
+  </data>
+  <data name="caseConversion_Artist" xml:space="preserve">
+    <value>Interpret</value>
+  </data>
+  <data name="caseConversion_Comment" xml:space="preserve">
+    <value>Kommentar</value>
+  </data>
+  <data name="caseConversion_Exceptions" xml:space="preserve">
+    <value>Ausnahmen</value>
+  </data>
+  <data name="caseConversion_Exception_Add" xml:space="preserve">
+    <value>Hinzufügen</value>
+  </data>
+  <data name="caseConversion_Exception_Remove" xml:space="preserve">
+    <value>Entfernen</value>
+  </data>
+  <data name="caseConversion_FileName" xml:space="preserve">
+    <value>Konvertiere Dateiname</value>
+  </data>
+  <data name="caseConversion_FirstLetterUpperCase" xml:space="preserve">
+    <value>Erster Buchstabe in Großschreibung</value>
+  </data>
+  <data name="caseConversion_GroupBoxTags" xml:space="preserve">
+    <value>Konvertiere folgende Tags ...</value>
+  </data>
+  <data name="caseConversion_GroupBox_Method" xml:space="preserve">
+    <value>Konvertierungs-Methode</value>
+  </data>
+  <data name="caseConversion_Header" xml:space="preserve">
+    <value>Groß- / Kleinschreibung umwandeln</value>
+  </data>
+  <data name="caseConversion_Options" xml:space="preserve">
+    <value>Optionen</value>
+  </data>
+  <data name="caseConversion_Replace20bySpace" xml:space="preserve">
+    <value>Ersetze "%20" durch Leerzeichen</value>
+  </data>
+  <data name="caseConversion_ReplaceSpaceBy20" xml:space="preserve">
+    <value>Ersetze Leerzeichen durch "%20"</value>
+  </data>
+  <data name="caseConversion_ReplaceSpaceByUnderscore" xml:space="preserve">
+    <value>Ersetze Leerzeichen durch "_"</value>
+  </data>
+  <data name="caseConversion_ReplaceUnderScoreBySpace" xml:space="preserve">
+    <value>Ersetze "_" durch Leerzeichen</value>
+  </data>
+  <data name="caseConversion_Tab_Settings" xml:space="preserve">
+    <value>Einstellungen</value>
+  </data>
+  <data name="caseConversion_Tags" xml:space="preserve">
+    <value>Konvertiere Tags</value>
+  </data>
+  <data name="caseConversion_Title" xml:space="preserve">
+    <value>Titel</value>
+  </data>
+  <data name="ribbon_Exit" xml:space="preserve">
+    <value>Beenden</value>
+    <comment>The Exit Command Button in the Ribbon Backstage</comment>
+  </data>
+  <data name="ribbon_Refresh" xml:space="preserve">
+    <value>Refresh</value>
+    <comment>The Refresh Command Button in the Ribbon Backstage</comment>
+  </data>
+  <data name="ribbon_Save" xml:space="preserve">
+    <value>Abspeichern</value>
+    <comment>The Save Command Button in the Ribbon Backstage</comment>
+  </data>
+  <data name="identifySong_Country" xml:space="preserve">
+    <value>Land</value>
+  </data>
+  <data name="identifySong_GroupBox_Identified" xml:space="preserve">
+    <value>Identifizierte Lieder</value>
+  </data>
+  <data name="identifySong_GroupBox_Results" xml:space="preserve">
+    <value>Das identifizierte Lied ist auf mehreren Alben verfügbar. Bitte auswählen</value>
+  </data>
+  <data name="identifySong_Title" xml:space="preserve">
+    <value>Internet Suche</value>
+    <comment>The Header of the Auto Tagging</comment>
+  </data>
+  <data name="settings_DebugLevel" xml:space="preserve">
+    <value>Debug Stufe:</value>
+  </data>
+  <data name="settings_General" xml:space="preserve">
+    <value>Generelle Einstellungen</value>
+  </data>
+  <data name="settings_Header" xml:space="preserve">
+    <value>Einstellungen</value>
+    <comment>The Header of Settings in the Ribbon Back Stage</comment>
+  </data>
+  <data name="settings_Keys" xml:space="preserve">
+    <value>Tastatur Shortcuts</value>
+  </data>
+  <data name="settings_Language" xml:space="preserve">
+    <value>Sprache:</value>
+  </data>
+  <data name="settings_Theme" xml:space="preserve">
+    <value>Farbschema:</value>
+  </data>
+  <data name="settings_AlternateRowColor" xml:space="preserve">
+    <value>Farbe für alternierende Reihen:</value>
+  </data>
+  <data name="settings_ChangedRowColor" xml:space="preserve">
+    <value>Farbe für geänderte Reihen:</value>
+  </data>
+  <data name="findReplace_HeaderFind" xml:space="preserve">
+    <value>Suchen</value>
+    <comment>The Header for the Find Dialog</comment>
+  </data>
+  <data name="findReplace_HeaderReplace" xml:space="preserve">
+    <value>Ersetzen</value>
+    <comment>The Header for the Replace Dialog</comment>
+  </data>
+  <data name="findReplace_FindNext" xml:space="preserve">
+    <value>Nächster</value>
+  </data>
+  <data name="findReplace_FindWhat" xml:space="preserve">
+    <value>Suchen nach:</value>
+  </data>
+  <data name="findReplace_MatchCase" xml:space="preserve">
+    <value>Groß- / Kleinschreibung</value>
+  </data>
+  <data name="findReplace_Replace" xml:space="preserve">
+    <value>Ersetzen</value>
+  </data>
+  <data name="findReplace_ReplaceAll" xml:space="preserve">
+    <value>Alle ersetzen</value>
+  </data>
+  <data name="findReplace_ReplaceWith" xml:space="preserve">
+    <value>Ersetzen durch:</value>
+  </data>
+  <data name="findReplace_NoMoreOccurencesFound" xml:space="preserve">
+    <value>Keine weiteren Treffer für die Suchzeichenfolge</value>
+  </data>
+  <data name="findReplace_NotFound" xml:space="preserve">
+    <value>Suchzeichenfolge nicht gefunden</value>
+  </data>
+  <data name="screentip_AutoNumberText" xml:space="preserve">
+    <value>Die Track Nummer der ausgewählten Dateien wird automatisch nummeriert.</value>
+  </data>
+  <data name="screentip_BPMText" xml:space="preserve">
+    <value>Analysiert die ausgewählte Datei und errechnet die Beats per Minute (BPM). Der Wert wird in die Metadaten geschrieben.\nDie Datei selbst wird nicht geändert.</value>
+  </data>
+  <data name="screentip_CaseConversionText" xml:space="preserve">
+    <value>Groß-/ Kleinschreibung Regeln, wie sie in den Optionen gesetzt wurden, werden auf die ausgewählten Datein angewendet.</value>
+  </data>
+  <data name="screentip_DeleteLayoutText" xml:space="preserve">
+    <value>Das Layout der einzelnen Regionen im Docking Manager wird beim beenden gespeichert und beim nächsten Start wiederverwendet. Verwende diese Funktion um zum Standard Layout zurück zu kehren,</value>
+  </data>
+  <data name="screentip_DeleteTagsText" xml:space="preserve">
+    <value>Alle Tags in den selektierten Dateien werden gelöscht.</value>
+  </data>
+  <data name="screentip_ExecuteScriptText" xml:space="preserve">
+    <value>Das Script, welches in der Combo Box ausgewählt wurde, wird auf die selektierten Dateien angewendet.</value>
+  </data>
+  <data name="screentip_FindText" xml:space="preserve">
+    <value>Öffnet den Suchdialog und sucht nach dem angegebenen Text in den ausgewählten Dateien.</value>
+  </data>
+  <data name="screentip_FixSongText" xml:space="preserve">
+    <value>Verwendet MP3Val um Fehler in der MP3 Datei zu korrigieren.</value>
+  </data>
+  <data name="screentip_GetLyricsText" xml:space="preserve">
+    <value>In den, in den Einstellungen ausgewählten, Quellen wird nach den Liedtexten gesucht.</value>
+  </data>
+  <data name="screentip_IdentifyFileText" xml:space="preserve">
+    <value>Es wird ein hash-Wert aus den ersten 30 Sekunden der Datei erzeugt. Dieser Wert wird benutzt, um die Datei bei MusicBrainz zu identifizieren.\nDie Tags werden dann von MusicBrainz geholt und in die Datei geschrieben.</value>
+  </data>
+  <data name="screentip_NumberOnClickText" xml:space="preserve">
+    <value>Während die Schaltfläche aktiv ist, wird bei einem click auf den Titel, die Track Nummer gesetzt.</value>
+  </data>
+  <data name="screentip_OrganiseText" xml:space="preserve">
+    <value>Die Dateien werden nach ihren Tag Werten an eine neue Lokation kopiert/verschoben.</value>
+  </data>
+  <data name="screentip_RefreshText" xml:space="preserve">
+    <value>Der Inhalt des ausgewählten Verzeichnisses wird neu eingelesen.\nWenn Änderungen anstehen, fragt das System, ob diese vorher gespeichert werden sollen.</value>
+  </data>
+  <data name="screentip_RemoveCommentsText" xml:space="preserve">
+    <value>Alle Kommentare in den selektierten Dateien werden entfernt.</value>
+  </data>
+  <data name="screentip_RenameFileText" xml:space="preserve">
+    <value>Die Dateien werden basierend auf den Dialogparametern umbenannt.</value>
+  </data>
+  <data name="screentip_ReplaceText" xml:space="preserve">
+    <value>Öfffnet den Suchen- / Ersetzendialog, um einen eingegebenen Text durch einen anderen Text zu ersetzen.</value>
+  </data>
+  <data name="screentip_ReplayGainText" xml:space="preserve">
+    <value>Analysiert die ausgewählte Datei und errechnet die Wiedergabeverstärkung. Der Wert wird in die Metadaten geschrieben.\nDie Datei selbst wird nicht geändert.</value>
+  </data>
+  <data name="screentip_ResetLayoutText" xml:space="preserve">
+    <value>Das Layout des Docking Manager wird zum Applikations-Standard zurück gesetzt</value>
+  </data>
+  <data name="screentip_SaveText" xml:space="preserve">
+    <value>Ausstehende Änderungen an Dateien werden auf die disk zurückgeschrieben.</value>
+  </data>
+  <data name="screentip_TagFromFileText" xml:space="preserve">
+    <value>Unter Verwendung der Parameter aus dem Dialog werden die verschiedenen tags wie z.B. "Track #", "Interpret",  "Tite\", etc. aus dem Dateinamen extrahiert.</value>
+  </data>
+  <data name="screentip_TagFromInternetText" xml:space="preserve">
+    <value>Der Interpret und Album Name werden für eine Suche bei Amazon verwendet. Es wird versucht einen Bezug zwischen dem Dateinamen und der Titelliste des Albums herzustellen.</value>
+  </data>
+  <data name="screentip_ValidateSongText" xml:space="preserve">
+    <value>Verwendet MP3Val, um die ausgewählte MP3 Datei auf Fehler zu untersuchen. Manche Fehler können mit der "Korrigieren MP3" Funktion behoben werden.</value>
+  </data>
+  <data name="lookup_AlbumTracks" xml:space="preserve">
+    <value>Titel auf Album</value>
+  </data>
+  <data name="lookup_SearchFinished" xml:space="preserve">
+    <value>Mehrere Alben gefunden. Bitte auswählen ...</value>
+  </data>
+  <data name="lookup_NoAlbumFound" xml:space="preserve">
+    <value>Kein Album gefunden. Bitte eine neue Auswahl treffen.</value>
+  </data>
+  <data name="lookup_SongsToTag" xml:space="preserve">
+    <value>Lieder zum Taggen (Verwende Drag &amp; Drop zum Ändern der Reihenfolge) </value>
+  </data>
+  <data name="lookup_Title" xml:space="preserve">
+    <value>Internet Lookup - Bitte Artist / Album eingeben</value>
+    <comment>The Header of the Internet Lookup Dialog</comment>
+  </data>
+  <data name="screentip_GetCoverArtText" xml:space="preserve">
+    <value>Bilder für die ausgewählten Lieder werden auf den ausgewählten Seiten gesucht</value>
+  </data>
+  <data name="lookup_SearchStatus" xml:space="preserve">
+    <value>Suche nach Alben ... {0} Seiten, Verbleibend {1}</value>
+  </data>
+  <data name="tagEdit_CommercialInfo" xml:space="preserve">
+    <value>Kommerzielle Information URL:</value>
+  </data>
+  <data name="tagEdit_CopyrightInformation" xml:space="preserve">
+    <value>Copyright Information URL:</value>
+  </data>
+  <data name="tagEdit_OfficialArtist" xml:space="preserve">
+    <value>Offizielle Interpret URL:</value>
+  </data>
+  <data name="tagEdit_OfficialAudiofile" xml:space="preserve">
+    <value>Offizielle Audiodatei URL:</value>
+  </data>
+  <data name="tagEdit_OfficialAudioSource" xml:space="preserve">
+    <value>Offizielle Audioquelle URL:</value>
+  </data>
+  <data name="tagEdit_OfficialPayment" xml:space="preserve">
+    <value>Offizielle Bezahlungs URL:</value>
+  </data>
+  <data name="tagEdit_OfficialPublisher" xml:space="preserve">
+    <value>Offizieller Herausgeber URL:</value>
+  </data>
+  <data name="tagEdit_OfficialRadioStation" xml:space="preserve">
+    <value>Offizielle Internet Radio Stat. URL:</value>
+  </data>
+  <data name="tagEdit_OrigAlbum" xml:space="preserve">
+    <value>Original Album Titel:</value>
+  </data>
+  <data name="tagEdit_OrigArtist" xml:space="preserve">
+    <value>Original Interpret:</value>
+  </data>
+  <data name="tagEdit_OrigFileName" xml:space="preserve">
+    <value>Original Dateiname:</value>
+  </data>
+  <data name="tagEdit_OrigLyricsWriter" xml:space="preserve">
+    <value>Original Text Autor:</value>
+  </data>
+  <data name="tagEdit_OrigOwner" xml:space="preserve">
+    <value>Original Besitzer:</value>
+  </data>
+  <data name="tagEdit_OrigReleaseYear" xml:space="preserve">
+    <value>Original Erscheinungsjahr:</value>
+  </data>
+  <data name="tagEdit_TabHeader_Involved_People" xml:space="preserve">
+    <value>Beteiligte Personen</value>
+    <comment>The Header for the Involved People Tab</comment>
+  </data>
+  <data name="tagEdit_TabHeader_Original_Information" xml:space="preserve">
+    <value>Original Information</value>
+    <comment>The Header for the Original Information Tab</comment>
+  </data>
+  <data name="tagEdit_TabHeader_Rating" xml:space="preserve">
+    <value>Bewertung</value>
+    <comment>The Header for the Rating Tab</comment>
+  </data>
+  <data name="tagEdit_TabHeader_UserFrames" xml:space="preserve">
+    <value>Benutzereinträge</value>
+    <comment>The header for the User Defined / Non Standard Frames</comment>
+  </data>
+  <data name="tagEdit_TabHeader_Web_Information" xml:space="preserve">
+    <value>Web Information</value>
+    <comment>The Header for the Web Information Tab</comment>
+  </data>
+  <data name="tagEdit_RatingUser" xml:space="preserve">
+    <value>Benutzer (eMail):</value>
+  </data>
+  <data name="tagEdit_RatingPlayCount" xml:space="preserve">
+    <value>Abspielzähler:</value>
+  </data>
+  <data name="tagEdit_Rating_Add" xml:space="preserve">
+    <value>Bewertung hinzufügen</value>
+    <comment>The Add Rating Button</comment>
+  </data>
+  <data name="tagEdit_Rating_Delete" xml:space="preserve">
+    <value>Bewertung entfernen</value>
+    <comment>The Delete Rating Buttom</comment>
+  </data>
+  <data name="tagEdit_Rating_Note" xml:space="preserve">
+    <value>Laut ID3 Standard kann eine Bewerting von 1-255 gehen, wobei 1 am Schlechtesten und 255 am Besten ist. 0 bedeutet unbekannt.
+
+Viele Programme haben ihr eigene Wertung und ignorieren den ID3-Standart, wie z.B. eine Bewertung durch Sterne, wie Sie in MPTagThat  verwendet wird.
+
+Wenn kein Zähler erwünscht ist, kann dieser weggelassen werden.
+
+Die einzelnen Wertungen können durch Drag &amp; Drop umsortiert werden.</value>
+  </data>
+  <data name="tagEdit_InvolvedPerson_Add" xml:space="preserve">
+    <value>Person hinzufügen</value>
+    <comment>The Button Text of the Involved Person Add</comment>
+  </data>
+  <data name="tagEdit_InvolvedPerson_Delete" xml:space="preserve">
+    <value>Person entfernen</value>
+    <comment>The Button Text of the Involved Person Delete</comment>
+  </data>
+  <data name="tagEdit_InvolvedPerson_Function" xml:space="preserve">
+    <value>Beteiligte Person Funktion:</value>
+  </data>
+  <data name="tagEdit_InvolvedPerson_Header" xml:space="preserve">
+    <value>Involvierte Personen</value>
+    <comment>The Header of the Involved Person Groupbox</comment>
+  </data>
+  <data name="tagEdit_InvolvedPerson_Name" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="tagEdit_MusicCreditList_Add" xml:space="preserve">
+    <value>Musiker hinzufügen</value>
+    <comment>Button to Add a Musician</comment>
+  </data>
+  <data name="tagEdit_MusicCreditList_Delete" xml:space="preserve">
+    <value>Musiker entfernen</value>
+    <comment>Button to Delete a Musician</comment>
+  </data>
+  <data name="tagEdit_MusicCreditList_Header" xml:space="preserve">
+    <value>Musik Credit Liste (nur ID3 V2.4)</value>
+    <comment>The Header for the Music Credit List GroupBox</comment>
+  </data>
+  <data name="tagEdit_MusicCreditList_Instrument" xml:space="preserve">
+    <value>Instrument</value>
+    <comment>Column Header for Music Credit List</comment>
+  </data>
+  <data name="tagEdit_MusicBrainzArtistId" xml:space="preserve">
+    <value>Interpret Id:</value>
+  </data>
+  <data name="tagEdit_MusicBrainzDiscId" xml:space="preserve">
+    <value>Medien Id:</value>
+  </data>
+  <data name="tagEdit_MusicBrainzReleaseArtistId" xml:space="preserve">
+    <value>Release Interpret Id:</value>
+  </data>
+  <data name="tagEdit_MusicBrainzReleaseCountry" xml:space="preserve">
+    <value>Release Land:</value>
+  </data>
+  <data name="tagEdit_MusicBrainzReleaseGroupId" xml:space="preserve">
+    <value>Release Gruppen Id:</value>
+  </data>
+  <data name="tagEdit_MusicBrainzReleaseId" xml:space="preserve">
+    <value>Release Id:</value>
+  </data>
+  <data name="tagEdit_MusicBrainzReleaseStatus" xml:space="preserve">
+    <value>Release Status:</value>
+  </data>
+  <data name="tagEdit_MusicBrainzReleaseTrackId" xml:space="preserve">
+    <value>Track Id:</value>
+  </data>
+  <data name="tagEdit_MusicBrainzReleaseType" xml:space="preserve">
+    <value>Release Typ:</value>
+  </data>
+  <data name="tagEdit_TabHeader_MusicBrainz" xml:space="preserve">
+    <value>MusicBrainz Information</value>
+  </data>
+  <data name="tagEdit_MusicBrainzInfo" xml:space="preserve">
+    <value>Hole von MusicBrainz</value>
+    <comment>The Get MusicBrainz Info Button</comment>
+  </data>
+  <data name="tagEdit_UserFrames_Add" xml:space="preserve">
+    <value>Eintrag hinzufügen</value>
+    <comment>Button Text</comment>
+  </data>
+  <data name="tagEdit_UserFrames_DeleteAllFrames" xml:space="preserve">
+    <value>Alle Einträge löschen</value>
+    <comment>Button Text</comment>
+  </data>
+  <data name="tagEdit_UserFrames_DeleteFrame" xml:space="preserve">
+    <value>Eintrag löschen</value>
+    <comment>Button Text</comment>
+  </data>
+  <data name="tagEdit_UserFrames_Description" xml:space="preserve">
+    <value>Beschreibung</value>
+    <comment>The Description header in the User Frame Grid</comment>
+  </data>
+  <data name="tagEdit_UserFrames_FrameId" xml:space="preserve">
+    <value>Frame Id</value>
+    <comment>The FrameID header in the User Frame Grid</comment>
+  </data>
+  <data name="tagEdit_UserFrames_Text" xml:space="preserve">
+    <value>Text</value>
+    <comment>The Text header in the User Frame Grid</comment>
+  </data>
+  <data name="settings_Keys_Description" xml:space="preserve">
+    <value>Beschreibung:</value>
+    <comment>The Description Label</comment>
+  </data>
+  <data name="settings_Keys_Header_Description" xml:space="preserve">
+    <value>Beschreibung</value>
+    <comment>The Header in te Key Map Grid</comment>
+  </data>
+  <data name="settings_Keys_Header_Id" xml:space="preserve">
+    <value>Id</value>
+    <comment>The Header in te Key Map Grid</comment>
+  </data>
+  <data name="settings_Keys_Header_Keys" xml:space="preserve">
+    <value>Tasten</value>
+    <comment>The Header in te Key Map Grid</comment>
+  </data>
+  <data name="settings_Keys_Restart" xml:space="preserve">
+    <value>Neustart erfordelich</value>
+  </data>
+  <data name="settings_Keys_ShortCut" xml:space="preserve">
+    <value>Tastaturkurzbefehl:</value>
+    <comment>The Key Short Cut Label</comment>
   </data>
   <data name="lyricsSearch_SwitchArtist" xml:space="preserve">
     <value>Interpret (Nachname, Vorname)  vor Durchführung tauschen</value>
+    <comment>The Switch Artist Check Box</comment>
   </data>
-  <data name="settings_Tags_General" xml:space="preserve">
-    <value>Generell</value>
-  </data>
-  <data name="settings_Tags_CopyArtist" xml:space="preserve">
-    <value>Interpret nach Album Interpret kopieren, wenn leer</value>
+  <data name="settings_Tags" xml:space="preserve">
+    <value>Tags</value>
+    <comment>The Header for the Tags Settings</comment>
   </data>
   <data name="settings_Tags_AutoFillNumberTracks" xml:space="preserve">
     <value>\"Anzahl von Tracks\" bei merfach editieren automatisch füllen</value>
@@ -1044,26 +1426,64 @@ verschieben/kopieren</value>
   <data name="settings_Tags_ChangeReadOnly" xml:space="preserve">
     <value>Change Readonly Attributte on Save</value>
   </data>
+  <data name="settings_Tags_CopyArtist" xml:space="preserve">
+    <value>Interpret nach Album Interpret kopieren, wenn leer</value>
+  </data>
+  <data name="settings_Tags_General" xml:space="preserve">
+    <value>Generell</value>
+    <comment>The GroupBox Header for Tags General</comment>
+  </data>
+  <data name="settings_Tags_PreferredCountries" xml:space="preserve">
+    <value>Bevorzugte Länder für MusicBrainz Suche:</value>
+  </data>
   <data name="settings_Id3_Encoding" xml:space="preserve">
     <value>Verwendeter Zeichensatz beim Speichern der Tags:</value>
   </data>
-  <data name="coverSearch_CreateMissingFolderThumb" xml:space="preserve">
-    <value>Erstelle fehlende Ordnervorschau (folder.jpg) beim Speichern</value>
-  </data>
   <data name="settings_Id3_Header" xml:space="preserve">
     <value>ID3</value>
-  </data>
-  <data name="settings_Id3_UseV4" xml:space="preserve">
-    <value>Version 2.4 für ID3 V2 Tags benutzen</value>
-  </data>
-  <data name="settings_Id3_UseV3" xml:space="preserve">
-    <value>Version 2.3 für ID3 V2 Tags benutzen</value>
+    <comment>The Header of the ID3 Settings</comment>
   </data>
   <data name="settings_Id3_UseApe" xml:space="preserve">
     <value>APE und ID3 V1 Tags benutzen</value>
   </data>
+  <data name="settings_Id3_UseV3" xml:space="preserve">
+    <value>Version 2.3 für ID3 V2 Tags benutzen</value>
+  </data>
+  <data name="settings_Id3_UseV4" xml:space="preserve">
+    <value>Version 2.4 für ID3 V2 Tags benutzen</value>
+  </data>
+  <data name="ribbon_About" xml:space="preserve">
+    <value>Über MPTagThat</value>
+  </data>
+  <data name="ribbon_Bar_About" xml:space="preserve">
+    <value>Über</value>
+  </data>
+  <data name="settings_Id3_AddGenre" xml:space="preserve">
+    <value>Genre Hinzufügen</value>
+  </data>
+  <data name="settings_Id3_ClearUserFrames" xml:space="preserve">
+    <value>Benutzerdefinierte Frames beim Speichern löschen</value>
+  </data>
+  <data name="settings_Id3_FixMp3" xml:space="preserve">
+    <value>Fehlerhafte MP3 Dateien automatisch korrigieren</value>
+  </data>
+  <data name="settings_Id3_Header_CustomGenres" xml:space="preserve">
+    <value>Benutzer Genres</value>
+    <comment>The Header for the Id3 Custom Genres Group Box</comment>
+  </data>
+  <data name="settings_Id3_Header_MP3Validation" xml:space="preserve">
+    <value>MP3 Dateiformatprüfung</value>
+    <comment>The Header for the Id3 MP3 Validation Group Box</comment>
+  </data>
   <data name="settings_Id3_Header_Update" xml:space="preserve">
     <value>Bei Änderung</value>
+    <comment>The Header for the ID3 Update Group Box</comment>
+  </data>
+  <data name="settings_Id3_RemoveGenre" xml:space="preserve">
+    <value>Genre(s) Löschen</value>
+  </data>
+  <data name="settings_Id3_SaveGenre" xml:space="preserve">
+    <value>Genre(s) speichern</value>
   </data>
   <data name="settings_Id3_UpdateRemoveV1" xml:space="preserve">
     <value>ID3 V1 entfernen</value>
@@ -1071,110 +1491,25 @@ verschieben/kopieren</value>
   <data name="settings_Id3_UpdateRemoveV2" xml:space="preserve">
     <value>ID3 V2 entfernen</value>
   </data>
+  <data name="settings_Id3_UpdateV1" xml:space="preserve">
+    <value>ID3 V1</value>
+  </data>
   <data name="settings_Id3_UpdateV1V2" xml:space="preserve">
     <value>ID3V1 und ID3V2 schreiben</value>
   </data>
   <data name="settings_Id3_UpdateV2" xml:space="preserve">
     <value>ID3 V2</value>
   </data>
-  <data name="settings_Id3_UpdateV1" xml:space="preserve">
-    <value>ID3 V1</value>
-  </data>
-  <data name="settings_Id3_ClearUserFrames" xml:space="preserve">
-    <value>Benutzerdefinierte Frames beim Speichern löschen</value>
-  </data>
-  <data name="settings_Id3_Header_MP3Validation" xml:space="preserve">
-    <value>MP3 Dateiformatprüfung</value>
-  </data>
   <data name="settings_Id3_ValidateMp3" xml:space="preserve">
     <value>Überprüfe MP3 Dateien beim Einlesen von Verzeichnis / Datenbank</value>
   </data>
-  <data name="settings_Id3_FixMp3" xml:space="preserve">
-    <value>Fehlerhafte MP3 Dateien automatisch korrigieren</value>
+  <data name="settings_Keys_Alt" xml:space="preserve">
+    <value>Alt</value>
   </data>
-  <data name="settings_Id3_Header_CustomGenres" xml:space="preserve">
-    <value>Benutzer Genres</value>
+  <data name="settings_Keys_Ctrl" xml:space="preserve">
+    <value>Strg</value>
   </data>
-  <data name="settings_Id3_AddGenre" xml:space="preserve">
-    <value>Genre Hinzufügen</value>
-  </data>
-  <data name="settings_Id3_RemoveGenre" xml:space="preserve">
-    <value>Genre Löschen</value>
-  </data>
-  <data name="lookup_Title" xml:space="preserve">
-    <value>Internet Lookup - Bitte Artist / Album eingeben</value>
-  </data>
-  <data name="lookup_NoAlbumFound" xml:space="preserve">
-    <value>Kein Album gefunden. Bitte eine neue Auswahl treffen.</value>
-  </data>
-  <data name="lookup_SearchFinished" xml:space="preserve">
-    <value>Mehrere Alben gefunden. Bitte auswählen ...</value>
-  </data>
-  <data name="lookup_AlbumTracks" xml:space="preserve">
-    <value>Titel auf Album</value>
-  </data>
-  <data name="message_Error_Title" xml:space="preserve">
-    <value>Fehler</value>
-  </data>
-  <data name="message_Save_Changes" xml:space="preserve">
-    <value>Änderungen nicht abgespeichert.
-Wollen Sie die änderungen speichern?</value>
-  </data>
-  <data name="message_Save_Changes_Title" xml:space="preserve">
-    <value>Änderungen speichern.</value>
-  </data>
-  <data name="message_Script_Compile_Failed" xml:space="preserve">
-    <value>Das Script enthält Fehler.\n\nDie genaue Fehlerursache ist im Log zu finden</value>
-  </data>
-  <data name="message_OutOfMemory" xml:space="preserve">
-    <value>Zuviele Files gescanned. Kein verfügbarer Speicherplatz.\r\nDer Scan wird abgebrochen.</value>
-  </data>
-  <data name="message_ErrorResetAttr" xml:space="preserve">
-    <value>Schreibschutz Attribut nicht zurückgesetzt</value>
-  </data>
-  <data name="message_CorruptFile" xml:space="preserve">
-    <value>Beschädigte Datie</value>
-  </data>
-  <data name="message_UnsupportedFormat" xml:space="preserve">
-    <value>Format nicht unterstützt</value>
-  </data>
-  <data name="message_NonExistingFile" xml:space="preserve">
-    <value>Datei existiert nicht mehr</value>
-  </data>
-  <data name="message_ErrorReadingFile" xml:space="preserve">
-    <value>Fehler beim Lesen: {0}</value>
-  </data>
-  <data name="message_ErrorSave" xml:space="preserve">
-    <value>Fehler beim Speichern: {0}</value>
-  </data>
-  <data name="findReplace_HeaderFind" xml:space="preserve">
-    <value>Suchen</value>
-  </data>
-  <data name="findReplace_NotFound" xml:space="preserve">
-    <value>Suchzeichenfolge nicht gefunden</value>
-  </data>
-  <data name="findReplace_NoMoreOccurencesFound" xml:space="preserve">
-    <value>Keine weiteren Treffer für die Suchzeichenfolge</value>
-  </data>
-  <data name="findReplace_FindWhat" xml:space="preserve">
-    <value>Suchen nach:</value>
-  </data>
-  <data name="findReplace_MatchCase" xml:space="preserve">
-    <value>Groß- / Kleinschreibung</value>
-  </data>
-  <data name="findReplace_FindNext" xml:space="preserve">
-    <value>Nächster</value>
-  </data>
-  <data name="findReplace_HeaderReplace" xml:space="preserve">
-    <value>Ersetzen</value>
-  </data>
-  <data name="findReplace_ReplaceWith" xml:space="preserve">
-    <value>Ersetzen durch:</value>
-  </data>
-  <data name="findReplace_Replace" xml:space="preserve">
-    <value>Ersetzen</value>
-  </data>
-  <data name="findReplace_ReplaceAll" xml:space="preserve">
-    <value>Alle ersetzen</value>
+  <data name="settings_Keys_Shift" xml:space="preserve">
+    <value>Umsch</value>
   </data>
 </root>
