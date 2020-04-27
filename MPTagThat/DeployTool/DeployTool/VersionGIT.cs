@@ -30,6 +30,11 @@ namespace DeployTool
   {
     private string _build;
 
+    /// <summary>
+    /// Execute Git with given parameters
+    /// </summary>
+    /// <param name="arguments"></param>
+    /// <returns></returns>
     private Process RunGitCommand(string arguments)
     {
       string programFiles = Environment.GetEnvironmentVariable("ProgramFiles(x86)") ?? Environment.GetEnvironmentVariable("ProgramFiles");
@@ -41,10 +46,9 @@ namespace DeployTool
       procInfo.Arguments = arguments;
       procInfo.FileName = file.FullName;
 
-      Console.WriteLine("Running : {0} {1}", file.FullName, arguments);
-
       if (file.Exists)
       {
+        Console.WriteLine("Running : {0} {1}", file.FullName, arguments);
         return Process.Start(procInfo);
       }
 
@@ -58,10 +62,9 @@ namespace DeployTool
       procInfo.Arguments = arguments;
       procInfo.FileName = file.FullName;
 
-      Console.WriteLine("Running : {0} {1}", file.FullName, arguments);
-
       if (file.Exists)
       {
+        Console.WriteLine("Running : {0} {1}", file.FullName, arguments);
         return Process.Start(procInfo);
       }
 
@@ -69,6 +72,11 @@ namespace DeployTool
       return null;
     }
 
+    /// <summary>
+    /// Returns the Git Directory from the given Path
+    /// </summary>
+    /// <param name="directory"></param>
+    /// <returns></returns>
     private string GetGitDir(string directory)
     {
       while (!Directory.Exists(directory + @"\.git"))
@@ -85,7 +93,12 @@ namespace DeployTool
       return directory + @"\.git";
     }
 
-    public string GetCurrentBuild(string gitDir)
+    /// <summary>
+    /// Gets the current build
+    /// </summary>
+    /// <param name="gitDir"></param>
+    /// <returns></returns>
+    private string GetCurrentBuild(string gitDir)
     {
       using (
         var proc = RunGitCommand($"--git-dir=\"{gitDir}\" rev-list HEAD --count "))
@@ -99,6 +112,50 @@ namespace DeployTool
       return null;
     }
 
+    /// <summary>
+    /// Get the status of the Git Folder
+    /// </summary>
+    /// <param name="directory"></param>
+    /// <returns></returns>
+    public string GetStatus(string directory)
+    {
+      using (
+        var proc = RunGitCommand($" status"))
+      {
+        if (proc != null)
+        {
+          string gitOut = proc.StandardOutput.ReadToEnd();
+          return gitOut;
+        }
+      }
+      return null;
+    }
+
+    /// <summary>
+    /// Revert change to file
+    /// </summary>
+    /// <param name="fileName"></param>
+    /// <returns></returns>
+    public bool RevertChange(string fileName)
+    {
+      using (
+        var proc = RunGitCommand($" checkout -- {fileName}"))
+      {
+        if (proc != null)
+        {
+          string gitOut = proc.StandardOutput.ReadToEnd();
+          return true;
+        }
+      }
+      return false;
+    }
+
+
+    /// <summary>
+    /// Read the Build Number
+    /// </summary>
+    /// <param name="directory"></param>
+    /// <returns></returns>
     public bool ReadBuild(string directory)
     {
       string gitDir = GetGitDir(directory);
@@ -112,6 +169,10 @@ namespace DeployTool
       return false;
     }
 
+    /// <summary>
+    /// Return the current Build number
+    /// </summary>
+    /// <returns></returns>
     public string GetBuild()
     {
       return _build;

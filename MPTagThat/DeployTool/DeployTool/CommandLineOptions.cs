@@ -30,7 +30,7 @@ namespace DeployTool
       git,
       path,
       revert,
-      GetVersion,
+      UpdateVersion,
       UpdateCopyright
     }
 
@@ -53,7 +53,7 @@ namespace DeployTool
       Console.WriteLine("/git=<directory>                   git directory");
       Console.WriteLine("/path=<directory>                  working directory");
       Console.WriteLine("/revert                            revert to build 0");
-      Console.WriteLine("/GetVersion <version>              writes the git revision + Version in textfile version.txt");
+      Console.WriteLine("/UpdateVersion <version>           Updates the Assmblies with version and creates textfile version.txt");
     }
 
     public bool IsOption(Option option)

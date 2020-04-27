@@ -20,11 +20,21 @@
 
 using System;
 using System.IO;
+using System.Text.RegularExpressions;
 
 namespace DeployTool
 {
   internal class Program
   {
+    #region Variables
+
+    private static string _directory;
+    private static CommandLineOptions _options;
+    
+    private const string StatusRegEx = @".*modified:\s*(.*)$";
+
+    #endregion
+
     private static void Main(string[] args)
     {
 
@@ -44,30 +54,32 @@ namespace DeployTool
         Environment.Exit(0);
       }
 
-      CommandLineOptions options = argsOptions as CommandLineOptions;
+      _options = argsOptions as CommandLineOptions;
 
-      if (!options.IsOption(CommandLineOptions.Option.path))
+      if (!_options.IsOption(CommandLineOptions.Option.path))
       {
         argsOptions.DisplayOptions();
         Environment.Exit(0);
       }
-      string directory = options.GetOption(CommandLineOptions.Option.path);
+      _directory = _options.GetOption(CommandLineOptions.Option.path);
 
-      if (options.IsOption(CommandLineOptions.Option.UpdateCopyright))
+      // Update the Assembly Copyright Date
+      if (_options.IsOption(CommandLineOptions.Option.UpdateCopyright))
       {
-        string copyrightText = options.GetOption(CommandLineOptions.Option.UpdateCopyright);
+        string copyrightText = _options.GetOption(CommandLineOptions.Option.UpdateCopyright);
         Console.WriteLine("Writing Copyright text: " + copyrightText);
 
         AssemblyUpdate copyrightUpdate = new AssemblyUpdate(copyrightText, AssemblyUpdate.UpdateMode.Copyright);
-        copyrightUpdate.UpdateAll(directory);
+        copyrightUpdate.UpdateAll(_directory);
 
         Environment.Exit(0);
       }
 
-      if (options.IsOption(CommandLineOptions.Option.GetVersion))
+      // Update the Assembly Version and Revision
+      if (_options.IsOption(CommandLineOptions.Option.UpdateVersion))
       {
-        string version = options.GetOption(CommandLineOptions.Option.GetVersion);
-
+        // Set the version from the command line
+        string version = _options.GetOption(CommandLineOptions.Option.UpdateVersion);
         if (string.IsNullOrEmpty(version))
         {
           fullVersion = "1.0.0.0";
@@ -77,25 +89,28 @@ namespace DeployTool
           fullVersion = version + ".$build";
         }
 
-        string gitDir = null; 
-        if (options.IsOption(CommandLineOptions.Option.git))
-        {
-          gitDir = options.GetOption(CommandLineOptions.Option.git);
-        }
-        if (string.IsNullOrEmpty(gitDir))
-        {
-          gitDir = directory;
-        }
+        // Set the Git Directory
+        string gitDir = GetGitDir(); 
         VersionGit git = new VersionGit();
-        bool versionExists = git.ReadBuild(gitDir);
+
+        // Check, if we have some pending commits
+        var status = git.GetStatus(gitDir);
+        if (!status.Contains("working tree clean"))
+        {
+          Console.WriteLine("GIT has pending commits / untracked files");
+          Environment.Exit(0);
+        }
+
+        // Lookup the latest build to get the Full Version
+        bool readBuild = git.ReadBuild(gitDir);
 
         if (File.Exists("version.txt"))
         {
           File.Delete("version.txt");
         }
-        if (!versionExists)
+        if (!readBuild)
         {
-          Console.WriteLine("Local GIT not up to date");
+          Console.WriteLine("Error getting Build number");
           Environment.Exit(0);
         }
 
@@ -103,10 +118,9 @@ namespace DeployTool
 
         TextWriter write = new StreamWriter("version.txt");
         fullVersion = fullVersion.Replace("$build", build);
-
         
         AssemblyUpdate update = new AssemblyUpdate(fullVersion);
-        update.UpdateAll(directory);
+        update.UpdateAll(_directory);
 
         write.Write(fullVersion);
         write.Close();
@@ -114,10 +128,48 @@ namespace DeployTool
         Environment.Exit(buildInt);
       }
 
-      if (options.IsOption(CommandLineOptions.Option.revert))
+      // Revert back changes to AssemblyInfo.cs
+      if (_options.IsOption(CommandLineOptions.Option.revert))
       {
-        Console.WriteLine("Reverting to build 0");
+        Console.WriteLine("Reverting changes to AssemblyInfo.cs made by Deploytool");
+        var regEx = new Regex(StatusRegEx, RegexOptions.Multiline);
+        // Set the Git Directory
+        string gitDir = GetGitDir();
+        VersionGit git = new VersionGit();
+
+        // Check, if we have some pending commits for AssemblyInfo
+        var status = git.GetStatus(gitDir);
+        var matches = regEx.Matches(status);
+        foreach (Match match in matches)
+        {
+          var file = match.Groups[1].Value;
+          if (file.EndsWith("AssemblyInfo.cs"))
+          {
+            git.RevertChange(file);
+            Console.WriteLine($"Reverted changes to {file}");
+          }
+        }
       }
+    }
+
+    /// <summary>
+    /// ´Builds the Git Directory
+    /// </summary>
+    /// <returns></returns>
+    private static string GetGitDir()
+    {
+      // Set the Git Directory
+      string gitDir = null; 
+      if (_options.IsOption(CommandLineOptions.Option.git))
+      {
+        gitDir = _options.GetOption(CommandLineOptions.Option.git);
+      }
+      if (string.IsNullOrEmpty(gitDir))
+      {
+        gitDir = _directory;
+      }
+
+      return gitDir;
     }
   }
 }
