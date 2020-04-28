@@ -1700,9 +1700,8 @@ Values: TRUE or FALSE. If TRUE, the logical disk supports file based compression
           throw new ArgumentOutOfRangeException();
         }
       }
-      catch (Exception e)
+      catch (Exception)
       {
-        e = e;
         throw new ArgumentOutOfRangeException();
       }
       datetime = new DateTime(year, month, day, hour, minute, second, 0);
@@ -1719,7 +1718,7 @@ Values: TRUE or FALSE. If TRUE, the logical disk supports file based compression
         {
           UTCOffset = Int32.Parse(tempString);
         }
-        catch (Exception e)
+        catch (Exception)
         {
           throw new ArgumentOutOfRangeException();
         }

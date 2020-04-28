@@ -50,8 +50,6 @@ namespace MPTagThat.Core.AlbumSearch
 
     private readonly Timer _timer;
 
-    private bool _albumFound;
-    private bool _searchHasEnded;
     private int _mSitesSearched;
 
 
@@ -127,7 +125,6 @@ namespace MPTagThat.Core.AlbumSearch
           log.Debug($"{site} Albums: {albums.Count} Searched: {_mSitesSearched} Sites Count: {AlbumSites.Count}");
           if (albums.Count > 0)
           {
-            _albumFound = true;
             _controller.AlbumFound = new object[] { albums, site };
             if (_mSitesSearched == AlbumSites.Count)
             {

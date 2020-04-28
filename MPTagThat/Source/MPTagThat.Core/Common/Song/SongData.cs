@@ -89,7 +89,6 @@ namespace MPTagThat.Core.Common.Song
     private string _lastWriteTime;
 
     private Util.MP3Error _mp3ValError;
-    private string _mp3ValErrorText;
     private ObservableCollection<Picture> _pictures = new ObservableCollection<Picture>();
     private List<string> _pictureHashList = new List<string>();
     private List<Comment> _comments = new List<Comment>();

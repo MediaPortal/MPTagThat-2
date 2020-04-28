@@ -163,7 +163,7 @@ namespace MPTagThat.MiscFiles.ViewModels
           item.FileName = Path.GetFileName(newFile);
           MiscFiles.Add(item);
         }
-        catch (Exception e)
+        catch (Exception)
         {
           // ignored
         }
