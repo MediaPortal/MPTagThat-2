@@ -14,13 +14,11 @@ set progpath=%ProgramFiles%
 if not "%ProgramFiles(x86)%".=="". set progpath=%ProgramFiles(x86)%
 
 REM set other MP related paths
-set GIT_ROOT=..
-REM set DeployTool="%GIT_ROOT%\Tools\Script & Batch tools\DeployVersionGIT\DeployVersionGIT\bin\Release\DeployVersionGIT.exe"
-REM set MPTagThat="%GIT_ROOT%\mediaportal"
-set DeployTool="d:\Documents\Source\MPTagThat-2\MPTagThat\DeployTool\DeployTool\bin\Debug\DeployTool.exe"
-set MPTagThat=d:\Documents\Source\MPTagThat-2\MPTagThat\Source
-set MPTagThat_GIT=d:\Documents\Source\MPTagThat-2
+set GIT_ROOT=..\..
+set DeployTool="%GIT_ROOT%\MPTagThat\DeployTool\DeployTool\bin\Debug\DeployTool.exe"
+set MPTagThat=%GIT_ROOT%\MPTagThat\Source
 
+REM Find the right version of msbuild on your system, by looking it up from "developer command prompt"
 set MSBuild="C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Current\Bin\msbuild.EXE"
 
 REM set log file
