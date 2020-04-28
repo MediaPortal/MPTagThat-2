@@ -89,8 +89,10 @@ namespace DeployTool
         }
         directory = parent.FullName;
       }
-      Console.WriteLine("Using git dir: {0}", directory);
-      return directory + @"\.git";
+
+      var dir = Path.GetFullPath(directory);
+      Console.WriteLine("Using git dir: {0}", dir);
+      return dir + @"\.git";
     }
 
     /// <summary>
@@ -103,7 +105,7 @@ namespace DeployTool
       string gitDir = GetGitDir(directory);
 
       using (
-        var proc = RunGitCommand($"-C {directory} --git-dir=\"{gitDir}\" rev-list HEAD --count "))
+        var proc = RunGitCommand($"-C {Path.GetFullPath(directory)} --git-dir=\"{gitDir}\" rev-list HEAD --count "))
       {
         if (proc != null)
         {
@@ -124,7 +126,7 @@ namespace DeployTool
       string gitDir = GetGitDir(directory);
 
       using (
-        var proc = RunGitCommand($"-C {directory} --git-dir=\"{gitDir}\" status"))
+        var proc = RunGitCommand($"-C {Path.GetFullPath(directory)} --git-dir=\"{gitDir}\" status"))
       {
         if (proc != null)
         {
@@ -145,7 +147,7 @@ namespace DeployTool
       string gitDir = GetGitDir(directory);
 
       using (
-        var proc = RunGitCommand($"-C {directory} --git-dir=\"{gitDir}\" checkout -- {fileName}"))
+        var proc = RunGitCommand($"-C {Path.GetFullPath(directory)} --git-dir=\"{gitDir}\" checkout -- {fileName}"))
       {
         if (proc != null)
         {
