@@ -110,9 +110,10 @@ namespace DeployTool
           }
           else
           {
-            newtext = Regex.Replace(newtext, "^(.*AssemblyVersion.*)$",
+            // Use negative lookahead to prevent a match on commented values
+            newtext = Regex.Replace(newtext, "^^(?!.*\\/)(.*AssemblyVersion.*)$",
               "[assembly: AssemblyVersion(\"" + _fullVersion + "\")]\r", RegexOptions.Multiline);
-            newtext = Regex.Replace(newtext, "^(.*AssemblyFileVersion.*)$",
+            newtext = Regex.Replace(newtext, "^(?!.*\\/)(.*AssemblyFileVersion.*)$",
               "[assembly: AssemblyFileVersion(\"" + _fullVersion + "\")]\r", RegexOptions.Multiline);
           }
         }
