@@ -428,6 +428,7 @@
                     <syncfusion:ButtonAdv  Label="" Width="30" Height="30" VerticalAlignment="Top" Margin="0,4,0,0" HorizontalAlignment="Left" 
                                          SmallIcon="pack://application:,,,/MPTagThat.TagEdit;component/Resources/Images/Save_16x.png" 
                                          Command="{Binding SaveCoverCommand}"
+                                         CommandParameter="{Binding SongEdit}" 
                                          ToolTip="{lex:Loc tagEdit_ToolTip_Picture_Save_CoverArt}"/>
                   </StackPanel>
                   <Border Grid.Row="0" Grid.Column="2" BorderThickness="1" BorderBrush="#FF000000" VerticalAlignment="Top" HorizontalAlignment="Left" Width="131" Height="131" >
