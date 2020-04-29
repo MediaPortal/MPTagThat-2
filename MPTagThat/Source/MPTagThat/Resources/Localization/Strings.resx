@@ -1510,4 +1510,28 @@ To change the order of the ratings drag the rows.</value>
   <data name="settings_Keys_Shift" xml:space="preserve">
     <value>Shift</value>
   </data>
+  <data name="songGrid_Header" xml:space="preserve">
+    <value>Songs</value>
+    <comment>The Header of the Song Grid Control</comment>
+  </data>
+  <data name="tagEdit_Header" xml:space="preserve">
+    <value>Tag Edit</value>
+    <comment>The Header of the Tag Edit Control</comment>
+  </data>
+  <data name="treeView_Filters" xml:space="preserve">
+    <value>Filters</value>
+    <comment>The Tab Header in the Treeview</comment>
+  </data>
+  <data name="treeView_Folders" xml:space="preserve">
+    <value>Folders</value>
+    <comment>The Header of the Accordion in Treeview</comment>
+  </data>
+  <data name="treeView_JumpToFolder" xml:space="preserve">
+    <value>Jump To Folder</value>
+    <comment>The Header of the Accordion in Treeview</comment>
+  </data>
+  <data name="treeView_Views" xml:space="preserve">
+    <value>Views</value>
+    <comment>The Tab Header in the Treeview</comment>
+  </data>
 </root>

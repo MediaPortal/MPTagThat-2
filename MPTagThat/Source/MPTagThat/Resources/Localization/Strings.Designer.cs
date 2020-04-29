@@ -1960,6 +1960,15 @@ namespace MPTagThat.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Songs.
+        /// </summary>
+        public static string songGrid_Header {
+            get {
+                return ResourceManager.GetString("songGrid_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Album.
         /// </summary>
         public static string songHeader_Album {
@@ -3112,6 +3121,15 @@ namespace MPTagThat.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Tag Edit.
+        /// </summary>
+        public static string tagEdit_Header {
+            get {
+                return ResourceManager.GetString("tagEdit_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Interpreted by:.
         /// </summary>
         public static string tagEdit_InterpretedBy {
@@ -3793,11 +3811,47 @@ namespace MPTagThat.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Filters.
+        /// </summary>
+        public static string treeView_Filters {
+            get {
+                return ResourceManager.GetString("treeView_Filters", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Folders.
+        /// </summary>
+        public static string treeView_Folders {
+            get {
+                return ResourceManager.GetString("treeView_Folders", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Treeview.
         /// </summary>
         public static string treeview_Header {
             get {
                 return ResourceManager.GetString("treeview_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Jump To Folder.
+        /// </summary>
+        public static string treeView_JumpToFolder {
+            get {
+                return ResourceManager.GetString("treeView_JumpToFolder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Views.
+        /// </summary>
+        public static string treeView_Views {
+            get {
+                return ResourceManager.GetString("treeView_Views", resourceCulture);
             }
         }
     }

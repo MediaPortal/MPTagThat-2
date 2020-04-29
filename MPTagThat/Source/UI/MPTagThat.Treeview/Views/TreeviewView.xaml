@@ -17,41 +17,49 @@
              Cursor="{Binding Cursor}" >
 
   <UserControl.Resources>
-      <local:ImageConverter x:Key="Converter"/>        
+    <local:ImageConverter x:Key="Converter"/>
 
-      <HierarchicalDataTemplate ItemsSource="{Binding Nodes}" x:Key="template">
-        <TextBlock Text="{Binding Name}" />
-      </HierarchicalDataTemplate>
-          
-      <Style TargetType="syncfusion:TreeViewItemAdv" x:Key="itemstyle">
-        <Setter Property="IsLoadOnDemand" Value="True"/>
-        <Setter Property="LeftImageSource" Value="{Binding Path=Item, Converter={StaticResource Converter}}"/>
-        <Setter Property="ToolTip" Value="{Binding Name}"/>
-        <Setter Property="ImageHeight" Value="16"/>
-        <Setter Property="ImageWidth" Value="16"/>
-        <Setter Property="IsSelected" Value="{Binding IsSelected, Mode=OneTime}"/>
-        <Setter Property="IsExpanded" Value="{Binding IsExpanded, Mode=TwoWay}"/>
-      </Style>
-    </UserControl.Resources>
+    <HierarchicalDataTemplate ItemsSource="{Binding Nodes}" x:Key="template">
+      <TextBlock Text="{Binding Name}" />
+    </HierarchicalDataTemplate>
 
-    <Grid>
-      <syncfusion:TreeViewAdv HorizontalAlignment="Left" VerticalAlignment="Top"
-                              AllowMultiSelect="False"
-                              ItemsSource="{Binding Nodes}"
-                              ItemTemplate="{StaticResource template}"
-                              ItemContainerStyle="{StaticResource itemstyle}" 
-                              ShowRootLines="False"
-                              BorderThickness="0 0 1 0" 
-                              IsScrollOnExpand="False"
-                              ScrollViewer.VerticalScrollBarVisibility="Visible">
-      <i:Interaction.Triggers>
-        <i:EventTrigger EventName="LoadOnDemand">
-          <prism:InvokeCommandAction Command="{Binding LoadFolderOnDemandCommand}" />
-        </i:EventTrigger>
-        <i:EventTrigger EventName="SelectedItemChanged">
-          <prism:InvokeCommandAction Command="{Binding SelectedItemChangedCommand}" />
-        </i:EventTrigger>
-      </i:Interaction.Triggers>
-      </syncfusion:TreeViewAdv>
+    <Style TargetType="syncfusion:TreeViewItemAdv" x:Key="itemstyle">
+      <Setter Property="IsLoadOnDemand" Value="True"/>
+      <Setter Property="LeftImageSource" Value="{Binding Path=Item, Converter={StaticResource Converter}}"/>
+      <Setter Property="ToolTip" Value="{Binding Name}"/>
+      <Setter Property="ImageHeight" Value="16"/>
+      <Setter Property="ImageWidth" Value="16"/>
+      <Setter Property="IsSelected" Value="{Binding IsSelected, Mode=OneTime}"/>
+      <Setter Property="IsExpanded" Value="{Binding IsExpanded, Mode=TwoWay}"/>
+    </Style>
+  </UserControl.Resources>
+
+  <Grid>
+    <syncfusion:TabControlExt CloseButtonType="Hide"  IsDisableUnloadTabItemExtContent="True" HorizontalAlignment="Stretch" VerticalAlignment="Top" >
+      <syncfusion:TabItemExt Header="{lex:Loc treeView_Views}">
+          <syncfusion:TreeViewAdv Grid.Row="0" 
+                                  AllowMultiSelect="False"
+                                  ItemsSource="{Binding Nodes}"
+                                  ItemTemplate="{StaticResource template}"
+                                  ItemContainerStyle="{StaticResource itemstyle}" 
+                                  ShowRootLines="False"
+                                  BorderThickness="0 0 1 0" 
+                                  IsScrollOnExpand="True"
+                                  ScrollViewer.VerticalScrollBarVisibility="Visible">
+          <i:Interaction.Triggers>
+            <i:EventTrigger EventName="LoadOnDemand">
+              <prism:InvokeCommandAction Command="{Binding LoadFolderOnDemandCommand}" />
+            </i:EventTrigger>
+            <i:EventTrigger EventName="SelectedItemChanged">
+              <prism:InvokeCommandAction Command="{Binding SelectedItemChangedCommand}" />
+            </i:EventTrigger>
+          </i:Interaction.Triggers>
+        </syncfusion:TreeViewAdv>
+      </syncfusion:TabItemExt>
+
+      <syncfusion:TabItemExt Header="{lex:Loc treeView_Filters}">
+
+      </syncfusion:TabItemExt>
+    </syncfusion:TabControlExt>
   </Grid>
 </UserControl>

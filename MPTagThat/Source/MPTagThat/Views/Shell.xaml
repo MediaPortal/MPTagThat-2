@@ -55,14 +55,14 @@
                       syncfusion:DockingManager.TargetNameInDockedMode="Treeview"
                       prism:RegionManager.RegionName="MiscFilesTab" />
 
-      <ContentControl syncfusion:DockingManager.Header="TagEdit" x:Name="TagEdit"
+      <ContentControl syncfusion:DockingManager.Header="{lex:Loc tagEdit_Header}" x:Name="TagEdit"
                       syncfusion:DockingManager.SideInDockedMode="Right"
                       syncfusion:DockingManager.DesiredWidthInDockedMode="375" 
                       syncfusion:DockingManager.DesiredWidthInFloatingMode="375" 
                       syncfusion:DockingManager.CanClose="False"
                       prism:RegionManager.RegionName="TagEdit" />
 
-      <ContentControl syncfusion:DockingManager.Header="SongGrid" x:Name="SongGrid"
+      <ContentControl syncfusion:DockingManager.Header="{lex:Loc songGrid_Header}" x:Name="SongGrid"
                       syncfusion:DockingManager.SideInDockedMode="Top"
                       syncfusion:DockingManager.CanClose="False" 
                       prism:RegionManager.RegionName="SongGrid" />
