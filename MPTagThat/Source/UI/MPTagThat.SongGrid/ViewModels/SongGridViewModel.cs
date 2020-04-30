@@ -286,6 +286,11 @@ namespace MPTagThat.SongGrid.ViewModels
 
               song.Status = -1;
               script?.Invoke(song);
+
+              // Remove and re-add song to Selected Items, so that changes in tags
+              // are reflected in the TagEdit Panel for multiple selections
+              SelectedItems.Remove(song);
+              SelectedItems.Add(song);
             }
             catch (Exception ex)
             {
