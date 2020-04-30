@@ -199,6 +199,7 @@ namespace MPTagThat.Treeview.ViewModels
     private void RefreshTreeview()
     {
       log.Trace(">>>");
+      Nodes.Clear();
       _dataProvider.RequestRoot(_helper);
       log.Trace("<<<");
     }
