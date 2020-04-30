@@ -619,11 +619,18 @@ namespace MPTagThat.SongGrid.ViewModels
             song.Changed = true;
           }
 
+          // For a Save All, we might have got a renamed file
+          if (command == "SaveAll")
+          {
+            song = result.song;
+          }
+
           // Has the file be renamed during save?
           if (Songs[i].FullFileName != song.FullFileName)
           {
             Songs.RemoveAt(i);
             Songs.Insert(i, song);
+            SelectedItems.Add(song);   // Readd teh song to selected Items, as it got removed before
           }
 
           if (commandObj.ProgressCancelled)

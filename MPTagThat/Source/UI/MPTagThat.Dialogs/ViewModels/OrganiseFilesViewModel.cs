@@ -34,12 +34,15 @@ using MPTagThat.Core.Utils;
 using Syncfusion.UI.Xaml.Grid;
 using WPFLocalizeExtension.Engine;
 using System.Collections;
+using System.Linq;
 using System.Reflection;
 using MPTagThat.Core;
 using MPTagThat.Core.Services.ScriptManager;
 using Action = MPTagThat.Core.Common.Action;
 using DialogResult = System.Windows.Forms.DialogResult;
 using Microsoft.VisualBasic.FileIO;
+using Syncfusion.Data.Extensions;
+
 // ReSharper disable CommentTypo
 
 // ReSharper disable IdentifierTypo
@@ -269,6 +272,17 @@ namespace MPTagThat.Dialogs.ViewModels
         var method = _instance.GetType().GetMethod("ExecuteCommand", new[] { typeof(string), typeof(object), typeof(bool) });
         method?.Invoke(_instance, new object[] { "SaveAll", new object[] { "true" }, false });
         log.Debug("Finished Saving All Pending changes");
+
+        var i = 0;
+        // Update the songs from the instance, since a SavAll might have renamed the file
+        var s = (ObservableCollection<Object>)_instance?.GetType().GetProperty("SelectedItems")?.GetValue(_instance);
+        foreach (var song in s)
+        {
+          // Can't clear the selection, so we need to remove and insert into collection
+          _songs.RemoveAt(i);
+          _songs.Insert(i, (SongData)song);
+          i++;
+        }
       }
 
       var directories = new Dictionary<string, string>();
