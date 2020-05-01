@@ -281,6 +281,10 @@
     <Resource Include="Resources\Images\Status_FixedSong.png" />
     <Resource Include="Resources\Images\CursorNumbering.cur" />
     <Resource Include="Resources\Images\Cancel_FolderScan.png" />
+    <Resource Include="Resources\Images\ContextMenu_Copy.png" />
+    <Resource Include="Resources\Images\ContextMenu_Cut.png" />
+    <Resource Include="Resources\Images\ContextMenu_Delete.png" />
+    <Resource Include="Resources\Images\ContextMenu_Paste.png" />
     <Content Include="x64\bass.dll" />
     <Content Include="x64\bassasio.dll" />
     <Content Include="x64\basscd.dll" />

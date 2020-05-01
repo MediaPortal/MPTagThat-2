@@ -78,8 +78,10 @@ namespace MPTagThat.SongGrid.ViewModels
     private List<string> _nonMusicFiles = new List<string>();
     private bool _progressCancelled;
     private bool _folderScanInProgress;
+    private bool _actionCopy;
 
     private readonly System.Windows.Input.Cursor _numberOnClickCursor = new System.Windows.Input.Cursor(System.Windows.Application.GetResourceStream(new Uri("pack://application:,,,/MPTagThat;component/Resources/Images/CursorNumbering.cur")).Stream);
+
 
     #endregion
 
@@ -100,6 +102,7 @@ namespace MPTagThat.SongGrid.ViewModels
       _songs = new BindingList<SongData>();
       ItemsSourceDataCommand = new BaseCommand(SetItemsSource);
       SelectionChangedCommand = new BaseCommand(SelectionChanged);
+      ContextMenuCopyCommand = new BaseCommand(ContextMenuCopy);
 
       EventSystem.Subscribe<GenericEvent>(OnMessageReceived, ThreadOption.UIThread);
       BindingOperations.EnableCollectionSynchronization(Songs, _lock);
@@ -202,6 +205,23 @@ namespace MPTagThat.SongGrid.ViewModels
         var parameters = new NavigationParameters();
         parameters.Add("songs", songs);
         _regionManager.RequestNavigate("TagEdit", "TagEditView", parameters);
+      }
+    }
+
+    public ICommand ContextMenuCopyCommand { get; }
+
+    private void ContextMenuCopy(object param)
+    {
+      if (param != null)
+      {
+        _options.CopyPasteBuffer.Clear();
+        var songs = (param as ObservableCollection<object>).Cast<SongData>().ToList();
+        foreach (var song in songs)
+        {
+          _options.CopyPasteBuffer.Add(song);
+        }
+
+        _actionCopy = true;
       }
     }
 

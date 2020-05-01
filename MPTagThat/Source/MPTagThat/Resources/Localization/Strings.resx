@@ -1534,4 +1534,28 @@ To change the order of the ratings drag the rows.</value>
     <value>Views</value>
     <comment>The Tab Header in the Treeview</comment>
   </data>
+  <data name="contextMenu_Copy" xml:space="preserve">
+    <value>Copy</value>
+    <comment>The Copy Context Menu</comment>
+  </data>
+  <data name="contextMenu_Cut" xml:space="preserve">
+    <value>Cut</value>
+    <comment>The Cut Context Menu</comment>
+  </data>
+  <data name="contextMenu_Delete" xml:space="preserve">
+    <value>Delete</value>
+    <comment>The Delete Context Menu</comment>
+  </data>
+  <data name="contextMenu_GoogleSearch" xml:space="preserve">
+    <value>Search for Song Cover on Google</value>
+    <comment>The Search Google Context Menu</comment>
+  </data>
+  <data name="contextMenu_Paste" xml:space="preserve">
+    <value>Paste</value>
+    <comment>The Paste Context Menu</comment>
+  </data>
+  <data name="contextMenu_SelectAll" xml:space="preserve">
+    <value>Select All</value>
+    <comment>The Select All Context Menu</comment>
+  </data>
 </root>

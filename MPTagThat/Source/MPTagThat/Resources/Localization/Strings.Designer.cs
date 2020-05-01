@@ -286,6 +286,60 @@ namespace MPTagThat.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Copy.
+        /// </summary>
+        public static string contextMenu_Copy {
+            get {
+                return ResourceManager.GetString("contextMenu_Copy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cut.
+        /// </summary>
+        public static string contextMenu_Cut {
+            get {
+                return ResourceManager.GetString("contextMenu_Cut", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Delete.
+        /// </summary>
+        public static string contextMenu_Delete {
+            get {
+                return ResourceManager.GetString("contextMenu_Delete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Search for Song Cover on Google.
+        /// </summary>
+        public static string contextMenu_GoogleSearch {
+            get {
+                return ResourceManager.GetString("contextMenu_GoogleSearch", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Paste.
+        /// </summary>
+        public static string contextMenu_Paste {
+            get {
+                return ResourceManager.GetString("contextMenu_Paste", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select All.
+        /// </summary>
+        public static string contextMenu_SelectAll {
+            get {
+                return ResourceManager.GetString("contextMenu_SelectAll", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Save covers with a maximum pixel width of:.
         /// </summary>
         public static string coverSearch_ChangeCoverSize {

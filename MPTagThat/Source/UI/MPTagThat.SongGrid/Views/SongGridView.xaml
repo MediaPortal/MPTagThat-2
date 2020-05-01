@@ -57,12 +57,55 @@
                            ForceCursor="True"
                            AlternatingRowStyle="{StaticResource AlternatingRowStyle}" 
                            RowStyle="{StaticResource ChangedRowStyle}" >
-      
+
       <i:Interaction.Triggers>
         <i:EventTrigger EventName="SelectionChanged">
           <i:InvokeCommandAction Command="{Binding SelectionChangedCommand}" CommandParameter="{Binding SelectedItems, ElementName=SongDataGrid}" />
         </i:EventTrigger>
       </i:Interaction.Triggers>
+
+      <syncfusion:SfDataGrid.ContextMenu>
+        <ContextMenu Style="{x:Null}">
+          <MenuItem Header="{lex:Loc contextMenu_Copy}"
+                    Command="{Binding ContextMenuCopyCommand}" 
+                    CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.SelectedItems}" >
+            <MenuItem.Icon>
+              <Image Source="pack://application:,,,/MPTagThat;component/Resources/Images/ContextMenu_Copy.png" ></Image>
+            </MenuItem.Icon>
+          </MenuItem>
+          <MenuItem Header="{lex:Loc contextMenu_Cut}"
+                    Command="{Binding ContextMenuCutCommand}" 
+                    CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.SelectedItems}" >
+            <MenuItem.Icon>
+              <Image Source="pack://application:,,,/MPTagThat;component/Resources/Images/ContextMenu_Cut.png" ></Image>
+            </MenuItem.Icon>
+          </MenuItem>
+          <MenuItem Header="{lex:Loc contextMenu_Paste}"
+                    Command="{Binding ContextMenuPasteCommand}" 
+                    CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.SelectedItems}" >
+            <MenuItem.Icon>
+              <Image Source="pack://application:,,,/MPTagThat;component/Resources/Images/ContextMenu_Paste.png" ></Image>
+            </MenuItem.Icon>
+          </MenuItem>
+          <MenuItem Header="{lex:Loc contextMenu_Delete}"
+                    Command="{Binding ContextMenuDeleteCommand}" 
+                    CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.SelectedItems}" >
+            <MenuItem.Icon>
+              <Image Source="pack://application:,,,/MPTagThat;component/Resources/Images/ContextMenu_Delete.png" ></Image>
+            </MenuItem.Icon>
+          </MenuItem>
+          <Separator/>
+          <MenuItem Header="{lex:Loc contextMenu_SelectAll}"
+                    Command="{Binding DataGrid.DataContext.ContextMenuSelectAllCommand}" >
+          </MenuItem>
+          <Separator/>
+          <MenuItem Header="{lex:Loc contextMenu_GoogleSearch}"
+                    Command="{Binding ContextMenuGoogleSearchCommand}" 
+                    CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.SelectedItems}" >
+          </MenuItem>
+        </ContextMenu>
+      </syncfusion:SfDataGrid.ContextMenu>
+
     </syncfusion:SfDataGrid>
   </Grid>
 </UserControl>
