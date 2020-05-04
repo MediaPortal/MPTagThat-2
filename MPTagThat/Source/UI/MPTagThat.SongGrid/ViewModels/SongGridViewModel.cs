@@ -807,8 +807,8 @@ namespace MPTagThat.SongGrid.ViewModels
             song.Changed = true;
           }
 
-          // For a Save All, we might have got a renamed file
-          if (command == "SaveAll")
+          // For a Save, we might have got a renamed file
+          if (command.StartsWith("Save"))
           {
             song = result.song;
           }
@@ -939,12 +939,16 @@ namespace MPTagThat.SongGrid.ViewModels
           // Run Commands, which don't display a dialog
           if (_supportedCommands.Contains(command))
           {
-            msg.MessageData.TryGetValue("runasync", out var runAsyncParam);
-            var runAsync = true;
+            //msg.MessageData.TryGetValue("runasync", out var runAsyncParam);
+
+            // Disabled Run Async, because it was causing problems with file access
+            var runAsync = false;
+            /*
             if (runAsyncParam != null)
             {
               runAsync = (bool)runAsyncParam;
             }
+            */
 
             // If we have Replaygain and mutiple songs selected, we should do Album Gain
             if (command == Action.ActionType.REPLAYGAIN && SelectedItems.Count > 1)
@@ -1060,8 +1064,10 @@ namespace MPTagThat.SongGrid.ViewModels
 
           if (command == Action.ActionType.ORGANISE)
           {
+            IsBusy = true;
             parameters.Add("songgridinstance", this);  // We need to reference to the SongGrid using Reflection for a Save all Command
             _dialogService.ShowDialogInAnotherWindow("OrganiseFilesView", "DialogWindowView", parameters, null);
+            IsBusy = false;
             return;
           }
 
