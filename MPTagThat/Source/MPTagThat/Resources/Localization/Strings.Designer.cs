@@ -727,6 +727,24 @@ namespace MPTagThat.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Do you really want to delete the selected files(s)?.
+        /// </summary>
+        public static string message_DeleteConfirm {
+            get {
+                return ResourceManager.GetString("message_DeleteConfirm", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Delete File(s).
+        /// </summary>
+        public static string message_DeleteConfirmHeader {
+            get {
+                return ResourceManager.GetString("message_DeleteConfirmHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Error.
         /// </summary>
         public static string message_Error_Title {

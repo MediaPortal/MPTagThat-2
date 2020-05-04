@@ -82,7 +82,8 @@
           </MenuItem>
           <MenuItem Header="{lex:Loc contextMenu_Paste}"
                     Command="{Binding ContextMenuPasteCommand}" 
-                    CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.SelectedItems}" >
+                    CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.SelectedItems}" 
+                    IsEnabled="{Binding IsPasteEnabled, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" >
             <MenuItem.Icon>
               <Image Source="pack://application:,,,/MPTagThat;component/Resources/Images/ContextMenu_Paste.png" ></Image>
             </MenuItem.Icon>
@@ -96,12 +97,18 @@
           </MenuItem>
           <Separator/>
           <MenuItem Header="{lex:Loc contextMenu_SelectAll}"
-                    Command="{Binding DataGrid.DataContext.ContextMenuSelectAllCommand}" >
+                    Command="{Binding ContextMenuSelectAllCommand}" >
+            <MenuItem.Icon>
+              <Image Source="pack://application:,,,/MPTagThat;component/Resources/Images/ContextMenu_SelectAll.png" ></Image>
+            </MenuItem.Icon>
           </MenuItem>
           <Separator/>
           <MenuItem Header="{lex:Loc contextMenu_GoogleSearch}"
                     Command="{Binding ContextMenuGoogleSearchCommand}" 
                     CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.SelectedItems}" >
+            <MenuItem.Icon>
+              <Image Source="pack://application:,,,/MPTagThat;component/Resources/Images/ContextMenu_Google.png" ></Image>
+            </MenuItem.Icon>
           </MenuItem>
         </ContextMenu>
       </syncfusion:SfDataGrid.ContextMenu>

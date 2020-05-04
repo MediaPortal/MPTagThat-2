@@ -1558,4 +1558,10 @@ To change the order of the ratings drag the rows.</value>
     <value>Select All</value>
     <comment>The Select All Context Menu</comment>
   </data>
+  <data name="message_DeleteConfirm" xml:space="preserve">
+    <value>Do you really want to delete the selected files(s)?</value>
+  </data>
+  <data name="message_DeleteConfirmHeader" xml:space="preserve">
+    <value>Delete File(s)</value>
+  </data>
 </root>
