@@ -274,8 +274,6 @@ namespace MPTagThat.Core.Services.Settings.Setting
 
     public StartupSettings StartupSettings { get; set; }
 
-    public bool ScanFolderRecursive { get; set; } = false;
-
     public bool NumberOnclick { get; set; } = false;
 
     public int AutoNumber { get; set; }

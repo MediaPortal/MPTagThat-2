@@ -3919,6 +3919,60 @@ namespace MPTagThat.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to View Mode:.
+        /// </summary>
+        public static string treeView_Mode {
+            get {
+                return ResourceManager.GetString("treeView_Mode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Database.
+        /// </summary>
+        public static string treeView_Mode_Database {
+            get {
+                return ResourceManager.GetString("treeView_Mode_Database", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Folder.
+        /// </summary>
+        public static string treeView_Mode_Folder {
+            get {
+                return ResourceManager.GetString("treeView_Mode_Folder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to TreeView Options.
+        /// </summary>
+        public static string treeView_Options {
+            get {
+                return ResourceManager.GetString("treeView_Options", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Refresh TreeView.
+        /// </summary>
+        public static string treeView_RefreshTreeView {
+            get {
+                return ResourceManager.GetString("treeView_RefreshTreeView", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Scan Subfolders.
+        /// </summary>
+        public static string treeView_ScanSubfolders {
+            get {
+                return ResourceManager.GetString("treeView_ScanSubfolders", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Views.
         /// </summary>
         public static string treeView_Views {

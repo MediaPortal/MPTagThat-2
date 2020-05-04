@@ -1564,4 +1564,22 @@ To change the order of the ratings drag the rows.</value>
   <data name="message_DeleteConfirmHeader" xml:space="preserve">
     <value>Delete File(s)</value>
   </data>
+  <data name="treeView_Mode" xml:space="preserve">
+    <value>View Mode:</value>
+  </data>
+  <data name="treeView_Mode_Database" xml:space="preserve">
+    <value>Database</value>
+  </data>
+  <data name="treeView_Mode_Folder" xml:space="preserve">
+    <value>Folder</value>
+  </data>
+  <data name="treeView_Options" xml:space="preserve">
+    <value>TreeView Options</value>
+  </data>
+  <data name="treeView_RefreshTreeView" xml:space="preserve">
+    <value>Refresh TreeView</value>
+  </data>
+  <data name="treeView_ScanSubfolders" xml:space="preserve">
+    <value>Scan Subfolders</value>
+  </data>
 </root>

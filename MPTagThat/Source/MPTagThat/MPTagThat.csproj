@@ -287,6 +287,7 @@
     <Resource Include="Resources\Images\ContextMenu_Paste.png" />
     <Resource Include="Resources\Images\ContextMenu_SelectAll.png" />
     <Resource Include="Resources\Images\ContextMenu_Google.png" />
+    <Resource Include="Resources\Images\Refresh.png" />
     <Content Include="x64\bass.dll" />
     <Content Include="x64\bassasio.dll" />
     <Content Include="x64\basscd.dll" />

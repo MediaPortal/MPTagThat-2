@@ -529,7 +529,6 @@ namespace MPTagThat.SongGrid.ViewModels
              _nonMusicFiles = new List<string>();
              GC.Collect();
 
-             _options.ScanFolderRecursive = false;
              if (!Directory.Exists(_selectedFolder))
                return;
 
@@ -546,7 +545,7 @@ namespace MPTagThat.SongGrid.ViewModels
 
              try
              {
-               foreach (FileInfo fi in GetFiles(new DirectoryInfo(_selectedFolder), _options.ScanFolderRecursive))
+               foreach (FileInfo fi in GetFiles(new DirectoryInfo(_selectedFolder), _options.MainSettings.ScanSubFolders))
                {
                  Application.DoEvents();
                  if (_progressCancelled)

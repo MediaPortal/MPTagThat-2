@@ -35,9 +35,25 @@
   </UserControl.Resources>
 
   <Grid>
-    <syncfusion:TabControlExt CloseButtonType="Hide"  IsDisableUnloadTabItemExtContent="True" HorizontalAlignment="Stretch" VerticalAlignment="Top" >
+    <Grid.RowDefinitions>
+      <RowDefinition Height="60"/>
+      <RowDefinition Height="*"/>
+      <RowDefinition Height="100"/>
+    </Grid.RowDefinitions>
+
+    <syncfusion:GroupBar Grid.Row="0" ItemHeaderHeight="20" >
+      <syncfusion:GroupBarItem Header="{lex:Loc treeView_JumpToFolder}" FontSize="12" FontWeight="Bold" IsExpanded="True" >
+        <StackPanel Orientation="Horizontal" Margin="5,0,0,0">
+          <ComboBox Height="25" MinWidth="250"
+                    ItemsSource="{Binding RecentFolders, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                    SelectedItem="{Binding SelectedRecentFolder}"/>
+        </StackPanel>
+      </syncfusion:GroupBarItem>
+    </syncfusion:GroupBar>
+
+    <syncfusion:TabControlExt Grid.Row="1" CloseButtonType="Hide"  IsDisableUnloadTabItemExtContent="True" HorizontalAlignment="Stretch" VerticalAlignment="Top" >
       <syncfusion:TabItemExt Header="{lex:Loc treeView_Views}">
-          <syncfusion:TreeViewAdv Grid.Row="0" 
+        <syncfusion:TreeViewAdv Grid.Row="0" 
                                   AllowMultiSelect="False"
                                   ItemsSource="{Binding Nodes}"
                                   ItemTemplate="{StaticResource template}"
@@ -61,5 +77,24 @@
 
       </syncfusion:TabItemExt>
     </syncfusion:TabControlExt>
+
+    <syncfusion:GroupBar Grid.Row="2" ItemHeaderHeight="20" ItemContentLength="50" >
+      <syncfusion:GroupBarItem Header="{lex:Loc treeView_Options}" FontSize="12" FontWeight="Bold" IsExpanded="True" >
+        <StackPanel>
+          <StackPanel Orientation="Horizontal" >
+            <Label Content="{lex:Loc treeView_Mode}" />
+            <ComboBox Height="25"  ItemsSource="{Binding ViewModes}"
+                      SelectedIndex="{Binding SelectedViewMode, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+          </StackPanel>
+          <StackPanel Orientation="Vertical">
+            <CheckBox Content="{lex:Loc treeView_ScanSubfolders}" Margin="5,5,0,0" IsChecked="{Binding ScanSubFolders, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+            <syncfusion:ButtonAdv Label="{lex:Loc treeView_RefreshTreeView}" Width="250" HorizontalAlignment="Left" Margin="5,5,0,0"
+                                  SmallIcon="pack://application:,,,/MPTagThat;component/Resources/Images/Refresh.png"
+                                  Command="{Binding RefreshTreeViewCommand}"/>
+          </StackPanel>
+        </StackPanel>
+      </syncfusion:GroupBarItem>
+    </syncfusion:GroupBar>
+
   </Grid>
 </UserControl>

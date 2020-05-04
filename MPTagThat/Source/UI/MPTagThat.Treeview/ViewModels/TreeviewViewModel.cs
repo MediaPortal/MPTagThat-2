@@ -37,6 +37,7 @@ using Prism.Events;
 using Prism.Mvvm;
 using Syncfusion.Windows.Shared;
 using Syncfusion.Windows.Tools.Controls;
+using WPFLocalizeExtension.Engine;
 
 #endregion
 
@@ -74,6 +75,7 @@ namespace MPTagThat.Treeview.ViewModels
         var selecteditem = (_selectedItem as TreeItem)?.Path;
         if (!string.IsNullOrEmpty(selecteditem))
         {
+          SetRecentFolder(selecteditem);
           _options.MainSettings.LastFolderUsed = selecteditem;
 
           GenericEvent evt = new GenericEvent
@@ -81,6 +83,7 @@ namespace MPTagThat.Treeview.ViewModels
             Action = "selectedfolderchanged"
           };
           evt.MessageData.Add("folder", selecteditem);
+          evt.MessageData.Add("scansubfolders", ScanSubFolders);
           EventSystem.Publish(evt);
         }
         log.Trace("<<<");
@@ -120,6 +123,17 @@ namespace MPTagThat.Treeview.ViewModels
         treeitem.IsLoadOnDemand = false;
       }
     }
+
+    /// <summary>
+    /// Refresh the Treeview
+    /// </summary>
+    public ICommand RefreshTreeViewCommand { get; }
+
+    private void RefreshTreeview(object param)
+    {
+      RefreshTreeview();
+    }
+
 
     private Environment.SpecialFolder _rootFolder;
     /// <summary>
@@ -161,6 +175,79 @@ namespace MPTagThat.Treeview.ViewModels
       set => SetProperty(ref _cursor, value);
     }
 
+    /// <summary>
+    /// The Binding for the Recent Folders
+    /// </summary>
+    private ObservableCollection<string> _recentFolders = new ObservableCollection<string>();
+    public ObservableCollection<string> RecentFolders
+    {
+      get => _recentFolders;
+      set { SetProperty(ref _recentFolders, value); }
+    }
+
+    /// <summary>
+    /// The Binding for the Selected Recent Folder
+    /// </summary>
+    private string _selectedRecentFolder;
+
+    public string SelectedRecentFolder
+    {
+      get => _selectedRecentFolder;
+      set
+      {
+        SetProperty(ref _selectedRecentFolder, value);
+        _options.MainSettings.LastFolderUsed = _selectedRecentFolder;
+        RefreshTreeview();
+        SetCurrentFolder(null, new EventArgs());
+      }
+    }
+
+    /// <summary>
+    /// The Binding for the View Modes
+    /// </summary>
+    private ObservableCollection<string> _viewModes = new ObservableCollection<string>();
+    public ObservableCollection<string> ViewModes
+    {
+      get => _viewModes;
+      set { SetProperty(ref _viewModes, value); }
+    }
+
+
+    private int _selectedViewMode;
+
+    public int SelectedViewMode
+    {
+      get => _selectedViewMode;
+      set
+      {
+        SetProperty(ref _selectedViewMode, value);
+        _options.MainSettings.DataProvider = _selectedViewMode;
+        if (_selectedViewMode == 0)
+        {
+          _dataProvider = new TreeViewDataProvider();
+        }
+        else
+        {
+          // Database Data Provider
+        }
+
+      }
+    }
+
+    /// <summary>
+    /// The Binding for scanning subfolders
+    /// </summary>
+    private bool _scanSubFolders;
+    public bool ScanSubFolders
+    {
+      get => _scanSubFolders;
+      set
+      {
+        SetProperty(ref _scanSubFolders, value);
+        _options.MainSettings.ScanSubFolders = value;
+      }
+    }
+
     #endregion
 
     #region ctor
@@ -178,8 +265,16 @@ namespace MPTagThat.Treeview.ViewModels
       RootFolder = Environment.SpecialFolder.Desktop;
       _dataProvider = new TreeViewDataProvider();
 
+      ViewModes.Add(LocalizeDictionary.Instance.GetLocalizedObject("MPTagThat", "Strings", "treeView_Mode_Folder", LocalizeDictionary.Instance.Culture).ToString());
+      ViewModes.Add(LocalizeDictionary.Instance.GetLocalizedObject("MPTagThat", "Strings", "treeView_Mode_Database", LocalizeDictionary.Instance.Culture).ToString());
+
+      SelectedViewMode = _options.MainSettings.DataProvider;
+
+      ScanSubFolders = _options.MainSettings.ScanSubFolders;
+
       SelectedItemChangedCommand = new DelegateCommand<object>(SelectedItemChanged);
       LoadFolderOnDemandCommand = new DelegateCommand<object>(LoadFolderOnDemand);
+      RefreshTreeViewCommand = new DelegateCommand<object>(RefreshTreeview);
 
       RefreshTreeview();
 
@@ -233,9 +328,9 @@ namespace MPTagThat.Treeview.ViewModels
       var nodeCol = _dataProvider.RequestDriveCollection(_helper, requestNetwork);
 
       var dirInfo = new DirectoryInfo(currentFolder);
-      
+
       // get path tokens
-      var dirs = new List<string> {dirInfo.FullName};
+      var dirs = new List<string> { dirInfo.FullName };
 
       while (dirInfo.Parent != null)
       {
@@ -271,6 +366,24 @@ namespace MPTagThat.Treeview.ViewModels
       }
       Cursor = Cursors.Arrow;
       log.Trace("<<<");
+    }
+
+    /// <summary>
+    /// Update the Recent Folder List, when a folder has been selected
+    /// </summary>
+    /// <param name="folder"></param>
+    private void SetRecentFolder(string folder)
+    {
+      _options.MainSettings.RecentFolders.Remove(folder);
+      _options.MainSettings.RecentFolders.Insert(0, folder);
+      if (_options.MainSettings.RecentFolders.Count > 20)
+      {
+        _options.MainSettings.RecentFolders.RemoveAt(20);
+      }
+
+      // Set the Binding
+      RecentFolders.Clear();
+      RecentFolders.AddRange(_options.MainSettings.RecentFolders);
     }
 
     #endregion
