@@ -14,7 +14,8 @@
              d:DesignHeight="450" d:DesignWidth="800" >
 
   <Grid>   
-    <ListView x:Name="MiscFilesListView" Background="{Binding BackColor}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ItemsSource="{Binding MiscFiles}">
+    <ListView x:Name="MiscFilesListView" Background="{Binding BackColor}" ItemsSource="{Binding MiscFiles}" 
+              ScrollViewer.HorizontalScrollBarVisibility="Disabled">
       <i:Interaction.Triggers>
         <i:EventTrigger EventName="SelectionChanged">
           <i:InvokeCommandAction Command="{Binding SelectionChangedCommand}" CommandParameter="{Binding SelectedItems, ElementName=MiscFilesListView}" />
@@ -33,12 +34,12 @@
       </ListView.ContextMenu>
       <ItemsControl.ItemsPanel>
         <ItemsPanelTemplate>
-          <UniformGrid Columns="1" HorizontalAlignment="Stretch"/>
+          <WrapPanel IsItemsHost="True" Orientation="Horizontal"/>
         </ItemsPanelTemplate>
       </ItemsControl.ItemsPanel>
       <ListView.ItemTemplate>      
         <DataTemplate>
-          <StackPanel Orientation="Vertical" VerticalAlignment="Top" HorizontalAlignment="Stretch">
+          <StackPanel Orientation="Vertical">
             <Image Source="{Binding ImageData}" HorizontalAlignment="Center" VerticalAlignment="Top" Height="100" Width="100" />
             <TextBox Name="tbFileName" Text="{Binding FileName}" HorizontalAlignment="Center" VerticalAlignment="Bottom" 
                      IsEnabled="{Binding IsTextBoxEnabled}" >
