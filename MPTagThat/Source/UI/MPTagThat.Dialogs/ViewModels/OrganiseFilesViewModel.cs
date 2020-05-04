@@ -268,20 +268,24 @@ namespace MPTagThat.Dialogs.ViewModels
       // Use Reflection. We cannot use the Event Aggregator since this doesn't run synced
       if (_instance != null)
       {
-        log.Debug("Saving All Pending changes first");
-        var method = _instance.GetType().GetMethod("ExecuteCommand", new[] { typeof(string), typeof(object), typeof(bool) });
-        method?.Invoke(_instance, new object[] { "SaveAll", new object[] { "true" }, false });
-        log.Debug("Finished Saving All Pending changes");
-
-        var i = 0;
-        // Update the songs from the instance, since a SavAll might have renamed the file
-        var s = (ObservableCollection<Object>)_instance?.GetType().GetProperty("SelectedItems")?.GetValue(_instance);
-        foreach (var song in s)
+        if (_songs.Any(so => so.Changed))
         {
-          // Can't clear the selection, so we need to remove and insert into collection
-          _songs.RemoveAt(i);
-          _songs.Insert(i, (SongData)song);
-          i++;
+          log.Debug("Saving All Pending changes first");
+          var method = _instance.GetType()
+            .GetMethod("ExecuteCommand", new[] {typeof(string), typeof(object), typeof(bool)});
+          method?.Invoke(_instance, new object[] {"SaveAll", new object[] {"true"}, false});
+          log.Debug("Finished Saving All Pending changes");
+
+          var i = 0;
+          // Update the songs from the instance, since a SavAll might have renamed the file
+          var s = (ObservableCollection<Object>) _instance?.GetType().GetProperty("SelectedItems")?.GetValue(_instance);
+          foreach (var song in s)
+          {
+            // Can't clear the selection, so we need to remove and insert into collection
+            _songs.RemoveAt(i);
+            _songs.Insert(i, (SongData) song);
+            i++;
+          }
         }
       }
 
