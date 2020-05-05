@@ -3883,15 +3883,6 @@ namespace MPTagThat.Resources.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Filters.
-        /// </summary>
-        public static string treeView_Filters {
-            get {
-                return ResourceManager.GetString("treeView_Filters", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Folders.
         /// </summary>
         public static string treeView_Folders {
@@ -3969,15 +3960,6 @@ namespace MPTagThat.Resources.Localization {
         public static string treeView_ScanSubfolders {
             get {
                 return ResourceManager.GetString("treeView_ScanSubfolders", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Views.
-        /// </summary>
-        public static string treeView_Views {
-            get {
-                return ResourceManager.GetString("treeView_Views", resourceCulture);
             }
         }
     }

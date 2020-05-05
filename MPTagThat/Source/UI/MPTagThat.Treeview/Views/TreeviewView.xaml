@@ -51,9 +51,7 @@
       </syncfusion:GroupBarItem>
     </syncfusion:GroupBar>
 
-    <syncfusion:TabControlExt Grid.Row="1" CloseButtonType="Hide"  IsDisableUnloadTabItemExtContent="True" HorizontalAlignment="Stretch" VerticalAlignment="Top" >
-      <syncfusion:TabItemExt Header="{lex:Loc treeView_Views}">
-        <syncfusion:TreeViewAdv Grid.Row="0" 
+        <syncfusion:TreeViewAdv Grid.Row="1" 
                                   AllowMultiSelect="False"
                                   ItemsSource="{Binding Nodes}"
                                   ItemTemplate="{StaticResource template}"
@@ -71,12 +69,6 @@
             </i:EventTrigger>
           </i:Interaction.Triggers>
         </syncfusion:TreeViewAdv>
-      </syncfusion:TabItemExt>
-
-      <syncfusion:TabItemExt Header="{lex:Loc treeView_Filters}">
-
-      </syncfusion:TabItemExt>
-    </syncfusion:TabControlExt>
 
     <syncfusion:GroupBar Grid.Row="2" ItemHeaderHeight="20" ItemContentLength="50" >
       <syncfusion:GroupBarItem Header="{lex:Loc treeView_Options}" FontSize="12" FontWeight="Bold" IsExpanded="True" >

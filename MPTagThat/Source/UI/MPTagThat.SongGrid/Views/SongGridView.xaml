@@ -45,6 +45,7 @@
                            Columns="{Binding DataGridColumns, Mode=TwoWay}" 
                            FrozenColumnCount="3"
                            ColumnSizer="AutoWithLastColumnFill" 
+                           AllowFiltering="True"
                            AllowResizingColumns="True" 
                            AllowDraggingColumns="True" 
                            AutoGenerateColumns="False"

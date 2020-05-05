@@ -24,30 +24,25 @@ namespace MPTagThat.Core.Common
   {
     private string _type = "text";
     
-    public GridViewColumn(string name, string type, int width, bool display, bool readOnly, bool bound, bool frozen)
+    public GridViewColumn(string name, string type, int width, bool display, bool readOnly, bool allowFilter)
     {
       Name = name;
       _type = type;
       Width = width;
       Display = display;
       Readonly = readOnly;
-      Bound = bound;
-      Frozen = frozen;
+      AllowFilter = allowFilter;
     }
 
     public GridViewColumn() {}
 
     public string Name { get; set; }
 
-    public string Title => LocExtension.GetLocalizedValue<string>($"MPTagThat:Strings:grid_{Name}");
-
     public bool Display { get; set; } = true;
-
-    public bool Bound { get; set; } = true;
 
     public bool Readonly { get; set; }
 
-    public bool Frozen { get; set; }
+    public bool AllowFilter { get; set; }
 
     public int Width { get; set; } = 100;
 
@@ -56,7 +51,5 @@ namespace MPTagThat.Core.Common
       get { return _type.ToLower(); }
       set { _type = value; }
     }
-
-    public int DisplayIndex { get; set; }
   }
 }

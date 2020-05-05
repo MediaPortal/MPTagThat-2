@@ -1518,10 +1518,6 @@ To change the order of the ratings drag the rows.</value>
     <value>Tag Edit</value>
     <comment>The Header of the Tag Edit Control</comment>
   </data>
-  <data name="treeView_Filters" xml:space="preserve">
-    <value>Filters</value>
-    <comment>The Tab Header in the Treeview</comment>
-  </data>
   <data name="treeView_Folders" xml:space="preserve">
     <value>Folders</value>
     <comment>The Header of the Accordion in Treeview</comment>
@@ -1529,10 +1525,6 @@ To change the order of the ratings drag the rows.</value>
   <data name="treeView_JumpToFolder" xml:space="preserve">
     <value>Jump To Folder</value>
     <comment>The Header of the Accordion in Treeview</comment>
-  </data>
-  <data name="treeView_Views" xml:space="preserve">
-    <value>Views</value>
-    <comment>The Tab Header in the Treeview</comment>
   </data>
   <data name="contextMenu_Copy" xml:space="preserve">
     <value>Copy</value>

@@ -477,6 +477,7 @@ namespace MPTagThat.Core.Utils
         LocalizeDictionary.Instance.Culture).ToString();
       column.IsReadOnly = setting.Readonly;
       column.IsHidden = !setting.Display;
+      column.AllowFiltering = setting.AllowFilter;
       column.Width = setting.Width;
       column.MappingName = setting.Name;
 
@@ -488,6 +489,7 @@ namespace MPTagThat.Core.Utils
         column.TextAlignment = TextAlignment.Center;
         var binding = new Binding("Status") { Converter = new SongStatusToImageConverter() };
         column.ValueBinding = binding;
+        column.AllowFiltering = false;
 
         // Bind the tooltip for the column to StatusMsg
         var styleToolTip = new Style();
