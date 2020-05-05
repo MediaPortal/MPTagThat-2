@@ -278,6 +278,7 @@ namespace MPTagThat.Dialogs.ViewModels
     {
       _options.FindBuffer = FindBuffer.ToList();
       _options.ReplaceBuffer = ReplaceBuffer.ToList();
+      _songGrid.SearchHelper.ClearSearch();
       base.CloseDialog(parameter);
     }
 
