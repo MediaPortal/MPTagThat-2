@@ -265,6 +265,7 @@ namespace MPTagThat.Dialogs.ViewModels
     {
       log.Trace(">>>");
 
+      var i = 0;
       // Use Reflection. We cannot use the Event Aggregator since this doesn't run synced
       if (_instance != null)
       {
@@ -276,7 +277,6 @@ namespace MPTagThat.Dialogs.ViewModels
           method?.Invoke(_instance, new object[] {"SaveAll", new object[] {"true"}, false});
           log.Debug("Finished Saving All Pending changes");
 
-          var i = 0;
           // Update the songs from the instance, since a SavAll might have renamed the file
           var s = (ObservableCollection<Object>) _instance?.GetType().GetProperty("SelectedItems")?.GetValue(_instance);
           foreach (var song in s)
@@ -293,8 +293,15 @@ namespace MPTagThat.Dialogs.ViewModels
       var targetFolder = TargetPath[SelectedIndexTargetPath];
       bool bError = false;
 
-      foreach (var song in _songs)
+      i = 0;
+      var songCount = _songs.Count;
+
+      // Cannot have a foreach, since modifying the collection
+      while (_songs.Count > 0 && i < songCount)
       {
+        // On a move, we always take element 0, so i is decremented on a move
+        var song = _songs[i];
+        i++;
         // Replace the Parameter Value with the Values from the song
         var resolvedParmString = Util.ReplaceParametersWithTrackValues(parameter, song);
 
@@ -397,6 +404,8 @@ namespace MPTagThat.Dialogs.ViewModels
             {
               FileSystem.MoveFile(song.FullFileName, newFilename, CkOverWriteFiles);
               song.Status = 0;
+              _songs.Remove(song);
+              i--;
             }
 
             // TODO: Update the Music Database
@@ -476,7 +485,7 @@ namespace MPTagThat.Dialogs.ViewModels
 
         string currentSelectedFolder = _options.MainSettings.LastFolderUsed;
         // Go up 1 level in the directory structure to find an existing folder
-        int i = 0;
+        i = 0;
         while (i < 10)
         {
           if (Directory.Exists(currentSelectedFolder))
