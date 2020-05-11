@@ -473,12 +473,12 @@
         <syncfusion:ButtonAdv Label="{lex:Loc dialog_Apply}" 
                               SmallIcon="pack://application:,,,/MPTagThat;component/Resources/Images/Apply_Changes_32x.png" 
                               Command="{Binding Tag2FileNameCommand}" 
-                              Width="75" Height="25" 
+                              Width="Auto" Height="25" 
                               HorizontalAlignment="Right" Margin="0,10,0,0" />
         <syncfusion:ButtonAdv Label="{lex:Loc dialog_Cancel}" 
                               SmallIcon="pack://application:,,,/MPTagThat;component/Resources/Images/Cancel_Changes_32x.png" 
                               Command="{Binding CancelChangesCommand}" 
-                              Width="75" Height="25" 
+                              Width="Auto" Height="25" 
                               HorizontalAlignment="Right" Margin="20,10,0,0" />
       </StackPanel>
 

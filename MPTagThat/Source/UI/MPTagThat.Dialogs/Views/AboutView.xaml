@@ -57,9 +57,9 @@
       </Grid>
 
       <StackPanel Grid.Row="1" Grid.Column="1">
-        <TextBlock HorizontalAlignment="Left" Margin="10,10,0,0" Grid.Row="1" FontSize="14" FontFamily="Comic Sans MS" Foreground="Blue" TextWrapping="Wrap" VerticalAlignment="Top" Width="570">
+        <TextBlock HorizontalAlignment="Left" Margin="10,10,10,0" Grid.Row="1" FontSize="14" FontFamily="Comic Sans MS" Foreground="Blue" TextWrapping="Wrap" VerticalAlignment="Top" Width="570">
           MPTagThat is an open source Tag editor for your complete music collection. <LineBreak /><LineBreak />
-          It let's you tag music in different file formats, retrieve album covers and song lyrics from multiple sites and much more.
+          It lets you tag music in different file formats, retrieve album covers and song lyrics from multiple sites and much more.
           Once the songs are tagged they can be organized in folders based on the tags. <LineBreak /> <LineBreak />
           Besides the tagging capabilities, there are options to Rip music from CDs, create Audio CDs from your music collections, 
           convert songs into different formats and many more.

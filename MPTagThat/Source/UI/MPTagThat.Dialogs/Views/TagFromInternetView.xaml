@@ -167,12 +167,12 @@
                               SmallIcon="pack://application:,,,/MPTagThat;component/Resources/Images/Apply_Changes_32x.png" 
                               Command="{Binding ApplyTagsCommand}" 
                               IsEnabled="{Binding IsBusy, Converter={StaticResource invertBoolConverter}}"
-                              Width="75" Height="25" 
+                              Width="Auto" Height="25" 
                               HorizontalAlignment="Right" Margin="0,5,0,0" />
         <syncfusion:ButtonAdv Label="{lex:Loc dialog_Cancel}" 
                               SmallIcon="pack://application:,,,/MPTagThat;component/Resources/Images/Cancel_Changes_32x.png" 
                               Command="{Binding CloseDialogCommand}" 
-                              Width="75" Height="25" 
+                              Width="Auto" Height="25" 
                               HorizontalAlignment="Right" Margin="20,5,0,0" />
       </StackPanel>
     </Grid>
