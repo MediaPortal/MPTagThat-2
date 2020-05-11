@@ -20,17 +20,43 @@ public class Script : IScript
 {
   public string Invoke(SongData song)
   {
-	string artist = song.Artist;
-	artist.Trim();
+    var stringSeparators = new string[] {"&", "/", "feat", "feat."};
+    var switchedArtist = "";
 
-	// Search for the first Blank
-	int iPos = artist.IndexOf(' ');
-	if (iPos > 0)
-	{
-	  // Switch the Artist name
-	  song.Artist = String.Format("{0}, {1}", artist.Substring(iPos + 1).Trim(), artist.Substring(0, iPos));
-	  song.Changed = true; // Indicate that the song has been changed
-	}
+    var artists = song.Artist.Split(stringSeparators, StringSplitOptions.None);
+    if (artists.Length > 0)
+    {
+      foreach (var artist in artists)
+      {
+        switchedArtist += SwitchArtist(artist) + ";";
+      }
+
+      song.Artist = switchedArtist.Substring(0, switchedArtist.Length - 1);
+      song.Changed = true;
+    }
+    else
+    {
+      switchedArtist += SwitchArtist(song.Artist);
+      if (switchedArtist != song.Artist)
+      {
+        song.Artist = switchedArtist;
+        song.Changed = true;
+      }
+    }
     return "";
+  }
+  
+  private string SwitchArtist(string artist)
+  {
+    artist = artist.Trim();
+
+    // Search for the first Blank
+    var iPos = artist.IndexOf(' ');
+    if (iPos > 0)
+    {
+      // Switch the Artist name
+      return string.Format("{0}, {1}", artist.Substring(iPos + 1).Trim(), artist.Substring(0, iPos));;
+    }
+    return artist;
   }
 }
