@@ -22,6 +22,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
+using System.Security.Policy;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Threading;
@@ -54,6 +55,8 @@ namespace MPTagThat.Treeview.ViewModels
     private DispatcherTimer _timer;
     private readonly TreeViewHelper _helper;
     private ITreeviewDataProvider _dataProvider;
+
+    private bool _init; 
 
     #endregion
 
@@ -276,7 +279,9 @@ namespace MPTagThat.Treeview.ViewModels
       LoadFolderOnDemandCommand = new DelegateCommand<object>(LoadFolderOnDemand);
       RefreshTreeViewCommand = new DelegateCommand<object>(RefreshTreeview);
 
+      _init = true;
       RefreshTreeview();
+      _init = false;
 
       // Work around the problem with Load On Demand being called from the Constructor.
       _timer = new DispatcherTimer();
@@ -296,6 +301,12 @@ namespace MPTagThat.Treeview.ViewModels
       log.Trace(">>>");
       Nodes.Clear();
       _dataProvider.RequestRoot(_helper);
+      
+      // Don't call set current folder when called from Constructor
+      if (!_init)
+      {
+        SetCurrentFolder(null, new EventArgs());
+      }
       log.Trace("<<<");
     }
 
@@ -313,10 +324,25 @@ namespace MPTagThat.Treeview.ViewModels
       {
         _timer.Stop();
       }
+
       var currentFolder = _options.MainSettings.LastFolderUsed;
       if (!Directory.Exists(currentFolder))
       {
-        return;
+        // Try to get 1 level up to find the parent
+        var i = 0;
+        while (i < 10)
+        {
+          if (Directory.Exists(currentFolder))
+            break;
+
+          currentFolder = currentFolder.Substring(0, currentFolder.LastIndexOf("\\"));
+          i++; // Max of 10 levels, to avoid possible infinity loop
+        }
+
+        if (i == 10)
+        {
+          return;
+        }
       }
 
       log.Info($"Set current folder to {currentFolder}");
