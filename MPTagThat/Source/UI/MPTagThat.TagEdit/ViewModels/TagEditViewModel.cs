@@ -1186,12 +1186,20 @@ namespace MPTagThat.TagEdit.ViewModels
       {
         if (CkTrackIsChecked)
         {
-          song.Track = songEdit.Track;
+          if (SongEdit.TrackNumber != 0 && SongEdit.TrackNumber != song.TrackNumber)
+          {
+            song.TrackNumber = songEdit.TrackNumber;
+          }
+          song.TrackCount = songEdit.TrackCount;
         }
 
         if (CkDiscIsChecked)
         {
-          song.Disc = songEdit.Disc;
+          if (SongEdit.DiscNumber != 0 && SongEdit.DiscNumber != song.DiscNumber)
+          {
+            song.DiscNumber = songEdit.DiscNumber;
+          }
+          song.DiscCount = songEdit.DiscCount;
         }
 
         if (CkTitleIsChecked)
@@ -1789,6 +1797,13 @@ namespace MPTagThat.TagEdit.ViewModels
         }
 
         i++;
+      }
+
+      if (SongEdit.TrackCount == 0 && _options.MainSettings.AutoFillNumberOfTracks)
+      {
+        SongEdit.TrackCount = (uint)songs.Count;
+        CkTrackIsChecked = true;
+        IsApplyButtonEnabled = true;
       }
 
       _isInitializing = false;
