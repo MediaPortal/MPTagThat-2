@@ -280,14 +280,6 @@
     <value>Rip</value>
     <comment>Ribbon Rip Tab</comment>
   </data>
-  <data name="statusBar_FilterActive" xml:space="preserve">
-    <value>Tagfilter: Active</value>
-    <comment>The TagFilter is Active</comment>
-  </data>
-  <data name="statusBar_FilterInactive" xml:space="preserve">
-    <value>Tagfilter: Inactive</value>
-    <comment>The TagFilter is Inactive</comment>
-  </data>
   <data name="message_CorruptFile" xml:space="preserve">
     <value>Corrupt File</value>
   </data>

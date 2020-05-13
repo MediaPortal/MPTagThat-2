@@ -174,26 +174,6 @@ namespace MPTagThat.ViewModels
       set => SetProperty(ref _currentFile, value);
     }
 
-    /// <summary>
-    /// Property to indicate if a TagFilter is active
-    /// </summary>
-    private string _filterActive = "false";
-    public string FilterActive
-    {
-      get
-      {
-        if (_filterActive == "true")
-        {
-          return LocalizeDictionary.Instance.GetLocalizedObject("MPTagThat", "Strings", "statusBar_FilterActive",
-            LocalizeDictionary.Instance.Culture).ToString();
-        }
-
-        return LocalizeDictionary.Instance.GetLocalizedObject("MPTagThat", "Strings", "statusBar_FilterInActive",
-          LocalizeDictionary.Instance.Culture).ToString();
-      }
-      set => SetProperty(ref _filterActive, value);
-    }
-
     #endregion
 
     #region ctor

@@ -2644,24 +2644,6 @@ namespace MPTagThat.Resources.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tagfilter: Active.
-        /// </summary>
-        public static string statusBar_FilterActive {
-            get {
-                return ResourceManager.GetString("statusBar_FilterActive", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Tagfilter: Inactive.
-        /// </summary>
-        public static string statusBar_FilterInactive {
-            get {
-                return ResourceManager.GetString("statusBar_FilterInactive", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Files: {0}.
         /// </summary>
         public static string statusBar_NumberOfFiles {
