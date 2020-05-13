@@ -286,6 +286,33 @@ namespace MPTagThat.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Clear All Filters.
+        /// </summary>
+        public static string contextMenu_ClearAllFilters {
+            get {
+                return ResourceManager.GetString("contextMenu_ClearAllFilters", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Clear Filter.
+        /// </summary>
+        public static string contextMenu_ClearFilter {
+            get {
+                return ResourceManager.GetString("contextMenu_ClearFilter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Choose Columns.
+        /// </summary>
+        public static string contextMenu_ColumnChooser {
+            get {
+                return ResourceManager.GetString("contextMenu_ColumnChooser", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Copy.
         /// </summary>
         public static string contextMenu_Copy {

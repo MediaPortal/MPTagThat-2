@@ -1574,4 +1574,13 @@ To change the order of the ratings drag the rows.</value>
   <data name="treeView_ScanSubfolders" xml:space="preserve">
     <value>Scan Subfolders</value>
   </data>
+  <data name="contextMenu_ClearAllFilters" xml:space="preserve">
+    <value>Clear All Filters</value>
+  </data>
+  <data name="contextMenu_ClearFilter" xml:space="preserve">
+    <value>Clear Filter</value>
+  </data>
+  <data name="contextMenu_ColumnChooser" xml:space="preserve">
+    <value>Choose Columns</value>
+  </data>
 </root>

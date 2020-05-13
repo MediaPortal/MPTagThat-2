@@ -60,7 +60,7 @@ using MessageBox = System.Windows.MessageBox;
 
 namespace MPTagThat.SongGrid.ViewModels
 {
-  class SongGridViewModel : BindableBase
+  public class SongGridViewModel : BindableBase
   {
     #region Variables
 
@@ -72,8 +72,6 @@ namespace MPTagThat.SongGrid.ViewModels
     private readonly SongGridViewColumns _gridColumns;
 
     private string _selectedFolder;
-    private string[] _filterFileExtensions;
-    private string _filterFileMask = "*.*";
 
     private List<string> _nonMusicFiles = new List<string>();
     private bool _progressCancelled;
@@ -108,6 +106,9 @@ namespace MPTagThat.SongGrid.ViewModels
       ContextMenuDeleteCommand = new BaseCommand(ContextMenuDelete);
       ContextMenuSelectAllCommand = new BaseCommand(ContextMenuSelectAll);
       ContextMenuGoogleSearchCommand = new BaseCommand(ContextMenuGoogleSearch);
+      ContextMenuClearFilterCommand = new BaseCommand(ContextMenuClearFilter);
+      ContextMenuClearAllFiltersCommand = new BaseCommand(ContextMenuClearAllFilters);
+      ContextMenuColumnChooserCommand = new BaseCommand(ContextMenuColumnChooser);
 
       EventSystem.Subscribe<GenericEvent>(OnMessageReceived, ThreadOption.UIThread);
       BindingOperations.EnableCollectionSynchronization(Songs, _lock);
@@ -322,9 +323,9 @@ namespace MPTagThat.SongGrid.ViewModels
     {
       if (param != null)
       {
-        var result = MessageBox.Show(LocalizeDictionary.Instance.GetLocalizedObject("MPTagThat", "Strings", "message_DeleteConfirm", LocalizeDictionary.Instance.Culture).ToString(), 
-          LocalizeDictionary.Instance.GetLocalizedObject("MPTagThat", "Strings", "message_DeleteConfirmHeader", LocalizeDictionary.Instance.Culture).ToString(), 
-          MessageBoxButton.OKCancel, 
+        var result = MessageBox.Show(LocalizeDictionary.Instance.GetLocalizedObject("MPTagThat", "Strings", "message_DeleteConfirm", LocalizeDictionary.Instance.Culture).ToString(),
+          LocalizeDictionary.Instance.GetLocalizedObject("MPTagThat", "Strings", "message_DeleteConfirmHeader", LocalizeDictionary.Instance.Culture).ToString(),
+          MessageBoxButton.OKCancel,
           MessageBoxImage.Question);
 
         if (result == MessageBoxResult.Cancel)
@@ -338,7 +339,7 @@ namespace MPTagThat.SongGrid.ViewModels
           try
           {
             log.Info($"Deleting file {song.FullFileName}");
-            
+
             FileSystem.DeleteFile(song.FullFileName, UIOption.OnlyErrorDialogs, RecycleOption.SendToRecycleBin,
               UICancelOption.ThrowException);
 
@@ -381,11 +382,53 @@ namespace MPTagThat.SongGrid.ViewModels
         {
           var songString = songs[0].Artist + " " + songs[0].Album;
           log.Info($"Looking up Cover for {songString} on Google");
-          
+
           songString = songString.Replace(" ", "+");
           var url = "https://www.google.com/search?tbm=isch&q=" + songString;
           System.Diagnostics.Process.Start(url);
         }
+      }
+    }
+
+    /// <summary>
+    /// Clear the Filter of the selected Column
+    /// </summary>
+    public ICommand ContextMenuClearFilterCommand { get; }
+
+    private void ContextMenuClearFilter(object param)
+    {
+      if (param is GridColumnContextMenuInfo)
+      {
+        var grid = (param as GridContextMenuInfo).DataGrid;
+        var column = (param as GridColumnContextMenuInfo).Column;
+        grid.ClearFilter(column);
+      }
+    }
+
+    /// <summary>
+    /// Clear all Filters in the Grid
+    /// </summary>
+    public ICommand ContextMenuClearAllFiltersCommand { get; }
+
+    private void ContextMenuClearAllFilters(object param)
+    {
+      if (param is GridColumnContextMenuInfo)
+      {
+        var grid = (param as GridContextMenuInfo).DataGrid;
+        grid.ClearFilters();
+      }
+    }
+
+    /// <summary>
+    /// Invoke the column chooser dialog
+    /// </summary>
+    public ICommand ContextMenuColumnChooserCommand { get; }
+
+    private void ContextMenuColumnChooser(object param)
+    {
+      if (param is GridColumnContextMenuInfo)
+      {
+
       }
     }
 
@@ -532,14 +575,7 @@ namespace MPTagThat.SongGrid.ViewModels
              if (!Directory.Exists(_selectedFolder))
                return;
 
-           // Get File Filter Settings
-           _filterFileExtensions = new string[] { "*.*" };
-           //_filterFileExtensions = _main.TreeView.ActiveFilter.FileFilter.Split('|');
-           //_filterFileMask = _main.TreeView.ActiveFilter.FileMask.Trim() == ""
-           //                    ? " * "
-           //                    : _main.TreeView.ActiveFilter.FileMask.Trim();
-
-           int count = 1;
+             int count = 1;
              int nonMusicCount = 0;
              StatusBarEvent msg = new StatusBarEvent { CurrentFolder = _selectedFolder, CurrentProgress = -1 };
 
@@ -561,13 +597,11 @@ namespace MPTagThat.SongGrid.ViewModels
                    {
                      msg.CurrentFile = fi.FullName;
                      log.Trace($"Retrieving file: {fi.FullName}");
-                   // Read the Tag
-                   var song = Song.Create(fi.FullName);
+                     // Read the Tag
+                     var song = Song.Create(fi.FullName);
                      if (song != null)
                      {
-                     //if (ApplyTagFilter(track))
-                     //{
-                     if (_options.MainSettings.MP3Validate && song.IsMp3)
+                       if (_options.MainSettings.MP3Validate && song.IsMp3)
                        {
                          log.Info($"Validating file {song.FullFileName}");
                          song.MP3ValidationError = Mp3Val.ValidateMp3File(song.FullFileName, out var strError);
@@ -578,8 +612,7 @@ namespace MPTagThat.SongGrid.ViewModels
                        count++;
                        msg.NumberOfFiles = count;
                        EventSystem.Publish(msg);
-                     //}
-                   }
+                     }
                    }
                    else
                    {
@@ -610,8 +643,8 @@ namespace MPTagThat.SongGrid.ViewModels
                log.Error("Folderscan: Running out of memory. Scanning aborted.");
              }
 
-           // Commit changes to SongTemp, in case we have switched to DB Mode
-           _options.Songlist.CommitDatabaseChanges();
+             // Commit changes to SongTemp, in case we have switched to DB Mode
+             _options.Songlist.CommitDatabaseChanges();
 
              msg.CurrentProgress = 0;
              msg.CurrentFile = "";
@@ -626,15 +659,6 @@ namespace MPTagThat.SongGrid.ViewModels
              EventSystem.Publish(evt);
 
              IsBusy = false;
-
-           // Display Status Information
-           try
-             {
-             //_main.ToolStripStatusFiles.Text = string.Format(localisation.ToString("main", "toolStripLabelFiles"), count, 0);
-           }
-             catch (InvalidOperationException)
-             {
-             }
 
              _folderScanInProgress = false;
              log.Trace("<<<");
@@ -673,14 +697,10 @@ namespace MPTagThat.SongGrid.ViewModels
               }
             }
 
-            foreach (string extension in _filterFileExtensions)
+            FileInfo[] newFiles = dir.GetFiles();
+            foreach (FileInfo file in newFiles)
             {
-              string searchFilter = string.Format("{0}.{1}", _filterFileMask, extension);
-              FileInfo[] newFiles = dir.GetFiles(searchFilter);
-              foreach (FileInfo file in newFiles)
-              {
-                files.Enqueue(file);
-              }
+              files.Enqueue(file);
             }
           }
         }

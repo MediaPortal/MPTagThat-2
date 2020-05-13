@@ -166,6 +166,7 @@
   <ItemGroup>
     <Content Include="mp3val.exe" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\..\packages\MPTagThat.Mp3Val.0.1.8\build\MPTagThat.Mp3Val.targets" Condition="Exists('..\..\packages\MPTagThat.Mp3Val.0.1.8\build\MPTagThat.Mp3Val.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
