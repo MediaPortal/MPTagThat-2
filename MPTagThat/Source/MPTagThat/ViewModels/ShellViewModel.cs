@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Globalization;
 using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 using System.Xml;
 using CommonServiceLocator;
@@ -18,6 +20,8 @@ using Prism.Events;
 using Prism.Mvvm;
 using Prism.Regions;
 using Syncfusion.SfSkinManager;
+using Syncfusion.Windows.Shared;
+using Syncfusion.Windows.Tools.Controls;
 using WPFLocalizeExtension.Engine;
 using Action = MPTagThat.Core.Common.Action;
 using Point = System.Drawing.Point;
@@ -33,9 +37,16 @@ namespace MPTagThat.ViewModels
     private readonly NLogLogger log;
     private Options _options;
 
+    private Dictionary<string, DockState> _savedDockStates = new Dictionary<string, DockState>();
+
     #endregion
 
     #region Properties
+
+    /// <summary>
+    /// Handle to the Docking Manager in the View
+    /// </summary>
+    public DockingManager MainDockingManager { get; set; }
 
     /// <summary>
     /// The Binding for handling the Keypress
@@ -187,6 +198,8 @@ namespace MPTagThat.ViewModels
 
       EventSystem.Subscribe<StatusBarEvent>(UpdateStatusBar);
       EventSystem.Subscribe<ProgressBarEvent>(UpdateProgressBar);
+      EventSystem.Subscribe<GenericEvent>(OnMessageReceived);
+
       SfSkinManager.ApplyStylesOnApplication = true;
 
       WindowCloseCommand = new BaseCommand(WindowClose);
@@ -335,9 +348,89 @@ namespace MPTagThat.ViewModels
       }
     }
 
+    /// <summary>
+    /// Hide the standard Tag based layout, when other Tabs are selected
+    /// </summary>
+    private void HideStandardLayout()
+    {
+      _savedDockStates.Clear();
+      foreach (ContentControl child in MainDockingManager.Children)
+      {
+        _savedDockStates.Add(child.Name, DockingManager.GetState(child));
+        switch (child.Name.ToLower())
+        {
+          case "treeview":
+          case "miscfiles":
+          case "tagedit":
+            MainDockingManager.ExecuteClose(child);
+            break;
+        }
+      }
+    }
+
+    /// <summary>
+    /// Restores the standard layout, when switching back to Tags Tab
+    /// </summary>
+    private void RestoreStandardLayout()
+    {
+      foreach (ContentControl child in MainDockingManager.Children)
+      {
+        var state = _savedDockStates[child.Name];
+        switch (child.Name.ToLower())
+        {
+          case "treeview":
+          case "miscfiles":
+          case "tagedit":
+            MainDockingManager.ExecuteRestore(child, state);
+            DockingManager.SetState(child, state);
+            break;
+        }
+      }
+    }
+
     #endregion
 
     #region Event Handling
+
+    /// <summary>
+    /// General Message Handler
+    /// </summary>
+    /// <param name="msg"></param>
+    private void OnMessageReceived(GenericEvent msg)
+    {
+      switch (msg.Action.ToLower())
+      {
+        case "ribbontabselected":
+          var tab = (string)msg.MessageData["ribbontab"];
+          switch (tab)
+          {
+            case "TabTag":
+              RestoreStandardLayout();
+              break;
+
+            case "TabConvert":
+              HideStandardLayout();
+              break;
+          }
+          break;
+
+        case "resetdockstate":
+          MainDockingManager.ResetState();
+          break;
+
+        case "deletedockstate":
+          if (File.Exists($"{_options.ConfigDir}\\DockingLayout.xml"))
+          {
+            File.Delete($"{_options.ConfigDir}\\DockingLayout.xml");
+          }
+          if (File.Exists($"{_options.ConfigDir}\\Default_DockingLayout.xml"))
+          {
+            BinaryFormatter formatter = new BinaryFormatter();
+            MainDockingManager.LoadDockState(formatter, StorageFormat.Xml, $"{_options.ConfigDir}\\Default_DockingLayout.xml");
+          }
+          break;
+      }
+    }
 
     /// <summary>
     /// Update the status bar with information from the StatusBar Event

@@ -43,6 +43,7 @@ using Prism.Regions;
 using Syncfusion.SfSkinManager;
 using Syncfusion.Windows.Shared;
 using Syncfusion.Windows.Tools;
+using Syncfusion.Windows.Tools.Controls;
 using Action = MPTagThat.Core.Common.Action;
 
 #endregion
@@ -63,6 +64,7 @@ namespace MPTagThat.Ribbon.ViewModels
 
     public RibbonViewModel(IRegionManager regionManager)
     {
+      _regionManager = regionManager;
       log = (ServiceLocator.Current.GetInstance(typeof(ILogger)) as ILogger)?.GetLogger;
       _options = (ServiceLocator.Current.GetInstance(typeof(ISettingsManager)) as ISettingsManager)?.GetOptions;
 
@@ -83,6 +85,24 @@ namespace MPTagThat.Ribbon.ViewModels
     #endregion
 
     #region Properties
+
+    private object _selectedRibbonTab;
+
+    public object SelectedRibbonTab
+    {
+      get => _selectedRibbonTab;
+      set
+      {
+        SetProperty(ref _selectedRibbonTab, value);
+        var tab = (value as RibbonTab)?.Name;
+        GenericEvent evt = new GenericEvent
+        {
+          Action = "ribbontabselected"
+        };
+        evt.MessageData.Add("ribbontab", tab);
+        EventSystem.Publish(evt);
+      }
+    }
 
     /// <summary>
     /// The Binding for the Scripts

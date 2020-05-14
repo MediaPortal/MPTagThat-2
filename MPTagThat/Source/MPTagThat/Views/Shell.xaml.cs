@@ -10,6 +10,7 @@ using System.Windows;
 using System.Windows.Media;
 using MPTagThat.Core.Services.Logging;
 using MPTagThat.Core.Services.Settings.Setting;
+using MPTagThat.ViewModels;
 
 namespace MPTagThat.Views
 {
@@ -27,7 +28,12 @@ namespace MPTagThat.Views
     public Shell()
     {
       InitializeComponent();
-
+      var vm = (ShellViewModel) DataContext;
+      if (vm != null)
+      {
+        vm.MainDockingManager = this.MainDockingManager;
+      }
+      
       var stateFile = _options.ConfigDir + "\\DockingLayout.xml";
 
       if (File.Exists(stateFile))
@@ -35,33 +41,9 @@ namespace MPTagThat.Views
         BinaryFormatter formatter = new BinaryFormatter();
         MainDockingManager.LoadDockState(formatter, StorageFormat.Xml, stateFile);
       }
-
-      EventSystem.Subscribe<GenericEvent>(OnMessageReceived);
     }
 
     #region Event Handling
-
-    private void OnMessageReceived(GenericEvent msg)
-    {
-      switch (msg.Action.ToLower())
-      {
-        case "resetdockstate":
-          MainDockingManager.ResetState();
-          break;
-
-        case "deletedockstate":
-          if (File.Exists($"{_options.ConfigDir}\\DockingLayout.xml"))
-          {
-            File.Delete($"{_options.ConfigDir}\\DockingLayout.xml");
-          }
-          if (File.Exists($"{_options.ConfigDir}\\Default_DockingLayout.xml"))
-          {
-            BinaryFormatter formatter = new BinaryFormatter();
-            MainDockingManager.LoadDockState(formatter, StorageFormat.Xml, $"{_options.ConfigDir}\\Default_DockingLayout.xml");
-          }
-          break;
-      }
-    }
 
     private void Window_Loaded(object sender, RoutedEventArgs e)
     {

@@ -113,7 +113,13 @@
     <Grid.ColumnDefinitions>
       <ColumnDefinition Width="*"/>
     </Grid.ColumnDefinitions>
-    <syncfusion:Ribbon x:Name="Ribbon" Margin="0" Grid.ColumnSpan="2" AutoPersist="True" BackStageHeader="" RibbonState="Normal">
+    <syncfusion:Ribbon x:Name="Ribbon" Margin="0" 
+                       Grid.ColumnSpan="2" 
+                       AutoPersist="True" 
+                       BackStageHeader="" 
+                       RibbonState="Normal"
+                       SelectedItem="{Binding SelectedRibbonTab}" >
+
       <syncfusion:RibbonTab x:Name="TabTag" Caption="{lex:Loc ribbon_TagTab}"  IsChecked="True">
 
         <syncfusion:RibbonBar Name="RibbonBarRetrieveTags" Header="{lex:Loc ribbon_RetrieveTags}">
@@ -460,9 +466,11 @@
         </syncfusion:RibbonBar>
       </syncfusion:RibbonTab>
 
+      <syncfusion:RibbonTab x:Name="TabConvert" Caption="{lex:Loc ribbon_ConvertTab}"  IsChecked="False"/>
+
       <!-- Disabled until implemented
       <syncfusion:RibbonTab x:Name="TabRip" Caption="{lex:Loc ribbon_RipTab}"  IsChecked="False"/>
-      <syncfusion:RibbonTab x:Name="TabConvert" Caption="{lex:Loc ribbon_ConvertTab}"  IsChecked="False"/>
+      
       <syncfusion:RibbonTab x:Name="TabBurn" Caption="{lex:Loc ribbon_BurnTab}"  IsChecked="False"/>
       <syncfusion:RibbonTab x:Name="TabDatabase" Caption="{lex:Loc ribbon_DatabaseTab}"  IsChecked="False"/>
       -->
