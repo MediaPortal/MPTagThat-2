@@ -46,7 +46,7 @@
                            AllowFiltering="True"
                            FilterRowPosition="FixedTop"
                            AllowResizingColumns="True" 
-                           AllowDraggingColumns="True" 
+                           AllowDraggingColumns="True"
                            AutoGenerateColumns="False"
                            ShowRowHeader="False" 
                            AllowEditing="True" 
@@ -66,9 +66,24 @@
 
       <syncfusion:SfDataGrid.HeaderContextMenu>
         <ContextMenu>
+          <MenuItem Command="{Binding Path=DataGrid.DataContext.ContextMenuClearSortCommand}"
+                    CommandParameter="{Binding}"
+                    Header="{lex:Loc contextMenu_ClearSort}">
+            <MenuItem.Icon>
+              <Image Source="pack://application:,,,/MPTagThat;component/Resources/Images/ContextMenu_ClearSort.png" ></Image>
+            </MenuItem.Icon>
+          </MenuItem>
+          <MenuItem Command="{Binding Path=DataGrid.DataContext.ContextMenuClearAllSortCommand}"
+                    CommandParameter="{Binding}"
+                    Header="{lex:Loc contextMenu_ClearAllSort}">
+            <MenuItem.Icon>
+              <Image Source="pack://application:,,,/MPTagThat;component/Resources/Images/ContextMenu_ClearAllSort.png" ></Image>
+            </MenuItem.Icon>
+          </MenuItem>
+          <Separator/>
           <MenuItem Command="{Binding Path=DataGrid.DataContext.ContextMenuClearFilterCommand}"
                     CommandParameter="{Binding}"
-                  Header="{lex:Loc contextMenu_ClearFilter}">
+                    Header="{lex:Loc contextMenu_ClearFilter}">
             <MenuItem.Icon>
               <Image Source="pack://application:,,,/MPTagThat;component/Resources/Images/ContextMenu_ClearFilter.png" ></Image>
             </MenuItem.Icon>
@@ -138,10 +153,6 @@
             </MenuItem.Icon>
           </MenuItem>
           <Separator/>
-          <MenuItem Command="{Binding ContextMenuClearFilterCommand}"
-                    CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}}"
-                    Header="Clear Filter">
-          </MenuItem>
         </ContextMenu>
       </syncfusion:SfDataGrid.ContextMenu>
 

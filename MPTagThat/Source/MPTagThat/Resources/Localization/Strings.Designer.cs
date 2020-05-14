@@ -304,11 +304,29 @@ namespace MPTagThat.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Clear All Sort.
+        /// </summary>
+        public static string contextMenu_ClearAllSort {
+            get {
+                return ResourceManager.GetString("contextMenu_ClearAllSort", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Clear Filter.
         /// </summary>
         public static string contextMenu_ClearFilter {
             get {
                 return ResourceManager.GetString("contextMenu_ClearFilter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Clear Sort.
+        /// </summary>
+        public static string contextMenu_ClearSort {
+            get {
+                return ResourceManager.GetString("contextMenu_ClearSort", resourceCulture);
             }
         }
         

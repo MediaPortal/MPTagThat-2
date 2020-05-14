@@ -98,66 +98,64 @@ namespace MPTagThat.SongGrid.ViewModels
 
     public SongGridViewColumns()
     {
-      _status = new GridViewColumn("Status", "image", 45, true, true, false);
-      _filename = new GridViewColumn("FileName", "text", 200, true, false, true);
-      _filepath = new GridViewColumn("FilePath", "text", 200, false, true, true); // Initially hidden
-      _track = new GridViewColumn("Track", "text", 40, true, false, false);
-      _artist = new GridViewColumn("Artist", "text", 150, true, false, true);
-      _albumartist = new GridViewColumn("AlbumArtist", "text", 150, true, false, true);
-      _album = new GridViewColumn("Album", "text", 150, true, false, true);
-      _title = new GridViewColumn("Title", "text", 250, true, false, true);
-      _year = new GridViewColumn("Year", "number", 40, true, false, true);
-      _genre = new GridViewColumn("Genre", "text", 100, true, false, true);
-      _creationtime = new GridViewColumn("CreationTime", "text", 100, true, true, true);
-      _lastwritetime = new GridViewColumn("LastWriteTime", "text", 100, true, true, true);
-      _tagtype = new GridViewColumn("TagType", "text", 100, true, true, true);
-      _disc = new GridViewColumn("Disc", "text", 45, true, false, true);
-      _bpm = new GridViewColumn("BPM", "number", 40, true, false, true);
-      _rating = new GridViewColumn("Rating", "rating", 90, true, false, true);
-      _replayGainTrack = new GridViewColumn("ReplayGainTrack", "text", 100, true, true, true);
-      _replayGainTrackPeak = new GridViewColumn("ReplayGainTrackPeak", "text", 100, true, true, true);
-      _replayGainAlbum = new GridViewColumn("ReplayGainAlbum", "text", 100, true, true, true);
-      _replayGainAlbumPeak = new GridViewColumn("ReplayGainAlbumPeak", "text", 100, true, true, true);
-      _comment = new GridViewColumn("Comment", "text", 200, true, false, true);
-      _composer = new GridViewColumn("Composer", "text", 150, true, false, true);
-      _conductor = new GridViewColumn("Conductor", "text", 150, true, false, true);
-      _numpics = new GridViewColumn("NumPics", "number", 40, true, false, false);
-      _duration = new GridViewColumn("Duration", "text", 100, true, true, false);
-      _filesize = new GridViewColumn("FileSize", "text", 80, true, true, true);
-      _bitrate = new GridViewColumn("BitRate", "text", 50, true, true, true);
-      _samplerate = new GridViewColumn("SampleRate", "text", 70, true, true, true);
-      _channels = new GridViewColumn("Channels", "text", 40, true, true, true);
-      _version = new GridViewColumn("Version", "text", 100, true, true, true);
+      _status = new GridViewColumn("Status", "image", 45, true, true, false, 0);
+      _filename = new GridViewColumn("FileName", "text", 200, true, false, true, 1);
+      _filepath = new GridViewColumn("FilePath", "text", 200, false, true, true, 2); // Initially hidden
+      _track = new GridViewColumn("Track", "text", 40, true, false, false, 3);
+      _artist = new GridViewColumn("Artist", "text", 150, true, false, true, 4);
+      _albumartist = new GridViewColumn("AlbumArtist", "text", 150, true, false, true, 5);
+      _album = new GridViewColumn("Album", "text", 150, true, false, true, 6);
+      _title = new GridViewColumn("Title", "text", 250, true, false, true, 7);
+      _year = new GridViewColumn("Year", "number", 40, true, false, true, 8);
+      _genre = new GridViewColumn("Genre", "text", 100, true, false, true, 9);
+      _disc = new GridViewColumn("Disc", "text", 45, true, false, true, 10);
+      _bpm = new GridViewColumn("BPM", "number", 40, true, false, true, 12);
+      _rating = new GridViewColumn("Rating", "rating", 90, true, false, true, 11);
+      _replayGainTrack = new GridViewColumn("ReplayGainTrack", "text", 100, true, true, true, 17);
+      _replayGainTrackPeak = new GridViewColumn("ReplayGainTrackPeak", "text", 100, true, true, true, 18);
+      _replayGainAlbum = new GridViewColumn("ReplayGainAlbum", "text", 100, true, true, true, 19);
+      _replayGainAlbumPeak = new GridViewColumn("ReplayGainAlbumPeak", "text", 100, true, true, true, 20);
+      _comment = new GridViewColumn("Comment", "text", 200, true, false, true, 13);
+      _composer = new GridViewColumn("Composer", "text", 150, true, false, true, 14);
+      _conductor = new GridViewColumn("Conductor", "text", 150, true, false, true, 15);
+      _numpics = new GridViewColumn("NumPics", "number", 40, true, false, false, 16);
+      _tagtype = new GridViewColumn("TagType", "text", 100, true, true, true, 47);
+      _duration = new GridViewColumn("Duration", "text", 100, true, true, false, 48);
+      _filesize = new GridViewColumn("FileSize", "text", 80, true, true, true, 49);
+      _bitrate = new GridViewColumn("BitRate", "text", 50, true, true, true, 50);
+      _samplerate = new GridViewColumn("SampleRate", "text", 70, true, true, true, 51);
+      _channels = new GridViewColumn("Channels", "text", 40, true, true, true, 52);
+      _version = new GridViewColumn("Version", "text", 100, true, true, true, 53);
+      _creationtime = new GridViewColumn("CreationTime", "text", 100, true, true, true, 54);
+      _lastwritetime = new GridViewColumn("LastWriteTime", "text", 100, true, true, true, 55);
 
       // Initially Hidden Columns
-      _artistSortName = new GridViewColumn("ArtistSortName", "text", 100, false, false, true);
-      _albumSortName = new GridViewColumn("AlbumSortName", "text", 100, false, false, true);
-      _commercialInformation = new GridViewColumn("CommercialInformation", "text", 100, false, false, true);
-      _copyright = new GridViewColumn("Copyright", "text", 100, false, false, true);
-      _copyrightInformation = new GridViewColumn("CopyrightInformation", "text", 100, false, false, true);
-      _encodedBy = new GridViewColumn("EncodedBy", "text", 100, false, false, true);
-      _interpreter = new GridViewColumn("Interpreter", "text", 100, false, false, true);
-      _grouping = new GridViewColumn("Grouping", "text", 100, false, false, true);
-      _lyrics = new GridViewColumn("Lyrics", "text", 100, false, false, true);
-      _mediaType = new GridViewColumn("MediaType", "text", 100, false, false, true);
-      _officialAudioFileInformation = new GridViewColumn("OfficialAudioFileInformation", "text", 100, false, false, true);
-      _officialArtistInformation = new GridViewColumn("OfficialArtistInformation", "text", 100, false, false, true);
-      _officialAudioSourceInformation = new GridViewColumn("OfficialAudioSourceInformation", "text", 100, false, false,
-                                                           true);
-      _officialInternetRadioInformation = new GridViewColumn("OfficialInternetRadioInformation", "text", 100, false,
-                                                             false, true);
-      _officialPaymentInformation = new GridViewColumn("OfficialPaymentInformation", "text", 100, false, false, true);
-      _officialPublisherInformation = new GridViewColumn("OfficialPublisherInformation", "text", 100, false, false, true);
-      _originalAlbum = new GridViewColumn("OriginalAlbum", "text", 100, false, false, true);
-      _originalFileName = new GridViewColumn("OriginalFileName", "text", 100, false, false, true);
-      _originalLyricsWriter = new GridViewColumn("OriginalLyricsWriter", "text", 100, false, false, true);
-      _originalArtist = new GridViewColumn("OriginalArtist", "text", 100, false, false, true);
-      _originalOwner = new GridViewColumn("OriginalOwner", "text", 100, false, false, true);
-      _originalRelease = new GridViewColumn("OriginalRelease", "text", 100, false, false, true);
-      _publisher = new GridViewColumn("Publisher", "text", 100, false, false, true);
-      _subTitle = new GridViewColumn("SubTitle", "text", 100, false, false, true);
-      _textWriter = new GridViewColumn("TextWriter", "text", 100, false, false, true);
-      _titleSortName = new GridViewColumn("TitleSortName", "text", 100, false, false, true);
+      _artistSortName = new GridViewColumn("ArtistSortName", "text", 100, false, false, true, 21);
+      _albumSortName = new GridViewColumn("AlbumSortName", "text", 100, false, false, true, 22);
+      _commercialInformation = new GridViewColumn("CommercialInformation", "text", 100, false, false, true, 23);
+      _copyright = new GridViewColumn("Copyright", "text", 100, false, false, true, 24);
+      _copyrightInformation = new GridViewColumn("CopyrightInformation", "text", 100, false, false, true, 25);
+      _encodedBy = new GridViewColumn("EncodedBy", "text", 100, false, false, true, 26);
+      _interpreter = new GridViewColumn("Interpreter", "text", 100, false, false, true, 27);
+      _grouping = new GridViewColumn("Grouping", "text", 100, false, false, true, 28);
+      _lyrics = new GridViewColumn("Lyrics", "text", 100, false, false, true, 29);
+      _mediaType = new GridViewColumn("MediaType", "text", 100, false, false, true, 30);
+      _officialAudioFileInformation = new GridViewColumn("OfficialAudioFileInformation", "text", 100, false, false, true, 31);
+      _officialArtistInformation = new GridViewColumn("OfficialArtistInformation", "text", 100, false, false, true, 32);
+      _officialAudioSourceInformation = new GridViewColumn("OfficialAudioSourceInformation", "text", 100, false, false, true, 33);
+      _officialInternetRadioInformation = new GridViewColumn("OfficialInternetRadioInformation", "text", 100, false, false, true, 34);
+      _officialPaymentInformation = new GridViewColumn("OfficialPaymentInformation", "text", 100, false, false, true, 35);
+      _officialPublisherInformation = new GridViewColumn("OfficialPublisherInformation", "text", 100, false, false, true, 36);
+      _originalAlbum = new GridViewColumn("OriginalAlbum", "text", 100, false, false, true, 37);
+      _originalFileName = new GridViewColumn("OriginalFileName", "text", 100, false, false, true, 38);
+      _originalLyricsWriter = new GridViewColumn("OriginalLyricsWriter", "text", 100, false, false, true, 39);
+      _originalArtist = new GridViewColumn("OriginalArtist", "text", 100, false, false, true, 40);
+      _originalOwner = new GridViewColumn("OriginalOwner", "text", 100, false, false, true, 41);
+      _originalRelease = new GridViewColumn("OriginalRelease", "text", 100, false, false, true, 42);
+      _publisher = new GridViewColumn("Publisher", "text", 100, false, false, true,43);
+      _subTitle = new GridViewColumn("SubTitle", "text", 100, false, false, true, 44);
+      _textWriter = new GridViewColumn("TextWriter", "text", 100, false, false, true,45);
+      _titleSortName = new GridViewColumn("TitleSortName", "text", 100, false, false, true,46);
 
       LoadSettings();
     }
@@ -197,11 +195,6 @@ namespace MPTagThat.SongGrid.ViewModels
       (ServiceLocator.Current.GetInstance(typeof(ISettingsManager)) as ISettingsManager).Save(_settings);
     }
 
-    public void SaveColumnSettings(GridColumn column, int colIndex)
-    {
-      _settings.Columns[colIndex].Width = (int)column.Width;
-      _settings.Columns[colIndex].Display = !column.IsHidden;
-    }
 
     private List<GridViewColumn> SetDefaultColumns()
     {

@@ -18,6 +18,7 @@
 
 #region
 
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using MPTagThat.Core.Common;
 using MPTagThat.Core.Services.Settings;
@@ -29,7 +30,7 @@ namespace MPTagThat.SongGrid.ViewModels
   public class SongGridViewColumnSettings : INamedSettings
   {
     [Setting(SettingScope.User, "")]
-    public Collection<GridViewColumn> Columns { get; set; } = new Collection<GridViewColumn>();
+    public List<GridViewColumn> Columns { get; set; } = new List<GridViewColumn>();
 
     #region INamedSettings Members
 

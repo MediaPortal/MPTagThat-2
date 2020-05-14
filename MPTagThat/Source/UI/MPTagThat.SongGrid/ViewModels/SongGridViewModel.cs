@@ -110,6 +110,8 @@ namespace MPTagThat.SongGrid.ViewModels
       ContextMenuClearFilterCommand = new BaseCommand(ContextMenuClearFilter);
       ContextMenuClearAllFiltersCommand = new BaseCommand(ContextMenuClearAllFilters);
       ContextMenuColumnChooserCommand = new BaseCommand(ContextMenuColumnChooser);
+      ContextMenuClearSortCommand = new BaseCommand(ContextMenuClearSort);
+      ContextMenuClearAllSortCommand = new BaseCommand(ContextMenuClearAllSort);
 
       EventSystem.Subscribe<GenericEvent>(OnMessageReceived, ThreadOption.UIThread);
       BindingOperations.EnableCollectionSynchronization(Songs, _lock);
@@ -392,6 +394,39 @@ namespace MPTagThat.SongGrid.ViewModels
     }
 
     /// <summary>
+    /// Clear the Sort of the selected Column
+    /// </summary>
+    public ICommand ContextMenuClearSortCommand { get; }
+
+    private void ContextMenuClearSort(object param)
+    {
+      if (param is GridColumnContextMenuInfo)
+      {
+        var grid = (param as GridContextMenuInfo).DataGrid;
+        var column = (param as GridColumnContextMenuInfo).Column;
+        var sortColumnDescription = grid.SortColumnDescriptions.FirstOrDefault(col => col.ColumnName == column.MappingName);
+        if (sortColumnDescription!=null)
+        {  
+          grid.SortColumnDescriptions.Remove(sortColumnDescription);
+        }
+      }
+    }
+
+    /// <summary>
+    /// Clear the Sort in the Grid
+    /// </summary>
+    public ICommand ContextMenuClearAllSortCommand { get; }
+
+    private void ContextMenuClearAllSort(object param)
+    {
+      if (param is GridColumnContextMenuInfo)
+      {
+        var grid = (param as GridContextMenuInfo).DataGrid;
+        grid.SortColumnDescriptions.Clear();
+      }
+    }
+
+    /// <summary>
     /// Clear the Filter of the selected Column
     /// </summary>
     public ICommand ContextMenuClearFilterCommand { get; }
@@ -458,6 +493,9 @@ namespace MPTagThat.SongGrid.ViewModels
     {
       log.Trace($"SongGrid: Creating Columns");
 
+      // Sort the list based on the Display Index Value
+      _gridColumns.Settings.Columns.Sort((x, y) => x.DisplayIndex.CompareTo(y.DisplayIndex));
+
       DataGridColumns = new Columns();
       // Now create the columns 
       foreach (GridViewColumn column in _gridColumns.Settings.Columns)
@@ -471,11 +509,14 @@ namespace MPTagThat.SongGrid.ViewModels
     /// </summary>
     private void SaveSettings()
     {
-      // Save the Width of the Columns
+      // Save the Column Settings
       int i = 0;
       foreach (var column in DataGridColumns)
       {
-        _gridColumns.SaveColumnSettings(column, i);
+        var col = _gridColumns.Settings.Columns.Find(x => x.Name == column.MappingName);
+        col.Width = (int)column.Width;
+        col.Display = !column.IsHidden;
+        col.DisplayIndex = i;
         i++;
       }
       _gridColumns.SaveSettings();

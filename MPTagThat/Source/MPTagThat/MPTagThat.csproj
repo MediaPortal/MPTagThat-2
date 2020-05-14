@@ -291,6 +291,8 @@
     <Resource Include="Resources\Images\ContextMenu_ClearFilter.png" />
     <Resource Include="Resources\Images\ContextMenu_ClearAllFilters.png" />
     <Resource Include="Resources\Images\ContextMenu_ColumnChooser.png" />
+    <Resource Include="Resources\Images\ContextMenu_ClearAllSort.png" />
+    <Resource Include="Resources\Images\ContextMenu_ClearSort.png" />
     <Content Include="x64\bass.dll" />
     <Content Include="x64\bassasio.dll" />
     <Content Include="x64\basscd.dll" />

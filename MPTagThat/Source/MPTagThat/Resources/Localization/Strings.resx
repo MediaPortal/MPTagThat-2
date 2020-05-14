@@ -1579,4 +1579,10 @@ To change the order of the ratings drag the rows.</value>
     <value>Choose Columns</value>
     <comment>The Header for te column chooser dialog</comment>
   </data>
+  <data name="contextMenu_ClearAllSort" xml:space="preserve">
+    <value>Clear All Sort</value>
+  </data>
+  <data name="contextMenu_ClearSort" xml:space="preserve">
+    <value>Clear Sort</value>
+  </data>
 </root>
