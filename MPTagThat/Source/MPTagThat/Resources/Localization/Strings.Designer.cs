@@ -286,6 +286,15 @@ namespace MPTagThat.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Choose Columns.
+        /// </summary>
+        public static string columnChooser_Heading {
+            get {
+                return ResourceManager.GetString("columnChooser_Heading", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Clear All Filters.
         /// </summary>
         public static string contextMenu_ClearAllFilters {

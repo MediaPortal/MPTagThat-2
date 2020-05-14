@@ -23,6 +23,7 @@ using CommonServiceLocator;
 using MPTagThat.Core.Common;
 using MPTagThat.Core.Services.Logging;
 using MPTagThat.Core.Services.Settings;
+using Syncfusion.UI.Xaml.Grid;
 
 #endregion
 
@@ -188,39 +189,6 @@ namespace MPTagThat.SongGrid.ViewModels
         }
         (ServiceLocator.Current.GetInstance(typeof(ISettingsManager)) as ISettingsManager).Save(_settings);
       }
-      else
-      {
-        // Add / Reorder Columns that have been added after Release, so that the settings don't need to be deleted
-
-        // Reorder the Status field
-        if (_settings.Columns[0].Name != "Status")
-        {
-          // We still have an old setting with Status at position 1
-          _settings.Columns.RemoveAt(1);
-          _settings.Columns.Insert(0, _status);
-        }
-
-        if (_settings.Columns[0].Name == "Status" && _settings.Columns[0].Type != "image")
-        {
-          _settings.Columns[0].Type = "image";
-        }
-
-        // FilePath should be column index #2
-        if (_settings.Columns[2].Name != "FilePath")
-        {
-          _settings.Columns.Insert(2, _filepath);
-        }
-
-        // Replaygain Columns
-        if (_settings.Columns[17].Name != "ReplayGainTrack")
-        {
-          _settings.Columns.Insert(17, _replayGainTrack);
-          _settings.Columns.Insert(18, _replayGainTrackPeak);
-          _settings.Columns.Insert(19, _replayGainAlbum);
-          _settings.Columns.Insert(20, _replayGainAlbumPeak);
-        }
-
-      }
     }
 
     public void SaveSettings()
@@ -229,14 +197,11 @@ namespace MPTagThat.SongGrid.ViewModels
       (ServiceLocator.Current.GetInstance(typeof(ISettingsManager)) as ISettingsManager).Save(_settings);
     }
 
-    /*
-    public void SaveColumnSettings(DataGridViewColumn column, int colIndex)
+    public void SaveColumnSettings(GridColumn column, int colIndex)
     {
-      _settings.Columns[colIndex].Width = column.Width;
-      _settings.Columns[colIndex].DisplayIndex = column.DisplayIndex;
-      _settings.Columns[colIndex].Display = column.Visible;
+      _settings.Columns[colIndex].Width = (int)column.Width;
+      _settings.Columns[colIndex].Display = !column.IsHidden;
     }
-    */
 
     private List<GridViewColumn> SetDefaultColumns()
     {

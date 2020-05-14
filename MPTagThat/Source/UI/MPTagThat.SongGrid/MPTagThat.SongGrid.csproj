@@ -130,11 +130,16 @@
     <Compile Include="Commands\Command.cs" />
     <Compile Include="Commands\CommandTypes.cs" />
     <Compile Include="Commands\SupportedCommandType.cs" />
+    <Compile Include="Models\ColumnChooserItems.cs" />
+    <Compile Include="ViewModels\CustomColumnChooserViewModel.cs" />
     <Compile Include="ViewModels\SongGridViewColumnSettings.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SongGridModule.cs" />
     <Compile Include="ViewModels\SongGridViewColumns.cs" />
     <Compile Include="ViewModels\SongGridViewModel.cs" />
+    <Compile Include="Views\CustomColumnChooser.xaml.cs">
+      <DependentUpon>CustomColumnChooser.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\SongGridView.xaml.cs">
       <DependentUpon>SongGridView.xaml</DependentUpon>
     </Compile>
@@ -144,6 +149,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Views\CustomColumnChooser.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\SongGridView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

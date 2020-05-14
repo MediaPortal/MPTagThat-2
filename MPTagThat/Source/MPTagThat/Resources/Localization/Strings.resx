@@ -1575,4 +1575,8 @@ To change the order of the ratings drag the rows.</value>
   <data name="contextMenu_ColumnChooser" xml:space="preserve">
     <value>Choose Columns</value>
   </data>
+  <data name="columnChooser_Heading" xml:space="preserve">
+    <value>Choose Columns</value>
+    <comment>The Header for te column chooser dialog</comment>
+  </data>
 </root>

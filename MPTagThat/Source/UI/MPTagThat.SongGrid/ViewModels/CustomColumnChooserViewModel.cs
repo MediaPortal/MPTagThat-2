@@ -16,27 +16,36 @@
 // along with MPTagThat. If not, see <http://www.gnu.org/licenses/>.
 #endregion
 
-using System.IO;
-using System.Windows.Controls;
-using CommonServiceLocator;
-using MPTagThat.Core.Services.Settings;
-using MPTagThat.SongGrid.ViewModels;
+#region 
 
-namespace MPTagThat.SongGrid.Views
+using System.Collections.ObjectModel;
+using System.Windows.Input;
+using MPTagThat.SongGrid.Models;
+using Prism.Mvvm;
+
+#endregion
+
+namespace MPTagThat.SongGrid.ViewModels
 {
-  /// <summary>
-  /// Interaction logic for SongGridView.xaml
-  /// </summary>
-  public partial class SongGridView : UserControl
+  public class CustomColumnChooserViewModel : BindableBase
   {
-    public SongGridView()
+    /// <summary>
+    /// Initializes a new instance of the <see cref="CustomColumnChooserViewModel"/> class.
+    /// </summary>
+    /// <param name="totalColumns">The total columns.</param>
+    public CustomColumnChooserViewModel(ObservableCollection<ColumnChooserItems> totalColumns)
     {
-      InitializeComponent();
-      var vm = (SongGridViewModel) DataContext;
-      if (vm != null)
-      {
-        vm.SongGrid = this.SongDataGrid;
-      }
+      ColumnCollection = totalColumns;
+    }
+
+    /// <summary>
+    /// Gets or sets the column collection.
+    /// </summary>
+    /// <value>The column collection.</value>
+    public ObservableCollection<ColumnChooserItems> ColumnCollection
+    {
+      get;
+      set;
     }
   }
 }

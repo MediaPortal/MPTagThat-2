@@ -16,27 +16,35 @@
 // along with MPTagThat. If not, see <http://www.gnu.org/licenses/>.
 #endregion
 
-using System.IO;
-using System.Windows.Controls;
-using CommonServiceLocator;
-using MPTagThat.Core.Services.Settings;
+#region
+
+using System.Windows;
 using MPTagThat.SongGrid.ViewModels;
+using Syncfusion.Windows.Shared;
+
+#endregion
 
 namespace MPTagThat.SongGrid.Views
 {
   /// <summary>
-  /// Interaction logic for SongGridView.xaml
+  /// Interaction logic for CustomColumnChooser.xaml
   /// </summary>
-  public partial class SongGridView : UserControl
+  public partial class CustomColumnChooser : ChromelessWindow
   {
-    public SongGridView()
+    public CustomColumnChooser(CustomColumnChooserViewModel viewModel)
     {
       InitializeComponent();
-      var vm = (SongGridViewModel) DataContext;
-      if (vm != null)
-      {
-        vm.SongGrid = this.SongDataGrid;
-      }
+      DataContext = viewModel;
+    }
+
+    private void OKButton_Click(object sender, RoutedEventArgs e)
+    {
+      this.DialogResult = true;
+    }
+
+    private void CancelButton_Click(object sender, RoutedEventArgs e)
+    {
+      this.DialogResult = false;
     }
   }
 }

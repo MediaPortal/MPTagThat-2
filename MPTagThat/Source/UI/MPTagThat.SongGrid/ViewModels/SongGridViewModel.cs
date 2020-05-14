@@ -49,6 +49,8 @@ using System.Windows;
 using System.Windows.Data;
 using MPTagThat.Core.Services.ScriptManager;
 using MPTagThat.Dialogs.ViewModels;
+using MPTagThat.SongGrid.Models;
+using MPTagThat.SongGrid.Views;
 using Action = MPTagThat.Core.Common.Action;
 using Prism.Services.Dialogs;
 using Application = System.Windows.Forms.Application;
@@ -79,7 +81,6 @@ namespace MPTagThat.SongGrid.ViewModels
     private bool _actionCopy;
 
     private readonly System.Windows.Input.Cursor _numberOnClickCursor = new System.Windows.Input.Cursor(System.Windows.Application.GetResourceStream(new Uri("pack://application:,,,/MPTagThat;component/Resources/Images/CursorNumbering.cur")).Stream);
-
 
     #endregion
 
@@ -428,7 +429,16 @@ namespace MPTagThat.SongGrid.ViewModels
     {
       if (param is GridColumnContextMenuInfo)
       {
-
+        var grid = (param as GridContextMenuInfo).DataGrid;
+        var visibleColumns = grid.Columns;
+        var totalColumns = GetColumnsDetails(visibleColumns);
+        var chooserViewModel = new CustomColumnChooserViewModel(totalColumns);
+        var columnChooserView = new CustomColumnChooser(chooserViewModel);
+        columnChooserView.Owner = System.Windows.Application.Current.MainWindow;
+        if ((bool) columnChooserView.ShowDialog())
+        {
+          ClickOKButton(chooserViewModel.ColumnCollection, grid);
+        }
       }
     }
 
@@ -454,6 +464,21 @@ namespace MPTagThat.SongGrid.ViewModels
       {
         DataGridColumns.Add(Util.FormatGridColumn(column));
       }
+    }
+
+    /// <summary>
+    ///   Save the settings
+    /// </summary>
+    private void SaveSettings()
+    {
+      // Save the Width of the Columns
+      int i = 0;
+      foreach (var column in DataGridColumns)
+      {
+        _gridColumns.SaveColumnSettings(column, i);
+        i++;
+      }
+      _gridColumns.SaveSettings();
     }
 
     /// <summary>
@@ -881,6 +906,60 @@ namespace MPTagThat.SongGrid.ViewModels
 
     #endregion
 
+    #region ColumnChooser
+
+    /// <summary>
+    /// Handle the OK Button Click
+    /// </summary>
+    /// <param name="ColumnCollection"></param>
+    /// <param name="dataGrid"></param>
+    private void ClickOKButton(ObservableCollection<ColumnChooserItems> ColumnCollection, SfDataGrid dataGrid)
+    {
+      foreach (var item in ColumnCollection)
+      {
+        var column = dataGrid.Columns.FirstOrDefault(v => v.MappingName == item.Name);
+        if (column != null)
+        {
+          if (item.IsChecked == false && !column.IsHidden)
+            column.IsHidden = true;
+          else if (item.IsChecked == true && column.IsHidden == true)
+          {
+            if (column.Width == 0)
+              column.Width = 150;
+            column.IsHidden = false;
+          }
+        }
+      }
+    }
+
+    /// <summary>
+    /// Get Details of te Grid Columns to be displayed in the Chooser
+    /// </summary>
+    /// <param name="totalVisibleColumns"></param>
+    /// <returns></returns>
+    private ObservableCollection<ColumnChooserItems> GetColumnsDetails(Columns totalVisibleColumns)
+    {
+      ObservableCollection<ColumnChooserItems> totalColumns = new ObservableCollection<ColumnChooserItems>();
+      foreach (var actualColumn in totalVisibleColumns)
+      {
+        ColumnChooserItems item = new ColumnChooserItems();
+        if (actualColumn.IsHidden)
+        {
+          item.IsChecked = false;
+          item.Name = actualColumn.MappingName;
+        }
+        else
+        {
+          item.IsChecked = true;
+          item.Name = actualColumn.MappingName;
+        }
+        totalColumns.Add(item);
+      }
+      return totalColumns;
+    }
+
+    #endregion
+
     #region Event Handling
 
     // List of Supported commands, that should be processed by ExecuteCommand
@@ -1107,6 +1186,7 @@ namespace MPTagThat.SongGrid.ViewModels
 
         case "applicationclosing":
           CheckChangesPending();
+          SaveSettings();
           break;
       }
     }

@@ -16,27 +16,40 @@
 // along with MPTagThat. If not, see <http://www.gnu.org/licenses/>.
 #endregion
 
-using System.IO;
-using System.Windows.Controls;
-using CommonServiceLocator;
-using MPTagThat.Core.Services.Settings;
-using MPTagThat.SongGrid.ViewModels;
+#region
 
-namespace MPTagThat.SongGrid.Views
+using Prism.Mvvm;
+
+#endregion
+
+namespace MPTagThat.SongGrid.Models
 {
-  /// <summary>
-  /// Interaction logic for SongGridView.xaml
-  /// </summary>
-  public partial class SongGridView : UserControl
+  public class ColumnChooserItems : BindableBase
   {
-    public SongGridView()
+    private bool _isChecked;
+
+    /// <summary>
+    /// Gets or sets a value indicating whether this instance is checked.
+    /// </summary>
+    /// <value>
+    /// 	<c>true</c> if this instance is checked; otherwise, <c>false</c>.
+    /// </value>
+    public bool IsChecked
     {
-      InitializeComponent();
-      var vm = (SongGridViewModel) DataContext;
-      if (vm != null)
-      {
-        vm.SongGrid = this.SongDataGrid;
-      }
+      get => _isChecked;
+      set => SetProperty(ref _isChecked, value);
     }
-  }
+
+    private string _name;
+
+    /// <summary>
+    /// Gets or sets the name.
+    /// </summary>
+    /// <value>The name.</value>
+    public string Name
+    {
+      get => _name;
+      set => SetProperty(ref _name, value);
+    }
+  } 
 }
