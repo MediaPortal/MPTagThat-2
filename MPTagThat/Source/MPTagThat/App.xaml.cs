@@ -110,6 +110,16 @@ namespace MPTagThat
       moduleCatalog.AddModule(typeof(MiscFiles.MiscFilesModule));
       moduleCatalog.AddModule(typeof(TagEdit.TagEditModule));
       moduleCatalog.AddModule(typeof(Dialogs.DialogModule));
+
+      // Modules, which should be loaded on Demand go here
+      Type converterModuleCType = typeof(Converter.ConverterModule);
+      moduleCatalog.AddModule(new ModuleInfo()
+      {
+        ModuleName = converterModuleCType.Name,
+        ModuleType = converterModuleCType.AssemblyQualifiedName,
+        InitializationMode = InitializationMode.OnDemand
+      });
+
     }
 
     /// <summary>

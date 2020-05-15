@@ -81,3 +81,6 @@ xcopy /y %1\UI\MPTagThat.TreeView\bin\%2\Interop.Shell32.dll %TARGETPATH%\Bin\
 REM Copy Dialogs Module
 xcopy /y %1\UI\MPTagThat.Dialogs\bin\%2\MPTagThat.Dialogs.* %TARGETPATH%\Bin\
 xcopy /y %1\UI\MPTagThat.Dialogs\bin\%2\Syncfusion.* %TARGETPATH%\Bin\
+
+REM Copy Converter Module
+xcopy /y %1\UI\MPTagThat.Converter\bin\%2\MPTagThat.Converter.* %TARGETPATH%\Bin\

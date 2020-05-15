@@ -1,22 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Globalization;
 using System.IO;
+using System.Linq;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using System.Xml;
 using CommonServiceLocator;
+using MPTagThat.Converter.Views;
 using MPTagThat.Core;
 using MPTagThat.Core.Common;
 using MPTagThat.Core.Events;
 using MPTagThat.Core.Services.Logging;
 using MPTagThat.Core.Services.Settings;
 using MPTagThat.Core.Services.Settings.Setting;
+using MPTagThat.SongGrid.Views;
 using Newtonsoft.Json;
-using Prism.Events;
+using Prism.Ioc;
+using Prism.Modularity;
 using Prism.Mvvm;
 using Prism.Regions;
 using Syncfusion.SfSkinManager;
@@ -371,7 +373,7 @@ namespace MPTagThat.ViewModels
     /// <summary>
     /// Restores the standard layout, when switching back to Tags Tab
     /// </summary>
-    private void RestoreStandardLayout()
+    private void RestoreStandardLayout(IRegion detailRegion)
     {
       foreach (ContentControl child in MainDockingManager.Children)
       {
@@ -385,6 +387,12 @@ namespace MPTagThat.ViewModels
             DockingManager.SetState(child, state);
             break;
         }
+      }
+
+      var view = detailRegion.Views.FirstOrDefault(v => v is SongGridView);
+      if (view != null)
+      {
+        detailRegion.Activate(view);
       }
     }
 
@@ -401,15 +409,32 @@ namespace MPTagThat.ViewModels
       switch (msg.Action.ToLower())
       {
         case "ribbontabselected":
+          var detailRegion = _regionManager.Regions["DetailRegion"];
           var tab = (string)msg.MessageData["ribbontab"];
           switch (tab)
           {
             case "TabTag":
-              RestoreStandardLayout();
+              RestoreStandardLayout(detailRegion);
               break;
 
             case "TabConvert":
               HideStandardLayout();
+              
+              // Load Module and Activate View
+              var moduleManager = (ModuleManager)CommonServiceLocator.ServiceLocator.Current.GetInstance(typeof(IModuleManager));
+              moduleManager.LoadModule("ConverterModule");
+              var converterView = detailRegion.Views.FirstOrDefault(v => v is ConverterView);
+              if (converterView == null)
+              {
+                var container = (IContainerExtension)CommonServiceLocator.ServiceLocator.Current.GetInstance(typeof(IContainerExtension));
+                var view = container.Resolve<ConverterView>();
+                detailRegion.Add(view);
+                detailRegion.Activate(view);
+              }
+              else
+              {
+                detailRegion.Activate(converterView);
+              }
               break;
           }
           break;

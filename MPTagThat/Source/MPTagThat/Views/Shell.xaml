@@ -65,7 +65,7 @@
       <ContentControl syncfusion:DockingManager.Header="{lex:Loc songGrid_Header}" x:Name="SongGrid"
                       syncfusion:DockingManager.SideInDockedMode="Top"
                       syncfusion:DockingManager.CanClose="False" 
-                      prism:RegionManager.RegionName="SongGrid" />
+                      prism:RegionManager.RegionName="DetailRegion" />
 
     </syncfusion:DockingManager>
   </Grid>

@@ -218,6 +218,10 @@
       <Project>{d66c1d7a-a9d8-4f02-9fa4-891a673d2c68}</Project>
       <Name>MPTagThat.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\UI\MPTagThat.Converter\MPTagThat.Converter.csproj">
+      <Project>{19e4d13b-3741-469d-9635-ae1176ee6a0e}</Project>
+      <Name>MPTagThat.Converter</Name>
+    </ProjectReference>
     <ProjectReference Include="..\UI\MPTagThat.Dialogs\MPTagThat.Dialogs.csproj">
       <Project>{a4d5a1cc-39cf-4ebb-8c2a-494b34eb0989}</Project>
       <Name>MPTagThat.Dialogs</Name>

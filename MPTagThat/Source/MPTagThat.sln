@@ -21,6 +21,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MPTagThat.TagEdit", "UI\MPT
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MPTagThat.Dialogs", "UI\MPTagThat.Dialogs\MPTagThat.Dialogs.csproj", "{A4D5A1CC-39CF-4EBB-8C2A-494B34EB0989}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MPTagThat.Converter", "UI\MPTagThat.Converter\MPTagThat.Converter.csproj", "{19E4D13B-3741-469D-9635-AE1176EE6A0E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -59,6 +61,10 @@ Global
 		{A4D5A1CC-39CF-4EBB-8C2A-494B34EB0989}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A4D5A1CC-39CF-4EBB-8C2A-494B34EB0989}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A4D5A1CC-39CF-4EBB-8C2A-494B34EB0989}.Release|Any CPU.Build.0 = Release|Any CPU
+		{19E4D13B-3741-469D-9635-AE1176EE6A0E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{19E4D13B-3741-469D-9635-AE1176EE6A0E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{19E4D13B-3741-469D-9635-AE1176EE6A0E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{19E4D13B-3741-469D-9635-AE1176EE6A0E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -70,6 +76,7 @@ Global
 		{C01E53E4-98AB-4313-8EBC-6DD7F6BE20BB} = {DB7C3A80-665F-4B4F-A3EA-36D539C37912}
 		{43451793-3565-4C80-91A4-C75DAE1B98CD} = {DB7C3A80-665F-4B4F-A3EA-36D539C37912}
 		{A4D5A1CC-39CF-4EBB-8C2A-494B34EB0989} = {DB7C3A80-665F-4B4F-A3EA-36D539C37912}
+		{19E4D13B-3741-469D-9635-AE1176EE6A0E} = {DB7C3A80-665F-4B4F-A3EA-36D539C37912}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {A885E3F7-B2DD-4902-B3C3-41326E432708}
