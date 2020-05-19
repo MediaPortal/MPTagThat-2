@@ -86,6 +86,10 @@ namespace MPTagThat.Ribbon.ViewModels
 
     #region Properties
 
+    /// <summary>
+    /// A Ribbon Tab has been selected
+    /// Invoke the respective view
+    /// </summary>
     private object _selectedRibbonTab;
 
     public object SelectedRibbonTab
@@ -118,6 +122,9 @@ namespace MPTagThat.Ribbon.ViewModels
       }
     }
 
+    /// <summary>
+    /// A Script has been selected
+    /// </summary>
     private int _scriptsSelectedIndex;
 
     public int ScriptsSelectedIndex
@@ -130,6 +137,9 @@ namespace MPTagThat.Ribbon.ViewModels
       }
     }
 
+    /// <summary>
+    /// The Number On Click Button has been selected
+    /// </summary>
     private bool _toggleNumberOnClick;
 
     public bool ToggleNumberOnClick
@@ -138,6 +148,9 @@ namespace MPTagThat.Ribbon.ViewModels
       set => SetProperty(ref _toggleNumberOnClick, value);
     }
 
+    /// <summary>
+    /// The Auto Number button has been selected
+    /// </summary>
     private int _autoNumberValue;
 
     public int AutoNumberValue
@@ -154,6 +167,9 @@ namespace MPTagThat.Ribbon.ViewModels
 
     #region General Settings
 
+    /// <summary>
+    /// Binding for available Languages
+    /// </summary>
     private ObservableCollection<Item> _languages = new ObservableCollection<Item>();
 
     public ObservableCollection<Item> Languages
@@ -166,6 +182,9 @@ namespace MPTagThat.Ribbon.ViewModels
       }
     }
 
+    /// <summary>
+    /// Handling the selection of a language
+    /// </summary>
     private Item _selectedLanguage;
 
     public Item SelectedLanguage
@@ -179,6 +198,9 @@ namespace MPTagThat.Ribbon.ViewModels
       }
     }
 
+    /// <summary>
+    /// The binding for the available themes
+    /// </summary>
     private ObservableCollection<string> _themes = new ObservableCollection<string>();
 
     public ObservableCollection<string> Themes
@@ -191,6 +213,9 @@ namespace MPTagThat.Ribbon.ViewModels
       }
     }
 
+    /// <summary>
+    /// The selected Theme
+    /// </summary>
     private string _selectedTheme;
 
     public string SelectedTheme
@@ -205,6 +230,9 @@ namespace MPTagThat.Ribbon.ViewModels
       }
     }
 
+    /// <summary>
+    /// Handling of color for changed rows
+    /// </summary>
     private string _changedRowColor;
 
     public string ChangedRowColor
@@ -217,6 +245,9 @@ namespace MPTagThat.Ribbon.ViewModels
       }
     }
 
+    /// <summary>
+    /// Handling of color for alternate rows
+    /// </summary>
     private string _alternateRowColor;
 
     public string AlternateRowColor
@@ -229,6 +260,9 @@ namespace MPTagThat.Ribbon.ViewModels
       }
     }
 
+    /// <summary>
+    /// Available Logging Levels
+    /// </summary>
     private ObservableCollection<string> _debugLevel = new ObservableCollection<string>();
 
     public ObservableCollection<string> DebugLevel
@@ -241,6 +275,9 @@ namespace MPTagThat.Ribbon.ViewModels
       }
     }
 
+    /// <summary>
+    /// Selected Log Levels
+    /// </summary>
     private string _selectedLogLevel;
 
     public string SelectedLogLevel
@@ -867,6 +904,21 @@ namespace MPTagThat.Ribbon.ViewModels
           _options.AutoNumber = AutoNumberValue;
           type = Action.ActionType.NUMBERONCLICK;
           break;
+
+        case "ButtonConvertStart":
+          type = Action.ActionType.CONVERT;
+          runAsync = false;
+          break;
+
+        case "ButtonConvertCancel":
+          type = Action.ActionType.CONVERTCANCEL;
+          runAsync = false;
+          break;
+
+        case "ButtonAddConversion":
+          type = Action.ActionType.ADDCONVERSION;
+          runAsync = false;
+          break;
       }
 
       if (type != Action.ActionType.INVALID)
@@ -913,8 +965,8 @@ namespace MPTagThat.Ribbon.ViewModels
           if (item[0] == _options.MainSettings.ActiveScript)
           {
             ScriptsSelectedIndex = i;
+            break;
           }
-
           i++;
         }
       }

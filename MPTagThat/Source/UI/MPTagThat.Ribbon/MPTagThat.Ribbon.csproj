@@ -221,6 +221,16 @@
   <ItemGroup>
     <Resource Include="Resources\Images\ribbon_About_32x.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\ribbon_AddConversionList_32x.png" />
+    <Resource Include="Resources\Images\ribbon_ConvertCancel_16x.png" />
+    <Resource Include="Resources\Images\ribbon_ConvertCancel_32x.png" />
+    <Resource Include="Resources\Images\ribbon_Convert_16x.png" />
+    <Resource Include="Resources\Images\ribbon_Convert_32x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\ribbon_AddConversionList_16x.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>

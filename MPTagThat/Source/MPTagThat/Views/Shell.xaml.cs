@@ -62,10 +62,15 @@ namespace MPTagThat.Views
       };
       EventSystem.Publish(evt);
 
-      (ServiceLocator.Current.GetInstance(typeof(ILogger)) as ILogger).GetLogger.Info("Saving Docking State");
+      (ServiceLocator.Current.GetInstance(typeof(ILogger)) as ILogger)?.GetLogger.Info("Saving Docking State");
       var stateFile = _options.ConfigDir + "\\DockingLayout.xml";
       BinaryFormatter formatter = new BinaryFormatter();
-      MainDockingManager.SaveDockState(formatter, StorageFormat.Xml, stateFile);
+
+      // Only Save the state of the DockingManager, when the Tabs Tag is active
+      if (_options.IsTagsTabActive)
+      {
+        MainDockingManager.SaveDockState(formatter, StorageFormat.Xml, stateFile);
+      }
     }
 
     #endregion

@@ -54,6 +54,9 @@ namespace MPTagThat.Core.Common
       BPM = 64,
       AUTONUMBER = 65,
       NUMBERONCLICK = 66,
+      CONVERT = 67,
+      CONVERTCANCEL = 68,
+      ADDCONVERSION = 69,
     }
 
     #endregion

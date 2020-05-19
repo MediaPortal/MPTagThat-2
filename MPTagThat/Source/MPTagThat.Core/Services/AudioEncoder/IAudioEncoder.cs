@@ -18,28 +18,31 @@
 
 #region
 
-using Prism.Mvvm;
+using Un4seen.Bass;
 
 #endregion
 
-namespace MPTagThat.TagEdit.Models
+namespace MPTagThat.Core.Services.AudioEncoder
 {
-  public class Person : BindableBase
+  public interface IAudioEncoder
   {
-    private string _name = "";
+    /// <summary>
+    ///   Sets the Encoder and the Outfile Name
+    /// </summary>
+    /// <param name = "encoder"></param>
+    /// <param name = "outFile"></param>
+    /// <returns>Formatted Outfile with Extension</returns>
+    string SetEncoder(string encoder, string outFile);
 
-    public string Name
-    {
-      get => _name; 
-      set => SetProperty(ref _name, value);
-    }
+    /// <summary>
+    ///   Starts encoding using the given Parameters
+    /// </summary>
+    /// <param name = "stream"></param>
+    /// <param name = "rowIndex"></param>
+    BASSError StartEncoding(int stream, int rowIndex);
 
-    private string _function = "";
-
-    public string Function
-    {
-      get => _function; 
-      set => SetProperty(ref _function, value);
-    }
-  }
-}
+    /// <summary>
+    /// Aborts the current encoding
+    /// </summary>
+    void AbortEncoding();
+  }}

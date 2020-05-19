@@ -153,6 +153,13 @@
             </MenuItem.Icon>
           </MenuItem>
           <Separator/>
+          <MenuItem Header="{lex:Loc contextMenu_AddConversionList}"
+                    Command="{Binding ContextMenuAddConversionCommand}" 
+                    CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.SelectedItems}" >
+            <MenuItem.Icon>
+              <Image Source="pack://application:,,,/MPTagThat;component/Resources/Images/ContextMenu_AddConversionList.png" ></Image>
+            </MenuItem.Icon>
+          </MenuItem>
         </ContextMenu>
       </syncfusion:SfDataGrid.ContextMenu>
 

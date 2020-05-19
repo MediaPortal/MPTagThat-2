@@ -18,28 +18,36 @@
 
 #region
 
+using System;
+using MPTagThat.Core.Common.Song;
 using Prism.Mvvm;
 
 #endregion
 
-namespace MPTagThat.TagEdit.Models
+namespace MPTagThat.Converter.Models
 {
-  public class Person : BindableBase
+  public class ConverterData : BindableBase
   {
-    private string _name = "";
+    private double _percentComplete = 0;
 
-    public string Name
+    public double PercentComplete
     {
-      get => _name; 
-      set => SetProperty(ref _name, value);
+      get => _percentComplete;
+      set => SetProperty(ref _percentComplete, value);
     }
 
-    private string _function = "";
+    public string FileName => Song.FullFileName;
 
-    public string Function
+    private string _newFileName = "";
+
+    public string NewFileName
     {
-      get => _function; 
-      set => SetProperty(ref _function, value);
+      get => _newFileName; 
+      set => SetProperty(ref _newFileName, value);
     }
+
+    public SongData Song { get; set; }
+
+    public string Status { get; set; } = "";
   }
 }

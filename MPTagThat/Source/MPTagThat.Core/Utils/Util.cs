@@ -75,6 +75,7 @@ namespace MPTagThat.Core.Utils
     private static readonly object padlock = new object();
 
     private static char[] _invalidFilenameChars;
+    private static char[] _invalidFoldernameChars;
 
     #endregion
 
@@ -84,6 +85,7 @@ namespace MPTagThat.Core.Utils
     {
       log = (ServiceLocator.Current.GetInstance(typeof(ILogger)) as ILogger).GetLogger;
       _invalidFilenameChars = Path.GetInvalidFileNameChars();
+      _invalidFoldernameChars = Path.GetInvalidPathChars();
     }
 
     #endregion
@@ -727,9 +729,9 @@ namespace MPTagThat.Core.Utils
     /// <returns></returns>
     public static string MakeValidFolderName(string str)
     {
-      if (str.IndexOfAny(_invalidFilenameChars) > -1)
+      if (str.IndexOfAny(_invalidFoldernameChars) > -1)
       {
-        foreach (char c in _invalidFilenameChars)
+        foreach (char c in _invalidFoldernameChars)
           str = str.Replace(c, '_');
       }
       return str;

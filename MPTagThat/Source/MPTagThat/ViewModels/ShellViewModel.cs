@@ -368,6 +368,7 @@ namespace MPTagThat.ViewModels
             break;
         }
       }
+      _options.IsTagsTabActive = false;
     }
 
     /// <summary>
@@ -394,6 +395,7 @@ namespace MPTagThat.ViewModels
       {
         detailRegion.Activate(view);
       }
+      _options.IsTagsTabActive = true;
     }
 
     #endregion

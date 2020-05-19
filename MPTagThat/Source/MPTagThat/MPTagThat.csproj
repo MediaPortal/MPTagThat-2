@@ -297,6 +297,7 @@
     <Resource Include="Resources\Images\ContextMenu_ColumnChooser.png" />
     <Resource Include="Resources\Images\ContextMenu_ClearAllSort.png" />
     <Resource Include="Resources\Images\ContextMenu_ClearSort.png" />
+    <Resource Include="Resources\Images\ContextMenu_AddConversionList.png" />
     <Content Include="x64\bass.dll" />
     <Content Include="x64\bassasio.dll" />
     <Content Include="x64\basscd.dll" />

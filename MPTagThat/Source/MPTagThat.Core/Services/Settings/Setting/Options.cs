@@ -279,6 +279,8 @@ namespace MPTagThat.Core.Services.Settings.Setting
     public int AutoNumber { get; set; }
 
     public KeyMaps KeyMap { get; set; }
+
+    public bool IsTagsTabActive { get; set; }
     #endregion
 
     #region ctor

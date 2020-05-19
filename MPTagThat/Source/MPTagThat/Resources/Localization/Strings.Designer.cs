@@ -295,6 +295,15 @@ namespace MPTagThat.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Add Item(s) to Conversion List.
+        /// </summary>
+        public static string contextMenu_AddConversionList {
+            get {
+                return ResourceManager.GetString("contextMenu_AddConversionList", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Clear All Filters.
         /// </summary>
         public static string contextMenu_ClearAllFilters {
@@ -318,6 +327,15 @@ namespace MPTagThat.Resources.Localization {
         public static string contextMenu_ClearFilter {
             get {
                 return ResourceManager.GetString("contextMenu_ClearFilter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Remove selected item(s).
+        /// </summary>
+        public static string contextMenu_ClearList {
+            get {
+                return ResourceManager.GetString("contextMenu_ClearList", resourceCulture);
             }
         }
         
@@ -390,6 +408,78 @@ namespace MPTagThat.Resources.Localization {
         public static string contextMenu_SelectAll {
             get {
                 return ResourceManager.GetString("contextMenu_SelectAll", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select Encoder:.
+        /// </summary>
+        public static string convert_Encoder {
+            get {
+                return ResourceManager.GetString("convert_Encoder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Error creating Music Directory.
+        /// </summary>
+        public static string convert_ErrorDirectory {
+            get {
+                return ResourceManager.GetString("convert_ErrorDirectory", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Error encoding File.
+        /// </summary>
+        public static string convert_ErrorEncoding {
+            get {
+                return ResourceManager.GetString("convert_ErrorEncoding", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Please select a Encoder from the list.
+        /// </summary>
+        public static string convert_NoEncoder {
+            get {
+                return ResourceManager.GetString("convert_NoEncoder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Error opening File.
+        /// </summary>
+        public static string convert_OpenFileError {
+            get {
+                return ResourceManager.GetString("convert_OpenFileError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Convert Options.
+        /// </summary>
+        public static string convert_Options {
+            get {
+                return ResourceManager.GetString("convert_Options", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Output Folder:.
+        /// </summary>
+        public static string convert_OutputFolder {
+            get {
+                return ResourceManager.GetString("convert_OutputFolder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Conversion aborted: Input and Output file are the same.
+        /// </summary>
+        public static string convert_SameFile {
+            get {
+                return ResourceManager.GetString("convert_SameFile", resourceCulture);
             }
         }
         
@@ -1123,6 +1213,24 @@ namespace MPTagThat.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Cancel Convert.
+        /// </summary>
+        public static string ribbon_ConvertCancel {
+            get {
+                return ResourceManager.GetString("ribbon_ConvertCancel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Start Convert.
+        /// </summary>
+        public static string ribbon_ConvertStart {
+            get {
+                return ResourceManager.GetString("ribbon_ConvertStart", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Convert.
         /// </summary>
         public static string ribbon_ConvertTab {
@@ -1492,6 +1600,15 @@ namespace MPTagThat.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Adds the selected files to the list of files to be converted to a different format..
+        /// </summary>
+        public static string screentip_AddConvert {
+            get {
+                return ResourceManager.GetString("screentip_AddConvert", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The track number of the selected song is set using the value in the text box as the start number..
         /// </summary>
         public static string screentip_AutoNumberText {
@@ -1515,6 +1632,24 @@ namespace MPTagThat.Resources.Localization {
         public static string screentip_CaseConversionText {
             get {
                 return ResourceManager.GetString("screentip_CaseConversionText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Start Conversion of the files in the list to the selected format.
+        /// </summary>
+        public static string screentip_ConverStart {
+            get {
+                return ResourceManager.GetString("screentip_ConverStart", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Terminates the Conversion process.
+        /// </summary>
+        public static string screentip_ConvertCancel {
+            get {
+                return ResourceManager.GetString("screentip_ConvertCancel", resourceCulture);
             }
         }
         

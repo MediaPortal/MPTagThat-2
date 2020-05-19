@@ -51,6 +51,7 @@ using MPTagThat.Core.Services.ScriptManager;
 using MPTagThat.Dialogs.ViewModels;
 using MPTagThat.SongGrid.Models;
 using MPTagThat.SongGrid.Views;
+using Prism.Modularity;
 using Action = MPTagThat.Core.Common.Action;
 using Prism.Services.Dialogs;
 using Application = System.Windows.Forms.Application;
@@ -112,6 +113,7 @@ namespace MPTagThat.SongGrid.ViewModels
       ContextMenuColumnChooserCommand = new BaseCommand(ContextMenuColumnChooser);
       ContextMenuClearSortCommand = new BaseCommand(ContextMenuClearSort);
       ContextMenuClearAllSortCommand = new BaseCommand(ContextMenuClearAllSort);
+      ContextMenuAddConversionCommand = new BaseCommand(ContextMenuAddConversion);
 
       EventSystem.Subscribe<GenericEvent>(OnMessageReceived, ThreadOption.UIThread);
       BindingOperations.EnableCollectionSynchronization(Songs, _lock);
@@ -474,6 +476,28 @@ namespace MPTagThat.SongGrid.ViewModels
         {
           ClickOKButton(chooserViewModel.ColumnCollection, grid);
         }
+      }
+    }
+
+    /// <summary>
+    /// Add the selected Songs to the Conversion list
+    /// </summary>
+    public ICommand ContextMenuAddConversionCommand { get; }
+
+    private void ContextMenuAddConversion(object param)
+    {
+      if (SelectedItems.Count > 0)
+      {
+        // Make sure the the Conversion Module is loaded
+        var moduleManager = (ModuleManager)CommonServiceLocator.ServiceLocator.Current.GetInstance(typeof(IModuleManager));
+        moduleManager.LoadModule("ConverterModule");
+        var songs = SelectedItems.Cast<SongData>().ToList();
+        var evt = new GenericEvent
+        {
+          Action = "addtoconversionlist"
+        };
+        evt.MessageData["songs"] = songs;
+        EventSystem.Publish(evt);
       }
     }
 
@@ -1075,6 +1099,13 @@ namespace MPTagThat.SongGrid.ViewModels
           {
             Songs.ToList().ForEach(song => SelectedItems.Add(song));
           }
+
+          // Command, which don't use the Execute Command of SongGrid
+          if (command == Action.ActionType.ADDCONVERSION)
+          {
+            ContextMenuAddConversion(new object{});
+          }
+
 
           // Run Commands, which don't display a dialog
           if (_supportedCommands.Contains(command))

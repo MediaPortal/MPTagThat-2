@@ -1585,4 +1585,54 @@ To change the order of the ratings drag the rows.</value>
   <data name="contextMenu_ClearSort" xml:space="preserve">
     <value>Clear Sort</value>
   </data>
+  <data name="convert_Encoder" xml:space="preserve">
+    <value>Select Encoder:</value>
+    <comment>The Label to select Encoder</comment>
+  </data>
+  <data name="convert_Options" xml:space="preserve">
+    <value>Convert Options</value>
+    <comment>The RibbonBar Heading</comment>
+  </data>
+  <data name="convert_OutputFolder" xml:space="preserve">
+    <value>Output Folder:</value>
+    <comment>The Output Folder of the converted file</comment>
+  </data>
+  <data name="ribbon_ConvertCancel" xml:space="preserve">
+    <value>Cancel Convert</value>
+    <comment>The Cancel Convert Button</comment>
+  </data>
+  <data name="ribbon_ConvertStart" xml:space="preserve">
+    <value>Start Convert</value>
+    <comment>The Start Convert Button</comment>
+  </data>
+  <data name="screentip_ConverStart" xml:space="preserve">
+    <value>Start Conversion of the files in the list to the selected format</value>
+  </data>
+  <data name="screentip_ConvertCancel" xml:space="preserve">
+    <value>Terminates the Conversion process</value>
+  </data>
+  <data name="contextMenu_AddConversionList" xml:space="preserve">
+    <value>Add Item(s) to Conversion List</value>
+  </data>
+  <data name="contextMenu_ClearList" xml:space="preserve">
+    <value>Remove selected item(s)</value>
+  </data>
+  <data name="convert_ErrorDirectory" xml:space="preserve">
+    <value>Error creating Music Directory</value>
+  </data>
+  <data name="convert_ErrorEncoding" xml:space="preserve">
+    <value>Error encoding File</value>
+  </data>
+  <data name="convert_NoEncoder" xml:space="preserve">
+    <value>Please select a Encoder from the list</value>
+  </data>
+  <data name="convert_OpenFileError" xml:space="preserve">
+    <value>Error opening File</value>
+  </data>
+  <data name="convert_SameFile" xml:space="preserve">
+    <value>Conversion aborted: Input and Output file are the same</value>
+  </data>
+  <data name="screentip_AddConvert" xml:space="preserve">
+    <value>Adds the selected files to the list of files to be converted to a different format.</value>
+  </data>
 </root>

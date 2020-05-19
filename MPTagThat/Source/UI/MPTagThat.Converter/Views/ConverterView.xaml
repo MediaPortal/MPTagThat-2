@@ -23,15 +23,23 @@
     <Style TargetType="syncfusion:VirtualizingCellsControl" x:Key="AlternatingRowStyle">
       <Setter Property="Background" Value="{Binding Path=Changed,UpdateSourceTrigger=PropertyChanged,Converter={StaticResource AlternateRowStyleSelector}}"/>
     </Style>
+
+    <!-- Tool Tip template  for the Status-->
+    <DataTemplate x:Key="TemplateToolTip">
+      <TextBlock Text="{Binding Status}"/>
+    </DataTemplate>
   </UserControl.Resources>
 
   <UserControl.Cursor>
     <Binding Path="DataContext.IsBusy" RelativeSource="{RelativeSource Self}" Converter="{StaticResource BusyToCursorConverter}" />
   </UserControl.Cursor>
 
-
   <Grid>
-    <syncfusion:SfDataGrid x:Name="SongDataGrid" 
+    <syncfusion:TabSplitter>
+      <syncfusion:TabSplitterItem Header="{lex:Loc ribbon_ConvertTab}" >
+        <syncfusion:TabSplitterItem.TopPanelItems>
+          <syncfusion:SplitterPage Header="{lex:Loc ribbon_ConvertTab}">
+            <syncfusion:SfDataGrid x:Name="SongDataGrid" 
                            SelectedItems="{Binding SelectedItems,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                            ItemsSource="{Binding Songs, Mode=TwoWay}"
                            FrozenColumnCount="1"
@@ -45,37 +53,90 @@
                            SelectionMode="Extended" 
                            EnableDataVirtualization="True" 
                            ShowBusyIndicator="True" 
-                           Cursor="{Binding CustomCursor, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                           ForceCursor="True"
-                           AlternatingRowStyle="{StaticResource AlternatingRowStyle}" >
+                           AlternatingRowStyle="{StaticResource AlternatingRowStyle}" 
+                           Margin="10,0" >
 
-      <syncfusion:SfDataGrid.ContextMenu>
-        <ContextMenu>
-          <MenuItem Header="{lex:Loc contextMenu_Delete}"
-                    Command="{Binding ContextMenuDeleteCommand}" 
+              <syncfusion:SfDataGrid.ContextMenu>
+                <ContextMenu>
+                  <MenuItem Header="{lex:Loc contextMenu_ClearList}"
+                    Command="{Binding ContextMenuClearListCommand}" 
                     CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.SelectedItems}" >
-            <MenuItem.Icon>
-              <Image Source="pack://application:,,,/MPTagThat;component/Resources/Images/ContextMenu_Delete.png" ></Image>
-            </MenuItem.Icon>
-          </MenuItem>
-          <Separator/>
-          <MenuItem Header="{lex:Loc contextMenu_SelectAll}"
+                    <MenuItem.Icon>
+                      <Image Source="pack://application:,,,/MPTagThat;component/Resources/Images/ContextMenu_Delete.png" ></Image>
+                    </MenuItem.Icon>
+                  </MenuItem>
+                  <Separator/>
+                  <MenuItem Header="{lex:Loc contextMenu_SelectAll}"
                     Command="{Binding ContextMenuSelectAllCommand}" >
-            <MenuItem.Icon>
-              <Image Source="pack://application:,,,/MPTagThat;component/Resources/Images/ContextMenu_SelectAll.png" ></Image>
-            </MenuItem.Icon>
-          </MenuItem>
-          <Separator/>
-        </ContextMenu>
-      </syncfusion:SfDataGrid.ContextMenu>
+                    <MenuItem.Icon>
+                      <Image Source="pack://application:,,,/MPTagThat;component/Resources/Images/ContextMenu_SelectAll.png" ></Image>
+                    </MenuItem.Icon>
+                  </MenuItem>
+                  <Separator/>
+                </ContextMenu>
+              </syncfusion:SfDataGrid.ContextMenu>
 
-      <syncfusion:SfDataGrid.Columns>
-        <syncfusion:GridTextColumn HeaderText="{lex:Loc songHeader_Status}" Width="150" />
-        <syncfusion:GridTextColumn HeaderText="{lex:Loc songHeader_FileName}" MappingName="FileName" Width="400" />
-        <syncfusion:GridTextColumn HeaderText="{lex:Loc songHeader_NewFileName}" MappingName="NewFileName" />
-      </syncfusion:SfDataGrid.Columns>
+              <syncfusion:SfDataGrid.Columns>
+                <syncfusion:GridTemplateColumn HeaderText="{lex:Loc songHeader_Status}" 
+                                               MappingName="PercentComplete" TextAlignment="Right" Width="150"
+                                               ShowToolTip="True" ToolTipTemplate="{StaticResource TemplateToolTip}">
+                  <syncfusion:GridTemplateColumn.CellTemplate>
+                    <DataTemplate>
+                      <Grid>
+                        <ProgressBar x:Name="progressBar" Background="Transparent"   
+                                     Visibility="Visible" Minimum="0" Maximum="100"       
+                                     Value="{Binding PercentComplete}" />
+                        <TextBlock Text="{Binding PercentComplete, StringFormat={}{0:0.00}%}" HorizontalAlignment="Center"  
+                                   VerticalAlignment="Center" TextAlignment="Center"/>
+                      </Grid>
+                    </DataTemplate>
+                  </syncfusion:GridTemplateColumn.CellTemplate>
+                </syncfusion:GridTemplateColumn>
+                <!-- <syncfusion:GridPercentColumn HeaderText="{lex:Loc songHeader_Status}" MappingName="PercentComplete" Width="100" 
+                                              ShowToolTip="True" ToolTipTemplate="{StaticResource TemplateToolTip}" /> -->
+                <syncfusion:GridTextColumn HeaderText="{lex:Loc songHeader_FileName}" MappingName="FileName" Width="400" />
+                <syncfusion:GridTextColumn HeaderText="{lex:Loc songHeader_NewFileName}" MappingName="NewFileName" />
+              </syncfusion:SfDataGrid.Columns>
 
 
-    </syncfusion:SfDataGrid>
+            </syncfusion:SfDataGrid>
+          </syncfusion:SplitterPage>
+        </syncfusion:TabSplitterItem.TopPanelItems>
+        <syncfusion:TabSplitterItem.BottomPanelItems>
+          <syncfusion:SplitterPage Header="{lex:Loc convert_Options}">
+            <GroupBox Header="{lex:Loc convert_Options}" Margin="10,5,10,10" >
+              <Grid>
+                <Grid.RowDefinitions>
+                  <RowDefinition Height="Auto"/>
+                  <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                  <ColumnDefinition Width="150"/>
+                  <ColumnDefinition Width="300"/>
+                  <ColumnDefinition Width="80"/>
+                </Grid.ColumnDefinitions>
+                <Label Grid.Row="0" Grid.Column="0" Content="{lex:Loc convert_OutputFolder}" />
+                <TextBox Grid.Row="0" Grid.Column="1" Width="300" 
+                         Text="{Binding ConvertRootFolder, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+
+                <Label Grid.Row="1" Grid.Column="0" Content="{lex:Loc convert_Encoder}" />
+                <ComboBox Grid.Row="1" Grid.Column="1" 
+                          MaxDropDownHeight="150" Width="300"  
+                          ItemsSource="{Binding Encoders}" 
+                          SelectedIndex="{Binding EncodersSelectedIndex, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="0,5,0,0" >
+                  <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                      <TextBlock Text="{Binding Name}" >
+                      </TextBlock>
+                    </DataTemplate>
+                  </ComboBox.ItemTemplate>
+                </ComboBox>
+
+              </Grid>
+            </GroupBox>
+          </syncfusion:SplitterPage>
+        </syncfusion:TabSplitterItem.BottomPanelItems>
+      </syncfusion:TabSplitterItem>
+    </syncfusion:TabSplitter>
   </Grid>
 </UserControl>

@@ -197,10 +197,13 @@ namespace MPTagThat.Core.Services.Settings.Setting
     [Setting(SettingScope.User, "")]
     public string RipTargetFolder { get; set; }
 
+    [Setting(SettingScope.User, "")]
+    public string ConvertRootFolder { get; set; }
+
     [Setting(SettingScope.User, "mp3")]
     public string RipEncoder { get; set; }
 
-    [Setting(SettingScope.User, "<A>\\<B>\\<K> - <T>")]
+    [Setting(SettingScope.User, @"%artist%\%album%\%track% - %title%")]
     public string RipFileNameFormat { get; set; }
 
     [Setting(SettingScope.User, "true")]

@@ -455,18 +455,68 @@
           </syncfusion:RibbonButton>
         </syncfusion:RibbonBar>
 
-        <syncfusion:RibbonBar Header="{lex:Loc ribbon_Bar_About}" >
-          <syncfusion:RibbonButton x:Name="ButtonAbout" SizeForm="Large" 
-                                 Label="{lex:Loc ribbon_About}" 
-                                 LargeIcon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_About_32x.png" 
-                                 SmallIcon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_About_32x.png" 
-                                 Command="{Binding ExecuteRibbonCommand}" 
-                                 CommandParameter="{Binding Name ,RelativeSource={RelativeSource Self}}" >
+        
+        <syncfusion:RibbonBar Header="{lex:Loc ribbon_Other}" >
+          <syncfusion:RibbonButton x:Name="ButtonAddConversion" SizeForm="Large" 
+                                   Label="{lex:Loc ribbon_AddConvert}" 
+                                   LargeIcon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_AddConversionList_32x.png" 
+                                   SmallIcon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_AddConversionList_16x.png" 
+                                   Command="{Binding ExecuteRibbonCommand}" 
+                                   CommandParameter="{Binding Name ,RelativeSource={RelativeSource Self}}" >
+            <syncfusion:RibbonButton.ToolTip>
+              <syncfusion:ScreenTip MinWidth="150" MaxWidth="400" Description="{lex:Loc ribbon_ConvertCancel}" VerticalOffset="10" ImageSource="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_AddConversionList_32x.png">
+                <StackPanel Orientation="Vertical" Width="300">
+                  <TextBlock Text="{lex:Loc screentip_AddConvert}" TextWrapping="Wrap" />
+                </StackPanel>
+              </syncfusion:ScreenTip>
+            </syncfusion:RibbonButton.ToolTip>
           </syncfusion:RibbonButton>
         </syncfusion:RibbonBar>
+
+        <syncfusion:RibbonBar Header="{lex:Loc ribbon_Bar_About}" >
+          <syncfusion:RibbonButton x:Name="ButtonAbout" SizeForm="Large" 
+                                   Label="{lex:Loc ribbon_About}" 
+                                   LargeIcon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_About_32x.png" 
+                                   SmallIcon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_About_32x.png" 
+                                   Command="{Binding ExecuteRibbonCommand}" 
+                                   CommandParameter="{Binding Name ,RelativeSource={RelativeSource Self}}" >
+          </syncfusion:RibbonButton>
+        </syncfusion:RibbonBar>
+
       </syncfusion:RibbonTab>
 
-      <syncfusion:RibbonTab x:Name="TabConvert" Caption="{lex:Loc ribbon_ConvertTab}"  IsChecked="False"/>
+      <syncfusion:RibbonTab x:Name="TabConvert" Caption="{lex:Loc ribbon_ConvertTab}"  IsChecked="False" >
+        <syncfusion:RibbonBar >
+          <syncfusion:RibbonButton x:Name="ButtonConvertStart" SizeForm="Large" 
+                                   Label="{lex:Loc ribbon_ConvertStart}" 
+                                   LargeIcon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_Convert_32x.png" 
+                                   SmallIcon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_Convert_16x.png" 
+                                   Command="{Binding ExecuteRibbonCommand}" 
+                                   CommandParameter="{Binding Name ,RelativeSource={RelativeSource Self}}" >
+            <syncfusion:RibbonButton.ToolTip>
+              <syncfusion:ScreenTip MinWidth="150" MaxWidth="400" Description="{lex:Loc ribbon_ConvertTab}" VerticalOffset="10" ImageSource="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_Convert_32x.png">
+                <StackPanel Orientation="Vertical" Width="300">
+                  <TextBlock Text="{lex:Loc screentip_ConverStart}" TextWrapping="Wrap" />
+                </StackPanel>
+              </syncfusion:ScreenTip>
+            </syncfusion:RibbonButton.ToolTip>
+          </syncfusion:RibbonButton>
+          <syncfusion:RibbonButton x:Name="ButtonConvertCancel" SizeForm="Large" 
+                                   Label="{lex:Loc ribbon_ConvertCancel}" 
+                                   LargeIcon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_ConvertCancel_32x.png" 
+                                   SmallIcon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_ConvertCancel_16x.png" 
+                                   Command="{Binding ExecuteRibbonCommand}" 
+                                   CommandParameter="{Binding Name ,RelativeSource={RelativeSource Self}}" >
+            <syncfusion:RibbonButton.ToolTip>
+              <syncfusion:ScreenTip MinWidth="150" MaxWidth="400" Description="{lex:Loc ribbon_ConvertCancel}" VerticalOffset="10" ImageSource="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_ConvertCancel_32x.png">
+                <StackPanel Orientation="Vertical" Width="300">
+                  <TextBlock Text="{lex:Loc screentip_ConvertCancel}" TextWrapping="Wrap" />
+                </StackPanel>
+              </syncfusion:ScreenTip>
+            </syncfusion:RibbonButton.ToolTip>
+          </syncfusion:RibbonButton>
+        </syncfusion:RibbonBar>
+        </syncfusion:RibbonTab>
 
       <!-- Disabled until implemented
       <syncfusion:RibbonTab x:Name="TabRip" Caption="{lex:Loc ribbon_RipTab}"  IsChecked="False"/>
