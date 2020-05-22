@@ -123,15 +123,6 @@ Section -Main SEC0000
 	SetOutPath $INSTDIR\Docs
 	File /r ${BASEFOLDER}\MPTagThat.Base\Docs\*
 
-    # FileIcons
-    #SetOutPath $INSTDIR\FileIcons
-    #File /r /x .svn ..\MPTagThat.Base\FileIcons\*
-
-	
-    # Language Dir
-    #SetOutPath $INSTDIR\Language
-    #File /r /x .svn ..\MPTagThat.Base\Language\*
-    
     # Scripts
     # Get AppData Folder first
     SetShellVarContext current
@@ -142,7 +133,11 @@ Section -Main SEC0000
     # File Icons
     SetOutPath ${ROAMINGDATA}\Fileicons
     File /r ${BASEFOLDER}\MPTagThat.Base\Fileicons\*
-    
+
+    # Default Config like e.g. the Docking Manager Layout
+    SetOutPath ${ROAMINGDATA}\Config
+    File /r ${BASEFOLDER}\MPTagThat.Base\Config\*
+
     # Base Files
     SetOutPath $INSTDIR
     File ${BASEFOLDER}\MPTagThat.Base\Config.xml

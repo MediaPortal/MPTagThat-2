@@ -1163,7 +1163,7 @@
     <value>Analyses the selected file and calculates the Replay Gain. The calcualted value is written into the Tags. Note: The file itself is not modified.</value>
   </data>
   <data name="screentip_ResetLayoutText" xml:space="preserve">
-    <value>The layout of the regions in the Docking Manager is reset to the Application Default.</value>
+    <value>The layout of the regions in the Docking Manager is reset to the Last Saved state.</value>
   </data>
   <data name="screentip_SaveText" xml:space="preserve">
     <value>Saves pending changes to disk and changes the tags of all selected songs.</value>

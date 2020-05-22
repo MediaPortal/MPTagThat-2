@@ -2131,7 +2131,7 @@ namespace MPTagThat.Resources.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The layout of the regions in the Docking Manager is reset to the Application Default..
+        ///   Looks up a localized string similar to The layout of the regions in the Docking Manager is reset to the Last Saved state..
         /// </summary>
         public static string screentip_ResetLayoutText {
             get {

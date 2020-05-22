@@ -212,6 +212,8 @@ namespace MPTagThat.ViewModels
 
       LoadKeyMap();
 
+      _options.IsTagsTabActive = true;
+
       // Set Initial Window Size and Location
       WindowWidth = _options.MainSettings.FormSize.Width;
       WindowHeight = _options.MainSettings.FormSize.Height;
