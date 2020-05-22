@@ -19,11 +19,15 @@
 #region
 
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
 using System.Windows.Input;
 using MPTagThat.Core.Common;
 using MPTagThat.Core.Common.Song;
 using Prism.Services.Dialogs;
+using Syncfusion.UI.Xaml.Grid;
 using WPFLocalizeExtension.Engine;
+using SelectionChangedEventArgs = System.Windows.Controls.SelectionChangedEventArgs;
 
 #endregion
 
@@ -34,11 +38,31 @@ namespace MPTagThat.Dialogs.ViewModels
     #region Variables
 
     private List<SongData> _songs;
+    private List<string> _selectedExceptions = new List<string>();
 
     #endregion
 
     #region Properties
 
+    private ObservableCollection<string> _convertExceptions = new ObservableCollection<string>();
+
+    public ObservableCollection<string> ConvertExceptions
+    {
+      get => _convertExceptions;
+      set
+      {
+        _convertExceptions = value;
+        RaisePropertyChanged("ConvertExceptions");
+      }
+    }
+
+    private string _newException;
+
+    public string NewException
+    {
+      get => _newException;
+      set => SetProperty(ref _newException, value);
+    }
 
     // Check Box Checked properties
     private bool _ckConvertTags;
@@ -99,6 +123,11 @@ namespace MPTagThat.Dialogs.ViewModels
       Title = LocalizeDictionary.Instance.GetLocalizedObject("MPTagThat", "Strings", "caseConversion_Header",
         LocalizeDictionary.Instance.Culture).ToString();
       CaseConversionCommand = new BaseCommand(CaseConversionApply);
+      ExceptionAddCommand = new BaseCommand(ExceptionAdd);
+      ExceptionRemoveCommand = new BaseCommand(ExceptionRemove);
+      SelectionChangedCommand = new BaseCommand(SelectionChanged);
+
+      ConvertExceptions.AddRange(_options.ConversionSettings.CaseConvExceptions);
     }
 
     #endregion
@@ -137,6 +166,48 @@ namespace MPTagThat.Dialogs.ViewModels
       }
       CloseDialog("true");
       log.Trace("<<<");
+    }
+
+    /// <summary>
+    /// A new exception should be added to the list
+    /// </summary>
+    public ICommand ExceptionAddCommand { get; }
+
+    private void ExceptionAdd(object param)
+    {
+      ConvertExceptions.Add(NewException);
+      _options.ConversionSettings.CaseConvExceptions = ConvertExceptions.ToList();
+    }
+
+    public ICommand ExceptionRemoveCommand { get; }
+
+    private void ExceptionRemove(object param)
+    {
+      // Prevent the Collection has been modified Error
+      var selectionsTobeRemoved = new List<string>();
+      foreach (var exc in _selectedExceptions)
+      {
+        selectionsTobeRemoved.Add(exc);
+      }
+
+      selectionsTobeRemoved.ForEach(exc => ConvertExceptions.Remove(exc));
+      _options.ConversionSettings.CaseConvExceptions = ConvertExceptions.ToList();
+    }
+
+    public ICommand SelectionChangedCommand { get; }
+
+    private void SelectionChanged(object param)
+    {
+      var parm = (SelectionChangedEventArgs) param;
+      foreach (var added in parm.AddedItems)
+      {
+        _selectedExceptions.Add((string)added);
+      }
+
+      foreach (var removed in parm.RemovedItems)
+      {
+        _selectedExceptions.Remove((string) removed);
+      }
     }
 
     #endregion
