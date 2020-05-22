@@ -39,6 +39,7 @@ using Prism.Mvvm;
 using Syncfusion.Windows.Shared;
 using Syncfusion.Windows.Tools.Controls;
 using WPFLocalizeExtension.Engine;
+using Action = MPTagThat.Core.Common.Action;
 
 #endregion
 
@@ -423,6 +424,15 @@ namespace MPTagThat.Treeview.ViewModels
         case "currentfolderchanged":
           RefreshTreeview();
           SetCurrentFolder(null, new EventArgs());
+          break;
+
+        case "command":
+          var command = (Action.ActionType)msg.MessageData["command"];
+          log.Trace($"Command {command}");
+          if (command == Action.ActionType.TREEREFRESH)
+          {
+            RefreshTreeview();
+          }
           break;
       }
     }
