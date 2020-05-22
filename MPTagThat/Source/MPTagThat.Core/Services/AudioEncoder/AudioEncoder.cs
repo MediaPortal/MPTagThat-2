@@ -55,7 +55,7 @@ namespace MPTagThat.Core.Services.AudioEncoder
 
     #endregion
 
-        #region IAudioEncoder Members
+    #region IAudioEncoder Members
 
     /// <summary>
     ///   Sets the Encoder and the Outfile Name
@@ -98,7 +98,7 @@ namespace MPTagThat.Core.Services.AudioEncoder
       };
       evt.MessageData.Add("rowindex", rowIndex);
       evt.MessageData.Add("percent", 0);
-      
+
       var encBuffer = new byte[60000]; // our encoding buffer
       while (Bass.BASS_ChannelIsActive(stream) == BASSActive.BASS_ACTIVE_PLAYING && !_isAborted)
       {
@@ -142,6 +142,10 @@ namespace MPTagThat.Core.Services.AudioEncoder
           outFileName += ".flac";
           break;
 
+        case "opus":
+          outFileName += ".opus";
+          break;
+
         case "m4a":
           outFileName += ".m4a";
           break;
@@ -183,7 +187,7 @@ namespace MPTagThat.Core.Services.AudioEncoder
               encLame.LAME_PresetName = _options.MainSettings.RipLameABRBitRate.ToString();
             else
               encLame.LAME_PresetName =
-                Enum.GetName(typeof (Options.LamePreset), _options.MainSettings.RipLamePreset)?.ToLower();
+                Enum.GetName(typeof(Options.LamePreset), _options.MainSettings.RipLamePreset)?.ToLower();
           }
           encoder = encLame;
           break;
@@ -218,17 +222,35 @@ namespace MPTagThat.Core.Services.AudioEncoder
           encoder = encFlac;
           break;
 
+        case "opus":
+          EncoderOPUS encOpus = new EncoderOPUS(stream);
+          if (_options.MainSettings.RipOpusExpert.Length > 0)
+          {
+            encOpus.OPUS_CustomOptions = _options.MainSettings.RipOpusExpert;
+            encOpus.OPUS_UseCustomOptionsOnly = true;
+          }
+          else
+          {
+            encOpus.OPUS_Complexity = _options.MainSettings.RipOpusComplexity;
+          }
+
+          encoder = encOpus;
+          break;
+
         case "m4a":
           EncoderFAAC encAAC = new EncoderFAAC(stream);
 
-          var bitrate =
-            Convert.ToInt32(_options.MainSettings.RipEncoderAACBitRate.Substring(0,
-                                                                                _options.MainSettings.
-                                                                                  RipEncoderAACBitRate.IndexOf(' ')));
-          encAAC.FAAC_Bitrate = bitrate;
-          encAAC.FAAC_Quality = 100;
-          encAAC.FAAC_UseQualityMode = true;
-          encAAC.FAAC_WrapMP4 = true;
+          if (_options.MainSettings.RipFAACExpert.Length > 0)
+          {
+            encAAC.FAAC_CustomOptions = _options.MainSettings.RipFAACExpert;
+            encAAC.FAAC_UseCustomOptionsOnly = true;
+          }
+          else
+          {
+            encAAC.FAAC_Quality = _options.MainSettings.RipFAACQuality;
+            encAAC.FAAC_UseQualityMode = true;
+            encAAC.FAAC_WrapMP4 = true;
+          }
 
           encoder = encAAC;
           break;
@@ -272,7 +294,7 @@ namespace MPTagThat.Core.Services.AudioEncoder
           else
           {
             encMpc.MPC_Preset =
-              (EncoderMPC.MPCPreset)Enum.Parse(typeof (EncoderMPC.MPCPreset), _options.MainSettings.RipEncoderMPCPreset);
+              (EncoderMPC.MPCPreset)Enum.Parse(typeof(EncoderMPC.MPCPreset), _options.MainSettings.RipEncoderMPCPreset);
           }
           encoder = encMpc;
           break;

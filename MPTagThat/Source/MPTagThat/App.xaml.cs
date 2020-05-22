@@ -211,6 +211,7 @@ namespace MPTagThat
       // Add our Bin and Bin\Bass Directory to the Path
       SetPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Bin"));
       SetPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"Bin\x64"));
+      SetPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"Bin\x64\Plugins"));
 
       base.OnStartup(e);
     }

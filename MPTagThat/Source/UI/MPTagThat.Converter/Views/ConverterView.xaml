@@ -12,7 +12,7 @@
              lex:ResxLocalizationProvider.DefaultAssembly="MPTagThat"
              lex:ResxLocalizationProvider.DefaultDictionary="Strings"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="800" d:DesignWidth="800">
 
   <UserControl.Resources>
     <!-- The Converts used -->
@@ -35,11 +35,12 @@
   </UserControl.Cursor>
 
   <Grid>
-    <syncfusion:TabSplitter>
-      <syncfusion:TabSplitterItem Header="{lex:Loc ribbon_ConvertTab}" >
-        <syncfusion:TabSplitterItem.TopPanelItems>
-          <syncfusion:SplitterPage Header="{lex:Loc ribbon_ConvertTab}">
-            <syncfusion:SfDataGrid x:Name="SongDataGrid" 
+    <Grid.RowDefinitions>
+      <RowDefinition/>
+      <RowDefinition Height="Auto" />
+      <RowDefinition/>
+    </Grid.RowDefinitions>
+    <syncfusion:SfDataGrid x:Name="SongDataGrid" Grid.Row="0"
                            SelectedItems="{Binding SelectedItems,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                            ItemsSource="{Binding Songs, Mode=TwoWay}"
                            FrozenColumnCount="1"
@@ -56,74 +57,542 @@
                            AlternatingRowStyle="{StaticResource AlternatingRowStyle}" 
                            Margin="10,0" >
 
-              <syncfusion:SfDataGrid.ContextMenu>
-                <ContextMenu>
-                  <MenuItem Header="{lex:Loc contextMenu_ClearList}"
+      <syncfusion:SfDataGrid.ContextMenu>
+        <ContextMenu>
+          <MenuItem Header="{lex:Loc contextMenu_ClearList}"
                     Command="{Binding ContextMenuClearListCommand}" 
                     CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.SelectedItems}" >
-                    <MenuItem.Icon>
-                      <Image Source="pack://application:,,,/MPTagThat;component/Resources/Images/ContextMenu_Delete.png" ></Image>
-                    </MenuItem.Icon>
-                  </MenuItem>
-                  <Separator/>
-                  <MenuItem Header="{lex:Loc contextMenu_SelectAll}"
+            <MenuItem.Icon>
+              <Image Source="pack://application:,,,/MPTagThat;component/Resources/Images/ContextMenu_Delete.png" ></Image>
+            </MenuItem.Icon>
+          </MenuItem>
+          <Separator/>
+          <MenuItem Header="{lex:Loc contextMenu_SelectAll}"
                     Command="{Binding ContextMenuSelectAllCommand}" >
-                    <MenuItem.Icon>
-                      <Image Source="pack://application:,,,/MPTagThat;component/Resources/Images/ContextMenu_SelectAll.png" ></Image>
-                    </MenuItem.Icon>
-                  </MenuItem>
-                  <Separator/>
-                </ContextMenu>
-              </syncfusion:SfDataGrid.ContextMenu>
+            <MenuItem.Icon>
+              <Image Source="pack://application:,,,/MPTagThat;component/Resources/Images/ContextMenu_SelectAll.png" ></Image>
+            </MenuItem.Icon>
+          </MenuItem>
+          <Separator/>
+        </ContextMenu>
+      </syncfusion:SfDataGrid.ContextMenu>
 
-              <syncfusion:SfDataGrid.Columns>
-                <syncfusion:GridTemplateColumn HeaderText="{lex:Loc songHeader_Status}" 
+      <syncfusion:SfDataGrid.Columns>
+        <syncfusion:GridTemplateColumn HeaderText="{lex:Loc songHeader_Status}" 
                                                MappingName="PercentComplete" TextAlignment="Right" Width="150"
                                                ShowToolTip="True" ToolTipTemplate="{StaticResource TemplateToolTip}">
-                  <syncfusion:GridTemplateColumn.CellTemplate>
-                    <DataTemplate>
-                      <Grid>
-                        <ProgressBar x:Name="progressBar" Background="Transparent"   
+          <syncfusion:GridTemplateColumn.CellTemplate>
+            <DataTemplate>
+              <Grid>
+                <ProgressBar x:Name="progressBar" Background="Transparent"   
                                      Visibility="Visible" Minimum="0" Maximum="100"       
                                      Value="{Binding PercentComplete}" />
-                        <TextBlock Text="{Binding PercentComplete, StringFormat={}{0:0.00}%}" HorizontalAlignment="Center"  
+                <TextBlock Text="{Binding PercentComplete, StringFormat={}{0:0.00}%}" HorizontalAlignment="Center"  
                                    VerticalAlignment="Center" TextAlignment="Center"/>
-                      </Grid>
-                    </DataTemplate>
-                  </syncfusion:GridTemplateColumn.CellTemplate>
-                </syncfusion:GridTemplateColumn>
-                <!-- <syncfusion:GridPercentColumn HeaderText="{lex:Loc songHeader_Status}" MappingName="PercentComplete" Width="100" 
-                                              ShowToolTip="True" ToolTipTemplate="{StaticResource TemplateToolTip}" /> -->
-                <syncfusion:GridTextColumn HeaderText="{lex:Loc songHeader_FileName}" MappingName="FileName" Width="400" />
-                <syncfusion:GridTextColumn HeaderText="{lex:Loc songHeader_NewFileName}" MappingName="NewFileName" />
-              </syncfusion:SfDataGrid.Columns>
+              </Grid>
+            </DataTemplate>
+          </syncfusion:GridTemplateColumn.CellTemplate>
+        </syncfusion:GridTemplateColumn>
+        <syncfusion:GridTextColumn HeaderText="{lex:Loc songHeader_FileName}" MappingName="FileName" Width="400" />
+        <syncfusion:GridTextColumn HeaderText="{lex:Loc songHeader_NewFileName}" MappingName="NewFileName" />
+      </syncfusion:SfDataGrid.Columns>
+    </syncfusion:SfDataGrid>
 
+    <!--Grid Splitter-->
+    <syncfusion:SfGridSplitter HorizontalAlignment="Stretch" 
+                               ResizeBehavior="PreviousAndNext"
+                               EnableCollapseButton="True"
+                               Width="Auto"
+                               Grid.Row="1">
+    </syncfusion:SfGridSplitter>
 
-            </syncfusion:SfDataGrid>
-          </syncfusion:SplitterPage>
-        </syncfusion:TabSplitterItem.TopPanelItems>
-        <syncfusion:TabSplitterItem.BottomPanelItems>
-          <syncfusion:SplitterPage Header="{lex:Loc convert_Options}">
-            <GroupBox Header="{lex:Loc convert_Options}" Margin="10,5,10,10" >
-              <Grid>
-                <Grid.RowDefinitions>
-                  <RowDefinition Height="Auto"/>
-                  <RowDefinition Height="Auto"/>
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                  <ColumnDefinition Width="150"/>
-                  <ColumnDefinition Width="300"/>
-                  <ColumnDefinition Width="80"/>
-                </Grid.ColumnDefinitions>
-                <Label Grid.Row="0" Grid.Column="0" Content="{lex:Loc convert_OutputFolder}" />
-                <TextBox Grid.Row="0" Grid.Column="1" Width="300" 
-                         Text="{Binding ConvertRootFolder, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+    <syncfusion:TabControlExt Grid.Row="2" Margin="10,5,10,10" CloseButtonType="Hide" >
+      <syncfusion:TabItemExt Header="{lex:Loc convert_Options_General}">
+        <Grid>
+          <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+          </Grid.RowDefinitions>
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="150"/>
+            <ColumnDefinition Width="106"/>
+            <ColumnDefinition Width="194"/>
+            <ColumnDefinition Width="300"/>
+          </Grid.ColumnDefinitions>
 
-                <Label Grid.Row="1" Grid.Column="0" Content="{lex:Loc convert_Encoder}" />
-                <ComboBox Grid.Row="1" Grid.Column="1" 
-                          MaxDropDownHeight="150" Width="300"  
-                          ItemsSource="{Binding Encoders}" 
-                          SelectedIndex="{Binding EncodersSelectedIndex, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="0,5,0,0" >
+          <Label Grid.Row="0" Grid.Column="0" Content="{lex:Loc convert_Encoder}" />
+          <ComboBox Grid.Row="0" Grid.Column="1" 
+                            MaxDropDownHeight="150" Width="300"  
+                            ItemsSource="{Binding Encoders}" 
+                            SelectedIndex="{Binding EncodersSelectedIndex, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.ColumnSpan="2" >
+            <ComboBox.ItemTemplate>
+              <DataTemplate>
+                <TextBlock Text="{Binding Name}" >
+                </TextBlock>
+              </DataTemplate>
+            </ComboBox.ItemTemplate>
+          </ComboBox>
+
+          <Label Grid.Row="1" Grid.Column="0" Content="{lex:Loc convert_OutputFolder}" />
+          <TextBox Grid.Row="1" Grid.Column="1" Width="300" Margin="0,5,0,0"
+                           Text="{Binding ConvertRootFolder, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.ColumnSpan="2"/>
+
+          <Label Grid.Row="2" Grid.Column="0" Content="{lex:Loc convert_FileName_Format}" />
+          <TextBox Grid.Row="2" Grid.Column="1" Width="300" Margin="0,5,0,0"
+                           Text="{Binding ConvertFileFormat, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.ColumnSpan="2"/>
+
+          <GroupBox Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="4" 
+                            Header="{lex:Loc convert_FileName_Parameters}" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top">
+            <Grid >
+              <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto" />
+              </Grid.RowDefinitions>
+              <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="255" />
+                <ColumnDefinition Width="255" />
+                <ColumnDefinition Width="255" />
+              </Grid.ColumnDefinitions>
+              <StackPanel Grid.Row="0" Grid.Column="0">
+                <Grid>
+                  <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="90" />
+                    <ColumnDefinition Width="15" />
+                    <ColumnDefinition Width="150" />
+                  </Grid.ColumnDefinitions>
+                  <Label Grid.Column="0" Name="Artist" Content="%artist%">
+                  </Label>
+                  <Label Grid.Column="1" Content="=" />
+                  <Label Grid.Column="2" Content="{lex:Loc tagAndRename_Artist}"/>
+                </Grid>
+                <Grid>
+                  <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="90" />
+                    <ColumnDefinition Width="15" />
+                    <ColumnDefinition Width="150" />
+                  </Grid.ColumnDefinitions>
+                  <Label Grid.Column="0" Name="AlbumArtist" Content="%albumartist%">
+                  </Label>
+                  <Label Grid.Column="1" Content="=" />
+                  <Label Grid.Column="2" Content="{lex:Loc tagAndRename_AlbumArtist}"/>
+                </Grid>
+                <Grid>
+                  <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="90" />
+                    <ColumnDefinition Width="15" />
+                    <ColumnDefinition Width="150" />
+                  </Grid.ColumnDefinitions>
+                  <Label Grid.Column="0" Name="Year" Content="%year%">
+                  </Label>
+                  <Label Grid.Column="1" Content="=" />
+                  <Label Grid.Column="2" Content="{lex:Loc tagAndRename_Year}"/>
+                </Grid>
+                <Grid>
+                  <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="90" />
+                    <ColumnDefinition Width="15" />
+                    <ColumnDefinition Width="150" />
+                  </Grid.ColumnDefinitions>
+                  <Label Grid.Column="0" Name="TrackNumber" Content="%track%">
+                  </Label>
+                  <Label Grid.Column="1" Content="=" />
+                  <Label Grid.Column="2" Content="{lex:Loc tagAndRename_Track}"/>
+                </Grid>
+                <Grid>
+                  <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="90" />
+                    <ColumnDefinition Width="15" />
+                    <ColumnDefinition Width="150" />
+                  </Grid.ColumnDefinitions>
+                  <Label Grid.Column="0" Name="DiscNumber" Content="%disc%">
+                  </Label>
+                  <Label Grid.Column="1" Content="=" />
+                  <Label Grid.Column="2" Content="{lex:Loc tagAndRename_Disc}"/>
+                </Grid>
+                <Grid>
+                  <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="90" />
+                    <ColumnDefinition Width="15" />
+                    <ColumnDefinition Width="150" />
+                  </Grid.ColumnDefinitions>
+                  <Label Grid.Column="0" Name="Remixed" Content="%remixed%">
+                  </Label>
+                  <Label Grid.Column="1" Content="=" />
+                  <Label Grid.Column="2" Content="{lex:Loc tagAndRename_ModifiedBy}"/>
+                </Grid>
+                <Grid>
+                  <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="90" />
+                    <ColumnDefinition Width="15" />
+                    <ColumnDefinition Width="150" />
+                  </Grid.ColumnDefinitions>
+                  <Label Grid.Column="0" Name="FirstArtist" Content="%artist:n%">
+                  </Label>
+                  <Label Grid.Column="1" Content="=" />
+                  <Label Grid.Column="2" Content="{lex:Loc tagAndRename_FirstNofArtist}"/>
+                </Grid>
+              </StackPanel>
+              <StackPanel Grid.Row="0" Grid.Column="1">
+                <Grid>
+                  <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="90" />
+                    <ColumnDefinition Width="15" />
+                    <ColumnDefinition Width="150" />
+                  </Grid.ColumnDefinitions>
+                  <Label Grid.Column="0" Name="Title" Content="%title%">
+                  </Label>
+                  <Label Grid.Column="1" Content="=" />
+                  <Label Grid.Column="2" Content="{lex:Loc tagAndRename_Title}"/>
+                </Grid>
+                <Grid>
+                  <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="90" />
+                    <ColumnDefinition Width="15" />
+                    <ColumnDefinition Width="150" />
+                  </Grid.ColumnDefinitions>
+                  <Label Grid.Column="0" Name="Genre" Content="%genre%">
+                  </Label>
+                  <Label Grid.Column="1" Content="=" />
+                  <Label Grid.Column="2" Content="{lex:Loc tagAndRename_Genre}"/>
+                </Grid>
+                <Grid>
+                  <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="90" />
+                    <ColumnDefinition Width="15" />
+                    <ColumnDefinition Width="150" />
+                  </Grid.ColumnDefinitions>
+                  <Label Grid.Column="0" Name="Conductor" Content="%conductor%">
+                  </Label>
+                  <Label Grid.Column="1" Content="=" />
+                  <Label Grid.Column="2" Content="{lex:Loc tagAndRename_Conductor}"/>
+                </Grid>
+                <Grid>
+                  <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="90" />
+                    <ColumnDefinition Width="15" />
+                    <ColumnDefinition Width="150" />
+                  </Grid.ColumnDefinitions>
+                  <Label Grid.Column="0" Name="TrackTotal" Content="%tracktotal%">
+                  </Label>
+                  <Label Grid.Column="1" Content="=" />
+                  <Label Grid.Column="2" Content="{lex:Loc tagAndRename_TrackTotal}"/>
+                </Grid>
+                <Grid>
+                  <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="90" />
+                    <ColumnDefinition Width="15" />
+                    <ColumnDefinition Width="150" />
+                  </Grid.ColumnDefinitions>
+                  <Label Grid.Column="0" Name="DiscTotal" Content="%disctotal%">
+                  </Label>
+                  <Label Grid.Column="1" Content="=" />
+                  <Label Grid.Column="2" Content="{lex:Loc tagAndRename_DiscTotal}"/>
+                </Grid>
+                <Grid>
+                  <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="90" />
+                    <ColumnDefinition Width="15" />
+                    <ColumnDefinition Width="150" />
+                  </Grid.ColumnDefinitions>
+                  <Label Grid.Column="0" Name="Bpm" Content="%bpm%">
+                  </Label>
+                  <Label Grid.Column="1" Content="=" />
+                  <Label Grid.Column="2" Content="{lex:Loc tagAndRename_BPM}"/>
+                </Grid>
+                <Grid>
+                  <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="90" />
+                    <ColumnDefinition Width="15" />
+                    <ColumnDefinition Width="150" />
+                  </Grid.ColumnDefinitions>
+                  <Label Grid.Column="0" Name="FirstAlbumArtist" Content="%albumartist:n%">
+                  </Label>
+                  <Label Grid.Column="1" Content="=" />
+                  <Label Grid.Column="2" Content="{lex:Loc tagAndRename_FirstNofAlbumArtist}"/>
+                </Grid>
+              </StackPanel>
+              <StackPanel Grid.Row="0" Grid.Column="2">
+                <Grid>
+                  <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="90" />
+                    <ColumnDefinition Width="15" />
+                    <ColumnDefinition Width="150" />
+                  </Grid.ColumnDefinitions>
+                  <Label Grid.Column="0" Name="Album" Content="%album%">
+                  </Label>
+                  <Label Grid.Column="1" Content="=" />
+                  <Label Grid.Column="2" Content="{lex:Loc tagAndRename_Album}"/>
+                </Grid>
+                <Grid>
+                  <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="90" />
+                    <ColumnDefinition Width="15" />
+                    <ColumnDefinition Width="150" />
+                  </Grid.ColumnDefinitions>
+                  <Label Grid.Column="0" Name="Comment" Content="%comment%">
+                  </Label>
+                  <Label Grid.Column="1" Content="=" />
+                  <Label Grid.Column="2" Content="{lex:Loc tagAndRename_Comment}"/>
+                </Grid>
+                <Grid>
+                  <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="90" />
+                    <ColumnDefinition Width="15" />
+                    <ColumnDefinition Width="150" />
+                  </Grid.ColumnDefinitions>
+                  <Label Grid.Column="0" Name="Composer" Content="%composer%">
+                  </Label>
+                  <Label Grid.Column="1" Content="=" />
+                  <Label Grid.Column="2" Content="{lex:Loc tagAndRename_Composer}"/>
+                </Grid>
+                <Grid>
+                  <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="90" />
+                    <ColumnDefinition Width="15" />
+                    <ColumnDefinition Width="150" />
+                  </Grid.ColumnDefinitions>
+                  <Label Grid.Column="0" Name="Group" Content="%group%">
+                  </Label>
+                  <Label Grid.Column="1" Content="=" />
+                  <Label Grid.Column="2" Content="{lex:Loc tagAndRename_Group}"/>
+                </Grid>
+                <Grid>
+                  <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="90" />
+                    <ColumnDefinition Width="15" />
+                    <ColumnDefinition Width="150" />
+                  </Grid.ColumnDefinitions>
+                  <Label Grid.Column="0" Name="Subtitle" Content="%subtitle%">
+                  </Label>
+                  <Label Grid.Column="1" Content="=" />
+                  <Label Grid.Column="2" Content="{lex:Loc tagAndRename_SubTitle}"/>
+                </Grid>
+                <Grid>
+                  <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="90" />
+                    <ColumnDefinition Width="15" />
+                    <ColumnDefinition Width="150" />
+                  </Grid.ColumnDefinitions>
+                  <Label Grid.Column="0" Name="BitRate" Content="%bitrate%">
+                  </Label>
+                  <Label Grid.Column="1" Content="=" />
+                  <Label Grid.Column="2" Content="{lex:Loc tagAndRename_BitRate}"/>
+                </Grid>
+              </StackPanel>
+              <StackPanel Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" >
+                <Label Name="Folder" Content="{lex:Loc organise_Folder}"  >
+                </Label>
+              </StackPanel>
+            </Grid>
+          </GroupBox>
+        </Grid>
+      </syncfusion:TabItemExt>
+
+      <!-- Lame Settings-->
+      <syncfusion:TabItemExt Header="{lex:Loc convert_Options_MP3}">
+        <StackPanel>
+          <GroupBox Header="{lex:Loc convert_Options_MP3_GroupBoxPresets}" Width="600" HorizontalAlignment="Left">
+            <Grid>
+              <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+              </Grid.RowDefinitions>
+              <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="300"/>
+                <ColumnDefinition Width="300"/>
+              </Grid.ColumnDefinitions>
+              <Label Grid.Row="0" Grid.Column="0" Content="{lex:Loc convert_Options_Preset}"/>
+              <ComboBox Grid.Row="1" Grid.Column="0" 
+                              MaxDropDownHeight="150" Width="200"  
+                              ItemsSource="{Binding LamePreset}" 
+                              SelectedIndex="{Binding LamePresetSelectedIndex, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                              HorizontalAlignment="Left">
+              </ComboBox>
+              <Label Grid.Row="0" Grid.Column="1" Content="{lex:Loc convert_Options_ABR_BitRate}"/>
+              <TextBox Grid.Row="1" Grid.Column="1" Width="80" HorizontalAlignment="Left" Text="{Binding LameABR, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+              <TextBlock Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" TextWrapping="Wrap" 
+                                 Margin="0,10,0,0"
+                                 Text="{Binding LamePresetDescription, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
+            </Grid>
+          </GroupBox>
+          <GroupBox Header="{lex:Loc convert_Options_GroupBox_ExpertSettings}" Width="600" HorizontalAlignment="Left">
+            <StackPanel>
+              <Label Content="{lex:Loc convert_Options_MP3_LameExpert}"/>
+              <TextBox Text="{Binding LameExpertOptions, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+              <Label Content="{lex:Loc convert_Options_WarningExpert}"/>
+            </StackPanel>
+          </GroupBox>
+        </StackPanel>
+      </syncfusion:TabItemExt>
+
+      <!-- Ogg Vorbis Settings-->
+      <syncfusion:TabItemExt Header="{lex:Loc convert_Options_Ogg}">
+        <StackPanel>
+          <GroupBox Header="{lex:Loc convert_Options_Ogg_GroupBoxSettings}" Width="600" HorizontalAlignment="Left">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
+              <Label Content="{lex:Loc convert_Options_Ogg_Quality}" Margin="0,5,0,0" />
+              <syncfusion:SfRangeSlider Minimum="-2" Maximum="10" Width="200" Height="40" Margin="10,0,0,0" 
+                                                TickFrequency="1" TickPlacement="BottomRight" 
+                                                Value="{Binding OggQuality, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+              <Label Content="{Binding OggQuality, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Margin="10,5,0,0"/>
+            </StackPanel>
+          </GroupBox>
+          <GroupBox Header="{lex:Loc convert_Options_GroupBox_ExpertSettings}" Width="600" HorizontalAlignment="Left">
+            <StackPanel>
+              <Label Content="{lex:Loc convert_Options_Ogg_OggExpert}"/>
+              <TextBox Text="{Binding OggExpertOptions, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+              <Label Content="{lex:Loc convert_Options_WarningExpert}"/>
+            </StackPanel>
+          </GroupBox>
+        </StackPanel>
+      </syncfusion:TabItemExt>
+
+      <!-- FLAC Settings-->
+      <syncfusion:TabItemExt Header="{lex:Loc convert_Options_FLAC}">
+        <StackPanel>
+          <GroupBox Header="{lex:Loc convert_Options_FLAC_GroupBoxSettings}" Width="600" HorizontalAlignment="Left">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
+              <Label Content="{lex:Loc convert_Options_Ogg_Quality}" Margin="0,5,0,0" />
+              <syncfusion:SfRangeSlider Minimum="0" Maximum="8" Width="200" Height="40" Margin="10,0,0,0" 
+                                                TickFrequency="1" TickPlacement="BottomRight" 
+                                                Value="{Binding FLACQuality, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+              <Label Content="{Binding FLACQuality, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Margin="10,5,0,0"/>
+            </StackPanel>
+          </GroupBox>
+          <GroupBox Header="{lex:Loc convert_Options_GroupBox_ExpertSettings}" Width="600" HorizontalAlignment="Left">
+            <StackPanel>
+              <Label Content="{lex:Loc convert_Options_FLAC_FLACExpert}"/>
+              <TextBox Text="{Binding FLACExpertOptions, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+              <Label Content="{lex:Loc convert_Options_WarningExpert}"/>
+            </StackPanel>
+          </GroupBox>
+        </StackPanel>
+      </syncfusion:TabItemExt>
+
+      <!-- Opus Settings-->
+      <syncfusion:TabItemExt Header="{lex:Loc convert_Options_Opus}">
+        <StackPanel>
+          <GroupBox Header="{lex:Loc convert_Options_Opus_GroupBoxSettings}" Width="600" HorizontalAlignment="Left">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
+              <Label Content="{lex:Loc convert_Options_Opus_Complexity}" Margin="0,5,0,0" />
+              <syncfusion:SfRangeSlider Minimum="0" Maximum="10" Width="200" Height="40" Margin="10,0,0,0" 
+                                        TickFrequency="1" TickPlacement="BottomRight" 
+                                        Value="{Binding OPUSComplexity, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+              <Label Content="{Binding OPUSComplexity, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Margin="10,5,0,0"/>
+            </StackPanel>
+          </GroupBox>
+          <GroupBox Header="{lex:Loc convert_Options_GroupBox_ExpertSettings}" Width="600" HorizontalAlignment="Left">
+            <StackPanel>
+              <Label Content="{lex:Loc convert_Options_Opus_Expert}"/>
+              <TextBox Text="{Binding OpusExpertOptions, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+              <Label Content="{lex:Loc convert_Options_WarningExpert}"/>
+            </StackPanel>
+          </GroupBox>
+        </StackPanel>
+      </syncfusion:TabItemExt>
+
+      <!-- FAAC Settings-->
+      <syncfusion:TabItemExt Header="{lex:Loc convert_Options_FAAC}">
+        <StackPanel>
+          <GroupBox Header="{lex:Loc convert_Options_FAAC_GroupBoxSettings}" Width="600" HorizontalAlignment="Left">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
+              <Label Content="{lex:Loc convert_Options_Ogg_Quality}" Margin="0,5,0,0" />
+              <syncfusion:SfRangeSlider Minimum="10" Maximum="500" Width="350" Height="40" Margin="10,0,0,0" 
+                                        TickFrequency="10" TickPlacement="BottomRight" 
+                                        Value="{Binding FAACQuality, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+              <Label Content="{Binding FAACQuality, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Margin="10,5,0,0"/>
+            </StackPanel>
+          </GroupBox>
+          <GroupBox Header="{lex:Loc convert_Options_GroupBox_ExpertSettings}" Width="600" HorizontalAlignment="Left">
+            <StackPanel>
+              <Label Content="{lex:Loc convert_Options_FAAC_FAACExpert}"/>
+              <TextBox Text="{Binding FAACExpertOptions, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+              <Label Content="{lex:Loc convert_Options_WarningExpert}"/>
+            </StackPanel>
+          </GroupBox>
+        </StackPanel>
+      </syncfusion:TabItemExt>
+
+      <!-- Musepack Settings-->
+      <syncfusion:TabItemExt Header="{lex:Loc convert_Options_Musepack}">
+        <StackPanel>
+          <GroupBox Header="{lex:Loc convert_Options_Musepack_GroupBoxSettings}" Width="600" HorizontalAlignment="Left">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
+              <Label Content="{lex:Loc convert_Options_Preset}" Margin="0,5,0,0" />
+              <ComboBox MaxDropDownHeight="150" Width="300"  
+                                ItemsSource="{Binding MusepackPreset}" 
+                                SelectedIndex="{Binding MusepackSelectedIndex, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                                HorizontalAlignment="Left" Margin="10,5,0,0">
+                <ComboBox.ItemTemplate>
+                  <DataTemplate>
+                    <TextBlock Text="{Binding Name}" >
+                    </TextBlock>
+                  </DataTemplate>
+                </ComboBox.ItemTemplate>
+              </ComboBox>
+            </StackPanel>
+          </GroupBox>
+          <GroupBox Header="{lex:Loc convert_Options_GroupBox_ExpertSettings}" Width="600" HorizontalAlignment="Left">
+            <StackPanel>
+              <Label Content="{lex:Loc convert_Options_Musepack_Expert}"/>
+              <TextBox Text="{Binding MusepackExpertOptions, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+              <Label Content="{lex:Loc convert_Options_WarningExpert}"/>
+            </StackPanel>
+          </GroupBox>
+        </StackPanel>
+      </syncfusion:TabItemExt>
+
+      <!-- WavPack Settings-->
+      <syncfusion:TabItemExt Header="{lex:Loc convert_Options_Wavpack}">
+        <StackPanel>
+          <GroupBox Header="{lex:Loc convert_Options_Wavpack_GroupBoxSettings}" Width="600" HorizontalAlignment="Left">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
+              <Label Content="{lex:Loc convert_Options_Preset}" Margin="0,5,0,0" />
+              <ComboBox MaxDropDownHeight="150" Width="300"  
+                                ItemsSource="{Binding WavPackPreset}" 
+                                SelectedIndex="{Binding WavPackSelectedIndex, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                                HorizontalAlignment="Left" Margin="10,5,0,0">
+                <ComboBox.ItemTemplate>
+                  <DataTemplate>
+                    <TextBlock Text="{Binding Name}" >
+                    </TextBlock>
+                  </DataTemplate>
+                </ComboBox.ItemTemplate>
+              </ComboBox>
+            </StackPanel>
+          </GroupBox>
+          <GroupBox Header="{lex:Loc convert_Options_GroupBox_ExpertSettings}" Width="600" HorizontalAlignment="Left">
+            <StackPanel>
+              <Label Content="{lex:Loc convert_Options_WavPack_Expert}"/>
+              <TextBox Text="{Binding WavPackExpertOptions, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+              <Label Content="{lex:Loc convert_Options_WarningExpert}"/>
+            </StackPanel>
+          </GroupBox>
+        </StackPanel>
+      </syncfusion:TabItemExt>
+
+      <!-- WMA Settings-->
+      <syncfusion:TabItemExt Header="{lex:Loc convert_Options_WMA}">
+        <StackPanel>
+          <GroupBox Header="{lex:Loc convert_Options_WMA_GroupBoxSettings}" Width="600" HorizontalAlignment="Left">
+            <Grid>
+              <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+              </Grid.RowDefinitions>
+              <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="200"/>
+                <ColumnDefinition/>
+              </Grid.ColumnDefinitions>
+                <Label Grid.Row="0" Grid.Column="0" Content="{lex:Loc convert_Options_WMA_Encoder}" Margin="0,5,0,0" />
+                <ComboBox Grid.Row="0" Grid.Column="1" MaxDropDownHeight="150" Width="300"  
+                          ItemsSource="{Binding WmaEncoder}" 
+                          SelectedIndex="{Binding WmaEncoderSelectedIndex, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                          HorizontalAlignment="Left" Margin="10,5,0,0">
                   <ComboBox.ItemTemplate>
                     <DataTemplate>
                       <TextBlock Text="{Binding Name}" >
@@ -131,12 +600,41 @@
                     </DataTemplate>
                   </ComboBox.ItemTemplate>
                 </ComboBox>
-
-              </Grid>
-            </GroupBox>
-          </syncfusion:SplitterPage>
-        </syncfusion:TabSplitterItem.BottomPanelItems>
-      </syncfusion:TabSplitterItem>
-    </syncfusion:TabSplitter>
+                <Label Grid.Row="1" Grid.Column="0" Content="{lex:Loc convert_Options_WMA_SampleFormat}" Margin="0,5,0,0" />
+                <ComboBox Grid.Row="1" Grid.Column="1" MaxDropDownHeight="150" Width="300"  
+                          ItemsSource="{Binding WmaSampleFormat}" 
+                          SelectedIndex="{Binding WmaSampleFormatSelectedIndex, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                          HorizontalAlignment="Left" Margin="10,5,0,0">
+                  <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                      <TextBlock Text="{Binding Name}" >
+                      </TextBlock>
+                    </DataTemplate>
+                  </ComboBox.ItemTemplate>
+                </ComboBox>
+                <Label Grid.Row="2" Grid.Column="0" Content="{lex:Loc convert_Options_Ogg_Quality}" Margin="0,5,0,0" />
+                <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Horizontal">
+                  <ComboBox MaxDropDownHeight="150" Width="150"  
+                            ItemsSource="{Binding WmaCBRVBR}" 
+                            SelectedIndex="{Binding WmaCBRVBRSelectedIndex, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                            HorizontalAlignment="Left" Margin="10,5,0,0">
+                    <ComboBox.ItemTemplate>
+                      <DataTemplate>
+                        <TextBlock Text="{Binding Name}" >
+                        </TextBlock>
+                      </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                  </ComboBox>
+                  <ComboBox MaxDropDownHeight="150" Width="130"  
+                            ItemsSource="{Binding WmaBitRate}" 
+                            SelectedIndex="{Binding WmaBitRateSelectedIndex, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                            HorizontalAlignment="Left" Margin="20,5,0,0">
+                  </ComboBox>
+                </StackPanel>
+            </Grid>
+          </GroupBox>
+        </StackPanel>
+      </syncfusion:TabItemExt>
+    </syncfusion:TabControlExt>
   </Grid>
 </UserControl>

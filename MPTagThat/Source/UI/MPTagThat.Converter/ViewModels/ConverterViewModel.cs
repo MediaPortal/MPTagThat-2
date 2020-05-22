@@ -42,6 +42,7 @@ using Prism.Mvvm;
 using Prism.Regions;
 using Syncfusion.Data.Extensions;
 using Un4seen.Bass;
+using Un4seen.Bass.AddOn.Wma;
 using WPFLocalizeExtension.Engine;
 using Action = MPTagThat.Core.Common.Action;
 
@@ -63,6 +64,8 @@ namespace MPTagThat.Converter.ViewModels
     private CancellationTokenSource  _cts;
     private string _encoder = null;
 
+    private int _defaultBitRateIndex;
+
     #endregion
 
     #region ctor
@@ -79,6 +82,7 @@ namespace MPTagThat.Converter.ViewModels
       Encoders.Add(new Item("MP3 Encoder", "mp3", ""));
       Encoders.Add(new Item("OGG Encoder", "ogg", ""));
       Encoders.Add(new Item("FLAC Encoder", "flac", ""));
+      Encoders.Add(new Item("OPUS Encoder", "opus", ""));
       Encoders.Add(new Item("AAC Encoder", "m4a", ""));
       Encoders.Add(new Item("WMA Encoder", "wma", ""));
       Encoders.Add(new Item("WAV Encoder", "wav", ""));
@@ -100,7 +104,81 @@ namespace MPTagThat.Converter.ViewModels
       }
 
       ConvertRootFolder = _options.MainSettings.ConvertRootFolder;
+      ConvertFileFormat = _options.MainSettings.RipFileNameFormat;
+      
+      LamePreset.Add("Medium");
+      LamePreset.Add("Standard");
+      LamePreset.Add("Extreme");
+      LamePreset.Add("Insane");
+      LamePreset.Add("Advanced BitRate (ABR) Mode");
 
+      LamePresetSelectedIndex = _options.MainSettings.RipLamePreset;
+      LameABR = _options.MainSettings.RipLameABRBitRate;
+      LameExpertOptions = _options.MainSettings.RipLameExpert;
+
+      OggQuality = _options.MainSettings.RipOggQuality;
+      OggExpertOptions = _options.MainSettings.RipOggExpert;
+
+      FLACQuality = _options.MainSettings.RipFlacQuality;
+      FLACExpertOptions = _options.MainSettings.RipFlacExpert;
+
+      OPUSComplexity = _options.MainSettings.RipOpusComplexity;
+      OpusExpertOptions = _options.MainSettings.RipOpusExpert;
+
+      FAACQuality = _options.MainSettings.RipFAACQuality;
+      FAACExpertOptions = _options.MainSettings.RipFAACExpert;
+
+      MusepackPreset.Add(new Item("Low/Medium Quality (~  90 kbps)","thumb",""));
+      MusepackPreset.Add(new Item("Medium Quality     (~ 130 kbps)","radio",""));
+      MusepackPreset.Add(new Item("High Quality       (~ 180 kbps)","standard",""));
+      MusepackPreset.Add(new Item("Excellent Quality  (~ 210 kbps)","xtreme",""));
+      MusepackPreset.Add(new Item("Excellent Quality  (~ 240 kbps)","insane",""));
+      MusepackPreset.Add(new Item("Highest Quality    (~ 270 kbps)","braindead",""));
+
+      var idx = 0;
+      foreach (var item in MusepackPreset)
+      {
+        if (item.Value == _options.MainSettings.RipEncoderMPCPreset)
+        {
+          MusepackSelectedIndex = idx;
+          break;
+        }
+        idx++;
+      }
+      MusepackExpertOptions = _options.MainSettings.RipEncoderMPCExpert;
+
+      WavPackPreset.Add(new Item("Fast Mode (fast, but some compromise in compression ratio)","-f",""));
+      WavPackPreset.Add(new Item("High quality (better compression, but slower)","-h",""));
+
+      idx = 0;
+      foreach (var item in WavPackPreset)
+      {
+        if (item.Value == _options.MainSettings.RipEncoderWVPreset)
+        {
+          WavPackSelectedIndex = idx;
+          break;
+        }
+        idx++;
+      }
+      WavPackExpertOptions = _options.MainSettings.RipEncoderWVExpert;
+
+      WmaEncoder.Add(new Item("Windows Media Audio Standard","wma",""));
+      WmaEncoder.Add(new Item("Windows Media Audio Professional","wmapro",""));
+      WmaEncoder.Add(new Item("Windows Media Audio Lossless","wmalossless",""));
+
+      idx = 0;
+      foreach (var item in WmaEncoder)
+      {
+        if (item.Value == _options.MainSettings.RipEncoderWMA)
+        {
+          WmaEncoderSelectedIndex = idx;
+          break;
+        }
+        idx++;
+      }
+
+
+      // Commands
       ContextMenuClearListCommand = new BaseCommand(ContextMenuClearList);
       ContextMenuSelectAllCommand = new BaseCommand(ContextMenuSelectAll);
 
@@ -176,7 +254,6 @@ namespace MPTagThat.Converter.ViewModels
       }
     }
 
-
     /// <summary>
     /// Binding for Wait Cursor
     /// </summary>
@@ -186,6 +263,474 @@ namespace MPTagThat.Converter.ViewModels
       get => _isBusy;
       set => SetProperty(ref _isBusy, value);
     }
+
+    #region Settings Properties
+
+    /// <summary>
+    /// The Binding for the Folder/File Format
+    /// </summary>
+    private string _convertFileFormat;
+
+    public string ConvertFileFormat
+    {
+      get => _convertFileFormat;
+      set
+      {
+        SetProperty(ref _convertFileFormat, value);
+        _options.MainSettings.RipFileNameFormat = value;
+      }
+    }
+
+    /// <summary>
+    /// The Binding for the Lame Presets
+    /// </summary>
+    private ObservableCollection<string> _lamePreset = new ObservableCollection<string>();
+    public ObservableCollection<string> LamePreset
+    {
+      get => _lamePreset;
+      set
+      {
+        _lamePreset = value;
+        RaisePropertyChanged("LamePreset");
+      }
+    }
+
+    /// <summary>
+    /// The selected Lame Prest
+    /// </summary>
+    private int _lamePresetSelectedIndex;
+
+    public int LamePresetSelectedIndex
+    {
+      get => _lamePresetSelectedIndex;
+      set
+      {
+        _options.MainSettings.RipLamePreset = value;
+        SetProperty(ref _lamePresetSelectedIndex, value);
+
+        switch (value)
+        {
+          case 0:
+            LamePresetDescription = LocalizeDictionary.Instance.GetLocalizedObject("MPTagThat", "Strings", "convert_Options_MP3_DescMedium", 
+              LocalizeDictionary.Instance.Culture).ToString();
+            break;
+
+          case 1:
+            LamePresetDescription = LocalizeDictionary.Instance.GetLocalizedObject("MPTagThat", "Strings", "convert_Options_MP3_DescStandard", 
+              LocalizeDictionary.Instance.Culture).ToString();
+            break;
+
+          case 2:
+            LamePresetDescription = LocalizeDictionary.Instance.GetLocalizedObject("MPTagThat", "Strings", "convert_Options_MP3_DescExtreme", 
+              LocalizeDictionary.Instance.Culture).ToString();
+            break;
+
+          case 3:
+            LamePresetDescription = LocalizeDictionary.Instance.GetLocalizedObject("MPTagThat", "Strings", "convert_Options_MP3_DescInsane", 
+              LocalizeDictionary.Instance.Culture).ToString();
+            break;
+
+          case 4:
+            LamePresetDescription = LocalizeDictionary.Instance.GetLocalizedObject("MPTagThat", "Strings", "convert_Options_MP3_DescABR", 
+              LocalizeDictionary.Instance.Culture).ToString();
+            break;
+        }
+
+      }
+    }
+
+    /// <summary>
+    /// Binding to show the Description for the Lame Presets
+    /// </summary>
+    private string _lamePresetDescription;
+
+    public string LamePresetDescription
+    {
+      get => _lamePresetDescription;
+      set => SetProperty(ref _lamePresetDescription, value);
+    }
+
+    /// <summary>
+    /// The Binding for ABR
+    /// </summary>
+    private int _lameABR;
+
+    public int LameABR
+    {
+      get => _lameABR;
+      set
+      {
+        SetProperty(ref _lameABR, value);
+        _options.MainSettings.RipLameABRBitRate = value;
+      }
+    }
+
+    /// <summary>
+    /// The Binding for the LAME Encoder Expert Options
+    /// </summary>
+    private string _lameExpertOptions;
+
+    public string LameExpertOptions
+    {
+      get => _lameExpertOptions;
+      set
+      {
+        SetProperty(ref _lameExpertOptions, value);
+        _options.MainSettings.RipLameExpert = value;
+      }
+    }
+
+    /// <summary>
+    /// The Binding for the Ogg Quality
+    /// </summary>
+    private int _oggQuality;
+
+    public int OggQuality
+    {
+      get => _oggQuality;
+      set
+      {
+        SetProperty(ref _oggQuality, value);
+        _options.MainSettings.RipOggQuality = value;
+      }
+    }
+
+    /// <summary>
+    /// The Binding for the OGG Encoder Expert Options
+    /// </summary>
+    private string _oggExpertOptions;
+
+    public string OggExpertOptions
+    {
+      get => _oggExpertOptions;
+      set
+      {
+        SetProperty(ref _oggExpertOptions, value);
+        _options.MainSettings.RipOggExpert = value;
+      }
+    }
+
+    /// <summary>
+    /// The Binding for the FLAC Quality
+    /// </summary>
+    private int _flacQuality;
+
+    public int FLACQuality
+    {
+      get => _flacQuality;
+      set
+      {
+        SetProperty(ref _flacQuality, value);
+        _options.MainSettings.RipFlacQuality = value;
+      }
+    }
+
+    /// <summary>
+    /// The Binding for the FLAC Encoder Expert Options
+    /// </summary>
+    private string _flacExpertOptions;
+
+    public string FLACExpertOptions
+    {
+      get => _flacExpertOptions;
+      set
+      {
+        SetProperty(ref _flacExpertOptions, value);
+        _options.MainSettings.RipFlacExpert = value;
+      }
+    }
+
+    /// <summary>
+    /// The Binding for the OPUS Complexity
+    /// </summary>
+    private int _opusComplexity;
+
+    public int OPUSComplexity
+    {
+      get => _opusComplexity;
+      set
+      {
+        SetProperty(ref _opusComplexity, value);
+        _options.MainSettings.RipOpusComplexity = value;
+      }
+    }
+
+    /// <summary>
+    /// The Binding for the Opus Encoder Expert Options
+    /// </summary>
+    private string _opusExpertOptions;
+
+    public string OpusExpertOptions
+    {
+      get => _opusExpertOptions;
+      set
+      {
+        SetProperty(ref _opusExpertOptions, value);
+        _options.MainSettings.RipOpusExpert = value;
+      }
+    }
+
+    /// <summary>
+    /// The Binding for the FAAC Quality
+    /// </summary>
+    private int _faacQuality;
+
+    public int FAACQuality
+    {
+      get => _faacQuality;
+      set
+      {
+        SetProperty(ref _faacQuality, value);
+        _options.MainSettings.RipFAACQuality = value;
+      }
+    }
+
+    /// <summary>
+    /// The Binding for the FAAC Encoder Expert Options
+    /// </summary>
+    private string _faacExpertOptions;
+
+    public string FAACExpertOptions
+    {
+      get => _faacExpertOptions;
+      set
+      {
+        SetProperty(ref _faacExpertOptions, value);
+        _options.MainSettings.RipFAACExpert = value;
+      }
+    }
+
+    /// <summary>
+    /// The Binding for the Musepack Presets
+    /// </summary>
+    private ObservableCollection<Item> _musePackPreset = new ObservableCollection<Item>();
+    public ObservableCollection<Item> MusepackPreset
+    {
+      get => _musePackPreset;
+      set
+      {
+        _musePackPreset = value;
+        RaisePropertyChanged("MusepackPreset");
+      }
+    }
+
+    /// <summary>
+    /// The selected Musepack Preset
+    /// </summary>
+    private int _musePackSelectedIndex;
+    public int MusepackSelectedIndex
+    {
+      get => _musePackSelectedIndex;
+      set
+      {
+        SetProperty(ref _musePackSelectedIndex, value);
+        _options.MainSettings.RipEncoderMPCPreset = MusepackPreset[value].Value;
+      }
+    }
+
+    /// <summary>
+    /// The Binding for the Musepack Encoder Expert Options
+    /// </summary>
+    private string _musepackExpertOptions;
+
+    public string MusepackExpertOptions
+    {
+      get => _musepackExpertOptions;
+      set
+      {
+        SetProperty(ref _musepackExpertOptions, value);
+        _options.MainSettings.RipEncoderMPCExpert = value;
+      }
+    }
+
+    /// <summary>
+    /// The Binding for the WavPack Presets
+    /// </summary>
+    private ObservableCollection<Item> _wavPackPreset = new ObservableCollection<Item>();
+    public ObservableCollection<Item> WavPackPreset
+    {
+      get => _wavPackPreset;
+      set
+      {
+        _wavPackPreset = value;
+        RaisePropertyChanged("WavPackPreset");
+      }
+    }
+
+    /// <summary>
+    /// The Selected WavPack Preset
+    /// </summary>
+    private int _wavPackSelectedIndex;
+    public int WavPackSelectedIndex
+    {
+      get => _wavPackSelectedIndex;
+      set
+      {
+        SetProperty(ref _wavPackSelectedIndex, value);
+        _options.MainSettings.RipEncoderWVPreset = WavPackPreset[value].Value;
+      }
+    }
+
+    /// <summary>
+    /// The Binding for the WavPack Encoder Expert Options
+    /// </summary>
+    private string _wavPackExpertOptions;
+
+    public string WavPackExpertOptions
+    {
+      get => _wavPackExpertOptions;
+      set
+      {
+        SetProperty(ref _wavPackExpertOptions, value);
+        _options.MainSettings.RipEncoderWVExpert = value;
+      }
+    }
+
+    /// <summary>
+    /// The Binding for the WMA Encoders
+    /// </summary>
+    private ObservableCollection<Item> _wmaEncoder = new ObservableCollection<Item>();
+    public ObservableCollection<Item> WmaEncoder
+    {
+      get => _wmaEncoder;
+      set
+      {
+        _wmaEncoder = value;
+        RaisePropertyChanged("WmaEncoder");
+      }
+    }
+
+    /// <summary>
+    /// The Selected WMA Encoder
+    /// </summary>
+    private int _wmaEncoderSelectedIndex;
+    public int WmaEncoderSelectedIndex
+    {
+      get => _wmaEncoderSelectedIndex;
+      set
+      {
+        SetProperty(ref _wmaEncoderSelectedIndex, value);
+        _options.MainSettings.RipEncoderWMA = WmaEncoder[value].Value;
+
+        switch (value)
+        {
+          case 0: // WMA Standard
+            WmaCBRVBR.Clear();
+            WmaCBRVBR.Add(new Item("Constant Bitrate", "Cbr", ""));
+            WmaCBRVBR.Add(new Item("Variable Bitrate", "Vbr", ""));
+            SetWMACbrVbr();
+            break;
+
+          case 1: // WMA Pro
+            WmaCBRVBR.Clear();
+            WmaCBRVBR.Add(new Item("Constant Bitrate", "Cbr", ""));
+            WmaCBRVBR.Add(new Item("Variable Bitrate", "Vbr", ""));
+            SetWMACbrVbr();
+            break;
+
+          case 2: // WMA LossLess
+            WmaCBRVBR.Clear();
+            WmaCBRVBR.Add(new Item("Variable Bitrate", "Vbr", ""));
+            WmaCBRVBRSelectedIndex = 0;
+            break;
+        }
+      }
+    }
+
+    /// <summary>
+    /// The binding for the WMA Sample Format
+    /// </summary>
+    private ObservableCollection<Item> _wmaSampleFormat = new ObservableCollection<Item>();
+
+    public ObservableCollection<Item> WmaSampleFormat
+    {
+      get => _wmaSampleFormat;
+      set
+      {
+        _wmaSampleFormat = value;
+        RaisePropertyChanged("WmaSampleFormat");
+      }
+    }
+
+    /// <summary>
+    /// The selected index in the WMA Sample Format Combo
+    /// </summary>
+    private int _wmaSampleFormatSelectedIndex;
+
+    public int WmaSampleFormatSelectedIndex
+    {
+      get => _wmaSampleFormatSelectedIndex;
+      set
+      {
+        SetProperty(ref _wmaSampleFormatSelectedIndex, value);
+        _options.MainSettings.RipEncoderWMASample = WmaSampleFormat[value].Value;
+        SetWMABitRateCombo();
+      }
+    }
+
+    /// <summary>
+    /// The binding for the VBR CBR
+    /// </summary>
+    private ObservableCollection<Item> _wmaCBRVBR = new ObservableCollection<Item>();
+
+    public ObservableCollection<Item> WmaCBRVBR
+    {
+      get => _wmaCBRVBR;
+      set
+      {
+        _wmaCBRVBR = value;
+        RaisePropertyChanged("WmaCBRVBR");
+      }
+    }
+
+    /// <summary>
+    /// The selected index in the CBR VBR Combo
+    /// </summary>
+    private int _wmaCBRVBRSelectedIndex;
+
+    public int WmaCBRVBRSelectedIndex
+    {
+      get => _wmaCBRVBRSelectedIndex;
+      set
+      {
+        SetProperty(ref _wmaCBRVBRSelectedIndex, value);
+        _options.MainSettings.RipEncoderWMACbrVbr = WmaCBRVBR[value].Value;
+        SetWMASampleCombo();
+      }
+    }
+
+    /// <summary>
+    /// The binding for the Bitrate
+    /// </summary>
+    private ObservableCollection<int> _wmaBitRate = new ObservableCollection<int>();
+
+    public ObservableCollection<int> WmaBitRate
+    {
+      get => _wmaBitRate;
+      set
+      {
+        _wmaBitRate = value;
+        RaisePropertyChanged("WmaBitRate");
+      }
+    }
+
+    /// <summary>
+    /// The selected index in the CBR VBR Combo
+    /// </summary>
+    private int _wmaBitRateSelectedIndex;
+
+    public int WmaBitRateSelectedIndex
+    {
+      get => _wmaBitRateSelectedIndex;
+      set
+      {
+        SetProperty(ref _wmaBitRateSelectedIndex, value);
+        _options.MainSettings.RipEncoderWMABitRate = WmaBitRate[value];
+      }
+    }
+
+
+    #endregion
 
     #endregion
 
@@ -307,7 +852,8 @@ namespace MPTagThat.Converter.ViewModels
     private void ConversionThread()
     {
       log.Trace(">>>");
-
+      
+      IsBusy = true;
       _cts = new CancellationTokenSource();
 
       var po = new ParallelOptions
@@ -409,8 +955,6 @@ namespace MPTagThat.Converter.ViewModels
             tagOutFile.Save();
 
             log.Info($"Finished converting file {inputFile} -> {outFile}");
-
-            return;
           }
           catch (Exception ex)
           {
@@ -426,9 +970,161 @@ namespace MPTagThat.Converter.ViewModels
       {
         _cts.Dispose();
         _conversionActive = false;
+        IsBusy = false;
       }
 
       log.Trace("<<<");
+    }
+
+    /// <summary>
+    ///   Sets the Mode according to the Settings / Selection
+    /// </summary>
+    private void SetWMACbrVbr()
+    {
+      var idx = 0;
+      foreach (Item item in WmaCBRVBR)
+      {
+        if ((item.Value as string).StartsWith(_options.MainSettings.RipEncoderWMACbrVbr))
+        {
+          WmaCBRVBRSelectedIndex = idx;
+          break;
+        }
+
+        idx++;
+      }
+    }
+
+        /// <summary>
+    ///   Fills the Sample Format Combo box
+    /// </summary>
+    private void SetWMASampleCombo()
+    {
+      Item[] modeTab = null;
+      var defaultValue = 0;
+      var vbrcbr = WmaCBRVBR[WmaCBRVBRSelectedIndex].Value;
+      string encoder = WmaEncoder[WmaEncoderSelectedIndex].Value;
+
+      if (encoder == "wma")
+      {
+        if (vbrcbr == "Cbr")
+        {
+          modeTab = _options.WmaStandardSampleCBR;
+          defaultValue = 10;
+          _defaultBitRateIndex = 4;
+        }
+        else
+        {
+          modeTab = _options.WmaStandardSampleVBR;
+          defaultValue = 0;
+          _defaultBitRateIndex = 4;
+        }
+      }
+      else if (encoder == "wmapro")
+      {
+        if (vbrcbr == "Cbr")
+        {
+          modeTab = _options.WmaProSampleCBR;
+          defaultValue = 1;
+          _defaultBitRateIndex = 4;
+        }
+        else
+        {
+          modeTab = _options.WmaProSampleVBR;
+          defaultValue = 0;
+          _defaultBitRateIndex = 4;
+        }
+      }
+      else
+      {
+        // Lossless
+        modeTab = _options.WmaLosslessSampleVBR;
+        defaultValue = 0;
+        _defaultBitRateIndex = 0;
+      }
+      WmaSampleFormat.Clear();
+      WmaSampleFormat.AddRange(modeTab);
+
+      bool found = false;
+      var idx = 0;
+      foreach (Item item in WmaSampleFormat)
+      {
+        if ((string)item.Value == _options.MainSettings.RipEncoderWMASample)
+        {
+          WmaSampleFormatSelectedIndex = idx;
+          found = true;
+          break;
+        }
+        idx++;
+      }
+
+      if (!found)
+        WmaSampleFormatSelectedIndex = defaultValue;
+    }
+
+    /// <summary>
+    ///   Fills the Bitrate combo, according to the selection in the Sample and CbrVbr Combo
+    /// </summary>
+    private void SetWMABitRateCombo()
+    {
+      var vbrcbr = WmaCBRVBR[WmaCBRVBRSelectedIndex].Value;
+      var sampleFormat = WmaSampleFormat[WmaSampleFormatSelectedIndex].Value.Split(',');
+
+      BASSWMAEncode encodeFlags = BASSWMAEncode.BASS_WMA_ENCODE_DEFAULT;
+
+      string encoder = WmaEncoder[WmaEncoderSelectedIndex].Value;
+      if (encoder == "wmapro" || encoder == "wmalossless")
+        encodeFlags = encodeFlags | BASSWMAEncode.BASS_WMA_ENCODE_PRO;
+      else
+        encodeFlags = encodeFlags | BASSWMAEncode.BASS_WMA_ENCODE_STANDARD;
+
+      if (vbrcbr == "Cbr")
+        encodeFlags = encodeFlags | BASSWMAEncode.BASS_WMA_ENCODE_RATES_CBR;
+      else
+        encodeFlags = encodeFlags | BASSWMAEncode.BASS_WMA_ENCODE_RATES_VBR;
+
+      if (sampleFormat[0] == "24")
+        encodeFlags = encodeFlags | BASSWMAEncode.BASS_WMA_ENCODE_24BIT;
+
+      WmaBitRate.Clear();
+      if (encoder == "wmalossless")
+      {
+        WmaBitRate.Add(100);
+        WmaBitRateSelectedIndex = 0;
+      }
+      else
+      {
+        int[] bitRates = BassWma.BASS_WMA_EncodeGetRates(Convert.ToInt32(sampleFormat[2]),
+                                                         Convert.ToInt32(sampleFormat[1]), encodeFlags);
+        foreach (var bitrate in bitRates)
+        {
+          WmaBitRate.Add(bitrate);
+        }
+
+        bool found = false;
+        var idx = 0;
+        foreach (var bitrate in WmaBitRate)
+        {
+          if (bitrate == _options.MainSettings.RipEncoderWMABitRate)
+          {
+            WmaBitRateSelectedIndex = idx;
+            found = true;
+            break;
+          }
+          idx++;
+        }
+
+        if (!found)
+        {
+          if (WmaBitRate.Count - 1 < _defaultBitRateIndex)
+          {
+            WmaBitRateSelectedIndex = 0;
+          }
+          else
+          {
+            WmaBitRateSelectedIndex = _defaultBitRateIndex;
+          }
+        }
+      }
     }
 
     #endregion

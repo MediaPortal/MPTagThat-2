@@ -235,6 +235,16 @@ namespace MPTagThat.Core.Services.Settings.Setting
 
     #endregion
 
+    #region OPUS
+
+    [Setting(SettingScope.User, "10")]
+    public int RipOpusComplexity { get; set; }
+
+    [Setting(SettingScope.User, "")]
+    public string RipOpusExpert { get; set; }
+
+    #endregion
+
     #region FLAC
 
     [Setting(SettingScope.User, "4")]
@@ -245,10 +255,13 @@ namespace MPTagThat.Core.Services.Settings.Setting
 
     #endregion
 
-    #region AAC
+    #region FAAC
 
-    [Setting(SettingScope.User, "128")]
-    public string RipEncoderAACBitRate { get; set; }
+    [Setting(SettingScope.User, "100")]
+    public int RipFAACQuality { get; set; }
+    
+    [Setting(SettingScope.User, "")]
+    public string RipFAACExpert { get; set; }
 
     #endregion
 
@@ -261,7 +274,7 @@ namespace MPTagThat.Core.Services.Settings.Setting
     public string RipEncoderWMASample { get; set; }
 
     [Setting(SettingScope.User, "50")]
-    public string RipEncoderWMABitRate { get; set; }
+    public int RipEncoderWMABitRate { get; set; }
 
     [Setting(SettingScope.User, "Vbr")]
     public string RipEncoderWMACbrVbr { get; set; }

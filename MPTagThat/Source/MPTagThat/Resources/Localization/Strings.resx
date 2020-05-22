@@ -1589,10 +1589,6 @@ To change the order of the ratings drag the rows.</value>
     <value>Select Encoder:</value>
     <comment>The Label to select Encoder</comment>
   </data>
-  <data name="convert_Options" xml:space="preserve">
-    <value>Convert Options</value>
-    <comment>The RibbonBar Heading</comment>
-  </data>
   <data name="convert_OutputFolder" xml:space="preserve">
     <value>Output Folder:</value>
     <comment>The Output Folder of the converted file</comment>
@@ -1634,5 +1630,122 @@ To change the order of the ratings drag the rows.</value>
   </data>
   <data name="screentip_AddConvert" xml:space="preserve">
     <value>Adds the selected files to the list of files to be converted to a different format.</value>
+  </data>
+  <data name="convert_FileName_Format" xml:space="preserve">
+    <value>Format:</value>
+  </data>
+  <data name="convert_FileName_Parameters" xml:space="preserve">
+    <value>Parameters</value>
+  </data>
+  <data name="convert_Options_ABR_BitRate" xml:space="preserve">
+    <value>Average Bitrate (ABR):</value>
+  </data>
+  <data name="convert_Options_FAAC" xml:space="preserve">
+    <value>AAC (m4a)</value>
+  </data>
+  <data name="convert_Options_FAAC_FAACExpert" xml:space="preserve">
+    <value>Enter FAAC Encoder parameters (Experts only):</value>
+  </data>
+  <data name="convert_Options_FAAC_GroupBoxSettings" xml:space="preserve">
+    <value>AAC Encoding Settings</value>
+  </data>
+  <data name="convert_Options_FLAC" xml:space="preserve">
+    <value>FLAC (flac)</value>
+  </data>
+  <data name="convert_Options_FLAC_FLACExpert" xml:space="preserve">
+    <value>Enter FLAC Encoder parameters (Experts only):</value>
+  </data>
+  <data name="convert_Options_FLAC_GroupBoxSettings" xml:space="preserve">
+    <value>FLAC Encoding Settings</value>
+  </data>
+  <data name="convert_Options_General" xml:space="preserve">
+    <value>General</value>
+  </data>
+  <data name="convert_Options_GroupBox_ExpertSettings" xml:space="preserve">
+    <value>Expert Settings</value>
+  </data>
+  <data name="convert_Options_MP3" xml:space="preserve">
+    <value>Lame (mp3)</value>
+  </data>
+  <data name="convert_Options_MP3_DescABR" xml:space="preserve">
+    <value>For ABR modes (high quality per given bitrate but not as high as VBR). Using this preset will usually give you good quality at a specified bitrate.\n\nDepending on the bitrate entered, this preset will determine the optimal settings for that particular situation. While this approach works, it is not nearly as flexible as VBR, and usually will not attain the same level of quality as VBR at higher bitrates.</value>
+  </data>
+  <data name="convert_Options_MP3_DescExtreme" xml:space="preserve">
+    <value>If you have extremely good hearing and similar equipment, this preset will generally provide slightly higher quality than the "standard" mode. (Bitrate Range 220-260)</value>
+  </data>
+  <data name="convert_Options_MP3_DescInsane" xml:space="preserve">
+    <value>CBR 320 kbps. This preset will usually be overkill for most people and most situations, but if you must have the absolute highest quality with no  regard to filesize, this is the way to go.</value>
+  </data>
+  <data name="convert_Options_MP3_DescMedium" xml:space="preserve">
+    <value>This preset should provide near transparency to most people on most music. (Bitrate Range 140-185)</value>
+  </data>
+  <data name="convert_Options_MP3_DescStandard" xml:space="preserve">
+    <value>This preset should generally be transparent to most people on most music and is already quite high in quality. (Bitrate Range 170-210)</value>
+  </data>
+  <data name="convert_Options_MP3_GroupBoxPresets" xml:space="preserve">
+    <value>MP3 Encoder Presets</value>
+  </data>
+  <data name="convert_Options_MP3_LameExpert" xml:space="preserve">
+    <value>Enter LAME Encoder parameters (Experts only):</value>
+  </data>
+  <data name="convert_Options_Musepack" xml:space="preserve">
+    <value>Musepack (mpc)</value>
+  </data>
+  <data name="convert_Options_Musepack_Expert" xml:space="preserve">
+    <value>Enter Musepack Encoder parameters (Experts only):</value>
+  </data>
+  <data name="convert_Options_Musepack_GroupBoxSettings" xml:space="preserve">
+    <value>Musepack Encoding Settings</value>
+  </data>
+  <data name="convert_Options_Ogg" xml:space="preserve">
+    <value>OGG Vorbis (ogg)</value>
+  </data>
+  <data name="convert_Options_Ogg_GroupBoxSettings" xml:space="preserve">
+    <value>OGG Encoding Settings</value>
+  </data>
+  <data name="convert_Options_Ogg_OggExpert" xml:space="preserve">
+    <value>Enter OGG Vorbis Encoder parameters (Experts only):</value>
+  </data>
+  <data name="convert_Options_Ogg_Quality" xml:space="preserve">
+    <value>Quality:</value>
+  </data>
+  <data name="convert_Options_Opus" xml:space="preserve">
+    <value>Opus (opus)</value>
+  </data>
+  <data name="convert_Options_Opus_Complexity" xml:space="preserve">
+    <value>Complexity:</value>
+  </data>
+  <data name="convert_Options_Opus_Expert" xml:space="preserve">
+    <value>Enter Opus Encoder parameters (Experts only):</value>
+  </data>
+  <data name="convert_Options_Opus_GroupBoxSettings" xml:space="preserve">
+    <value>Opus Encoding Settings</value>
+  </data>
+  <data name="convert_Options_Preset" xml:space="preserve">
+    <value>Preset:</value>
+  </data>
+  <data name="convert_Options_WarningExpert" xml:space="preserve">
+    <value>Warning: Preset settings will not be used, when specifying Expert parameters</value>
+  </data>
+  <data name="convert_Options_Wavpack" xml:space="preserve">
+    <value>WavPack (wv)</value>
+  </data>
+  <data name="convert_Options_WavPack_Expert" xml:space="preserve">
+    <value>Enter WavPack Encoder parameters (Experts only):</value>
+  </data>
+  <data name="convert_Options_Wavpack_GroupBoxSettings" xml:space="preserve">
+    <value>WavPack Encoding Settings</value>
+  </data>
+  <data name="convert_Options_WMA" xml:space="preserve">
+    <value>Windows Media Audio (wma)</value>
+  </data>
+  <data name="convert_Options_WMA_Encoder" xml:space="preserve">
+    <value>Encoder Format:</value>
+  </data>
+  <data name="convert_Options_WMA_GroupBoxSettings" xml:space="preserve">
+    <value>Windows Media Audio Encoding Settings</value>
+  </data>
+  <data name="convert_Options_WMA_SampleFormat" xml:space="preserve">
+    <value>Sample Format:</value>
   </data>
 </root>

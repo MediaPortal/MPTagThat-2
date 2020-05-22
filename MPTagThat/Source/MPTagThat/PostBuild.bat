@@ -84,3 +84,4 @@ xcopy /y %1\UI\MPTagThat.Dialogs\bin\%2\Syncfusion.* %TARGETPATH%\Bin\
 
 REM Copy Converter Module
 xcopy /y %1\UI\MPTagThat.Converter\bin\%2\MPTagThat.Converter.* %TARGETPATH%\Bin\
+xcopy /y %1\UI\MPTagThat.Converter\bin\%2\x64\*.* %TARGETPATH%\Bin\Encoder\

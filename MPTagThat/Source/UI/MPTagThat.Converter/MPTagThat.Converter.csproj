@@ -13,6 +13,8 @@
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <WarningLevel>4</WarningLevel>
     <Deterministic>true</Deterministic>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -55,6 +57,12 @@
     </Reference>
     <Reference Include="Syncfusion.SfGrid.WPF, Version=18.1460.0.52, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Syncfusion.SfGrid.WPF.18.1.0.52\lib\net46\Syncfusion.SfGrid.WPF.dll</HintPath>
+    </Reference>
+    <Reference Include="Syncfusion.SfInput.WPF, Version=18.1460.0.52, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Syncfusion.SfInput.WPF.18.1.0.52\lib\net46\Syncfusion.SfInput.WPF.dll</HintPath>
+    </Reference>
+    <Reference Include="Syncfusion.SfShared.WPF, Version=18.1460.0.52, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Syncfusion.SfShared.WPF.18.1.0.52\lib\net46\Syncfusion.SfShared.WPF.dll</HintPath>
     </Reference>
     <Reference Include="Syncfusion.Shared.WPF, Version=18.1460.0.52, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Syncfusion.Shared.WPF.18.1.0.52\lib\net46\Syncfusion.Shared.WPF.dll</HintPath>
@@ -123,7 +131,30 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="x64\faac.exe" />
+    <Content Include="x64\faad.exe" />
+    <Content Include="x64\flac.exe" />
+    <Content Include="x64\lame.exe" />
+    <Content Include="x64\lame_enc.dll" />
+    <Content Include="x64\libfaac-0.dll" />
+    <Content Include="x64\libfaad-2.dll" />
+    <Content Include="x64\mpcenc.exe" />
+    <Content Include="x64\oggenc2.exe" />
+    <Content Include="x64\opusenc.exe" />
+    <Content Include="x64\wavpack.exe" />
+    <Content Include="x86\faac.exe" />
+    <Content Include="x86\faad.exe" />
+    <Content Include="x86\flac.exe" />
+    <Content Include="x86\lame.exe" />
+    <Content Include="x86\lame_enc.dll" />
+    <Content Include="x86\libfaac-0.dll" />
+    <Content Include="x86\libfaad-2.dll" />
+    <Content Include="x86\mpcenc.exe" />
+    <Content Include="x86\oggenc2.exe" />
+    <Content Include="x86\opusenc.exe" />
+    <Content Include="x86\wavpack.exe" />
+  </ItemGroup>
   <ItemGroup>
     <Page Include="Views\ConverterView.xaml">
       <SubType>Designer</SubType>
@@ -137,4 +168,11 @@
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="..\..\packages\MPTagThat.AudioEncoders.1.0.0\build\MPTagThat.AudioEncoders.targets" Condition="Exists('..\..\packages\MPTagThat.AudioEncoders.1.0.0\build\MPTagThat.AudioEncoders.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\..\packages\MPTagThat.AudioEncoders.1.0.0\build\MPTagThat.AudioEncoders.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\MPTagThat.AudioEncoders.1.0.0\build\MPTagThat.AudioEncoders.targets'))" />
+  </Target>
 </Project>

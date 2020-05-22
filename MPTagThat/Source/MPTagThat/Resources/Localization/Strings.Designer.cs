@@ -439,6 +439,24 @@ namespace MPTagThat.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Format:.
+        /// </summary>
+        public static string convert_FileName_Format {
+            get {
+                return ResourceManager.GetString("convert_FileName_Format", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Parameters.
+        /// </summary>
+        public static string convert_FileName_Parameters {
+            get {
+                return ResourceManager.GetString("convert_FileName_Parameters", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Please select a Encoder from the list.
         /// </summary>
         public static string convert_NoEncoder {
@@ -457,11 +475,335 @@ namespace MPTagThat.Resources.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Convert Options.
+        ///   Looks up a localized string similar to Average Bitrate (ABR):.
         /// </summary>
-        public static string convert_Options {
+        public static string convert_Options_ABR_BitRate {
             get {
-                return ResourceManager.GetString("convert_Options", resourceCulture);
+                return ResourceManager.GetString("convert_Options_ABR_BitRate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to AAC (m4a).
+        /// </summary>
+        public static string convert_Options_FAAC {
+            get {
+                return ResourceManager.GetString("convert_Options_FAAC", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enter FAAC Encoder parameters (Experts only):.
+        /// </summary>
+        public static string convert_Options_FAAC_FAACExpert {
+            get {
+                return ResourceManager.GetString("convert_Options_FAAC_FAACExpert", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to AAC Encoding Settings.
+        /// </summary>
+        public static string convert_Options_FAAC_GroupBoxSettings {
+            get {
+                return ResourceManager.GetString("convert_Options_FAAC_GroupBoxSettings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to FLAC (flac).
+        /// </summary>
+        public static string convert_Options_FLAC {
+            get {
+                return ResourceManager.GetString("convert_Options_FLAC", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enter FLAC Encoder parameters (Experts only):.
+        /// </summary>
+        public static string convert_Options_FLAC_FLACExpert {
+            get {
+                return ResourceManager.GetString("convert_Options_FLAC_FLACExpert", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to FLAC Encoding Settings.
+        /// </summary>
+        public static string convert_Options_FLAC_GroupBoxSettings {
+            get {
+                return ResourceManager.GetString("convert_Options_FLAC_GroupBoxSettings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to General.
+        /// </summary>
+        public static string convert_Options_General {
+            get {
+                return ResourceManager.GetString("convert_Options_General", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Expert Settings.
+        /// </summary>
+        public static string convert_Options_GroupBox_ExpertSettings {
+            get {
+                return ResourceManager.GetString("convert_Options_GroupBox_ExpertSettings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Lame (mp3).
+        /// </summary>
+        public static string convert_Options_MP3 {
+            get {
+                return ResourceManager.GetString("convert_Options_MP3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to For ABR modes (high quality per given bitrate but not as high as VBR). Using this preset will usually give you good quality at a specified bitrate.\n\nDepending on the bitrate entered, this preset will determine the optimal settings for that particular situation. While this approach works, it is not nearly as flexible as VBR, and usually will not attain the same level of quality as VBR at higher bitrates..
+        /// </summary>
+        public static string convert_Options_MP3_DescABR {
+            get {
+                return ResourceManager.GetString("convert_Options_MP3_DescABR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to If you have extremely good hearing and similar equipment, this preset will generally provide slightly higher quality than the &quot;standard&quot; mode. (Bitrate Range 220-260).
+        /// </summary>
+        public static string convert_Options_MP3_DescExtreme {
+            get {
+                return ResourceManager.GetString("convert_Options_MP3_DescExtreme", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to CBR 320 kbps. This preset will usually be overkill for most people and most situations, but if you must have the absolute highest quality with no  regard to filesize, this is the way to go..
+        /// </summary>
+        public static string convert_Options_MP3_DescInsane {
+            get {
+                return ResourceManager.GetString("convert_Options_MP3_DescInsane", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This preset should provide near transparency to most people on most music. (Bitrate Range 140-185).
+        /// </summary>
+        public static string convert_Options_MP3_DescMedium {
+            get {
+                return ResourceManager.GetString("convert_Options_MP3_DescMedium", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This preset should generally be transparent to most people on most music and is already quite high in quality. (Bitrate Range 170-210).
+        /// </summary>
+        public static string convert_Options_MP3_DescStandard {
+            get {
+                return ResourceManager.GetString("convert_Options_MP3_DescStandard", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to MP3 Encoder Presets.
+        /// </summary>
+        public static string convert_Options_MP3_GroupBoxPresets {
+            get {
+                return ResourceManager.GetString("convert_Options_MP3_GroupBoxPresets", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enter LAME Encoder parameters (Experts only):.
+        /// </summary>
+        public static string convert_Options_MP3_LameExpert {
+            get {
+                return ResourceManager.GetString("convert_Options_MP3_LameExpert", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Musepack (mpc).
+        /// </summary>
+        public static string convert_Options_Musepack {
+            get {
+                return ResourceManager.GetString("convert_Options_Musepack", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enter Musepack Encoder parameters (Experts only):.
+        /// </summary>
+        public static string convert_Options_Musepack_Expert {
+            get {
+                return ResourceManager.GetString("convert_Options_Musepack_Expert", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Musepack Encoding Settings.
+        /// </summary>
+        public static string convert_Options_Musepack_GroupBoxSettings {
+            get {
+                return ResourceManager.GetString("convert_Options_Musepack_GroupBoxSettings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to OGG Vorbis (ogg).
+        /// </summary>
+        public static string convert_Options_Ogg {
+            get {
+                return ResourceManager.GetString("convert_Options_Ogg", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to OGG Encoding Settings.
+        /// </summary>
+        public static string convert_Options_Ogg_GroupBoxSettings {
+            get {
+                return ResourceManager.GetString("convert_Options_Ogg_GroupBoxSettings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enter OGG Vorbis Encoder parameters (Experts only):.
+        /// </summary>
+        public static string convert_Options_Ogg_OggExpert {
+            get {
+                return ResourceManager.GetString("convert_Options_Ogg_OggExpert", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Quality:.
+        /// </summary>
+        public static string convert_Options_Ogg_Quality {
+            get {
+                return ResourceManager.GetString("convert_Options_Ogg_Quality", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Opus (opus).
+        /// </summary>
+        public static string convert_Options_Opus {
+            get {
+                return ResourceManager.GetString("convert_Options_Opus", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Complexity:.
+        /// </summary>
+        public static string convert_Options_Opus_Complexity {
+            get {
+                return ResourceManager.GetString("convert_Options_Opus_Complexity", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enter Opus Encoder parameters (Experts only):.
+        /// </summary>
+        public static string convert_Options_Opus_Expert {
+            get {
+                return ResourceManager.GetString("convert_Options_Opus_Expert", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Opus Encoding Settings.
+        /// </summary>
+        public static string convert_Options_Opus_GroupBoxSettings {
+            get {
+                return ResourceManager.GetString("convert_Options_Opus_GroupBoxSettings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Preset:.
+        /// </summary>
+        public static string convert_Options_Preset {
+            get {
+                return ResourceManager.GetString("convert_Options_Preset", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Warning: Preset settings will not be used, when specifying Expert parameters.
+        /// </summary>
+        public static string convert_Options_WarningExpert {
+            get {
+                return ResourceManager.GetString("convert_Options_WarningExpert", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to WavPack (wv).
+        /// </summary>
+        public static string convert_Options_Wavpack {
+            get {
+                return ResourceManager.GetString("convert_Options_Wavpack", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enter WavPack Encoder parameters (Experts only):.
+        /// </summary>
+        public static string convert_Options_WavPack_Expert {
+            get {
+                return ResourceManager.GetString("convert_Options_WavPack_Expert", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to WavPack Encoding Settings.
+        /// </summary>
+        public static string convert_Options_Wavpack_GroupBoxSettings {
+            get {
+                return ResourceManager.GetString("convert_Options_Wavpack_GroupBoxSettings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Windows Media Audio (wma).
+        /// </summary>
+        public static string convert_Options_WMA {
+            get {
+                return ResourceManager.GetString("convert_Options_WMA", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Encoder Format:.
+        /// </summary>
+        public static string convert_Options_WMA_Encoder {
+            get {
+                return ResourceManager.GetString("convert_Options_WMA_Encoder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Windows Media Audio Encoding Settings.
+        /// </summary>
+        public static string convert_Options_WMA_GroupBoxSettings {
+            get {
+                return ResourceManager.GetString("convert_Options_WMA_GroupBoxSettings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sample Format:.
+        /// </summary>
+        public static string convert_Options_WMA_SampleFormat {
+            get {
+                return ResourceManager.GetString("convert_Options_WMA_SampleFormat", resourceCulture);
             }
         }
         
