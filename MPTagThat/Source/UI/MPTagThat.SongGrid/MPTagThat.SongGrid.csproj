@@ -101,7 +101,6 @@
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
-    <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
     <Reference Include="TagLibSharp, Version=2.2.0.1, Culture=neutral, PublicKeyToken=db62eba44689b5b0, processorArchitecture=MSIL">
       <HintPath>..\..\packages\MediaPortal.TagLib.2.2.0.1\lib\TagLibSharp.dll</HintPath>
