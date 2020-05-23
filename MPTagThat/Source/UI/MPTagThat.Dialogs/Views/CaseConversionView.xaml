@@ -144,7 +144,7 @@
                       Command="{Binding ExceptionAddCommand}" Margin="5,5,0,0"/>
 
               <ListBox x:Name="ExceptionListBox" Margin="10,5,0,0"
-                       Grid.Row="1" Grid.Column="0" 
+                       Grid.Row="1" Grid.Column="0" Height="200"
                        ItemsSource="{Binding ConvertExceptions, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                        SelectionMode="Multiple" >
                 <b:Interaction.Triggers>
@@ -155,11 +155,17 @@
                 </b:Interaction.Triggers>    
                 <ListBox.ItemsPanel>
                   <ItemsPanelTemplate>
-                    <UniformGrid Margin="20" Columns="4"
+                    <UniformGrid Margin="20" Columns="5"
                                  HorizontalAlignment="Left"
                                  VerticalAlignment="Top"/>
                   </ItemsPanelTemplate>
                 </ListBox.ItemsPanel>
+                <ListBox.ItemContainerStyle>
+                  <Style TargetType="ListBoxItem">
+                    <Setter Property="BorderThickness" Value="1" />
+                    <Setter Property="BorderBrush" Value="DarkGray" />
+                  </Style>
+                </ListBox.ItemContainerStyle>
               </ListBox>
               
               <Button Grid.Row="1" Grid.Column="1" Width="Auto" Height="25" Margin="5,5,0,0"
