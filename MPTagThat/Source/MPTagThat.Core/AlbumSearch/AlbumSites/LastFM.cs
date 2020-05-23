@@ -20,6 +20,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using CommonServiceLocator;
@@ -90,9 +91,9 @@ namespace MPTagThat.Core.AlbumSearch.AlbumSites
           Site = "LastFM",
           Artist = lastfmAlbum.ArtistName,
           Title = lastfmAlbum.Name,
-          SmallImageUrl = lastfmAlbum.Images.Small.AbsoluteUri,
-          MediumImageUrl = lastfmAlbum.Images.Medium.AbsoluteUri,
-          LargeImageUrl = lastfmAlbum.Images.Large.AbsoluteUri
+          SmallImageUrl = lastfmAlbum.Images?.Small?.AbsoluteUri,
+          MediumImageUrl = lastfmAlbum.Images?.Medium?.AbsoluteUri,
+          LargeImageUrl = lastfmAlbum.Images?.Large?.AbsoluteUri
         };
 
         var discs = new List<List<AlbumSong>>();
