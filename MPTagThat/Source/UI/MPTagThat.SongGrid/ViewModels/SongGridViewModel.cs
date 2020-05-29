@@ -99,7 +99,7 @@ namespace MPTagThat.SongGrid.ViewModels
       _gridColumns = new SongGridViewColumns();
       CreateColumns();
 
-      _songs = new BindingList<SongData>();
+      _songs = new SongList<SongData>();
       ItemsSourceDataCommand = new BaseCommand(SetItemsSource);
       SelectionChangedCommand = new BaseCommand(SelectionChanged);
       ContextMenuCopyCommand = new BaseCommand(ContextMenuCopy);
@@ -150,8 +150,8 @@ namespace MPTagThat.SongGrid.ViewModels
     /// The Songs in the Grid
     /// </summary>
 
-    private BindingList<SongData> _songs;
-    public BindingList<SongData> Songs
+    private SongList<SongData> _songs;
+    public SongList<SongData> Songs
     {
       get => _songs;
       set => SetProperty(ref _songs, value);
@@ -700,6 +700,12 @@ namespace MPTagThat.SongGrid.ViewModels
                        }
                        Songs.Add(song);
                        count++;
+                       if (count % 1000 == 0)
+                       {
+                         // Commit every 1000 songs, in case we have database mode enabled
+                         _songs.CommitDatabaseChanges();
+                       }
+
                        msg.NumberOfFiles = count;
                        EventSystem.Publish(msg);
                      }
@@ -734,7 +740,7 @@ namespace MPTagThat.SongGrid.ViewModels
              }
 
              // Commit changes to SongTemp, in case we have switched to DB Mode
-             _options.Songlist.CommitDatabaseChanges();
+             _songs.CommitDatabaseChanges();
 
              msg.CurrentProgress = 0;
              msg.CurrentFile = "";

@@ -1748,4 +1748,10 @@ To change the order of the ratings drag the rows.</value>
   <data name="convert_Options_WMA_SampleFormat" xml:space="preserve">
     <value>Sample Format:</value>
   </data>
+  <data name="database_ScanAborted" xml:space="preserve">
+    <value>Database scan cancelled</value>
+  </data>
+  <data name="database_ScanFinished" xml:space="preserve">
+    <value>Database scan finished. Processed {0} tracks in: {1:d2}:{2:d2}:{3:d2}</value>
+  </data>
 </root>

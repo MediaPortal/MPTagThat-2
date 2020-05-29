@@ -916,6 +916,24 @@ namespace MPTagThat.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Database scan cancelled.
+        /// </summary>
+        public static string database_ScanAborted {
+            get {
+                return ResourceManager.GetString("database_ScanAborted", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Database scan finished. Processed {0} tracks in: {1:d2}:{2:d2}:{3:d2}.
+        /// </summary>
+        public static string database_ScanFinished {
+            get {
+                return ResourceManager.GetString("database_ScanFinished", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Apply.
         /// </summary>
         public static string dialog_Apply {

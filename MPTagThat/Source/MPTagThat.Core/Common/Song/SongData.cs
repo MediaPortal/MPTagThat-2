@@ -26,7 +26,6 @@ using System.Linq;
 using System.Windows.Media.Imaging;
 using MPTagThat.Core.Utils;
 using Prism.Mvvm;
-using Raven.Abstractions.Extensions;
 using TagLib;
 using Picture = MPTagThat.Core.Common.Song.Picture;
 
@@ -195,10 +194,9 @@ namespace MPTagThat.Core.Common.Song
     }
 
     /// <summary>
-    /// Indicates that we are in the Init stage and
-    /// should not set the Changed status
+    /// Indicates if the Changed status should bet set
     /// </summary>
-    public bool Init { get; set; }
+    public bool  UpdateChangedProperty { get; set; }
 
     /// <summary>
     /// Indicates, if the Tags have been removed
@@ -1256,7 +1254,6 @@ namespace MPTagThat.Core.Common.Song
     public SongData Clone()
     {
       var songClone = new SongData();
-      songClone.Init = true;
       songClone.FullFileName = this.FullFileName;
       songClone.FileName = this.FileName;
       songClone.Artist = this.Artist;
@@ -1329,7 +1326,7 @@ namespace MPTagThat.Core.Common.Song
           var pic = new Picture(this._pictures[i]);
           picList.Add(pic);
         }
-        songClone._pictures.AddRange(picList);
+        picList.ForEach(songClone._pictures.Add);
 
         songClone._popmframes = new ObservableCollection<PopmFrame>();
         var popmList = new List<PopmFrame>();
@@ -1338,7 +1335,7 @@ namespace MPTagThat.Core.Common.Song
           var popmframe = new PopmFrame(this._popmframes[i]);
           popmList.Add(popmframe);
         }
-        songClone._popmframes.AddRange(popmList);
+        popmList.ForEach(songClone._popmframes.Add);
 
         songClone.UserFrames = new ObservableCollection<Frame>();
         var userFrameList = new List<Frame>();
@@ -1347,7 +1344,7 @@ namespace MPTagThat.Core.Common.Song
           var userFrame = new Frame(this.UserFrames[i].Id, this.UserFrames[i].Description, this.UserFrames[i].Value);
           userFrameList.Add(userFrame);
         }
-        songClone.UserFrames.AddRange(userFrameList);
+        userFrameList.ForEach(songClone.UserFrames.Add);
 
         // Handle Lists
         for (var i = 0; i < this._lyrics.Count; i++)
@@ -1372,7 +1369,6 @@ namespace MPTagThat.Core.Common.Song
       {
         // ignored
       }
-      songClone.Init = false;
       return songClone;
     }
 
@@ -1441,7 +1437,7 @@ namespace MPTagThat.Core.Common.Song
 
     protected override void OnPropertyChanged(PropertyChangedEventArgs args)
     {
-      if (!Init && args.PropertyName != "Changed" && args.PropertyName != "Status" && args.PropertyName != "StatusMsg")
+      if (UpdateChangedProperty && args.PropertyName != "Changed" && args.PropertyName != "Status" && args.PropertyName != "StatusMsg")
       {
         Changed = true;
       }

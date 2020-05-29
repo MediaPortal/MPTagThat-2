@@ -1,5 +1,5 @@
-﻿#region Copyright (C) 2017 Team MediaPortal
-// Copyright (C) 2017 Team MediaPortal
+﻿#region Copyright (C) 2020 Team MediaPortal
+// Copyright (C) 2020 Team MediaPortal
 // http://www.team-mediaportal.com
 // 
 // MPTagThat is free software: you can redistribute it and/or modify
@@ -16,16 +16,12 @@
 // along with MPTagThat. If not, see <http://www.gnu.org/licenses/>.
 #endregion
 
-namespace MPTagThat.Core.Services.Settings.Setting
+namespace MPTagThat.Core.Services.MusicDatabase.Indexes
 {
-  public class StartupSettings
+  public class DistinctResult
   {
-    public bool Portable { get; set; } = false;
-    public int MaxSongs { get; set; } = 1000;
-    public bool RavenDebug { get; set; } = false;
-    public bool RavenStudio { get; set; } = false;
-    public int RavenStudioPort { get; set; } = 8080;
-    public string DatabaseFolder { get; set; }
-    public string CoverArtFolder { get; set; }
+    public string Name { get; set; }
+    public string Album { get; set; }
+    public string Genre { get; set; }
   }
 }

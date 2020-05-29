@@ -1459,6 +1459,7 @@ namespace MPTagThat.TagEdit.ViewModels
         SongEdit = songs[0];
         _songBackup = SongEdit.Clone();
         UpdateGenres(SongEdit);
+        SongEdit.UpdateChangedProperty = true;
         SelectedGenres?.AddRange(SongEdit.Genre.Split(';'));
         var j = 0;
         foreach (var mediatype in MediaTypes)
@@ -1480,7 +1481,6 @@ namespace MPTagThat.TagEdit.ViewModels
       }
 
       log.Trace($"{songs.Count} songs selected");
-      SongEdit.Init = true;
       var i = 0;
       byte[] picData = new byte[] { };
       var strGenreTemp = "";
@@ -1807,7 +1807,7 @@ namespace MPTagThat.TagEdit.ViewModels
       }
 
       _isInitializing = false;
-      SongEdit.Init = false;
+      SongEdit.UpdateChangedProperty = true;
       IsApplyButtonEnabled = false;
 
       // We have multiple Songs selected, so show the Checkboxes and
@@ -1995,7 +1995,6 @@ namespace MPTagThat.TagEdit.ViewModels
     private void UndoSongedits(SongData original, SongData backup)
     {
       original.Status = -1;
-      original.Init = true;
       original.Changed = false;
       original.FullFileName = backup.FullFileName;
       original.FileName = backup.FileName;
@@ -2059,7 +2058,6 @@ namespace MPTagThat.TagEdit.ViewModels
       original.TrackLength = backup.TrackLength;
       original.Year = backup.Year;
       original.UserFrames = backup.UserFrames;
-      original.Init = false;
     }
 
     /// <summary>

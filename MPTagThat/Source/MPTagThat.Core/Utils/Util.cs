@@ -22,6 +22,7 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -1423,6 +1424,103 @@ namespace MPTagThat.Core.Utils
       parmString = str.Replace(s1, "\x0001");
       return retVal;
     }
+
+    #endregion
+
+    #region Database related methods
+    
+    /// <summary>
+    ///   Changes the Quote to a double Quote, to have correct SQL Syntax
+    /// </summary>
+    /// <param name = "strText"></param>
+    /// <returns></returns>
+    public static string RemoveInvalidChars(string strText)
+    {
+      if (strText == null)
+      {
+        return "";
+      }
+      return strText.Replace("'", "''").Trim();
+    }
+
+    /// <summary>
+    /// Escape Database queries to have the correct syntax
+    /// </summary>
+    /// <param name="query"></param>
+    /// <returns></returns>
+    public static string EscapeDatabaseQuery(string query)
+    {
+      var literal = new StringBuilder(query.Length);
+      foreach (var c in query)
+      {
+        switch (c)
+        {
+          // && || 
+          case '+':
+            literal.Append(@"\+");
+            break;
+          case '-':
+            literal.Append(@"\-");
+            break;
+          case '!':
+            literal.Append(@"\!");
+            break;
+          case '(':
+            literal.Append(@"\(");
+            break;
+          case ')':
+            literal.Append(@"\)");
+            break;
+          case '}':
+            literal.Append(@"\}");
+            break;
+          case '{':
+            literal.Append(@"\{");
+            break;
+          case '[':
+            literal.Append(@"\[");
+            break;
+          case ']':
+            literal.Append(@"\]");
+            break;
+          case '^':
+            literal.Append(@"\^");
+            break;
+          case '~':
+            literal.Append(@"\~");
+            break;
+          case '*':
+            literal.Append(@"\*");
+            break;
+          case '?':
+            literal.Append(@"\?");
+            break;
+          case ':':
+            literal.Append(@"\:");
+            break;
+          case '\\':
+            literal.Append(@"\\");
+            break;
+
+          case '"':
+            literal.Append("\"");
+            break;
+          default:
+            if (Char.GetUnicodeCategory(c) != UnicodeCategory.Control)
+            {
+              literal.Append(c);
+            }
+            else
+            {
+              literal.Append(@"\u");
+              literal.Append(((ushort) c).ToString("x4"));
+            }
+            break;
+        }
+      }
+      return literal.ToString();
+    }
+
 
     #endregion
   }

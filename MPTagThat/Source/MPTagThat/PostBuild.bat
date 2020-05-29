@@ -7,7 +7,7 @@ echo off
 set TARGETPATH="%1%..\Bin"
 
 REM Copy All new files from base
-xcopy %1\MPTagThat.Base\bin\*.* %TARGETPATH%\Bin\ /E /R /Y /D
+xcopy %1\MPTagThat.Base\bin\*.* %TARGETPATH%\Bin\ /E /R /D
 
 
 REM Copy Main Program
@@ -46,8 +46,12 @@ xcopy /y %1\MPTagThat.Core\bin\%2\RateLimiter.dll %TARGETPATH%\Bin\
 xcopy /y %1\MPTagThat.Core\bin\%2\RestSharp.dll %TARGETPATH%\Bin\
 xcopy /y %1\MPTagThat.Core\bin\%2\RestSharpHelper.dll %TARGETPATH%\Bin\
 xcopy /y %1\MPTagThat.Core\bin\%2\System.Reactive.dll %TARGETPATH%\Bin\
+xcopy /y %1\MPTagThat.Core\bin\%2\LiteDB.* %TARGETPATH%\Bin\
 xcopy /y %1\MPTagThat.Core\bin\%2\Prism.* %TARGETPATH%\Bin\
+xcopy /y %1\MPTagThat.Core\bin\%2\RavenDBServer\*.* %TARGETPATH%\Bin\RavenDBServer\ /E /R /D
 xcopy /y %1\MPTagThat.Core\bin\%2\Raven.* %TARGETPATH%\Bin\
+xcopy /y %1\MPTagThat.Core\bin\%2\Sparrow.* %TARGETPATH%\Bin\
+xcopy /y %1\MPTagThat.Core\bin\%2\Lambda2Js.Signed.* %TARGETPATH%\Bin\
 xcopy /y %1\MPTagThat.Core\bin\%2\Syncfusion.* %TARGETPATH%\Bin\
 xcopy /y %1\MPTagThat.Core\bin\%2\WPFLocalizeExtension.* %TARGETPATH%\Bin\
 xcopy /y %1\MPTagThat.Core\bin\%2\XAMLMarkupExtensions.* %TARGETPATH%\Bin\

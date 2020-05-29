@@ -15,286 +15,323 @@
 // You should have received a copy of the GNU General Public License
 // along with MPTagThat. If not, see <http://www.gnu.org/licenses/>.
 #endregion
+
 #region
 
 using System;
-using System.Linq;
-using System.Linq.Expressions;
-using Raven.Client.Embedded;
-using Raven.Client;
-using Raven.Client.Document;
 using System.Collections;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
 using System.IO;
-using System.Runtime.CompilerServices;
-using MPTagThat.Core.Common;
-//using MPTagThat.Core.Services.MusicDatabase;
-using Raven.Abstractions.Data;
-using Raven.Client.Connection;
+using System.Linq;
 using CommonServiceLocator;
-using MPTagThat.Core.Annotations;
 using MPTagThat.Core.Services.Logging;
+using MPTagThat.Core.Services.MusicDatabase;
 using MPTagThat.Core.Services.Settings;
-using MPTagThat.Core.Services.Settings.Setting;
 using MPTagThat.Core.Utils;
+using Raven.Client.Documents;
+using Raven.Client.Documents.BulkInsert;
+using Raven.Client.Documents.Session;
 
 #endregion
 
 namespace MPTagThat.Core.Common.Song
 {
   /// <summary>
-  /// This class is used to store a list of Songs, respresented as <see cref="MPTagThat.Core.Common.Song.SongData" />.
-  /// Based on the amount of songs reatrieved, it either stores them in a BindingList or uses
-  /// a temporary db4o database created on the fly to prevent Out of Memory issues, when processing a large collection of songs.
+  /// This class is used to store a list of Songs, represented as <see cref="MPTagThat.Core.Common.Song.SongData" />.
+  /// Based on the amount of songs retrieved, it either stores them in a BindingList or uses
+  /// a temporary database created on the fly to prevent Out of Memory issues, when processing a large collection of songs.
   /// </summary>
-  public class SongList : BindingList<SongData>, IDisposable
+  public class SongList<T> : IList<T>, INotifyCollectionChanged
   {
     #region Variables
 
+    private readonly IList<T> _list;
+    private IDocumentStore _store;
+    private IDocumentSession _session;
+
+    private bool _databaseModeEnabled;
     private readonly string _databaseName = "SongsTemp";
     private string _databaseFolder;
 
-    private bool _databaseModeEnabled = false;
-
-    private IDocumentStore _store;
-    private IDocumentSession _session;
+    private int _songId;
     private List<string> _dbIdList = new List<string>();
-    private BindingList<SongData> _songList = new BindingList<SongData>();
-    private int _trackId = 0;
 
-    private int _lastRetrievedTrackIndex = -1;
-    private SongData _lastRetrievedTrack = null;
-    private int _countCache = 0;
+    private int _lastRetrievedSongIndex = -1;
+    private T _lastRetrievedSong = default(T);
 
-    private ISettingsManager settings;
-    private ILogger log;
+    private readonly ISettingsManager _settings = (ServiceLocator.Current.GetInstance(typeof(ISettingsManager)) as ISettingsManager);
+    private readonly ILogger log = (ServiceLocator.Current.GetInstance(typeof(ILogger)) as ILogger)?.GetLogger;
+
     #endregion
 
-    #region ctor / dtor
+    #region ctor
 
     public SongList()
     {
-      log = (ServiceLocator.Current.GetInstance(typeof(ILogger)) as ILogger).GetLogger;
-      settings = (ServiceLocator.Current.GetInstance(typeof(ISettingsManager)) as ISettingsManager);
-      _databaseModeEnabled = false;
-      _databaseFolder = $"{settings.GetOptions.StartupSettings.DatabaseFolder}{_databaseName}";
+      _list = new List<T>();
+    }
+
+    public SongList(IEnumerable<T> collection)
+    {
+      _list = new List<T>(collection);
+    }
+
+    public SongList(int capacity)
+    {
+      _list = new List<T>(capacity);
     }
 
     #endregion
 
-    #region Properties
+    #region IList Implementation
 
     /// <summary>
-    /// Return the count of songs in the list
+    /// Indexer
     /// </summary>
+    /// <param name="index"></param>
     /// <returns></returns>
-    public new int Count
+    public T this[int index]
     {
       get
       {
         if (_databaseModeEnabled)
         {
-          if (_countCache == 0)
+          if (index == _lastRetrievedSongIndex)
           {
-            _countCache = _session.Query<SongData>().Count();
-          }
-          return _countCache;
-        }
-
-        return _songList.Count;
-      }
-    }
-
-    #endregion
-
-    #region Indexer
-
-    /// <summary>
-    /// Implementation of indexer
-    /// </summary>
-    /// <param name="i"></param>
-    /// <returns></returns>
-    public new object this[int i]
-    {
-      get
-      {
-        if (_databaseModeEnabled)
-        {
-          if (i == _lastRetrievedTrackIndex)
-          {
-            return _lastRetrievedTrack;
+            return _lastRetrievedSong;
           }
 
-          _lastRetrievedTrackIndex = i;
+          _lastRetrievedSongIndex = index;
 
-          var result = _session.Load<SongData>(_dbIdList[i]);
+          var result = _session.Load<T>(_dbIdList[index]);
 
-          _lastRetrievedTrack = result;
-          return _lastRetrievedTrack;
+          _lastRetrievedSong = result;
+          return _lastRetrievedSong;
         }
 
-        return _songList[i];
+        return _list[index];
       }
       set
       {
+        T originalItem = this[index];
         if (_databaseModeEnabled)
         {
-          var result = _session.Load<SongData>(_dbIdList[i]);
+          var result = _session.Load<T>(_dbIdList[index]);
 
-          var track = result;
-          track = (SongData)value;
-          _session.Store(track);
+          var song = result;
+          song = value;
+          _session.Store(song);
           _session.SaveChanges();
         }
         else
         {
-          _songList[i] = (SongData)value;
+          _list[index] = value;
         }
-      }
-    }
 
-    #endregion
-
-    #region Public Methods
-
-    /// <summary>
-    /// Adding of new songs to the list
-    /// </summary>
-    /// <param name="track"></param>
-    public int Add(object track)
-    {
-      if (!_databaseModeEnabled && _songList.Count > settings.GetOptions.StartupSettings.MaxSongs)
-      {
-        CopyLIstToDatabase();
-      }
-
-      if (_databaseModeEnabled)
-      {
-        (track as SongData).Id = $"SongDatas/{_trackId++.ToString()}";
-        _session.Store(track);
-        _dbIdList.Add((track as SongData).Id);
-      }
-      else
-      {
-        _songList.Add((SongData)track);
-      }
-
-      return 1;
-    }
-
-
-    public void CommitDatabaseChanges()
-    {
-      if (_databaseModeEnabled)
-      {
-        _session.SaveChanges();
+        OnCollectionChanged(NotifyCollectionChangedAction.Replace, originalItem, value, index);
       }
     }
 
     /// <summary>
-    /// Removes the object at the specified index
+    /// Enumerates the items in the list / database
     /// </summary>
-    /// <param name="index"></param>
-    public new void RemoveAt(int index)
+    /// <returns></returns>
+    public IEnumerator<T> GetEnumerator()
     {
       if (_databaseModeEnabled)
       {
-        var track = _session.Load<SongData>(_dbIdList[index]);
-        _session.Delete(track);
-        _session.SaveChanges();
-        _dbIdList.RemoveAt(index);
+        return _session.Query<T>().GetEnumerator();
+      }
+      return _list.GetEnumerator();
+    }
+
+    /// <summary>
+    /// Enumerates the items in the list / database
+    /// </summary>
+    /// <returns></returns>
+    IEnumerator IEnumerable.GetEnumerator()
+    {
+      return GetEnumerator();
+    }
+
+    /// <summary>
+    /// Add a new Item
+    /// </summary>
+    /// <param name="item"></param>
+    public void Add(T item)
+    {
+      var index = 0;
+      if (!_databaseModeEnabled && _list.Count > _settings.GetOptions.StartupSettings.MaxSongs)
+      {
+        CopyListToDatabase();
+      }
+
+      if (_databaseModeEnabled)
+      {
+        index = _session.Query<SongData>().Count();
+        (item as SongData).Id = $"S/{_songId++}";
+        _session.Store(item);
+        _dbIdList.Add((item as SongData).Id);
       }
       else
       {
-        _songList.RemoveAt(index);
+        index = _list.Count;
+        _list.Add(item);
       }
-    }
-
-    public bool Contains(object value)
-    {
-      throw new NotImplementedException();
+      OnCollectionChanged(NotifyCollectionChangedAction.Add, item, index);
     }
 
     /// <summary>
     /// Clear the list
     /// </summary>
-    public new void Clear()
+    public void Clear()
     {
       if (_databaseModeEnabled)
       {
-        _trackId = 0;
+        _songId = 0;
         _databaseModeEnabled = false;
         _session?.Advanced.Clear();
         _session = null;
         _store.Dispose();
         _store = null;
-        //ServiceScope.Get<IMusicDatabase>().RemoveStore(_databaseName);
+        (ServiceLocator.Current.GetInstance(typeof(IMusicDatabase)) as IMusicDatabase).RemoveStore(_databaseName);
         _dbIdList.Clear();
       }
       else
       {
-        _songList.Clear();
+        _list.Clear();  
+      }
+      OnCollectionReset();
+    }
+
+    /// <summary>
+    /// Check if Item is contained in list
+    /// </summary>
+    /// <param name="item"></param>
+    /// <returns></returns>
+    public bool Contains(T item)
+    {
+      return _list.Contains(item);
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="array"></param>
+    /// <param name="arrayIndex"></param>
+    public void CopyTo(T[] array, int arrayIndex)
+    {
+      if (_databaseModeEnabled)
+      {
+        _session.Query<T>().ToList().CopyTo(array, arrayIndex);
+        return;
+      }
+
+      _list.CopyTo(array, arrayIndex);
+    }
+
+    /// <summary>
+    /// Remove item from list
+    /// </summary>
+    /// <param name="item"></param>
+    /// <returns></returns>
+    public bool Remove(T item)
+    {
+      var index = _list.IndexOf(item);
+      if (index > -1)
+      {
+        RemoveAt(index);
+        return true;
+      }
+
+      return false;
+    }
+
+    /// <summary>
+    /// Return the count of Items in list/database
+    /// </summary>
+    public int Count
+    {
+      get
+      {
+        if (_databaseModeEnabled)
+        {
+          return _session.Query<T>().Count();
+        }
+
+        return _list.Count;
       }
     }
 
     /// <summary>
-    /// Apply Sorting
+    /// List is not readonly
     /// </summary>
-    /// <param name="property"></param>
-    /// <param name="direction"></param>
-    public void Sort(PropertyDescriptor property, ListSortDirection direction)
+    public bool IsReadOnly => false;
+
+    /// <summary>
+    /// Lookup the index of the item 
+    /// </summary>
+    /// <param name="item"></param>
+    /// <returns></returns>
+    public int IndexOf(T item)
+    {
+      return _list.IndexOf(item);
+    }
+
+    /// <summary>
+    /// Insert an Item into specific position
+    /// </summary>
+    /// <param name="index"></param>
+    /// <param name="item"></param>
+    public void Insert(int index, T item)
+    {
+      _list.Insert(index, item);
+      OnCollectionChanged(NotifyCollectionChangedAction.Add, item, index);
+    }
+
+    /// <summary>
+    /// Remove item at specific position
+    /// </summary>
+    /// <param name="index"></param>
+    public void RemoveAt(int index)
     {
       if (_databaseModeEnabled)
       {
-        // Build the Linq Expression tree for sorting
-        string sortFieldName = property.Name;
-        string sortMethod = "OrderBy";
-        if (direction.ToString() == "Descending")
-        {
-          sortMethod = "OrderbyDescending";
-        }
-
-        var queryableData = _session.Query<SongData>();
-        var type = typeof(SongData);
-        var prop = type.GetProperty(sortFieldName);
-        var parameter = Expression.Parameter(type, "p");
-        var propertyAccess = Expression.MakeMemberAccess(parameter, prop);
-        var orderByExpression = Expression.Lambda(propertyAccess, parameter);
-
-        var queryExpr = Expression.Call(typeof(Queryable), sortMethod,
-                                                new[] { type, property.PropertyType },
-                                                queryableData.Expression, Expression.Quote(orderByExpression));
-
-
-        var result = queryableData.Provider.CreateQuery<SongData>(queryExpr);
-
-        _dbIdList.Clear();
-        foreach (SongData dataObject in result)
-        {
-          _dbIdList.Add(dataObject.Id);
-        }
+        var song = _session.Load<T>(_dbIdList[index]);
+        _session.Delete(song);
+        _session.SaveChanges();
+        _dbIdList.RemoveAt(index);
+        OnCollectionChanged(NotifyCollectionChangedAction.Remove, song, index);
+      }
+      else
+      {
+        var item = _list[index];
+        _list.RemoveAt(index);
+        OnCollectionChanged(NotifyCollectionChangedAction.Remove, item, index);
       }
     }
 
     #endregion
 
-    #region Private Methods
+    #region Database releated methods
 
     private bool CreateDbConnection()
     {
-      if (_store != null)
+      if (_session != null)
       {
         return true;
       }
 
       try
       {
+        _databaseFolder = $"{_settings?.GetOptions.StartupSettings.DatabaseFolder}\\{_databaseName}";
         Util.DeleteFolder(_databaseFolder);
-        //_store = ServiceScope.Get<IMusicDatabase>().GetDocumentStoreFor(_databaseName);
-        _session = _store.OpenSession();
+        _store = (ServiceLocator.Current.GetInstance(typeof(IMusicDatabase)) as IMusicDatabase)?.GetDocumentStoreFor(_databaseName);
+        _session = _store?.OpenSession();
+        _session.Advanced.MaxNumberOfRequestsPerSession = 10000;
+
         return true;
       }
       catch (Exception ex)
@@ -309,7 +346,7 @@ namespace MPTagThat.Core.Common.Song
     /// The number of allowed objects in the BindingList has been exceeded
     /// Copy all the data to the database
     /// </summary>
-    private void CopyLIstToDatabase()
+    private void CopyListToDatabase()
     {
       log.Debug("Number of Songs in list exceeded the limit. Database mode enabled");
 
@@ -319,64 +356,89 @@ namespace MPTagThat.Core.Common.Song
       }
 
       _dbIdList.Clear();
-      _trackId = 0;
+      _songId = 0;
 
-      BulkInsertOptions bulkInsertOptions = new BulkInsertOptions
-      {
-        BatchSize = 1000,
-        OverwriteExisting = true
-      };
 
-      using (BulkInsertOperation bulkInsert = _store.BulkInsert(null, bulkInsertOptions))
+      _databaseModeEnabled = true;
+
+      using (BulkInsertOperation bulkinsert = _store.BulkInsert())
       {
-        foreach (SongData track in _songList)
+        foreach (var item in _list)
         {
-          track.Id = $"SongDatas/{_trackId++.ToString()}";
-          bulkInsert.Store(track);
-          _dbIdList.Add(track.Id);
+          var index = _session.Query<SongData>().Count();
+          (item as SongData).Id = $"S/{_songId++}";
+          bulkinsert.Store(item);
+          _dbIdList.Add((item as SongData).Id);
         }
       }
 
-      _songList.Clear();
-      _databaseModeEnabled = true;
+      OnCollectionReset();
+      _list.Clear();
+
       log.Debug("Finished enabling database mode.");
     }
 
+    /// <summary>
+    /// Commit the Changes to the Database
+    /// </summary>
+    public void CommitDatabaseChanges()
+    {
+      if (_databaseModeEnabled)
+      {
+        _session?.SaveChanges();
+      }
+    }
     #endregion
 
-    #region Interfaces
+    #region CollectionChanged Implementation 
 
-    #region IDisposable Support
-    private bool disposedValue = false; // To detect redundant calls
+    public event NotifyCollectionChangedEventHandler CollectionChanged;
 
-    protected virtual void Dispose(bool disposing)
+    /// <summary>
+    /// Helper to raise CollectionChanged event to any listeners
+    /// </summary>
+    private void OnCollectionChanged(NotifyCollectionChangedAction action, object item, int index)
     {
-      if (!disposedValue)
+      OnCollectionChanged(new NotifyCollectionChangedEventArgs(action, item, index));
+    }
+
+    /// <summary>
+    /// Helper to raise CollectionChanged event to any listeners
+    /// </summary>
+    private void OnCollectionChanged(NotifyCollectionChangedAction action, object item, int index, int oldIndex)
+    {
+      OnCollectionChanged(new NotifyCollectionChangedEventArgs(action, item, index, oldIndex));
+    }
+
+    /// <summary>
+    /// Helper to raise CollectionChanged event to any listeners
+    /// </summary>
+    private void OnCollectionChanged(NotifyCollectionChangedAction action, object oldItem, object newItem, int index)
+    {
+      OnCollectionChanged(new NotifyCollectionChangedEventArgs(action, newItem, oldItem, index));
+    }
+
+    /// <summary>
+    /// Helper to raise CollectionChanged event with action == Reset to any listeners
+    /// </summary>
+    private void OnCollectionReset()
+    {
+      OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
+    }
+
+    /// <summary>
+    /// Raise CollectionChanged event to any listeners.
+    /// Properties/methods modifying this ObservableCollection will raise
+    /// a collection changed event through this virtual method.
+    /// </summary>
+    protected virtual void OnCollectionChanged(NotifyCollectionChangedEventArgs e)
+    {
+      if (CollectionChanged != null)
       {
-        if (disposing)
-        {
-          if (_store != null && !_store.WasDisposed)
-          {
-            _session?.Dispose();
-            _store.Dispose();
-            Util.DeleteFolder(_databaseName);
-          }
-        }
-        disposedValue = true;
+        CollectionChanged(this, e);
       }
     }
 
-    // This code added to correctly implement the disposable pattern.
-    public void Dispose()
-    {
-      // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
-      Dispose(true);
-    }
     #endregion
-
-    #endregion
-
-    public PropertyDescriptor SortProperty { get; }
-    public ListSortDirection SortDirection { get; }
   }
 }

@@ -8,6 +8,7 @@ using System.Threading;
 using System.Windows;
 using System.Xml;
 using MPTagThat.Core.Services.Logging;
+using MPTagThat.Core.Services.MusicDatabase;
 using MPTagThat.Core.Services.ScriptManager;
 using MPTagThat.Core.Services.Settings;
 using MPTagThat.Core.Services.Settings.Setting;
@@ -78,9 +79,11 @@ namespace MPTagThat
         .MainSettings.DebugLevel);
 
       // All other services, relying on Settings to come here
-      logger.GetLogger.Debug("Registering Scripting Manager");
-      var scripting = new ScriptManager();
-      containerRegistry.RegisterInstance<IScriptManager>(scripting);
+      logger.GetLogger.Info("Registering Scripting Manager");
+      containerRegistry.RegisterInstance<IScriptManager>(new ScriptManager());
+      
+      logger.GetLogger.Info("Registering Music Database Service");
+      containerRegistry.RegisterInstance<IMusicDatabase>(new MusicDatabase());
 
       var language = (CommonServiceLocator.ServiceLocator.Current.GetInstance(typeof(ISettingsManager)) as ISettingsManager)?.GetOptions
         .MainSettings.Language;
@@ -261,6 +264,7 @@ namespace MPTagThat
     private static void DoInitService(IUnityContainer container)
     {
       (CommonServiceLocator.ServiceLocator.Current.GetInstance(typeof(ILogger)) as ILogger)?.GetLogger.Trace(">>>");
+      (CommonServiceLocator.ServiceLocator.Current.GetInstance(typeof(ILogger)) as ILogger)?.GetLogger.Info("Init BASS Audio Engine");
       if (!Bass.BASS_Init(0, 44100, BASSInit.BASS_DEVICE_DEFAULT, IntPtr.Zero))
       {
         int error = (int)Bass.BASS_ErrorGetCode();

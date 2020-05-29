@@ -21,6 +21,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.IO;
 using System.Windows.Forms;
 using CommonServiceLocator;
 using MPTagThat.Core.Common;
@@ -270,8 +271,6 @@ namespace MPTagThat.Core.Services.Settings.Setting
 
     public int ReadOnlyFileHandling { get; set; }
 
-    public SongList Songlist { get; set; }
-
     public StartupSettings StartupSettings { get; set; }
 
     public bool NumberOnclick { get; set; } = false;
@@ -298,9 +297,17 @@ namespace MPTagThat.Core.Services.Settings.Setting
       {
         StartupSettings = settings.StartupSettings;
         if (StartupSettings.Portable)
+        {
           _configDir = $@"{Application.StartupPath}\Config";
+        }
         else
+        {
           _configDir = $@"{Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)}\MPTagThat2\Config";
+          if (settings.StartupSettings.DatabaseFolder == null)
+          {
+            settings.StartupSettings.DatabaseFolder = $@"{Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)}\MPTagThat2\Databases";
+          }
+        }
 
         _MPTagThatSettings = new MPTagThatSettings();
         settings.Load(_MPTagThatSettings);
@@ -430,8 +437,6 @@ namespace MPTagThat.Core.Services.Settings.Setting
       _copyPasteBuffer = new List<SongData>();
 
       ReadOnlyFileHandling = 2; // Don't change attribute as a default.
-
-      Songlist = new SongList();
     }
 
     #endregion
