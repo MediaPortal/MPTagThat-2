@@ -280,7 +280,7 @@ namespace MPTagThat.Core.Services.MusicDatabase
     }
 
     /// <summary>
-    /// Update a track in the database
+    /// Update a song in the database
     /// </summary>
     /// <param name="track"></param>
     /// <param name="originalFileName"></param>
@@ -295,7 +295,7 @@ namespace MPTagThat.Core.Services.MusicDatabase
       try
       {
         originalFileName = Util.EscapeDatabaseQuery(originalFileName);
-        // Lookup the track in the database
+        // Lookup the song in the database
         var dbTracks = _session.Advanced.DocumentQuery<SongData, DefaultSearchIndex>().WhereEquals("Query", originalFileName).ToList();
         if (dbTracks.Count > 0)
         {
@@ -613,24 +613,27 @@ namespace MPTagThat.Core.Services.MusicDatabase
       }
     }
 
-    private SongData StoreCoverArt(SongData track)
+    private SongData StoreCoverArt(SongData song)
     {
       HashAlgorithm sha = new SHA1CryptoServiceProvider();
-      // Check for pictures in the track and add it to the hash list
+      // Check for pictures in the song and add it to the hash list
       // For database objects, the pictures are hashed and stored in the cover art folder
-      foreach (Picture picture in track.Pictures)
+      foreach (Picture picture in song.Pictures)
       {
         string hash = BitConverter.ToString(sha.ComputeHash(picture.Data)).Replace("-", string.Empty);
-        track.PictureHashList.Add(hash);
+        song.PictureHashList.Add(hash);
         string fullFileName = $"{_options.StartupSettings.CoverArtFolder}{hash}.png";
         if (!File.Exists(fullFileName))
         {
           try
           {
             Image img = Picture.ImageFromData(picture.Data);
-            // Need to make a copy, otherwise we have a GDI+ Error
-            Bitmap bCopy = new Bitmap(img);
-            bCopy.Save(fullFileName, ImageFormat.Png);
+            if (img != null)
+            {
+              // Need to make a copy, otherwise we have a GDI+ Error
+              Bitmap bCopy = new Bitmap(img);
+              bCopy.Save(fullFileName, ImageFormat.Png);
+            }
           }
           catch (Exception)
           {
@@ -639,8 +642,8 @@ namespace MPTagThat.Core.Services.MusicDatabase
         }
       }
       // finally remove the pictures from the database object
-      track.Pictures.Clear();
-      return track;
+      song.Pictures.Clear();
+      return song;
     }
 
     /// <summary>

@@ -25,7 +25,7 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
-using System.Windows;
+using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Navigation;
 using CommonServiceLocator;
@@ -33,6 +33,7 @@ using MPTagThat.Core;
 using MPTagThat.Core.Common;
 using MPTagThat.Core.Events;
 using MPTagThat.Core.Services.Logging;
+using MPTagThat.Core.Services.MusicDatabase;
 using MPTagThat.Core.Services.ScriptManager;
 using MPTagThat.Core.Services.Settings;
 using MPTagThat.Core.Services.Settings.Setting;
@@ -45,6 +46,7 @@ using Syncfusion.Windows.Shared;
 using Syncfusion.Windows.Tools;
 using Syncfusion.Windows.Tools.Controls;
 using Action = MPTagThat.Core.Common.Action;
+using Application = System.Windows.Application;
 
 #endregion
 
@@ -161,6 +163,39 @@ namespace MPTagThat.Ribbon.ViewModels
         SetProperty(ref _autoNumberValue, value);
         _options.AutoNumber = value;
       }
+    }
+
+    /// <summary>
+    /// Selected Music Shares
+    /// </summary>
+    private ObservableCollection<string> _databaseMusicFolders = new ObservableCollection<string>();
+
+    public ObservableCollection<string> DatabaseMusicFolders
+    {
+      get => _databaseMusicFolders;
+      set => SetProperty(ref _databaseMusicFolders, value);
+    }
+
+    /// <summary>
+    /// The Selected Music Folder
+    /// </summary>
+    private int _selectedMusicFolder;
+
+    public int SelectedMusicFolder
+    {
+      get => _selectedMusicFolder;
+      set => SetProperty(ref _selectedMusicFolder, value);
+    }
+
+    /// <summary>
+    /// SHould the database be cleared before scanning
+    /// </summary>
+    private bool _databaseClearChecked;
+
+    public bool DatabaseClearChecked
+    {
+      get => _databaseClearChecked;
+      set => SetProperty(ref _databaseClearChecked, value);
     }
 
     #region Settings related Properties in the Backstage
@@ -919,6 +954,10 @@ namespace MPTagThat.Ribbon.ViewModels
           type = Action.ActionType.ADDCONVERSION;
           runAsync = false;
           break;
+
+        case "ButtonDatabaseScanStart":
+          (ServiceLocator.Current.GetInstance(typeof(IMusicDatabase)) as IMusicDatabase).BuildDatabase(DatabaseMusicFolders[SelectedMusicFolder], DatabaseClearChecked);
+          break;
       }
 
       if (type != Action.ActionType.INVALID)
@@ -932,6 +971,21 @@ namespace MPTagThat.Ribbon.ViewModels
         evt.MessageData.Add("runasync", runAsync);
         EventSystem.Publish(evt);
       }
+
+      // We end up here, when a Ribbon Command is executed which doesn't require an event/action
+      if (elementName == "DatabaseMusicFolderOpen")
+      {
+        using (var dialog = new System.Windows.Forms.FolderBrowserDialog())
+        {
+          System.Windows.Forms.DialogResult result = dialog.ShowDialog();
+          if (result == DialogResult.OK)
+          {
+            DatabaseMusicFolders.Insert(0, dialog.SelectedPath);
+            SelectedMusicFolder = 0;
+          }
+        }
+      }
+
     }
 
     #endregion

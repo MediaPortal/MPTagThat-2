@@ -1600,6 +1600,96 @@ namespace MPTagThat.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Active database:.
+        /// </summary>
+        public static string ribbon_Database_Active {
+            get {
+                return ResourceManager.GetString("ribbon_Database_Active", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Clear database content before scanning.
+        /// </summary>
+        public static string ribbon_Database_Clear {
+            get {
+                return ResourceManager.GetString("ribbon_Database_Clear", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Delete Database.
+        /// </summary>
+        public static string ribbon_Database_Delete {
+            get {
+                return ResourceManager.GetString("ribbon_Database_Delete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Database Maintenance.
+        /// </summary>
+        public static string ribbon_Database_MainGroup {
+            get {
+                return ResourceManager.GetString("ribbon_Database_MainGroup", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Music Files.
+        /// </summary>
+        public static string ribbon_Database_MusicFolder {
+            get {
+                return ResourceManager.GetString("ribbon_Database_MusicFolder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Query.
+        /// </summary>
+        public static string ribbon_Database_Query {
+            get {
+                return ResourceManager.GetString("ribbon_Database_Query", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Database Query.
+        /// </summary>
+        public static string ribbon_Database_QueryGroup {
+            get {
+                return ResourceManager.GetString("ribbon_Database_QueryGroup", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Abort Scan.
+        /// </summary>
+        public static string ribbon_Database_ScanAbort {
+            get {
+                return ResourceManager.GetString("ribbon_Database_ScanAbort", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Start Scan.
+        /// </summary>
+        public static string ribbon_Database_ScanStart {
+            get {
+                return ResourceManager.GetString("ribbon_Database_ScanStart", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Switch Database.
+        /// </summary>
+        public static string ribbon_Database_Switch {
+            get {
+                return ResourceManager.GetString("ribbon_Database_Switch", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Database.
         /// </summary>
         public static string ribbon_DatabaseContextualTab {
@@ -1996,20 +2086,65 @@ namespace MPTagThat.Resources.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Start Conversion of the files in the list to the selected format.
-        /// </summary>
-        public static string screentip_ConverStart {
-            get {
-                return ResourceManager.GetString("screentip_ConverStart", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Terminates the Conversion process.
         /// </summary>
         public static string screentip_ConvertCancel {
             get {
                 return ResourceManager.GetString("screentip_ConvertCancel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Start Conversion of the files in the list to the selected format.
+        /// </summary>
+        public static string screentip_ConvertStart {
+            get {
+                return ResourceManager.GetString("screentip_ConvertStart", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Deletes the active Database.
+        /// </summary>
+        public static string screentip_Database_Delete {
+            get {
+                return ResourceManager.GetString("screentip_Database_Delete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Runs the Query against the selected Database.
+        /// </summary>
+        public static string screentip_Database_Query {
+            get {
+                return ResourceManager.GetString("screentip_Database_Query", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Aborts the currently running scan.
+        /// </summary>
+        public static string screentip_Database_ScanAbort {
+            get {
+                return ResourceManager.GetString("screentip_Database_ScanAbort", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Starts scanning the specified share and stores the result in the selected database..
+        /// </summary>
+        public static string screentip_Database_ScanStart {
+            get {
+                return ResourceManager.GetString("screentip_Database_ScanStart", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Opens a dialog to switch between Databases.
+        /// </summary>
+        public static string screentip_Database_Switch {
+            get {
+                return ResourceManager.GetString("screentip_Database_Switch", resourceCulture);
             }
         }
         

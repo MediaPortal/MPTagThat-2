@@ -1601,7 +1601,7 @@ To change the order of the ratings drag the rows.</value>
     <value>Start Convert</value>
     <comment>The Start Convert Button</comment>
   </data>
-  <data name="screentip_ConverStart" xml:space="preserve">
+  <data name="screentip_ConvertStart" xml:space="preserve">
     <value>Start Conversion of the files in the list to the selected format</value>
   </data>
   <data name="screentip_ConvertCancel" xml:space="preserve">
@@ -1753,5 +1753,50 @@ To change the order of the ratings drag the rows.</value>
   </data>
   <data name="database_ScanFinished" xml:space="preserve">
     <value>Database scan finished. Processed {0} tracks in: {1:d2}:{2:d2}:{3:d2}</value>
+  </data>
+  <data name="ribbon_Database_Active" xml:space="preserve">
+    <value>Active database:</value>
+  </data>
+  <data name="ribbon_Database_Clear" xml:space="preserve">
+    <value>Clear database content before scanning</value>
+  </data>
+  <data name="ribbon_Database_Delete" xml:space="preserve">
+    <value>Delete Database</value>
+  </data>
+  <data name="ribbon_Database_MainGroup" xml:space="preserve">
+    <value>Database Maintenance</value>
+  </data>
+  <data name="ribbon_Database_MusicFolder" xml:space="preserve">
+    <value>Music Files</value>
+  </data>
+  <data name="ribbon_Database_Query" xml:space="preserve">
+    <value>Query</value>
+  </data>
+  <data name="ribbon_Database_QueryGroup" xml:space="preserve">
+    <value>Database Query</value>
+  </data>
+  <data name="ribbon_Database_ScanAbort" xml:space="preserve">
+    <value>Abort Scan</value>
+  </data>
+  <data name="ribbon_Database_ScanStart" xml:space="preserve">
+    <value>Start Scan</value>
+  </data>
+  <data name="ribbon_Database_Switch" xml:space="preserve">
+    <value>Switch Database</value>
+  </data>
+  <data name="screentip_Database_Delete" xml:space="preserve">
+    <value>Deletes the active Database</value>
+  </data>
+  <data name="screentip_Database_Query" xml:space="preserve">
+    <value>Runs the Query against the selected Database</value>
+  </data>
+  <data name="screentip_Database_ScanAbort" xml:space="preserve">
+    <value>Aborts the currently running scan</value>
+  </data>
+  <data name="screentip_Database_ScanStart" xml:space="preserve">
+    <value>Starts scanning the specified share and stores the result in the selected database.</value>
+  </data>
+  <data name="screentip_Database_Switch" xml:space="preserve">
+    <value>Opens a dialog to switch between Databases</value>
   </data>
 </root>

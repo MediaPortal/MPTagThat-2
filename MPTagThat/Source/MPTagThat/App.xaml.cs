@@ -306,7 +306,16 @@ namespace MPTagThat
       _startupSettings = new StartupSettings();
       string configFile = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Config.xml");
       if (!File.Exists(configFile))
+      {
+        _startupSettings.MaxSongs = 1000;
+        _startupSettings.RavenDebug = false;
+        _startupSettings.RavenStudioPort = 8080;
+        var dbPath = "%APPDATA%\\MPTagThat2\\Databases";
+        _startupSettings.DatabaseFolder = CheckPath(dbPath);
+        var coverArtPath = "%APPDATA%\\MPTagThat2\\CoverArt";
+        _startupSettings.CoverArtFolder = CheckPath(coverArtPath);
         return;
+      }
 
       try
       {
@@ -330,13 +339,10 @@ namespace MPTagThat
         }
 
         XmlNode maxSongsNode = doc.DocumentElement.SelectSingleNode("/config/MaximumNumberOfSongsInList");
-        _startupSettings.MaxSongs = maxSongsNode != null ? Convert.ToInt32(maxSongsNode.InnerText) : 500;
+        _startupSettings.MaxSongs = maxSongsNode != null ? Convert.ToInt32(maxSongsNode.InnerText) : 1000;
 
         XmlNode ravenDebugNode = doc.DocumentElement.SelectSingleNode("/config/RavenDebug");
         _startupSettings.RavenDebug = ravenDebugNode != null && Convert.ToInt32(ravenDebugNode.InnerText) != 0;
-
-        XmlNode ravenStudioNode = doc.DocumentElement.SelectSingleNode("/config/RavenStudio");
-        _startupSettings.RavenStudio = ravenStudioNode != null && Convert.ToInt32(ravenStudioNode.InnerText) != 0;
 
         XmlNode ravenPortNode = doc.DocumentElement.SelectSingleNode("/config/RavenStudioPort");
         _startupSettings.RavenStudioPort = ravenPortNode != null ? Convert.ToInt32(ravenPortNode.InnerText) : 8080;

@@ -231,6 +231,19 @@
   <ItemGroup>
     <Resource Include="Resources\Images\ribbon_AddConversionList_16x.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\ribbon_DatabaseAddCancel_16x.png" />
+    <Resource Include="Resources\Images\ribbon_DatabaseAddCancel_32x.png" />
+    <Resource Include="Resources\Images\ribbon_DatabaseAdd_16x.png" />
+    <Resource Include="Resources\Images\ribbon_DatabaseAdd_32x.png" />
+    <Resource Include="Resources\Images\ribbon_DatabaseDelete_16x.png" />
+    <Resource Include="Resources\Images\ribbon_DatabaseDelete_32x.png" />
+    <Resource Include="Resources\Images\ribbon_DatabaseSwitch_16x.png" />
+    <Resource Include="Resources\Images\ribbon_DatabaseSwitch_32x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\ribbon_Lens_32x.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>
