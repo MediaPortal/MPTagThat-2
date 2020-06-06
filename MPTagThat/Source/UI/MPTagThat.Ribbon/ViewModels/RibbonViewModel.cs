@@ -188,7 +188,7 @@ namespace MPTagThat.Ribbon.ViewModels
     }
 
     /// <summary>
-    /// SHould the database be cleared before scanning
+    /// Should the database be cleared before scanning
     /// </summary>
     private bool _databaseClearChecked;
 
@@ -196,6 +196,33 @@ namespace MPTagThat.Ribbon.ViewModels
     {
       get => _databaseClearChecked;
       set => SetProperty(ref _databaseClearChecked, value);
+    }
+
+    /// <summary>
+    /// The list of the last queries
+    /// </summary>
+    private ObservableCollection<string> _queries = new ObservableCollection<string>();
+
+    public ObservableCollection<string> Queries
+    {
+      get => _queries;
+      set => SetProperty(ref _queries, value);
+    }
+
+    private string _queriesSelectedText;
+
+    public string QueriesSelectedText
+    {
+      get => _queriesSelectedText;
+      set => SetProperty(ref _queriesSelectedText, value);
+    }
+
+    private object _queriesSelectedItem;
+
+    public object QueriesSelectedItem
+    {
+      get => _queriesSelectedItem;
+      set => SetProperty(ref _queriesSelectedItem, value);
     }
 
     #region Settings related Properties in the Backstage
@@ -826,6 +853,7 @@ namespace MPTagThat.Ribbon.ViewModels
       var elementName = (string)param;
       var type = Action.ActionType.INVALID;
       var runAsync = true;
+      var eventParameter = "";
       switch (elementName)
       {
         case "ButtonAbout":
@@ -956,7 +984,20 @@ namespace MPTagThat.Ribbon.ViewModels
           break;
 
         case "ButtonDatabaseScanStart":
-          (ServiceLocator.Current.GetInstance(typeof(IMusicDatabase)) as IMusicDatabase).BuildDatabase(DatabaseMusicFolders[SelectedMusicFolder], DatabaseClearChecked);
+          (ServiceLocator.Current.GetInstance(typeof(IMusicDatabase)) as IMusicDatabase)?.BuildDatabase(DatabaseMusicFolders[SelectedMusicFolder], DatabaseClearChecked);
+          break;
+
+        case "ButtonDatabaseScanAbort":
+          (ServiceLocator.Current.GetInstance(typeof(IMusicDatabase)) as IMusicDatabase)?.AbortDatabaseScan();
+          break;
+
+        case "ButtonDatabaseDelete":
+          (ServiceLocator.Current.GetInstance(typeof(IMusicDatabase)) as IMusicDatabase)?.DeleteDatabase((ServiceLocator.Current.GetInstance(typeof(IMusicDatabase)) as IMusicDatabase)?.CurrentDatabase);
+          break;
+
+        case "ButtonDatabaseQuery":
+          type = Action.ActionType.DATABASEQUERY;
+          eventParameter = QueriesSelectedText;
           break;
       }
 
@@ -969,6 +1010,10 @@ namespace MPTagThat.Ribbon.ViewModels
         };
         evt.MessageData.Add("command", type);
         evt.MessageData.Add("runasync", runAsync);
+        if (!eventParameter.IsNullOrWhiteSpace())
+        {
+          evt.MessageData.Add("parameter", eventParameter);
+        }
         EventSystem.Publish(evt);
       }
 

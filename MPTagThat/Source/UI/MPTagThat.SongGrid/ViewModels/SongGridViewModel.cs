@@ -47,6 +47,7 @@ using System.Windows.Threading;
 using System.Threading;
 using System.Windows;
 using System.Windows.Data;
+using MPTagThat.Core.Services.MusicDatabase;
 using MPTagThat.Core.Services.ScriptManager;
 using MPTagThat.Dialogs.ViewModels;
 using MPTagThat.SongGrid.Models;
@@ -1100,18 +1101,30 @@ namespace MPTagThat.SongGrid.ViewModels
             return;
           }
 
+          if (command == Action.ActionType.DATABASEQUERY)
+          {
+            Songs.Clear();
+            var query = (string)msg.MessageData["parameter"];
+            var result = (ServiceLocator.Current.GetInstance(typeof(IMusicDatabase)) as IMusicDatabase)?.ExecuteQuery(query);
+            if (result != null)
+            {
+              result.ForEach(song => Songs.Add(song));
+            }
+
+            return;
+          }
+
           // Select all songs, except for Find & Replace and Help
           if (SelectedItems.Count == 0 && (command != Action.ActionType.FIND && command != Action.ActionType.REPLACE && command != Action.ActionType.HELP))
           {
             Songs.ToList().ForEach(song => SelectedItems.Add(song));
           }
 
-          // Command, which don't use the Execute Command of SongGrid
+          // Commands, which don't use the Execute Command of SongGrid
           if (command == Action.ActionType.ADDCONVERSION)
           {
             ContextMenuAddConversion(new object{});
           }
-
 
           // Run Commands, which don't display a dialog
           if (_supportedCommands.Contains(command))

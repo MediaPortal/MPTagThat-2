@@ -62,6 +62,7 @@ namespace MPTagThat.Core.Services.MusicDatabase
     private readonly string _defaultMusicDatabaseName = "MusicDatabase";
     private IDocumentStore _store;
     private IDocumentSession _session;
+    private bool _databaseServerStarted;
 
     private BackgroundWorker _bgwScanShare;
     private int _audioFiles;
@@ -229,40 +230,31 @@ namespace MPTagThat.Core.Services.MusicDatabase
     /// <param name="query"></param>
     public List<SongData> ExecuteQuery(string query)
     {
-      return ExecuteQuery(query, "");
-    }
+      log.Info($"Executing database query: {query}");
 
-    /// <summary>
-    /// Runs the query against the MusicDatabase
-    /// </summary>
-    /// <param name="query"></param>
-    /// <param name="orderBy"></param>
-    public List<SongData> ExecuteQuery(string query, string orderBy)
-    {
       if (_store == null && !CreateDbConnection())
       {
         log.Error("Could not establish a session.");
         return null;
       }
 
-      var order = orderBy.Split(',');
+      StatusBarEvent msg = new StatusBarEvent { CurrentFolder = "", CurrentProgress = -1 };
+      msg.NumberOfFiles = 0;
+      EventSystem.Publish(msg);
+
       List<SongData> result = null;
 
       if (query.Contains(":"))
       {
-        // Set Artist as default order, if nothing is specified
-        if (order[0] == "")
-        {
-          Array.Resize(ref order, 3);
-          order[0] = "Artist";
-          order[1] = "Album";
-          order[2] = "Track";
-        }
-
-        result = _session.Advanced.DocumentQuery<SongData>()
+        var resultSet = _session.Advanced.DocumentQuery<SongData, DefaultSearchIndex>()
           .WhereLucene("Artist",query)
           .Take(int.MaxValue)
           .ToList();
+
+        log.Info($"Query returned {resultSet.Count} results");
+
+        // need to do our own ordering
+        result = resultSet.OrderBy(x => x.Artist).ThenBy(x => x.Album).ThenBy(x => x.Track).ToList();
       }
       else
       {
@@ -273,9 +265,16 @@ namespace MPTagThat.Core.Services.MusicDatabase
           .Take(int.MaxValue)
           .ToList();
 
+        log.Info($"Query returned {resultSet.Count} results");
+
         // need to do our own ordering
         result = resultSet.OrderBy(x => x.Artist).ThenBy(x => x.Album).ThenBy(x => x.Track).ToList();
       }
+
+      msg.CurrentProgress = 0;
+      msg.NumberOfFiles = result.Count;
+      EventSystem.Publish(msg);
+
       return result;
     }
 
@@ -510,8 +509,10 @@ namespace MPTagThat.Core.Services.MusicDatabase
       try
       {
         _store = GetDocumentStoreFor(CurrentDatabase);
+        log.Trace("Opening database session");
         _session = _store.OpenSession();
 
+        log.Trace("Creating indices");
         IndexCreation.CreateIndexes(typeof(DefaultSearchIndex).Assembly, _store);
         IndexCreation.CreateIndexes(typeof(DistinctArtistIndex).Assembly, _store);
         IndexCreation.CreateIndexes(typeof(DistinctArtistAlbumIndex).Assembly, _store);
@@ -520,6 +521,7 @@ namespace MPTagThat.Core.Services.MusicDatabase
         IndexCreation.CreateIndexes(typeof(DistinctGenreIndex).Assembly, _store);
         IndexCreation.CreateIndexes(typeof(DistinctGenreArtistIndex).Assembly, _store);
         IndexCreation.CreateIndexes(typeof(DistinctGenreArtistAlbumIndex).Assembly, _store);
+        log.Trace("Finished creating indices");
 
         return true;
       }
@@ -690,6 +692,20 @@ namespace MPTagThat.Core.Services.MusicDatabase
     }
 
     /// <summary>
+    /// Starts the Raven Database Server
+    /// </summary>
+    private void StartDatabaseServer()
+    {
+      log.Info($"Starting database server in folder {_options.StartupSettings.DatabaseFolder}");
+      EmbeddedServer.Instance.StartServer(new ServerOptions
+      {
+        DataDirectory = $"{_options.StartupSettings.DatabaseFolder}",
+        ServerUrl = "http://127.0.0.1:8080"
+      });
+      _databaseServerStarted = true;
+    }
+
+    /// <summary>
     /// Creates a Raven Document Store
     /// </summary>
     /// <param name="databaseName"></param>
@@ -698,20 +714,19 @@ namespace MPTagThat.Core.Services.MusicDatabase
     {
       return new Lazy<IDocumentStore>(() =>
       {
-        EmbeddedServer.Instance.StartServer(new ServerOptions
+        if (!_databaseServerStarted)
         {
-          DataDirectory = $"{_options.StartupSettings.DatabaseFolder}\\{databaseName}",
-          ServerUrl = "http://127.0.0.1:8080"
-        });
+          StartDatabaseServer();
+        }
 
-        var docStore = EmbeddedServer.Instance.GetDocumentStore("Embedded");
-        //docStore.Conventions.MaxNumberOfRequestsPerSession = 1000000;
+        var docStore = EmbeddedServer.Instance.GetDocumentStore(databaseName);
         
+        log.Trace("Initializing database store");
         docStore.Initialize();
         return docStore;
       });
     }
-    #endregion
 
+    #endregion
   }
 }

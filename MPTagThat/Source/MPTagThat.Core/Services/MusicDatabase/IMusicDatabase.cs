@@ -86,13 +86,6 @@ namespace MPTagThat.Core.Services.MusicDatabase
     List<SongData> ExecuteQuery(string query);
 
     /// <summary>
-    /// Runs the query against the MusicDatabase
-    /// </summary>
-    /// <param name="query"></param>
-    /// <param name="orderBy"></param>
-    List<SongData> ExecuteQuery(string query, string orderBy);
-
-    /// <summary>
     /// Update a track in the Music Database
     /// </summary>
     /// <param name="track"></param>

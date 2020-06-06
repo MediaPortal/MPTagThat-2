@@ -459,7 +459,7 @@ namespace MPTagThat.Core.Common.Song
 
         try
         {
-          if (disc[1] != "")
+          if (disc?.Length > 1 && disc[1] != "")
             DiscCount = Convert.ToUInt32(disc[1]);
         }
         catch (Exception) { }
@@ -1128,7 +1128,7 @@ namespace MPTagThat.Core.Common.Song
 
         try
         {
-          if (track.Length > 1 && track[1] != "")
+          if (track?.Length > 1 && track[1] != "")
             TrackCount = Convert.ToUInt32(track[1]);
           else
             TrackCount = 0;

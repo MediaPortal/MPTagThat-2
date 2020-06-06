@@ -57,6 +57,7 @@ namespace MPTagThat.Core.Common
       CONVERT = 67,
       CONVERTCANCEL = 68,
       ADDCONVERSION = 69,
+      DATABASEQUERY = 70,
     }
 
     #endregion

@@ -490,7 +490,9 @@
         <syncfusion:RibbonBar Header="{lex:Loc ribbon_Database_QueryGroup}" >
           <syncfusion:RibbonComboBox x:Name="ComboBoxDatabaseQuery" MaxDropDownHeight="150" Width="300"  
                                      ItemsSource="{Binding Queries}" 
-                                     SelectedIndex="{Binding QueriesSelectedIndex, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" >
+                                     SelectedItem="{Binding QueriesSelectedItem, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                     Text="{Binding QueriesSelectedText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                     IsEditable="True" >
           </syncfusion:RibbonComboBox>
           <syncfusion:RibbonButton x:Name="ButtonDatabaseQuery" SizeForm="Large" 
                                    Label="{lex:Loc ribbon_Database_Query}" 
