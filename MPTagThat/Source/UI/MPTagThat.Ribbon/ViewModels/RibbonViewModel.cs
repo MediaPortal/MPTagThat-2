@@ -998,6 +998,21 @@ namespace MPTagThat.Ribbon.ViewModels
         case "ButtonDatabaseQuery":
           type = Action.ActionType.DATABASEQUERY;
           eventParameter = QueriesSelectedText;
+
+          // Maintain the last 10 used queries
+          var currentQuery = QueriesSelectedText;
+          Queries.Remove(currentQuery);
+          Queries.Insert(0, currentQuery);
+          _options.MainSettings.MusicDatabaseQueries.Clear();
+          var i = 0;
+          foreach (var q in Queries)
+          {
+            _options.MainSettings.MusicDatabaseQueries.Add(q);
+            if (i++ > 10)
+            {
+              break;
+            }
+          }
           break;
       }
 
@@ -1068,6 +1083,12 @@ namespace MPTagThat.Ribbon.ViewModels
           }
           i++;
         }
+      }
+
+      // Load the Database Queries
+      foreach (var q in _options.MainSettings.MusicDatabaseQueries)
+      {
+        Queries.Add(q);
       }
 
       // Fill the Settings

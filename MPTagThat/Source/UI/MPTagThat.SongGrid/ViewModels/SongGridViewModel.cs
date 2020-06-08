@@ -1111,6 +1111,9 @@ namespace MPTagThat.SongGrid.ViewModels
               result.ForEach(song => Songs.Add(song));
             }
 
+            // Commit changes to SongTemp, in case we have switched to DB Mode
+            _songs.CommitDatabaseChanges();
+
             return;
           }
 
