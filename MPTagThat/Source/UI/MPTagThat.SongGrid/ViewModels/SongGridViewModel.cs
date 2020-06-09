@@ -21,7 +21,6 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -50,6 +49,7 @@ using System.Windows.Data;
 using MPTagThat.Core.Services.MusicDatabase;
 using MPTagThat.Core.Services.ScriptManager;
 using MPTagThat.Dialogs.ViewModels;
+using MPTagThat.Dialogs.Views;
 using MPTagThat.SongGrid.Models;
 using MPTagThat.SongGrid.Views;
 using Prism.Modularity;
@@ -81,6 +81,8 @@ namespace MPTagThat.SongGrid.ViewModels
     private bool _progressCancelled;
     private bool _folderScanInProgress;
     private bool _actionCopy;
+
+    private NotificationView _notificationView = new NotificationView();
 
     private readonly System.Windows.Input.Cursor _numberOnClickCursor = new System.Windows.Input.Cursor(System.Windows.Application.GetResourceStream(new Uri("pack://application:,,,/MPTagThat;component/Resources/Images/CursorNumbering.cur")).Stream);
 
@@ -1103,6 +1105,12 @@ namespace MPTagThat.SongGrid.ViewModels
 
           if (command == Action.ActionType.DATABASEQUERY)
           {
+            if (!(ServiceLocator.Current.GetInstance(typeof(IMusicDatabase)) as IMusicDatabase).DatabaseEngineStarted)
+            {
+              _notificationView.Show();
+            }
+
+            IsBusy = true;
             Songs.Clear();
             var query = (string)msg.MessageData["parameter"];
             var result = (ServiceLocator.Current.GetInstance(typeof(IMusicDatabase)) as IMusicDatabase)?.ExecuteQuery(query);
@@ -1110,10 +1118,10 @@ namespace MPTagThat.SongGrid.ViewModels
             {
               result.ForEach(song => Songs.Add(song));
             }
-
+            _notificationView.Close();
+            IsBusy = false;
             // Commit changes to SongTemp, in case we have switched to DB Mode
             _songs.CommitDatabaseChanges();
-
             return;
           }
 

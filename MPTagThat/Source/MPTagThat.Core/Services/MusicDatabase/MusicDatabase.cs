@@ -28,6 +28,7 @@ using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
+using System.Threading.Tasks;
 using System.Windows.Interop;
 using CommonServiceLocator;
 using MPTagThat.Core.Common;
@@ -62,14 +63,15 @@ namespace MPTagThat.Core.Services.MusicDatabase
     private readonly string _defaultMusicDatabaseName = "MusicDatabase";
     private IDocumentStore _store;
     private IDocumentSession _session;
-    private bool _databaseServerStarted;
 
     private BackgroundWorker _bgwScanShare;
     private int _audioFiles;
     private DateTime _scanStartTime;
 
-    private readonly ConcurrentDictionary<string, Lazy<IDocumentStore>> _stores =
-        new ConcurrentDictionary<string, Lazy<IDocumentStore>>();
+    //private readonly ConcurrentDictionary<string, Lazy<IDocumentStore>> _stores =
+    //    new ConcurrentDictionary<string, Lazy<IDocumentStore>>();
+
+    private readonly Dictionary<string, IDocumentStore> _stores = new Dictionary<string, IDocumentStore>();
 
     private StatusBarEvent _progressEvent = new StatusBarEvent { Type = StatusBarEvent.StatusTypes.CurrentFile };
 
@@ -123,6 +125,8 @@ namespace MPTagThat.Core.Services.MusicDatabase
 
     public bool MusicBrainzDatabaseActive { get; set; }
 
+    public bool DatabaseEngineStarted { get; set; }
+
     #endregion
 
     #region Public Methods
@@ -134,7 +138,13 @@ namespace MPTagThat.Core.Services.MusicDatabase
     /// <returns></returns>
     public IDocumentStore GetDocumentStoreFor(string databaseName)
     {
-      return _stores.GetOrAdd(databaseName, CreateDocumentStore).Value;
+      if (_stores.ContainsKey(databaseName))
+      {
+        return _stores[databaseName];
+      }
+
+      _stores.Add(databaseName, CreateDocumentStore(databaseName).Result);
+      return _stores[databaseName];
     }
 
     /// <summary>
@@ -143,8 +153,7 @@ namespace MPTagThat.Core.Services.MusicDatabase
     /// <param name="databasename"></param>
     public void RemoveStore(string databasename)
     {
-      Lazy<IDocumentStore> store = null;
-      _stores.TryRemove(databasename, out store);
+      _stores.Remove(databasename);
     }
 
     /// <summary>
@@ -702,7 +711,7 @@ namespace MPTagThat.Core.Services.MusicDatabase
         DataDirectory = $"{_options.StartupSettings.DatabaseFolder}",
         ServerUrl = "http://127.0.0.1:8080"
       });
-      _databaseServerStarted = true;
+      DatabaseEngineStarted = true;
     }
 
     /// <summary>
@@ -710,6 +719,21 @@ namespace MPTagThat.Core.Services.MusicDatabase
     /// </summary>
     /// <param name="databaseName"></param>
     /// <returns></returns>
+    private async Task<IDocumentStore> CreateDocumentStore(string databaseName)
+    {
+      if (!DatabaseEngineStarted)
+      {
+        StartDatabaseServer();
+      }
+
+      var docStore = EmbeddedServer.Instance.GetDocumentStore(databaseName);
+        
+      log.Trace("Initializing database store");
+      docStore.Initialize();
+      return docStore;
+    }
+    
+    /*
     private Lazy<IDocumentStore> CreateDocumentStore(string databaseName)
     {
       return new Lazy<IDocumentStore>(() =>
@@ -726,6 +750,7 @@ namespace MPTagThat.Core.Services.MusicDatabase
         return docStore;
       });
     }
+    */
 
     #endregion
   }

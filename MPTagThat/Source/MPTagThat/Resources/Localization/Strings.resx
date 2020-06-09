@@ -1799,4 +1799,8 @@ To change the order of the ratings drag the rows.</value>
   <data name="screentip_Database_Switch" xml:space="preserve">
     <value>Opens a dialog to switch between Databases</value>
   </data>
+  <data name="songGrid_DatabaseInit" xml:space="preserve">
+    <value>Starting Database Server Please wait ...</value>
+    <comment>Busy indicator when database is starting</comment>
+  </data>
 </root>

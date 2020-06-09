@@ -53,6 +53,11 @@ namespace MPTagThat.Core.Services.MusicDatabase
     bool MusicBrainzDatabaseActive { get; set; }
 
     /// <summary>
+    /// Returns, if the DatabaseEngine has been started
+    /// </summary>
+    bool DatabaseEngineStarted { get; set; }
+
+    /// <summary>
     /// Returns the active database
     /// </summary>
     string CurrentDatabase { get; }

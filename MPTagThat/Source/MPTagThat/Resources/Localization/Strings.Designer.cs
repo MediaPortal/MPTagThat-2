@@ -2716,6 +2716,15 @@ namespace MPTagThat.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Starting Database Server Please wait ....
+        /// </summary>
+        public static string songGrid_DatabaseInit {
+            get {
+                return ResourceManager.GetString("songGrid_DatabaseInit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Songs.
         /// </summary>
         public static string songGrid_Header {

@@ -67,8 +67,8 @@
     <Reference Include="Syncfusion.Data.WPF, Version=18.1460.0.52, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Syncfusion.Data.WPF.18.1.0.52\lib\net46\Syncfusion.Data.WPF.dll</HintPath>
     </Reference>
-    <Reference Include="Syncfusion.Licensing, Version=18.1460.0.52, Culture=neutral, PublicKeyToken=632609b4d040f6b4, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Syncfusion.Licensing.18.1.0.52\lib\net46\Syncfusion.Licensing.dll</HintPath>
+    <Reference Include="Syncfusion.Licensing, Version=18.1460.0.55, Culture=neutral, PublicKeyToken=632609b4d040f6b4, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Syncfusion.Licensing.18.1.0.55\lib\net46\Syncfusion.Licensing.dll</HintPath>
     </Reference>
     <Reference Include="Syncfusion.SfGrid.WPF, Version=18.1460.0.52, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Syncfusion.SfGrid.WPF.18.1.0.52\lib\net46\Syncfusion.SfGrid.WPF.dll</HintPath>
@@ -76,8 +76,8 @@
     <Reference Include="Syncfusion.SfInput.WPF, Version=18.1460.0.52, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Syncfusion.SfInput.WPF.18.1.0.52\lib\net46\Syncfusion.SfInput.WPF.dll</HintPath>
     </Reference>
-    <Reference Include="Syncfusion.SfShared.WPF, Version=18.1460.0.52, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Syncfusion.SfShared.WPF.18.1.0.52\lib\net46\Syncfusion.SfShared.WPF.dll</HintPath>
+    <Reference Include="Syncfusion.SfShared.WPF, Version=18.1460.0.55, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Syncfusion.SfShared.WPF.18.1.0.55\lib\net46\Syncfusion.SfShared.WPF.dll</HintPath>
     </Reference>
     <Reference Include="Syncfusion.Shared.WPF, Version=18.1460.0.52, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Syncfusion.Shared.WPF.18.1.0.52\lib\net46\Syncfusion.Shared.WPF.dll</HintPath>
