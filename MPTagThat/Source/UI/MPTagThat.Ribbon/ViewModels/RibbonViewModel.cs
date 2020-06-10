@@ -1088,7 +1088,7 @@ namespace MPTagThat.Ribbon.ViewModels
         }
       }
 
-      // FLoad available Music Shares
+      // Load available Music Shares
       foreach (var share in _options.MainSettings.MusicShares)
       {
         DatabaseMusicFolders.Add(share);
