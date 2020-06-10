@@ -46,7 +46,6 @@ xcopy /y %1\MPTagThat.Core\bin\%2\RateLimiter.dll %TARGETPATH%\Bin\
 xcopy /y %1\MPTagThat.Core\bin\%2\RestSharp.dll %TARGETPATH%\Bin\
 xcopy /y %1\MPTagThat.Core\bin\%2\RestSharpHelper.dll %TARGETPATH%\Bin\
 xcopy /y %1\MPTagThat.Core\bin\%2\System.Reactive.dll %TARGETPATH%\Bin\
-xcopy /y %1\MPTagThat.Core\bin\%2\LiteDB.* %TARGETPATH%\Bin\
 xcopy /y %1\MPTagThat.Core\bin\%2\Prism.* %TARGETPATH%\Bin\
 xcopy /y %1\MPTagThat.Core\bin\%2\RavenDBServer\*.* %TARGETPATH%\Bin\RavenDBServer\ /E /R /D
 xcopy /y %1\MPTagThat.Core\bin\%2\Raven.* %TARGETPATH%\Bin\
