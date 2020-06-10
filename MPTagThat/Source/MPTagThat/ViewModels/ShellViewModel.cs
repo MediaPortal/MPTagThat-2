@@ -380,7 +380,11 @@ namespace MPTagThat.ViewModels
     {
       foreach (ContentControl child in MainDockingManager.Children)
       {
-        var state = _savedDockStates[child.Name];
+        var state = DockState.Dock;
+        if (_savedDockStates.ContainsKey(child.Name))
+        {
+          state = _savedDockStates[child.Name];
+        }
         switch (child.Name.ToLower())
         {
           case "treeview":
