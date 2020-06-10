@@ -327,7 +327,7 @@ namespace MPTagThat.Treeview.ViewModels
       }
 
       var currentFolder = _options.MainSettings.LastFolderUsed;
-      if (!Directory.Exists(currentFolder))
+      if (!Directory.Exists(currentFolder) && !currentFolder.IsNullOrWhiteSpace())
       {
         // Try to get 1 level up to find the parent
         var i = 0;
@@ -354,43 +354,50 @@ namespace MPTagThat.Treeview.ViewModels
       var requestNetwork = currentFolder.StartsWith(@"\\");
       var nodeCol = _dataProvider.RequestDriveCollection(_helper, requestNetwork);
 
-      var dirInfo = new DirectoryInfo(currentFolder);
+      if (!currentFolder.IsNullOrWhiteSpace())
+      {
+        var dirInfo = new DirectoryInfo(currentFolder);
 
-      // get path tokens
-      var dirs = new List<string> { dirInfo.FullName };
+        // get path tokens
+        var dirs = new List<string> {dirInfo.FullName};
 
-      while (dirInfo.Parent != null)
-      {
-        dirs.Add(dirInfo.Parent.FullName);
-        dirInfo = dirInfo.Parent;
-      }
-      // For network we should add also the server to the dir list
-      if (requestNetwork)
-      {
-        dirs.Add(dirInfo.FullName.Substring(0, dirInfo.FullName.LastIndexOf(@"\", StringComparison.Ordinal)));
-      }
-      for (var i = dirs.Count - 1; i >= 0; i--)
-      {
-        foreach (var n in nodeCol)
+        while (dirInfo.Parent != null)
         {
-          if (string.Compare(n.Path.ToLower(), dirs[i].ToLower(), StringComparison.Ordinal) == 0)
+          dirs.Add(dirInfo.Parent.FullName);
+          dirInfo = dirInfo.Parent;
+        }
+
+        // For network we should add also the server to the dir list
+        if (requestNetwork)
+        {
+          dirs.Add(dirInfo.FullName.Substring(0, dirInfo.FullName.LastIndexOf(@"\", StringComparison.Ordinal)));
+        }
+
+        for (var i = dirs.Count - 1; i >= 0; i--)
+        {
+          foreach (var n in nodeCol)
           {
-            if (i == 0)
+            if (string.Compare(n.Path.ToLower(), dirs[i].ToLower(), StringComparison.Ordinal) == 0)
             {
-              n.IsSelected = true;
-              // Set the Selected Item, because we will get a null value from the XAML Event
-              SelectedItem = n;
+              if (i == 0)
+              {
+                n.IsSelected = true;
+                // Set the Selected Item, because we will get a null value from the XAML Event
+                SelectedItem = n;
+              }
+              else
+              {
+                n.IsExpanded = true;
+                _dataProvider.RequestSubDirs(_helper, n);
+                nodeCol = n.Nodes;
+              }
+
+              break;
             }
-            else
-            {
-              n.IsExpanded = true;
-              _dataProvider.RequestSubDirs(_helper, n);
-              nodeCol = n.Nodes;
-            }
-            break;
           }
         }
       }
+
       Cursor = Cursors.Arrow;
       log.Trace("<<<");
     }
