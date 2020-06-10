@@ -1042,6 +1042,9 @@ namespace MPTagThat.Ribbon.ViewModels
           {
             DatabaseMusicFolders.Insert(0, dialog.SelectedPath);
             SelectedMusicFolder = 0;
+            // Maintain the list of MusicShares
+            _options.MainSettings.MusicShares.Remove(dialog.SelectedPath);
+            _options.MainSettings.MusicShares.Insert(0, dialog.SelectedPath);
           }
         }
       }
@@ -1083,6 +1086,12 @@ namespace MPTagThat.Ribbon.ViewModels
           }
           i++;
         }
+      }
+
+      // FLoad available Music Shares
+      foreach (var share in _options.MainSettings.MusicShares)
+      {
+        DatabaseMusicFolders.Add(share);
       }
 
       // Load the Database Queries
