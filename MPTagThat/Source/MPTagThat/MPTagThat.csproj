@@ -44,32 +44,17 @@
     <ApplicationIcon>MPTagThat.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="PresentationFramework.Aero" />
-    <Reference Include="ReachFramework" />
     <Reference Include="System" />
-    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Configuration" />
-    <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
-    <Reference Include="System.Management" />
-    <Reference Include="System.Printing" />
-    <Reference Include="System.Runtime.Serialization" />
-    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
-    <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Xaml">
       <RequiredTargetFramework>4.0</RequiredTargetFramework>
     </Reference>
-    <Reference Include="UIAutomationClient" />
-    <Reference Include="UIAutomationProvider" />
-    <Reference Include="UIAutomationTypes" />
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
-    <Reference Include="WindowsFormsIntegration" />
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
@@ -289,9 +274,6 @@
     <PackageReference Include="BASSCombined">
       <Version>2.4.15</Version>
     </PackageReference>
-    <PackageReference Include="CommonServiceLocator">
-      <Version>2.0.5</Version>
-    </PackageReference>
     <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf">
       <Version>1.1.19</Version>
     </PackageReference>
@@ -302,7 +284,7 @@
       <Version>12.0.3</Version>
     </PackageReference>
     <PackageReference Include="Prism.Unity">
-      <Version>8.0.0.1455-ci</Version>
+      <Version>8.0.0.1740-pre</Version>
     </PackageReference>
     <PackageReference Include="Syncfusion.Licensing">
       <Version>18.1.0.52</Version>
@@ -327,15 +309,6 @@
     </PackageReference>
     <PackageReference Include="System.Threading.Tasks.Extensions">
       <Version>4.5.4</Version>
-    </PackageReference>
-    <PackageReference Include="Unity">
-      <Version>5.11.3</Version>
-    </PackageReference>
-    <PackageReference Include="Unity.Abstractions">
-      <Version>5.11.3</Version>
-    </PackageReference>
-    <PackageReference Include="Unity.Container">
-      <Version>5.11.5</Version>
     </PackageReference>
     <PackageReference Include="WPFLocalizeExtension">
       <Version>3.6.1</Version>

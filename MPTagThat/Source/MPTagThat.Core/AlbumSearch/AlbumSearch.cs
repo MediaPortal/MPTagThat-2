@@ -21,9 +21,9 @@
 using System;
 using System.Collections.Generic;
 using System.Threading;
-using CommonServiceLocator;
 using MPTagThat.Core.AlbumSearch.AlbumSites;
 using MPTagThat.Core.Services.Logging;
+using Prism.Ioc;
 using Timer = System.Timers.Timer;
 
 #endregion
@@ -65,7 +65,7 @@ namespace MPTagThat.Core.AlbumSearch
 
     public AlbumSearch(IAlbumSearch controller, string artist, string album)
     {
-      log = (ServiceLocator.Current.GetInstance(typeof(ILogger)) as ILogger).GetLogger;
+      log = ContainerLocator.Current.Resolve<ILogger>().GetLogger;
       _artist = artist;
       _albumTitle = album;
       _controller = controller;

@@ -25,7 +25,6 @@ using System.IO;
 using System.Windows;
 using System.Windows.Input;
 using Prism.Services.Dialogs;
-using CommonServiceLocator;
 using MPTagThat.Core.Common;
 using MPTagThat.Core.Common.Song;
 using MPTagThat.Core.Events;
@@ -41,6 +40,7 @@ using MPTagThat.Core.Services.ScriptManager;
 using Action = MPTagThat.Core.Common.Action;
 using DialogResult = System.Windows.Forms.DialogResult;
 using Microsoft.VisualBasic.FileIO;
+using Prism.Ioc;
 using Syncfusion.Data.Extensions;
 
 // ReSharper disable CommentTypo
@@ -236,8 +236,7 @@ namespace MPTagThat.Dialogs.ViewModels
       if (SelectedIndexScripts > 0)
       {
         var scriptName = Scripts[SelectedIndexScripts].Name;
-        _scriptAssembly =
-          (ServiceLocator.Current.GetInstance(typeof(IScriptManager)) as IScriptManager)?.Load(scriptName);
+        _scriptAssembly = ContainerLocator.Current.Resolve<IScriptManager>()?.Load(scriptName);
       }
 
       OrganiseFiles(SelectedItemText);
@@ -715,7 +714,7 @@ namespace MPTagThat.Dialogs.ViewModels
       SelectedIndex = _options.OrganiseSettings.LastUsedFormat > Parameters.Count - 1 ? 0 : _options.OrganiseSettings.LastUsedFormat;
 
       // Get Scripts
-      ArrayList scripts = (ServiceLocator.Current.GetInstance(typeof(IScriptManager)) as IScriptManager)?.GetOrganiseScripts();
+      ArrayList scripts = ContainerLocator.Current.Resolve<IScriptManager>()?.GetOrganiseScripts();
 
       var i = 1;
       SelectedIndexScripts = 0;

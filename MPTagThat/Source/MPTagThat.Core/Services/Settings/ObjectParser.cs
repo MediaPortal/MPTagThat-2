@@ -25,8 +25,8 @@ using System.Reflection;
 using System.Text;
 using System.Xml;
 using System.Xml.Serialization;
-using CommonServiceLocator;
 using MPTagThat.Core.Services.Logging;
+using Prism.Ioc;
 
 #endregion
 
@@ -51,8 +51,8 @@ namespace MPTagThat.Core.Services.Settings
         fileName = obj + ".xml";
       }
 
-      var options = (ServiceLocator.Current.GetInstance(typeof(ISettingsManager)) as ISettingsManager).GetOptions;
-      var log = (ServiceLocator.Current.GetInstance(typeof(ILogger)) as ILogger).GetLogger;
+      var options = ContainerLocator.Current.Resolve<ISettingsManager>().GetOptions;
+      var log = ContainerLocator.Current.Resolve<ILogger>().GetLogger;
       log.Trace($"Serialize({ obj},{fileName})");
       var globalSettingsList = new Dictionary<string, string>();
       var userSettingsList = new Dictionary<string, string>();
@@ -185,8 +185,8 @@ namespace MPTagThat.Core.Services.Settings
         fileName = obj + ".xml";
       }
       XmlSettingsProvider xmlreader = new XmlSettingsProvider(fileName);
-      var options = (ServiceLocator.Current.GetInstance(typeof(ISettingsManager)) as ISettingsManager).GetOptions;
-      var log = (ServiceLocator.Current.GetInstance(typeof(ILogger)) as ILogger).GetLogger;
+      var options = ContainerLocator.Current.Resolve<ISettingsManager>().GetOptions;
+      var log = ContainerLocator.Current.Resolve<ILogger>().GetLogger;
       log.Trace($"Deserialize({obj},{fileName})");
       // if xml file doesn't exist yet then create it
       string fullFileName = String.Format(@"{0}\{1}", options.ConfigDir, fileName);

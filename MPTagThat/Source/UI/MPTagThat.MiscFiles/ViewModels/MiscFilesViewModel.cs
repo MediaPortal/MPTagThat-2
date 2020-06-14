@@ -27,7 +27,6 @@ using System.Linq;
 using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
-using CommonServiceLocator;
 using MPTagThat.Core;
 using MPTagThat.Core.Common;
 using MPTagThat.Core.Events;
@@ -38,6 +37,7 @@ using Prism.Mvvm;
 using System.Windows.Media;
 using MPTagThat.Core.Services.Settings;
 using MPTagThat.Core.Services.Settings.Setting;
+using Prism.Ioc;
 
 #endregion
 
@@ -49,7 +49,7 @@ namespace MPTagThat.MiscFiles.ViewModels
     
     private object _lock = new object();
     private MiscFile _currentItem;
-    private Options _options = (ServiceLocator.Current.GetInstance(typeof(ISettingsManager)) as ISettingsManager)?.GetOptions;
+    private Options _options = ContainerLocator.Current.Resolve<ISettingsManager>()?.GetOptions;
 
     #endregion
 
@@ -380,7 +380,7 @@ namespace MPTagThat.MiscFiles.ViewModels
       }
       catch (Exception ex)
       {
-        (ServiceLocator.Current.GetInstance(typeof(ILogger)) as ILogger).GetLogger.Error("File has invalid Picture: {0} {1}", fileName, ex.Message);
+        ContainerLocator.Current.Resolve<ILogger>().GetLogger.Error("File has invalid Picture: {0} {1}", fileName, ex.Message);
       }
 
       if (img != null)

@@ -18,6 +18,7 @@
 #region
 
 using System.Collections.Generic;
+using Prism.Ioc;
 
 #endregion
 
@@ -66,7 +67,7 @@ namespace MPTagThat.Core.Services.Settings.Setting
 
     public void Save()
     {
-      (CommonServiceLocator.ServiceLocator.Current.GetInstance(typeof(ISettingsManager)) as ISettingsManager).Save(this);
+      ContainerLocator.Current.Resolve<ISettingsManager>().Save(this);
     }
 
     #endregion

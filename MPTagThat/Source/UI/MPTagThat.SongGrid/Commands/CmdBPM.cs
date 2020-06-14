@@ -20,9 +20,7 @@
 
 using System;
 using System.Threading.Tasks;
-using CommonServiceLocator;
 using MPTagThat.Core.Common.Song;
-using MPTagThat.Core.Services.Logging;
 using Un4seen.Bass;
 using Un4seen.Bass.AddOn.Fx;
 

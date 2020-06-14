@@ -26,7 +26,6 @@ using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using CommonServiceLocator;
 using Microsoft.VisualBasic.FileIO;
 using MPTagThat.Core;
 using MPTagThat.Core.Common;
@@ -52,6 +51,7 @@ using MPTagThat.Dialogs.ViewModels;
 using MPTagThat.Dialogs.Views;
 using MPTagThat.SongGrid.Models;
 using MPTagThat.SongGrid.Views;
+using Prism.Ioc;
 using Prism.Modularity;
 using Action = MPTagThat.Core.Common.Action;
 using Prism.Services.Dialogs;
@@ -92,9 +92,9 @@ namespace MPTagThat.SongGrid.ViewModels
     {
       _regionManager = regionManager;
       _dialogService = dialogService;
-      log = (ServiceLocator.Current.GetInstance(typeof(ILogger)) as ILogger)?.GetLogger;
+      log = ContainerLocator.Current.Resolve<ILogger>()?.GetLogger;
       log.Trace(">>>");
-      _options = (ServiceLocator.Current.GetInstance(typeof(ISettingsManager)) as ISettingsManager)?.GetOptions;
+      _options = ContainerLocator.Current.Resolve<ISettingsManager>()?.GetOptions;
 
       // Load the Settings
       _gridColumns = new SongGridViewColumns();
@@ -490,7 +490,7 @@ namespace MPTagThat.SongGrid.ViewModels
       if (SelectedItems.Count > 0)
       {
         // Make sure the the Conversion Module is loaded
-        var moduleManager = (ModuleManager)CommonServiceLocator.ServiceLocator.Current.GetInstance(typeof(IModuleManager));
+        var moduleManager = (ModuleManager)ContainerLocator.Current.Resolve<IModuleManager>();
         moduleManager.LoadModule("ConverterModule");
         var songs = SelectedItems.Cast<SongData>().ToList();
         var evt = new GenericEvent
@@ -576,7 +576,7 @@ namespace MPTagThat.SongGrid.ViewModels
     public void ExecuteScript(string scriptFile)
     {
       log.Trace("SongGrid: Executing script");
-      Assembly assembly = (ServiceLocator.Current.GetInstance(typeof(IScriptManager)) as IScriptManager)?.Load(scriptFile);
+      Assembly assembly = ContainerLocator.Current.Resolve<IScriptManager>()?.Load(scriptFile);
 
       var count = 0;
       var msg = new ProgressBarEvent { CurrentProgress = 0, MinValue = 0, MaxValue = SelectedItems.Count };
@@ -1104,7 +1104,7 @@ namespace MPTagThat.SongGrid.ViewModels
           if (command == Action.ActionType.DATABASEQUERY)
           {
             var notificationView = new NotificationView();
-            if (!(ServiceLocator.Current.GetInstance(typeof(IMusicDatabase)) as IMusicDatabase).DatabaseEngineStarted)
+            if (!ContainerLocator.Current.Resolve<IMusicDatabase>().DatabaseEngineStarted)
             {
               notificationView.Show();
             }
@@ -1112,7 +1112,7 @@ namespace MPTagThat.SongGrid.ViewModels
             IsBusy = true;
             Songs.Clear();
             var query = (string)msg.MessageData["parameter"];
-            var result = (ServiceLocator.Current.GetInstance(typeof(IMusicDatabase)) as IMusicDatabase)?.ExecuteQuery(query);
+            var result = ContainerLocator.Current.Resolve<IMusicDatabase>()?.ExecuteQuery(query);
             if (result != null)
             {
               result.ForEach(song => Songs.Add(song));

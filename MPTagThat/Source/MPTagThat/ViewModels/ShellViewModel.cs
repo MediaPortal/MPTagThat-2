@@ -194,7 +194,7 @@ namespace MPTagThat.ViewModels
     public ShellViewModel(IRegionManager regionManager)
     {
       _regionManager = regionManager;
-      log = (ServiceLocator.Current.GetInstance(typeof(ILogger)) as ILogger).GetLogger;
+      log = ContainerLocator.Current.Resolve<ILogger>().GetLogger;
 
       log.Trace(">>>");
 
@@ -208,7 +208,7 @@ namespace MPTagThat.ViewModels
       KeyPressedCommand = new BaseCommand(Keypressed);
       CancelFolderScanCommand = new BaseCommand(CancelFolderScan);
 
-      _options = (ServiceLocator.Current.GetInstance(typeof(ISettingsManager)) as ISettingsManager).GetOptions;
+      _options = ContainerLocator.Current.Resolve<ISettingsManager>().GetOptions;
 
       LoadKeyMap();
 

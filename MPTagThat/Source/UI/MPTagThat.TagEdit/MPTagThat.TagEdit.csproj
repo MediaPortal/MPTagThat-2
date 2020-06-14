@@ -35,26 +35,12 @@
   <ItemGroup>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
-    <Reference Include="ReachFramework" />
     <Reference Include="System" />
-    <Reference Include="System.ComponentModel.DataAnnotations" />
-    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
-    <Reference Include="System.Management" />
-    <Reference Include="System.Printing" />
-    <Reference Include="System.Runtime.Serialization" />
-    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xaml" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
-    <Reference Include="UIAutomationProvider" />
-    <Reference Include="UIAutomationTypes" />
     <Reference Include="WindowsBase" />
-    <Reference Include="WindowsFormsIntegration" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Models\Person.cs" />
@@ -100,9 +86,6 @@
     <Resource Include="Resources\Images\MusicBrainz_32x.png" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="CommonServiceLocator">
-      <Version>2.0.5</Version>
-    </PackageReference>
     <PackageReference Include="MediaPortal.FreeImageNET">
       <Version>3.18.3</Version>
     </PackageReference>
@@ -113,7 +96,7 @@
       <Version>1.1.19</Version>
     </PackageReference>
     <PackageReference Include="Prism.Wpf">
-      <Version>8.0.0.1455-ci</Version>
+      <Version>8.0.0.1740-pre</Version>
     </PackageReference>
     <PackageReference Include="Syncfusion.SfAccordion.WPF">
       <Version>18.1.0.52</Version>

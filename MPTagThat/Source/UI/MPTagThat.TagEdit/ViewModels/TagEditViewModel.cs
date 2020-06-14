@@ -27,7 +27,6 @@ using System.Text;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
-using CommonServiceLocator;
 using Microsoft.Win32;
 using MPTagThat.Core;
 using MPTagThat.Core.Common;
@@ -39,6 +38,7 @@ using MPTagThat.Core.Services.Settings.Setting;
 using MPTagThat.Core.Utils;
 using MPTagThat.TagEdit.Models;
 using Prism.Events;
+using Prism.Ioc;
 using Prism.Mvvm;
 using Prism.Regions;
 using Syncfusion.UI.Xaml.Grid;
@@ -59,8 +59,8 @@ namespace MPTagThat.TagEdit.ViewModels
   {
     #region Variables
 
-    private readonly NLogLogger log = (ServiceLocator.Current.GetInstance(typeof(ILogger)) as ILogger)?.GetLogger;
-    private readonly Options _options = (ServiceLocator.Current.GetInstance(typeof(ISettingsManager)) as ISettingsManager)?.GetOptions;
+    private readonly NLogLogger log = ContainerLocator.Current.Resolve<ILogger>()?.GetLogger;
+    private readonly Options _options = ContainerLocator.Current.Resolve<ISettingsManager>()?.GetOptions;
     private List<SongData> _songs;
     private SongData _songBackup;
     private bool _isInitializing;

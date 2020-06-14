@@ -23,8 +23,8 @@ using System.Globalization;
 using System.Windows;
 using System.Windows.Data;
 using System.Windows.Media;
-using CommonServiceLocator;
 using MPTagThat.Core.Services.Settings;
+using Prism.Ioc;
 
 #endregion
 
@@ -36,7 +36,7 @@ namespace MPTagThat.Core.Common.Converter
   public class RowChangedColorConverter : IValueConverter
   {
 
-    private Color _changedRowColor = (Color) ColorConverter.ConvertFromString((ServiceLocator.Current.GetInstance(typeof(ISettingsManager)) as ISettingsManager)?.GetOptions.MainSettings.ChangedRowColor);
+    private Color _changedRowColor = (Color) ColorConverter.ConvertFromString(ContainerLocator.Current.Resolve<ISettingsManager>()?.GetOptions.MainSettings.ChangedRowColor);
 
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {

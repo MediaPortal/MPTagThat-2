@@ -25,11 +25,11 @@ using System.Collections.Specialized;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
-using CommonServiceLocator;
 using MPTagThat.Core.Services.Logging;
 using MPTagThat.Core.Services.MusicDatabase;
 using MPTagThat.Core.Services.Settings;
 using MPTagThat.Core.Utils;
+using Prism.Ioc;
 using Raven.Client.Documents;
 using Raven.Client.Documents.BulkInsert;
 using Raven.Client.Documents.Session;
@@ -61,8 +61,8 @@ namespace MPTagThat.Core.Common.Song
     private int _lastRetrievedSongIndex = -1;
     private T _lastRetrievedSong = default(T);
 
-    private readonly ISettingsManager _settings = (ServiceLocator.Current.GetInstance(typeof(ISettingsManager)) as ISettingsManager);
-    private readonly ILogger log = (ServiceLocator.Current.GetInstance(typeof(ILogger)) as ILogger)?.GetLogger;
+    private readonly ISettingsManager _settings = ContainerLocator.Current.Resolve<ISettingsManager>();
+    private readonly ILogger log = ContainerLocator.Current.Resolve<ILogger>()?.GetLogger;
 
     #endregion
 
@@ -196,7 +196,7 @@ namespace MPTagThat.Core.Common.Song
         _session = null;
         _store.Dispose();
         _store = null;
-        (ServiceLocator.Current.GetInstance(typeof(IMusicDatabase)) as IMusicDatabase).RemoveStore(_databaseName);
+        ContainerLocator.Current.Resolve<IMusicDatabase>().RemoveStore(_databaseName);
         _dbIdList.Clear();
       }
       else
@@ -328,7 +328,7 @@ namespace MPTagThat.Core.Common.Song
       {
         _databaseFolder = $"{_settings?.GetOptions.StartupSettings.DatabaseFolder}\\{_databaseName}";
         Util.DeleteFolder(_databaseFolder);
-        _store = (ServiceLocator.Current.GetInstance(typeof(IMusicDatabase)) as IMusicDatabase)?.GetDocumentStoreFor(_databaseName);
+        _store = ContainerLocator.Current.Resolve<IMusicDatabase>()?.GetDocumentStoreFor(_databaseName);
         _session = _store?.OpenSession();
         _session.Advanced.MaxNumberOfRequestsPerSession = 10000;
 

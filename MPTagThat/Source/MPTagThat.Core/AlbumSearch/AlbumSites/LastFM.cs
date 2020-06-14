@@ -23,10 +23,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using CommonServiceLocator;
 using IF.Lastfm.Core.Api;
 using MPTagThat.Core.AlbumCoverSearch;
 using MPTagThat.Core.Services.Logging;
+using Prism.Ioc;
 
 #endregion
 
@@ -36,7 +36,7 @@ namespace MPTagThat.Core.AlbumSearch.AlbumSites
   {
     #region Variables
 
-    private readonly NLogLogger _log = (ServiceLocator.Current.GetInstance(typeof(ILogger)) as ILogger)?.GetLogger;
+    private readonly NLogLogger _log = ContainerLocator.Current.Resolve<ILogger>()?.GetLogger;
     private readonly LastfmClient _lastfmClient;
 
     #endregion

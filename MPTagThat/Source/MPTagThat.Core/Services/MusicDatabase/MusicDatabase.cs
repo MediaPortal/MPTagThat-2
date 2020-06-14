@@ -30,7 +30,6 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Threading.Tasks;
 using System.Windows.Interop;
-using CommonServiceLocator;
 using MPTagThat.Core.Common;
 using MPTagThat.Core.Common.Song;
 using MPTagThat.Core.Events;
@@ -39,6 +38,7 @@ using MPTagThat.Core.Services.MusicDatabase.Indexes;
 using MPTagThat.Core.Services.Settings;
 using MPTagThat.Core.Services.Settings.Setting;
 using MPTagThat.Core.Utils;
+using Prism.Ioc;
 using Raven.Client;
 using Raven.Client.Documents;
 using Raven.Client.Documents.BulkInsert;
@@ -58,8 +58,8 @@ namespace MPTagThat.Core.Services.MusicDatabase
   {
     #region Variables
 
-    private readonly NLogLogger log = (ServiceLocator.Current.GetInstance(typeof(ILogger)) as ILogger)?.GetLogger;
-    private readonly Options _options = (ServiceLocator.Current.GetInstance(typeof(ISettingsManager)) as ISettingsManager)?.GetOptions;
+    private readonly NLogLogger log = ContainerLocator.Current.Resolve<ILogger>()?.GetLogger;
+    private readonly Options _options = ContainerLocator.Current.Resolve<ISettingsManager>()?.GetOptions;
     private readonly string _defaultMusicDatabaseName = "MusicDatabase";
     private IDocumentStore _store;
     private IDocumentSession _session;

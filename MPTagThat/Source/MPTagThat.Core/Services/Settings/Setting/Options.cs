@@ -23,9 +23,9 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using System.Windows.Forms;
-using CommonServiceLocator;
 using MPTagThat.Core.Common;
 using MPTagThat.Core.Common.Song;
+using Prism.Ioc;
 
 #endregion
 
@@ -293,7 +293,7 @@ namespace MPTagThat.Core.Services.Settings.Setting
 
     public void InitOptions()
     {
-      if (ServiceLocator.Current.GetInstance(typeof(ISettingsManager)) is ISettingsManager settings)
+      if (ContainerLocator.Current.Resolve<ISettingsManager>() is ISettingsManager settings)
       {
         StartupSettings = settings.StartupSettings;
         if (StartupSettings.Portable)
@@ -445,7 +445,7 @@ namespace MPTagThat.Core.Services.Settings.Setting
 
     public void SaveAllSettings()
     {
-      var settings = (ServiceLocator.Current.GetInstance(typeof(ISettingsManager)) as ISettingsManager);
+      var settings = ContainerLocator.Current.Resolve<ISettingsManager>();
       if (settings != null)
       {
         settings.Save(_MPTagThatSettings);

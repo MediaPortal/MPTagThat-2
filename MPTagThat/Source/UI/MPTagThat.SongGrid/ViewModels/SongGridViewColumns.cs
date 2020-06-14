@@ -19,11 +19,9 @@
 #region
 
 using System.Collections.Generic;
-using CommonServiceLocator;
 using MPTagThat.Core.Common;
-using MPTagThat.Core.Services.Logging;
 using MPTagThat.Core.Services.Settings;
-using Syncfusion.UI.Xaml.Grid;
+using Prism.Ioc;
 
 #endregion
 
@@ -174,7 +172,7 @@ namespace MPTagThat.SongGrid.ViewModels
     {
       _settings = new SongGridViewColumnSettings();
       _settings.Name = "Tracks";
-      (ServiceLocator.Current.GetInstance(typeof(ISettingsManager)) as ISettingsManager).Load(_settings);
+      ContainerLocator.Current.Resolve<ISettingsManager>().Load(_settings);
       if (_settings.Columns.Count == 0)
       {
         // Setup the Default Columns to display on first use of the program
@@ -185,14 +183,14 @@ namespace MPTagThat.SongGrid.ViewModels
         {
           _settings.Columns.Add(column);
         }
-        (ServiceLocator.Current.GetInstance(typeof(ISettingsManager)) as ISettingsManager).Save(_settings);
+        ContainerLocator.Current.Resolve<ISettingsManager>().Save(_settings);
       }
     }
 
     public void SaveSettings()
     {
       _settings.Name = "Tracks";
-      (ServiceLocator.Current.GetInstance(typeof(ISettingsManager)) as ISettingsManager).Save(_settings);
+      ContainerLocator.Current.Resolve<ISettingsManager>().Save(_settings);
     }
 
 

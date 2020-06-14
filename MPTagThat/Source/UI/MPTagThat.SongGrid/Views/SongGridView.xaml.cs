@@ -18,7 +18,6 @@
 
 using System.IO;
 using System.Windows.Controls;
-using CommonServiceLocator;
 using MPTagThat.Core.Services.Settings;
 using MPTagThat.SongGrid.ViewModels;
 

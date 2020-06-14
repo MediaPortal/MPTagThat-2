@@ -30,13 +30,13 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Forms;
-using CommonServiceLocator;
 using MPTagThat.Core.Common.Converter;
 using MPTagThat.Core.Common.Song;
 using MPTagThat.Core.Events;
 using MPTagThat.Core.Services.Logging;
 using MPTagThat.Core.Services.Settings;
 using MPTagThat.Core.Services.Settings.Setting;
+using Prism.Ioc;
 using Syncfusion.UI.Xaml.Grid;
 using Syncfusion.Windows.Controls.Input;
 using Syncfusion.Windows.Primitives;
@@ -84,7 +84,7 @@ namespace MPTagThat.Core.Utils
 
     private Util()
     {
-      log = (ServiceLocator.Current.GetInstance(typeof(ILogger)) as ILogger).GetLogger;
+      log = ContainerLocator.Current.Resolve<ILogger>().GetLogger;
       _invalidFilenameChars = Path.GetInvalidFileNameChars();
       _invalidFoldernameChars = Path.GetInvalidPathChars();
     }
@@ -565,7 +565,7 @@ namespace MPTagThat.Core.Utils
     {
       if (file.MimeType == "taglib/mp3")
       {
-        var options = (ServiceLocator.Current.GetInstance(typeof(ISettingsManager)) as ISettingsManager)?.GetOptions;
+        var options = ContainerLocator.Current.Resolve<ISettingsManager>()?.GetOptions;
         Tag id3v2_tag = file.GetTag(TagTypes.Id3v2) as Tag;
         if (id3v2_tag != null && options.MainSettings.ID3V2Version > 0)
           id3v2_tag.Version = (byte)options.MainSettings.ID3V2Version;

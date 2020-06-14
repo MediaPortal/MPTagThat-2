@@ -35,27 +35,16 @@
   <ItemGroup>
     <Reference Include="Microsoft.VisualBasic" />
     <Reference Include="System" />
-    <Reference Include="System.Configuration" />
-    <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
-    <Reference Include="System.Management" />
-    <Reference Include="System.Runtime.Serialization" />
-    <Reference Include="System.Runtime.Serialization.Formatters.Soap" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
-    <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Xaml">
       <RequiredTargetFramework>4.0</RequiredTargetFramework>
     </Reference>
-    <Reference Include="UIAutomationProvider" />
-    <Reference Include="UIAutomationTypes" />
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
-    <Reference Include="WindowsFormsIntegration" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DialogModule.cs" />
@@ -176,9 +165,6 @@
     <Folder Include="Resources\Images\" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="CommonServiceLocator">
-      <Version>2.0.5</Version>
-    </PackageReference>
     <PackageReference Include="MediaPortal.TagLib">
       <Version>2.2.0.1</Version>
     </PackageReference>
@@ -186,7 +172,7 @@
       <Version>1.1.19</Version>
     </PackageReference>
     <PackageReference Include="Prism.Wpf">
-      <Version>8.0.0.1455-ci</Version>
+      <Version>8.0.0.1740-pre</Version>
     </PackageReference>
     <PackageReference Include="Syncfusion.SfGrid.WPF">
       <Version>18.1.0.52</Version>

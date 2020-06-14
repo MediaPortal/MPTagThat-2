@@ -27,8 +27,6 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Windows.Input;
-using System.Windows.Navigation;
-using CommonServiceLocator;
 using MPTagThat.Core;
 using MPTagThat.Core.Common;
 using MPTagThat.Core.Events;
@@ -39,11 +37,11 @@ using MPTagThat.Core.Services.Settings;
 using MPTagThat.Core.Services.Settings.Setting;
 using Newtonsoft.Json;
 using Prism.Events;
+using Prism.Ioc;
 using Prism.Mvvm;
 using Prism.Regions;
 using Syncfusion.SfSkinManager;
 using Syncfusion.Windows.Shared;
-using Syncfusion.Windows.Tools;
 using Syncfusion.Windows.Tools.Controls;
 using Action = MPTagThat.Core.Common.Action;
 using Application = System.Windows.Application;
@@ -67,8 +65,8 @@ namespace MPTagThat.Ribbon.ViewModels
     public RibbonViewModel(IRegionManager regionManager)
     {
       _regionManager = regionManager;
-      log = (ServiceLocator.Current.GetInstance(typeof(ILogger)) as ILogger)?.GetLogger;
-      _options = (ServiceLocator.Current.GetInstance(typeof(ISettingsManager)) as ISettingsManager)?.GetOptions;
+      log = ContainerLocator.Current.Resolve<ILogger>()?.GetLogger;
+      _options = ContainerLocator.Current.Resolve<ISettingsManager>()?.GetOptions;
 
       ResetLayoutCommand = new BaseCommand(ResetLayout);
       DeleteLayoutCommand = new BaseCommand(DeleteLayout);
@@ -984,15 +982,15 @@ namespace MPTagThat.Ribbon.ViewModels
           break;
 
         case "ButtonDatabaseScanStart":
-          (ServiceLocator.Current.GetInstance(typeof(IMusicDatabase)) as IMusicDatabase)?.BuildDatabase(DatabaseMusicFolders[SelectedMusicFolder], DatabaseClearChecked);
+          ContainerLocator.Current.Resolve<IMusicDatabase>()?.BuildDatabase(DatabaseMusicFolders[SelectedMusicFolder], DatabaseClearChecked);
           break;
 
         case "ButtonDatabaseScanAbort":
-          (ServiceLocator.Current.GetInstance(typeof(IMusicDatabase)) as IMusicDatabase)?.AbortDatabaseScan();
+          ContainerLocator.Current.Resolve<IMusicDatabase>()?.AbortDatabaseScan();
           break;
 
         case "ButtonDatabaseDelete":
-          (ServiceLocator.Current.GetInstance(typeof(IMusicDatabase)) as IMusicDatabase)?.DeleteDatabase((ServiceLocator.Current.GetInstance(typeof(IMusicDatabase)) as IMusicDatabase)?.CurrentDatabase);
+          ContainerLocator.Current.Resolve<IMusicDatabase>()?.DeleteDatabase(ContainerLocator.Current.Resolve<IMusicDatabase>()?.CurrentDatabase);
           break;
 
         case "ButtonDatabaseQuery":
@@ -1072,7 +1070,7 @@ namespace MPTagThat.Ribbon.ViewModels
         _options.MainSettings.ActiveScript = "SwitchArtist.sct";
       }
 
-      scripts = (ServiceLocator.Current.GetInstance(typeof(IScriptManager)) as IScriptManager)?.GetScripts();
+      scripts = ContainerLocator.Current.Resolve<IScriptManager>()?.GetScripts();
       i = 0;
       if (scripts != null)
       {

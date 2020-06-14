@@ -18,7 +18,6 @@
 
 #region 
 
-using CommonServiceLocator;
 using DiscogsClient.Data.Query;
 using DiscogsClient.Internal;
 using MPTagThat.Core.Services.Logging;
@@ -30,6 +29,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using DiscogsClient.Data.Result;
 using MPTagThat.Core.AlbumCoverSearch;
+using Prism.Ioc;
 
 #endregion
 
@@ -39,7 +39,7 @@ namespace MPTagThat.Core.AlbumSearch.AlbumSites
   {
     #region Variables
 
-    private readonly NLogLogger log = (ServiceLocator.Current.GetInstance(typeof(ILogger)) as ILogger).GetLogger;
+    private readonly NLogLogger log = ContainerLocator.Current.Resolve<ILogger>().GetLogger;
     private DiscogsClient.DiscogsClient _discogsClient;
 
     #endregion

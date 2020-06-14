@@ -26,7 +26,6 @@ using System.Security.Policy;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Threading;
-using CommonServiceLocator;
 using MPTagThat.Core;
 using MPTagThat.Core.Events;
 using MPTagThat.Core.Services.Logging;
@@ -35,6 +34,7 @@ using MPTagThat.Core.Services.Settings.Setting;
 using MPTagThat.Treeview.Model;
 using MPTagThat.Treeview.Model.Win32;
 using Prism.Events;
+using Prism.Ioc;
 using Prism.Mvvm;
 using Syncfusion.Windows.Shared;
 using Syncfusion.Windows.Tools.Controls;
@@ -258,9 +258,9 @@ namespace MPTagThat.Treeview.ViewModels
 
     public TreeviewViewModel()
     {
-      log = (ServiceLocator.Current.GetInstance(typeof(ILogger)) as ILogger)?.GetLogger;
+      log = ContainerLocator.Current.Resolve<ILogger>()?.GetLogger;
       log.Trace(">>>");
-      _options = (ServiceLocator.Current.GetInstance(typeof(ISettingsManager)) as ISettingsManager)?.GetOptions;
+      _options = ContainerLocator.Current.Resolve<ISettingsManager>()?.GetOptions;
 
       EventSystem.Subscribe<GenericEvent>(OnMessageReceived, ThreadOption.UIThread);
 

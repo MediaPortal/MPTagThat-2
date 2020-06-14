@@ -1,5 +1,4 @@
-﻿using CommonServiceLocator;
-using MPTagThat.Core;
+﻿using MPTagThat.Core;
 using MPTagThat.Core.Events;
 using MPTagThat.Core.Services.Settings;
 using System.IO;
@@ -11,6 +10,7 @@ using System.Windows.Media;
 using MPTagThat.Core.Services.Logging;
 using MPTagThat.Core.Services.Settings.Setting;
 using MPTagThat.ViewModels;
+using Prism.Ioc;
 
 namespace MPTagThat.Views
 {
@@ -21,7 +21,7 @@ namespace MPTagThat.Views
   {
     #region Variables
 
-    private Options _options = (ServiceLocator.Current.GetInstance(typeof(ISettingsManager)) as ISettingsManager).GetOptions;
+    private Options _options = ContainerLocator.Current.Resolve<ISettingsManager>().GetOptions;
 
     #endregion
 
@@ -62,7 +62,7 @@ namespace MPTagThat.Views
       };
       EventSystem.Publish(evt);
 
-      (ServiceLocator.Current.GetInstance(typeof(ILogger)) as ILogger)?.GetLogger.Info("Saving Docking State");
+      ContainerLocator.Current.Resolve<ILogger>()?.GetLogger.Info("Saving Docking State");
       var stateFile = _options.ConfigDir + "\\DockingLayout.xml";
       BinaryFormatter formatter = new BinaryFormatter();
 

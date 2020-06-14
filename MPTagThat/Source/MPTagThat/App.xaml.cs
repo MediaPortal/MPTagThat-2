@@ -68,14 +68,12 @@ namespace MPTagThat
       var settings = new SettingsManager();
       containerRegistry.RegisterInstance<ISettingsManager>(settings);
       
-      // Set the Service Locator, to allow other service using the Logger
-      CommonServiceLocator.ServiceLocator.SetLocatorProvider(() => new UnityServiceLocatorAdapter(Container.GetContainer()));
 
       // Must be the last thing here, since we are referring to the service 
       settings.StartupSettings = _startupSettings;
       settings.GetOptions.InitOptions();
 
-      logger.Level = (LogLevel)Enum.Parse(typeof(LogLevel),(CommonServiceLocator.ServiceLocator.Current.GetInstance(typeof(ISettingsManager)) as ISettingsManager)?.GetOptions
+      logger.Level = (LogLevel)Enum.Parse(typeof(LogLevel),(Container.Resolve(typeof(ISettingsManager)) as ISettingsManager)?.GetOptions
         .MainSettings.DebugLevel);
 
       // All other services, relying on Settings to come here
@@ -85,8 +83,7 @@ namespace MPTagThat
       logger.GetLogger.Info("Registering Music Database Service");
       containerRegistry.RegisterInstance<IMusicDatabase>(new MusicDatabase());
 
-      var language = (CommonServiceLocator.ServiceLocator.Current.GetInstance(typeof(ISettingsManager)) as ISettingsManager)?.GetOptions
-        .MainSettings.Language;
+      var language = Container.Resolve<ISettingsManager>()?.GetOptions.MainSettings.Language;
       WPFLocalizeExtension.Engine.LocalizeDictionary.Instance.Culture = new CultureInfo(language);
     }
 
@@ -96,7 +93,7 @@ namespace MPTagThat
     /// <returns></returns>
     protected override void ConfigureRegionAdapterMappings(RegionAdapterMappings regionAdapterMappings)
     {
-      (CommonServiceLocator.ServiceLocator.Current.GetInstance(typeof(ILogger)) as ILogger)?.GetLogger.Trace("Configure Region Adapater Mappings");
+      Container.Resolve<ILogger>()?.GetLogger.Trace("Configure Region Adapater Mappings");
       base.ConfigureRegionAdapterMappings(regionAdapterMappings);
       regionAdapterMappings.RegisterMapping(typeof(DockingManager), Container.Resolve<DockingManagerRegionAdapter>());
     }
@@ -106,7 +103,7 @@ namespace MPTagThat
     /// </summary>
     protected override void ConfigureModuleCatalog(IModuleCatalog moduleCatalog)
     {
-      (CommonServiceLocator.ServiceLocator.Current.GetInstance(typeof(ILogger)) as ILogger)?.GetLogger.Trace("Adding modules to Catalog");
+      Container.Resolve<ILogger>()?.GetLogger.Trace("Adding modules to Catalog");
       moduleCatalog.AddModule(typeof(Ribbon.RibbonModule));
       moduleCatalog.AddModule(typeof(Treeview.TreeviewModule));
       moduleCatalog.AddModule(typeof(SongGrid.SongGridModule));
@@ -263,8 +260,8 @@ namespace MPTagThat
     /// </summary>
     private static void DoInitService(IUnityContainer container)
     {
-      (CommonServiceLocator.ServiceLocator.Current.GetInstance(typeof(ILogger)) as ILogger)?.GetLogger.Trace(">>>");
-      (CommonServiceLocator.ServiceLocator.Current.GetInstance(typeof(ILogger)) as ILogger)?.GetLogger.Info("Init BASS Audio Engine");
+      container.Resolve<ILogger>()?.GetLogger.Trace(">>>");
+      container.Resolve<ILogger>()?.GetLogger.Info("Init BASS Audio Engine");
       if (!Bass.BASS_Init(0, 44100, BASSInit.BASS_DEVICE_DEFAULT, IntPtr.Zero))
       {
         int error = (int)Bass.BASS_ErrorGetCode();

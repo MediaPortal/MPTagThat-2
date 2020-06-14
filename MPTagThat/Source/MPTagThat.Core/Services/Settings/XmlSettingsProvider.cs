@@ -21,8 +21,8 @@
 using System;
 using System.IO;
 using System.Xml;
-using CommonServiceLocator;
 using MPTagThat.Core.Services.Logging;
+using Prism.Ioc;
 
 #endregion
 
@@ -41,7 +41,7 @@ namespace MPTagThat.Core.Services.Settings
     public XmlSettingsProvider(string xmlfilename)
     {
       _filename = xmlfilename;
-      var options = (ServiceLocator.Current.GetInstance(typeof(ISettingsManager)) as ISettingsManager).GetOptions;
+      var options = ContainerLocator.Current.Resolve<ISettingsManager>().GetOptions;
       var fullFileName = $@"{options.ConfigDir}\{xmlfilename}";
       
       _document = new XmlDocument();
@@ -79,8 +79,8 @@ namespace MPTagThat.Core.Services.Settings
 
     public void Save()
     {
-      var options = (ServiceLocator.Current.GetInstance(typeof(ISettingsManager)) as ISettingsManager).GetOptions;
-      var log = (ServiceLocator.Current.GetInstance(typeof(ILogger)) as ILogger).GetLogger;
+      var options = ContainerLocator.Current.Resolve<ISettingsManager>().GetOptions;
+      var log = ContainerLocator.Current.Resolve<ILogger>().GetLogger;
       log.Trace($"Saving({_filename},{_modified})");
       if (!_modified) return;
       if (!Directory.Exists(options.ConfigDir))

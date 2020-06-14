@@ -22,11 +22,11 @@ using System.Globalization;
 using System.IO;
 using System.Text.RegularExpressions;
 using System.Threading;
-using CommonServiceLocator;
 using MPTagThat.Core.Services.Logging;
 using MPTagThat.Core.Services.Settings;
 using MPTagThat.Core.Services.Settings.Setting;
 using MPTagThat.Core.Utils;
+using Prism.Ioc;
 using WPFLocalizeExtension.Engine;
 
 #endregion
@@ -49,8 +49,8 @@ namespace MPTagThat.Core.Common.Song
 
     static CaseConversion()
     {
-      log = (ServiceLocator.Current.GetInstance(typeof(ILogger)) as ILogger)?.GetLogger;
-      _options = (ServiceLocator.Current.GetInstance(typeof(ISettingsManager)) as ISettingsManager)?.GetOptions;
+      log = ContainerLocator.Current.Resolve<ILogger>()?.GetLogger;
+      _options = ContainerLocator.Current.Resolve<ISettingsManager>()?.GetOptions;
     }
 
     #endregion

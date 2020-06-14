@@ -20,11 +20,11 @@
 
 using System;
 using System.IO;
-using CommonServiceLocator;
 using MPTagThat.Core.Events;
 using MPTagThat.Core.Services.Logging;
 using MPTagThat.Core.Services.Settings;
 using MPTagThat.Core.Services.Settings.Setting;
+using Prism.Ioc;
 using Un4seen.Bass;
 using Un4seen.Bass.Misc;
 
@@ -49,8 +49,8 @@ namespace MPTagThat.Core.Services.AudioEncoder
 
     public AudioEncoder()
     {
-      log = (ServiceLocator.Current.GetInstance(typeof(ILogger)) as ILogger)?.GetLogger;
-      _options = (ServiceLocator.Current.GetInstance(typeof(ISettingsManager)) as ISettingsManager)?.GetOptions;
+      log = ContainerLocator.Current.Resolve<ILogger>()?.GetLogger;
+      _options = ContainerLocator.Current.Resolve<ISettingsManager>()?.GetOptions;
     }
 
     #endregion

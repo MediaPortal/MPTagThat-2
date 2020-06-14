@@ -20,10 +20,10 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
-using CommonServiceLocator;
 using MPTagThat.Core.Services.Logging;
 using MPTagThat.Treeview.Model.Win32;
 using MPTagThat.Treeview.ViewModels;
+using Prism.Ioc;
 using Shell32;
 
 namespace MPTagThat.Treeview.Model
@@ -35,7 +35,7 @@ namespace MPTagThat.Treeview.Model
   {
     #region fields
 
-    private readonly NLogLogger log = (ServiceLocator.Current.GetInstance(typeof(ILogger)) as ILogger)?.GetLogger;
+    private readonly NLogLogger log = ContainerLocator.Current.Resolve<ILogger>()?.GetLogger;
 
     /// <summary>
     ///   drive tree node (My computer) root collection

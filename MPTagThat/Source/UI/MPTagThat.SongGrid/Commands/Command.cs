@@ -18,14 +18,13 @@
 
 # region
 
-using CommonServiceLocator;
 using MPTagThat.Core.Common.Song;
 using MPTagThat.Core.Services.Logging;
 using MPTagThat.Core.Services.Settings;
 using MPTagThat.Core.Services.Settings.Setting;
 using System;
 using System.Threading.Tasks;
-using System.Windows.Forms;
+using Prism.Ioc;
 using Prism.Services.Dialogs;
 
 #endregion
@@ -104,8 +103,8 @@ namespace MPTagThat.SongGrid.Commands
       }
 
       Type commandType = CommandTypes.AvailableCommands[command];
-      log = (ServiceLocator.Current.GetInstance(typeof(ILogger)) as ILogger).GetLogger;
-      options = (ServiceLocator.Current.GetInstance(typeof(ISettingsManager)) as ISettingsManager).GetOptions;
+      log = ContainerLocator.Current.Resolve<ILogger>().GetLogger;
+      options = ContainerLocator.Current.Resolve<ISettingsManager>().GetOptions;
 
       try
       {

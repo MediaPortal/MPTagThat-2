@@ -26,13 +26,13 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
-using CommonServiceLocator;
 using Hqub.MusicBrainz.API;
 using Hqub.MusicBrainz.API.Entities;
 using MPTagThat.Core.AlbumCoverSearch;
 using MPTagThat.Core.Services.Logging;
 using MPTagThat.Core.Services.Settings;
 using MPTagThat.Core.Services.Settings.Setting;
+using Prism.Ioc;
 
 #endregion
 
@@ -42,8 +42,8 @@ namespace MPTagThat.Core.AlbumSearch.AlbumSites
   {
     #region Variables
 
-    private readonly NLogLogger log = (ServiceLocator.Current.GetInstance(typeof(ILogger)) as ILogger).GetLogger;
-    private Options _options = (ServiceLocator.Current.GetInstance(typeof(ISettingsManager)) as ISettingsManager).GetOptions;
+    private readonly NLogLogger log = ContainerLocator.Current.Resolve<ILogger>().GetLogger;
+    private Options _options = ContainerLocator.Current.Resolve<ISettingsManager>().GetOptions;
     private Regex _switchedArtist = new Regex(@"^.*, .*$");
 
     #endregion

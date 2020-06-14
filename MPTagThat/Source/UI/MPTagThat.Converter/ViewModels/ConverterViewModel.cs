@@ -27,7 +27,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
-using CommonServiceLocator;
 using MPTagThat.Converter.Models;
 using MPTagThat.Core;
 using MPTagThat.Core.Common;
@@ -38,6 +37,7 @@ using MPTagThat.Core.Services.Logging;
 using MPTagThat.Core.Services.Settings;
 using MPTagThat.Core.Services.Settings.Setting;
 using MPTagThat.Core.Utils;
+using Prism.Ioc;
 using Prism.Mvvm;
 using Prism.Regions;
 using Syncfusion.Data.Extensions;
@@ -73,9 +73,9 @@ namespace MPTagThat.Converter.ViewModels
     public ConverterViewModel(IRegionManager regionManager)
     {
       _regionManager = regionManager;
-      log = (ServiceLocator.Current.GetInstance(typeof(ILogger)) as ILogger)?.GetLogger;
+      log = ContainerLocator.Current.Resolve<ILogger>()?.GetLogger;
       log.Trace(">>>");
-      _options = (ServiceLocator.Current.GetInstance(typeof(ISettingsManager)) as ISettingsManager)?.GetOptions;
+      _options = ContainerLocator.Current.Resolve<ISettingsManager>()?.GetOptions;
       EventSystem.Subscribe<GenericEvent>(OnMessageReceived);
 
       // Load the Encoders

@@ -4,10 +4,10 @@ using System.Drawing;
 using System.Globalization;
 using System.IO;
 using System.Linq;
-using CommonServiceLocator;
 using MPTagThat.Core.Services.Logging;
 using MPTagThat.Core.Services.Settings;
 using MPTagThat.Core.Utils;
+using Prism.Ioc;
 using TagLib;
 using TagLib.Id3v2;
 using TagLib.Ogg;
@@ -21,7 +21,7 @@ namespace MPTagThat.Core.Common.Song
   {
     #region Variables
 
-    private static ILogger log = (ServiceLocator.Current.GetInstance(typeof(ILogger)) as ILogger).GetLogger;
+    private static ILogger log = ContainerLocator.Current.Resolve<ILogger>().GetLogger;
 
     #endregion
 
@@ -449,7 +449,7 @@ namespace MPTagThat.Core.Common.Song
         return true;
       }
 
-      var options = (ServiceLocator.Current.GetInstance(typeof(ISettingsManager)) as ISettingsManager)?.GetOptions;
+      var options = ContainerLocator.Current.Resolve<ISettingsManager>()?.GetOptions;
 
       /*
       if (song.Readonly && !options.MainSettings.ChangeReadOnlyAttributte &&

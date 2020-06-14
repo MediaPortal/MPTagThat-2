@@ -22,11 +22,12 @@ using System;
 using System.Collections;
 using System.IO;
 using System.Reflection;
-using CommonServiceLocator;
 using CSScriptLibrary;
 using MPTagThat.Core.Services.Logging;
 using MPTagThat.Core.Services.Settings;
 using MPTagThat.Core.Services.Settings.Setting;
+using Prism.Ioc;
+
 // ReSharper disable PossibleNullReferenceException
 
 #endregion
@@ -51,8 +52,8 @@ namespace MPTagThat.Core.Services.ScriptManager
 
     public ScriptManager()
     {
-      log = (ServiceLocator.Current.GetInstance(typeof(ILogger)) as ILogger)?.GetLogger;
-      _options = (ServiceLocator.Current.GetInstance(typeof(ISettingsManager)) as ISettingsManager)?.GetOptions;
+      log = ContainerLocator.Current.Resolve<ILogger>()?.GetLogger;
+      _options = ContainerLocator.Current.Resolve<ISettingsManager>()?.GetOptions;
 
       _sharedAsemblyDir = $@"{Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)}\MPTagThat2\Scripts";
       if (!Directory.Exists(_sharedAsemblyDir))

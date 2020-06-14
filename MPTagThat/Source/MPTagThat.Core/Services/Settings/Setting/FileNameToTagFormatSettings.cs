@@ -16,6 +16,8 @@
 // along with MPTagThat. If not, see <http://www.gnu.org/licenses/>.
 #endregion
 
+using Prism.Ioc;
+
 namespace MPTagThat.Core.Services.Settings.Setting
 {
   public class FileNameToTagFormatSettings : ParameterFormat
@@ -24,7 +26,7 @@ namespace MPTagThat.Core.Services.Settings.Setting
 
     public void Save()
     {
-      (CommonServiceLocator.ServiceLocator.Current.GetInstance(typeof(ISettingsManager)) as ISettingsManager).Save(this);
+      ContainerLocator.Current.Resolve<ISettingsManager>().Save(this);
     }
 
     #endregion

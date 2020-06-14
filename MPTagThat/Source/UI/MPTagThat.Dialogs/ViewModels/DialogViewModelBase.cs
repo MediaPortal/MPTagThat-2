@@ -22,11 +22,8 @@ using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Services.Dialogs;
 using System;
-using System.ComponentModel;
-using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
-using CommonServiceLocator;
 using MPTagThat.Core;
 using MPTagThat.Core.Common;
 using MPTagThat.Core.Events;
@@ -34,6 +31,7 @@ using MPTagThat.Core.Services.Logging;
 using MPTagThat.Core.Services.Settings;
 using MPTagThat.Core.Services.Settings.Setting;
 using Prism.Events;
+using Prism.Ioc;
 
 #endregion
 
@@ -46,8 +44,8 @@ namespace MPTagThat.Dialogs.ViewModels
   {
     #region Variables
 
-    public readonly Options _options = (ServiceLocator.Current.GetInstance(typeof(ISettingsManager)) as ISettingsManager)?.GetOptions;
-    public readonly NLogLogger log = (ServiceLocator.Current.GetInstance(typeof(ILogger)) as ILogger)?.GetLogger;
+    public readonly Options _options = ContainerLocator.Current.Resolve<ISettingsManager>()?.GetOptions;
+    public readonly NLogLogger log = ContainerLocator.Current.Resolve<ILogger>()?.GetLogger;
 
     private DelegateCommand<string> _closeDialogCommand;
     public DelegateCommand<string> CloseDialogCommand =>

@@ -20,8 +20,6 @@
 
 using System;
 using System.IO;
-using CommonServiceLocator;
-using MPTagThat.Core.Services.Settings;
 using NLog;
 using NLog.Config;
 using NLog.Filters;

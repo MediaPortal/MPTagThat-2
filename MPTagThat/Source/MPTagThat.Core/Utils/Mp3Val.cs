@@ -25,10 +25,10 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using CommonServiceLocator;
 using MPTagThat.Core.Services.Logging;
 using MPTagThat.Core.Services.Settings;
 using MPTagThat.Core.Services.Settings.Setting;
+using Prism.Ioc;
 
 #endregion
 
@@ -39,8 +39,8 @@ namespace MPTagThat.Core.Utils
     #region Variables
 
     private static List<string> StdOutList;
-    private static readonly NLogLogger log = (ServiceLocator.Current.GetInstance(typeof(ILogger)) as ILogger)?.GetLogger;
-    private static Options _options = (ServiceLocator.Current.GetInstance(typeof(ISettingsManager)) as ISettingsManager)?.GetOptions;
+    private static readonly NLogLogger log = ContainerLocator.Current.Resolve<ILogger>()?.GetLogger;
+    private static Options _options = ContainerLocator.Current.Resolve<ISettingsManager>()?.GetOptions;
     #endregion
 
     #region File Validation
