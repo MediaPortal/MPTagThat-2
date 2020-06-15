@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using CommonServiceLocator;
 using MPTagThat.Converter.Views;
 using MPTagThat.Core;
 using MPTagThat.Core.Common;
@@ -429,13 +429,12 @@ namespace MPTagThat.ViewModels
               HideStandardLayout();
               
               // Load Module and Activate View
-              var moduleManager = (ModuleManager)CommonServiceLocator.ServiceLocator.Current.GetInstance(typeof(IModuleManager));
+              var moduleManager = (ModuleManager)ContainerLocator.Current.Resolve<IModuleManager>();
               moduleManager.LoadModule("ConverterModule");
               var converterView = detailRegion.Views.FirstOrDefault(v => v is ConverterView);
               if (converterView == null)
               {
-                var container = (IContainerExtension)CommonServiceLocator.ServiceLocator.Current.GetInstance(typeof(IContainerExtension));
-                var view = container.Resolve<ConverterView>();
+                var view = ContainerLocator.Current.Resolve<ConverterView>();
                 detailRegion.Add(view);
                 detailRegion.Activate(view);
               }
