@@ -19,7 +19,6 @@
 #region 
 
 using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data.SQLite;
@@ -28,9 +27,9 @@ using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using System.Windows.Interop;
-using MPTagThat.Core.Common;
+using System.Windows.Markup;
 using MPTagThat.Core.Common.Song;
 using MPTagThat.Core.Events;
 using MPTagThat.Core.Services.Logging;
@@ -39,7 +38,6 @@ using MPTagThat.Core.Services.Settings;
 using MPTagThat.Core.Services.Settings.Setting;
 using MPTagThat.Core.Utils;
 using Prism.Ioc;
-using Raven.Client;
 using Raven.Client.Documents;
 using Raven.Client.Documents.BulkInsert;
 using Raven.Client.Documents.Indexes;
@@ -68,15 +66,11 @@ namespace MPTagThat.Core.Services.MusicDatabase
     private int _audioFiles;
     private DateTime _scanStartTime;
 
-    //private readonly ConcurrentDictionary<string, Lazy<IDocumentStore>> _stores =
-    //    new ConcurrentDictionary<string, Lazy<IDocumentStore>>();
-
     private readonly Dictionary<string, IDocumentStore> _stores = new Dictionary<string, IDocumentStore>();
+    private readonly StatusBarEvent _progressEvent = new StatusBarEvent { Type = StatusBarEvent.StatusTypes.CurrentFile };
+    private readonly SQLiteConnection _sqLiteConnection;
 
-    private StatusBarEvent _progressEvent = new StatusBarEvent { Type = StatusBarEvent.StatusTypes.CurrentFile };
-
-    private SQLiteConnection _sqLiteConnection;
-
+    private string[] _indexedTags = {"Artist:", "AlbumArtist:", "Album:", "Composer:", "Genre:", "Title:", "Type:", "FullFileName:"};
     #endregion
 
     #region ctor / dtor
@@ -85,7 +79,7 @@ namespace MPTagThat.Core.Services.MusicDatabase
     {
       CurrentDatabase = _defaultMusicDatabaseName;
 
-      // Open Connection to the SQLite Database with the music brainz artists
+      // Open Connection to the SQLite Database with the MusicBrainz artists
       MusicBrainzDatabaseActive = false;
       if (File.Exists(@"bin\\MusicBrainzArtists.db3"))
       {
@@ -252,6 +246,8 @@ namespace MPTagThat.Core.Services.MusicDatabase
       EventSystem.Publish(msg);
 
       List<SongData> result = null;
+
+      query = FormatQuery(query);
 
       if (query.Contains(":"))
       {
@@ -732,25 +728,26 @@ namespace MPTagThat.Core.Services.MusicDatabase
       docStore.Initialize();
       return docStore;
     }
-    
-    /*
-    private Lazy<IDocumentStore> CreateDocumentStore(string databaseName)
-    {
-      return new Lazy<IDocumentStore>(() =>
-      {
-        if (!_databaseServerStarted)
-        {
-          StartDatabaseServer();
-        }
 
-        var docStore = EmbeddedServer.Instance.GetDocumentStore(databaseName);
-        
-        log.Trace("Initializing database store");
-        docStore.Initialize();
-        return docStore;
-      });
+    /// <summary>
+    /// Format the query for Lucene syntax
+    /// </summary>
+    /// <param name="query"></param>
+    /// <returns></returns>
+    private string FormatQuery(string query)
+    {
+      // And / Or operators need to be all uppercase
+      query = Regex.Replace(query, " and ", " AND ", RegexOptions.IgnoreCase);
+      query = Regex.Replace(query, " or ", " OR ", RegexOptions.IgnoreCase);
+
+      // Change the indexed Tags to first letter Upper case
+      foreach (var tag in _indexedTags)
+      {
+        query = Regex.Replace(query, tag, tag, RegexOptions.IgnoreCase);
+      }
+
+      return query;
     }
-    */
 
     #endregion
   }
