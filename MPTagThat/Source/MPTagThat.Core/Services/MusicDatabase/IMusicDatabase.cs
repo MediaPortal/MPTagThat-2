@@ -93,9 +93,9 @@ namespace MPTagThat.Core.Services.MusicDatabase
     /// <summary>
     /// Update a track in the Music Database
     /// </summary>
-    /// <param name="track"></param>
+    /// <param name="song"></param>
     /// <param name="originalFileName"></param>
-    void UpdateTrack(SongData track, string originalFileName);
+    void UpdateSong(SongData song, string originalFileName);
 
     /// <summary>
     /// Retrieves Distinct Artists

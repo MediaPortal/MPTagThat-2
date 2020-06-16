@@ -199,7 +199,7 @@ namespace MPTagThat.Core.Services.MusicDatabase
       _store?.Dispose();
       _store = null;
       RemoveStore(databaseName);
-      var dbPath = $"{_options.StartupSettings.DatabaseFolder}{databaseName}";
+      var dbPath = $"{_options.StartupSettings.DatabaseFolder}Databases\\{databaseName}";
       Util.DeleteFolder(dbPath);
       if (CurrentDatabase == databaseName)
       {
@@ -221,7 +221,7 @@ namespace MPTagThat.Core.Services.MusicDatabase
       CurrentDatabase = dbName;
       if (CreateDbConnection())
       {
-        log.Info($"Database has been switch to {CurrentDatabase}");
+        log.Info($"Database has been switched to {CurrentDatabase}");
         return true;
       }
       return false;
@@ -286,9 +286,9 @@ namespace MPTagThat.Core.Services.MusicDatabase
     /// <summary>
     /// Update a song in the database
     /// </summary>
-    /// <param name="track"></param>
+    /// <param name="song"></param>
     /// <param name="originalFileName"></param>
-    public void UpdateTrack(SongData track, string originalFileName)
+    public void UpdateSong(SongData song, string originalFileName)
     {
       if (_store == null && !CreateDbConnection())
       {
@@ -300,17 +300,17 @@ namespace MPTagThat.Core.Services.MusicDatabase
       {
         originalFileName = Util.EscapeDatabaseQuery(originalFileName);
         // Lookup the song in the database
-        var dbTracks = _session.Advanced.DocumentQuery<SongData, DefaultSearchIndex>().WhereEquals("Query", originalFileName).ToList();
+        var dbTracks = _session.Advanced.DocumentQuery<SongData, DefaultSearchIndex>().WhereEquals("FullFileName", originalFileName).ToList();
         if (dbTracks.Count > 0)
         {
-          track.Id = dbTracks[0].Id;
-          _session.Advanced.Evict(dbTracks[0]); // Release refe
+          song.Id = dbTracks[0].Id;
+          _session.Advanced.Evict(dbTracks[0]); // Release reference
           // Reset status
-          track.Status = -1;
-          track.Changed = false;
-          track = StoreCoverArt(track);
+          song.Status = -1;
+          song.Changed = false;
+          song = StoreCoverArt(song);
 
-          _session.Store(track);
+          _session.Store(song);
           _session.SaveChanges();
         }
       }

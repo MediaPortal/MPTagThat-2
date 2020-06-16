@@ -79,16 +79,20 @@ namespace MPTagThat.Treeview.ViewModels
         var selecteditem = (_selectedItem as TreeItem)?.Path;
         if (!string.IsNullOrEmpty(selecteditem))
         {
-          SetRecentFolder(selecteditem);
-          _options.MainSettings.LastFolderUsed = selecteditem;
-
-          GenericEvent evt = new GenericEvent
+          // Do we have folder or database view selected?
+          if (_dataProvider is TreeViewDataProvider)
           {
-            Action = "selectedfolderchanged"
-          };
-          evt.MessageData.Add("folder", selecteditem);
-          evt.MessageData.Add("scansubfolders", ScanSubFolders);
-          EventSystem.Publish(evt);
+            SetRecentFolder(selecteditem);
+            _options.MainSettings.LastFolderUsed = selecteditem;
+
+            GenericEvent evt = new GenericEvent
+            {
+              Action = "selectedfolderchanged"
+            };
+            evt.MessageData.Add("folder", selecteditem);
+            evt.MessageData.Add("scansubfolders", ScanSubFolders);
+            EventSystem.Publish(evt);
+          }
         }
         log.Trace("<<<");
       }
@@ -225,16 +229,15 @@ namespace MPTagThat.Treeview.ViewModels
       set
       {
         SetProperty(ref _selectedViewMode, value);
-        _options.MainSettings.DataProvider = _selectedViewMode;
         if (_selectedViewMode == 0)
         {
           _dataProvider = new TreeViewDataProvider();
         }
         else
         {
-          // Database Data Provider
+          _dataProvider = new TreeviewDataProviderMusicDatabase();
         }
-
+        RefreshTreeview();
       }
     }
 
@@ -272,8 +275,6 @@ namespace MPTagThat.Treeview.ViewModels
       ViewModes.Add(LocalizeDictionary.Instance.GetLocalizedObject("MPTagThat", "Strings", "treeView_Mode_Folder", LocalizeDictionary.Instance.Culture).ToString());
       ViewModes.Add(LocalizeDictionary.Instance.GetLocalizedObject("MPTagThat", "Strings", "treeView_Mode_Database", LocalizeDictionary.Instance.Culture).ToString());
 
-      SelectedViewMode = _options.MainSettings.DataProvider;
-
       ScanSubFolders = _options.MainSettings.ScanSubFolders;
 
       SelectedItemChangedCommand = new DelegateCommand<object>(SelectedItemChanged);
@@ -281,7 +282,8 @@ namespace MPTagThat.Treeview.ViewModels
       RefreshTreeViewCommand = new DelegateCommand<object>(RefreshTreeview);
 
       _init = true;
-      RefreshTreeview();
+      // Set the Folder Browser as default data provider
+      SelectedViewMode = 0;
       _init = false;
 
       // Work around the problem with Load On Demand being called from the Constructor.

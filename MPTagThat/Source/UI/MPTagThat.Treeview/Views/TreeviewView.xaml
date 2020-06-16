@@ -56,6 +56,8 @@
                                   ItemsSource="{Binding Nodes}"
                                   ItemTemplate="{StaticResource template}"
                                   ItemContainerStyle="{StaticResource itemstyle}" 
+                                  IsVirtualizing="True" 
+                                  VirtualizationMode="Normal"
                                   ShowRootLines="False"
                                   BorderThickness="0 0 1 0" 
                                   IsScrollOnExpand="True"

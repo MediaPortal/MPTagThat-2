@@ -48,6 +48,7 @@
     <Compile Include="Model\ITreeviewDataProvider.cs" />
     <Compile Include="Model\TreeItem.cs" />
     <Compile Include="Model\TreeviewDataProvider.cs" />
+    <Compile Include="Model\TreeviewDataProviderMusicDatabase.cs" />
     <Compile Include="Model\TreeviewHelper.cs" />
     <Compile Include="Model\Win32\Enums.cs" />
     <Compile Include="Model\Win32\Logicaldisk.cs">

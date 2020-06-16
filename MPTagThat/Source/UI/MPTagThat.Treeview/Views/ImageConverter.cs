@@ -23,7 +23,6 @@ using System.IO;
 using System.Linq;
 using System.Windows.Data;
 using System.Windows.Media.Imaging;
-using MPTagThat.Treeview.Model.Win32;
 using Shell32;
 
 #endregion
@@ -32,6 +31,9 @@ namespace MPTagThat.Treeview.Views
 {
   public class ImageConverter : IValueConverter
   {
+    private BitmapImage _artistIcon = new BitmapImage(new Uri("pack://application:,,,/MPTagThat.TagEdit;component/Resources/Images/Musician_Add_32x.png"));
+    private BitmapImage _albumIcon = new BitmapImage(new Uri("pack://application:,,,/MPTagThat;component/Resources/Images/Album_32x.png"));
+    private BitmapImage _genreIcon = new BitmapImage(new Uri("pack://application:,,,/MPTagThat;component/Resources/Images/Genre_32x.png"));
 
     public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
     {
@@ -59,8 +61,23 @@ namespace MPTagThat.Treeview.Views
           }
         }
         return Core.Utils.ShellIcon.GetSmallIcon(folderItem.Path, true);
-      } 
-      return new BitmapImage();
+      }
+
+      if (value is string type)
+      {
+        switch (type)
+        {
+          case "Artist":
+            return _artistIcon;
+
+          case "Album":
+            return _albumIcon;
+
+          case "Genre":
+            return _genreIcon;
+        }
+      }
+      return null;
     }
 
     public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)

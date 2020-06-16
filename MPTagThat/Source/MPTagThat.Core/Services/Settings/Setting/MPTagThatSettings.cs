@@ -48,9 +48,6 @@ namespace MPTagThat.Core.Services.Settings.Setting
     [Setting(SettingScope.User, "false")]
     public bool ScanSubFolders { get; set; }
 
-    [Setting(SettingScope.User, "0")]
-    public int DataProvider { get; set; }
-
     [Setting(SettingScope.User, "")]
     public Point FormLocation { get; set; }
 
