@@ -16,6 +16,8 @@
 // along with MPTagThat. If not, see <http://www.gnu.org/licenses/>.
 #endregion
 
+# region 
+
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -25,6 +27,8 @@ using MPTagThat.Treeview.Model.Win32;
 using MPTagThat.Treeview.ViewModels;
 using Prism.Ioc;
 using Shell32;
+
+#endregion
 
 namespace MPTagThat.Treeview.Model
 {

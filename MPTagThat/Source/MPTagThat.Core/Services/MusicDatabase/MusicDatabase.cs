@@ -29,7 +29,6 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using System.Windows.Markup;
 using MPTagThat.Core.Common.Song;
 using MPTagThat.Core.Events;
 using MPTagThat.Core.Services.Logging;

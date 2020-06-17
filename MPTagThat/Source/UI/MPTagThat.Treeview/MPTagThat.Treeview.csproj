@@ -77,6 +77,10 @@
       <Project>{d66c1d7a-a9d8-4f02-9fa4-891a673d2c68}</Project>
       <Name>MPTagThat.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\MPTagThat.Dialogs\MPTagThat.Dialogs.csproj">
+      <Project>{a4d5a1cc-39cf-4ebb-8c2a-494b34eb0989}</Project>
+      <Name>MPTagThat.Dialogs</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <COMReference Include="Shell32">

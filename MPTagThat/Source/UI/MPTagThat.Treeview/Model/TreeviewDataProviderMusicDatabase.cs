@@ -16,20 +16,19 @@
 // along with MPTagThat. If not, see <http://www.gnu.org/licenses/>.
 #endregion
 
-using System;
+#region 
+
 using System.Collections;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
 using MPTagThat.Core.Services.Logging;
 using MPTagThat.Core.Services.MusicDatabase;
 using MPTagThat.Core.Services.MusicDatabase.Indexes;
-using MPTagThat.Treeview.Model.Win32;
+using MPTagThat.Dialogs.Views;
 using Prism.Ioc;
 using Syncfusion.Windows.Shared;
+
+#endregion
 
 namespace MPTagThat.Treeview.Model
 {
@@ -64,6 +63,8 @@ namespace MPTagThat.Treeview.Model
     /// </summary>
     private RootFolder _rootFolder = RootFolder.None;
 
+    private NotificationView _notificationView;
+
     #endregion
 
     #region ITreeViewFolderBrowserDataProvider Members
@@ -97,6 +98,11 @@ namespace MPTagThat.Treeview.Model
       IEnumerable result = null;
       if (parent.IsSpecialFolder)
       {
+        if (!ContainerLocator.Current.Resolve<IMusicDatabase>().DatabaseEngineStarted)
+        {
+          _notificationView = new NotificationView();
+          _notificationView.Show();
+        }
         switch (parent.Path.ToLower())
         {
           case "artist":
@@ -113,6 +119,11 @@ namespace MPTagThat.Treeview.Model
             _rootFolder = RootFolder.Genre;
             result = ContainerLocator.Current.Resolve<IMusicDatabase>().GetGenres();
             break;
+        }
+
+        if (_notificationView != null)
+        {
+          _notificationView.Close();
         }
 
         if (result != null)
