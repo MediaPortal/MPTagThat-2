@@ -1292,6 +1292,13 @@ namespace MPTagThat.SongGrid.ViewModels
 
           break;
 
+        case "clearsonglist":
+          var statusMsg = new StatusBarEvent { CurrentFolder = "", CurrentProgress = 0 };
+          statusMsg.NumberOfFiles = 0;
+          EventSystem.Publish(statusMsg);
+          Songs.Clear();
+          break;
+
         case "applicationclosing":
           CheckChangesPending();
           SaveSettings();

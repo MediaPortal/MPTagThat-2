@@ -228,6 +228,12 @@ namespace MPTagThat.Treeview.ViewModels
       get => _selectedViewMode;
       set
       {
+        // Clear SongList, when view mode changes
+        GenericEvent evt = new GenericEvent
+        {
+          Action = "clearsonglist"
+        };
+        EventSystem.Publish(evt);
         SetProperty(ref _selectedViewMode, value);
         if (_selectedViewMode == 0)
         {
