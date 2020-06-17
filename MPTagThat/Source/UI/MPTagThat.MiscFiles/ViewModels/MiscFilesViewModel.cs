@@ -354,6 +354,10 @@ namespace MPTagThat.MiscFiles.ViewModels
           }
           FillFilesCollection(ref files);
           break;
+
+        case "miscfilesclear":
+          MiscFiles.Clear();
+          break;
       }
     }
 

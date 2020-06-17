@@ -845,6 +845,13 @@ namespace MPTagThat.SongGrid.ViewModels
 
              IsBusy = true;
              Songs.Clear();
+
+             var evt = new GenericEvent
+             {
+               Action = "miscfilesclear"
+             };
+             EventSystem.Publish(evt);
+
              StatusBarEvent msg = new StatusBarEvent { CurrentFolder = query, CurrentProgress = -1 };
 
              var orderBy = "";
