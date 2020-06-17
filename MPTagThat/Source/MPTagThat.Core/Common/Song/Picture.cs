@@ -54,8 +54,8 @@ namespace MPTagThat.Core.Common.Song
         using (FileStream fs = new FileStream(fileName, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
         {
           FreeImageBitmap img = new FreeImageBitmap(fs);
-          fs.Close();Data = ImageToByte((Image)(img.Clone() as FreeImageBitmap));
-          
+          fs.Close();
+          Data = ImageToByte((Image)(img.Clone() as FreeImageBitmap));
           img.Dispose();
         }
       }
@@ -147,7 +147,7 @@ namespace MPTagThat.Core.Common.Song
       using (MemoryStream stream = new MemoryStream())
       {
         FreeImageBitmap bCopy = new FreeImageBitmap(img);
-        bCopy.Save(stream, FREE_IMAGE_FORMAT.FIF_JPEG, FREE_IMAGE_SAVE_FLAGS.JPEG_QUALITYSUPERB);
+        bCopy.Save(stream, FREE_IMAGE_FORMAT.FIF_PNG, FREE_IMAGE_SAVE_FLAGS.PNG_INTERLACED);
         stream.Close();
         byteArray = stream.ToArray();
       }

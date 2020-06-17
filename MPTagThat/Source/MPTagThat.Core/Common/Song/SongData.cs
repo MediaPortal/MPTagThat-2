@@ -24,7 +24,9 @@ using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Windows.Media.Imaging;
+using MPTagThat.Core.Services.Settings;
 using MPTagThat.Core.Utils;
+using Prism.Ioc;
 using Prism.Mvvm;
 using TagLib;
 using Picture = MPTagThat.Core.Common.Song.Picture;
@@ -912,6 +914,13 @@ namespace MPTagThat.Core.Common.Song
             indexFrontCover = 0;
           }
           return _pictures[indexFrontCover].ImageFromPic();
+        }
+        
+        if (PictureHashList.Count > 0)
+        {
+          var coverartFolder = ContainerLocator.Current.Resolve<ISettingsManager>().StartupSettings.CoverArtFolder;
+          var pic = new Picture($@"{coverartFolder}{PictureHashList[0]}.png");
+          return pic.ImageFromPic();
         }
         return null;
       }
