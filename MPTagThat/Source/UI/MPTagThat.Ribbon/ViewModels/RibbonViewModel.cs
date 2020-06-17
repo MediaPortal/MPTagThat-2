@@ -996,6 +996,14 @@ namespace MPTagThat.Ribbon.ViewModels
         case "ButtonDatabaseQuery":
           type = Action.ActionType.DATABASEQUERY;
           eventParameter = QueriesSelectedText;
+          
+          var evt = new GenericEvent
+          {
+            Action = "ToggleDatabaseView"
+          };
+          EventSystem.Publish(evt);
+
+          System.Windows.Forms.Application.DoEvents();
 
           // Maintain the last 10 used queries
           var currentQuery = QueriesSelectedText;

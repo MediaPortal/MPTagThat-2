@@ -237,10 +237,12 @@ namespace MPTagThat.Treeview.ViewModels
         SetProperty(ref _selectedViewMode, value);
         if (_selectedViewMode == 0)
         {
+          log.Trace("Changing to Folder View");
           _dataProvider = new TreeViewDataProvider();
         }
         else
         {
+          log.Trace("Changing to Database View");
           _dataProvider = new TreeviewDataProviderMusicDatabase();
         }
         RefreshTreeview();
@@ -447,6 +449,14 @@ namespace MPTagThat.Treeview.ViewModels
           if (command == Action.ActionType.TREEREFRESH)
           {
             RefreshTreeview();
+          }
+          break;
+
+        case "toggledatabaseview":
+          if (SelectedViewMode == 0)
+          {
+            log.Info($"Toggle Database View Mode");
+            SelectedViewMode = 1;
           }
           break;
       }
