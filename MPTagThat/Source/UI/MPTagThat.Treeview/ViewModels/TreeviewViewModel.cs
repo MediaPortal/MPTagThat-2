@@ -82,6 +82,7 @@ namespace MPTagThat.Treeview.ViewModels
           // Do we have folder or database view selected?
           if (_dataProvider is TreeViewDataProvider)
           {
+            // Folder View
             SetRecentFolder(selecteditem);
             _options.MainSettings.LastFolderUsed = selecteditem;
 
@@ -91,6 +92,16 @@ namespace MPTagThat.Treeview.ViewModels
             };
             evt.MessageData.Add("folder", selecteditem);
             evt.MessageData.Add("scansubfolders", ScanSubFolders);
+            EventSystem.Publish(evt);
+          }
+          else
+          {
+            // Database View
+            GenericEvent evt = new GenericEvent
+            {
+              Action = "selectedfolderchanged"
+            };
+            evt.MessageData.Add("database", selecteditem);
             EventSystem.Publish(evt);
           }
         }

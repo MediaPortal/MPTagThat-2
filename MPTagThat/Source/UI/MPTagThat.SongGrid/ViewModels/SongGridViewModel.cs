@@ -83,7 +83,7 @@ namespace MPTagThat.SongGrid.ViewModels
     private bool _actionCopy;
 
     private NotificationView _notificationView;
-    
+
     private readonly System.Windows.Input.Cursor _numberOnClickCursor = new System.Windows.Input.Cursor(System.Windows.Application.GetResourceStream(new Uri("pack://application:,,,/MPTagThat;component/Resources/Images/CursorNumbering.cur")).Stream);
 
     #endregion
@@ -410,8 +410,8 @@ namespace MPTagThat.SongGrid.ViewModels
         var grid = (param as GridContextMenuInfo).DataGrid;
         var column = (param as GridColumnContextMenuInfo).Column;
         var sortColumnDescription = grid.SortColumnDescriptions.FirstOrDefault(col => col.ColumnName == column.MappingName);
-        if (sortColumnDescription!=null)
-        {  
+        if (sortColumnDescription != null)
+        {
           grid.SortColumnDescriptions.Remove(sortColumnDescription);
         }
       }
@@ -475,7 +475,7 @@ namespace MPTagThat.SongGrid.ViewModels
         var chooserViewModel = new CustomColumnChooserViewModel(totalColumns);
         var columnChooserView = new CustomColumnChooser(chooserViewModel);
         columnChooserView.Owner = System.Windows.Application.Current.MainWindow;
-        if ((bool) columnChooserView.ShowDialog())
+        if ((bool)columnChooserView.ShowDialog())
         {
           ClickOKButton(chooserViewModel.ColumnCollection, grid);
         }
@@ -812,6 +812,153 @@ namespace MPTagThat.SongGrid.ViewModels
 
     #endregion
 
+    #region Database Scanning
+
+    /// <summary>
+    /// Invoke a scan on the database
+    /// </summary>
+    /// <param name="query"></param>
+    private async void DatabaseScan(string query)
+    {
+      await Task.Run(() =>
+      {
+        if (System.Windows.Application.Current.Dispatcher != null)
+          System.Windows.Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Background,
+            (SendOrPostCallback)delegate
+           {
+             log.Trace(">>>");
+             if (String.IsNullOrEmpty(query))
+             {
+               log.Info("Empty Query string.");
+               return;
+             }
+
+             log.Info($"Scanning Database for: {query}");
+
+             string[] searchString = query.Split('\\');
+
+             // Get out, if we are on the Top Level only
+             if (searchString.GetLength(0) == 1)
+             {
+               return;
+             }
+
+             IsBusy = true;
+             Songs.Clear();
+             StatusBarEvent msg = new StatusBarEvent { CurrentFolder = query, CurrentProgress = -1 };
+
+             var orderBy = "";
+             var dbQuery = CreateQuery(searchString, out orderBy);
+             var result = ContainerLocator.Current.Resolve<IMusicDatabase>().ExecuteQuery(dbQuery);
+
+             if (result != null)
+             {
+               log.Info($"Database Scan: Query returned {result.Count} songs");
+               var count = 1;
+               foreach (var song in result)
+               {
+                 if (_options.MainSettings.MP3Validate && song.IsMp3)
+                 {
+                   log.Info($"Validating file {song.FullFileName}");
+                   song.MP3ValidationError = Mp3Val.ValidateMp3File(song.FullFileName, out var strError);
+                   song.StatusMsg = strError;
+                   song.Status = song.MP3ValidationError != Util.MP3Error.NoError ? 3 : -1;
+                 }
+                 Songs.Add(song);
+                 count++;
+                 if (count % 1000 == 0)
+                 {
+                   // Commit every 1000 songs, in case we have database mode enabled
+                   _songs.CommitDatabaseChanges();
+                 }
+
+                 msg.NumberOfFiles = count;
+                 EventSystem.Publish(msg);
+               }
+             }
+
+             // Commit changes to SongTemp, in case we have switched to DB Mode
+             _songs.CommitDatabaseChanges();
+
+             msg.CurrentProgress = 0;
+             msg.CurrentFile = "";
+             EventSystem.Publish(msg);
+
+             IsBusy = false;
+             log.Trace("<<<");
+           }, null);
+      });
+    }
+
+    /// <summary>
+    /// Create a query based on the selection
+    /// </summary>
+    /// <param name="searchString"></param>
+    /// <param name="orderBy"></param>
+    /// <returns></returns>
+    private string CreateQuery(string[] searchString, out string orderBy)
+    {
+      var query = "";
+      orderBy = "";
+
+      switch (searchString[0].ToLower())
+      {
+        case "artist":
+          query = FormatMultipleEntries(searchString[1], "Artist");
+          orderBy = "Album,Track";
+          if (searchString.GetLength(0) > 2)
+          {
+            query += $" AND Album:\"{Util.EscapeDatabaseQuery(searchString[2])}\"";
+            orderBy = "Track";
+          }
+          break;
+
+        case "albumartist":
+          query = FormatMultipleEntries(searchString[1], "AlbumArtist");
+          orderBy = "Album,Track";
+          if (searchString.GetLength(0) > 2)
+          {
+            query += $" AND Album:\"{Util.EscapeDatabaseQuery(searchString[2])}\"";
+            orderBy = "Track";
+          }
+          break;
+
+        case "genre":
+          query = FormatMultipleEntries(searchString[1], "Genre");
+          //orderByClause = "strArtist, strAlbum, iTrack";
+          orderBy = "Artist,Album,Track";
+          if (searchString.GetLength(0) > 2)
+          {
+            query += " AND ";
+            query += FormatMultipleEntries(searchString[2], "Artist");
+            orderBy = "Album,Track";
+          }
+          if (searchString.GetLength(0) > 3)
+          {
+            query += $" AND Album:\"{Util.EscapeDatabaseQuery(searchString[3])}\"";
+            orderBy = "Album,Track";
+          }
+          break;
+      }
+
+      return query;
+    }
+
+    /// <summary>
+    /// Format Multiple Value fields, like Artist, AlbumArtist and Genre 
+    /// </summary>
+    /// <param name="searchString"></param>
+    /// <param name="fieldtype"></param>
+    /// <returns></returns>
+    private string FormatMultipleEntries(string searchString, string fieldtype)
+    {
+      return string.Join(" AND ", Util.EscapeDatabaseQuery(searchString)
+            .Split(new[] { " ", "," }, StringSplitOptions.RemoveEmptyEntries)
+            .Select(x => $"{fieldtype}:*{x}* "));
+    }
+
+    #endregion
+
     #region Command Execution
 
     public void ExecuteCommand(string command)
@@ -1069,6 +1216,11 @@ namespace MPTagThat.SongGrid.ViewModels
             _selectedFolder = (string)msg.MessageData["folder"];
             FolderScan();
           }
+          else if (msg.MessageData.ContainsKey("database"))
+          {
+            SelectedItems.Clear();
+            DatabaseScan((string)msg.MessageData["database"]);
+          }
           break;
 
         case "cancelfolderscan":
@@ -1140,7 +1292,7 @@ namespace MPTagThat.SongGrid.ViewModels
           // Commands, which don't use the Execute Command of SongGrid
           if (command == Action.ActionType.ADDCONVERSION)
           {
-            ContextMenuAddConversion(new object{});
+            ContextMenuAddConversion(new object { });
           }
 
           // Run Commands, which don't display a dialog
