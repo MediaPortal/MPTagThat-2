@@ -132,9 +132,14 @@ namespace MPTagThat.Treeview.Model
           foreach (var item in result)
           {
             var value = "";
-            if (_rootFolder == RootFolder.Artist || _rootFolder == RootFolder.AlbumArtist)
+            if (_rootFolder == RootFolder.Artist)
             {
               type = "Artist";
+              value = (item as DistinctResult)?.Name;
+            }
+            else if (_rootFolder == RootFolder.AlbumArtist)
+            {
+              type = "AlbumArtist";
               value = (item as DistinctResult)?.Name;
             }
             else
@@ -167,18 +172,16 @@ namespace MPTagThat.Treeview.Model
         }
         else if (_rootFolder == RootFolder.Genre)
         {
-          /*
-          string[] searchString = (parent.Tag as string).Split('\\');
-          if (searchString.GetLength(0) == 2)
+          string[] searchString = parent.Path.Split('\\');
+          if (searchString.GetLength(0) == 1)
           {
             result = ContainerLocator.Current.Resolve<IMusicDatabase>().GetGenreArtists(parent.Path);
           }
           else
           {
             isGenreArtistLevel = false;
-            result = ContainerLocator.Current.Resolve<IMusicDatabase>().GetGenreArtistAlbums(searchString[1], searchString[2]);
+            result = ContainerLocator.Current.Resolve<IMusicDatabase>().GetGenreArtistAlbums(searchString[0], searchString[1]);
           }
-          */
         }
 
         if (result != null)
@@ -187,10 +190,12 @@ namespace MPTagThat.Treeview.Model
           foreach (var item in result)
           {
             var value = "";
+            var path = "";
             if (_rootFolder == RootFolder.Artist || _rootFolder == RootFolder.AlbumArtist)
             {
               type = "Album";
               value = (item as DistinctResult)?.Album;
+              path = value;
             }
             else
             {
@@ -198,6 +203,7 @@ namespace MPTagThat.Treeview.Model
               if (isGenreArtistLevel)
               {
                 value = (item as DistinctResult)?.Name;
+                path = parent.Path + "\\" + value;
               }
               else
               {
@@ -205,7 +211,7 @@ namespace MPTagThat.Treeview.Model
               }
             }
 
-            var newNode = CreateTreeNode(helper, value, value, false, type);
+            var newNode = CreateTreeNode(helper, value, path, false, type);
             parent.Nodes.Add(newNode);
           }
         }

@@ -82,6 +82,7 @@ namespace MPTagThat.Core.Services.MusicDatabase
       MusicBrainzDatabaseActive = false;
       if (File.Exists(@"bin\\MusicBrainzArtists.db3"))
       {
+        log.Info("OPening MusicBrainz Artist Database");
         _sqLiteConnection = new SQLiteConnection("Data Source=bin\\MusicBrainzArtists.db3");
         _sqLiteConnection?.Open();
         MusicBrainzDatabaseActive = true;
@@ -131,6 +132,7 @@ namespace MPTagThat.Core.Services.MusicDatabase
     /// <returns></returns>
     public IDocumentStore GetDocumentStoreFor(string databaseName)
     {
+      log.Trace($"Getting database store for {databaseName}");
       if (_stores.ContainsKey(databaseName))
       {
         return _stores[databaseName];
@@ -193,6 +195,7 @@ namespace MPTagThat.Core.Services.MusicDatabase
     /// </summary>
     public void DeleteDatabase(string databaseName)
     {
+      log.Trace($"Deleteing database {databaseName}");
       _session?.Advanced.Clear();
       _session = null;
       _store?.Dispose();
@@ -328,11 +331,13 @@ namespace MPTagThat.Core.Services.MusicDatabase
         return null;
       }
 
+      log.Trace("Getting distinct artists");
       var artists = _session.Query<DistinctResult, DistinctArtistIndex>()
         .Take(int.MaxValue)
         .OrderBy(x => x.Name)
         .ToList();
 
+      log.Debug($"Found {artists.Count} distinct artists");
       return artists;
     }
 
@@ -344,6 +349,7 @@ namespace MPTagThat.Core.Services.MusicDatabase
         return null;
       }
 
+      log.Trace($"Getting distinct artist albums for {query}");
       var artistalbums = _session.Query<DistinctResult, DistinctArtistAlbumIndex>()
         .Where(x => x.Name == Util.EscapeDatabaseQuery(query))
         .Take(int.MaxValue)
@@ -351,6 +357,7 @@ namespace MPTagThat.Core.Services.MusicDatabase
         .ThenBy(x => x.Album)
         .ToList();
 
+      log.Debug($"Found {artistalbums.Count} distinct Artist Albums");
       return artistalbums;
     }
 
@@ -362,11 +369,13 @@ namespace MPTagThat.Core.Services.MusicDatabase
         return null;
       }
 
+      log.Trace("Getting distinct album artists");
       var albumartists = _session.Query<DistinctResult, DistinctAlbumArtistIndex>()
         .Take(int.MaxValue)
         .OrderBy(x => x.Name)
         .ToList();
 
+      log.Debug($"Found {albumartists.Count} distinct album artists");
       return albumartists;
     }
 
@@ -378,6 +387,7 @@ namespace MPTagThat.Core.Services.MusicDatabase
         return null;
       }
 
+      log.Trace($"Getting distinct albumartist  albums for {query}");
       var artistalbums = _session.Query<DistinctResult, DistinctAlbumArtistAlbumIndex>()
         .Where(x => x.Name == Util.EscapeDatabaseQuery(query))
         .Take(int.MaxValue)
@@ -385,6 +395,7 @@ namespace MPTagThat.Core.Services.MusicDatabase
         .ThenBy(x => x.Album)
         .ToList();
 
+      log.Debug($"Found {artistalbums.Count} distinct AlbumArtist Albums");
       return artistalbums;
     }
 
@@ -396,11 +407,13 @@ namespace MPTagThat.Core.Services.MusicDatabase
         return null;
       }
 
+      log.Trace("Getting distinct genres");
       var genres = _session.Query<DistinctResult, DistinctGenreIndex>()
         .Take(int.MaxValue)
         .OrderBy(x => x.Genre)
         .ToList();
 
+      log.Debug($"Found {genres.Count} distinct Genres");
       return genres;
     }
 
@@ -412,6 +425,7 @@ namespace MPTagThat.Core.Services.MusicDatabase
         return null;
       }
 
+      log.Trace($"Getting distinct genre artists for {query}");
       var genreartists = _session.Query<DistinctResult, DistinctGenreArtistIndex>()
         .Where(x => x.Genre == Util.EscapeDatabaseQuery(query))
         .Take(int.MaxValue)
@@ -419,6 +433,7 @@ namespace MPTagThat.Core.Services.MusicDatabase
         .ThenBy(x => x.Name)
         .ToList();
 
+      log.Debug($"Found {genreartists.Count} distinct Genre Artists");
       return genreartists;
     }
 
@@ -430,6 +445,7 @@ namespace MPTagThat.Core.Services.MusicDatabase
         return null;
       }
 
+      log.Trace($"Getting distinct genre artists albums for {genre} and {artist}");
       var genreartists = _session.Query<DistinctResult, DistinctGenreArtistAlbumIndex>()
         .Where(x => x.Genre == Util.EscapeDatabaseQuery(genre) && x.Name == Util.EscapeDatabaseQuery(artist))
         .Take(int.MaxValue)
@@ -438,6 +454,7 @@ namespace MPTagThat.Core.Services.MusicDatabase
         .ThenBy(x => x.Album)
         .ToList();
 
+      log.Debug($"Found {genreartists.Count} distinct Genre Artist Albums");
       return genreartists;
     }
 
