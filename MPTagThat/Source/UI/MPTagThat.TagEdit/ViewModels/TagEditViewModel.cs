@@ -2215,6 +2215,18 @@ namespace MPTagThat.TagEdit.ViewModels
             CkPicturesIsChecked = true;
           }
           break;
+
+        case "command":
+          var command = (Action.ActionType)msg.MessageData["command"];
+          if (command == Action.ActionType.REFRESH)
+          {
+            log.Trace($"Command {command}");
+            _isInitializing = true;
+            ClearForm();
+            IsEnabled = false;
+            _isInitializing = false;
+          }
+          break;
       }
     }
 
