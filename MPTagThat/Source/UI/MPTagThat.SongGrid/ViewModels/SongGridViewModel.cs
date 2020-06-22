@@ -373,7 +373,10 @@ namespace MPTagThat.SongGrid.ViewModels
 
     private void ContextMenuSelectAll(object param)
     {
-      Songs.ToList().ForEach(song => SelectedItems.Add(song));
+      foreach (var song in Songs)
+      {
+        SelectedItems.Add(song);
+      }
     }
 
     /// <summary>
@@ -1293,7 +1296,11 @@ namespace MPTagThat.SongGrid.ViewModels
           // Select all songs, except for Find & Replace and Help
           if (SelectedItems.Count == 0 && (command != Action.ActionType.FIND && command != Action.ActionType.REPLACE && command != Action.ActionType.HELP))
           {
-            Songs.ToList().ForEach(song => SelectedItems.Add(song));
+            // Much faster, than using LINQ and convert to a list
+            foreach (var song in Songs)
+            {
+              SelectedItems.Add(song);
+            }
           }
 
           // Commands, which don't use the Execute Command of SongGrid
@@ -1408,6 +1415,7 @@ namespace MPTagThat.SongGrid.ViewModels
                     // First Clear all the existingPictures
                     song.Pictures.Clear();
                     song.Pictures.Add(folderThumb);
+                    song.Changed = true;
                   }
                 }
               }

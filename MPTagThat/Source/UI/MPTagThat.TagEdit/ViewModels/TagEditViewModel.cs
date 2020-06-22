@@ -1796,6 +1796,8 @@ namespace MPTagThat.TagEdit.ViewModels
           SongEdit.MusicBrainzReleaseGroupId = i == 0 ? song.MusicBrainzReleaseGroupId : "";
         }
 
+        // Enable Update mode for Song
+        song.UpdateChangedProperty = true;
         i++;
       }
 

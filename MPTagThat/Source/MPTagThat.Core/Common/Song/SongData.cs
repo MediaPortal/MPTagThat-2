@@ -1432,11 +1432,19 @@ namespace MPTagThat.Core.Common.Song
 
     private void Pictures_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
     {
+      if (UpdateChangedProperty)
+      {
+        Changed = true;
+      }
       RaisePropertyChanged($"Pictures");
     }
 
     private void UserFrames_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
     {
+      if (UpdateChangedProperty)
+      {
+        Changed = true;
+      }
       RaisePropertyChanged($"UserFrames");
     }
     
