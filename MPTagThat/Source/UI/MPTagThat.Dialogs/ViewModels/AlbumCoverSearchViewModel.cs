@@ -428,10 +428,10 @@ namespace MPTagThat.Dialogs.ViewModels
       if (_songs.GroupBy(s => s.AlbumArtist).Count() == 1)
       {
         Artist = _songs[0].AlbumArtist;
-      }
-      else if (_songs.GroupBy(s => s.Artist).Count() == 1)
-      {
-        Artist = _songs[0].Artist;
+        if (Artist.Trim() == "" && _songs.GroupBy(s => s.Artist).Count() == 1)
+        {
+          Artist = _songs[0].Artist;
+        }
       }
       if (_songs.GroupBy(s => s.Album).Count() == 1)
       {
