@@ -21,6 +21,7 @@
 using MPTagThat.Core.AlbumSearch;
 using Prism.Services.Dialogs;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -44,7 +45,7 @@ namespace MPTagThat.Dialogs.ViewModels
   /// <summary>
   /// View Model handling the Album Search 
   /// </summary>
-  public class TagFromInternetViewModel  : DialogViewModelBase, IAlbumSearch
+  public class TagFromInternetViewModel : DialogViewModelBase, IAlbumSearch
   {
     #region Variables
 
@@ -115,7 +116,7 @@ namespace MPTagThat.Dialogs.ViewModels
       get => _selectedAlbumSongs;
       set => SetProperty(ref _selectedAlbumSongs, value);
     }
-    
+
     /// <summary>
     /// Binding for the Albums found
     /// </summary>
@@ -249,15 +250,20 @@ namespace MPTagThat.Dialogs.ViewModels
       ByteVector vector = _selectedAlbum.ImageData;
       if (vector != null)
       {
-       pic.MimeType = "image/jpg";
+        pic.MimeType = "image/jpg";
         pic.Description = "";
         pic.Type = PictureType.FrontCover;
         pic.Data = vector.Data;
       }
-      
+
       int i = 0;
       foreach (var song in MatchedSongs)
       {
+        if (song == null)
+        {
+          i++;
+          continue;
+        }
         song.Artist = Artist;
         song.Album = Album;
         var strYear = Year;
@@ -271,7 +277,7 @@ namespace MPTagThat.Dialogs.ViewModels
           var year = Convert.ToInt32(strYear);
           song.Year = year;
         }
-        catch (Exception) {}
+        catch (Exception) { }
 
         var albumSong = SelectedAlbumSongs[i];
         song.TrackNumber = (uint)albumSong.Number;
@@ -302,7 +308,7 @@ namespace MPTagThat.Dialogs.ViewModels
     {
       MatchedSongs.Clear();
       SelectedAlbumSongs.Clear();
-      
+
       _selectedAlbum = Albums[SelectedAlbumSite];
       Artist = _selectedAlbum.Artist;
       Album = _selectedAlbum.Title;
@@ -314,17 +320,23 @@ namespace MPTagThat.Dialogs.ViewModels
       }
 
       int albumTrackPos = 0;
+      var list = new SongData[_songs.Count];
       foreach (var albumSong in SelectedAlbumSongs)
       {
         foreach (var song in _songs)
         {
           if (Util.LongestCommonSubstring(albumSong.Title, song.FileName) > 0.75)
           {
-            MatchedSongs.Insert(albumTrackPos, song);
+            list[albumTrackPos] = song;
             break;
           }
         }
         albumTrackPos++;
+      }
+
+      foreach (var s in list)
+      {
+        _matchedSongs.Add(s);
       }
     }
 
