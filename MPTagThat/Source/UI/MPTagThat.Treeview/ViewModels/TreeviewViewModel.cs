@@ -513,7 +513,6 @@ namespace MPTagThat.Treeview.ViewModels
       {
         case "currentfolderchanged":
           RefreshTreeview();
-          SetCurrentFolder(null, new EventArgs());
           break;
 
         case "command":
