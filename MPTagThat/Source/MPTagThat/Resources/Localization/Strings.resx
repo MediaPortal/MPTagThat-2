@@ -1803,4 +1803,8 @@ To change the order of the ratings drag the rows.</value>
     <value>Starting Database Server Please wait ...</value>
     <comment>Busy indicator when database is starting</comment>
   </data>
+  <data name="treeView_Loading" xml:space="preserve">
+    <value>Loading ...</value>
+    <comment>The Text used to display whil expaning a folder</comment>
+  </data>
 </root>

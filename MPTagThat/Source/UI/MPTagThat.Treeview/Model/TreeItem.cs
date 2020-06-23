@@ -20,16 +20,23 @@
 
 using System.Collections.ObjectModel;
 using Prism.Mvvm;
+using Syncfusion.Windows.Tools.Controls;
 
 #endregion
 
 namespace MPTagThat.Treeview.Model
 {
-    public class TreeItem : BindableBase
+    public class TreeItem : BindableBase, IVirtualTree
     {
         #region Properties
 
-        public string Name { get; set; }
+        private string _name;
+
+        public string Name
+        {
+          get => _name; 
+          set => SetProperty(ref _name, value);
+        }
 
         public object Item { get; set; }
 
@@ -39,10 +46,7 @@ namespace MPTagThat.Treeview.Model
         public ObservableCollection<TreeItem> Nodes
         {
             get => _nodes;
-            set
-            {
-                SetProperty(ref _nodes, value);
-            }
+            set => SetProperty(ref _nodes, value);
         }
 
         private bool _isSpecialFolder;
@@ -59,6 +63,9 @@ namespace MPTagThat.Treeview.Model
             set { SetProperty(ref _isExpanded, value); }
         }
 
+        public int ItemsCount { get; set; }
+        public double ExtentHeight { get; set; }
+
         private bool _isSelected;
         public bool IsSelected
         {
@@ -66,22 +73,7 @@ namespace MPTagThat.Treeview.Model
             set { SetProperty(ref _isSelected, value); }
         }
 
-        // DeleteChildren, used to 
-        // 1) remove old tree 2) set children=null, so a new tree is build
-        public void DeleteChildren()
-        {
-            if (_nodes != null)
-            {
-                for (int i = _nodes.Count - 1; i >= 0; i--)
-                {
-                    _nodes[i].DeleteChildren();
-                    _nodes[i] = null;
-                    _nodes.RemoveAt(i);
-                }
-
-                _nodes = null;
-            }
-        }
+        public IVirtualTree Parent { get; set; }
 
         #endregion
 

@@ -25,6 +25,7 @@
 
     <Style TargetType="syncfusion:TreeViewItemAdv" x:Key="itemstyle">
       <Setter Property="IsLoadOnDemand" Value="True"/>
+      <Setter Property="LoadingHeader" Value="{lex:Loc treeView_Loading}"/>
       <Setter Property="LeftImageSource" Value="{Binding Path=Item, Converter={StaticResource Converter}}"/>
       <Setter Property="ToolTip" Value="{Binding Name}"/>
       <Setter Property="ImageHeight" Value="16"/>
@@ -57,7 +58,7 @@
                                   ItemTemplate="{StaticResource template}"
                                   ItemContainerStyle="{StaticResource itemstyle}" 
                                   IsVirtualizing="True" 
-                                  VirtualizationMode="Normal"
+                                  VirtualizationMode="Extended"
                                   ShowRootLines="False"
                                   BorderThickness="0 0 1 0" 
                                   IsScrollOnExpand="True"
@@ -68,6 +69,9 @@
             </i:EventTrigger>
             <i:EventTrigger EventName="SelectedItemChanged">
               <prism:InvokeCommandAction Command="{Binding SelectedItemChangedCommand}" />
+            </i:EventTrigger>
+            <i:EventTrigger EventName="Expanded">
+              <prism:InvokeCommandAction Command="{Binding ExpandedCommand}" />
             </i:EventTrigger>
           </i:Interaction.Triggers>
         </syncfusion:TreeViewAdv>

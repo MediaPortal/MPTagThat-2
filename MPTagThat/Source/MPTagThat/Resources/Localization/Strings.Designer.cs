@@ -4585,6 +4585,15 @@ namespace MPTagThat.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Loading ....
+        /// </summary>
+        public static string treeView_Loading {
+            get {
+                return ResourceManager.GetString("treeView_Loading", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to View Mode:.
         /// </summary>
         public static string treeView_Mode {

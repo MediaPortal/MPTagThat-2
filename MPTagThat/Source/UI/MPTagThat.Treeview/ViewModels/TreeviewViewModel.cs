@@ -22,11 +22,11 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
-using System.Security.Policy;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Threading;
 using MPTagThat.Core;
+using MPTagThat.Core.Common;
 using MPTagThat.Core.Events;
 using MPTagThat.Core.Services.Logging;
 using MPTagThat.Core.Services.Settings;
@@ -54,10 +54,12 @@ namespace MPTagThat.Treeview.ViewModels
     private readonly NLogLogger log;
 
     private DispatcherTimer _timer;
+    private DispatcherTimer _loadOnDemandTimer;
     private readonly TreeViewHelper _helper;
     private ITreeviewDataProvider _dataProvider;
-
-    private bool _init; 
+    private TreeViewItemAdv _currentNode;
+    private bool _init;
+    private bool _expandCurrentFolder;
 
     #endregion
 
@@ -135,11 +137,8 @@ namespace MPTagThat.Treeview.ViewModels
       if (treeitem != null && treeitem.DataContext is TreeItem node)
       {
         log.Trace($"Expanding node {node.Name}");
-        if (node.Nodes.Count == 0)
-        {
-          _dataProvider.RequestSubDirs(_helper, node);
-        }
-        treeitem.IsLoadOnDemand = false;
+        _currentNode = treeitem;
+        _loadOnDemandTimer.Start();
       }
     }
 
@@ -153,6 +152,19 @@ namespace MPTagThat.Treeview.ViewModels
       RefreshTreeview();
     }
 
+    public ICommand ExpandedCommand { get; }
+
+    private void Expanded(object parm)
+    {
+      if (_expandCurrentFolder)
+      {
+        var source = (parm as ExpandedCollapsedEventArgs).OriginalSource;
+        if (source is TreeViewItemAdv item)
+        {
+          item.IsLoadOnDemand = false;
+        }
+      }
+    }
 
     private Environment.SpecialFolder _rootFolder;
     /// <summary>
@@ -296,18 +308,24 @@ namespace MPTagThat.Treeview.ViewModels
 
       ScanSubFolders = _options.MainSettings.ScanSubFolders;
 
-      SelectedItemChangedCommand = new DelegateCommand<object>(SelectedItemChanged);
-      LoadFolderOnDemandCommand = new DelegateCommand<object>(LoadFolderOnDemand);
-      RefreshTreeViewCommand = new DelegateCommand<object>(RefreshTreeview);
+      SelectedItemChangedCommand = new BaseCommand(SelectedItemChanged);
+      LoadFolderOnDemandCommand = new BaseCommand(LoadFolderOnDemand);
+      RefreshTreeViewCommand = new BaseCommand(RefreshTreeview);
+      ExpandedCommand = new BaseCommand(Expanded);
 
       _init = true;
       // Set the Folder Browser as default data provider
       SelectedViewMode = 0;
       _init = false;
 
+      // Initialize the Load on Demand Timer
+      _loadOnDemandTimer = new DispatcherTimer();
+      _loadOnDemandTimer.Interval = new TimeSpan(0, 0, 0, 0, 150);
+      _loadOnDemandTimer.Tick += new EventHandler(LoadOnDemandTimer_Tick);
+      
       // Work around the problem with Load On Demand being called from the Constructor.
       _timer = new DispatcherTimer();
-      _timer.Interval = new TimeSpan(0, 0, 0, 0, 200);
+      _timer.Interval = new TimeSpan(0, 0, 0, 0, 150);
       _timer.Tick += SetCurrentFolder;
       _timer.Tag = RootFolder;
       _timer.Start();
@@ -318,12 +336,15 @@ namespace MPTagThat.Treeview.ViewModels
 
     #region Private Methods
 
+    /// <summary>
+    /// Refresh the treeview
+    /// </summary>
     private void RefreshTreeview()
     {
       log.Trace(">>>");
       Nodes.Clear();
       _dataProvider.RequestRoot(_helper);
-      
+
       // Don't call set current folder when called from Constructor
       if (!_init)
       {
@@ -332,6 +353,24 @@ namespace MPTagThat.Treeview.ViewModels
       log.Trace("<<<");
     }
 
+    /// <summary>
+    /// Load Folder on Demand
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    void LoadOnDemandTimer_Tick(object sender, EventArgs e)
+    {           
+      _loadOnDemandTimer.Stop();
+      if (_currentNode.DataContext is TreeItem node)
+      {
+        if (node.Nodes.Count == 0)
+        {
+          _dataProvider.RequestSubDirs(_helper, node);
+        }
+      }
+
+      _currentNode.IsLoadOnDemand = false;
+    }
 
     /// <summary>
     /// Expand the tree to list the current folder.
@@ -346,6 +385,16 @@ namespace MPTagThat.Treeview.ViewModels
       {
         _timer.Stop();
       }
+
+      _expandCurrentFolder = true;
+
+      // Re-use the Time to Reset the _expandCurrentFolder flag
+      // Work around the problem that when expanding the current folder on startup
+      // it would infinite show "Loading" for expanded nodes
+      _timer = new DispatcherTimer();
+      _timer.Interval = new TimeSpan(0, 0, 0, 0, 1000);
+      _timer.Tick += ResetExpandCurrentFolderFlag;
+      _timer.Start();
 
       var currentFolder = _options.MainSettings.LastFolderUsed;
       if (!Directory.Exists(currentFolder) && !currentFolder.IsNullOrWhiteSpace())
@@ -380,7 +429,7 @@ namespace MPTagThat.Treeview.ViewModels
         var dirInfo = new DirectoryInfo(currentFolder);
 
         // get path tokens
-        var dirs = new List<string> {dirInfo.FullName};
+        var dirs = new List<string> { dirInfo.FullName };
 
         while (dirInfo.Parent != null)
         {
@@ -421,6 +470,19 @@ namespace MPTagThat.Treeview.ViewModels
 
       Cursor = Cursors.Arrow;
       log.Trace("<<<");
+    }
+
+    /// <summary>
+    /// Reset the ExpandCurrentFolder Flag
+    /// Work around the problem that when expanding the current folder on startup
+    /// it would infinite show "Loading" for expanded nodes
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    private void ResetExpandCurrentFolderFlag(object sender, EventArgs e)
+    {
+      _timer.Stop();
+      _expandCurrentFolder = false;
     }
 
     /// <summary>
