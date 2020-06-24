@@ -698,6 +698,7 @@ namespace MPTagThat.Core.Utils
         case ".bmp":
         case ".gif":
         case ".jpg":
+        case ".jpeg":
         case ".png":
           return true;
       }
