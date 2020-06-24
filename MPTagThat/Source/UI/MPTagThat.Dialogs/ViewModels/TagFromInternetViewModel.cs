@@ -306,6 +306,11 @@ namespace MPTagThat.Dialogs.ViewModels
 
     private void AlbumSiteSelected(object param)
     {
+      if (SelectedAlbumSite == -1)
+      {
+        return;
+      }
+
       MatchedSongs.Clear();
       SelectedAlbumSongs.Clear();
 
@@ -327,6 +332,10 @@ namespace MPTagThat.Dialogs.ViewModels
         {
           if (Util.LongestCommonSubstring(albumSong.Title, song.FileName) > 0.75)
           {
+            if (albumTrackPos > list.Length - 1)
+            {
+              break;
+            }
             list[albumTrackPos] = song;
             break;
           }
@@ -469,10 +478,13 @@ namespace MPTagThat.Dialogs.ViewModels
       SelectedAlbumSearchSites.AddRange(_options.MainSettings.SelectedAlbumInfoSites);
 
       _songs = parameters.GetValue<List<SongData>>("songs");
+      Artist = "";
       if (_songs.GroupBy(s => s.Artist).Count() == 1)
       {
         Artist = _songs[0].Artist;
       }
+
+      Album = "";
       if (_songs.GroupBy(s => s.Album).Count() == 1)
       {
         Album = _songs[0].Album;
