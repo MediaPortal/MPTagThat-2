@@ -735,6 +735,10 @@ namespace MPTagThat.Core.Utils
         foreach (char c in _invalidFoldernameChars)
           str = str.Replace(c, '_');
       }
+
+      // In addition we don't want to see "?" in our folders
+      str = str.Replace('?', '_');
+
       return str;
     }
 

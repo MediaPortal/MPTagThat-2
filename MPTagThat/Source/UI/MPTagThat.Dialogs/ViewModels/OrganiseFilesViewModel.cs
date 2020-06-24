@@ -328,7 +328,10 @@ namespace MPTagThat.Dialogs.ViewModels
           directoryName = Path.GetDirectoryName(resolvedParmString);
         }
 
+        // Make sure we have a valid folder name
+        directoryName = Util.MakeValidFolderName(directoryName);
         directoryName = Path.Combine(targetFolder, directoryName);
+        
 
         try
         {
@@ -364,6 +367,9 @@ namespace MPTagThat.Dialogs.ViewModels
           {
             newFilename = resolvedParmString.Substring(lastBackSlash + 1);
           }
+
+          newFilename = Util.MakeValidFileName(newFilename);
+
           newFilename += song.FileExt;
           newFilename = Path.Combine(directoryName, newFilename);
 
