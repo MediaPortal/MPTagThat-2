@@ -90,7 +90,10 @@ namespace MPTagThat.Core.AlbumSearch.AlbumSites
       foreach (var result in searchresults.GetResults())
       {
         var album = await GetRelease(result.id);
-        Albums.Add(album);
+        if (album != null)
+        {
+          Albums.Add(album);
+        }
       }
       log.Trace("Discogs Query Ended");
       // We don't need to return really anything. Just to satisfy that a Task can't return void
@@ -101,6 +104,11 @@ namespace MPTagThat.Core.AlbumSearch.AlbumSites
     {
       log.Trace($"Discogs: Receiving Release {releaseid}");
       var release = await _discogsClient.GetMasterAsync(releaseid);
+      if (release == null)
+      {
+        log.Trace("No release found. returning null");
+        return null;
+      }
       var album = new Album();
       album.Site = "Discogs";
       var discogsImage = release.images.FirstOrDefault(i => i.type == DiscogsImageType.primary);;
