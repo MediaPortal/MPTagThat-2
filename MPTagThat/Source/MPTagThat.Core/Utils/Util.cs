@@ -737,8 +737,9 @@ namespace MPTagThat.Core.Utils
           str = str.Replace(c, '_');
       }
 
-      // In addition we don't want to see "?" in our folders
+      // In addition we don't want to see "?" and ":" in our folders
       str = str.Replace('?', '_');
+      str = str.Replace(':', '_');
 
       return str;
     }
