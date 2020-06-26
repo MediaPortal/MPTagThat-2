@@ -116,6 +116,13 @@
     </Style>
   </UserControl.Resources>
 
+  <!-- Used to capture Enter and Escape as default keys --> 
+  <i:Interaction.Triggers>
+    <i:EventTrigger EventName="PreviewKeyDown">               
+      <prism:InvokeCommandAction Command="{Binding KeyDownCommand}" />
+    </i:EventTrigger>
+  </i:Interaction.Triggers>
+
   <DockPanel LastChildFill="True">
     <Grid DockPanel.Dock="Top" Margin="10,10,0,10">
       <StackPanel Orientation="Horizontal">

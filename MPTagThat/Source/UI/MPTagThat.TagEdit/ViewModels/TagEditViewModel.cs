@@ -37,6 +37,7 @@ using MPTagThat.Core.Services.Settings;
 using MPTagThat.Core.Services.Settings.Setting;
 using MPTagThat.Core.Utils;
 using MPTagThat.TagEdit.Models;
+using Prism.Commands;
 using Prism.Events;
 using Prism.Ioc;
 using Prism.Mvvm;
@@ -451,6 +452,7 @@ namespace MPTagThat.TagEdit.ViewModels
 
     public TagEditViewModel()
     {
+      KeyDownCommand = new DelegateCommand<KeyEventArgs>(KeyDown);
       ApplyEditCommand = new BaseCommand(ApplyEdit);
       CancelEditCommand = new BaseCommand(CancelEdit);
       TextChangedCommand = new BaseCommand(TextChanged);
@@ -486,6 +488,25 @@ namespace MPTagThat.TagEdit.ViewModels
     #endregion
 
     #region Commands
+
+    public ICommand KeyDownCommand { get; }
+
+    /// <summary>
+    /// Handle Enter and Escape Key
+    /// </summary>
+    /// <param name="param"></param>
+    private void KeyDown(KeyEventArgs param)
+    {
+      if (param.Key == Key.Enter)
+      {
+        ApplyEdit(SongEdit);
+      }
+
+      if (param.Key == Key.Escape)
+      {
+        CancelEdit(SongEdit);
+      }
+    }
 
     public ICommand TextChangedCommand { get; }
 
