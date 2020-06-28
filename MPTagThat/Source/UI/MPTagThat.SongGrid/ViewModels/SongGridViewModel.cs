@@ -51,6 +51,7 @@ using MPTagThat.Dialogs.ViewModels;
 using MPTagThat.Dialogs.Views;
 using MPTagThat.SongGrid.Models;
 using MPTagThat.SongGrid.Views;
+using Prism.Commands;
 using Prism.Ioc;
 using Prism.Modularity;
 using Action = MPTagThat.Core.Common.Action;
@@ -81,6 +82,7 @@ namespace MPTagThat.SongGrid.ViewModels
     private bool _progressCancelled;
     private bool _folderScanInProgress;
     private bool _actionCopy;
+    private bool _selectAll;
 
     private NotificationView _notificationView;
 
@@ -230,9 +232,11 @@ namespace MPTagThat.SongGrid.ViewModels
           };
           EventSystem.Publish(evt);
         }
-        var parameters = new NavigationParameters();
-        parameters.Add("songs", songs);
-        _regionManager.RequestNavigate("TagEdit", "TagEditView", parameters);
+
+        if (!_selectAll)
+        {
+          NavigateToTagEdit();
+        }
       }
     }
 
@@ -373,10 +377,15 @@ namespace MPTagThat.SongGrid.ViewModels
 
     private void ContextMenuSelectAll(object param)
     {
+      _selectAll = true;
+
       foreach (var song in Songs)
       {
         SelectedItems.Add(song);
       }
+
+      _selectAll = false;
+      NavigateToTagEdit();
     }
 
     /// <summary>
@@ -568,6 +577,16 @@ namespace MPTagThat.SongGrid.ViewModels
           ExecuteCommand("SaveAll", parm, false);
         }
       }
+    }
+
+    /// <summary>
+    /// Send a Region Navigate to TagEdit, to show the selected Rows
+    /// </summary>
+    private void NavigateToTagEdit()
+    {
+      var navParameters = new NavigationParameters();
+      navParameters.Add("songs", SelectedItems.Cast<SongData>().ToList());
+      _regionManager.RequestNavigate("TagEdit", "TagEditView", navParameters);
     }
 
     #endregion
@@ -1296,11 +1315,18 @@ namespace MPTagThat.SongGrid.ViewModels
           // Select all songs, except for Find & Replace and Help
           if (SelectedItems.Count == 0 && (command != Action.ActionType.FIND && command != Action.ActionType.REPLACE && command != Action.ActionType.HELP))
           {
+            _selectAll = true;
+
             // Much faster, than using LINQ and convert to a list
             foreach (var song in Songs)
             {
               SelectedItems.Add(song);
             }
+
+            _selectAll = false;
+
+            // Set the TagEdit View
+            NavigateToTagEdit();
           }
 
           // Commands, which don't use the Execute Command of SongGrid
