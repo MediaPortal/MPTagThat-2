@@ -690,8 +690,8 @@ namespace MPTagThat.SongGrid.ViewModels
              if (!Directory.Exists(_selectedFolder))
                return;
 
-             int count = 1;
-             int nonMusicCount = 0;
+             var count = 0;
+             var nonMusicCount = 0;
              StatusBarEvent msg = new StatusBarEvent { CurrentFolder = _selectedFolder, CurrentProgress = -1 };
 
              try
