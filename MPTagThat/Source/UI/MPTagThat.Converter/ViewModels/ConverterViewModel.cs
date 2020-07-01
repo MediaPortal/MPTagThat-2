@@ -26,6 +26,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Forms;
 using System.Windows.Input;
 using MPTagThat.Converter.Models;
 using MPTagThat.Core;
@@ -45,6 +46,7 @@ using Un4seen.Bass;
 using Un4seen.Bass.AddOn.Wma;
 using WPFLocalizeExtension.Engine;
 using Action = MPTagThat.Core.Common.Action;
+using MessageBox = System.Windows.MessageBox;
 
 #endregion
 
@@ -181,6 +183,7 @@ namespace MPTagThat.Converter.ViewModels
       // Commands
       ContextMenuClearListCommand = new BaseCommand(ContextMenuClearList);
       ContextMenuSelectAllCommand = new BaseCommand(ContextMenuSelectAll);
+      MusicFolderOpenCommand = new BaseCommand(MusicFolderOpen);
 
       log.Trace("<<<");
     }
@@ -758,6 +761,24 @@ namespace MPTagThat.Converter.ViewModels
     private void ContextMenuSelectAll(object param)
     {
       Songs.ForEach(song => SelectedItems.Add(song));
+    }
+
+    /// <summary>
+    /// Open a dialog to select the Music Folder 
+    /// </summary>
+    public ICommand MusicFolderOpenCommand { get; }
+
+    private void MusicFolderOpen(object param)
+    {
+      using (var dialog = new System.Windows.Forms.FolderBrowserDialog())
+      {
+        System.Windows.Forms.DialogResult result = dialog.ShowDialog();
+        if (result == DialogResult.OK)
+        {
+          ConvertRootFolder = dialog.SelectedPath;
+          _options.MainSettings.ConvertRootFolder = ConvertRootFolder;
+        }
+      }
     }
 
     #endregion

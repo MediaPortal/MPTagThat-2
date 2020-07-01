@@ -136,9 +136,16 @@
           </ComboBox>
 
           <Label Grid.Row="1" Grid.Column="0" Content="{lex:Loc convert_OutputFolder}" />
-          <TextBox Grid.Row="1" Grid.Column="1" Width="300" Margin="0,5,0,0"
-                           Text="{Binding ConvertRootFolder, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.ColumnSpan="2"/>
+          
+          <StackPanel Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Orientation="Horizontal">
+            <TextBox  Width="270" Margin="0,5,0,0"
+                           Text="{Binding ConvertRootFolder, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 
+            <Button Content=" ... " Margin="5,5,0,0" Height="20"
+                    x:Name="DatabaseMusicFolderOpen" 
+                    Command="{Binding MusicFolderOpenCommand}" />
+
+          </StackPanel>
           <Label Grid.Row="2" Grid.Column="0" Content="{lex:Loc convert_FileName_Format}" />
           <TextBox Grid.Row="2" Grid.Column="1" Width="300" Margin="0,5,0,0"
                            Text="{Binding ConvertFileFormat, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.ColumnSpan="2"/>
