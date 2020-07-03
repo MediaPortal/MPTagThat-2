@@ -18,17 +18,25 @@
 
 #region
 
-using System;
+using System.Windows.Media.Animation;
 using MPTagThat.Core.Common.Song;
 using Prism.Mvvm;
 
 #endregion
 
-namespace MPTagThat.Converter.Models
+namespace MPTagThat.Rip.Models
 {
-  public class ConverterData : BindableBase
+  public class RipData : BindableBase
   {
     public bool Changed => false;
+
+    private bool _isChecked;
+
+    public bool IsChecked
+    {
+      get => _isChecked;
+      set => SetProperty(ref _isChecked, value);
+    }
 
     private double _percentComplete = 0;
 
@@ -38,18 +46,37 @@ namespace MPTagThat.Converter.Models
       set => SetProperty(ref _percentComplete, value);
     }
 
-    public string FileName => Song.FullFileName;
+    private string _track;
 
-    private string _newFileName = "";
-
-    public string NewFileName
+    public string Track
     {
-      get => _newFileName; 
-      set => SetProperty(ref _newFileName, value);
+      get => _track;
+      set => SetProperty(ref _track, value);
     }
 
-    public SongData Song { get; set; }
+    private string _artist;
 
-    public string Status { get; set; } = "";
+    public string Artist
+    {
+      get => _artist;
+      set => SetProperty(ref _artist, value);
+    }
+
+    private string _title;
+
+    public string Title
+    {
+      get => _title;
+      set => SetProperty(ref _title, value);
+    }
+
+    private string _duration;
+
+    public string Duration
+    {
+      get => _duration;
+      set => SetProperty(ref _duration, value);
+    }
+
   }
 }

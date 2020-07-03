@@ -102,6 +102,7 @@
     <EmbeddedResource Include="Resources\Localization\Strings.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Strings.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Localization\Strings.de.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
@@ -146,6 +147,10 @@
     <ProjectReference Include="..\UI\MPTagThat.Ribbon\MPTagThat.Ribbon.csproj">
       <Project>{25cddf0b-6b18-4a1d-834b-987a4bb26f05}</Project>
       <Name>MPTagThat.Ribbon</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\UI\MPTagThat.Rip\MPTagThat.Rip.csproj">
+      <Project>{509cd006-36c1-4e36-af17-cff7dffc99b9}</Project>
+      <Name>MPTagThat.Rip</Name>
     </ProjectReference>
     <ProjectReference Include="..\UI\MPTagThat.SongGrid\MPTagThat.SongGrid.csproj">
       <Project>{2d3154af-53c8-40fa-991a-6ab019078915}</Project>

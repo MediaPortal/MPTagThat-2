@@ -87,6 +87,12 @@
     <Compile Include="Events\GenericEvent.cs" />
     <Compile Include="Events\ProgressBarEvent.cs" />
     <Compile Include="Events\StatusBarEvent.cs" />
+    <Compile Include="GnuDB\CDInfo.cs" />
+    <Compile Include="GnuDB\CDInfoDetail.cs" />
+    <Compile Include="GnuDB\CDTrackDetail.cs" />
+    <Compile Include="GnuDB\GnuDBQuery.cs" />
+    <Compile Include="GnuDB\GnuDBSite.cs" />
+    <Compile Include="GnuDB\XMCDParser.cs" />
     <Compile Include="Lyrics\ILyricsSearch.cs" />
     <Compile Include="Lyrics\LyricsController.cs" />
     <Compile Include="Lyrics\LyricSearch.cs" />
@@ -108,6 +114,8 @@
     <Compile Include="Services\AudioEncoder\IAudioEncoder.cs" />
     <Compile Include="Services\Logging\ILogger.cs" />
     <Compile Include="Services\Logging\NLogLogger.cs" />
+    <Compile Include="Services\MediaChangeMonitor\IMediaChangeMonitor.cs" />
+    <Compile Include="Services\MediaChangeMonitor\MediaChangeMonitor.cs" />
     <Compile Include="Services\MusicDatabase\IMusicDatabase.cs" />
     <Compile Include="Services\MusicDatabase\Indexes\DefaultSearchIndex.cs" />
     <Compile Include="Services\MusicDatabase\Indexes\DistinctAlbumArtistAlbumsIndex.cs" />
@@ -218,6 +226,7 @@
       <Version>3.6.1</Version>
     </PackageReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

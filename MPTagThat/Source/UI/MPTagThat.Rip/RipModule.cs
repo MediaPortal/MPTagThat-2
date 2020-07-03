@@ -18,38 +18,27 @@
 
 #region
 
-using System;
-using MPTagThat.Core.Common.Song;
-using Prism.Mvvm;
+using MPTagThat.Rip.Views;
+using Prism.Ioc;
+using Prism.Modularity;
+using Prism.Regions;
 
 #endregion
-
-namespace MPTagThat.Converter.Models
+namespace MPTagThat.Rip
 {
-  public class ConverterData : BindableBase
+  /// <summary>
+  /// Module for Rip 
+  /// </summary>
+  public class RipModule : IModule
   {
-    public bool Changed => false;
-
-    private double _percentComplete = 0;
-
-    public double PercentComplete
+    public void RegisterTypes(IContainerRegistry containerRegistry)
     {
-      get => _percentComplete;
-      set => SetProperty(ref _percentComplete, value);
     }
 
-    public string FileName => Song.FullFileName;
-
-    private string _newFileName = "";
-
-    public string NewFileName
+    public void OnInitialized(IContainerProvider containerProvider)
     {
-      get => _newFileName; 
-      set => SetProperty(ref _newFileName, value);
+      var regionManager = containerProvider.Resolve<IRegionManager>();
+      regionManager.RegisterViewWithRegion("DetailRegion", typeof(RipView));
     }
-
-    public SongData Song { get; set; }
-
-    public string Status { get; set; } = "";
   }
 }

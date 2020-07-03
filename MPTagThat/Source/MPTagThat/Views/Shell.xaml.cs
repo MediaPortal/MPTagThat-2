@@ -8,6 +8,7 @@ using System.Runtime.Serialization.Formatters.Binary;
 using System.Windows;
 using System.Windows.Media;
 using MPTagThat.Core.Services.Logging;
+using MPTagThat.Core.Services.MediaChangeMonitor;
 using MPTagThat.Core.Services.Settings.Setting;
 using MPTagThat.ViewModels;
 using Prism.Ioc;
@@ -71,6 +72,8 @@ namespace MPTagThat.Views
       {
         MainDockingManager.SaveDockState(formatter, StorageFormat.Xml, stateFile);
       }
+
+      ContainerLocator.Current.Resolve<IMediaChangeMonitor>()?.StopListening();
     }
 
     #endregion

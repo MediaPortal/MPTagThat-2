@@ -1565,6 +1565,7 @@ To change the order of the ratings drag the rows.</value>
   </data>
   <data name="treeView_ScanSubfolders" xml:space="preserve">
     <value>Scan Subfolders</value>
+    <comment>Group Box Header for Ripping Options</comment>
   </data>
   <data name="contextMenu_ClearAllFilters" xml:space="preserve">
     <value>Clear All Filters</value>
@@ -1614,7 +1615,7 @@ To change the order of the ratings drag the rows.</value>
     <value>Remove selected item(s)</value>
   </data>
   <data name="convert_ErrorDirectory" xml:space="preserve">
-    <value>Error creating Music Directory</value>
+    <value>Error creating Target Directory</value>
   </data>
   <data name="convert_ErrorEncoding" xml:space="preserve">
     <value>Error encoding File</value>
@@ -1806,5 +1807,30 @@ To change the order of the ratings drag the rows.</value>
   <data name="treeView_Loading" xml:space="preserve">
     <value>Loading ...</value>
     <comment>The Text used to display whil expaning a folder</comment>
+  </data>
+  <data name="rip_CDs" xml:space="preserve">
+    <value>Select CD:</value>
+    <comment>Label for the CD Selection Combo</comment>
+  </data>
+  <data name="ribbon_RipCancel" xml:space="preserve">
+    <value>Cancel Rip</value>
+  </data>
+  <data name="ribbon_RipStart" xml:space="preserve">
+    <value>Start Rip</value>
+  </data>
+  <data name="screentip_RipCancel" xml:space="preserve">
+    <value>Abort the riping process</value>
+  </data>
+  <data name="screentip_RipStart" xml:space="preserve">
+    <value>Start riping the selected CD tracks in the list to the selected format</value>
+  </data>
+  <data name="rip_ActivateTargetFolder" xml:space="preserve">
+    <value>Activate Target Folder after Ripping</value>
+  </data>
+  <data name="rip_Eject" xml:space="preserve">
+    <value>Eject CD after Ripping</value>
+  </data>
+  <data name="rip_Options" xml:space="preserve">
+    <value>Ripping Options</value>
   </data>
 </root>

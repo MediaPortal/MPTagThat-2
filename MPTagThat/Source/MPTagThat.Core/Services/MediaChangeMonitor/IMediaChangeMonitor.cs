@@ -19,37 +19,35 @@
 #region
 
 using System;
-using MPTagThat.Core.Common.Song;
-using Prism.Mvvm;
 
 #endregion
 
-namespace MPTagThat.Converter.Models
+namespace MPTagThat.Core.Services.MediaChangeMonitor
 {
-  public class ConverterData : BindableBase
+  public delegate void MediaInsertedEvent(string eDriveLetter);
+
+  public delegate void MediaRemovedEvent(string eDriveLetter);
+
+  public interface IMediaChangeMonitor
   {
-    public bool Changed => false;
+    /// <summary>
+    ///   This event is fired, whenever a media is inserted
+    /// </summary>
+    event MediaInsertedEvent MediaInserted;
 
-    private double _percentComplete = 0;
+    /// <summary>
+    ///   This event is fired, when a media is removed
+    /// </summary>
+    event MediaRemovedEvent MediaRemoved;
 
-    public double PercentComplete
-    {
-      get => _percentComplete;
-      set => SetProperty(ref _percentComplete, value);
-    }
+    /// <summary>
+    ///   Starts Listening for Volume Change Events
+    /// </summary>
+    void StartListening();
 
-    public string FileName => Song.FullFileName;
-
-    private string _newFileName = "";
-
-    public string NewFileName
-    {
-      get => _newFileName; 
-      set => SetProperty(ref _newFileName, value);
-    }
-
-    public SongData Song { get; set; }
-
-    public string Status { get; set; } = "";
+    /// <summary>
+    ///   Stops Listening for Volume Change Events
+    /// </summary>
+    void StopListening();
   }
 }

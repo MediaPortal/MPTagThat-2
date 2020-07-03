@@ -214,6 +214,14 @@
       <Version>3.6.1</Version>
     </PackageReference>
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\ribbon_Rip_16x.png" />
+    <Resource Include="Resources\Images\ribbon_Rip_32x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\ribbon_RipCancel_16x.png" />
+    <Resource Include="Resources\Images\ribbon_RipCancel_32x.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>

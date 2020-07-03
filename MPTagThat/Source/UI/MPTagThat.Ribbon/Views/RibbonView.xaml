@@ -595,7 +595,7 @@
                                    Command="{Binding ExecuteRibbonCommand}" 
                                    CommandParameter="{Binding Name ,RelativeSource={RelativeSource Self}}" >
             <syncfusion:RibbonButton.ToolTip>
-              <syncfusion:ScreenTip MinWidth="150" MaxWidth="400" Description="{lex:Loc ribbon_ConvertTab}" VerticalOffset="10" ImageSource="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_Convert_32x.png">
+              <syncfusion:ScreenTip MinWidth="150" MaxWidth="400" Description="{lex:Loc ribbon_ConvertStart}" VerticalOffset="10" ImageSource="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_Convert_32x.png">
                 <StackPanel Orientation="Vertical" Width="300">
                   <TextBlock Text="{lex:Loc screentip_ConvertStart}" TextWrapping="Wrap" />
                 </StackPanel>
@@ -619,8 +619,43 @@
         </syncfusion:RibbonBar>
       </syncfusion:RibbonTab>
 
+
+      <syncfusion:RibbonTab x:Name="TabRip" Caption="{lex:Loc ribbon_RipTab}"  IsChecked="False">
+        <syncfusion:RibbonBar Header="" >
+          <syncfusion:RibbonButton x:Name="ButtonRipStart" SizeForm="Large" 
+                                   Label="{lex:Loc ribbon_RipStart}" 
+                                   LargeIcon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_Rip_32x.png" 
+                                   SmallIcon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_Rip_16x.png" 
+                                   Command="{Binding ExecuteRibbonCommand}" 
+                                   CommandParameter="{Binding Name ,RelativeSource={RelativeSource Self}}" >
+            <syncfusion:RibbonButton.ToolTip>
+              <syncfusion:ScreenTip MinWidth="150" MaxWidth="400" Description="{lex:Loc ribbon_RipStart}" VerticalOffset="10" ImageSource="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_Rip_32x.png">
+                <StackPanel Orientation="Vertical" Width="300">
+                  <TextBlock Text="{lex:Loc screentip_RipStart}" TextWrapping="Wrap" />
+                </StackPanel>
+              </syncfusion:ScreenTip>
+            </syncfusion:RibbonButton.ToolTip>
+          </syncfusion:RibbonButton>
+          <syncfusion:RibbonButton x:Name="ButtonRipCancel" SizeForm="Large" 
+                                   Label="{lex:Loc ribbon_RipCancel}" 
+                                   LargeIcon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_RipCancel_32x.png" 
+                                   SmallIcon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_RipCancel_16x.png" 
+                                   Command="{Binding ExecuteRibbonCommand}" 
+                                   CommandParameter="{Binding Name ,RelativeSource={RelativeSource Self}}" >
+            <syncfusion:RibbonButton.ToolTip>
+              <syncfusion:ScreenTip MinWidth="150" MaxWidth="400" Description="{lex:Loc ribbon_RipCancel}" VerticalOffset="10" ImageSource="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_RipCancel_32x.png">
+                <StackPanel Orientation="Vertical" Width="300">
+                  <TextBlock Text="{lex:Loc screentip_RipCancel}" TextWrapping="Wrap" />
+                </StackPanel>
+              </syncfusion:ScreenTip>
+            </syncfusion:RibbonButton.ToolTip>
+          </syncfusion:RibbonButton>
+        </syncfusion:RibbonBar>
+
+
+      </syncfusion:RibbonTab>
+
       <!-- Disabled until implemented
-      <syncfusion:RibbonTab x:Name="TabRip" Caption="{lex:Loc ribbon_RipTab}"  IsChecked="False"/>
       
       <syncfusion:RibbonTab x:Name="TabBurn" Caption="{lex:Loc ribbon_BurnTab}"  IsChecked="False"/>
       

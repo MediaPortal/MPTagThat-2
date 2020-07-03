@@ -8,6 +8,7 @@ using System.Threading;
 using System.Windows;
 using System.Xml;
 using MPTagThat.Core.Services.Logging;
+using MPTagThat.Core.Services.MediaChangeMonitor;
 using MPTagThat.Core.Services.MusicDatabase;
 using MPTagThat.Core.Services.ScriptManager;
 using MPTagThat.Core.Services.Settings;
@@ -83,6 +84,9 @@ namespace MPTagThat
       logger.GetLogger.Info("Registering Music Database Service");
       containerRegistry.RegisterInstance<IMusicDatabase>(new MusicDatabase());
 
+      logger.GetLogger.Info("Registering Music Media Change Monitor");
+      containerRegistry.RegisterInstance<IMediaChangeMonitor>(new MediaChangeMonitor());
+
       var language = Container.Resolve<ISettingsManager>()?.GetOptions.MainSettings.Language;
       WPFLocalizeExtension.Engine.LocalizeDictionary.Instance.Culture = new CultureInfo(language);
     }
@@ -120,6 +124,13 @@ namespace MPTagThat
         InitializationMode = InitializationMode.OnDemand
       });
 
+      Type ripModuleCType = typeof(Rip.RipModule);
+      moduleCatalog.AddModule(new ModuleInfo()
+      {
+        ModuleName = ripModuleCType.Name,
+        ModuleType = ripModuleCType.AssemblyQualifiedName,
+        InitializationMode = InitializationMode.OnDemand
+      });
     }
 
     /// <summary>

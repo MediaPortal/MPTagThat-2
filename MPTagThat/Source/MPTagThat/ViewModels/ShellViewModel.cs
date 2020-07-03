@@ -1,7 +1,26 @@
-﻿using System;
+﻿#region Copyright (C) 2020 Team MediaPortal
+// Copyright (C) 2020 Team MediaPortal
+// http://www.team-mediaportal.com
+// 
+// MPTagThat is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 2 of the License, or
+// (at your option) any later version.
+// 
+// MPTagThat is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+// GNU General Public License for more details.
+// 
+// You should have received a copy of the GNU General Public License
+// along with MPTagThat. If not, see <http://www.gnu.org/licenses/>.
+#endregion
+
+#region
+
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Runtime.Serialization.Formatters.Binary;
@@ -13,8 +32,10 @@ using MPTagThat.Core;
 using MPTagThat.Core.Common;
 using MPTagThat.Core.Events;
 using MPTagThat.Core.Services.Logging;
+using MPTagThat.Core.Services.MediaChangeMonitor;
 using MPTagThat.Core.Services.Settings;
 using MPTagThat.Core.Services.Settings.Setting;
+using MPTagThat.Rip.Views;
 using MPTagThat.SongGrid.Views;
 using Newtonsoft.Json;
 using Prism.Ioc;
@@ -28,6 +49,8 @@ using WPFLocalizeExtension.Engine;
 using Action = MPTagThat.Core.Common.Action;
 using Point = System.Drawing.Point;
 using Size = System.Drawing.Size;
+
+#endregion
 
 namespace MPTagThat.ViewModels
 {
@@ -209,6 +232,7 @@ namespace MPTagThat.ViewModels
       CancelFolderScanCommand = new BaseCommand(CancelFolderScan);
 
       _options = ContainerLocator.Current.Resolve<ISettingsManager>().GetOptions;
+      ContainerLocator.Current.Resolve<IMediaChangeMonitor>().StartListening();
 
       LoadKeyMap();
 
@@ -357,7 +381,12 @@ namespace MPTagThat.ViewModels
     /// </summary>
     private void HideStandardLayout()
     {
-      _savedDockStates.Clear();
+      if (_savedDockStates.Count > 0)
+      {
+        // No need to hide anything, if we have already a saved dock state
+        return;
+      }
+
       foreach (ContentControl child in MainDockingManager.Children)
       {
         _savedDockStates.Add(child.Name, DockingManager.GetState(child));
@@ -395,6 +424,7 @@ namespace MPTagThat.ViewModels
             break;
         }
       }
+      _savedDockStates.Clear();
 
       var view = detailRegion.Views.FirstOrDefault(v => v is SongGridView);
       if (view != null)
@@ -441,6 +471,24 @@ namespace MPTagThat.ViewModels
               else
               {
                 detailRegion.Activate(converterView);
+              }
+              break;
+
+            case "TabRip":
+              HideStandardLayout();
+              // Load Module and Activate View
+              moduleManager = (ModuleManager)ContainerLocator.Current.Resolve<IModuleManager>();
+              moduleManager.LoadModule("RipModule");
+              var ripView = detailRegion.Views.FirstOrDefault(v => v is RipView);
+              if (ripView == null)
+              {
+                var view = ContainerLocator.Current.Resolve<RipView>();
+                detailRegion.Add(view);
+                detailRegion.Activate(view);
+              }
+              else
+              {
+                detailRegion.Activate(ripView);
               }
               break;
           }

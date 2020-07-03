@@ -421,7 +421,7 @@ namespace MPTagThat.Resources.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Error creating Music Directory.
+        ///   Looks up a localized string similar to Error creating Target Directory.
         /// </summary>
         public static string convert_ErrorDirectory {
             get {
@@ -1978,6 +1978,24 @@ namespace MPTagThat.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Cancel Rip.
+        /// </summary>
+        public static string ribbon_RipCancel {
+            get {
+                return ResourceManager.GetString("ribbon_RipCancel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Start Rip.
+        /// </summary>
+        public static string ribbon_RipStart {
+            get {
+                return ResourceManager.GetString("ribbon_RipStart", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Rip.
         /// </summary>
         public static string ribbon_RipTab {
@@ -2046,6 +2064,42 @@ namespace MPTagThat.Resources.Localization {
         public static string ribbon_ValidateSong {
             get {
                 return ResourceManager.GetString("ribbon_ValidateSong", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Activate Target Folder after Ripping.
+        /// </summary>
+        public static string rip_ActivateTargetFolder {
+            get {
+                return ResourceManager.GetString("rip_ActivateTargetFolder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select CD:.
+        /// </summary>
+        public static string rip_CDs {
+            get {
+                return ResourceManager.GetString("rip_CDs", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Eject CD after Ripping.
+        /// </summary>
+        public static string rip_Eject {
+            get {
+                return ResourceManager.GetString("rip_Eject", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ripping Options.
+        /// </summary>
+        public static string rip_Options {
+            get {
+                return ResourceManager.GetString("rip_Options", resourceCulture);
             }
         }
         
@@ -2289,6 +2343,24 @@ namespace MPTagThat.Resources.Localization {
         public static string screentip_ResetLayoutText {
             get {
                 return ResourceManager.GetString("screentip_ResetLayoutText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Abort the riping process.
+        /// </summary>
+        public static string screentip_RipCancel {
+            get {
+                return ResourceManager.GetString("screentip_RipCancel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Start riping the selected CD tracks in the list to the selected format.
+        /// </summary>
+        public static string screentip_RipStart {
+            get {
+                return ResourceManager.GetString("screentip_RipStart", resourceCulture);
             }
         }
         

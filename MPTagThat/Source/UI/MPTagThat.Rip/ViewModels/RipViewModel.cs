@@ -19,30 +19,33 @@
 #region
 
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel.Design;
 using System.IO;
-using System.Linq;
+using System.Net;
+using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Data;
 using System.Windows.Forms;
 using System.Windows.Input;
-using MPTagThat.Converter.Models;
 using MPTagThat.Core;
 using MPTagThat.Core.Common;
-using MPTagThat.Core.Common.Song;
 using MPTagThat.Core.Events;
+using MPTagThat.Core.GnuDB;
 using MPTagThat.Core.Services.AudioEncoder;
 using MPTagThat.Core.Services.Logging;
+using MPTagThat.Core.Services.MediaChangeMonitor;
 using MPTagThat.Core.Services.Settings;
 using MPTagThat.Core.Services.Settings.Setting;
 using MPTagThat.Core.Utils;
+using MPTagThat.Rip.Models;
 using Prism.Ioc;
 using Prism.Mvvm;
 using Prism.Regions;
-using Syncfusion.Data.Extensions;
+using Syncfusion.Windows.Tools.Controls;
 using Un4seen.Bass;
+using Un4seen.Bass.AddOn.Cd;
 using Un4seen.Bass.AddOn.Wma;
 using WPFLocalizeExtension.Engine;
 using Action = MPTagThat.Core.Common.Action;
@@ -50,9 +53,9 @@ using MessageBox = System.Windows.MessageBox;
 
 #endregion
 
-namespace MPTagThat.Converter.ViewModels
+namespace MPTagThat.Rip.ViewModels
 {
-  public class ConverterViewModel : BindableBase
+  public class RipViewModel : BindableBase
   {
     #region Variables
 
@@ -61,132 +64,15 @@ namespace MPTagThat.Converter.ViewModels
     private readonly NLogLogger log;
     private Options _options;
 
-    private Thread _threadConvert;
-    private bool _conversionActive = false;
-    private CancellationTokenSource  _cts;
+    private Thread _threadRip;
+    private bool _ripActive = false;
+    private bool _ripCancel;
     private string _encoder = null;
 
     private int _defaultBitRateIndex;
-
-    #endregion
-
-    #region ctor
-
-    public ConverterViewModel(IRegionManager regionManager)
-    {
-      _regionManager = regionManager;
-      log = ContainerLocator.Current.Resolve<ILogger>()?.GetLogger;
-      log.Trace(">>>");
-      _options = ContainerLocator.Current.Resolve<ISettingsManager>()?.GetOptions;
-      EventSystem.Subscribe<GenericEvent>(OnMessageReceived);
-
-      // Load the Encoders
-      Encoders.Add(new Item("MP3 Encoder", "mp3", ""));
-      Encoders.Add(new Item("OGG Encoder", "ogg", ""));
-      Encoders.Add(new Item("FLAC Encoder", "flac", ""));
-      Encoders.Add(new Item("OPUS Encoder", "opus", ""));
-      Encoders.Add(new Item("AAC Encoder", "m4a", ""));
-      Encoders.Add(new Item("WMA Encoder", "wma", ""));
-      Encoders.Add(new Item("WAV Encoder", "wav", ""));
-      Encoders.Add(new Item("MusePack Encoder", "mpc", ""));
-      Encoders.Add(new Item("WavPack Encoder", "wv", ""));
-      if (_options.MainSettings.LastConversionEncoderUsed != "")
-      {
-        var i = 0;
-        foreach (var item in Encoders)
-        {
-          if (item.Value == _options.MainSettings.LastConversionEncoderUsed)
-          {
-            EncodersSelectedIndex = i;
-            break;
-          }
-
-          i++;
-        }
-      }
-
-      ConvertRootFolder = _options.MainSettings.ConvertRootFolder;
-      ConvertFileFormat = _options.MainSettings.ConvertFileNameFormat;
-      
-      LamePreset.Add("Medium");
-      LamePreset.Add("Standard");
-      LamePreset.Add("Extreme");
-      LamePreset.Add("Insane");
-      LamePreset.Add("Advanced BitRate (ABR) Mode");
-
-      LamePresetSelectedIndex = _options.MainSettings.RipLamePreset;
-      LameABR = _options.MainSettings.RipLameABRBitRate;
-      LameExpertOptions = _options.MainSettings.RipLameExpert;
-
-      OggQuality = _options.MainSettings.RipOggQuality;
-      OggExpertOptions = _options.MainSettings.RipOggExpert;
-
-      FLACQuality = _options.MainSettings.RipFlacQuality;
-      FLACExpertOptions = _options.MainSettings.RipFlacExpert;
-
-      OPUSComplexity = _options.MainSettings.RipOpusComplexity;
-      OpusExpertOptions = _options.MainSettings.RipOpusExpert;
-
-      FAACQuality = _options.MainSettings.RipFAACQuality;
-      FAACExpertOptions = _options.MainSettings.RipFAACExpert;
-
-      MusepackPreset.Add(new Item("Low/Medium Quality (~  90 kbps)","thumb",""));
-      MusepackPreset.Add(new Item("Medium Quality     (~ 130 kbps)","radio",""));
-      MusepackPreset.Add(new Item("High Quality       (~ 180 kbps)","standard",""));
-      MusepackPreset.Add(new Item("Excellent Quality  (~ 210 kbps)","xtreme",""));
-      MusepackPreset.Add(new Item("Excellent Quality  (~ 240 kbps)","insane",""));
-      MusepackPreset.Add(new Item("Highest Quality    (~ 270 kbps)","braindead",""));
-
-      var idx = 0;
-      foreach (var item in MusepackPreset)
-      {
-        if (item.Value == _options.MainSettings.RipEncoderMPCPreset)
-        {
-          MusepackSelectedIndex = idx;
-          break;
-        }
-        idx++;
-      }
-      MusepackExpertOptions = _options.MainSettings.RipEncoderMPCExpert;
-
-      WavPackPreset.Add(new Item("Fast Mode (fast, but some compromise in compression ratio)","-f",""));
-      WavPackPreset.Add(new Item("High quality (better compression, but slower)","-h",""));
-
-      idx = 0;
-      foreach (var item in WavPackPreset)
-      {
-        if (item.Value == _options.MainSettings.RipEncoderWVPreset)
-        {
-          WavPackSelectedIndex = idx;
-          break;
-        }
-        idx++;
-      }
-      WavPackExpertOptions = _options.MainSettings.RipEncoderWVExpert;
-
-      WmaEncoder.Add(new Item("Windows Media Audio Standard","wma",""));
-      WmaEncoder.Add(new Item("Windows Media Audio Professional","wmapro",""));
-      WmaEncoder.Add(new Item("Windows Media Audio Lossless","wmalossless",""));
-
-      idx = 0;
-      foreach (var item in WmaEncoder)
-      {
-        if (item.Value == _options.MainSettings.RipEncoderWMA)
-        {
-          WmaEncoderSelectedIndex = idx;
-          break;
-        }
-        idx++;
-      }
-
-
-      // Commands
-      ContextMenuClearListCommand = new BaseCommand(ContextMenuClearList);
-      ContextMenuSelectAllCommand = new BaseCommand(ContextMenuSelectAll);
-      MusicFolderOpenCommand = new BaseCommand(MusicFolderOpen);
-
-      log.Trace("<<<");
-    }
+    private IMediaChangeMonitor _mediaChangeMonitor;
+    private CDInfo[] _cds;
+    private int _driveID = -1;
 
     #endregion
 
@@ -196,8 +82,8 @@ namespace MPTagThat.Converter.ViewModels
     /// The Songs in the Grid
     /// </summary>
 
-    private ObservableCollection<ConverterData> _songs = new ObservableCollection<ConverterData>();
-    public ObservableCollection<ConverterData> Songs
+    private ObservableCollection<RipData> _songs = new ObservableCollection<RipData>();
+    public ObservableCollection<RipData> Songs
     {
       get => _songs;
       set => SetProperty(ref _songs, value);
@@ -211,6 +97,84 @@ namespace MPTagThat.Converter.ViewModels
     {
       get => _selectedItems;
       set => SetProperty(ref _selectedItems, value);
+    }
+
+    /// <summary>
+    /// The Binding for the AlbumArtist returned by GnuDB
+    /// </summary>
+    private string _albumArtist;
+
+    public string AlbumArtist
+    {
+      get => _albumArtist;
+      set => SetProperty(ref _albumArtist, value);
+    }
+
+    /// <summary>
+    /// The Binding for the Album returned by GnuDB
+    /// </summary>
+    private string _album;
+
+    public string Album
+    {
+      get => _album;
+      set => SetProperty(ref _album, value);
+    }
+
+    /// <summary>
+    /// The Binding for the Genre returned by GnuDB
+    /// </summary>
+    private string _genre;
+
+    public string Genre
+    {
+      get => _genre;
+      set => SetProperty(ref _genre, value);
+    }
+
+    /// <summary>
+    /// The Binding for the Year returned by GnuDB
+    /// </summary>
+    private string _year;
+
+    public string Year
+    {
+      get => _year;
+      set => SetProperty(ref _year, value);
+    }
+
+    /// <summary>
+    /// The Binding found by the CD Query
+    /// </summary>
+    private ObservableCollection<string> _cdtitles = new ObservableCollection<string>();
+
+    public ObservableCollection<string> CDTitles
+    {
+      get => _cdtitles;
+      set
+      {
+        _cdtitles = value;
+        RaisePropertyChanged("CDTitles");
+      }
+    }
+
+    /// <summary>
+    /// The Binding fo the selected index in the CD Combo
+    /// </summary>
+    private int _cdSelectedIndex;
+
+    public int CDSelectedIndex
+    {
+      get => _cdSelectedIndex;
+      set
+      {
+        SetProperty(ref _cdSelectedIndex, value);
+        Songs.Clear();
+        if (_cdSelectedIndex > -1)
+        {
+          FetchCDDetails(_cds[_cdSelectedIndex]);
+        }
+      }
     }
 
     /// <summary>
@@ -243,19 +207,50 @@ namespace MPTagThat.Converter.ViewModels
     }
 
     /// <summary>
-    /// The Root folder for Convert
+    /// The Root folder for Rip
     /// </summary>
-    private string _convertRootFolder;
+    private string _ripRootFolder;
 
-    public string ConvertRootFolder
+    public string RipRootFolder
     {
-      get => _convertRootFolder;
+      get => _ripRootFolder;
       set
       {
-        _options.MainSettings.ConvertRootFolder = value;
-        SetProperty(ref _convertRootFolder, value);
+        _options.MainSettings.RipTargetFolder = value;
+        SetProperty(ref _ripRootFolder, value);
       }
     }
+
+    /// <summary>
+    /// Eject CD after Ripping
+    /// </summary>
+    private bool _ejectCD;
+
+    public bool EjectCD
+    {
+      get => _ejectCD;
+      set
+      {
+        SetProperty(ref _ejectCD, value);
+        _options.MainSettings.RipEjectCD = value;
+      }
+    }
+
+    /// <summary>
+    /// Activate Target Folder after Ripping
+    /// </summary>
+    private bool _activateTargetFolder;
+
+    public bool ActivateTargetFolder
+    {
+      get => _activateTargetFolder;
+      set
+      {
+        SetProperty(ref _activateTargetFolder, value);
+        _options.MainSettings.RipActivateTargetFolder = value;
+      }
+    }
+
 
     /// <summary>
     /// Binding for Wait Cursor
@@ -272,15 +267,15 @@ namespace MPTagThat.Converter.ViewModels
     /// <summary>
     /// The Binding for the Folder/File Format
     /// </summary>
-    private string _convertFileFormat;
+    private string _ripFileFormat;
 
-    public string ConvertFileFormat
+    public string RipFileFormat
     {
-      get => _convertFileFormat;
+      get => _ripFileFormat;
       set
       {
-        SetProperty(ref _convertFileFormat, value);
-        _options.MainSettings.ConvertFileNameFormat = value;
+        SetProperty(ref _ripFileFormat, value);
+        _options.MainSettings.RipFileNameFormat = value;
       }
     }
 
@@ -314,27 +309,27 @@ namespace MPTagThat.Converter.ViewModels
         switch (value)
         {
           case 0:
-            LamePresetDescription = LocalizeDictionary.Instance.GetLocalizedObject("MPTagThat", "Strings", "convert_Options_MP3_DescMedium", 
+            LamePresetDescription = LocalizeDictionary.Instance.GetLocalizedObject("MPTagThat", "Strings", "convert_Options_MP3_DescMedium",
               LocalizeDictionary.Instance.Culture).ToString();
             break;
 
           case 1:
-            LamePresetDescription = LocalizeDictionary.Instance.GetLocalizedObject("MPTagThat", "Strings", "convert_Options_MP3_DescStandard", 
+            LamePresetDescription = LocalizeDictionary.Instance.GetLocalizedObject("MPTagThat", "Strings", "convert_Options_MP3_DescStandard",
               LocalizeDictionary.Instance.Culture).ToString();
             break;
 
           case 2:
-            LamePresetDescription = LocalizeDictionary.Instance.GetLocalizedObject("MPTagThat", "Strings", "convert_Options_MP3_DescExtreme", 
+            LamePresetDescription = LocalizeDictionary.Instance.GetLocalizedObject("MPTagThat", "Strings", "convert_Options_MP3_DescExtreme",
               LocalizeDictionary.Instance.Culture).ToString();
             break;
 
           case 3:
-            LamePresetDescription = LocalizeDictionary.Instance.GetLocalizedObject("MPTagThat", "Strings", "convert_Options_MP3_DescInsane", 
+            LamePresetDescription = LocalizeDictionary.Instance.GetLocalizedObject("MPTagThat", "Strings", "convert_Options_MP3_DescInsane",
               LocalizeDictionary.Instance.Culture).ToString();
             break;
 
           case 4:
-            LamePresetDescription = LocalizeDictionary.Instance.GetLocalizedObject("MPTagThat", "Strings", "convert_Options_MP3_DescABR", 
+            LamePresetDescription = LocalizeDictionary.Instance.GetLocalizedObject("MPTagThat", "Strings", "convert_Options_MP3_DescABR",
               LocalizeDictionary.Instance.Culture).ToString();
             break;
         }
@@ -737,31 +732,132 @@ namespace MPTagThat.Converter.ViewModels
 
     #endregion
 
-    #region Commands
+    #region ctor
 
-    /// <summary>
-    /// Remove the selected Items from the list
-    /// </summary>
-    public ICommand ContextMenuClearListCommand { get; }
-
-    private void ContextMenuClearList(object param)
+    public RipViewModel(IRegionManager regionManager)
     {
-      var songs = (param as ObservableCollection<object>).Cast<ConverterData>().ToList();
-      foreach (var song in songs)
+      _regionManager = regionManager;
+      log = ContainerLocator.Current.Resolve<ILogger>()?.GetLogger;
+      log.Trace(">>>");
+      _options = ContainerLocator.Current.Resolve<ISettingsManager>()?.GetOptions;
+      EventSystem.Subscribe<GenericEvent>(OnMessageReceived);
+
+      _mediaChangeMonitor = ContainerLocator.Current.Resolve<IMediaChangeMonitor>();
+      _mediaChangeMonitor.MediaInserted += MediaInserted;
+      _mediaChangeMonitor.MediaRemoved += MediaRemoved;
+
+      // Load the Encoders
+      Encoders.Add(new Item("MP3 Encoder", "mp3", ""));
+      Encoders.Add(new Item("OGG Encoder", "ogg", ""));
+      Encoders.Add(new Item("FLAC Encoder", "flac", ""));
+      Encoders.Add(new Item("OPUS Encoder", "opus", ""));
+      Encoders.Add(new Item("AAC Encoder", "m4a", ""));
+      Encoders.Add(new Item("WMA Encoder", "wma", ""));
+      Encoders.Add(new Item("WAV Encoder", "wav", ""));
+      Encoders.Add(new Item("MusePack Encoder", "mpc", ""));
+      Encoders.Add(new Item("WavPack Encoder", "wv", ""));
+      if (_options.MainSettings.LastConversionEncoderUsed != "")
       {
-        Songs.Remove(song);
+        var i = 0;
+        foreach (var item in Encoders)
+        {
+          if (item.Value == _options.MainSettings.LastConversionEncoderUsed)
+          {
+            EncodersSelectedIndex = i;
+            break;
+          }
+
+          i++;
+        }
       }
+
+      RipRootFolder = _options.MainSettings.ConvertRootFolder;
+      RipFileFormat = _options.MainSettings.RipFileNameFormat;
+      EjectCD = _options.MainSettings.RipEjectCD;
+      ActivateTargetFolder = _options.MainSettings.RipActivateTargetFolder;
+
+      LamePreset.Add("Medium");
+      LamePreset.Add("Standard");
+      LamePreset.Add("Extreme");
+      LamePreset.Add("Insane");
+      LamePreset.Add("Advanced BitRate (ABR) Mode");
+
+      LamePresetSelectedIndex = _options.MainSettings.RipLamePreset;
+      LameABR = _options.MainSettings.RipLameABRBitRate;
+      LameExpertOptions = _options.MainSettings.RipLameExpert;
+
+      OggQuality = _options.MainSettings.RipOggQuality;
+      OggExpertOptions = _options.MainSettings.RipOggExpert;
+
+      FLACQuality = _options.MainSettings.RipFlacQuality;
+      FLACExpertOptions = _options.MainSettings.RipFlacExpert;
+
+      OPUSComplexity = _options.MainSettings.RipOpusComplexity;
+      OpusExpertOptions = _options.MainSettings.RipOpusExpert;
+
+      FAACQuality = _options.MainSettings.RipFAACQuality;
+      FAACExpertOptions = _options.MainSettings.RipFAACExpert;
+
+      MusepackPreset.Add(new Item("Low/Medium Quality (~  90 kbps)", "thumb", ""));
+      MusepackPreset.Add(new Item("Medium Quality     (~ 130 kbps)", "radio", ""));
+      MusepackPreset.Add(new Item("High Quality       (~ 180 kbps)", "standard", ""));
+      MusepackPreset.Add(new Item("Excellent Quality  (~ 210 kbps)", "xtreme", ""));
+      MusepackPreset.Add(new Item("Excellent Quality  (~ 240 kbps)", "insane", ""));
+      MusepackPreset.Add(new Item("Highest Quality    (~ 270 kbps)", "braindead", ""));
+
+      var idx = 0;
+      foreach (var item in MusepackPreset)
+      {
+        if (item.Value == _options.MainSettings.RipEncoderMPCPreset)
+        {
+          MusepackSelectedIndex = idx;
+          break;
+        }
+        idx++;
+      }
+      MusepackExpertOptions = _options.MainSettings.RipEncoderMPCExpert;
+
+      WavPackPreset.Add(new Item("Fast Mode (fast, but some compromise in compression ratio)", "-f", ""));
+      WavPackPreset.Add(new Item("High quality (better compression, but slower)", "-h", ""));
+
+      idx = 0;
+      foreach (var item in WavPackPreset)
+      {
+        if (item.Value == _options.MainSettings.RipEncoderWVPreset)
+        {
+          WavPackSelectedIndex = idx;
+          break;
+        }
+        idx++;
+      }
+      WavPackExpertOptions = _options.MainSettings.RipEncoderWVExpert;
+
+      WmaEncoder.Add(new Item("Windows Media Audio Standard", "wma", ""));
+      WmaEncoder.Add(new Item("Windows Media Audio Professional", "wmapro", ""));
+      WmaEncoder.Add(new Item("Windows Media Audio Lossless", "wmalossless", ""));
+
+      idx = 0;
+      foreach (var item in WmaEncoder)
+      {
+        if (item.Value == _options.MainSettings.RipEncoderWMA)
+        {
+          WmaEncoderSelectedIndex = idx;
+          break;
+        }
+        idx++;
+      }
+
+
+      // Commands
+      MusicFolderOpenCommand = new BaseCommand(MusicFolderOpen);
+
+      BindingOperations.EnableCollectionSynchronization(CDTitles, _lock);
+      log.Trace("<<<");
     }
 
-    /// <summary>
-    /// Select all songs in the list
-    /// </summary>
-    public ICommand ContextMenuSelectAllCommand { get; }
+    #endregion
 
-    private void ContextMenuSelectAll(object param)
-    {
-      Songs.ForEach(song => SelectedItems.Add(song));
-    }
+    #region Commands
 
     /// <summary>
     /// Open a dialog to select the Music Folder 
@@ -775,8 +871,8 @@ namespace MPTagThat.Converter.ViewModels
         System.Windows.Forms.DialogResult result = dialog.ShowDialog();
         if (result == DialogResult.OK)
         {
-          ConvertRootFolder = dialog.SelectedPath;
-          _options.MainSettings.ConvertRootFolder = ConvertRootFolder;
+          RipRootFolder = dialog.SelectedPath;
+          _options.MainSettings.RipTargetFolder = RipRootFolder;
         }
       }
     }
@@ -785,64 +881,77 @@ namespace MPTagThat.Converter.ViewModels
 
     #region Private Methods
 
-    /// <summary>
-    ///   Cancel the Conversion Process
-    /// </summary>
-    public void ConvertFilesCancel()
+    private void MediaInserted(string eDriveLetter)
     {
-      if (_cts != null)
-      {
-        _cts.Cancel();
-      }
-      _conversionActive = false;
+      string driveLetter = eDriveLetter.Substring(0, 1);
+      int driveID = Util.Drive2BassID(Convert.ToChar(driveLetter));
+
+      Songs.Clear();
+      AlbumArtist = Album = Genre = Year = "";
+      QueryGnuDB(driveLetter);
+
+    }
+
+    private void MediaRemoved(string eDriveLetter)
+    {
+      AlbumArtist = Album = Genre = Year = "";
+      CDTitles.Clear();
+      Songs.Clear();
     }
 
     /// <summary>
-    ///   Converts the selected files in the Grid
+    /// Cancel Rip
     /// </summary>
-    public void ConvertFiles()
+    private void RipCancel()
     {
-      if (_conversionActive)
+      _ripActive = false;
+      _ripCancel = true;
+      _threadRip.Abort();
+      // Unlock the Drive and open the door, if selected
+      BassCd.BASS_CD_Door(_driveID, BASSCDDoor.BASS_CD_DOOR_UNLOCK);
+      if (_options.MainSettings.RipEjectCD)
       {
-        log.Info("Conversion already running.");
+        BassCd.BASS_CD_Door(_driveID, BASSCDDoor.BASS_CD_DOOR_OPEN);
+      }
+    }
+
+    /// <summary>
+    /// Start ripping the CD
+    /// </summary>
+    private void RipCd()
+    {
+      if (_ripActive)
+      {
+        log.Info("Rip already running.");
         return;
       }
 
       if (Songs.Count == 0)
       {
-        log.Info("No files in Conversion List");
+        log.Info("No files in Song List");
         return;
       }
 
-      if (string.IsNullOrEmpty(ConvertRootFolder))
+      if (string.IsNullOrEmpty(RipRootFolder))
       {
-        log.Info("Empty Conversion Folder. Defaulting to Root of First Song.");
-        var path = Songs[0].Song.FullFileName;
-        var root = Path.GetPathRoot(path);
-        while (true)
-        {
-          var temp = Path.GetDirectoryName(path);
-          if (temp != null && temp.Equals(root))
-            break;
-          path = temp;
-        }
-        ConvertRootFolder = path;
+        log.Info("Empty Target Folder. Open Dialog.");
+        MusicFolderOpen(null);
       }
 
       try
       {
-        if (!Directory.Exists(ConvertRootFolder))
+        if (!Directory.Exists(RipRootFolder))
         {
-          log.Info("Creating Conversion Target Folder");
-          Directory.CreateDirectory(ConvertRootFolder);
+          log.Info("Creating Rip Target Folder");
+          Directory.CreateDirectory(RipRootFolder);
         }
       }
       catch (Exception ex)
       {
-        MessageBox.Show(LocalizeDictionary.Instance.GetLocalizedObject("MPTagThat", "Strings", "convert_ErrorDirectory", LocalizeDictionary.Instance.Culture).ToString(),
+        System.Windows.MessageBox.Show(LocalizeDictionary.Instance.GetLocalizedObject("MPTagThat", "Strings", "convert_ErrorDirectory", LocalizeDictionary.Instance.Culture).ToString(),
           LocalizeDictionary.Instance.GetLocalizedObject("MPTagThat", "Strings", "message_Error_Title", LocalizeDictionary.Instance.Culture).ToString(),
           MessageBoxButton.OK);
-        log.Error("Error creating Conversion output directory: {0}. {1}", ConvertRootFolder, ex.Message);
+        log.Error("Error creating Rip output directory: {0}. {1}", RipRootFolder, ex.Message);
         return;
       }
 
@@ -860,139 +969,295 @@ namespace MPTagThat.Converter.ViewModels
         return;
       }
 
-      _threadConvert = new Thread(ConversionThread) {Name = "Conversion", Priority = ThreadPriority.Highest};
-      _threadConvert.Start();
+      _threadRip = new Thread(RippingThread) { Name = "Riping", Priority = ThreadPriority.Highest };
+      _threadRip.Start();
     }
 
     /// <summary>
     /// Run the conversion
     /// </summary>
-    private void ConversionThread()
+    private void RippingThread()
     {
       log.Trace(">>>");
-      
+
       IsBusy = true;
-      _cts = new CancellationTokenSource();
+      _ripCancel = false;
 
-      var po = new ParallelOptions
+      if (_driveID < 0)
       {
-        CancellationToken = _cts.Token, MaxDegreeOfParallelism = System.Environment.ProcessorCount
-      };
+        log.Info("No CD drive selected. Rip not started.");
+        log.Trace("<<<");
+        return;
+      }
 
-      _conversionActive = true;
+      _ripActive = true;
+      var targetDir = "";
+
+      // Build the Target Directory
+      var artistDir = AlbumArtist == string.Empty ? "Artist" : AlbumArtist;
+      var albumDir = Album == string.Empty ? "Album" : Album;
+
+      var outFileFormat = _options.MainSettings.RipFileNameFormat;
+      int index = outFileFormat.LastIndexOf('\\');
+      if (index > -1)
+      {
+        targetDir = outFileFormat.Substring(0, index);
+        targetDir = targetDir.Replace("%artist%", artistDir);
+        targetDir = targetDir.Replace("%albumartist%", artistDir);
+        targetDir = targetDir.Replace("%album%", albumDir);
+        targetDir = targetDir.Replace("%genre%", Genre);
+        targetDir = targetDir.Replace("%year%", Year);
+        outFileFormat = outFileFormat.Substring(index + 1);
+      }
+      else
+      {
+        targetDir = $@"{artistDir}\{albumDir}";
+      }
+
+      targetDir = Util.MakeValidFolderName(targetDir);
+
+      targetDir = $@"{_ripRootFolder}\{targetDir}";
+
+      log.Debug($"Rip: Using Target Folder: {targetDir}");
+
       try
       {
-        Parallel.For(0, _songs.Count, po, index =>
+        if (!Directory.Exists(targetDir))
+          Directory.CreateDirectory(targetDir);
+      }
+      catch (Exception ex)
+      {
+        log.Error("Error creating Ripping directory: {0}. {1}", targetDir, ex.Message);
+        return;
+      }
+
+      // Lock the Door
+      BassCd.BASS_CD_Door(_driveID, BASSCDDoor.BASS_CD_DOOR_LOCK);
+
+      var currentRow = 0;
+      foreach (var song in Songs)
+      {
+        if (_ripCancel)
         {
-          po.CancellationToken.ThrowIfCancellationRequested();
-          var song = _songs[index];
-          var inputFile = song.Song.FullFileName;
-          var outFile = Util.ReplaceParametersWithTrackValues(_options.MainSettings.ConvertFileNameFormat, song.Song);
-          outFile = Path.Combine(ConvertRootFolder, outFile);
-          string directoryName = Path.GetDirectoryName(outFile);
+          log.Info($"Ripping Audio CD aborted");
+          break;
+        }
 
-          // Now check the validity of the directory
-          if (directoryName != null && !Directory.Exists(directoryName))
-          {
-            try
-            {
-              Directory.CreateDirectory(directoryName);
-            }
-            catch (Exception e1)
-            {
-              log.Error("Error creating folder: {0} {1]", directoryName, e1.Message);
-              song.Status = e1.Message;
-              return;
-            }
-          }
+        if (!song.IsChecked)
+        {
+          currentRow++;
+          continue;
+        }
 
-          var audioEncoder = new AudioEncoder();
-          outFile = audioEncoder.SetEncoder(_encoder, outFile);
-          song.NewFileName = outFile;
+        int stream = BassCd.BASS_CD_StreamCreate(_driveID, currentRow, BASSFlag.BASS_STREAM_DECODE);
+        if (stream == 0)
+        {
+          log.Error("Error creating stream for Audio Track {0}. Error: {1}", currentRow.ToString(),
+                    Enum.GetName(typeof(BASSError), Bass.BASS_ErrorGetCode()));
+          continue;
+        }
 
-          if (inputFile == outFile)
-          {
-            song.Status = LocalizeDictionary.Instance.GetLocalizedObject("MPTagThat", "Strings",
-              "convert_SameFile", LocalizeDictionary.Instance.Culture).ToString();
-            log.Error("No conversion for {0}. Output would overwrite input", inputFile);
-            return;
-          }
+        log.Info($"Ripping Audio CD Track{currentRow + 1} - {song.Title}");
+        var outFile = outFileFormat;
+        outFile = outFile.Replace("%albumartist%", artistDir);
+        outFile = outFile.Replace("%album%", albumDir);
+        outFile = outFile.Replace("%genre%", Genre);
+        outFile = outFile.Replace("%year%", Year);
+        outFile = outFile.Replace("%artist%", song.Artist);
+        outFile = outFile.Replace("%track%", song.Track.PadLeft(_options.MainSettings.NumberTrackDigits, '0'));
+        outFile = outFile.Replace("%title%", song.Title);
+        outFile = Util.MakeValidFileName(outFile);
 
-          int stream = Bass.BASS_StreamCreateFile(inputFile, 0, 0, BASSFlag.BASS_STREAM_DECODE);
-          if (stream == 0)
-          {
-            song.Status = LocalizeDictionary.Instance.GetLocalizedObject("MPTagThat", "Strings",
-                            "convert_OpenFileError", LocalizeDictionary.Instance.Culture).ToString()
-                          + ": " + Enum.GetName(typeof(BASSError), Bass.BASS_ErrorGetCode());
+        outFile = $@"{targetDir}\{outFile}";
 
-            log.Error("Error creating stream for file {0}. Error: {1}", inputFile,
-              Enum.GetName(typeof(BASSError), Bass.BASS_ErrorGetCode()));
-            return;
-          }
+        var audioEncoder = new AudioEncoder();
+        outFile = audioEncoder.SetEncoder(_encoder, outFile);
 
-          log.Info($"Convert file {inputFile} -> {outFile}");
+        if (audioEncoder.StartEncoding(stream, currentRow) != BASSError.BASS_OK)
+        {
+          log.Error("Error starting Encoder for Audio Track {0}. Error: {1}", currentRow.ToString(),
+                    Enum.GetName(typeof(BASSError), Bass.BASS_ErrorGetCode()));
+        }
 
-          if (audioEncoder.StartEncoding(stream, index) != BASSError.BASS_OK)
-          {
-            song.Status = LocalizeDictionary.Instance.GetLocalizedObject("MPTagThat", "Strings",
-                            "convert_ErrorEncoding", LocalizeDictionary.Instance.Culture).ToString()
-                          + ": " + Enum.GetName(typeof(BASSError), Bass.BASS_ErrorGetCode());
+        Bass.BASS_StreamFree(stream);
+        log.Info($"Finished Ripping Audio CD Track{currentRow + 1}");
 
-            log.Error("Error starting Encoder for File {0}. Error: {1}", inputFile,
-              Enum.GetName(typeof(BASSError), Bass.BASS_ErrorGetCode()));
-            Bass.BASS_StreamFree(stream);
-            return;
-          }
+        try
+        {
+          // Now Tag the encoded File
+          TagLib.File file = TagLib.File.Create(outFile);
+          file.Tag.AlbumArtists = new[] { AlbumArtist };
+          file.Tag.Album = Album;
+          file.Tag.Genres = new[] { Genre };
+          file.Tag.Year = Year == string.Empty ? 0 : Convert.ToUInt32(Year);
+          file.Tag.Performers = new[] { song.Artist };
+          file.Tag.Track = Convert.ToUInt16(song.Track);
+          file.Tag.Title = song.Title;
+          file = Util.FormatID3Tag(file);
+          file.Save();
+        }
+        catch (Exception ex)
+        {
+          log.Error("Error tagging encoded file {0}. Error: {1}", outFile, ex.Message);
+        }
 
-          song.PercentComplete = 100;
-
-          Bass.BASS_StreamFree(stream);
-
-          try
-          {
-            // Now Tag the encoded File
-            TagLib.File tagInFile = TagLib.File.Create(inputFile);
-            TagLib.File tagOutFile = TagLib.File.Create(outFile);
-            tagOutFile.Tag.AlbumArtists = tagInFile.Tag.AlbumArtists;
-            tagOutFile.Tag.Album = tagInFile.Tag.Album;
-            tagOutFile.Tag.Genres = tagInFile.Tag.Genres;
-            tagOutFile.Tag.Year = tagInFile.Tag.Year;
-            tagOutFile.Tag.Performers = tagInFile.Tag.Performers;
-            tagOutFile.Tag.Track = tagInFile.Tag.Track;
-            tagOutFile.Tag.TrackCount = tagInFile.Tag.TrackCount;
-            tagOutFile.Tag.Title = tagInFile.Tag.Title;
-            tagOutFile.Tag.Comment = tagInFile.Tag.Comment;
-            tagOutFile.Tag.Composers = tagInFile.Tag.Composers;
-            tagOutFile.Tag.Conductor = tagInFile.Tag.Conductor;
-            tagOutFile.Tag.Copyright = tagInFile.Tag.Copyright;
-            tagOutFile.Tag.Disc = tagInFile.Tag.Disc;
-            tagOutFile.Tag.DiscCount = tagInFile.Tag.DiscCount;
-            tagOutFile.Tag.Lyrics = tagInFile.Tag.Lyrics;
-            tagOutFile.Tag.Pictures = tagInFile.Tag.Pictures;
-            tagOutFile = Util.FormatID3Tag(tagOutFile);
-            tagOutFile.Save();
-
-            log.Info($"Finished converting file {inputFile} -> {outFile}");
-          }
-          catch (Exception ex)
-          {
-            log.Error("Error tagging encoded file {0}. Error: {1}", outFile, ex.Message);
-          }
-        });
+        currentRow++;
       }
-      catch (OperationCanceledException e)
+
+      // Unlock the Drive and open the door, if selected
+      BassCd.BASS_CD_Door(_driveID, BASSCDDoor.BASS_CD_DOOR_UNLOCK);
+      if (_options.MainSettings.RipEjectCD)
       {
-        log.Info("Parallel Tasks aborted");
-      }
-      finally
-      {
-        _cts.Dispose();
-        _conversionActive = false;
-        IsBusy = false;
+        BassCd.BASS_CD_Door(_driveID, BASSCDDoor.BASS_CD_DOOR_OPEN);
       }
 
       log.Trace("<<<");
     }
+
+    #region GnuDB 
+
+    /// <summary>
+    /// Run a Query to GnuDB
+    /// </summary>
+    /// <param name="driveLetter"></param>
+    private void QueryGnuDB(string driveLetter)
+    {
+      _driveID = Util.Drive2BassID(Convert.ToChar(driveLetter));
+      if (_driveID < 0)
+      {
+        return;
+      }
+
+      log.Info("Starting GnuDB Lookup");
+      IsBusy = true;
+      try
+      {
+        GnuDBQuery gnuDbQuery = new GnuDBQuery();
+
+        gnuDbQuery.Connect();
+        _cds = gnuDbQuery.GetDiscInfo(Convert.ToChar(driveLetter));
+        gnuDbQuery.Disconnect();
+
+        if (_cds != null && _cds.Length > 0)
+        {
+          log.Debug($"GnuDB: Found {_cds.Length} matching discs.");
+          foreach (var cd in _cds)
+          {
+            CDTitles.Add(cd.Title);
+          }
+
+          CDSelectedIndex = 0;
+        }
+        else
+        {
+          log.Debug("GnuDB: Disc could not be located in GnuDB.");
+        }
+      }
+      catch (System.Net.WebException webEx)
+      {
+        if (webEx.Status == WebExceptionStatus.Timeout)
+        {
+          log.Info("GnuDB: Timeout querying GnuDB. No Data returned for CD");
+        }
+        else
+        {
+          log.Error("GnuDB: Exception querying Disc. {0} {1}", webEx.Message, webEx.StackTrace);
+        }
+      }
+      catch (Exception ex)
+      {
+        log.Error("GnuDB: Exception querying Disc. {0} {1}", ex.Message, ex.StackTrace);
+      }
+      log.Info("Finished GnuDB Lookup");
+      IsBusy = false;
+
+      log.Trace("<<<");
+    }
+
+    private void FetchCDDetails(CDInfo cd)
+    {
+      log.Info($"Fetching GnuDB Details for {cd.Title}");
+      IsBusy = true;
+      CDInfoDetail MusicCD = new CDInfoDetail();
+      try
+      {
+        GnuDBQuery gnuDbQuery = new GnuDBQuery();
+        gnuDbQuery.Connect();
+        MusicCD = gnuDbQuery.GetDiscDetails(cd.Category, cd.DiscId);
+
+        if (MusicCD != null)
+        {
+          AlbumArtist = MusicCD.Artist;
+          Album = MusicCD.Title;
+          Genre = MusicCD.Genre;
+          Year = MusicCD.Year.ToString();
+
+          foreach (CDTrackDetail trackDetail in MusicCD.Tracks)
+          {
+            if (trackDetail.Artist == null)
+            {
+              trackDetail.Artist = MusicCD.Artist;
+            }
+
+            var song = new RipData
+            {
+              IsChecked = true,
+              Artist = trackDetail.Artist,
+              Title = trackDetail.Title,
+              Track = trackDetail.Track.ToString(),
+              Duration = trackDetail.Duration
+            };
+            Songs.Add(song);
+          }
+        }
+        else
+        {
+          int numTracks = BassCd.BASS_CD_GetTracks(_driveID);
+          for (int i = 0; i < numTracks; i++)
+          {
+            CDTrackDetail trackDetail = new CDTrackDetail();
+            trackDetail.Track = i + 1;
+            trackDetail.Title = $"Track{(i + 1).ToString().PadLeft(2, '0')}";
+
+            var song = new RipData
+            {
+              IsChecked = true,
+              Artist = trackDetail.Artist,
+              Title = trackDetail.Title,
+              Track = trackDetail.Track.ToString(),
+              Duration = trackDetail.Duration
+            };
+            Songs.Add(song);
+          }
+        }
+
+        gnuDbQuery.Disconnect();
+      }
+      catch (System.Net.WebException webEx)
+      {
+        if (webEx.Status == WebExceptionStatus.Timeout)
+        {
+          log.Info("GnuDB: Timeout fetching CD Details");
+          MusicCD = null;
+        }
+        else
+        {
+          log.Error("GnuDB: Exception fetching Disc details. {0} {1}", webEx.Message, webEx.StackTrace);
+          MusicCD = null;
+        }
+      }
+      catch (Exception ex)
+      {
+        log.Error("GnuDB: Exception fetching Disc details. {0} {1}", ex.Message, ex.StackTrace);
+        MusicCD = null;
+      }
+      log.Info("Finished GnuDB Lookup");
+      IsBusy = false;
+    }
+
+    #endregion
+
+    #region Encoder Settings
 
     /// <summary>
     ///   Sets the Mode according to the Settings / Selection
@@ -1012,7 +1277,7 @@ namespace MPTagThat.Converter.ViewModels
       }
     }
 
-        /// <summary>
+    /// <summary>
     ///   Fills the Sample Format Combo box
     /// </summary>
     private void SetWMASampleCombo()
@@ -1147,6 +1412,8 @@ namespace MPTagThat.Converter.ViewModels
 
     #endregion
 
+    #endregion
+
     #region Event Handling
 
     /// <summary>
@@ -1167,29 +1434,22 @@ namespace MPTagThat.Converter.ViewModels
 
           var command = (Action.ActionType)msg.MessageData["command"];
           log.Trace($"Command {command}");
-
-          if (command == Action.ActionType.CONVERT)
+          if (command == Action.ActionType.RIP)
           {
-            ConvertFiles();
+            RipCd();
             return;
           }
 
-          if (command == Action.ActionType.CONVERTCANCEL)
+          if (command == Action.ActionType.RIPCANCEL)
           {
-            ConvertFilesCancel();
+            RipCancel();
           }
-          break;
 
-        case "addtoconversionlist":
-          var songs = (List<SongData>)msg.MessageData["songs"];
-          foreach (var song in songs)
-          {
-            Songs.Add(new ConverterData() { Song = song });
-          }
           break;
       }
     }
 
     #endregion
+
   }
 }

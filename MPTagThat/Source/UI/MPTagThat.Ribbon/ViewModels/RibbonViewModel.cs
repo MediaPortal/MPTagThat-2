@@ -976,6 +976,16 @@ namespace MPTagThat.Ribbon.ViewModels
           runAsync = false;
           break;
 
+        case "ButtonRipStart":
+          type = Action.ActionType.RIP;
+          runAsync = false;
+          break;
+
+        case "ButtonRipCancel":
+          type = Action.ActionType.RIPCANCEL;
+          runAsync = false;
+          break;
+
         case "ButtonAddConversion":
           type = Action.ActionType.ADDCONVERSION;
           runAsync = false;

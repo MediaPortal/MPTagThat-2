@@ -1,4 +1,4 @@
-﻿#region Copyright (C) 2020 Team MediaPortal
+#region Copyright (C) 2020 Team MediaPortal
 // Copyright (C) 2020 Team MediaPortal
 // http://www.team-mediaportal.com
 // 
@@ -18,38 +18,42 @@
 
 #region
 
-using System;
-using MPTagThat.Core.Common.Song;
-using Prism.Mvvm;
+using System.Text;
 
 #endregion
 
-namespace MPTagThat.Converter.Models
+namespace MPTagThat.Core.GnuDB
 {
-  public class ConverterData : BindableBase
+  /// <summary>
+  ///   Contains Information about a CD
+  /// </summary>
+  public class CDInfo
   {
-    public bool Changed => false;
+    public CDInfo() {}
 
-    private double _percentComplete = 0;
-
-    public double PercentComplete
+    public CDInfo(string discid, string category, string title)
     {
-      get => _percentComplete;
-      set => SetProperty(ref _percentComplete, value);
+      DiscId = discid;
+      Category = category;
+      Title = title;
     }
 
-    public string FileName => Song.FullFileName;
+    public string Category { get; set; }
 
-    private string _newFileName = "";
+    public string DiscId { get; set; }
 
-    public string NewFileName
+    public string Title { get; set; }
+
+    public override string ToString()
     {
-      get => _newFileName; 
-      set => SetProperty(ref _newFileName, value);
+      StringBuilder buff = new StringBuilder(100);
+      buff.Append("DiscId: ");
+      buff.Append(DiscId);
+      buff.Append("; Category: ");
+      buff.Append(Category);
+      buff.Append("; Title: ");
+      buff.Append(Title);
+      return buff.ToString();
     }
-
-    public SongData Song { get; set; }
-
-    public string Status { get; set; } = "";
   }
 }

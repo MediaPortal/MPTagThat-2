@@ -41,6 +41,7 @@ using Syncfusion.UI.Xaml.Grid;
 using Syncfusion.Windows.Controls.Input;
 using Syncfusion.Windows.Primitives;
 using TagLib;
+using Un4seen.Bass.AddOn.Cd;
 using WPFLocalizeExtension.Engine;
 using Binding = System.Windows.Data.Binding;
 using File = TagLib.File;
@@ -1527,6 +1528,29 @@ namespace MPTagThat.Core.Utils
       return literal.ToString();
     }
 
+
+    #endregion
+
+    #region CD Related Methods
+
+    /// <summary>
+    ///   Converts the given CD/DVD Drive Letter to a number suiteable for BASS
+    /// </summary>
+    /// <param name = "driveLetter"></param>
+    /// <returns></returns>
+    public static int Drive2BassID(char driveLetter)
+    {
+      BASS_CD_INFO cdinfo = new BASS_CD_INFO();
+      for (int i = 0; i < 25; i++)
+      {
+        if (BassCd.BASS_CD_GetInfo(i, cdinfo))
+        {
+          if (cdinfo.DriveLetter == driveLetter)
+            return i;
+        }
+      }
+      return -1;
+    }
 
     #endregion
   }

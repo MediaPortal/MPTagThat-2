@@ -201,6 +201,9 @@ namespace MPTagThat.Core.Services.Settings.Setting
     public string RipEncoder { get; set; }
 
     [Setting(SettingScope.User, @"%artist%\%album%\%track% - %title%")]
+    public string ConvertFileNameFormat { get; set; }
+
+    [Setting(SettingScope.User, @"%artist%\%album%\%track% - %title%")]
     public string RipFileNameFormat { get; set; }
 
     [Setting(SettingScope.User, "true")]
