@@ -512,6 +512,7 @@ namespace MPTagThat.Treeview.ViewModels
       switch (msg.Action.ToLower())
       {
         case "currentfolderchanged":
+        case "activatetargetfolder":
           RefreshTreeview();
           break;
 

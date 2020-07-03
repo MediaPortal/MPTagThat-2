@@ -89,8 +89,6 @@
                            AutoGenerateColumns="False"
                            ShowRowHeader="False" 
                            AllowEditing="True" 
-                           SelectionMode="Extended" 
-                           EnableDataVirtualization="True" 
                            ShowBusyIndicator="True" 
                            AlternatingRowStyle="{StaticResource AlternatingRowStyle}" 
                            Margin="10,0" >
@@ -112,9 +110,9 @@
           </syncfusion:GridTemplateColumn.CellTemplate>
         </syncfusion:GridTemplateColumn>
         <syncfusion:GridTextColumn HeaderText="{lex:Loc songHeader_Track}" MappingName="Track" Width="80" />
-        <syncfusion:GridTextColumn HeaderText="{lex:Loc songHeader_Artist}" MappingName="Artist" Width="150" />
-        <syncfusion:GridTextColumn HeaderText="{lex:Loc songHeader_Title}" MappingName="Title" Width="150" />
-        <syncfusion:GridTextColumn HeaderText="{lex:Loc songHeader_Duration}" MappingName="Duration" Width="150" />
+        <syncfusion:GridTextColumn HeaderText="{lex:Loc songHeader_Artist}" MappingName="Artist" Width="200" />
+        <syncfusion:GridTextColumn HeaderText="{lex:Loc songHeader_Title}" MappingName="Title" Width="200" />
+        <syncfusion:GridTextColumn HeaderText="{lex:Loc songHeader_Duration}" MappingName="Duration" Width="200" />
       </syncfusion:SfDataGrid.Columns>
     </syncfusion:SfDataGrid>
 

@@ -118,6 +118,7 @@
                        AutoPersist="True" 
                        BackStageHeader="" 
                        RibbonState="Normal"
+                       SelectedIndex="{Binding SelectedTabIndex, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                        SelectedItem="{Binding SelectedRibbonTab}" >
 
       <syncfusion:RibbonTab x:Name="TabTag" Caption="{lex:Loc ribbon_TagTab}"  IsChecked="True">

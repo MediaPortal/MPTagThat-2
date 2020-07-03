@@ -20,10 +20,8 @@
 
 using System;
 using System.Collections.ObjectModel;
-using System.ComponentModel.Design;
 using System.IO;
 using System.Net;
-using System.Text;
 using System.Threading;
 using System.Windows;
 using System.Windows.Data;
@@ -43,7 +41,6 @@ using MPTagThat.Rip.Models;
 using Prism.Ioc;
 using Prism.Mvvm;
 using Prism.Regions;
-using Syncfusion.Windows.Tools.Controls;
 using Un4seen.Bass;
 using Un4seen.Bass.AddOn.Cd;
 using Un4seen.Bass.AddOn.Wma;
@@ -907,6 +904,7 @@ namespace MPTagThat.Rip.ViewModels
       _ripActive = false;
       _ripCancel = true;
       _threadRip.Abort();
+      IsBusy = false;
       // Unlock the Drive and open the door, if selected
       BassCd.BASS_CD_Door(_driveID, BASSCDDoor.BASS_CD_DOOR_UNLOCK);
       if (_options.MainSettings.RipEjectCD)
@@ -1104,11 +1102,24 @@ namespace MPTagThat.Rip.ViewModels
         currentRow++;
       }
 
+      _ripActive = false;
+      IsBusy = false;
+
       // Unlock the Drive and open the door, if selected
       BassCd.BASS_CD_Door(_driveID, BASSCDDoor.BASS_CD_DOOR_UNLOCK);
       if (_options.MainSettings.RipEjectCD)
       {
         BassCd.BASS_CD_Door(_driveID, BASSCDDoor.BASS_CD_DOOR_OPEN);
+      }
+
+      if (_options.MainSettings.RipActivateTargetFolder)
+      {
+        _options.MainSettings.LastFolderUsed = targetDir;
+        var evt = new GenericEvent
+        {
+          Action = "activatetargetfolder"
+        };
+        EventSystem.Publish(evt);
       }
 
       log.Trace("<<<");

@@ -108,6 +108,14 @@ namespace MPTagThat.Ribbon.ViewModels
       }
     }
 
+    private int _selectedTabIndex;
+
+    public int SelectedTabIndex
+    {
+      get => _selectedTabIndex;
+      set => SetProperty(ref _selectedTabIndex, value);
+    }
+
     /// <summary>
     /// The Binding for the Scripts
     /// </summary>
@@ -1208,6 +1216,11 @@ namespace MPTagThat.Ribbon.ViewModels
       {
         case "autonumberchanged":
           AutoNumberValue = _options.AutoNumber;
+          break;
+
+        case "activatetargetfolder":
+          // Switch to Tags Tab
+          SelectedTabIndex = 0;
           break;
       }
     }
