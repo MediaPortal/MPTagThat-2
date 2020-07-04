@@ -1987,6 +1987,15 @@ namespace MPTagThat.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to GnuDB Query.
+        /// </summary>
+        public static string ribbon_RipGnuDB {
+            get {
+                return ResourceManager.GetString("ribbon_RipGnuDB", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Start Rip.
         /// </summary>
         public static string ribbon_RipStart {
@@ -2352,6 +2361,15 @@ namespace MPTagThat.Resources.Localization {
         public static string screentip_RipCancel {
             get {
                 return ResourceManager.GetString("screentip_RipCancel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Looks up the current Audio CD on GnuDB and fills the information into the song grid, ready for ripping.
+        /// </summary>
+        public static string screentip_RipGnuDB {
+            get {
+                return ResourceManager.GetString("screentip_RipGnuDB", resourceCulture);
             }
         }
         

@@ -1833,4 +1833,10 @@ To change the order of the ratings drag the rows.</value>
   <data name="rip_Options" xml:space="preserve">
     <value>Ripping Options</value>
   </data>
+  <data name="ribbon_RipGnuDB" xml:space="preserve">
+    <value>GnuDB Query</value>
+  </data>
+  <data name="screentip_RipGnuDB" xml:space="preserve">
+    <value>Looks up the current Audio CD on GnuDB and fills the information into the song grid, ready for ripping</value>
+  </data>
 </root>

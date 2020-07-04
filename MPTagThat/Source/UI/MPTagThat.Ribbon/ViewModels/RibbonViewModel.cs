@@ -994,6 +994,11 @@ namespace MPTagThat.Ribbon.ViewModels
           runAsync = false;
           break;
 
+        case "ButtonGnuDb":
+          type = Action.ActionType.GNUDBQUERY;
+          runAsync = false;
+          break;
+
         case "ButtonAddConversion":
           type = Action.ActionType.ADDCONVERSION;
           runAsync = false;

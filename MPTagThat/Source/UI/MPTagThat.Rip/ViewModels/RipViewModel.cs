@@ -881,12 +881,9 @@ namespace MPTagThat.Rip.ViewModels
     private void MediaInserted(string eDriveLetter)
     {
       string driveLetter = eDriveLetter.Substring(0, 1);
-      int driveID = Util.Drive2BassID(Convert.ToChar(driveLetter));
-
       Songs.Clear();
       AlbumArtist = Album = Genre = Year = "";
       QueryGnuDB(driveLetter);
-
     }
 
     private void MediaRemoved(string eDriveLetter)
@@ -1456,6 +1453,19 @@ namespace MPTagThat.Rip.ViewModels
             RipCancel();
           }
 
+          if (command == Action.ActionType.GNUDBQUERY)
+          {
+            var cdinfos = BassCd.BASS_CD_GetInfos(true);
+            for (var i = 0; i < cdinfos.Length; i++)
+            {
+              if (BassCd.BASS_CD_IsReady(i))
+              {
+                var mb = BassCd.BASS_CD_GetID(i, BASSCDId.BASS_CDID_MUSICBRAINZ);
+                MediaInserted(cdinfos[i].DriveLetter.ToString());
+              }
+            }
+
+          }
           break;
       }
     }
