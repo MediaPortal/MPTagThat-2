@@ -19,14 +19,20 @@
 #region
 
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
+using System.Linq;
 using System.Net;
+using System.Runtime.Serialization.Json;
+using System.Text;
 using System.Threading;
 using System.Windows;
 using System.Windows.Data;
 using System.Windows.Forms;
 using System.Windows.Input;
+using Hqub.MusicBrainz.API.Entities;
 using MPTagThat.Core;
 using MPTagThat.Core.Common;
 using MPTagThat.Core.Events;
@@ -38,6 +44,7 @@ using MPTagThat.Core.Services.Settings;
 using MPTagThat.Core.Services.Settings.Setting;
 using MPTagThat.Core.Utils;
 using MPTagThat.Rip.Models;
+using Newtonsoft.Json.Linq;
 using Prism.Ioc;
 using Prism.Mvvm;
 using Prism.Regions;
@@ -884,6 +891,7 @@ namespace MPTagThat.Rip.ViewModels
       Songs.Clear();
       AlbumArtist = Album = Genre = Year = "";
       QueryGnuDB(driveLetter);
+      QueryMusicBrainz(driveLetter);
     }
 
     private void MediaRemoved(string eDriveLetter)
@@ -1130,6 +1138,7 @@ namespace MPTagThat.Rip.ViewModels
     /// <param name="driveLetter"></param>
     private void QueryGnuDB(string driveLetter)
     {
+      log.Trace(">>>");
       _driveID = Util.Drive2BassID(Convert.ToChar(driveLetter));
       if (_driveID < 0)
       {
@@ -1261,6 +1270,107 @@ namespace MPTagThat.Rip.ViewModels
       }
       log.Info("Finished GnuDB Lookup");
       IsBusy = false;
+    }
+
+    #endregion
+
+    #region MusicBrainz
+
+    /// <summary>
+    /// Runs a CD search against MusicBrainz
+    /// </summary>
+    /// <param name="driveLetter"></param>
+    private void QueryMusicBrainz(string driveLetter)
+    {
+      log.Trace(">>>");
+      _driveID = Util.Drive2BassID(Convert.ToChar(driveLetter));
+      if (_driveID < 0)
+      {
+        return;
+      }
+
+      log.Info("Starting MusicBrainz CD Lookup");
+      IsBusy = true;
+      try
+      {
+        var mbId = BassCd.BASS_CD_GetID(_driveID, BASSCDId.BASS_CDID_MUSICBRAINZ);
+        var mbURL = $@"https://musicbrainz.org/ws/2/discid/{mbId}?fmt=json&inc=artists+recordings+artist-credits";
+        var mbResponse = Util.GetWebPage(mbURL);
+       
+        var json = JObject.Parse(mbResponse);
+        var releases = GetReleases(ref json);
+
+        foreach (var release in releases)
+        {
+          var title = $"{release.Title} - {release.Country} ({release.Date})";
+          CDTitles.Add(title);
+        }
+
+
+      }
+      catch (Exception ex)
+      {
+        log.Error("MusicBrainz: Error parsing Json Result. {0} {1}", ex.Message, ex.StackTrace);
+      }
+      log.Info("Finished MusicBrainz Lookup");
+      IsBusy = false;
+
+      log.Trace("<<<");
+    }
+
+    private List<Release> GetReleases(ref JObject json)
+    {
+      var rel = new List<Release>();
+      var releases =  (json["releases"] as JArray)?.Select(r => (object)r).ToList();
+      if (releases != null)
+      {
+        foreach (JObject r in releases)
+        {
+          var release = new Release {Title = (string) r["title"], Country = (string) r["country"], Date = (string) r["date"]};
+          var credit = (r["artist-credit"] as JArray)?.Select(c => (object)c).ToList();
+          if (credit != null)
+          {
+            release.Credits = new List<NameCredit>();
+            foreach (JObject c in credit)
+            {
+              var namecredit = new NameCredit{Name = (string)c["name"]};
+              release.Credits.Add(namecredit);
+            }
+          }
+          var media = (r["media"] as JArray)?.Select(m => (object) m).ToList();
+          if (media != null)
+          {
+            release.Media = new List<Medium>();
+            foreach (JObject m in media)
+            {
+              var medium = new Medium();
+              var tracks = (m["tracks"]as JArray)?.Select(t => (object)t).ToList();
+              if (tracks != null)
+              {
+                medium.Tracks = new List<Track>();
+                foreach (JObject t in tracks)
+                {
+                  var track = new Track();
+                  track.Recording = new Recording();
+                  track.Recording.Title = (string) t["title"];
+                  track.Recording.Credits = new List<NameCredit>();
+                  track.Length = (int) t["length"];
+                  foreach (JObject c in t["artist-credit"])
+                  {
+                    track.Recording.Credits.Add(new NameCredit { Name = (string) c["name"]});
+                  }
+                  medium.Tracks.Add(track);
+                }
+                medium.TrackCount = tracks.Count;
+              }
+              release.Media.Add(medium);
+            }
+          }
+          rel.Add(release);
+        }
+      }
+
+      return rel;
     }
 
     #endregion
@@ -1460,7 +1570,6 @@ namespace MPTagThat.Rip.ViewModels
             {
               if (BassCd.BASS_CD_IsReady(i))
               {
-                var mb = BassCd.BASS_CD_GetID(i, BASSCDId.BASS_CDID_MUSICBRAINZ);
                 MediaInserted(cdinfos[i].DriveLetter.ToString());
               }
             }

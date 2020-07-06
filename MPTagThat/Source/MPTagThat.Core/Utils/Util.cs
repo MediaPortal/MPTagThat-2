@@ -25,6 +25,7 @@ using System.Drawing.Imaging;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -815,6 +816,36 @@ namespace MPTagThat.Core.Utils
     #endregion
 
     #region Web Related Methods
+
+    /// <summary>
+    ///   Returns the requested WebPage
+    /// </summary>
+    /// <param name = "requestString"></param>
+    /// <returns></returns>
+    public static string GetWebPage(string requestString)
+    {
+      string responseString = null;
+      try
+      {
+        var request = (HttpWebRequest)WebRequest.Create(requestString);
+        request.Proxy.Credentials = CredentialCache.DefaultCredentials;
+        request.UserAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.116 Safari/537.36";
+        var response = (HttpWebResponse)request.GetResponse();
+        using (var responseStream = response.GetResponseStream())
+        {
+          using (var reader = new StreamReader(responseStream))
+          {
+            responseString = reader.ReadToEnd();
+          }
+        }
+      }
+      catch (Exception ex)
+      {
+        log.Error($"Util: Error retrieving Web Page: {requestString} {ex.Message} {ex.StackTrace}");
+      }
+
+      return responseString;
+    }
 
     /// <summary>
     ///   Reads data from a stream until the end is reached. The
