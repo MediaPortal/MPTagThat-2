@@ -56,7 +56,13 @@
       <ComboBox Grid.Row="0" Grid.Column="1" Margin="0,5,0,0"
                 MaxDropDownHeight="150" 
                 ItemsSource="{Binding CDTitles}" 
-                SelectedIndex="{Binding CDSelectedIndex, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.ColumnSpan="2" >
+                SelectedItem="{Binding CDSelectedItem, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.ColumnSpan="2" >
+        <ComboBox.ItemTemplate>
+          <DataTemplate>
+            <TextBlock Text="{Binding Name}" >
+            </TextBlock>
+          </DataTemplate>
+        </ComboBox.ItemTemplate>
       </ComboBox>
 
       <Label Grid.Row="1" Grid.Column="0" Content="{lex:Loc tagEdit_AlbumArtist}" />
@@ -78,7 +84,6 @@
 
     <!-- The Grid -->
     <syncfusion:SfDataGrid x:Name="SongDataGrid" Grid.Row="1"
-                           SelectedItems="{Binding SelectedItems,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                            ItemsSource="{Binding Songs, Mode=TwoWay}"
                            FrozenColumnCount="2"
                            ColumnSizer="AutoWithLastColumnFill" 

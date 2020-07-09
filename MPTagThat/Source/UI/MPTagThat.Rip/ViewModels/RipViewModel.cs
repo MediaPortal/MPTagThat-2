@@ -76,7 +76,9 @@ namespace MPTagThat.Rip.ViewModels
     private int _defaultBitRateIndex;
     private IMediaChangeMonitor _mediaChangeMonitor;
     private CDInfo[] _cds;
+    private List<Release> _musicBrainzReleases = new List<Release>();
     private int _driveID = -1;
+    private string _mbId;
 
     #endregion
 
@@ -91,16 +93,6 @@ namespace MPTagThat.Rip.ViewModels
     {
       get => _songs;
       set => SetProperty(ref _songs, value);
-    }
-
-    /// <summary>
-    /// The selected Items in the Grid
-    /// </summary>
-    private ObservableCollection<object> _selectedItems = new ObservableCollection<object>();
-    public ObservableCollection<object> SelectedItems
-    {
-      get => _selectedItems;
-      set => SetProperty(ref _selectedItems, value);
     }
 
     /// <summary>
@@ -150,9 +142,9 @@ namespace MPTagThat.Rip.ViewModels
     /// <summary>
     /// The Binding found by the CD Query
     /// </summary>
-    private ObservableCollection<string> _cdtitles = new ObservableCollection<string>();
+    private ObservableCollection<Item> _cdtitles = new ObservableCollection<Item>();
 
-    public ObservableCollection<string> CDTitles
+    public ObservableCollection<Item> CDTitles
     {
       get => _cdtitles;
       set
@@ -163,23 +155,37 @@ namespace MPTagThat.Rip.ViewModels
     }
 
     /// <summary>
-    /// The Binding fo the selected index in the CD Combo
+    /// The selected CD in the combo
     /// </summary>
-    private int _cdSelectedIndex;
+    private object _cdSelectedItem;
 
-    public int CDSelectedIndex
+    public object CDSelectedItem
     {
-      get => _cdSelectedIndex;
+      get => _cdSelectedItem;
       set
       {
-        SetProperty(ref _cdSelectedIndex, value);
+        AlbumArtist = Album = Genre = Year = "";
         Songs.Clear();
-        if (_cdSelectedIndex > -1)
+
+        SetProperty(ref _cdSelectedItem, value);
+        if (value == null)
         {
-          FetchCDDetails(_cds[_cdSelectedIndex]);
+          return;
+        }
+
+        var item = (Item) _cdSelectedItem;
+        var index = Convert.ToInt32(item.Value.Substring(0, item.Value.IndexOf(" -", StringComparison.Ordinal)));
+        if (item.Value.ToLower().Contains("gnudb"))
+        {
+          FetchCDDetails(_cds[index]);
+        }
+        else
+        {
+          FetchMusicBrainzDetails(_musicBrainzReleases[index]);
         }
       }
     }
+
 
     /// <summary>
     /// The Binding for the Encoders
@@ -889,9 +895,15 @@ namespace MPTagThat.Rip.ViewModels
     {
       string driveLetter = eDriveLetter.Substring(0, 1);
       Songs.Clear();
+      CDTitles.Clear();
       AlbumArtist = Album = Genre = Year = "";
       QueryGnuDB(driveLetter);
       QueryMusicBrainz(driveLetter);
+
+      if (CDTitles.Count > 0)
+      {
+        CDSelectedItem = CDTitles[0];
+      }
     }
 
     private void MediaRemoved(string eDriveLetter)
@@ -1158,12 +1170,12 @@ namespace MPTagThat.Rip.ViewModels
         if (_cds != null && _cds.Length > 0)
         {
           log.Debug($"GnuDB: Found {_cds.Length} matching discs.");
+          var index = 0;
           foreach (var cd in _cds)
           {
-            CDTitles.Add(cd.Title);
+            CDTitles.Add(new Item(cd.Title, $"{index} - GnuDB"));
+            index++;
           }
-
-          CDSelectedIndex = 0;
         }
         else
         {
@@ -1290,23 +1302,24 @@ namespace MPTagThat.Rip.ViewModels
       }
 
       log.Info("Starting MusicBrainz CD Lookup");
+      _musicBrainzReleases.Clear();
       IsBusy = true;
       try
       {
-        var mbId = BassCd.BASS_CD_GetID(_driveID, BASSCDId.BASS_CDID_MUSICBRAINZ);
-        var mbURL = $@"https://musicbrainz.org/ws/2/discid/{mbId}?fmt=json&inc=artists+recordings+artist-credits";
+        _mbId = BassCd.BASS_CD_GetID(_driveID, BASSCDId.BASS_CDID_MUSICBRAINZ);
+        var mbURL = $@"https://musicbrainz.org/ws/2/discid/{_mbId}?fmt=json&inc=artists+recordings+artist-credits";
         var mbResponse = Util.GetWebPage(mbURL);
        
         var json = JObject.Parse(mbResponse);
-        var releases = GetReleases(ref json);
+        _musicBrainzReleases = GetReleases(ref json);
 
-        foreach (var release in releases)
+        var index = 0;
+        foreach (var release in _musicBrainzReleases)
         {
-          var title = $"{release.Title} - {release.Country} ({release.Date})";
-          CDTitles.Add(title);
+          var title = $"{release.Credits[0].Name} / {release.Title} - {release.Country} ({release.Date})";
+          CDTitles.Add(new Item(title, $"{index} - MusicBrainz"));
+          index++;
         }
-
-
       }
       catch (Exception ex)
       {
@@ -1351,6 +1364,7 @@ namespace MPTagThat.Rip.ViewModels
                 foreach (JObject t in tracks)
                 {
                   var track = new Track();
+                  track.Position = (int) t["position"];
                   track.Recording = new Recording();
                   track.Recording.Title = (string) t["title"];
                   track.Recording.Credits = new List<NameCredit>();
@@ -1363,15 +1377,87 @@ namespace MPTagThat.Rip.ViewModels
                 }
                 medium.TrackCount = tracks.Count;
               }
+
+              var discs = (m["discs"] as JArray)?.Select(d => (object) d).ToList();
+              if (discs != null)
+              {
+                medium.Discs = new List<Disc>();
+                foreach (JObject d in discs)
+                {
+                  var disc = new Disc {Id = (string) d["id"]};
+                  medium.Discs.Add(disc);
+                }
+
+              }
               release.Media.Add(medium);
             }
           }
           rel.Add(release);
         }
       }
-
       return rel;
     }
+
+    private void FetchMusicBrainzDetails(Release release)
+    {
+      log.Trace(">>>");
+      foreach (var credit in release.Credits)
+      {
+        AlbumArtist += credit.Name + ";";
+      }
+
+      AlbumArtist = AlbumArtist.Substring(0, AlbumArtist.Length - 1); // remove the trailing semicolon
+      Album = release.Title;
+      Year = release.Date;
+
+      foreach (var medium in release.Media)
+      {
+        bool foundId = false;
+        foreach (var disc in medium.Discs)
+        {
+          if (disc.Id == _mbId)
+          {
+            foundId = true;
+            break;
+          }
+        }
+        
+        if (foundId)
+        {
+          foreach (var track in medium.Tracks)
+          {
+            var song = new RipData
+            {
+              IsChecked = true,
+              Title = track.Recording.Title,
+              Track = track.Position.ToString(),
+            };
+
+            var duration = TimeSpan.FromMilliseconds(Convert.ToDouble(track.Length.Value)).ToString(@"hh\:mm\:ss");
+            if (duration.StartsWith("00:"))
+            {
+              duration = duration.Substring(3);
+            }
+            song.Duration = duration;
+
+            foreach (var credit in track.Recording.Credits)
+            {
+              song.Artist += credit.Name + ";";
+            }
+
+            song.Artist = song.Artist.Substring(0, song.Artist.Length - 1);
+            Songs.Add(song);
+          }
+
+          break;
+        }
+      }
+
+
+
+      log.Trace("<<<");
+    }
+
 
     #endregion
 

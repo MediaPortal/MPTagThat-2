@@ -1987,7 +1987,7 @@ namespace MPTagThat.Resources.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to GnuDB Query.
+        ///   Looks up a localized string similar to CD Query.
         /// </summary>
         public static string ribbon_RipGnuDB {
             get {
@@ -2365,7 +2365,7 @@ namespace MPTagThat.Resources.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Looks up the current Audio CD on GnuDB and fills the information into the song grid, ready for ripping.
+        ///   Looks up a localized string similar to Looks up the current Audio CD on GnuDB and MusicBrainz and fills the information into the song grid, ready for ripping.
         /// </summary>
         public static string screentip_RipGnuDB {
             get {
