@@ -133,16 +133,16 @@
       <Version>8.0.0.1740-pre</Version>
     </PackageReference>
     <PackageReference Include="Syncfusion.SfGrid.WPF">
-      <Version>18.1.0.52</Version>
+      <Version>18.2.0.44</Version>
     </PackageReference>
     <PackageReference Include="Syncfusion.SfInput.WPF">
-      <Version>18.1.0.52</Version>
+      <Version>18.2.0.44</Version>
     </PackageReference>
     <PackageReference Include="Syncfusion.SfShared.WPF">
       <Version>18.1.0.52</Version>
     </PackageReference>
     <PackageReference Include="Syncfusion.Tools.WPF">
-      <Version>18.1.0.52</Version>
+      <Version>18.2.0.44</Version>
     </PackageReference>
     <PackageReference Include="WPFLocalizeExtension">
       <Version>3.6.1</Version>
