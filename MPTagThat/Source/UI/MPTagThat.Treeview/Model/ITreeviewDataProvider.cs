@@ -16,12 +16,8 @@
 // along with MPTagThat. If not, see <http://www.gnu.org/licenses/>.
 #endregion
 
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Syncfusion.UI.Xaml.TreeView.Engine;
 
 namespace MPTagThat.Treeview.Model
 {
@@ -32,24 +28,26 @@ namespace MPTagThat.Treeview.Model
         /// </summary>
         /// <param name = "helper">The helper instance which provides method's and properties related to create and get nodes.</param>
         /// <param name = "node">The node on which the context menu was requested.</param>
-        void QueryContextMenuItems(TreeViewHelper helper, TreeItem node);
+        void QueryContextMenuItems(TreeViewHelper helper, TreeViewNode node);
 
         /// <summary>
         ///   Fill the root level.
         /// </summary>
         /// <param name = "helper">The helper instance which provides method's and properties related to create and get nodes.</param>
-        void RequestRoot(TreeViewHelper helper);
+        /// <param name = "parent">The expanding node.</param>
+        void RequestRoot(TreeViewHelper helper, TreeViewNode parent);
 
         /// <summary>
         ///   Fill the Directory structure for a given path.
         /// </summary>
         /// <param name = "helper">The helper instance which provides method's and properties related to create and get nodes.</param>
         /// <param name = "parent">The expanding node.</param>
-        void RequestSubDirs(TreeViewHelper helper, TreeItem parent);
+        void RequestSubDirs(TreeViewHelper helper, TreeViewNode parent);
 
         /// <summary>
-        ///   Gets the tree node collection which holds the drive node's. The requested collection is than used to search a specific node.
+        ///   Create Root Node containing the type of the DataProvider.
         /// </summary>
-        ObservableCollection<TreeItem> RequestDriveCollection(TreeViewHelper helper, bool isNetwork);
+        /// <param name = "helper">The helper instance which provides method's and properties related to create and get nodes.</param>
+        void CreateRootNode(TreeViewHelper helper);
     }
 }

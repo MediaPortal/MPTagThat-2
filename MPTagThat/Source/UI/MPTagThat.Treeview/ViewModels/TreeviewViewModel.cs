@@ -36,6 +36,8 @@ using MPTagThat.Treeview.Model.Win32;
 using Prism.Events;
 using Prism.Ioc;
 using Prism.Mvvm;
+using Syncfusion.UI.Xaml.TreeView;
+using Syncfusion.UI.Xaml.TreeView.Engine;
 using Syncfusion.Windows.Shared;
 using Syncfusion.Windows.Tools.Controls;
 using WPFLocalizeExtension.Engine;
@@ -57,9 +59,8 @@ namespace MPTagThat.Treeview.ViewModels
     private DispatcherTimer _loadOnDemandTimer;
     private readonly TreeViewHelper _helper;
     private ITreeviewDataProvider _dataProvider;
-    private TreeViewItemAdv _currentNode;
+    private TreeViewNode _currentNode;
     private bool _init;
-    private bool _expandCurrentFolder;
 
     #endregion
 
@@ -68,17 +69,17 @@ namespace MPTagThat.Treeview.ViewModels
     /// <summary>
     /// A new Item has been selected. Send a notification to list the content of the folder
     /// </summary>
-    private object _selectedItem;
-    public object SelectedItem
+    private object _selectedNode;
+    public object SelectedNode
     {
-      get => _selectedItem;
+      get => _selectedNode;
       set
       {
         log.Trace(">>>");
-        SetProperty(ref _selectedItem, value);
+        SetProperty(ref _selectedNode, value);
 
         // Prepare Event to be published
-        var selecteditem = (_selectedItem as TreeItem)?.Path;
+        var selecteditem = (_selectedNode as TreeItem)?.Path;
         if (!string.IsNullOrEmpty(selecteditem))
         {
           // Do we have folder or database view selected?
@@ -111,20 +112,6 @@ namespace MPTagThat.Treeview.ViewModels
       }
     }
 
-    public ICommand SelectedItemChangedCommand { get; set; }
-    /// <summary>
-    /// The Selected Item has Changed. 
-    /// </summary>
-    /// <param name="param"></param>
-    public void SelectedItemChanged(object param)
-    {
-      var args = (RoutedPropertyChangedEventArgs<object>)param;
-      if (args.NewValue is TreeItem item)
-      {
-        this.SelectedItem = item;
-      }
-    }
-
     public ICommand LoadFolderOnDemandCommand { get; set; }
     /// <summary>
     /// Expand the node. This is needed to use the Load On demand feature from syncfuion
@@ -133,14 +120,42 @@ namespace MPTagThat.Treeview.ViewModels
     /// <param name="parameter"></param>
     private void LoadFolderOnDemand(object parameter)
     {
-      TreeViewItemAdv treeitem = (parameter as LoadonDemandEventArgs)?.TreeViewItem;
-      if (treeitem != null && treeitem.DataContext is TreeItem node)
+      var node = parameter as TreeViewNode;
+
+      // Skip the repeated population of child items when every time the node expands.
+      if (node != null && node.ChildNodes.Count > 0)
       {
-        log.Trace($"Expanding node {node.Name}");
-        _currentNode = treeitem;
-        _loadOnDemandTimer.Start();
+        node.IsExpanded = true;
+        node.ShowExpanderAnimation = false;
+        return;
       }
+
+      //Animation starts for expander to show progressing of load on demand
+      node.ShowExpanderAnimation = true;
+      TreeView.Dispatcher.BeginInvoke(DispatcherPriority.ApplicationIdle, new System.Action(() =>
+      {
+        _currentNode = node;
+        _loadOnDemandTimer.Start();
+      }));
     }
+
+    /// <summary>
+    /// CanExecute method is called before expanding and initialization of node. Returns whether the node has child nodes or not.
+    /// Based on return value, expander visibility of the node is handled.  
+    /// </summary>
+    /// <param name="sender">TreeViewNode is passed as default parameter </param>
+    /// <returns>Returns true, if the specified node has child items to load on demand and expander icon is displayed for that node, else returns false and icon is not displayed.</returns>
+    private bool CanExecuteOnDemandLoading(object sender)
+    {
+      var hasChildNodes = ((sender as TreeViewNode).Content as TreeItem).HasChildNodes;
+      if (hasChildNodes)
+      {
+        return true;
+      }
+        
+      return false;
+    }
+
 
     /// <summary>
     /// Refresh the Treeview
@@ -150,20 +165,6 @@ namespace MPTagThat.Treeview.ViewModels
     private void RefreshTreeview(object param)
     {
       RefreshTreeview();
-    }
-
-    public ICommand ExpandedCommand { get; }
-
-    private void Expanded(object parm)
-    {
-      if (_expandCurrentFolder)
-      {
-        var source = (parm as ExpandedCollapsedEventArgs).OriginalSource;
-        if (source is TreeViewItemAdv item)
-        {
-          item.IsLoadOnDemand = false;
-        }
-      }
     }
 
     private Environment.SpecialFolder _rootFolder;
@@ -286,6 +287,11 @@ namespace MPTagThat.Treeview.ViewModels
       }
     }
 
+    /// <summary>
+    /// Reference to the Treeview
+    /// </summary>
+    public SfTreeView TreeView { get; set; }
+
     #endregion
 
     #region ctor
@@ -308,21 +314,19 @@ namespace MPTagThat.Treeview.ViewModels
 
       ScanSubFolders = _options.MainSettings.ScanSubFolders;
 
-      SelectedItemChangedCommand = new BaseCommand(SelectedItemChanged);
-      LoadFolderOnDemandCommand = new BaseCommand(LoadFolderOnDemand);
+      LoadFolderOnDemandCommand = new BaseCommand(LoadFolderOnDemand, CanExecuteOnDemandLoading);
       RefreshTreeViewCommand = new BaseCommand(RefreshTreeview);
-      ExpandedCommand = new BaseCommand(Expanded);
 
       _init = true;
       // Set the Folder Browser as default data provider
       SelectedViewMode = 0;
       _init = false;
-
+      
       // Initialize the Load on Demand Timer
       _loadOnDemandTimer = new DispatcherTimer();
       _loadOnDemandTimer.Interval = new TimeSpan(0, 0, 0, 0, 150);
       _loadOnDemandTimer.Tick += new EventHandler(LoadOnDemandTimer_Tick);
-      
+
       // Work around the problem with Load On Demand being called from the Constructor.
       _timer = new DispatcherTimer();
       _timer.Interval = new TimeSpan(0, 0, 0, 0, 150);
@@ -343,7 +347,7 @@ namespace MPTagThat.Treeview.ViewModels
     {
       log.Trace(">>>");
       Nodes.Clear();
-      _dataProvider.RequestRoot(_helper);
+      _dataProvider.CreateRootNode(_helper);
 
       // Don't call set current folder when called from Constructor
       if (!_init)
@@ -359,17 +363,25 @@ namespace MPTagThat.Treeview.ViewModels
     /// <param name="sender"></param>
     /// <param name="e"></param>
     void LoadOnDemandTimer_Tick(object sender, EventArgs e)
-    {           
+    {
       _loadOnDemandTimer.Stop();
-      if (_currentNode.DataContext is TreeItem node)
+      if (_currentNode.Content is TreeItem node)
       {
-        if (node.Nodes.Count == 0)
+        if (node.IsRoot)
         {
-          _dataProvider.RequestSubDirs(_helper, node);
+          _dataProvider.RequestRoot(_helper, _currentNode);
+        }
+        else
+        {
+          _dataProvider.RequestSubDirs(_helper, _currentNode);
+        }
+        if (_currentNode.ChildNodes.Count > 0)
+        {
+          _currentNode.IsExpanded = true;
         }
       }
 
-      _currentNode.IsLoadOnDemand = false;
+      _currentNode.ShowExpanderAnimation = false;
     }
 
     /// <summary>
@@ -386,16 +398,11 @@ namespace MPTagThat.Treeview.ViewModels
         _timer.Stop();
       }
 
-      _expandCurrentFolder = true;
-
-      // Re-use the Time to Reset the _expandCurrentFolder flag
-      // Work around the problem that when expanding the current folder on startup
-      // it would infinite show "Loading" for expanded nodes
-      _timer = new DispatcherTimer();
-      _timer.Interval = new TimeSpan(0, 0, 0, 0, 1000);
-      _timer.Tick += ResetExpandCurrentFolderFlag;
-      _timer.Start();
-
+      // Expand the first levels of the Treeview
+      _currentNode = TreeView.Nodes[0];
+      LoadOnDemandTimer_Tick(new DispatcherTimer(), new EventArgs());
+      _currentNode = TreeView.Nodes[0].ChildNodes[0];
+      LoadOnDemandTimer_Tick(new DispatcherTimer(), new EventArgs());
       var currentFolder = _options.MainSettings.LastFolderUsed;
       if (!Directory.Exists(currentFolder) && !currentFolder.IsNullOrWhiteSpace())
       {
@@ -419,10 +426,8 @@ namespace MPTagThat.Treeview.ViewModels
       log.Info($"Set current folder to {currentFolder}");
 
       Cursor = Cursors.Wait;
-      _helper.TreeView.Nodes[0].IsExpanded = true;
-      _helper.TreeView.Nodes[0].Nodes[0].IsExpanded = true;
       var requestNetwork = currentFolder.StartsWith(@"\\");
-      var nodeCol = _dataProvider.RequestDriveCollection(_helper, requestNetwork);
+      var nodes = TreeView.Nodes[0].ChildNodes[0].ChildNodes;
 
       if (!currentFolder.IsNullOrWhiteSpace())
       {
@@ -445,23 +450,22 @@ namespace MPTagThat.Treeview.ViewModels
 
         for (var i = dirs.Count - 1; i >= 0; i--)
         {
-          foreach (var n in nodeCol)
+          foreach (var n in nodes)
           {
-            if (string.Compare(n.Path.ToLower(), dirs[i].ToLower(), StringComparison.Ordinal) == 0)
+            var path = (n.Content as TreeItem).Path;
+            if (string.Compare(path.ToLower(), dirs[i].ToLower(), StringComparison.Ordinal) == 0)
             {
               if (i == 0)
               {
-                n.IsSelected = true;
                 // Set the Selected Item, because we will get a null value from the XAML Event
-                SelectedItem = n;
+                SelectedNode = n.Content;
               }
               else
               {
-                n.IsExpanded = true;
-                _dataProvider.RequestSubDirs(_helper, n);
-                nodeCol = n.Nodes;
+                _currentNode = n;
+                LoadOnDemandTimer_Tick(new DispatcherTimer(), new EventArgs());
+                nodes = n.ChildNodes;
               }
-
               break;
             }
           }
@@ -470,19 +474,6 @@ namespace MPTagThat.Treeview.ViewModels
 
       Cursor = Cursors.Arrow;
       log.Trace("<<<");
-    }
-
-    /// <summary>
-    /// Reset the ExpandCurrentFolder Flag
-    /// Work around the problem that when expanding the current folder on startup
-    /// it would infinite show "Loading" for expanded nodes
-    /// </summary>
-    /// <param name="sender"></param>
-    /// <param name="e"></param>
-    private void ResetExpandCurrentFolderFlag(object sender, EventArgs e)
-    {
-      _timer.Stop();
-      _expandCurrentFolder = false;
     }
 
     /// <summary>

@@ -19,10 +19,6 @@
   <UserControl.Resources>
     <local:ImageConverter x:Key="Converter"/>
 
-    <HierarchicalDataTemplate ItemsSource="{Binding Nodes}" x:Key="template">
-      <TextBlock Text="{Binding Name}" />
-    </HierarchicalDataTemplate>
-
     <Style TargetType="syncfusion:TreeViewItemAdv" x:Key="itemstyle">
       <Setter Property="IsLoadOnDemand" Value="True"/>
       <Setter Property="LoadingHeader" Value="{lex:Loc treeView_Loading}"/>
@@ -52,29 +48,45 @@
       </syncfusion:GroupBarItem>
     </syncfusion:GroupBar>
 
-        <syncfusion:TreeViewAdv Grid.Row="1" 
-                                  AllowMultiSelect="False"
-                                  ItemsSource="{Binding Nodes}"
-                                  ItemTemplate="{StaticResource template}"
-                                  ItemContainerStyle="{StaticResource itemstyle}" 
-                                  IsVirtualizing="True" 
-                                  VirtualizationMode="Extended"
-                                  ShowRootLines="False"
-                                  BorderThickness="0 0 1 0" 
-                                  IsScrollOnExpand="True"
-                                  ScrollViewer.VerticalScrollBarVisibility="Visible">
-          <i:Interaction.Triggers>
-            <i:EventTrigger EventName="LoadOnDemand">
-              <prism:InvokeCommandAction Command="{Binding LoadFolderOnDemandCommand}" />
-            </i:EventTrigger>
-            <i:EventTrigger EventName="SelectedItemChanged">
-              <prism:InvokeCommandAction Command="{Binding SelectedItemChangedCommand}" />
-            </i:EventTrigger>
-            <i:EventTrigger EventName="Expanded">
-              <prism:InvokeCommandAction Command="{Binding ExpandedCommand}" />
-            </i:EventTrigger>
-          </i:Interaction.Triggers>
-        </syncfusion:TreeViewAdv>
+    <syncfusion:SfTreeView x:Name="TreeView"
+                           Grid.Row="1" 
+                           SelectionMode="Single"
+                           AutoExpandMode="RootNodes"
+                           ItemsSource="{Binding Nodes}"
+                           SelectedItem="{Binding SelectedNode, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                           LoadOnDemandCommand="{Binding LoadFolderOnDemandCommand}"
+                           ShowRootLines="False"
+                           BorderThickness="0 0 1 0" 
+                           ScrollViewer.VerticalScrollBarVisibility="Visible">
+
+      <syncfusion:SfTreeView.ItemTemplate>
+        <DataTemplate>
+          <Grid x:Name="grid">
+            <Grid Grid.Row="0">
+              <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="20" />
+                <ColumnDefinition Width="*" />
+              </Grid.ColumnDefinitions>
+              <Grid>
+                <Image Source="{Binding Path=Item, Converter={StaticResource Converter}}"
+                       VerticalAlignment="Center"
+                       HorizontalAlignment="Center"
+                       Height="16"
+                       Width="16"/>
+              </Grid>
+              <Grid Grid.Column="1"
+                    Margin="1,0,0,0"
+                    VerticalAlignment="Center">
+                <Label Content="{Binding Name}"
+                       Foreground="Black"
+                       FontSize="12"
+                       VerticalContentAlignment="Center" />
+              </Grid>
+            </Grid>
+          </Grid>
+        </DataTemplate>
+      </syncfusion:SfTreeView.ItemTemplate>
+    </syncfusion:SfTreeView>
 
     <syncfusion:GroupBar Grid.Row="2" ItemHeaderHeight="20" ItemContentLength="50" >
       <syncfusion:GroupBarItem Header="{lex:Loc treeView_Options}" FontSize="12" FontWeight="Bold" IsExpanded="True" >
