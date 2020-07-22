@@ -292,6 +292,7 @@ namespace MPTagThat.Ribbon.ViewModels
       set
       {
         SetProperty(ref _selectedTheme, value);
+        SfSkinManager.ApplyStylesOnApplication = true;
         SfSkinManager.SetVisualStyle(Application.Current.MainWindow,
           (VisualStyles) Enum.Parse(typeof(VisualStyles), value));
         _options.MainSettings.Theme = value;

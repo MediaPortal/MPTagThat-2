@@ -83,7 +83,7 @@
       <Version>8.0.0.1740-pre</Version>
     </PackageReference>
     <PackageReference Include="Syncfusion.Tools.WPF">
-      <Version>18.2.0.44</Version>
+      <Version>18.2.0.46</Version>
     </PackageReference>
     <PackageReference Include="WPFLocalizeExtension">
       <Version>3.6.1</Version>
