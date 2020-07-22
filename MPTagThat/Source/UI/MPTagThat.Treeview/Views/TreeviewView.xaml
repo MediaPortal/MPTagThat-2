@@ -18,17 +18,6 @@
 
   <UserControl.Resources>
     <local:ImageConverter x:Key="Converter"/>
-
-    <Style TargetType="syncfusion:TreeViewItemAdv" x:Key="itemstyle">
-      <Setter Property="IsLoadOnDemand" Value="True"/>
-      <Setter Property="LoadingHeader" Value="{lex:Loc treeView_Loading}"/>
-      <Setter Property="LeftImageSource" Value="{Binding Path=Item, Converter={StaticResource Converter}}"/>
-      <Setter Property="ToolTip" Value="{Binding Name}"/>
-      <Setter Property="ImageHeight" Value="16"/>
-      <Setter Property="ImageWidth" Value="16"/>
-      <Setter Property="IsSelected" Value="{Binding IsSelected, Mode=OneTime}"/>
-      <Setter Property="IsExpanded" Value="{Binding IsExpanded, Mode=TwoWay}"/>
-    </Style>
   </UserControl.Resources>
 
   <Grid>
@@ -55,9 +44,8 @@
                            ItemsSource="{Binding Nodes}"
                            SelectedItem="{Binding SelectedNode, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                            LoadOnDemandCommand="{Binding LoadFolderOnDemandCommand}"
-                           ShowRootLines="False"
-                           BorderThickness="0 0 1 0" 
-                           ScrollViewer.VerticalScrollBarVisibility="Visible">
+                           ShowLines="False"
+                           BorderThickness="0 0 1 0" >
 
       <syncfusion:SfTreeView.ItemTemplate>
         <DataTemplate>
