@@ -57,6 +57,8 @@ namespace MPTagThat.Dialogs.ViewModels
 
     public Brush Background => _options.BackGround;
 
+    public string Theme => _options.MainSettings.Theme;
+
     private string _title;
     public string Title
     {

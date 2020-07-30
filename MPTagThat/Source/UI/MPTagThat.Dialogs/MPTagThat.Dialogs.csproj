@@ -177,6 +177,9 @@
     <PackageReference Include="Syncfusion.SfGrid.WPF">
       <Version>18.2.0.47</Version>
     </PackageReference>
+    <PackageReference Include="Syncfusion.SfSkinManager.WPF">
+      <Version>18.2.0.47</Version>
+    </PackageReference>
     <PackageReference Include="Syncfusion.Tools.WPF">
       <Version>18.2.0.47</Version>
     </PackageReference>
