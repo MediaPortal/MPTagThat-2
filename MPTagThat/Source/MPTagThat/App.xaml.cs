@@ -18,6 +18,7 @@ using Prism.Ioc;
 using Prism.Modularity;
 using Prism.Regions;
 using Prism.Unity;
+using Syncfusion.SfSkinManager;
 using Syncfusion.Windows.Tools.Controls;
 using Un4seen.Bass;
 using Unity;
@@ -48,7 +49,7 @@ namespace MPTagThat
     #region Interfaces
 
     /// <summary>
-    /// Resolve our main Shell Winndow
+    /// Resolve our main Shell Window
     /// </summary>
     /// <returns></returns>
     protected override Window CreateShell()
@@ -141,6 +142,8 @@ namespace MPTagThat
       _splashScreen = new Splash();
       _splashScreen.Status.Content = "MPTagThat starting ...";
       _splashScreen.Show();
+
+      SfSkinManager.ApplyStylesOnApplication = true;
 
       _commandLineArgs = e.Args;     
       _portable = 0;
