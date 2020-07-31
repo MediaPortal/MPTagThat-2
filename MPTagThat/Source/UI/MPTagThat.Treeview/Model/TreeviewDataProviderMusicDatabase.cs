@@ -16,9 +16,11 @@
 // along with MPTagThat. If not, see <http://www.gnu.org/licenses/>.
 #endregion
 
-#region 
+#region
 
+using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
 using MPTagThat.Core.Services.Logging;
@@ -26,6 +28,7 @@ using MPTagThat.Core.Services.MusicDatabase;
 using MPTagThat.Core.Services.MusicDatabase.Indexes;
 using MPTagThat.Dialogs.Views;
 using Prism.Ioc;
+using Syncfusion.UI.Xaml.TreeView.Engine;
 using Syncfusion.Windows.Shared;
 
 #endregion
@@ -69,41 +72,62 @@ namespace MPTagThat.Treeview.Model
 
     #region ITreeViewFolderBrowserDataProvider Members
 
-    public void QueryContextMenuItems(TreeViewHelper helper, TreeItem node) { }
+    public void QueryContextMenuItems(TreeViewHelper helper, TreeViewNode node) { }
 
-    public void RequestRoot(TreeViewHelper helper)
+    /// <summary>
+    /// Create the Root Collection when building the Tree View
+    /// </summary>
+    /// <param name="helper"></param>
+    public virtual void CreateRootNode(TreeViewHelper helper)
     {
       log.Trace(">>>");
       var musicDBNode = CreateTreeNode(helper, "Music Database", "Root", true, "Root");
-      helper.TreeView.Nodes.Add(musicDBNode);
-      var artistNode = CreateTreeNode(helper, "Artist", "Artist", true, "Artist");
-      musicDBNode.Nodes.Add(artistNode);
-      var albumArtistNode = CreateTreeNode(helper, "Album Artist", "AlbumArtist", true, "Artist");
-      musicDBNode.Nodes.Add(albumArtistNode);
-      var genreNode = CreateTreeNode(helper, "Genre", "Genre", true, "Genre");
-      musicDBNode.Nodes.Add(genreNode);
+
+      musicDBNode.IsRoot = true;
+      helper.Model.Nodes.Add(musicDBNode);
       log.Trace("<<<");
     }
 
-    public void RequestSubDirs(TreeViewHelper helper, TreeItem parent)
+    public void RequestRoot(TreeViewHelper helper, TreeViewNode parent)
     {
       log.Trace(">>>");
-      if (parent.Path.IsNullOrWhiteSpace())
+      var items = new List<TreeItem>();
+      var artistNode = CreateTreeNode(helper, "Artist", "Artist", true, "Artist");
+      items.Add(artistNode);
+      var albumArtistNode = CreateTreeNode(helper, "Album Artist", "AlbumArtist", true, "Artist");
+      items.Add(albumArtistNode);
+      var genreNode = CreateTreeNode(helper, "Genre", "Genre", true, "Genre");
+      items.Add(genreNode);
+      parent.PopulateChildNodes(items);
+      log.Trace("<<<");
+    }
+
+    public void RequestSubDirs(TreeViewHelper helper, TreeViewNode node)
+    {
+      log.Trace(">>>");
+
+      var musicItem = node.Content as TreeItem;
+      if (musicItem == null)
       {
         return;
       }
 
-      helper.TreeView.Cursor = Cursors.Wait;
+      if (musicItem.Path.IsNullOrWhiteSpace())
+      {
+        return;
+      }
+
+      helper.Model.Cursor = Cursors.Wait;
 
       IEnumerable result = null;
-      if (parent.IsSpecialFolder)
+      if (musicItem.IsSpecialFolder)
       {
         if (!ContainerLocator.Current.Resolve<IMusicDatabase>().DatabaseEngineStarted)
         {
           _notificationView = new NotificationView();
           _notificationView.Show();
         }
-        switch (parent.Path.ToLower())
+        switch (musicItem.Path.ToLower())
         {
           case "artist":
             _rootFolder = RootFolder.Artist;
@@ -121,13 +145,11 @@ namespace MPTagThat.Treeview.Model
             break;
         }
 
-        if (_notificationView != null)
-        {
-          _notificationView.Close();
-        }
+        _notificationView?.Close();
 
         if (result != null)
         {
+          var items = new List<TreeItem>();
           var type = "";
           foreach (var item in result)
           {
@@ -150,20 +172,27 @@ namespace MPTagThat.Treeview.Model
             }
             var path = $@"{type}\{value}";
             var newNode = CreateTreeNode(helper, value, path, false, type);
-            parent.Nodes.Add(newNode);
+            items.Add(newNode);
           }
+
+          // Sort the Result, as we cannot rely on database sorting
+          var nodesArray = items.ToArray();
+          Array.Sort(nodesArray,
+            (p1, p2) => string.Compare(p1.Name, p2.Name));
+
+          node.PopulateChildNodes(nodesArray);
         }
       }
       else
       {
         var isGenreArtistLevel = true;
-        if (parent.Item == null)
+        if (musicItem.Item == null)
         {
-          helper.TreeView.Cursor = Cursors.Arrow;
+          helper.Model.Cursor = Cursors.Arrow;
           return;
         }
 
-        var searchString = parent.Path.Split('\\');
+        var searchString = musicItem.Path.Split('\\');
 
         if (_rootFolder == RootFolder.Artist)
         {
@@ -188,6 +217,7 @@ namespace MPTagThat.Treeview.Model
 
         if (result != null)
         {
+          var items = new List<TreeItem>();
           var type = "";
           foreach (var item in result)
           {
@@ -210,20 +240,22 @@ namespace MPTagThat.Treeview.Model
               }
             }
 
-            var path = $@"{parent.Path}\{value}";
+            var path = $@"{musicItem.Path}\{value}";
             var newNode = CreateTreeNode(helper, value, path, false, type);
-            parent.Nodes.Add(newNode);
+            items.Add(newNode);
           }
+
+          // Sort the Result, as we cannot rely on database sorting
+          var nodesArray = items.ToArray();
+          Array.Sort(nodesArray,
+            (p1, p2) => string.Compare(p1.Name, p2.Name));
+
+          node.PopulateChildNodes(nodesArray);
         }
       }
 
-      helper.TreeView.Cursor = Cursors.Arrow;
+      helper.Model.Cursor = Cursors.Arrow;
       log.Trace("<<<");
-    }
-
-    public ObservableCollection<TreeItem> RequestDriveCollection(TreeViewHelper helper, bool isNetwork)
-    {
-      return _rootCollection;
     }
 
     #endregion
@@ -242,7 +274,7 @@ namespace MPTagThat.Treeview.Model
     protected virtual TreeItem CreateTreeNode(TreeViewHelper helper, string text, string path,
       bool isSpecialFolder, object item)
     {
-      return new TreeItem(text, isSpecialFolder) { Path = path, Item = item };
+      return new TreeItem(text, isSpecialFolder) { Path = path, Item = item, HasChildNodes = true};
     }
 
     #endregion

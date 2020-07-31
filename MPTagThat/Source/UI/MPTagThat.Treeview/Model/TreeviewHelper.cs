@@ -32,19 +32,19 @@ namespace MPTagThat.Treeview.Model
     /// <summary>
     ///   the managed tree view instance
     /// </summary>
-    private readonly TreeviewViewModel _treeView;
+    private readonly TreeviewViewModel _model;
 
     #endregion
 
     #region constructors
 
     /// <summary>
-    ///   Initialize a new instance of TreeViewHelper for the specified TreeViewFolderBrowser instance.
+    ///   Initialize a new instance of TreeViewHelper for the specified TreeViewViewModel instance.
     /// </summary>
-    /// <param name = "treeView"></param>
-    internal TreeViewHelper(TreeviewViewModel treeView)
+    /// <param name = "model"></param>
+    internal TreeViewHelper(TreeviewViewModel model)
     {
-      _treeView = treeView;
+      _model = model;
     }
 
     #endregion
@@ -52,12 +52,9 @@ namespace MPTagThat.Treeview.Model
     #region public interface
 
     /// <summary>
-    ///   Gets the underlying <see cref = "TreeViewFolderBrowser" /> instance.
+    ///   Gets the underlying <see cref = "TreeViewViewModel" /> instance.
     /// </summary>
-    public TreeviewViewModel TreeView
-    {
-      get { return _treeView; }
-    }
+    public TreeviewViewModel Model => _model;
 
     #endregion
   }

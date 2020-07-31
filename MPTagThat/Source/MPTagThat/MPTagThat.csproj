@@ -285,7 +285,7 @@
       <Version>1.1.19</Version>
     </PackageReference>
     <PackageReference Include="MPTagThat_License_Manager">
-      <Version>1.0.3</Version>
+      <Version>1.0.4</Version>
     </PackageReference>
     <PackageReference Include="Newtonsoft.Json">
       <Version>12.0.3</Version>
@@ -294,22 +294,22 @@
       <Version>8.0.0.1740-pre</Version>
     </PackageReference>
     <PackageReference Include="Syncfusion.Licensing">
-      <Version>18.1.0.52</Version>
+      <Version>18.2.0.47</Version>
     </PackageReference>
     <PackageReference Include="Syncfusion.Themes.Office2016Colorful.WPF">
-      <Version>18.1.0.52</Version>
+      <Version>18.2.0.47</Version>
     </PackageReference>
     <PackageReference Include="Syncfusion.Themes.Office2016DarkGray.WPF">
-      <Version>18.1.0.52</Version>
+      <Version>18.2.0.47</Version>
     </PackageReference>
     <PackageReference Include="Syncfusion.Themes.Office2016White.WPF">
-      <Version>18.1.0.52</Version>
+      <Version>18.2.0.47</Version>
     </PackageReference>
     <PackageReference Include="Syncfusion.Themes.Office365.WPF">
-      <Version>18.1.0.52</Version>
+      <Version>18.2.0.47</Version>
     </PackageReference>
     <PackageReference Include="Syncfusion.Tools.WPF">
-      <Version>18.1.0.52</Version>
+      <Version>18.2.0.47</Version>
     </PackageReference>
     <PackageReference Include="System.Runtime.CompilerServices.Unsafe">
       <Version>4.7.1</Version>

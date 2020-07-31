@@ -9,6 +9,8 @@
              xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
              xmlns:core="clr-namespace:MPTagThat.Core.Common.Converter;assembly=MPTagThat.Core"
              xmlns:lex="http://wpflocalizeextension.codeplex.com"
+             xmlns:syncfusionSkin="clr-namespace:Syncfusion.SfSkinManager;assembly=Syncfusion.SfSkinManager.WPF"
+             syncfusionSkin:SfSkinManager.VisualStyle="{Binding Theme}"
              lex:LocalizeDictionary.DesignCulture="en"
              lex:ResxLocalizationProvider.DefaultAssembly="MPTagThat"
              lex:ResxLocalizationProvider.DefaultDictionary="Strings"

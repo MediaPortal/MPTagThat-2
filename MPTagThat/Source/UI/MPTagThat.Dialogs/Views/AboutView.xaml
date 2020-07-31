@@ -7,6 +7,8 @@
              prism:ViewModelLocator.AutoWireViewModel="True"
              xmlns:syncfusion="http://schemas.syncfusion.com/wpf" 
              xmlns:lex="http://wpflocalizeextension.codeplex.com"
+             xmlns:syncfusionSkin="clr-namespace:Syncfusion.SfSkinManager;assembly=Syncfusion.SfSkinManager.WPF"
+             syncfusionSkin:SfSkinManager.VisualStyle="{Binding Theme}"
              lex:LocalizeDictionary.DesignCulture="en"
              lex:ResxLocalizationProvider.DefaultAssembly="MPTagThat"
              lex:ResxLocalizationProvider.DefaultDictionary="Strings"
@@ -21,7 +23,7 @@
     </Style>
   </prism:Dialog.WindowStyle>
 
-  <Border Background="White"  BorderBrush="LightGray" BorderThickness="3" CornerRadius="5" >
+  <Border Background="{Binding Background}"  BorderBrush="LightGray" BorderThickness="3" CornerRadius="5" >
     <Grid >
       <Grid.RowDefinitions>
         <RowDefinition Height="149" />

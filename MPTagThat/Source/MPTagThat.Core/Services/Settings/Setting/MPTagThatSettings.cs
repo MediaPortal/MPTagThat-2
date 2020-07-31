@@ -39,9 +39,6 @@ namespace MPTagThat.Core.Services.Settings.Setting
 
     #region Layout
     
-    [Setting(SettingScope.User, "#FFFFFF")]
-    public string BackGround { get; set; }
-    
     [Setting(SettingScope.User, "")]
     public string LastFolderUsed { get; set; } = "";
 

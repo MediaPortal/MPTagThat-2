@@ -23,6 +23,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using System.Windows.Forms;
+using System.Windows.Media;
 using MPTagThat.Core.Common;
 using MPTagThat.Core.Common.Song;
 using Prism.Ioc;
@@ -280,6 +281,9 @@ namespace MPTagThat.Core.Services.Settings.Setting
     public KeyMaps KeyMap { get; set; }
 
     public bool IsTagsTabActive { get; set; }
+    
+    public Brush BackGround { get; set; }
+
     #endregion
 
     #region ctor

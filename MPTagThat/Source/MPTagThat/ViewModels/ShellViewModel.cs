@@ -225,8 +225,6 @@ namespace MPTagThat.ViewModels
       EventSystem.Subscribe<ProgressBarEvent>(UpdateProgressBar);
       EventSystem.Subscribe<GenericEvent>(OnMessageReceived);
 
-      SfSkinManager.ApplyStylesOnApplication = true;
-
       WindowCloseCommand = new BaseCommand(WindowClose);
       KeyPressedCommand = new BaseCommand(Keypressed);
       CancelFolderScanCommand = new BaseCommand(CancelFolderScan);

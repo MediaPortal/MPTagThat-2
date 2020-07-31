@@ -55,7 +55,9 @@ namespace MPTagThat.Dialogs.ViewModels
 
     #region Properties
 
-    public Brush Background => (Brush)new BrushConverter().ConvertFromString(_options.MainSettings.BackGround);
+    public Brush Background => _options.BackGround;
+
+    public string Theme => _options.MainSettings.Theme;
 
     private string _title;
     public string Title

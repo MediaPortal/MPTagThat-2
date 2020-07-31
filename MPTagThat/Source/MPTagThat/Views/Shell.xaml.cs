@@ -29,12 +29,12 @@ namespace MPTagThat.Views
     public Shell()
     {
       InitializeComponent();
-      var vm = (ShellViewModel) DataContext;
+      var vm = (ShellViewModel)DataContext;
       if (vm != null)
       {
         vm.MainDockingManager = this.MainDockingManager;
       }
-      
+
       var stateFile = _options.ConfigDir + "\\DockingLayout.xml";
 
       if (File.Exists(stateFile))
@@ -48,11 +48,8 @@ namespace MPTagThat.Views
 
     private void Window_Loaded(object sender, RoutedEventArgs e)
     {
-      var dockcontrol = VisualUtils.FindDescendant(this, typeof(DockingManager)) as DockingManager;
-      if (dockcontrol != null)
-      {
-        _options.MainSettings.BackGround = new BrushConverter().ConvertToString(dockcontrol.Background);
-      }
+      // Set the Background to be used in dialogs
+      _options.BackGround = this.Background;
     }
 
     private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)

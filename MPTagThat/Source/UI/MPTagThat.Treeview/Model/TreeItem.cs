@@ -18,73 +18,72 @@
 
 #region
 
-using System.Collections.ObjectModel;
 using Prism.Mvvm;
-using Syncfusion.Windows.Tools.Controls;
 
 #endregion
 
 namespace MPTagThat.Treeview.Model
 {
-    public class TreeItem : BindableBase, IVirtualTree
+  public class TreeItem : BindableBase
+  {
+    #region Properties
+
+    /// <summary>
+    /// The Name of the Node, whih is displayed in te Treeview
+    /// </summary>
+    private string _name;
+
+    public string Name
     {
-        #region Properties
-
-        private string _name;
-
-        public string Name
-        {
-          get => _name; 
-          set => SetProperty(ref _name, value);
-        }
-
-        public object Item { get; set; }
-
-        public string Path { get; set; }
-
-        private ObservableCollection<TreeItem> _nodes = new ObservableCollection<TreeItem>();
-        public ObservableCollection<TreeItem> Nodes
-        {
-            get => _nodes;
-            set => SetProperty(ref _nodes, value);
-        }
-
-        private bool _isSpecialFolder;
-        public bool IsSpecialFolder
-        {
-            get => _isSpecialFolder;
-            set { SetProperty(ref _isSpecialFolder, value); }
-        }
-
-        private bool _isExpanded;
-        public bool IsExpanded
-        {
-            get => _isExpanded;
-            set { SetProperty(ref _isExpanded, value); }
-        }
-
-        public int ItemsCount { get; set; }
-        public double ExtentHeight { get; set; }
-
-        private bool _isSelected;
-        public bool IsSelected
-        {
-            get => _isSelected;
-            set { SetProperty(ref _isSelected, value); }
-        }
-
-        public IVirtualTree Parent { get; set; }
-
-        #endregion
-
-        #region ctor
-
-        public TreeItem(string text, bool isSpecialFolder)
-        {
-            Name = text;
-            _isSpecialFolder = isSpecialFolder;
-        }
-
-        #endregion
+      get => _name;
+      set => SetProperty(ref _name, value);
     }
+
+    /// <summary>
+    /// The Item read. Used to get the Cover Art
+    /// </summary>
+    public object Item { get; set; }
+
+    /// <summary>
+    /// This is the Root Level (Desktop or Music Database)
+    /// </summary>
+    public bool IsRoot { get; set; }
+
+    /// <summary>
+    /// The Path of the Item
+    /// </summary>
+    public string Path { get; set; }
+
+    /// <summary>
+    /// Do we have a special Folder
+    /// </summary>
+    private bool _isSpecialFolder;
+    public bool IsSpecialFolder
+    {
+      get => _isSpecialFolder;
+      set { SetProperty(ref _isSpecialFolder, value); }
+    }
+
+    /// <summary>
+    /// Denotes that we have Child Nodes
+    /// </summary>
+    private bool _hasChildNodes;
+    public bool HasChildNodes
+    {
+      get => _hasChildNodes;
+      set { SetProperty(ref _hasChildNodes, value); }
+    }
+
+    #endregion
+
+    #region ctor
+
+    public TreeItem(string text, bool isSpecialFolder)
+    {
+      Name = text;
+      _isSpecialFolder = isSpecialFolder;
+    }
+
+    #endregion
+  }
 }

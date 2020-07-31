@@ -27,6 +27,7 @@ using MPTagThat.Treeview.Model.Win32;
 using MPTagThat.Treeview.ViewModels;
 using Prism.Ioc;
 using Shell32;
+using Syncfusion.UI.Xaml.TreeView.Engine;
 
 #endregion
 
@@ -71,23 +72,27 @@ namespace MPTagThat.Treeview.Model
     /// </summary>
     /// <param name="helper"></param>
     /// <param name="node"></param>
-    public virtual void QueryContextMenuItems(TreeViewHelper helper, TreeItem node) { }
+    public virtual void QueryContextMenuItems(TreeViewHelper helper, TreeViewNode node) { }
 
     /// <summary>
-    /// Return the Drives for My Computer or Network
+    /// Create the Root Collection when building the Tree View
     /// </summary>
     /// <param name="helper"></param>
-    /// <param name="isNetwork"></param>
-    /// <returns></returns>
-    public virtual ObservableCollection<TreeItem> RequestDriveCollection(TreeViewHelper helper, bool isNetwork)
+    public virtual void CreateRootNode(TreeViewHelper helper)
     {
       log.Trace(">>>");
-      if (isNetwork)
+      switch (helper.Model.RootFolder)
       {
-        return _rootCollectionNetwork;
+        case Environment.SpecialFolder.Desktop:
+          Folder2 desktopFolder = (Folder2) _shell.GetDesktop();
+          // create root node <Desktop>
+          var desktopNode = CreateTreeNode(helper, desktopFolder.Title, desktopFolder.Self.Path,
+            true, desktopFolder.Self);
+          desktopNode.IsRoot = true;
+          helper.Model.Nodes.Add(desktopNode);
+          break;
       }
       log.Trace("<<<");
-      return _rootCollection;
     }
 
     /// <summary>
@@ -95,18 +100,18 @@ namespace MPTagThat.Treeview.Model
     /// </summary>
     /// <param name="helper"></param>
     /// <param name="parent"></param>
-    public virtual void RequestSubDirs(TreeViewHelper helper, TreeItem parent)
+    public virtual void RequestSubDirs(TreeViewHelper helper, TreeViewNode parent)
     {
       log.Trace(">>>");
-      helper.TreeView.Cursor = Cursors.Wait;
+      helper.Model.Cursor = Cursors.Wait;
 
-      FolderItem2 folderItem = ((FolderItem2)parent.Item);
+      FolderItem2 folderItem = ((FolderItem2)(parent.Content as TreeItem).Item);
 
       log.Trace($"Requesting Subfolders of {folderItem.Name}");
 
       if (_shell.Shell.NameSpace(ShellSpecialFolderConstants.ssfDRIVES).Title == folderItem.Name)
       {
-        FillMyComputer(folderItem, parent.Nodes, helper);
+        FillMyComputer(folderItem, parent, helper);
       }
       else
       {
@@ -124,11 +129,11 @@ namespace MPTagThat.Treeview.Model
         // Sort the Directories, as Samba might return unsorted
         var nodesArray = nodes.ToArray();
         Array.Sort(nodesArray,
-          (p1, p2) => string.CompareOrdinal(p1.Name, p2.Name));
+          (p1, p2) => string.Compare(p1.Name, p2.Name));
 
-        parent.Nodes.AddRange(nodesArray);
-        helper.TreeView.Cursor = Cursors.Arrow;
+        parent.PopulateChildNodes(nodesArray);
       }
+      helper.Model.Cursor = Cursors.Arrow;
       log.Trace("<<<");
     }
 
@@ -136,18 +141,16 @@ namespace MPTagThat.Treeview.Model
     /// Create the Root Collection when building the Tree View
     /// </summary>
     /// <param name="helper"></param>
-    public virtual void RequestRoot(TreeViewHelper helper)
+    public virtual void RequestRoot(TreeViewHelper helper, TreeViewNode parent)
     {
       log.Trace(">>>");
       // setup up root node collection
-      switch (helper.TreeView.RootFolder)
+      switch (helper.Model.RootFolder)
       {
         case Environment.SpecialFolder.Desktop:
           Folder2 desktopFolder = (Folder2)_shell.GetDesktop();
-          // create root node <Desktop>
-          var desktopNode = CreateTreeNode(helper, desktopFolder.Title, desktopFolder.Self.Path,
-                                                    true, desktopFolder.Self);
-          helper.TreeView.Nodes.Add(desktopNode);
+
+          var nodes = new List<TreeItem>();
           foreach (FolderItem fi in desktopFolder.Items())
           {
             log.Trace($"Folder: {fi.Name} | Type: {fi.Type} | IsFolder: {fi.IsFolder} | IsFileSystem: {fi.IsFileSystem}");
@@ -169,34 +172,35 @@ namespace MPTagThat.Treeview.Model
 
             // Create the Tree Node
             var node = CreateTreeNode(helper, fi.Name, fi.Path, true, fi);
-            desktopNode.Nodes.Add(node);
+            nodes.Add(node);
 
             // Handle My Computer
             if (_shell.Shell.NameSpace(ShellSpecialFolderConstants.ssfDRIVES).Title == fi.Name)
             {
-              FillMyComputer(fi, node.Nodes, helper);
+              //FillMyComputer(fi, node.Nodes, helper);
             }
 
             // Add to Network Node
             if (fi.Path == "::{F02C1A0D-BE21-4350-88B0-7367FC96EF3C}")
             {
-              _rootCollectionNetwork = node.Nodes;
+              //_rootCollectionNetwork = node.Nodes;
             }
           }
+          parent.PopulateChildNodes(nodes);
           break;
 
-        case Environment.SpecialFolder.MyComputer:
-          FillMyComputer(((Folder2)_shell.Shell.NameSpace(ShellSpecialFolderConstants.ssfDRIVES)).Self,
-            helper.TreeView.Nodes, helper);
-          break;
+        //case Environment.SpecialFolder.MyComputer:
+          //FillMyComputer(((Folder2)_shell.Shell.NameSpace(ShellSpecialFolderConstants.ssfDRIVES)).Self,
+          //  helper.Model.Nodes, helper);
+          //break;
 
         default:
           // create root node with specified SpecialFolder
-          Folder2 root = (Folder3)_shell.Shell.NameSpace(helper.TreeView.RootFolder);
+          Folder2 root = (Folder3)_shell.Shell.NameSpace(helper.Model.RootFolder);
           var rootNode = CreateTreeNode(helper, root.Title, root.Self.Path, false, root);
           //rootNode.Tag = root.Self;
-          helper.TreeView.Nodes.Add(rootNode);
-          _rootCollection = rootNode.Nodes;
+          helper.Model.Nodes.Add(rootNode);
+          //_rootCollection = rootNode.Nodes;
           break;
       }
       log.Trace("<<<");
@@ -212,19 +216,19 @@ namespace MPTagThat.Treeview.Model
     /// <param name="folderItem"></param>
     /// <param name="parentCollection"></param>
     /// <param name="helper"></param>
-    protected virtual void FillMyComputer(FolderItem folderItem, ObservableCollection<TreeItem> parentCollection,
+    protected virtual void FillMyComputer(FolderItem folderItem, TreeViewNode node,
       TreeViewHelper helper)
     {
       log.Trace(">>>");
-      _rootCollection = parentCollection;
       Logicaldisk.LogicaldiskCollection logicalDisks = null;
       
       // get wmi logical disk's if we have to 			
-      if (helper.TreeView.DriveTypes != Enums.DriveTypes.All)
+      if (helper.Model.DriveTypes != Enums.DriveTypes.All)
       {
-        logicalDisks = Logicaldisk.GetInstances(null, GetWmiQueryStatement(helper.TreeView));
+        logicalDisks = Logicaldisk.GetInstances(null, GetWmiQueryStatement(helper.Model));
       }
-      
+
+      var items = new List<TreeItem>();
       foreach (FolderItem fi in ((Folder)folderItem.GetFolder).Items())
       {
         log.Trace($"Folder: {fi.Name} | Type: {fi.Type} | IsFolder: {fi.IsFolder} | IsFileSystem: {fi.IsFileSystem}");
@@ -253,9 +257,10 @@ namespace MPTagThat.Treeview.Model
           }
         }
         // create new node
-        var node = CreateTreeNode(helper, fi.Name, fi.Path, false, fi);
-        parentCollection.Add(node);
+        var newNode = CreateTreeNode(helper, fi.Name, fi.Path, false, fi);
+        items.Add(newNode);
       }
+      node.PopulateChildNodes(items);
       log.Trace("<<<");
     }
 
@@ -272,7 +277,7 @@ namespace MPTagThat.Treeview.Model
     protected virtual TreeItem CreateTreeNode(TreeViewHelper helper, string text, string path,
                                                   bool isSpecialFolder, object item)
     {
-      return new TreeItem(text, isSpecialFolder) { Path = path, Item = item };
+      return new TreeItem(text, isSpecialFolder) { Path = path, Item = item, HasChildNodes = true};
     }
 
     /// <summary>
