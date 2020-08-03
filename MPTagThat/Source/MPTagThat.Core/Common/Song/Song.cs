@@ -88,7 +88,6 @@ namespace MPTagThat.Core.Common.Song
       FileInfo fi = new FileInfo(fileName);
       try
       {
-        song.Id = null; // Raven should generate the ID
         song.FullFileName = fileName;
         song.FileName = Path.GetFileName(fileName);
         song.Readonly = fi.IsReadOnly;

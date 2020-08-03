@@ -19,9 +19,8 @@
 #region
 
 using System.Collections.Generic;
+using LiteDB;
 using MPTagThat.Core.Common.Song;
-using MPTagThat.Core.Services.MusicDatabase.Indexes;
-using Raven.Client.Documents;
 
 #endregion
 
@@ -34,7 +33,7 @@ namespace MPTagThat.Core.Services.MusicDatabase
     /// </summary>
     /// <param name="databaseName"></param>
     /// <returns></returns>
-    IDocumentStore GetDocumentStoreFor(string databaseName);
+    LiteDatabase GetDocumentStoreFor(string databaseName);
 
     /// <summary>
     /// Remove the Store
@@ -101,40 +100,40 @@ namespace MPTagThat.Core.Services.MusicDatabase
     /// Retrieves Distinct Artists
     /// </summary>
     /// <returns></returns>
-    List<DistinctResult> GetArtists();
+    List<string> GetArtists();
 
     /// <summary>
     /// Retrieves Distinct Artists and their Distinct Albums based on the query
     /// </summary>
     /// <param name="query"></param>
     /// <returns></returns>
-    List<DistinctResult> GetArtistAlbums(string query);
+    List<string> GetArtistAlbums(string query);
 
     /// <summary>
     /// Retrieves Distinct AlbumArtists 
     /// </summary>
     /// <returns></returns>
-    List<DistinctResult> GetAlbumArtists();
+    List<string> GetAlbumArtists();
 
     /// <summary>
     /// Retrieves Distinct AlbumArtists and their Distinct Albums based on the query
     /// </summary>
     /// <param name="query"></param>
     /// <returns></returns>
-    List<DistinctResult> GetAlbumArtistAlbums(string query);
+    List<string> GetAlbumArtistAlbums(string query);
 
     /// <summary>
     /// Retrieves Distinct Genres
     /// </summary>
     /// <returns></returns>
-    List<DistinctResult> GetGenres();
+    List<string> GetGenres();
 
     /// <summary>
     /// Retrieves Distinct Genres and their Distinct Artists
     /// </summary>
     /// <param name="query"></param>
     /// <returns></returns>
-    List<DistinctResult> GetGenreArtists(string query);
+    List<string> GetGenreArtists(string query);
 
     /// <summary>
     /// Retrieves Distinct Genres and their Distinct Artists and Albums
@@ -142,7 +141,7 @@ namespace MPTagThat.Core.Services.MusicDatabase
     /// <param name="genre"></param>
     /// <param name="album"></param>
     /// <returns></returns>
-    List<DistinctResult> GetGenreArtistAlbums(string genre, string album);
+    List<string> GetGenreArtistAlbums(string genre, string album);
 
     /// <summary>
     /// Search for Artists to put into Autocompletion Combo

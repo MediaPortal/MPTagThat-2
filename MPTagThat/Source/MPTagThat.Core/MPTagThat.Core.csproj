@@ -117,15 +117,6 @@
     <Compile Include="Services\MediaChangeMonitor\IMediaChangeMonitor.cs" />
     <Compile Include="Services\MediaChangeMonitor\MediaChangeMonitor.cs" />
     <Compile Include="Services\MusicDatabase\IMusicDatabase.cs" />
-    <Compile Include="Services\MusicDatabase\Indexes\DefaultSearchIndex.cs" />
-    <Compile Include="Services\MusicDatabase\Indexes\DistinctAlbumArtistAlbumsIndex.cs" />
-    <Compile Include="Services\MusicDatabase\Indexes\DistinctAlbumArtistIndex.cs" />
-    <Compile Include="Services\MusicDatabase\Indexes\DistinctArtistAlbumIndex.cs" />
-    <Compile Include="Services\MusicDatabase\Indexes\DistinctArtistIndex.cs" />
-    <Compile Include="Services\MusicDatabase\Indexes\DistinctGenreArtistAlbumIndex.cs" />
-    <Compile Include="Services\MusicDatabase\Indexes\DistinctGenreArtistIndex.cs" />
-    <Compile Include="Services\MusicDatabase\Indexes\DistinctGenreIndex.cs" />
-    <Compile Include="Services\MusicDatabase\Indexes\DistinctResult.cs" />
     <Compile Include="Services\MusicDatabase\MusicDatabase.cs" />
     <Compile Include="Services\ScriptManager\IScript.cs" />
     <Compile Include="Services\ScriptManager\IScriptManager.cs" />
@@ -171,6 +162,9 @@
     <PackageReference Include="Inflatable.Lastfm">
       <Version>1.1.0.339</Version>
     </PackageReference>
+    <PackageReference Include="LiteDB">
+      <Version>5.0.8</Version>
+    </PackageReference>
     <PackageReference Include="MediaPortal.FreeImageNET">
       <Version>3.18.3</Version>
     </PackageReference>
@@ -188,9 +182,6 @@
     </PackageReference>
     <PackageReference Include="Prism.Core">
       <Version>8.0.0.1740-pre</Version>
-    </PackageReference>
-    <PackageReference Include="RavenDB.Embedded">
-      <Version>4.2.103</Version>
     </PackageReference>
     <PackageReference Include="Syncfusion.SfGrid.WPF">
       <Version>18.2.0.47</Version>
