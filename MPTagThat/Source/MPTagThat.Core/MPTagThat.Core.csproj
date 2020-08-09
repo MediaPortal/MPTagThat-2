@@ -184,13 +184,13 @@
       <Version>8.0.0.1740-pre</Version>
     </PackageReference>
     <PackageReference Include="Syncfusion.SfGrid.WPF">
-      <Version>18.2.0.47</Version>
+      <Version>18.2.0.48</Version>
     </PackageReference>
     <PackageReference Include="Syncfusion.SfInput.WPF">
-      <Version>18.2.0.47</Version>
+      <Version>18.2.0.48</Version>
     </PackageReference>
     <PackageReference Include="Syncfusion.Tools.WPF">
-      <Version>18.2.0.47</Version>
+      <Version>18.2.0.48</Version>
     </PackageReference>
     <PackageReference Include="System.Collections.Immutable">
       <Version>1.7.1</Version>
