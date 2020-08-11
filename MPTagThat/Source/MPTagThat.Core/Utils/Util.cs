@@ -1497,9 +1497,6 @@ namespace MPTagThat.Core.Utils
           case '+':
             literal.Append(@"\+");
             break;
-          case '-':
-            literal.Append(@"\-");
-            break;
           case '!':
             literal.Append(@"\!");
             break;

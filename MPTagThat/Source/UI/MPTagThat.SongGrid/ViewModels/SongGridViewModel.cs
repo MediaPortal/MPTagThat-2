@@ -876,8 +876,7 @@ namespace MPTagThat.SongGrid.ViewModels
 
              StatusBarEvent msg = new StatusBarEvent { CurrentFolder = query, CurrentProgress = -1 };
 
-             var orderBy = "";
-             var dbQuery = CreateQuery(searchString, out orderBy);
+             var dbQuery = CreateQuery(searchString);
              var result = ContainerLocator.Current.Resolve<IMusicDatabase>().ExecuteQuery(dbQuery);
 
              if (result != null)
@@ -923,49 +922,38 @@ namespace MPTagThat.SongGrid.ViewModels
     /// Create a query based on the selection
     /// </summary>
     /// <param name="searchString"></param>
-    /// <param name="orderBy"></param>
     /// <returns></returns>
-    private string CreateQuery(string[] searchString, out string orderBy)
+    private string CreateQuery(string[] searchString)
     {
-      var query = "";
-      orderBy = "";
+      var query = "dbview:";
 
       switch (searchString[0].ToLower())
       {
         case "artist":
-          query = FormatMultipleEntries(searchString[1], "Artist");
-          orderBy = "Album,Track";
+          query += $"Artist = \"{Util.EscapeDatabaseQuery(searchString[1])}\"";
           if (searchString.GetLength(0) > 2)
           {
-            query += $" AND Album:\"{Util.EscapeDatabaseQuery(searchString[2])}\"";
-            orderBy = "Track";
+            query += $" AND Album = \"{Util.EscapeDatabaseQuery(searchString[2])}\"";
           }
           break;
 
         case "albumartist":
-          query = FormatMultipleEntries(searchString[1], "AlbumArtist");
-          orderBy = "Album,Track";
+          query += $"AlbumArtist = \"{Util.EscapeDatabaseQuery(searchString[1])}\"";
           if (searchString.GetLength(0) > 2)
           {
-            query += $" AND Album:\"{Util.EscapeDatabaseQuery(searchString[2])}\"";
-            orderBy = "Track";
+            query += $" AND Album = \"{Util.EscapeDatabaseQuery(searchString[2])}\"";
           }
           break;
 
         case "genre":
-          query = FormatMultipleEntries(searchString[1], "Genre");
-          //orderByClause = "strArtist, strAlbum, iTrack";
-          orderBy = "Artist,Album,Track";
+          query += $"Genre = \"{Util.EscapeDatabaseQuery(searchString[1])}\"";
           if (searchString.GetLength(0) > 2)
           {
-            query += " AND ";
-            query += FormatMultipleEntries(searchString[2], "Artist");
-            orderBy = "Album,Track";
+            query += $" AND Artist = \"{Util.EscapeDatabaseQuery(searchString[2])}\"";
           }
           if (searchString.GetLength(0) > 3)
           {
-            query += $" AND Album:\"{Util.EscapeDatabaseQuery(searchString[3])}\"";
-            orderBy = "Album,Track";
+            query += $" AND Album = \"{Util.EscapeDatabaseQuery(searchString[3])}\"";
           }
           break;
       }

@@ -249,37 +249,26 @@ namespace MPTagThat.Core.Services.MusicDatabase
 
       List<SongData> result = null;
 
-      query = FormatQuery(query);
-
-      if (query.Contains(":"))
+      var sql = "";
+      if (query.StartsWith("dbview:"))
       {
-        /*
-        var resultSet = _session.Advanced.DocumentQuery<SongData, DefaultSearchIndex>()
-          .WhereLucene("Artist", query)
-          .Take(int.MaxValue)
-          .ToList();
-
-        log.Info($"Query returned {resultSet.Count} results");
-
-        // need to do our own ordering
-        result = resultSet.OrderBy(x => x.Artist).ThenBy(x => x.Album).ThenBy(x => x.Track).ToList();
-        */
+        sql = "select $ from songs where " + query.Substring(7);
       }
       else
       {
-        var sql = "select $ from songs " +
-                  $"where Artist like '%{query}%' or " +
-                  $"AlbumArtist like '%{query}%' or " +
-                  $"Album like '%{query}%' or " +
-                  $"Title like '%{query}%' or " +
-                  $"Genre like '%{query}%'";
-
-        var resultSet = _store.Execute(sql).ToEnumerable().Select(s => BsonMapper.Global.Deserialize<SongData>(s)).ToList();
-        log.Info($"Query returned {resultSet.Count} results");
-
-        // need to do our own ordering
-        result = resultSet.OrderBy(x => x.Artist).ThenBy(x => x.Album).ThenBy(x => x.Track).ToList();
+        sql = "select $ from songs " +
+              $"where Artist like '%{query}%' or " +
+              $"AlbumArtist like '%{query}%' or " +
+              $"Album like '%{query}%' or " +
+              $"Title like '%{query}%' or " +
+              $"Genre like '%{query}%'";
       }
+
+      var resultSet = _store.Execute(sql).ToEnumerable().Select(s => BsonMapper.Global.Deserialize<SongData>(s)).ToList();
+      log.Info($"Query returned {resultSet.Count} results");
+
+      // need to do our own ordering
+      result = resultSet.OrderBy(x => x.Artist).ThenBy(x => x.Album).ThenBy(x => x.Track).ToList();
 
       msg.CurrentProgress = 0;
       msg.NumberOfFiles = result.Count;
@@ -339,7 +328,7 @@ namespace MPTagThat.Core.Services.MusicDatabase
       }
 
       log.Trace("Getting distinct artists");
-      
+
       var artists = new List<string>();
       var reader = _store.Execute("select distinct(*.Artist)  from songs");
       reader.Read();
@@ -348,7 +337,7 @@ namespace MPTagThat.Core.Services.MusicDatabase
       {
         artists.Add(artist.ToString().Trim('"'));
       }
-      
+
       log.Debug($"Found {artists.Count} distinct artists");
       return artists;
     }
@@ -611,8 +600,8 @@ namespace MPTagThat.Core.Services.MusicDatabase
         col.EnsureIndex("$.Title", false);
         col.EnsureIndex("$.Type", false);
         col.EnsureIndex("$.Composer", false);
-        col.EnsureIndex("ArtistAlbum", "[$.Artist, $.Album]",false);
-        col.EnsureIndex("AlbumArtistAlbum", "[$.AlbumArtist, $.Album]",false);
+        col.EnsureIndex("ArtistAlbum", "[$.Artist, $.Album]", false);
+        col.EnsureIndex("AlbumArtistAlbum", "[$.AlbumArtist, $.Album]", false);
 
         var songList = new List<SongData>();
 
@@ -742,26 +731,6 @@ namespace MPTagThat.Core.Services.MusicDatabase
           Console.WriteLine(ex.Message, ex);
         }
       }
-    }
-
-    /// <summary>
-    /// Format the query for Lucene syntax
-    /// </summary>
-    /// <param name="query"></param>
-    /// <returns></returns>
-    private string FormatQuery(string query)
-    {
-      // And / Or operators need to be all uppercase
-      query = Regex.Replace(query, " and ", " AND ", RegexOptions.IgnoreCase);
-      query = Regex.Replace(query, " or ", " OR ", RegexOptions.IgnoreCase);
-
-      // Change the indexed Tags to first letter Upper case
-      foreach (var tag in _indexedTags)
-      {
-        query = Regex.Replace(query, tag, tag, RegexOptions.IgnoreCase);
-      }
-
-      return query;
     }
 
     #endregion

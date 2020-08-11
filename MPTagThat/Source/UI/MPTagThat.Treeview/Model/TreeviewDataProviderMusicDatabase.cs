@@ -116,6 +116,18 @@ namespace MPTagThat.Treeview.Model
         return;
       }
 
+      // Check on the Level of the node, so that we don't allow infinite expansions
+      if ((musicItem.Path.StartsWith("Artist") || musicItem.Path.StartsWith("AlbumArtist")) && node.Level == 3)
+      {
+        node.HasChildNodes = false;
+        return;
+      } 
+      if (musicItem.Path.StartsWith("Genre") && node.Level == 4)
+      {
+        node.HasChildNodes = false;
+        return;
+      }
+
       helper.Model.Cursor = Cursors.Wait;
 
       List<string> result = null;
