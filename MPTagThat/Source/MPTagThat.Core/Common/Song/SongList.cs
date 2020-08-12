@@ -46,14 +46,14 @@ namespace MPTagThat.Core.Common.Song
     #region Variables
 
     private readonly IList<T> _list;
-    private LiteDatabase _store;
+    private LiteDatabase _database;
+    private ILiteCollection<SongData> _collection;
 
     private bool _databaseModeEnabled;
     private readonly string _databaseName = "SongsTemp";
-    private string _databaseFolder;
 
     private int _songId;
-    private List<string> _dbIdList = new List<string>();
+    private List<int> _dbIdList = new List<int>();
 
     private int _lastRetrievedSongIndex = -1;
     private T _lastRetrievedSong = default(T);
@@ -102,7 +102,7 @@ namespace MPTagThat.Core.Common.Song
 
           _lastRetrievedSongIndex = index;
 
-          var result = 1; //_session.Load<T>(_dbIdList[index]);
+          var result = _collection.FindById(_dbIdList[index]); 
 
           _lastRetrievedSong = (T)(object)result;
           return _lastRetrievedSong;
@@ -115,14 +115,7 @@ namespace MPTagThat.Core.Common.Song
         T originalItem = this[index];
         if (_databaseModeEnabled)
         {
-          /*
-          var result = _session.Load<T>(_dbIdList[index]);
-
-          var song = result;
-          song = value;
-          _session.Store(song);
-          _session.SaveChanges();
-          */
+          _collection.Upsert(_dbIdList[index], (SongData)(object)value);
         }
         else
         {
@@ -141,7 +134,7 @@ namespace MPTagThat.Core.Common.Song
     {
       if (_databaseModeEnabled)
       {
-        //return _session.Query<T>().GetEnumerator();
+        return (IEnumerator<T>)_collection.FindAll().OrderBy(s => s.Id).GetEnumerator();
       }
       return _list.GetEnumerator();
     }
@@ -161,17 +154,20 @@ namespace MPTagThat.Core.Common.Song
     /// <param name="item"></param>
     public void Add(T item)
     {
-      var index = 0;
+      int index;
       if (!_databaseModeEnabled && _list.Count > _settings.GetOptions.StartupSettings.MaxSongs)
       {
         CopyListToDatabase();
+        _songId = _collection.Count();
       }
 
       if (_databaseModeEnabled)
       {
-        //index = _session.Query<SongData>().Count();
-        //_session.Store(item);
-        //_dbIdList.Add((item as SongData).Id);
+        var song = (item as SongData);
+        song.Id = _songId++;
+        _collection.Insert(_songId, song);
+        index = _collection.Count();
+        _dbIdList.Add(song.Id);
       }
       else
       {
@@ -190,10 +186,9 @@ namespace MPTagThat.Core.Common.Song
       {
         _songId = 0;
         _databaseModeEnabled = false;
-        //_session?.Advanced.Clear();
-        //_session = null;
-        _store.Dispose();
-        _store = null;
+        _collection.DeleteAll();
+        _database.Dispose();
+        _database = null;
         ContainerLocator.Current.Resolve<IMusicDatabase>().RemoveStore(_databaseName);
         _dbIdList.Clear();
       }
@@ -223,7 +218,7 @@ namespace MPTagThat.Core.Common.Song
     {
       if (_databaseModeEnabled)
       {
-        //_session.Query<T>().ToList().CopyTo(array, arrayIndex);
+        _collection.FindAll().Cast<T>().ToList().CopyTo(array, arrayIndex);
         return;
       }
 
@@ -256,7 +251,7 @@ namespace MPTagThat.Core.Common.Song
       {
         if (_databaseModeEnabled)
         {
-          return 0; //_session.Query<T>().Count();
+          return _collection.Count();
         }
 
         return _list.Count;
@@ -297,13 +292,10 @@ namespace MPTagThat.Core.Common.Song
     {
       if (_databaseModeEnabled)
       {
-        /*
-        var song = _session.Load<T>(_dbIdList[index]);
-        _session.Delete(song);
-        _session.SaveChanges();
+        var song = _collection.FindById(index);
+        _collection.Delete(index);
         _dbIdList.RemoveAt(index);
         OnCollectionChanged(NotifyCollectionChangedAction.Remove, song, index);
-        */
       }
       else
       {
@@ -321,14 +313,19 @@ namespace MPTagThat.Core.Common.Song
     {
       try
       {
-        _databaseFolder = $"{_settings?.GetOptions.StartupSettings.DatabaseFolder}\\{_databaseName}";
-        Util.DeleteFolder(_databaseFolder);
-        _store = ContainerLocator.Current.Resolve<IMusicDatabase>()?.GetDocumentStoreFor(_databaseName);
+        ContainerLocator.Current.Resolve<IMusicDatabase>() ?.DeleteDatabase(_databaseName);
+        _database = ContainerLocator.Current.Resolve<IMusicDatabase>()?.GetDocumentStoreFor(_databaseName);
+        if (_database != null)
+        {
+          _collection = _database.GetCollection<SongData>("songs");
+          _collection.EnsureIndex("$.FullFileName", true);
+        }
 
         return true;
       }
       catch (Exception ex)
       {
+        _databaseModeEnabled = false;
         log.Error("Error creating DB Connection. Database Mode disabled. {0}", ex.Message);
       }
       return false;
@@ -354,18 +351,16 @@ namespace MPTagThat.Core.Common.Song
 
       _databaseModeEnabled = true;
 
-      /*
-      using (BulkInsertOperation bulkinsert = _store.BulkInsert())
+      var tempSongs = new List<SongData>();
+      foreach (var item in _list)
       {
-        foreach (var item in _list)
-        {
-          var index = _session.Query<SongData>().Count();
-          (item as SongData).Id = $"S/{_songId++}";
-          bulkinsert.Store(item);
-          _dbIdList.Add((item as SongData).Id);
-        }
+        var song = (item as SongData);
+        tempSongs.Add(song);
+        _dbIdList.Add(_songId++);
       }
-      */
+
+      _collection.InsertBulk(tempSongs);
+      tempSongs.Clear();
 
       OnCollectionReset();
       _list.Clear();
@@ -373,16 +368,6 @@ namespace MPTagThat.Core.Common.Song
       log.Debug("Finished enabling database mode.");
     }
 
-    /// <summary>
-    /// Commit the Changes to the Database
-    /// </summary>
-    public void CommitDatabaseChanges()
-    {
-      if (_databaseModeEnabled)
-      {
-        //_session?.SaveChanges();
-      }
-    }
     #endregion
 
     #region CollectionChanged Implementation 

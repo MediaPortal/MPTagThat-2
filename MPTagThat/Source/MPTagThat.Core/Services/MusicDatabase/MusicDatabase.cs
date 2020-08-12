@@ -600,8 +600,8 @@ namespace MPTagThat.Core.Services.MusicDatabase
         col.EnsureIndex("$.Title", false);
         col.EnsureIndex("$.Type", false);
         col.EnsureIndex("$.Composer", false);
-        col.EnsureIndex("ArtistAlbum", "[$.Artist, $.Album]", false);
-        col.EnsureIndex("AlbumArtistAlbum", "[$.AlbumArtist, $.Album]", false);
+        //col.EnsureIndex("ArtistAlbum", "[$.Artist, $.Album]", false);
+        //col.EnsureIndex("AlbumArtistAlbum", "[$.AlbumArtist, $.Album]", false);
 
         var songList = new List<SongData>();
 

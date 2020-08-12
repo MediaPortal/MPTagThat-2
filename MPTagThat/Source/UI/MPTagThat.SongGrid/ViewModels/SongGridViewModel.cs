@@ -725,12 +725,6 @@ namespace MPTagThat.SongGrid.ViewModels
                        }
                        Songs.Add(song);
                        count++;
-                       if (count % 1000 == 0)
-                       {
-                         // Commit every 1000 songs, in case we have database mode enabled
-                         _songs.CommitDatabaseChanges();
-                       }
-
                        msg.NumberOfFiles = count;
                        EventSystem.Publish(msg);
                      }
@@ -763,9 +757,6 @@ namespace MPTagThat.SongGrid.ViewModels
                  LocalizeDictionary.Instance.GetLocalizedObject("MPTagThat", "Strings", "message_ErrorTitle", LocalizeDictionary.Instance.Culture).ToString(), MessageBoxButton.OK);
                log.Error("Folderscan: Running out of memory. Scanning aborted.");
              }
-
-             // Commit changes to SongTemp, in case we have switched to DB Mode
-             _songs.CommitDatabaseChanges();
 
              msg.CurrentProgress = 0;
              msg.CurrentFile = "";
@@ -894,19 +885,11 @@ namespace MPTagThat.SongGrid.ViewModels
                  }
                  Songs.Add(song);
                  count++;
-                 if (count % 1000 == 0)
-                 {
-                   // Commit every 1000 songs, in case we have database mode enabled
-                   _songs.CommitDatabaseChanges();
-                 }
 
                  msg.NumberOfFiles = count;
                  EventSystem.Publish(msg);
                }
              }
-
-             // Commit changes to SongTemp, in case we have switched to DB Mode
-             _songs.CommitDatabaseChanges();
 
              msg.CurrentProgress = 0;
              msg.CurrentFile = "";
@@ -1295,8 +1278,6 @@ namespace MPTagThat.SongGrid.ViewModels
             }
 
             IsBusy = false;
-            // Commit changes to SongTemp, in case we have switched to DB Mode
-            _songs.CommitDatabaseChanges();
             return;
           }
 
