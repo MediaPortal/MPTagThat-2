@@ -84,8 +84,6 @@ namespace MPTagThat.SongGrid.ViewModels
     private bool _actionCopy;
     private bool _selectAll;
 
-    private NotificationView _notificationView;
-
     private readonly System.Windows.Input.Cursor _numberOnClickCursor = new System.Windows.Input.Cursor(System.Windows.Application.GetResourceStream(new Uri("pack://application:,,,/MPTagThat;component/Resources/Images/CursorNumbering.cur")).Stream);
 
     #endregion
@@ -944,19 +942,6 @@ namespace MPTagThat.SongGrid.ViewModels
       return query;
     }
 
-    /// <summary>
-    /// Format Multiple Value fields, like Artist, AlbumArtist and Genre 
-    /// </summary>
-    /// <param name="searchString"></param>
-    /// <param name="fieldtype"></param>
-    /// <returns></returns>
-    private string FormatMultipleEntries(string searchString, string fieldtype)
-    {
-      return string.Join(" AND ", Util.EscapeDatabaseQuery(searchString)
-            .Split(new[] { " ", "," }, StringSplitOptions.RemoveEmptyEntries)
-            .Select(x => $"{fieldtype}:*{x}* "));
-    }
-
     #endregion
 
     #region Command Execution
@@ -1257,12 +1242,6 @@ namespace MPTagThat.SongGrid.ViewModels
 
           if (command == Action.ActionType.DATABASEQUERY)
           {
-            if (!ContainerLocator.Current.Resolve<IMusicDatabase>().DatabaseEngineStarted)
-            {
-              _notificationView = new NotificationView();
-              _notificationView.Show();
-            }
-
             IsBusy = true;
             Songs.Clear();
             var query = (string)msg.MessageData["parameter"];
@@ -1270,11 +1249,6 @@ namespace MPTagThat.SongGrid.ViewModels
             if (result != null)
             {
               result.ForEach(song => Songs.Add(song));
-            }
-
-            if (_notificationView != null)
-            {
-              _notificationView.Close();
             }
 
             IsBusy = false;
