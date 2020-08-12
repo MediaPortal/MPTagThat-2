@@ -28,20 +28,14 @@ using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
+using LiteDB;
 using MPTagThat.Core.Common.Song;
 using MPTagThat.Core.Events;
 using MPTagThat.Core.Services.Logging;
-using MPTagThat.Core.Services.MusicDatabase.Indexes;
 using MPTagThat.Core.Services.Settings;
 using MPTagThat.Core.Services.Settings.Setting;
 using MPTagThat.Core.Utils;
 using Prism.Ioc;
-using Raven.Client.Documents;
-using Raven.Client.Documents.BulkInsert;
-using Raven.Client.Documents.Indexes;
-using Raven.Client.Documents.Session;
-using Raven.Embedded;
 using WPFLocalizeExtension.Engine;
 
 #endregion 
@@ -58,18 +52,17 @@ namespace MPTagThat.Core.Services.MusicDatabase
     private readonly NLogLogger log = ContainerLocator.Current.Resolve<ILogger>()?.GetLogger;
     private readonly Options _options = ContainerLocator.Current.Resolve<ISettingsManager>()?.GetOptions;
     private readonly string _defaultMusicDatabaseName = "MusicDatabase";
-    private IDocumentStore _store;
-    private IDocumentSession _session;
+    private LiteDatabase _store;
 
     private BackgroundWorker _bgwScanShare;
     private int _audioFiles;
     private DateTime _scanStartTime;
 
-    private readonly Dictionary<string, IDocumentStore> _stores = new Dictionary<string, IDocumentStore>();
+    private readonly Dictionary<string, LiteDatabase> _stores = new Dictionary<string, LiteDatabase>();
     private readonly StatusBarEvent _progressEvent = new StatusBarEvent { Type = StatusBarEvent.StatusTypes.CurrentFile };
     private readonly SQLiteConnection _sqLiteConnection;
 
-    private string[] _indexedTags = {"Artist:", "AlbumArtist:", "Album:", "Composer:", "Genre:", "Title:", "Type:", "FullFileName:"};
+    private string[] _indexedTags = { "Artist:", "AlbumArtist:", "Album:", "Composer:", "Genre:", "Title:", "Type:", "FullFileName:" };
     #endregion
 
     #region ctor / dtor
@@ -82,18 +75,10 @@ namespace MPTagThat.Core.Services.MusicDatabase
       MusicBrainzDatabaseActive = false;
       if (File.Exists(@"bin\\MusicBrainzArtists.db3"))
       {
-        log.Info("OPening MusicBrainz Artist Database");
+        log.Info("Opening MusicBrainz Artist Database");
         _sqLiteConnection = new SQLiteConnection("Data Source=bin\\MusicBrainzArtists.db3");
         _sqLiteConnection?.Open();
         MusicBrainzDatabaseActive = true;
-      }
-    }
-
-    ~MusicDatabase()
-    {
-      if (_store != null && !_store.WasDisposed)
-      {
-        _session?.Dispose();
       }
     }
 
@@ -130,7 +115,7 @@ namespace MPTagThat.Core.Services.MusicDatabase
     /// </summary>
     /// <param name="databaseName"></param>
     /// <returns></returns>
-    public IDocumentStore GetDocumentStoreFor(string databaseName)
+    public LiteDatabase GetDocumentStoreFor(string databaseName)
     {
       log.Trace($"Getting database store for {databaseName}");
       if (_stores.ContainsKey(databaseName))
@@ -138,7 +123,16 @@ namespace MPTagThat.Core.Services.MusicDatabase
         return _stores[databaseName];
       }
 
-      _stores.Add(databaseName, CreateDocumentStore(databaseName).Result);
+      try
+      {
+        var db = new LiteDatabase($@"{_options.StartupSettings.DatabaseFolder}\{databaseName}.db");
+        _stores.Add(databaseName, db);
+      }
+      catch (Exception ex)
+      {
+        log.Error("Error creating database connection: ", ex.Message);
+        return null;
+      }
       return _stores[databaseName];
     }
 
@@ -163,10 +157,14 @@ namespace MPTagThat.Core.Services.MusicDatabase
         DeleteDatabase(CurrentDatabase);
       }
 
-      if (_store == null && !CreateDbConnection())
+      if (_store == null)
       {
-        log.Error("Database Scan aborted.");
-        return;
+        _store = GetDocumentStoreFor(CurrentDatabase);
+        if (_store == null)
+        {
+          log.Error("Database Scan aborted.");
+          return;
+        }
       }
 
       _bgwScanShare = new BackgroundWorker
@@ -195,14 +193,13 @@ namespace MPTagThat.Core.Services.MusicDatabase
     /// </summary>
     public void DeleteDatabase(string databaseName)
     {
-      log.Trace($"Deleteing database {databaseName}");
-      _session?.Advanced.Clear();
-      _session = null;
+      log.Trace($"Deleting database {databaseName}");
       _store?.Dispose();
       _store = null;
       RemoveStore(databaseName);
-      var dbPath = $"{_options.StartupSettings.DatabaseFolder}Databases\\{databaseName}";
-      Util.DeleteFolder(dbPath);
+      var dbPath = $"{_options.StartupSettings.DatabaseFolder}\\{databaseName}";
+      File.Delete($"{dbPath}.db");
+      File.Delete($"{dbPath}-log.db");
       if (CurrentDatabase == databaseName)
       {
         CurrentDatabase = _defaultMusicDatabaseName;
@@ -215,13 +212,12 @@ namespace MPTagThat.Core.Services.MusicDatabase
     public bool SwitchDatabase(string databaseName)
     {
       var dbName = Util.MakeValidFileName(databaseName);
-      _session?.Advanced.Clear();
-      _session = null;
       _store?.Dispose();
       _store = null;
       RemoveStore(CurrentDatabase);
       CurrentDatabase = dbName;
-      if (CreateDbConnection())
+      _store = GetDocumentStoreFor(CurrentDatabase);
+      if (_store != null)
       {
         log.Info($"Database has been switched to {CurrentDatabase}");
         return true;
@@ -237,10 +233,14 @@ namespace MPTagThat.Core.Services.MusicDatabase
     {
       log.Info($"Executing database query: {query}");
 
-      if (_store == null && !CreateDbConnection())
+      if (_store == null)
       {
-        log.Error("Could not establish a session.");
-        return null;
+        _store = GetDocumentStoreFor(CurrentDatabase);
+        if (_store == null)
+        {
+          log.Error("Could not establish a session.");
+          return null;
+        }
       }
 
       StatusBarEvent msg = new StatusBarEvent { CurrentFolder = "", CurrentProgress = -1 };
@@ -249,34 +249,26 @@ namespace MPTagThat.Core.Services.MusicDatabase
 
       List<SongData> result = null;
 
-      query = FormatQuery(query);
-
-      if (query.Contains(":"))
+      var sql = "";
+      if (query.StartsWith("dbview:"))
       {
-        var resultSet = _session.Advanced.DocumentQuery<SongData, DefaultSearchIndex>()
-          .WhereLucene("Artist",query)
-          .Take(int.MaxValue)
-          .ToList();
-
-        log.Info($"Query returned {resultSet.Count} results");
-
-        // need to do our own ordering
-        result = resultSet.OrderBy(x => x.Artist).ThenBy(x => x.Album).ThenBy(x => x.Track).ToList();
+        sql = "select $ from songs where " + query.Substring(7);
       }
       else
       {
-        var searchText = new List<object>();
-        searchText.AddRange(query.Split(new char[] { ' ' }));
-        var resultSet = _session.Advanced.DocumentQuery<SongData, DefaultSearchIndex>()
-          .ContainsAll("Query", searchText)
-          .Take(int.MaxValue)
-          .ToList();
-
-        log.Info($"Query returned {resultSet.Count} results");
-
-        // need to do our own ordering
-        result = resultSet.OrderBy(x => x.Artist).ThenBy(x => x.Album).ThenBy(x => x.Track).ToList();
+        sql = "select $ from songs " +
+              $"where Artist like '%{query}%' or " +
+              $"AlbumArtist like '%{query}%' or " +
+              $"Album like '%{query}%' or " +
+              $"Title like '%{query}%' or " +
+              $"Genre like '%{query}%'";
       }
+
+      var resultSet = _store.Execute(sql).ToEnumerable().Select(s => BsonMapper.Global.Deserialize<SongData>(s)).ToList();
+      log.Info($"Query returned {resultSet.Count} results");
+
+      // need to do our own ordering
+      result = resultSet.OrderBy(x => x.Artist).ThenBy(x => x.Album).ThenBy(x => x.Track).ToList();
 
       msg.CurrentProgress = 0;
       msg.NumberOfFiles = result.Count;
@@ -292,28 +284,28 @@ namespace MPTagThat.Core.Services.MusicDatabase
     /// <param name="originalFileName"></param>
     public void UpdateSong(SongData song, string originalFileName)
     {
-      if (_store == null && !CreateDbConnection())
+      if (_store == null)
       {
-        log.Error("Could not establish a session.");
-        return;
+        _store = GetDocumentStoreFor(CurrentDatabase);
+        if (_store == null)
+        {
+          log.Error("Could not establish a session.");
+          return;
+        }
       }
 
       try
       {
         originalFileName = Util.EscapeDatabaseQuery(originalFileName);
         // Lookup the song in the database
-        var dbTracks = _session.Advanced.DocumentQuery<SongData, DefaultSearchIndex>().WhereEquals("FullFileName", originalFileName).ToList();
-        if (dbTracks.Count > 0)
+        var col = _store.GetCollection<SongData>("songs");
+        var originalSong = col.FindOne(s => s.FullFileName.Equals(originalFileName));
+        if (originalSong != null)
         {
-          song.Id = dbTracks[0].Id;
-          _session.Advanced.Evict(dbTracks[0]); // Release reference
-          // Reset status
-          song.Status = -1;
-          song.Changed = false;
-          song = StoreCoverArt(song);
-
-          _session.Store(song);
-          _session.SaveChanges();
+          originalSong.Status = -1;
+          originalSong.Changed = false;
+          originalSong = StoreCoverArt(originalSong);
+          col.Update(originalSong.Id, originalSong);
         }
       }
       catch (Exception ex)
@@ -323,139 +315,191 @@ namespace MPTagThat.Core.Services.MusicDatabase
     }
 
 
-    public List<DistinctResult> GetArtists()
+    public List<string> GetArtists()
     {
-      if (_store == null && !CreateDbConnection())
+      if (_store == null)
       {
-        log.Error("Could not establish a session.");
-        return null;
+        _store = GetDocumentStoreFor(CurrentDatabase);
+        if (_store == null)
+        {
+          log.Error("Could not establish a session.");
+          return null;
+        }
       }
 
       log.Trace("Getting distinct artists");
-      var artists = _session.Query<DistinctResult, DistinctArtistIndex>()
-        .Take(int.MaxValue)
-        .OrderBy(x => x.Name)
-        .ToList();
+
+      var artists = new List<string>();
+      var reader = _store.Execute("select distinct(*.Artist)  from songs");
+      reader.Read();
+      var result = reader.Current;
+      foreach (var artist in result["Artist"].AsArray)
+      {
+        artists.Add(artist.ToString().Trim('"'));
+      }
 
       log.Debug($"Found {artists.Count} distinct artists");
       return artists;
     }
 
-    public List<DistinctResult> GetArtistAlbums(string query)
+    public List<string> GetArtistAlbums(string query)
     {
-      if (_store == null && !CreateDbConnection())
+      if (_store == null)
       {
-        log.Error("Could not establish a session.");
-        return null;
+        _store = GetDocumentStoreFor(CurrentDatabase);
+        if (_store == null)
+        {
+          log.Error("Could not establish a session.");
+          return null;
+        }
       }
 
       log.Trace($"Getting distinct artist albums for {query}");
-      var artistalbums = _session.Query<DistinctResult, DistinctArtistAlbumIndex>()
-        .Where(x => x.Name == Util.EscapeDatabaseQuery(query))
-        .Take(int.MaxValue)
-        .OrderBy(x => x.Name)
-        .ThenBy(x => x.Album)
-        .ToList();
+
+      var artistalbums = new List<string>();
+      var reader = _store.Execute($"select distinct(*.Album) from songs where Artist = \"{Util.EscapeDatabaseQuery(query)}\"");
+      reader.Read();
+      var result = reader.Current;
+      foreach (var album in result["Album"].AsArray)
+      {
+        artistalbums.Add(album.ToString().Trim('"'));
+      }
 
       log.Debug($"Found {artistalbums.Count} distinct Artist Albums");
       return artistalbums;
     }
 
-    public List<DistinctResult> GetAlbumArtists()
+    public List<string> GetAlbumArtists()
     {
-      if (_store == null && !CreateDbConnection())
+      if (_store == null)
       {
-        log.Error("Could not establish a session.");
-        return null;
+        _store = GetDocumentStoreFor(CurrentDatabase);
+        if (_store == null)
+        {
+          log.Error("Could not establish a session.");
+          return null;
+        }
       }
 
       log.Trace("Getting distinct album artists");
-      var albumartists = _session.Query<DistinctResult, DistinctAlbumArtistIndex>()
-        .Take(int.MaxValue)
-        .OrderBy(x => x.Name)
-        .ToList();
+
+      var albumartists = new List<string>();
+      var reader = _store.Execute("select distinct(*.AlbumArtist)  from songs");
+      reader.Read();
+      var result = reader.Current;
+      foreach (var albumartist in result["AlbumArtist"].AsArray)
+      {
+        albumartists.Add(albumartist.ToString().Trim('"'));
+      }
 
       log.Debug($"Found {albumartists.Count} distinct album artists");
       return albumartists;
     }
 
-    public List<DistinctResult> GetAlbumArtistAlbums(string query)
+    public List<string> GetAlbumArtistAlbums(string query)
     {
-      if (_store == null && !CreateDbConnection())
+      if (_store == null)
       {
-        log.Error("Could not establish a session.");
-        return null;
+        _store = GetDocumentStoreFor(CurrentDatabase);
+        if (_store == null)
+        {
+          log.Error("Could not establish a session.");
+          return null;
+        }
       }
 
       log.Trace($"Getting distinct albumartist  albums for {query}");
-      var artistalbums = _session.Query<DistinctResult, DistinctAlbumArtistAlbumIndex>()
-        .Where(x => x.Name == Util.EscapeDatabaseQuery(query))
-        .Take(int.MaxValue)
-        .OrderBy(x => x.Name)
-        .ThenBy(x => x.Album)
-        .ToList();
+
+      var artistalbums = new List<string>();
+      var reader = _store.Execute($"select distinct(*.Album) from songs where AlbumArtist = \"{Util.EscapeDatabaseQuery(query)}\"");
+      reader.Read();
+      var result = reader.Current;
+      foreach (var album in result["Album"].AsArray)
+      {
+        artistalbums.Add(album.ToString().Trim('"'));
+      }
 
       log.Debug($"Found {artistalbums.Count} distinct AlbumArtist Albums");
       return artistalbums;
     }
 
-    public List<DistinctResult> GetGenres()
+    public List<string> GetGenres()
     {
-      if (_store == null && !CreateDbConnection())
+      if (_store == null)
       {
-        log.Error("Could not establish a session.");
-        return null;
+        _store = GetDocumentStoreFor(CurrentDatabase);
+        if (_store == null)
+        {
+          log.Error("Could not establish a session.");
+          return null;
+        }
       }
 
       log.Trace("Getting distinct genres");
-      var genres = _session.Query<DistinctResult, DistinctGenreIndex>()
-        .Take(int.MaxValue)
-        .OrderBy(x => x.Genre)
-        .ToList();
+
+      var genres = new List<string>();
+      var reader = _store.Execute("select distinct(*.Genre)  from songs");
+      reader.Read();
+      var result = reader.Current;
+      foreach (var genre in result["Genre"].AsArray)
+      {
+        genres.Add(genre.ToString().Trim('"'));
+      }
 
       log.Debug($"Found {genres.Count} distinct Genres");
       return genres;
     }
 
-    public List<DistinctResult> GetGenreArtists(string query)
+    public List<string> GetGenreArtists(string query)
     {
-      if (_store == null && !CreateDbConnection())
+      if (_store == null)
       {
-        log.Error("Could not establish a session.");
-        return null;
+        _store = GetDocumentStoreFor(CurrentDatabase);
+        if (_store == null)
+        {
+          log.Error("Could not establish a session.");
+          return null;
+        }
       }
 
       log.Trace($"Getting distinct genre artists for {query}");
-      var genreartists = _session.Query<DistinctResult, DistinctGenreArtistIndex>()
-        .Where(x => x.Genre == Util.EscapeDatabaseQuery(query))
-        .Take(int.MaxValue)
-        .OrderBy(x => x.Genre)
-        .ThenBy(x => x.Name)
-        .ToList();
+      var genreartists = new List<string>();
+      var reader = _store.Execute($"select distinct(*.Artist) from songs where Genre = \"{Util.EscapeDatabaseQuery(query)}\"");
+      reader.Read();
+      var result = reader.Current;
+      foreach (var artist in result["Artist"].AsArray)
+      {
+        genreartists.Add(artist.ToString().Trim('"'));
+      }
 
       log.Debug($"Found {genreartists.Count} distinct Genre Artists");
       return genreartists;
     }
 
-    public List<DistinctResult> GetGenreArtistAlbums(string genre, string artist)
+    public List<string> GetGenreArtistAlbums(string genre, string artist)
     {
-      if (_store == null && !CreateDbConnection())
+      if (_store == null)
       {
-        log.Error("Could not establish a session.");
-        return null;
+        _store = GetDocumentStoreFor(CurrentDatabase);
+        if (_store == null)
+        {
+          log.Error("Could not establish a session.");
+          return null;
+        }
       }
 
       log.Trace($"Getting distinct genre artists albums for {genre} and {artist}");
-      var genreartists = _session.Query<DistinctResult, DistinctGenreArtistAlbumIndex>()
-        .Where(x => x.Genre == Util.EscapeDatabaseQuery(genre) && x.Name == Util.EscapeDatabaseQuery(artist))
-        .Take(int.MaxValue)
-        .OrderBy(x => x.Genre)
-        .ThenBy(x => x.Name)
-        .ThenBy(x => x.Album)
-        .ToList();
+      var genreArtistAlbums = new List<string>();
+      var reader = _store.Execute($"select distinct(*.Album) from songs where Genre = \"{Util.EscapeDatabaseQuery(genre)}\" and Artist = \"{Util.EscapeDatabaseQuery(artist)}\"");
+      reader.Read();
+      var result = reader.Current;
+      foreach (var album in result["Album"].AsArray)
+      {
+        genreArtistAlbums.Add(album.ToString().Trim('"'));
+      }
 
-      log.Debug($"Found {genreartists.Count} distinct Genre Artist Albums");
-      return genreartists;
+      log.Debug($"Found {genreArtistAlbums.Count} distinct Genre Artist Albums");
+      return genreArtistAlbums;
     }
 
     /// <summary>
@@ -516,44 +560,6 @@ namespace MPTagThat.Core.Services.MusicDatabase
 
     #region Private Methods
 
-    /// <summary>
-    /// Creates a Database Connection and establishes a session
-    /// </summary>
-    /// <returns></returns>
-    private bool CreateDbConnection()
-    {
-      if (_store != null)
-      {
-        return true;
-      }
-
-      try
-      {
-        _store = GetDocumentStoreFor(CurrentDatabase);
-        log.Trace("Opening database session");
-        _session = _store.OpenSession();
-
-        log.Trace("Creating indices");
-        IndexCreation.CreateIndexes(typeof(DefaultSearchIndex).Assembly, _store);
-        IndexCreation.CreateIndexes(typeof(DistinctArtistIndex).Assembly, _store);
-        IndexCreation.CreateIndexes(typeof(DistinctArtistAlbumIndex).Assembly, _store);
-        IndexCreation.CreateIndexes(typeof(DistinctAlbumArtistIndex).Assembly, _store);
-        IndexCreation.CreateIndexes(typeof(DistinctAlbumArtistAlbumIndex).Assembly, _store);
-        IndexCreation.CreateIndexes(typeof(DistinctGenreIndex).Assembly, _store);
-        IndexCreation.CreateIndexes(typeof(DistinctGenreArtistIndex).Assembly, _store);
-        IndexCreation.CreateIndexes(typeof(DistinctGenreArtistAlbumIndex).Assembly, _store);
-        log.Trace("Finished creating indices");
-
-        return true;
-      }
-      catch (Exception ex)
-      {
-        log.Error("Error creating DB Connection. {0}", ex.Message);
-      }
-
-      return false;
-    }
-
     private void ScanShare_Completed(object sender, RunWorkerCompletedEventArgs e)
     {
       BackgroundWorker bgw = (BackgroundWorker)sender;
@@ -571,7 +577,7 @@ namespace MPTagThat.Core.Services.MusicDatabase
       {
         TimeSpan ts = DateTime.Now - _scanStartTime;
         _progressEvent.CurrentFile = string.Format(LocalizeDictionary.Instance.GetLocalizedObject("MPTagThat", "Strings", "database_ScanFinished", LocalizeDictionary.Instance.Culture).ToString()
-                ,_audioFiles, ts.Hours, ts.Minutes, ts.Seconds);
+                , _audioFiles, ts.Hours, ts.Minutes, ts.Seconds);
         EventSystem.Publish(_progressEvent);
         log.Info("Database Scan finished");
       }
@@ -585,50 +591,65 @@ namespace MPTagThat.Core.Services.MusicDatabase
       var di = new DirectoryInfo((string)e.Argument);
       try
       {
-        using (BulkInsertOperation bulkInsert = _store.BulkInsert())
-        {
-          foreach (FileInfo fi in GetFiles(di, true))
-          {
-            if (_bgwScanShare.CancellationPending)
-            {
-              e.Cancel = true;
-              break;
-            }
+        var col = _store.GetCollection<SongData>("songs");
+        col.EnsureIndex("$.FullFileName", true);
+        col.EnsureIndex("$.Artist", false);
+        col.EnsureIndex("$.AlbumArtist", false);
+        col.EnsureIndex("$.Album", false);
+        col.EnsureIndex("$.Genre", false);
+        col.EnsureIndex("$.Title", false);
+        col.EnsureIndex("$.Type", false);
+        col.EnsureIndex("$.Composer", false);
+        //col.EnsureIndex("ArtistAlbum", "[$.Artist, $.Album]", false);
+        //col.EnsureIndex("AlbumArtistAlbum", "[$.AlbumArtist, $.Album]", false);
 
-            try
-            {
-              if (!Util.IsAudio(fi.FullName))
-              {
-                continue;
-              }
-              _progressEvent.CurrentFile = $"Reading file {fi.FullName}";
-              EventSystem.Publish(_progressEvent);
-              var track = Song.Create(fi.FullName);
-              if (track != null)
-              {
-                track = StoreCoverArt(track);
-                bulkInsert.Store(track);
-                _audioFiles++;
-                if (_audioFiles % 1000 == 0)
-                {
-                  log.Info($"Number of processed files: {_audioFiles}");
-                }
-              }
-            }
-            catch (PathTooLongException)
+        var songList = new List<SongData>();
+
+        foreach (FileInfo fi in GetFiles(di, true))
+        {
+          if (_bgwScanShare.CancellationPending)
+          {
+            e.Cancel = true;
+            break;
+          }
+
+          try
+          {
+            if (!Util.IsAudio(fi.FullName))
             {
               continue;
             }
-            catch (System.UnauthorizedAccessException)
+            _progressEvent.CurrentFile = $"Reading file {fi.FullName}";
+            EventSystem.Publish(_progressEvent);
+            var track = Song.Create(fi.FullName);
+            if (track != null)
             {
-              continue;
-            }
-            catch (Exception ex)
-            {
-              log.Error("Error during Database BulkInsert {0}", ex.Message);
+              track = StoreCoverArt(track);
+              songList.Add(track);
+              _audioFiles++;
+              if (_audioFiles % 1000 == 0)
+              {
+                log.Info($"Number of processed files: {_audioFiles}");
+                col.InsertBulk(songList, 1000);
+                songList.Clear();
+              }
             }
           }
+          catch (PathTooLongException)
+          {
+            continue;
+          }
+          catch (System.UnauthorizedAccessException)
+          {
+            continue;
+          }
+          catch (Exception ex)
+          {
+            log.Error("Error during Database BulkInsert {0}", ex.Message);
+          }
         }
+        col.InsertBulk(songList, 1000);
+        songList.Clear();
       }
       catch (System.InvalidOperationException ex)
       {
@@ -710,59 +731,6 @@ namespace MPTagThat.Core.Services.MusicDatabase
           Console.WriteLine(ex.Message, ex);
         }
       }
-    }
-
-    /// <summary>
-    /// Starts the Raven Database Server
-    /// </summary>
-    private void StartDatabaseServer()
-    {
-      log.Info($"Starting database server in folder {_options.StartupSettings.DatabaseFolder}");
-      EmbeddedServer.Instance.StartServer(new ServerOptions
-      {
-        DataDirectory = $"{_options.StartupSettings.DatabaseFolder}",
-        ServerUrl = "http://127.0.0.1:8080"
-      });
-      DatabaseEngineStarted = true;
-    }
-
-    /// <summary>
-    /// Creates a Raven Document Store
-    /// </summary>
-    /// <param name="databaseName"></param>
-    /// <returns></returns>
-    private async Task<IDocumentStore> CreateDocumentStore(string databaseName)
-    {
-      if (!DatabaseEngineStarted)
-      {
-        StartDatabaseServer();
-      }
-
-      var docStore = EmbeddedServer.Instance.GetDocumentStore(databaseName);
-        
-      log.Trace("Initializing database store");
-      docStore.Initialize();
-      return docStore;
-    }
-
-    /// <summary>
-    /// Format the query for Lucene syntax
-    /// </summary>
-    /// <param name="query"></param>
-    /// <returns></returns>
-    private string FormatQuery(string query)
-    {
-      // And / Or operators need to be all uppercase
-      query = Regex.Replace(query, " and ", " AND ", RegexOptions.IgnoreCase);
-      query = Regex.Replace(query, " or ", " OR ", RegexOptions.IgnoreCase);
-
-      // Change the indexed Tags to first letter Upper case
-      foreach (var tag in _indexedTags)
-      {
-        query = Regex.Replace(query, tag, tag, RegexOptions.IgnoreCase);
-      }
-
-      return query;
     }
 
     #endregion

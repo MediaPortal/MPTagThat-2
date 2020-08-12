@@ -84,8 +84,6 @@ namespace MPTagThat.SongGrid.ViewModels
     private bool _actionCopy;
     private bool _selectAll;
 
-    private NotificationView _notificationView;
-
     private readonly System.Windows.Input.Cursor _numberOnClickCursor = new System.Windows.Input.Cursor(System.Windows.Application.GetResourceStream(new Uri("pack://application:,,,/MPTagThat;component/Resources/Images/CursorNumbering.cur")).Stream);
 
     #endregion
@@ -725,12 +723,6 @@ namespace MPTagThat.SongGrid.ViewModels
                        }
                        Songs.Add(song);
                        count++;
-                       if (count % 1000 == 0)
-                       {
-                         // Commit every 1000 songs, in case we have database mode enabled
-                         _songs.CommitDatabaseChanges();
-                       }
-
                        msg.NumberOfFiles = count;
                        EventSystem.Publish(msg);
                      }
@@ -763,9 +755,6 @@ namespace MPTagThat.SongGrid.ViewModels
                  LocalizeDictionary.Instance.GetLocalizedObject("MPTagThat", "Strings", "message_ErrorTitle", LocalizeDictionary.Instance.Culture).ToString(), MessageBoxButton.OK);
                log.Error("Folderscan: Running out of memory. Scanning aborted.");
              }
-
-             // Commit changes to SongTemp, in case we have switched to DB Mode
-             _songs.CommitDatabaseChanges();
 
              msg.CurrentProgress = 0;
              msg.CurrentFile = "";
@@ -876,8 +865,7 @@ namespace MPTagThat.SongGrid.ViewModels
 
              StatusBarEvent msg = new StatusBarEvent { CurrentFolder = query, CurrentProgress = -1 };
 
-             var orderBy = "";
-             var dbQuery = CreateQuery(searchString, out orderBy);
+             var dbQuery = CreateQuery(searchString);
              var result = ContainerLocator.Current.Resolve<IMusicDatabase>().ExecuteQuery(dbQuery);
 
              if (result != null)
@@ -895,19 +883,11 @@ namespace MPTagThat.SongGrid.ViewModels
                  }
                  Songs.Add(song);
                  count++;
-                 if (count % 1000 == 0)
-                 {
-                   // Commit every 1000 songs, in case we have database mode enabled
-                   _songs.CommitDatabaseChanges();
-                 }
 
                  msg.NumberOfFiles = count;
                  EventSystem.Publish(msg);
                }
              }
-
-             // Commit changes to SongTemp, in case we have switched to DB Mode
-             _songs.CommitDatabaseChanges();
 
              msg.CurrentProgress = 0;
              msg.CurrentFile = "";
@@ -923,67 +903,43 @@ namespace MPTagThat.SongGrid.ViewModels
     /// Create a query based on the selection
     /// </summary>
     /// <param name="searchString"></param>
-    /// <param name="orderBy"></param>
     /// <returns></returns>
-    private string CreateQuery(string[] searchString, out string orderBy)
+    private string CreateQuery(string[] searchString)
     {
-      var query = "";
-      orderBy = "";
+      var query = "dbview:";
 
       switch (searchString[0].ToLower())
       {
         case "artist":
-          query = FormatMultipleEntries(searchString[1], "Artist");
-          orderBy = "Album,Track";
+          query += $"Artist = \"{Util.EscapeDatabaseQuery(searchString[1])}\"";
           if (searchString.GetLength(0) > 2)
           {
-            query += $" AND Album:\"{Util.EscapeDatabaseQuery(searchString[2])}\"";
-            orderBy = "Track";
+            query += $" AND Album = \"{Util.EscapeDatabaseQuery(searchString[2])}\"";
           }
           break;
 
         case "albumartist":
-          query = FormatMultipleEntries(searchString[1], "AlbumArtist");
-          orderBy = "Album,Track";
+          query += $"AlbumArtist = \"{Util.EscapeDatabaseQuery(searchString[1])}\"";
           if (searchString.GetLength(0) > 2)
           {
-            query += $" AND Album:\"{Util.EscapeDatabaseQuery(searchString[2])}\"";
-            orderBy = "Track";
+            query += $" AND Album = \"{Util.EscapeDatabaseQuery(searchString[2])}\"";
           }
           break;
 
         case "genre":
-          query = FormatMultipleEntries(searchString[1], "Genre");
-          //orderByClause = "strArtist, strAlbum, iTrack";
-          orderBy = "Artist,Album,Track";
+          query += $"Genre = \"{Util.EscapeDatabaseQuery(searchString[1])}\"";
           if (searchString.GetLength(0) > 2)
           {
-            query += " AND ";
-            query += FormatMultipleEntries(searchString[2], "Artist");
-            orderBy = "Album,Track";
+            query += $" AND Artist = \"{Util.EscapeDatabaseQuery(searchString[2])}\"";
           }
           if (searchString.GetLength(0) > 3)
           {
-            query += $" AND Album:\"{Util.EscapeDatabaseQuery(searchString[3])}\"";
-            orderBy = "Album,Track";
+            query += $" AND Album = \"{Util.EscapeDatabaseQuery(searchString[3])}\"";
           }
           break;
       }
 
       return query;
-    }
-
-    /// <summary>
-    /// Format Multiple Value fields, like Artist, AlbumArtist and Genre 
-    /// </summary>
-    /// <param name="searchString"></param>
-    /// <param name="fieldtype"></param>
-    /// <returns></returns>
-    private string FormatMultipleEntries(string searchString, string fieldtype)
-    {
-      return string.Join(" AND ", Util.EscapeDatabaseQuery(searchString)
-            .Split(new[] { " ", "," }, StringSplitOptions.RemoveEmptyEntries)
-            .Select(x => $"{fieldtype}:*{x}* "));
     }
 
     #endregion
@@ -1286,12 +1242,6 @@ namespace MPTagThat.SongGrid.ViewModels
 
           if (command == Action.ActionType.DATABASEQUERY)
           {
-            if (!ContainerLocator.Current.Resolve<IMusicDatabase>().DatabaseEngineStarted)
-            {
-              _notificationView = new NotificationView();
-              _notificationView.Show();
-            }
-
             IsBusy = true;
             Songs.Clear();
             var query = (string)msg.MessageData["parameter"];
@@ -1301,14 +1251,7 @@ namespace MPTagThat.SongGrid.ViewModels
               result.ForEach(song => Songs.Add(song));
             }
 
-            if (_notificationView != null)
-            {
-              _notificationView.Close();
-            }
-
             IsBusy = false;
-            // Commit changes to SongTemp, in case we have switched to DB Mode
-            _songs.CommitDatabaseChanges();
             return;
           }
 

@@ -24,6 +24,7 @@ using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Windows.Media.Imaging;
+using LiteDB;
 using MPTagThat.Core.Services.Settings;
 using MPTagThat.Core.Utils;
 using Prism.Ioc;
@@ -119,9 +120,9 @@ namespace MPTagThat.Core.Common.Song
 
     /// <summary>
     /// Unique ID of the Track
-    /// To be used in identifying cloned / changed tracks
+    /// To be used in the Database
     /// </summary>
-    public string Id { get; set; }
+    public int Id { get; set; }
 
     /// <summary>
     /// The ID3 Version
@@ -154,6 +155,7 @@ namespace MPTagThat.Core.Common.Song
     /// </summary>
     private int _status = -1;
 
+    [BsonIgnore]
     public int Status
     {
       get => _status;
@@ -189,6 +191,8 @@ namespace MPTagThat.Core.Common.Song
     /// A Status message, which we might want to display
     /// </summary>
     private string _statusMsg = "";
+   
+    [BsonIgnore]
     public string StatusMsg
     {
       get => _statusMsg;
@@ -263,6 +267,7 @@ namespace MPTagThat.Core.Common.Song
     /// <summary>
     /// Has the Track fixable errors?
     /// </summary>
+    [BsonIgnore]
     public Util.MP3Error MP3ValidationError { get => _mp3ValError; set => SetProperty(ref _mp3ValError, value); }
 
     #endregion
@@ -453,8 +458,8 @@ namespace MPTagThat.Core.Common.Song
         string[] disc = null;
         try
         {
-          disc = value.Split('/');
-          if (disc[0] != "")
+          disc = value?.Split('/');
+          if (disc != null && disc[0] != "")
             DiscNumber = Convert.ToUInt32(disc[0]);
         }
         catch (Exception) { }
@@ -901,6 +906,7 @@ namespace MPTagThat.Core.Common.Song
     /// <summary>
     /// Return the Front Cover
     /// </summary>
+    [BsonIgnore]
     public BitmapImage FrontCover
     {
       get
@@ -1020,7 +1026,7 @@ namespace MPTagThat.Core.Common.Song
 
       set
       {
-        if (value != "" && !value.ToLower().Contains("db"))
+        if (!string.IsNullOrEmpty(value) && !value.ToLower().Contains("db"))
         {
           value += " dB";
         }
@@ -1037,11 +1043,11 @@ namespace MPTagThat.Core.Common.Song
 
     public string ReplayGainAlbum
     {
-      get { return _replaygainAlbum; }
+      get => _replaygainAlbum;
 
       set
       {
-        if (value != "" && !value.ToLower().Contains("db"))
+        if (!string.IsNullOrEmpty(value) && !value.ToLower().Contains("db"))
         {
           value += " dB";
         }

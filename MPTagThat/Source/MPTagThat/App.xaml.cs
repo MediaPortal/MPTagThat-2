@@ -315,12 +315,10 @@ namespace MPTagThat
     private static void ReadConfig()
     {
       _startupSettings = new StartupSettings();
-      string configFile = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Config.xml");
+      string configFile = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "MPTagThat2\\Config.xml");
       if (!File.Exists(configFile))
       {
         _startupSettings.MaxSongs = 1000;
-        _startupSettings.RavenDebug = false;
-        _startupSettings.RavenStudioPort = 8080;
         var dbPath = "%APPDATA%\\MPTagThat2\\Databases";
         _startupSettings.DatabaseFolder = CheckPath(dbPath);
         var coverArtPath = "%APPDATA%\\MPTagThat2\\CoverArt";
@@ -351,12 +349,6 @@ namespace MPTagThat
 
         XmlNode maxSongsNode = doc.DocumentElement.SelectSingleNode("/config/MaximumNumberOfSongsInList");
         _startupSettings.MaxSongs = maxSongsNode != null ? Convert.ToInt32(maxSongsNode.InnerText) : 1000;
-
-        XmlNode ravenDebugNode = doc.DocumentElement.SelectSingleNode("/config/RavenDebug");
-        _startupSettings.RavenDebug = ravenDebugNode != null && Convert.ToInt32(ravenDebugNode.InnerText) != 0;
-
-        XmlNode ravenPortNode = doc.DocumentElement.SelectSingleNode("/config/RavenStudioPort");
-        _startupSettings.RavenStudioPort = ravenPortNode != null ? Convert.ToInt32(ravenPortNode.InnerText) : 8080;
 
         XmlNode ravenDatabaseNode = doc.DocumentElement.SelectSingleNode("/config/MusicDatabaseFolder");
         var dbPath = ravenDatabaseNode?.InnerText ?? "%APPDATA%\\MPTagThat2\\Databases";

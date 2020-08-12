@@ -68,6 +68,7 @@ namespace MPTagThat.Treeview.Views
         switch (type)
         {
           case "Artist":
+          case "AlbumArtist":
             return _artistIcon;
 
           case "Album":

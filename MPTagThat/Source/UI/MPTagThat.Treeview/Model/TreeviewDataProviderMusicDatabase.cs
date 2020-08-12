@@ -25,7 +25,6 @@ using System.Collections.ObjectModel;
 using System.Windows.Input;
 using MPTagThat.Core.Services.Logging;
 using MPTagThat.Core.Services.MusicDatabase;
-using MPTagThat.Core.Services.MusicDatabase.Indexes;
 using MPTagThat.Dialogs.Views;
 using Prism.Ioc;
 using Syncfusion.UI.Xaml.TreeView.Engine;
@@ -117,16 +116,23 @@ namespace MPTagThat.Treeview.Model
         return;
       }
 
+      // Check on the Level of the node, so that we don't allow infinite expansions
+      if ((musicItem.Path.StartsWith("Artist") || musicItem.Path.StartsWith("AlbumArtist")) && node.Level == 3)
+      {
+        node.HasChildNodes = false;
+        return;
+      } 
+      if (musicItem.Path.StartsWith("Genre") && node.Level == 4)
+      {
+        node.HasChildNodes = false;
+        return;
+      }
+
       helper.Model.Cursor = Cursors.Wait;
 
-      IEnumerable result = null;
+      List<string> result = null;
       if (musicItem.IsSpecialFolder)
       {
-        if (!ContainerLocator.Current.Resolve<IMusicDatabase>().DatabaseEngineStarted)
-        {
-          _notificationView = new NotificationView();
-          _notificationView.Show();
-        }
         switch (musicItem.Path.ToLower())
         {
           case "artist":
@@ -145,8 +151,6 @@ namespace MPTagThat.Treeview.Model
             break;
         }
 
-        _notificationView?.Close();
-
         if (result != null)
         {
           var items = new List<TreeItem>();
@@ -157,18 +161,18 @@ namespace MPTagThat.Treeview.Model
             if (_rootFolder == RootFolder.Artist)
             {
               type = "Artist";
-              value = (item as DistinctResult)?.Name;
+              value = item;
               
             }
             else if (_rootFolder == RootFolder.AlbumArtist)
             {
               type = "AlbumArtist";
-              value = (item as DistinctResult)?.Name;
+              value = item;
             }
             else
             {
               type = "Genre";
-              value = (item as DistinctResult)?.Genre;
+              value = item;
             }
             var path = $@"{type}\{value}";
             var newNode = CreateTreeNode(helper, value, path, false, type);
@@ -185,7 +189,6 @@ namespace MPTagThat.Treeview.Model
       }
       else
       {
-        var isGenreArtistLevel = true;
         if (musicItem.Item == null)
         {
           helper.Model.Cursor = Cursors.Arrow;
@@ -210,7 +213,6 @@ namespace MPTagThat.Treeview.Model
           }
           else
           {
-            isGenreArtistLevel = false;
             result = ContainerLocator.Current.Resolve<IMusicDatabase>().GetGenreArtistAlbums(searchString[1], searchString[2]);
           }
         }
@@ -225,19 +227,12 @@ namespace MPTagThat.Treeview.Model
             if (_rootFolder == RootFolder.Artist || _rootFolder == RootFolder.AlbumArtist)
             {
               type = "Album";
-              value = (item as DistinctResult)?.Album;
+              value = item;
             }
             else
             {
               type = "Genre";
-              if (isGenreArtistLevel)
-              {
-                value = (item as DistinctResult)?.Name;
-              }
-              else
-              {
-                value = (item as DistinctResult)?.Album;
-              }
+              value = item;
             }
 
             var path = $@"{musicItem.Path}\{value}";

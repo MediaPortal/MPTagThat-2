@@ -16,6 +16,7 @@ xcopy /y %1\MPTagThat\bin\%2\MPTagThat.exe.* %TARGETPATH%
 xcopy /y %1\MPTagThat\bin\%2\Bass.Net.dll %TARGETPATH%\Bin\
 xcopy /s /y %1\MPTagThat\bin\%2\x64\* %TARGETPATH%\Bin\x64\
 xcopy /y %1\MPTagThat\bin\%2\MPTagThat.LicenseManager.dll %TARGETPATH%\Bin\
+xcopy /y %1\MPTagThat\bin\%2\NewtonSoft.Json.dll %TARGETPATH%\Bin\
 xcopy /y %1\MPTagThat\bin\%2\Prism.* %TARGETPATH%\Bin\
 xcopy /y %1\MPTagThat\bin\%2\Syncfusion.* %TARGETPATH%\Bin\
 xcopy /y %1\MPTagThat\bin\%2\System.* %TARGETPATH%\Bin\
@@ -31,7 +32,6 @@ REM Copy Core
 xcopy /y %1\MPTagThat.Core\bin\%2\MPTagThat.Core.* %TARGETPATH%\Bin\
 xcopy /y %1\MPTagThat.Core\bin\%2\NLog.dll %TARGETPATH%\Bin\
 xcopy /y %1\MPTagThat.Core\bin\%2\taglibsharp.dll %TARGETPATH%\Bin\
-xcopy /y %1\MPTagThat.Core\bin\%2\NewtonSoft.Json.dll %TARGETPATH%\Bin\
 xcopy /y %1\MPTagThat.Core\bin\%2\FreeImageNET.dll %TARGETPATH%\Bin\
 xcopy /y %1\MPTagThat.Core\bin\%2\x64\FreeImage.dll %TARGETPATH%\Bin\x64\
 xcopy /y %1\MPTagThat.Core\bin\%2\CommonServiceLocator.dll %TARGETPATH%\Bin\
@@ -39,6 +39,7 @@ xcopy /y %1\MPTagThat.Core\bin\%2\CSScriptLibrary.dll %TARGETPATH%\Bin\
 xcopy /y %1\MPTagThat.Core\bin\%2\Hqub.MusicBrainz.API.dll %TARGETPATH%\Bin\
 xcopy /y %1\MPTagThat.Core\bin\%2\DiscogsClient.dll %TARGETPATH%\Bin\
 xcopy /y %1\MPTagThat.Core\bin\%2\IF.Lastfm.Core.dll %TARGETPATH%\Bin\
+xcopy /y %1\MPTagThat.Core\bin\%2\LiteDB.dll %TARGETPATH%\Bin\
 xcopy /y %1\MPTagThat.Core\bin\%2\Microsoft.* %TARGETPATH%\Bin\
 xcopy /y %1\MPTagThat.Core\bin\%2\Mono.CSharp.dll %TARGETPATH%\Bin\
 xcopy /y %1\MPTagThat.Core\bin\%2\netstandard.dll %TARGETPATH%\Bin\
@@ -47,10 +48,6 @@ xcopy /y %1\MPTagThat.Core\bin\%2\RestSharp.dll %TARGETPATH%\Bin\
 xcopy /y %1\MPTagThat.Core\bin\%2\RestSharpHelper.dll %TARGETPATH%\Bin\
 xcopy /y %1\MPTagThat.Core\bin\%2\System.Reactive.dll %TARGETPATH%\Bin\
 xcopy /y %1\MPTagThat.Core\bin\%2\Prism.* %TARGETPATH%\Bin\
-xcopy /y %1\MPTagThat.Core\bin\%2\RavenDBServer\*.* %TARGETPATH%\Bin\RavenDBServer\ /E /R /D
-xcopy /y %1\MPTagThat.Core\bin\%2\Raven.* %TARGETPATH%\Bin\
-xcopy /y %1\MPTagThat.Core\bin\%2\Sparrow.* %TARGETPATH%\Bin\
-xcopy /y %1\MPTagThat.Core\bin\%2\Lambda2Js.Signed.* %TARGETPATH%\Bin\
 xcopy /y %1\MPTagThat.Core\bin\%2\Syncfusion.* %TARGETPATH%\Bin\
 xcopy /y %1\MPTagThat.Core\bin\%2\WPFLocalizeExtension.* %TARGETPATH%\Bin\
 xcopy /y %1\MPTagThat.Core\bin\%2\XAMLMarkupExtensions.* %TARGETPATH%\Bin\
