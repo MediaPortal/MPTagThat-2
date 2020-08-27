@@ -66,6 +66,8 @@ namespace MPTagThat.Treeview.ViewModels
 
     #region Properies
 
+    public string Theme => _options.MainSettings.Theme;
+
     /// <summary>
     /// A new Item has been selected. Send a notification to list the content of the folder
     /// </summary>

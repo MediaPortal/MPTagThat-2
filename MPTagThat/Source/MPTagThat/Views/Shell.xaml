@@ -38,7 +38,12 @@
       <RowDefinition Height="Auto"/>
       <RowDefinition Height="*"/>
     </Grid.RowDefinitions>
-    <ContentControl prism:RegionManager.RegionName="RibbonRegion" />
+    <ContentControl prism:RegionManager.RegionName="RibbonRegion">
+      <!-- Fix by Syncfusion to avoid Ribbon not being visible on startup -->
+      <ContentControl.Resources>
+        <Style BasedOn="{x:Null}" TargetType="{x:Type ContentControl}" />
+      </ContentControl.Resources>
+    </ContentControl>
     <syncfusion:DockingManager prism:RegionManager.RegionName="MainRegion" Name="MainDockingManager" DockFill="True" DockFillDocumentMode="Normal" Grid.ColumnSpan="2" Grid.Row="1">
       <ContentControl syncfusion:DockingManager.Header="{lex:Loc treeview_Header}" x:Name="Treeview" 
                       syncfusion:DockingManager.DesiredWidthInDockedMode="200" 

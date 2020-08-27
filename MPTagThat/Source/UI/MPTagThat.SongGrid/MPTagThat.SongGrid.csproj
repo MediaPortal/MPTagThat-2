@@ -138,9 +138,6 @@
     <PackageReference Include="Syncfusion.SfInput.WPF">
       <Version>18.2.0.48</Version>
     </PackageReference>
-    <PackageReference Include="Syncfusion.SfShared.WPF">
-      <Version>18.1.0.52</Version>
-    </PackageReference>
     <PackageReference Include="Syncfusion.Tools.WPF">
       <Version>18.2.0.48</Version>
     </PackageReference>

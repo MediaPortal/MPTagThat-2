@@ -105,9 +105,6 @@
     <PackageReference Include="Prism.Wpf">
       <Version>8.0.0.1740-pre</Version>
     </PackageReference>
-    <PackageReference Include="Syncfusion.PropertyGrid.WPF">
-      <Version>18.2.0.48</Version>
-    </PackageReference>
     <PackageReference Include="Syncfusion.SfTreeView.WPF">
       <Version>18.2.0.48</Version>
     </PackageReference>

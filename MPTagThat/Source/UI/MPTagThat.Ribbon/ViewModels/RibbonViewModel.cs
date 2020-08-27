@@ -1140,6 +1140,12 @@ namespace MPTagThat.Ribbon.ViewModels
       SelectedLanguage = _languages.First(item => item.Name == _options.MainSettings.Language);
 
       // Themes
+      _themes.Add("MaterialLight");
+      _themes.Add("MaterialDark");
+      _themes.Add("MaterialLightBlue");
+      _themes.Add("MaterialDarkBlue");
+      _themes.Add("Office2019Colorful");
+      _themes.Add("Office2019Black");
       _themes.Add("Office365");
       _themes.Add("Office2016Colorful");
       _themes.Add("Office2016White");
