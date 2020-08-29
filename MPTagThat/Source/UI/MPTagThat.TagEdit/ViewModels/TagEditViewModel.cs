@@ -1862,8 +1862,8 @@ namespace MPTagThat.TagEdit.ViewModels
     {
       // A IPLS is delimited with "\0"
       // A TIPL is delimited with ";"
-      var ipls = song.InvolvedPeople.Split(new[] { '\0', ';' });
-      for (var j = 0; j < ipls.Length - 1; j += 2)
+      var ipls = song.InvolvedPeople?.Split(new[] { '\0', ';' });
+      for (var j = 0; j < ipls?.Length - 1; j += 2)
       {
         InvolvedPersons.Add(new Person { Name = ipls[j].Trim(), Function = ipls[j + 1].Trim() });
       }
@@ -1898,8 +1898,8 @@ namespace MPTagThat.TagEdit.ViewModels
     private void FillMusicianGrid(SongData song)
     {
       // A TMCL is delimited with ";"
-      var tmcl = song.MusicCreditList.Split(new[] { ';' });
-      for (var j = 0; j < tmcl.Length - 1; j += 2)
+      var tmcl = song.MusicCreditList?.Split(new[] { ';' });
+      for (var j = 0; j < tmcl?.Length - 1; j += 2)
       {
         InvolvedMusicians.Add(new Person { Function = tmcl[j].Trim(), Name = tmcl[j + 1].Trim() });
       }
