@@ -42,7 +42,6 @@
     <syncfusion:SfTreeView x:Name="TreeView"
                            Grid.Row="1" 
                            SelectionMode="Single"
-                           AutoExpandMode="RootNodes"
                            ItemsSource="{Binding Nodes}"
                            SelectedItem="{Binding SelectedNode, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                            LoadOnDemandCommand="{Binding LoadFolderOnDemandCommand}"
@@ -68,7 +67,6 @@
                     Margin="1,0,0,0"
                     VerticalAlignment="Center">
                 <Label Content="{Binding Name}"
-                       Foreground="Black"
                        FontSize="12"
                        VerticalContentAlignment="Center" />
               </Grid>
