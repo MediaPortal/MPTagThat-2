@@ -92,9 +92,6 @@ namespace MPTagThat.Core.Common.Song
 
     private Util.MP3Error _mp3ValError;
     private ObservableCollection<Picture> _pictures = new ObservableCollection<Picture>();
-    private List<string> _pictureHashList = new List<string>();
-    private List<Comment> _comments = new List<Comment>();
-    private List<Lyric> _lyrics = new List<Lyric>();
     private ObservableCollection<PopmFrame> _popmframes = new ObservableCollection<PopmFrame>();
     private List<TagLib.TagTypes> _removedTagTypes = null;
 
@@ -105,8 +102,6 @@ namespace MPTagThat.Core.Common.Song
     public SongData()
     {
       _mp3ValError = Util.MP3Error.NoError;
-      Frames = new List<Frame>();
-      UserFrames = new ObservableCollection<Frame>();
 
       Pictures.CollectionChanged += Pictures_CollectionChanged;
       UserFrames.CollectionChanged += UserFrames_CollectionChanged;
@@ -132,17 +127,18 @@ namespace MPTagThat.Core.Common.Song
     /// <summary>
     /// The Extended Frames included in the file
     /// </summary>
-    public List<Frame> Frames { get; set; }
+    public List<Frame> Frames { get; set; } = new List<Frame>();
 
     /// <summary>
     /// The User Defined Frames included in the file
     /// </summary>
-    public ObservableCollection<Frame> UserFrames { get; set; }
+    public ObservableCollection<Frame> UserFrames { get; set; } = new ObservableCollection<Frame>();
 
     /// <summary>
     /// The User Defined Frames that we have read before modification
     /// </summary>
-    public List<Frame> SavedUserFrames { get; set; }
+    [BsonIgnore]
+    public List<Frame> SavedUserFrames { get; set; } = new List<Frame>();
 
     /// <summary>
     /// Current Status of Track, as indicated in Column 0 of grid
@@ -174,6 +170,7 @@ namespace MPTagThat.Core.Common.Song
     /// </summary>
     private bool _changed = false;
 
+    [BsonIgnore]
     public bool Changed
     {
       get => _changed;
@@ -191,7 +188,7 @@ namespace MPTagThat.Core.Common.Song
     /// A Status message, which we might want to display
     /// </summary>
     private string _statusMsg = "";
-   
+
     [BsonIgnore]
     public string StatusMsg
     {
@@ -202,11 +199,13 @@ namespace MPTagThat.Core.Common.Song
     /// <summary>
     /// Indicates if the Changed status should bet set
     /// </summary>
-    public bool  UpdateChangedProperty { get; set; }
+    [BsonIgnore]
+    public bool UpdateChangedProperty { get; set; }
 
     /// <summary>
     /// Indicates, if the Tags have been removed
     /// </summary>
+    [BsonIgnore]
     public List<TagLib.TagTypes> TagsRemoved
     {
       get
@@ -237,11 +236,13 @@ namespace MPTagThat.Core.Common.Song
     /// <summary>
     /// File Extension
     /// </summary>
+    [BsonIgnore]
     public string FileExt { get => Path.GetExtension(FullFileName); }
 
     /// <summary>
     /// Path of the File
     /// </summary>
+    [BsonIgnore]
     public string FilePath { get => Path.GetDirectoryName(FullFileName); }
 
     /// <summary>
@@ -252,16 +253,19 @@ namespace MPTagThat.Core.Common.Song
     /// <summary>
     /// Do we have a MP3 File?
     /// </summary>
+    [BsonIgnore]
     public bool IsMp3 => TagType.ToLower() == "mp3";
 
     /// <summary>
     /// Do we have a V2.4 MP3 File?
     /// </summary>
+    [BsonIgnore]
     public bool IsMp3V4 => TagType.ToLower() == "mp3" && ID3Version == 4;
 
     /// <summary>
     /// Number of Pictures in File
     /// </summary>
+    [BsonIgnore]
     public int NumPics => Pictures.Count > 0 ? Pictures.Count : PictureHashList.Count;
 
     /// <summary>
@@ -348,19 +352,20 @@ namespace MPTagThat.Core.Common.Song
     /// Comment Tag
     /// ID3: COMM
     /// </summary>
+    [BsonIgnore]
     public string Comment
     {
-      get => _comments.Count > 0 ? _comments[0].Text : "";
+      get => ID3Comments.Count > 0 ? ID3Comments[0].Text : "";
       set
       {
-        if (_comments.Count == 0)
+        if (ID3Comments.Count == 0)
         {
-          _comments.Add(new Comment("", "", value));
+          ID3Comments.Add(new Comment("", "", value));
           RaisePropertyChanged("Comment");
         }
         else
         {
-          _comments[0].Text = value;
+          ID3Comments[0].Text = value;
           RaisePropertyChanged("Comment");
         }
       }
@@ -370,10 +375,7 @@ namespace MPTagThat.Core.Common.Song
     /// Comment Tag
     /// ID3: COMM
     /// </summary>
-    public List<Comment> ID3Comments
-    {
-      get => _comments;
-    }
+    public List<Comment> ID3Comments { get; set; } = new List<Comment>();
 
     /// <summary>
     /// Commercial Information Tag
@@ -443,6 +445,7 @@ namespace MPTagThat.Core.Common.Song
     /// Position in Mediaset Tag
     /// ID3: TPOS
     /// </summary>
+    [BsonIgnore]
     public string Disc
     {
       get
@@ -552,6 +555,7 @@ namespace MPTagThat.Core.Common.Song
     /// Involved People Tag
     /// ID3: IPLS (2.3) / TIPL (2.4)
     /// </summary>
+    [BsonIgnore]
     public string InvolvedPeople
     {
       get
@@ -581,31 +585,29 @@ namespace MPTagThat.Core.Common.Song
     /// Lyrics Tag
     /// ID3: USLT
     /// </summary>
+    [BsonIgnore]
     public string Lyrics
     {
       get
       {
-        return _lyrics.Count > 0 ? _lyrics[0].Text : "";
+        return LyricsFrames.Count > 0 ? LyricsFrames[0].Text : "";
       }
       set
       {
-        if (_lyrics.Count == 0)
+        if (LyricsFrames.Count == 0)
         {
-          _lyrics.Add(new Lyric("", "", value));
+          LyricsFrames.Add(new Lyric("", "", value));
         }
         else
         {
-          _lyrics[0].Text = value;
+          LyricsFrames[0].Text = value;
         }
         RaisePropertyChanged("Lyrics");
       }
     }
 
 
-    public List<Lyric> LyricsFrames
-    {
-      get => _lyrics;
-    }
+    public List<Lyric> LyricsFrames { get; set; } = new List<Lyric>();
 
     /// <summary>
     /// MediaType Tag
@@ -921,7 +923,7 @@ namespace MPTagThat.Core.Common.Song
           }
           return _pictures[indexFrontCover].ImageFromPic();
         }
-        
+
         if (PictureHashList.Count > 0)
         {
           var coverartFolder = ContainerLocator.Current.Resolve<ISettingsManager>().StartupSettings.CoverArtFolder;
@@ -935,6 +937,7 @@ namespace MPTagThat.Core.Common.Song
     /// <summary>
     /// Returns the stored Coverart for the Song
     /// </summary>
+    [BsonIgnore]
     public ObservableCollection<Picture> Pictures
     {
       get => _pictures;
@@ -944,7 +947,7 @@ namespace MPTagThat.Core.Common.Song
     /// <summary>
     /// Returns the Hashlist for objects, which we have in the database
     /// </summary>
-    public List<string> PictureHashList => _pictureHashList;
+    public List<string> PictureHashList { get; set; } = new List<string>();
 
     /// <summary>
     /// Publisher Writer Tag
@@ -964,6 +967,7 @@ namespace MPTagThat.Core.Common.Song
     /// Rating Tag
     /// ID3: POPM
     /// </summary>
+    [BsonIgnore]
     public int Rating
     {
       get
@@ -1115,6 +1119,7 @@ namespace MPTagThat.Core.Common.Song
     /// Track Tag
     /// ID3: TRCK
     /// </summary>
+    [BsonIgnore]
     public string Track
     {
       get
@@ -1362,22 +1367,22 @@ namespace MPTagThat.Core.Common.Song
         userFrameList.ForEach(songClone.UserFrames.Add);
 
         // Handle Lists
-        for (var i = 0; i < this._lyrics.Count; i++)
+        for (var i = 0; i < this.LyricsFrames.Count; i++)
         {
-          var lyric = new Lyric(this._lyrics[i]);
-          songClone._lyrics.Add(lyric);
+          var lyric = new Lyric(this.LyricsFrames[i]);
+          songClone.LyricsFrames.Add(lyric);
         }
 
-        for (var i = 0; i < this._pictureHashList.Count; i++)
+        for (var i = 0; i < this.PictureHashList.Count; i++)
         {
-          var hash = this._pictureHashList[i];
-          songClone._pictureHashList.Add(hash);
+          var hash = this.PictureHashList[i];
+          songClone.PictureHashList.Add(hash);
         }
 
-        for (var i = 0; i < this._comments.Count; i++)
+        for (var i = 0; i < this.ID3Comments.Count; i++)
         {
-          var comment = new Comment(this._comments[i]);
-          songClone._comments.Add(comment);
+          var comment = new Comment(this.ID3Comments[i]);
+          songClone.ID3Comments.Add(comment);
         }
       }
       catch (Exception)
@@ -1453,7 +1458,7 @@ namespace MPTagThat.Core.Common.Song
       }
       RaisePropertyChanged($"UserFrames");
     }
-    
+
     #endregion
 
     #region overrides
