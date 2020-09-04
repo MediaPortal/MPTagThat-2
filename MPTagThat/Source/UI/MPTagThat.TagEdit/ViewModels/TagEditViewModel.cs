@@ -2017,6 +2017,7 @@ namespace MPTagThat.TagEdit.ViewModels
     /// <param name="backup"></param>
     private void UndoSongedits(SongData original, SongData backup)
     {
+      original.UpdateChangedProperty = false;
       original.Status = -1;
       original.Changed = false;
       original.FullFileName = backup.FullFileName;
