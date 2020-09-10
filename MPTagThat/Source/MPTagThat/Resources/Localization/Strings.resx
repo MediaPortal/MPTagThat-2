@@ -1835,4 +1835,8 @@ To change the order of the ratings drag the rows.</value>
   <data name="screentip_RipGnuDB" xml:space="preserve">
     <value>Looks up the current Audio CD on GnuDB and MusicBrainz and fills the information into the song grid, ready for ripping</value>
   </data>
+  <data name="settings_RowColor" xml:space="preserve">
+    <value>Row Color:</value>
+    <comment>The standard Row Color in the Song Grid</comment>
+  </data>
 </root>

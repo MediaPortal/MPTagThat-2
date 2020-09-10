@@ -22,13 +22,16 @@
     <core:BusyToCursorConverter x:Key="BusyToCursorConverter" />
     <core:RowChangedColorConverter x:Key="ChangedRowStyleSelector" />
     <core:AlternateRowChangedColorConverter x:Key="AlternateRowStyleSelector" />
+    <core:ColorContrastConverter x:Key="ForegroundStyleSelector" />
 
     <!-- The Row Styles in the Grid -->
     <Style TargetType="syncfusion:VirtualizingCellsControl" x:Key="AlternatingRowStyle">
       <Setter Property="Background" Value="{Binding Path=Changed,UpdateSourceTrigger=PropertyChanged,Converter={StaticResource AlternateRowStyleSelector}}"/>
+      <Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource Self}, Path=Background, UpdateSourceTrigger=PropertyChanged,Converter={StaticResource ForegroundStyleSelector}}"/>
     </Style>
     <Style TargetType="syncfusion:VirtualizingCellsControl" x:Key="ChangedRowStyle">
       <Setter Property="Background" Value="{Binding Path=Changed,UpdateSourceTrigger=PropertyChanged,Converter={StaticResource ChangedRowStyleSelector}}"/>
+      <Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource Self}, Path=Background,Converter={StaticResource ForegroundStyleSelector}}"/>
     </Style>
   </UserControl.Resources>
 
@@ -56,7 +59,7 @@
                            Cursor="{Binding CustomCursor, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                            ForceCursor="True"
                            AlternatingRowStyle="{StaticResource AlternatingRowStyle}" 
-                           RowStyle="{StaticResource ChangedRowStyle}" >
+                           RowStyle="{StaticResource ChangedRowStyle}">
 
       <i:Interaction.Triggers>
         <i:EventTrigger EventName="SelectionChanged">

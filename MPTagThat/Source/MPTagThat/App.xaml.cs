@@ -144,7 +144,7 @@ namespace MPTagThat
       _splashScreen.Show();
 
       SfSkinManager.ApplyStylesOnApplication = false;
-
+      
       _commandLineArgs = e.Args;     
       _portable = 0;
       _startupFolder = "";
@@ -239,6 +239,11 @@ namespace MPTagThat
       log.Trace(">>>");
       _splashScreen.Status.Content = "Finishing startup ...";
       
+      
+      SfSkinManager.SetVisualStyle(Application.Current.MainWindow,
+        (VisualStyles)Enum.Parse(typeof(VisualStyles), (Container.Resolve(typeof(ISettingsManager)) as ISettingsManager)?.GetOptions
+          .MainSettings.Theme));
+
       log.Info("MPTagThat is starting...");
       
       // Move Init of Services, which we don't need immediately to a separate thread to increase startup performance

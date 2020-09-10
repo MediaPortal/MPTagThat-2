@@ -67,6 +67,7 @@
     <Compile Include="Common\Behaviors\TextBoxCursorPositionBehavior.cs" />
     <Compile Include="Common\Converter\AlternateRowChangedColorConverter.cs" />
     <Compile Include="Common\Converter\BusyToCursorConverter.cs" />
+    <Compile Include="Common\Converter\ColorContrastConverter.cs" />
     <Compile Include="Common\Converter\InvertBoolConverter.cs" />
     <Compile Include="Common\Converter\InvertVisibilityConverter.cs" />
     <Compile Include="Common\Converter\RowChangedColorConverter.cs" />
@@ -184,13 +185,13 @@
       <Version>8.0.0.1740-pre</Version>
     </PackageReference>
     <PackageReference Include="Syncfusion.SfGrid.WPF">
-      <Version>18.2.0.54</Version>
+      <Version>18.2.0.57</Version>
     </PackageReference>
     <PackageReference Include="Syncfusion.SfInput.WPF">
-      <Version>18.2.0.54</Version>
+      <Version>18.2.0.57</Version>
     </PackageReference>
     <PackageReference Include="Syncfusion.Tools.WPF">
-      <Version>18.2.0.54</Version>
+      <Version>18.2.0.57</Version>
     </PackageReference>
     <PackageReference Include="System.Collections.Immutable">
       <Version>1.7.1</Version>

@@ -2734,6 +2734,15 @@ namespace MPTagThat.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Row Color:.
+        /// </summary>
+        public static string settings_RowColor {
+            get {
+                return ResourceManager.GetString("settings_RowColor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Tags Settings.
         /// </summary>
         public static string settings_Tags {

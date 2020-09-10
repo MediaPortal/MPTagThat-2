@@ -178,6 +178,9 @@ namespace MPTagThat.Core.Services.Settings.Setting
     [Setting(SettingScope.User, "Yellow")]
     public string ChangedRowColor { get; set; }
 
+    [Setting(SettingScope.User, "White")]
+    public string RowColor { get; set; }
+
     [Setting(SettingScope.User, "LightBlue")]
     public string AlternateRowColor { get; set; }
 
