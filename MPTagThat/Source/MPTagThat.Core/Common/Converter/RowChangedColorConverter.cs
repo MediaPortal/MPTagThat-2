@@ -23,7 +23,9 @@ using System.Globalization;
 using System.Windows;
 using System.Windows.Data;
 using System.Windows.Media;
+using MPTagThat.Core.Events;
 using MPTagThat.Core.Services.Settings;
+using Prism.Events;
 using Prism.Ioc;
 
 #endregion
@@ -35,20 +37,52 @@ namespace MPTagThat.Core.Common.Converter
   /// </summary>
   public class RowChangedColorConverter : IValueConverter
   {
+    #region Variables
 
     private Color _changedRowColor = (Color) ColorConverter.ConvertFromString(ContainerLocator.Current.Resolve<ISettingsManager>()?.GetOptions.MainSettings.ChangedRowColor);
+    private Color _rowColor = (Color) ColorConverter.ConvertFromString(ContainerLocator.Current.Resolve<ISettingsManager>()?.GetOptions.MainSettings.RowColor);
+
+    #endregion
+
+    #region ctor
+
+    public RowChangedColorConverter()
+    {
+      EventSystem.Subscribe<GenericEvent>(OnMessageReceived, ThreadOption.UIThread);
+    }
+
+    #endregion
+
+    #region Methods
 
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
       if ((bool)value)
         return new SolidColorBrush(_changedRowColor);
 
-      return DependencyProperty.UnsetValue;
+      return new SolidColorBrush(_rowColor);
     }
 
     public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
     {
-      throw new NotImplementedException();
+      return DependencyProperty.UnsetValue;
     }
+
+    #endregion
+
+    #region Event Handling
+
+    private void OnMessageReceived(GenericEvent msg)
+    {
+      switch (msg.Action.ToLower())
+      {
+        case "themecolorchanged":
+          _rowColor = (Color) ColorConverter.ConvertFromString(ContainerLocator.Current.Resolve<ISettingsManager>()?.GetOptions.MainSettings.RowColor);
+          _changedRowColor = (Color) ColorConverter.ConvertFromString(ContainerLocator.Current.Resolve<ISettingsManager>()?.GetOptions.MainSettings.ChangedRowColor);
+          break;
+      }
+    }
+
+    #endregion
   }
 }

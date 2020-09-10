@@ -292,8 +292,39 @@ namespace MPTagThat.Ribbon.ViewModels
       set
       {
         SetProperty(ref _selectedTheme, value);
-        SfSkinManager.SetVisualStyle(Application.Current.MainWindow,
-          (VisualStyles) Enum.Parse(typeof(VisualStyles), value));
+        // TODO: Activate once the fix from Syncfusion arrives
+        //SfSkinManager.SetVisualStyle(Application.Current.MainWindow,
+        //  (VisualStyles)Enum.Parse(typeof(VisualStyles), value));
+        
+        // Set the preferred Row Colors for the Grid
+        switch (_selectedTheme)
+        {
+          case "MaterialLight":
+            RowColor = "#FFFFFFFF";
+            AlternateRowColor = "#FFA0A0A0";
+            break;
+
+          case "MaterialDark":
+            RowColor = "#FF121212";
+            AlternateRowColor = "#FF3A3A3A";
+            break;
+
+          case "MaterialLightBlue":
+            RowColor = "#FFF6F9FE";
+            AlternateRowColor = "#FF0F73AF";
+            break;
+
+          case "Office2019Colorful":
+            RowColor = "#FFFFFFFF";
+            AlternateRowColor = "#FFD0DEF2";
+            break;
+
+          case "Office2019Black":
+            RowColor = "#FF323130";
+            AlternateRowColor = "#FFA0A0A0";
+            break;
+        }
+
         _options.MainSettings.Theme = value;
       }
     }
@@ -314,6 +345,26 @@ namespace MPTagThat.Ribbon.ViewModels
     }
 
     /// <summary>
+    /// Handling of color for rows
+    /// </summary>
+    private string _rowColor;
+
+    public string RowColor
+    {
+      get => _rowColor;
+      set
+      {
+        SetProperty(ref _rowColor, value);
+        _options.MainSettings.RowColor = value;
+        GenericEvent evt = new GenericEvent()
+        {
+          Action = "themecolorchanged"
+        };
+        EventSystem.Publish(evt);
+      }
+    }
+
+    /// <summary>
     /// Handling of color for alternate rows
     /// </summary>
     private string _alternateRowColor;
@@ -325,6 +376,11 @@ namespace MPTagThat.Ribbon.ViewModels
       {
         SetProperty(ref _alternateRowColor, value);
         _options.MainSettings.AlternateRowColor = value;
+        GenericEvent evt = new GenericEvent()
+        {
+          Action = "themecolorchanged"
+        };
+        EventSystem.Publish(evt);
       }
     }
 
@@ -354,7 +410,7 @@ namespace MPTagThat.Ribbon.ViewModels
       set
       {
         SetProperty(ref _selectedLogLevel, value);
-        log.Level = (LogLevel) Enum.Parse(typeof(LogLevel), value);
+        log.Level = (LogLevel)Enum.Parse(typeof(LogLevel), value);
         _options.MainSettings.DebugLevel = value;
       }
     }
@@ -396,7 +452,7 @@ namespace MPTagThat.Ribbon.ViewModels
           else if (buttons[i] == "Shift")
             ShiftKey = true;
         }
-        KeyValue =  buttons[buttons.Length - 1];
+        KeyValue = buttons[buttons.Length - 1];
       }
     }
 
@@ -775,7 +831,7 @@ namespace MPTagThat.Ribbon.ViewModels
 
     private void AddGenre(object param)
     {
-      CustomGenres.Add(new Item("",""));
+      CustomGenres.Add(new Item("", ""));
     }
 
     public ICommand DeleteGenreCommand { get; }
@@ -783,12 +839,12 @@ namespace MPTagThat.Ribbon.ViewModels
     private void DeleteGenre(object param)
     {
       // Can't use a foreach here, since it modifies the collection
-      while(SelectedGenres.Count > 0)
+      while (SelectedGenres.Count > 0)
       {
         SelectedGenres.Remove((string)SelectedGenres[0]);
       }
     }
-    
+
     public ICommand SaveGenreCommand { get; }
 
     private void SaveGenre(object param)
@@ -1019,7 +1075,7 @@ namespace MPTagThat.Ribbon.ViewModels
         case "ButtonDatabaseQuery":
           type = Action.ActionType.DATABASEQUERY;
           eventParameter = QueriesSelectedText;
-          
+
           var evt = new GenericEvent
           {
             Action = "ToggleDatabaseView"
@@ -1135,8 +1191,8 @@ namespace MPTagThat.Ribbon.ViewModels
       SelectedLogLevel = _options.MainSettings.DebugLevel;
 
       // Languages
-      Languages.Add(new Item("de","Deutsch"));
-      Languages.Add(new Item("en","English"));
+      Languages.Add(new Item("de", "Deutsch"));
+      Languages.Add(new Item("en", "English"));
       SelectedLanguage = _languages.First(item => item.Name == _options.MainSettings.Language);
 
       // Themes
@@ -1153,6 +1209,7 @@ namespace MPTagThat.Ribbon.ViewModels
       SelectedTheme = _options.MainSettings.Theme;
 
       ChangedRowColor = _options.MainSettings.ChangedRowColor;
+      RowColor = _options.MainSettings.RowColor;
       AlternateRowColor = _options.MainSettings.AlternateRowColor;
 
       KeyMap.AddRange(_options.KeyMap.KeyMap);
@@ -1188,7 +1245,7 @@ namespace MPTagThat.Ribbon.ViewModels
 
       switch (_options.MainSettings.ID3Version)
       {
-        case 1: 
+        case 1:
           ID3UpdateV1 = true;
           break;
 
@@ -1209,7 +1266,7 @@ namespace MPTagThat.Ribbon.ViewModels
       ValidateMp3 = _options.MainSettings.MP3Validate;
       FixMp3 = _options.MainSettings.MP3AutoFix;
 
-      foreach(var genre in _options.MainSettings.CustomGenres)
+      foreach (var genre in _options.MainSettings.CustomGenres)
       {
         CustomGenres.Add(new Item(genre, ""));
       }
