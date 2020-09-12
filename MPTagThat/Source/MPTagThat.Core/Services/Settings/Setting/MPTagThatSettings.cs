@@ -172,16 +172,16 @@ namespace MPTagThat.Core.Services.Settings.Setting
     [Setting(SettingScope.User, "en")]
     public string Language { get; set; }
 
-    [Setting(SettingScope.User, "Office2016Colorful")]
+    [Setting(SettingScope.User, "Office2019Colorful")]
     public string Theme { get; set; }
 
-    [Setting(SettingScope.User, "Yellow")]
+    [Setting(SettingScope.User, "Red")]
     public string ChangedRowColor { get; set; }
 
-    [Setting(SettingScope.User, "White")]
+    [Setting(SettingScope.User, "#FFFFFFFF")]
     public string RowColor { get; set; }
 
-    [Setting(SettingScope.User, "LightBlue")]
+    [Setting(SettingScope.User, "#FFD0DEF2")]
     public string AlternateRowColor { get; set; }
 
     [Setting(SettingScope.User, "Debug")]

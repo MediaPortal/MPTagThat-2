@@ -311,7 +311,7 @@ namespace MPTagThat.Ribbon.ViewModels
 
           case "MaterialLightBlue":
             RowColor = "#FFF6F9FE";
-            AlternateRowColor = "#FF0F73AF";
+            AlternateRowColor = "#FFA1C2FA";
             break;
 
           case "Office2019Colorful":
@@ -1199,13 +1199,8 @@ namespace MPTagThat.Ribbon.ViewModels
       _themes.Add("MaterialLight");
       _themes.Add("MaterialDark");
       _themes.Add("MaterialLightBlue");
-      _themes.Add("MaterialDarkBlue");
       _themes.Add("Office2019Colorful");
       _themes.Add("Office2019Black");
-      _themes.Add("Office365");
-      _themes.Add("Office2016Colorful");
-      _themes.Add("Office2016White");
-      _themes.Add("Office2016DarkGray");
       SelectedTheme = _options.MainSettings.Theme;
 
       ChangedRowColor = _options.MainSettings.ChangedRowColor;
