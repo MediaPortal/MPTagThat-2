@@ -25,6 +25,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Windows.Media.Imaging;
+using FreeImageAPI;
 using TagLib;
 
 #endregion
@@ -92,26 +93,33 @@ namespace MPTagThat.Core.AlbumSearch
     {
       get
       {
-        var sUrl = LargeImageUrl ?? MediumImageUrl ?? SmallImageUrl;
-        if (sUrl == null)
+        var vector = ImageData;
+        if (vector == null)
         {
           return null;
         }
 
         try
         {
-          BitmapImage bitmap = new BitmapImage();
-          bitmap.BeginInit();
-          bitmap.UriSource = new Uri(sUrl, UriKind.Absolute);
-          bitmap.CacheOption = BitmapCacheOption.OnLoad;
-          bitmap.EndInit();
-          return bitmap;
+          var bitmapImage = new BitmapImage();
+          using (var stream = new MemoryStream(vector.Data))
+          {
+            stream.Seek(0, SeekOrigin.Begin);
+            bitmapImage.BeginInit();
+            bitmapImage.StreamSource = stream;
+            bitmapImage.CreateOptions = BitmapCreateOptions.PreservePixelFormat;
+            bitmapImage.CacheOption = BitmapCacheOption.OnLoad;
+            bitmapImage.EndInit();
+            return bitmapImage;
+          }
         }
-        catch { /* On purpose */}
-
-        return null;
+        catch
+        {
+          return null;
+        }
       }
     }
+
 
     public ByteVector ImageData
     {

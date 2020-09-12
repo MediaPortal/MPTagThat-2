@@ -86,15 +86,19 @@ namespace MPTagThat.Core.AlbumSearch.AlbumSites
       log.Trace($"Discogs: Querying {ArtistName} -  {AlbumName}");
       var query = new DiscogsSearch { artist = ArtistName, release_title = AlbumName, type = DiscogsEntityType.master };
       var searchresults = await _discogsClient.SearchAsync(query);
-      // Look for the Master Release only
-      foreach (var result in searchresults.GetResults())
+      if (searchresults != null)
       {
-        var album = await GetRelease(result.id);
-        if (album != null)
+        // Look for the Master Release only
+        foreach (var result in searchresults.GetResults())
         {
-          Albums.Add(album);
+          var album = await GetRelease(result.id);
+          if (album != null)
+          {
+            Albums.Add(album);
+          }
         }
       }
+
       log.Trace("Discogs Query Ended");
       // We don't need to return really anything. Just to satisfy that a Task can't return void
       return null;
