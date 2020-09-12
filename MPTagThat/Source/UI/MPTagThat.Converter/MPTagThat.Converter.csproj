@@ -133,7 +133,7 @@
       <Version>18.2.0.57</Version>
     </PackageReference>
     <PackageReference Include="WPFLocalizeExtension">
-      <Version>3.6.1</Version>
+      <Version>3.8.0</Version>
     </PackageReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
