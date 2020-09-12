@@ -295,7 +295,11 @@ namespace MPTagThat.Dialogs.ViewModels
           if (_lc.NrOfCurrentSearches < NrOfCurrentSearchesAllowed && _lc.StopSearches == false)
           {
             string[] lyricId = (string[])_lyricsQueue.Dequeue();
-            lyricId[0] = SwitchArtist(lyricId[0]);
+
+            if (_options.MainSettings.SwitchArtist)
+            {
+              lyricId[0] = SwitchArtist(lyricId[0]);
+            }
 
             _lc.AddNewLyricSearch(lyricId[0], TrimTitle(lyricId[1]), GetStrippedPrefixArtist(lyricId[0], _strippedPrefixStrings),
               row);
