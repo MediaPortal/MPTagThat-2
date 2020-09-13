@@ -138,6 +138,9 @@
     <PackageReference Include="Syncfusion.SfInput.WPF">
       <Version>18.2.0.57</Version>
     </PackageReference>
+    <PackageReference Include="Syncfusion.SfRichTextBoxAdv.WPF">
+      <Version>18.2.0.57</Version>
+    </PackageReference>
     <PackageReference Include="Syncfusion.Tools.WPF">
       <Version>18.2.0.57</Version>
     </PackageReference>

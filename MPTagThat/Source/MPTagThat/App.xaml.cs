@@ -143,7 +143,7 @@ namespace MPTagThat
       _splashScreen.Status.Content = "MPTagThat starting ...";
       _splashScreen.Show();
 
-      SfSkinManager.ApplyStylesOnApplication = false;
+      SfSkinManager.ApplyStylesOnApplication = true;
       
       _commandLineArgs = e.Args;     
       _portable = 0;
