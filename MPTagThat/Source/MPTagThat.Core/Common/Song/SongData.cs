@@ -915,13 +915,13 @@ namespace MPTagThat.Core.Common.Song
       {
         if (Pictures.Count > 0)
         {
-          int indexFrontCover = _pictures
-            .Select((pic, i) => new { Pic = pic, Position = i }).First(m => m.Pic.Type == PictureType.FrontCover).Position;
-          if (indexFrontCover < 0)
+          var indexFrontCover = _pictures
+            .Select((pic, i) => new { Pic = pic, Position = i }).FirstOrDefault(m => m.Pic.Type == PictureType.FrontCover)?.Position;
+          if (indexFrontCover == null)
           {
             indexFrontCover = 0;
           }
-          return _pictures[indexFrontCover].ImageFromPic();
+          return _pictures[indexFrontCover.Value].ImageFromPic();
         }
 
         if (PictureHashList.Count > 0)
