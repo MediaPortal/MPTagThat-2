@@ -25,7 +25,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using MPTagThat.Core;
 using MPTagThat.Core.Events;
+using MPTagThat.Core.Services.MusicDatabase;
+using MPTagThat.Core.Services.Settings;
 using MPTagThat.Core.Utils;
+using Prism.Ioc;
 using TagLib;
 using File = System.IO.File;
 
@@ -137,7 +140,7 @@ namespace MPTagThat.SongGrid.Commands
               if (song.Pictures.Count > 0)
               {
                 int indexFrontCover = song.Pictures
-                  .Select((pic, i) => new {Pic = pic, Position = i}).First(m => m.Pic.Type == PictureType.FrontCover)
+                  .Select((pic, i) => new { Pic = pic, Position = i }).First(m => m.Pic.Type == PictureType.FrontCover)
                   .Position;
                 if (indexFrontCover < 0)
                 {
@@ -153,8 +156,7 @@ namespace MPTagThat.SongGrid.Commands
               }
             }
 
-            // TODO: Update the Music Database
-            //ServiceScope.Get<IMusicDatabase>().UpdateTrack(track, originalFileName);
+            ContainerLocator.Current.Resolve<IMusicDatabase>().UpdateSong(song, originalFileName);
 
             song.Status = 0;
             song.Changed = false;

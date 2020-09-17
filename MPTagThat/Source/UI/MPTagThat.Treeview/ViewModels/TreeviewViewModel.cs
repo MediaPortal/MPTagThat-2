@@ -265,11 +265,13 @@ namespace MPTagThat.Treeview.ViewModels
         {
           log.Trace("Changing to Folder View");
           _dataProvider = new TreeViewDataProvider();
+          _options.IsDatabaseMode = false;
         }
         else
         {
           log.Trace("Changing to Database View");
           _dataProvider = new TreeviewDataProviderMusicDatabase();
+          _options.IsDatabaseMode = true;
         }
         RefreshTreeview();
       }

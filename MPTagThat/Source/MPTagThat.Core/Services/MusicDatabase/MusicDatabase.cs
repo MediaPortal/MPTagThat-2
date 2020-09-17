@@ -296,16 +296,17 @@ namespace MPTagThat.Core.Services.MusicDatabase
 
       try
       {
-        originalFileName = Util.EscapeDatabaseQuery(originalFileName);
+        //originalFileName = Util.EscapeDatabaseQuery(originalFileName);
         // Lookup the song in the database
         var col = _store.GetCollection<SongData>("songs");
         var originalSong = col.FindOne(s => s.FullFileName.Equals(originalFileName));
         if (originalSong != null)
         {
-          originalSong.Status = -1;
-          originalSong.Changed = false;
-          originalSong = StoreCoverArt(originalSong);
-          col.Update(originalSong.Id, originalSong);
+          song.Status = -1;
+          song.Changed = false;
+          song = StoreCoverArt(song);
+          song.Id = originalSong.Id;
+          col.Upsert(song);
         }
       }
       catch (Exception ex)

@@ -284,6 +284,8 @@ namespace MPTagThat.Core.Services.Settings.Setting
     
     public Brush BackGround { get; set; }
 
+    public bool IsDatabaseMode { get; set; }
+
     #endregion
 
     #region ctor

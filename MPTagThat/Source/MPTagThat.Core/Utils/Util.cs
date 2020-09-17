@@ -1488,6 +1488,12 @@ namespace MPTagThat.Core.Utils
     /// <returns></returns>
     public static string EscapeDatabaseQuery(string query)
     {
+
+      return query;
+
+      // Seems to be not needed with LiteDB. Just leave it in, so that it can be re-activated when needed
+
+      /*
       var literal = new StringBuilder(query.Length);
       foreach (var c in query)
       {
@@ -1554,6 +1560,7 @@ namespace MPTagThat.Core.Utils
         }
       }
       return literal.ToString();
+      */
     }
 
 
