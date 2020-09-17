@@ -40,6 +40,7 @@ using MPTagThat.Core.Services.ScriptManager;
 using Action = MPTagThat.Core.Common.Action;
 using DialogResult = System.Windows.Forms.DialogResult;
 using Microsoft.VisualBasic.FileIO;
+using MPTagThat.Core.Services.MusicDatabase;
 using Prism.Ioc;
 using Syncfusion.Data.Extensions;
 
@@ -403,20 +404,21 @@ namespace MPTagThat.Dialogs.ViewModels
             if (CkCopyFiles)
             {
               FileSystem.CopyFile(song.FullFileName, newFilename, CkOverWriteFiles);
-              song.Status = 0;
+              song.Status = -1;
             }
             else
             {
               FileSystem.MoveFile(song.FullFileName, newFilename, CkOverWriteFiles);
-              song.Status = 0;
+              song.Status = -1;
               _songs.Remove(song);
               i--;
             }
 
-            // TODO: Update the Music Database
-            //var originalFileName = song.FullFileName;
-            //song.FullFileName = newFilename;
-            //ServiceScope.Get<IMusicDatabase>().UpdateTrack(song, originalFileName);
+            var originalFileName = song.FullFileName;
+            song.UpdateChangedProperty = false;
+            song.FullFileName = newFilename;
+            ContainerLocator.Current.Resolve<IMusicDatabase>().UpdateSong(song, originalFileName);
+            song.UpdateChangedProperty = true;
           }
           catch (Exception e2)
           {
