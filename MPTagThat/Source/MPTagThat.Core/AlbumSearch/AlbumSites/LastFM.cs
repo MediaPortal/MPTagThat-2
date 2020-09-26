@@ -91,9 +91,9 @@ namespace MPTagThat.Core.AlbumSearch.AlbumSites
           Site = "LastFM",
           Artist = lastfmAlbum.ArtistName,
           Title = lastfmAlbum.Name,
-          SmallImageUrl = lastfmAlbum.Images?.Small?.AbsoluteUri,
-          MediumImageUrl = lastfmAlbum.Images?.Medium?.AbsoluteUri,
-          LargeImageUrl = lastfmAlbum.Images?.Large?.AbsoluteUri
+          SmallImageUrl = lastfmAlbum.Images?.Large?.AbsoluteUri,
+          MediumImageUrl = lastfmAlbum.Images?.Largest?.AbsoluteUri,
+          LargeImageUrl = lastfmAlbum.Images?.Mega?.AbsoluteUri
         };
 
         var discs = new List<List<AlbumSong>>();
