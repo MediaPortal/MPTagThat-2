@@ -173,7 +173,7 @@
       <Version>2.2.0.1</Version>
     </PackageReference>
     <PackageReference Include="MPTagThat_License_Manager">
-      <Version>1.0.4</Version>
+      <Version>1.0.5</Version>
     </PackageReference>
     <PackageReference Include="MusicBrainzAPI">
       <Version>2.1.0</Version>
@@ -185,13 +185,13 @@
       <Version>8.0.0.1740-pre</Version>
     </PackageReference>
     <PackageReference Include="Syncfusion.SfGrid.WPF">
-      <Version>18.2.0.57</Version>
+      <Version>18.3.0.35</Version>
     </PackageReference>
     <PackageReference Include="Syncfusion.SfInput.WPF">
-      <Version>18.2.0.57</Version>
+      <Version>18.3.0.35</Version>
     </PackageReference>
     <PackageReference Include="Syncfusion.Tools.WPF">
-      <Version>18.2.0.57</Version>
+      <Version>18.3.0.35</Version>
     </PackageReference>
     <PackageReference Include="System.Collections.Immutable">
       <Version>1.7.1</Version>

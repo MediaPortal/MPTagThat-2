@@ -75,6 +75,11 @@ namespace MPTagThat
       settings.StartupSettings = _startupSettings;
       settings.GetOptions.InitOptions();
 
+      SfSkinManager.ApplyStylesOnApplication = true;
+      SfSkinManager.SetVisualStyle(Application.Current.MainWindow,
+        (VisualStyles)Enum.Parse(typeof(VisualStyles), (Container.Resolve(typeof(ISettingsManager)) as ISettingsManager)?.GetOptions
+          .MainSettings.Theme));
+
       logger.Level = (LogLevel)Enum.Parse(typeof(LogLevel),(Container.Resolve(typeof(ISettingsManager)) as ISettingsManager)?.GetOptions
         .MainSettings.DebugLevel);
 
@@ -143,8 +148,6 @@ namespace MPTagThat
       _splashScreen.Status.Content = "MPTagThat starting ...";
       _splashScreen.Show();
 
-      SfSkinManager.ApplyStylesOnApplication = true;
-      
       _commandLineArgs = e.Args;     
       _portable = 0;
       _startupFolder = "";
@@ -238,11 +241,6 @@ namespace MPTagThat
       var log = Container.Resolve<ILogger>().GetLogger;
       log.Trace(">>>");
       _splashScreen.Status.Content = "Finishing startup ...";
-      
-      
-      SfSkinManager.SetVisualStyle(Application.Current.MainWindow,
-        (VisualStyles)Enum.Parse(typeof(VisualStyles), (Container.Resolve(typeof(ISettingsManager)) as ISettingsManager)?.GetOptions
-          .MainSettings.Theme));
 
       log.Info("MPTagThat is starting...");
       
