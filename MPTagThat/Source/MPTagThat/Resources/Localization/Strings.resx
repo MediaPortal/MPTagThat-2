@@ -1839,4 +1839,7 @@ To change the order of the ratings drag the rows.</value>
     <value>Row Color:</value>
     <comment>The standard Row Color in the Song Grid</comment>
   </data>
+  <data name="message_Restart_Required" xml:space="preserve">
+    <value>requires restart</value>
+  </data>
 </root>

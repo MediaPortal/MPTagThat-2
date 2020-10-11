@@ -76,9 +76,6 @@ namespace MPTagThat
       settings.GetOptions.InitOptions();
 
       SfSkinManager.ApplyStylesOnApplication = true;
-      SfSkinManager.SetVisualStyle(Application.Current.MainWindow,
-        (VisualStyles)Enum.Parse(typeof(VisualStyles), (Container.Resolve(typeof(ISettingsManager)) as ISettingsManager)?.GetOptions
-          .MainSettings.Theme));
 
       logger.Level = (LogLevel)Enum.Parse(typeof(LogLevel),(Container.Resolve(typeof(ISettingsManager)) as ISettingsManager)?.GetOptions
         .MainSettings.DebugLevel);
