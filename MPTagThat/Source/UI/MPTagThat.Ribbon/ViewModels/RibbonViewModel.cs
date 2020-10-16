@@ -292,18 +292,15 @@ namespace MPTagThat.Ribbon.ViewModels
       set
       {
         SetProperty(ref _selectedTheme, value);
-
-        // Due to problems with the Syncfusion Framework not updating all elements, this requires a restart
-        SfSkinManager.ApplyStylesOnApplication = true;
         SfSkinManager.SetVisualStyle(Application.Current.MainWindow,
           (VisualStyles)Enum.Parse(typeof(VisualStyles), value));
-
+        
         // Set the preferred Row Colors for the Grid
         switch (_selectedTheme)
         {
           case "MaterialLight":
             RowColor = "#FFFFFFFF";
-            AlternateRowColor = "#FFA1C2FA";
+            AlternateRowColor = "#FFA0A0A0";
             break;
 
           case "MaterialDark":
@@ -313,7 +310,7 @@ namespace MPTagThat.Ribbon.ViewModels
 
           case "MaterialLightBlue":
             RowColor = "#FFF6F9FE";
-            AlternateRowColor = "#FF0F73AF";
+            AlternateRowColor = "#FFA1C2FA";
             break;
 
           case "Office2019Colorful":
@@ -321,24 +318,9 @@ namespace MPTagThat.Ribbon.ViewModels
             AlternateRowColor = "#FFD0DEF2";
             break;
 
-          case "Office2019White":
-            RowColor = "#FFFFFFFF";
-            AlternateRowColor = "#FFD0DEF2";
-            break;
-
           case "Office2019Black":
             RowColor = "#FF323130";
             AlternateRowColor = "#FFA0A0A0";
-            break;
-
-          case "Office2019DarkGray":
-            RowColor = "#FFD4D4D4";
-            AlternateRowColor = "#FF646464";
-            break;
-
-          case "Office2019HighContrast":
-            RowColor = "#FF000000";
-            AlternateRowColor = "#FFFAD95A";
             break;
         }
 

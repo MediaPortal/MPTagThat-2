@@ -1303,15 +1303,6 @@ namespace MPTagThat.Resources.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to requires restart.
-        /// </summary>
-        public static string message_Restart_Required {
-            get {
-                return ResourceManager.GetString("message_Restart_Required", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Changes have not been saved. Do you want to save the changes?.
         /// </summary>
         public static string message_Save_Changes {

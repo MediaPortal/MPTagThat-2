@@ -753,7 +753,7 @@
                 </DataTemplate>
               </syncfusion:SfAccordion.HeaderTemplate>
               <syncfusion:SfAccordionItem Header="{lex:Loc settings_General}" AccordionButtonStyle="{StaticResource expanderButtonStyle}">
-                <StackPanel Width="700" Margin="10,10,0,10" HorizontalAlignment="Left">
+                <StackPanel Width="600" Margin="10,10,0,10" HorizontalAlignment="Left">
                   <GroupBox Background="Transparent" Style="{StaticResource GroupBoxStyleNoHeader}">
                     <Grid>
                       <Grid.RowDefinitions>
@@ -767,11 +767,10 @@
                       <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="200"/>
                         <ColumnDefinition/>
-                        <ColumnDefinition Width="200"/>
                       </Grid.ColumnDefinitions>
                       <Label Grid.Row="0" Grid.Column="0" Content="{lex:Loc settings_DebugLevel}"/>
                       <ComboBox Grid.Row="0" Grid.Column="1" ItemsSource="{Binding DebugLevel}" Width="200"
-                                SelectedItem="{Binding SelectedLogLevel, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="0,5,0,2" />
+                                SelectedItem="{Binding SelectedLogLevel, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,0,2" />
                       <Label Grid.Row="1"  Grid.Column="0" Content="{lex:Loc settings_Language}"/>
                       <ComboBox Grid.Row="1" Grid.Column="1" ItemsSource="{Binding Languages}" Width="200"
                                 DisplayMemberPath="Value"
@@ -779,7 +778,6 @@
                       <Label Grid.Row="2" Grid.Column="0" Content="{lex:Loc settings_Theme}"/>
                       <ComboBox Grid.Row="2" Grid.Column="1" ItemsSource="{Binding Themes}" Width="200"
                             SelectedItem="{Binding SelectedTheme, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,0,2"/>
-                      <Label Grid.Row="2" Grid.Column="2" Content="{lex:Loc message_Restart_Required}"/>
                       <Label Grid.Row="3" Grid.Column="0" Content="{lex:Loc settings_ChangedRowColor}"/>
                       <syncfusion:ColorPicker Grid.Row="3" Grid.Column="1"  IsColorPaletteVisible="True" Margin="0,0,0,2"
                                               Color="{Binding ChangedRowColor, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="200" />
