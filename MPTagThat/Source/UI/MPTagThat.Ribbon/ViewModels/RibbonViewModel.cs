@@ -292,8 +292,9 @@ namespace MPTagThat.Ribbon.ViewModels
       set
       {
         SetProperty(ref _selectedTheme, value);
-        SfSkinManager.SetVisualStyle(Application.Current.MainWindow,
-          (VisualStyles)Enum.Parse(typeof(VisualStyles), value));
+        // TODO: Activate once the fix from Syncfusion arrives
+        //SfSkinManager.SetVisualStyle(Application.Current.MainWindow,
+        //  (VisualStyles)Enum.Parse(typeof(VisualStyles), value));
         
         // Set the preferred Row Colors for the Grid
         switch (_selectedTheme)
@@ -1200,9 +1201,6 @@ namespace MPTagThat.Ribbon.ViewModels
       _themes.Add("MaterialLightBlue");
       _themes.Add("Office2019Colorful");
       _themes.Add("Office2019Black");
-      _themes.Add("Office2019DarkGray");
-      _themes.Add("Office2019HighContrast");
-      _themes.Add("Office2019White");
       SelectedTheme = _options.MainSettings.Theme;
 
       ChangedRowColor = _options.MainSettings.ChangedRowColor;

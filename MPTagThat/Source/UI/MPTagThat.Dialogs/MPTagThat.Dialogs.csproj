@@ -175,13 +175,13 @@
       <Version>8.0.0.1740-pre</Version>
     </PackageReference>
     <PackageReference Include="Syncfusion.SfGrid.WPF">
-      <Version>18.3.0.35</Version>
+      <Version>18.2.0.57</Version>
     </PackageReference>
     <PackageReference Include="Syncfusion.SfSkinManager.WPF">
-      <Version>18.3.0.35</Version>
+      <Version>18.2.0.57</Version>
     </PackageReference>
     <PackageReference Include="Syncfusion.Tools.WPF">
-      <Version>18.3.0.35</Version>
+      <Version>18.2.0.57</Version>
     </PackageReference>
     <PackageReference Include="WPFLocalizeExtension">
       <Version>3.8.0</Version>
