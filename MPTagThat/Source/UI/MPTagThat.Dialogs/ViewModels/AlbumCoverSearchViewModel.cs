@@ -424,15 +424,18 @@ namespace MPTagThat.Dialogs.ViewModels
         }
       }
 
+      Artist = "";
       _songs = parameters.GetValue<List<SongData>>("songs");
       if (_songs.GroupBy(s => s.AlbumArtist).Count() == 1)
       {
         Artist = _songs[0].AlbumArtist;
-        if (Artist.Trim() == "" && _songs.GroupBy(s => s.Artist).Count() == 1)
-        {
-          Artist = _songs[0].Artist;
-        }
       }
+
+      if (Artist.Trim() == "" && _songs.GroupBy(s => s.Artist).Count() == 1)
+      {
+          Artist = _songs[0].Artist;
+      }
+
       if (_songs.GroupBy(s => s.Album).Count() == 1)
       {
         Album = _songs[0].Album;
