@@ -844,7 +844,18 @@ namespace MPTagThat.TagEdit.ViewModels
 
     private void ApplyArtistToAlbumArtist(object param)
     {
-      if (SongEdit != null)
+      if (MultiArtist && SongEdit != null)
+      {
+        if (MultiAlbumArtist)
+        {
+          AlbumArtistComboText = ArtistComboText;
+        }
+        else
+        {
+          SongEdit.AlbumArtist = ArtistComboText;
+        }
+      }
+      else if (SongEdit != null)
       {
         SongEdit.AlbumArtist = SongEdit.Artist;
       }
@@ -1695,6 +1706,7 @@ namespace MPTagThat.TagEdit.ViewModels
           {
             MultiArtist = true;
             SelectedArtistsIndex = 0;
+            ArtistComboText = Artists[0];
           }
         }
 
@@ -1710,6 +1722,7 @@ namespace MPTagThat.TagEdit.ViewModels
           {
             MultiAlbumArtist = true;
             SelectedAlbumArtistsIndex = 0;
+            AlbumArtistComboText = AlbumArtists[0];
           }
         }
 
