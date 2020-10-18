@@ -90,6 +90,11 @@
                               Command="{Binding CloseDialogCommand}" 
                               Width="Auto" Height="25" 
                               HorizontalAlignment="Right" Margin="20,5,0,0" />
+        <syncfusion:ButtonAdv Label="{lex:Loc dialog_CancelAll}" 
+                              SmallIcon="pack://application:,,,/MPTagThat;component/Resources/Images/Cancel_Changes_32x.png" 
+                              Command="{Binding CancelAllCommand}" 
+                              Width="Auto" Height="25" 
+                              HorizontalAlignment="Right" Margin="20,5,0,0" />
       </StackPanel>
     </Grid>
   </Border>

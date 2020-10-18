@@ -61,6 +61,7 @@ namespace MPTagThat.Dialogs.ViewModels
         LocalizeDictionary.Instance.Culture).ToString();
 
       ApplyRecordingCommand = new BaseCommand(ApplyRecording);
+      CancelAllCommand = new BaseCommand(CancelAll);
     }
 
     #endregion
@@ -80,6 +81,19 @@ namespace MPTagThat.Dialogs.ViewModels
       log.Trace("<<<");
     }
 
+    /// <summary>
+    /// Abort all Processing
+    /// </summary>
+    public ICommand CancelAllCommand { get; set; }
+
+    private void CancelAll(object param)
+    {
+      log.Trace(">>>");
+      log.Info("Abort Auto tagging all songs");
+      CloseDialog("abort");
+      log.Trace("<<<");
+    }
+
     #endregion
 
     #region Overrides
@@ -90,15 +104,16 @@ namespace MPTagThat.Dialogs.ViewModels
       Recordings = new ObservableCollection<MusicBrainzRecording>(recordings.Select(r => r));
     }
 
-
     public override void CloseDialog(string parameter)
     {
-      ButtonResult result = ButtonResult.None;
-
+      ButtonResult result = ButtonResult.Cancel;
+      
       if (parameter?.ToLower() == "true")
         result = ButtonResult.OK;
       else if (parameter?.ToLower() == "false")
         result = ButtonResult.Cancel;
+      else if (parameter?.ToLower() == "abort")
+        result = ButtonResult.Abort;
 
       var parameters = new DialogParameters();
       parameters.Add("selectedrecording", _selectedRecording);

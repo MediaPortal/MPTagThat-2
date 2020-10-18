@@ -139,6 +139,16 @@ namespace MPTagThat.SongGrid.Commands
             r.Parameters.TryGetValue("selectedrecording", out selectedRecording);
           }
         });
+
+        if (dialogResult == ButtonResult.Cancel)
+        {
+          return (false, song);
+        }
+        else if (dialogResult == ButtonResult.Abort)
+        {
+          return (false, null);
+        }
+
       }
 
       if (selectedRecording.Id != string.Empty)

@@ -1057,6 +1057,10 @@ namespace MPTagThat.SongGrid.ViewModels
             song = result.song;
             song.Changed = true;
           }
+          else if (result.song == null)
+          {
+            break;  // When a command returns Changed = False and set the song to null, this means abort processing
+          }
 
           // For a Save, we might have got a renamed file
           if (command.StartsWith("Save"))
@@ -1069,7 +1073,7 @@ namespace MPTagThat.SongGrid.ViewModels
           {
             Songs.RemoveAt(i);
             Songs.Insert(i, song);
-            SelectedItems.Add(song);   // Readd teh song to selected Items, as it got removed before
+            SelectedItems.Add(song);   // Add the song to selected Items, as it got removed before
           }
 
           if (commandObj.ProgressCancelled)

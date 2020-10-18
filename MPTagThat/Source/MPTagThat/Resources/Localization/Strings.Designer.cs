@@ -952,6 +952,15 @@ namespace MPTagThat.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Cancel All.
+        /// </summary>
+        public static string dialog_CancelAll {
+            get {
+                return ResourceManager.GetString("dialog_CancelAll", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Close.
         /// </summary>
         public static string dialog_Close {
