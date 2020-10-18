@@ -232,6 +232,7 @@ namespace MPTagThat.Dialogs.ViewModels
       SearchCommand = new BaseCommand(SearchAlbums);
       ApplyTagsCommand = new BaseCommand(ApplyTags);
       SelectedAlbumSiteChangedCommand = new BaseCommand(AlbumSiteSelected);
+      SelectedSongsDoubleClickCommand = new BaseCommand(SelectedSongsDoubleClick);
     }
 
     #endregion
@@ -324,10 +325,11 @@ namespace MPTagThat.Dialogs.ViewModels
         SelectedAlbumSongs.AddRange(discs);
       }
 
-      int albumTrackPos = 0;
+      var albumTrackPos = 0;
       var list = new SongData[_songs.Count];
       foreach (var albumSong in SelectedAlbumSongs)
       {
+        var songFound = false;
         foreach (var song in _songs)
         {
           if (Util.LongestCommonSubstring(albumSong.Title, song.FileName) > 0.75)
@@ -337,8 +339,14 @@ namespace MPTagThat.Dialogs.ViewModels
               break;
             }
             list[albumTrackPos] = song;
+            songFound = true;
             break;
           }
+        }
+
+        if (!songFound && albumTrackPos < _songs.Count)
+        {
+          list[albumTrackPos] = _songs[albumTrackPos];
         }
         albumTrackPos++;
       }
@@ -346,6 +354,22 @@ namespace MPTagThat.Dialogs.ViewModels
       foreach (var s in list)
       {
         _matchedSongs.Add(s);
+      }
+    }
+
+    /// <summary>
+    /// When Double Clicking on a Album Song, update the SOng with the same index
+    /// </summary>
+    public ICommand SelectedSongsDoubleClickCommand { get; }
+    private void SelectedSongsDoubleClick(object param)
+    {
+      var albumSong = param as AlbumSong;
+      if (albumSong.Number < _matchedSongs.Count)
+      {
+        var song = MatchedSongs[albumSong.Number - 1];
+        song.TrackNumber = (uint) albumSong.Number;
+        song.Title = albumSong.Title;
+        //MatchedSongs[albumSong.Number - 1] = song;
       }
     }
 

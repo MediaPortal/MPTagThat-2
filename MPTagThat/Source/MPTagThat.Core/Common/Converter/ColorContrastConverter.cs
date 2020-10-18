@@ -29,7 +29,7 @@ using System.Windows.Media;
 namespace MPTagThat.Core.Common.Converter
 {
   /// <summary>
-  /// This Converter is used to adjust the value of the Foreground in the Song grid to be adapated to the background
+  /// This Converter is used to adjust the value of the Foreground in the Song grid to be adapted to the background
   /// I.e. for darker Backgrounds it will use White and for Lighter Backgrounds it will use Black
   /// 
   /// The color value consists of three channels representing the red, green, and blue components.

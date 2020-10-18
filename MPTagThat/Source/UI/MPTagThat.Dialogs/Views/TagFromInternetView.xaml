@@ -109,13 +109,14 @@
         <Grid.ColumnDefinitions>
           <ColumnDefinition Width="350"/>
           <ColumnDefinition Width="10"/>
-          <ColumnDefinition Width="350" />
+          <ColumnDefinition Width="450" />
         </Grid.ColumnDefinitions>
 
         <Label Grid.Row="0"  Grid.Column="0" Content="{lex:Loc lookup_AlbumTracks}" />
         <Label Grid.Row="0"  Grid.Column="2" Content="{lex:Loc lookup_SongsToTag}" />
 
         <syncfusion:SfDataGrid Grid.Row="1" Grid.Column="0"
+                               Name="selectedAlbumSiteGrid"
                                ItemsSource="{Binding SelectedAlbumSongs}"
                                AllowSorting="False"
                                AllowResizingColumns="True" 
@@ -123,6 +124,13 @@
                                AutoGenerateColumns="False"
                                ShowRowHeader="False"
                                ColumnSizer="AutoWithLastColumnFill">
+
+          <b:Interaction.Triggers>
+            <b:EventTrigger EventName="MouseDoubleClick">
+              <b:InvokeCommandAction Command="{Binding SelectedSongsDoubleClickCommand}" CommandParameter="{Binding CurrentItem, ElementName=selectedAlbumSiteGrid}" />
+            </b:EventTrigger>
+          </b:Interaction.Triggers>
+
           <syncfusion:SfDataGrid.Columns>
             <syncfusion:GridTextColumn HeaderText="{lex:Loc songHeader_Track}" MappingName="Number" Width="80"/>
             <syncfusion:GridTextColumn HeaderText="{lex:Loc songHeader_Title}" MappingName="Title" />
@@ -141,6 +149,8 @@
                                ColumnSizer="AutoWithLastColumnFill">
           <syncfusion:SfDataGrid.Columns>
             <syncfusion:GridTextColumn HeaderText="{lex:Loc songHeader_FileName}" MappingName="FileName" />
+            <syncfusion:GridTextColumn HeaderText="{lex:Loc songHeader_Track}" MappingName="TrackNumber" Width="80" />
+            <syncfusion:GridTextColumn HeaderText="{lex:Loc songHeader_Title}" MappingName="Title" />
           </syncfusion:SfDataGrid.Columns>
         </syncfusion:SfDataGrid>
 
