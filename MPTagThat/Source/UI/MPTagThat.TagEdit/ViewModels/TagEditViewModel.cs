@@ -269,6 +269,130 @@ namespace MPTagThat.TagEdit.ViewModels
       set => SetProperty(ref _selectedUserFrames, value);
     }
 
+    #region Multi Album, Artist, AlbumArtist
+
+    /// <summary>
+    /// When we have Multiple Albums show a Combo instead of Text Box
+    /// </summary>
+    private bool _multiAlbum;
+    public bool MultiAlbum
+    {
+      get => _multiAlbum;
+      set => SetProperty(ref _multiAlbum, value);
+    }
+
+    /// <summary>
+    /// The Collection for Multiple Albums
+    /// </summary>
+    private ObservableCollection<string> _albums = new ObservableCollection<string>();
+    public ObservableCollection<string> Albums
+    {
+      get => _albums;
+      set => SetProperty(ref _albums, value);
+    }
+
+    /// <summary>
+    /// The selected Album in the Album Combo
+    /// </summary>
+    private int _selectedAlbumsIndex;
+    public int SelectedAlbumsIndex
+    {
+      get => _selectedAlbumsIndex;
+      set => SetProperty(ref _selectedAlbumsIndex, value);
+    }
+
+    /// <summary>
+    /// The Text of the Album in the Album Combo
+    /// </summary>
+    private string _albumComboText;
+    public string AlbumComboText
+    {
+      get => _albumComboText;
+      set => SetProperty(ref _albumComboText, value);
+    }
+
+    /// <summary>
+    /// When we have Multiple Artists show a Combo instead of Text Box
+    /// </summary>
+    private bool _multiArtist;
+    public bool MultiArtist
+    {
+      get => _multiArtist;
+      set => SetProperty(ref _multiArtist, value);
+    }
+
+    /// <summary>
+    /// The Collection for Multiple Artists
+    /// </summary>
+    private ObservableCollection<string> _artists = new ObservableCollection<string>();
+    public ObservableCollection<string> Artists
+    {
+      get => _artists;
+      set => SetProperty(ref _artists, value);
+    }
+
+    /// <summary>
+    /// The selected Artist in the Artist Combo
+    /// </summary>
+    private int _selectedArtistsIndex;
+    public int SelectedArtistsIndex
+    {
+      get => _selectedArtistsIndex;
+      set => SetProperty(ref _selectedArtistsIndex, value);
+    }
+
+    /// <summary>
+    /// The Text of the Artist in the Artist Combo
+    /// </summary>
+    private string _artistComboText;
+    public string ArtistComboText
+    {
+      get => _artistComboText;
+      set => SetProperty(ref _artistComboText, value);
+    }
+
+    /// <summary>
+    /// When we have Multiple AlbumArtists show a Combo instead of Text Box
+    /// </summary>
+    private bool _multiAlbumArtist;
+    public bool MultiAlbumArtist
+    {
+      get => _multiAlbumArtist;
+      set => SetProperty(ref _multiAlbumArtist, value);
+    }
+
+    /// <summary>
+    /// The Collection for Multiple AlbumArtists
+    /// </summary>
+    private ObservableCollection<string> _albumArtists = new ObservableCollection<string>();
+    public ObservableCollection<string> AlbumArtists
+    {
+      get => _albumArtists;
+      set => SetProperty(ref _albumArtists, value);
+    }
+
+    /// <summary>
+    /// The selected AlbumArtist in the AlbumArtist Combo
+    /// </summary>
+    private int _selectedAlbumArtistsIndex;
+    public int SelectedAlbumArtistsIndex
+    {
+      get => _selectedAlbumArtistsIndex;
+      set => SetProperty(ref _selectedAlbumArtistsIndex, value);
+    }
+
+    /// <summary>
+    /// The Text of the AlbumArtist in the AlbumArtist Combo
+    /// </summary>
+    private string _albumArtistComboText;
+    public string AlbumArtistComboText
+    {
+      get => _albumArtistComboText;
+      set => SetProperty(ref _albumArtistComboText, value);
+    }
+
+    #endregion
+
     #region Check Box Checked properties
     private bool _ckTrackIsChecked;
     public bool CkTrackIsChecked { get => _ckTrackIsChecked; set => SetProperty(ref _ckTrackIsChecked, value); }
@@ -542,12 +666,15 @@ namespace MPTagThat.TagEdit.ViewModels
             CkTitleIsChecked = true;
             break;
           case "artist":
+          case "artistcombotext":
             CkArtistIsChecked = true;
             break;
           case "albumartist":
+          case "albumartistcombotext":
             CkAlbumArtistIsChecked = true;
             break;
           case "album":
+          case "albumcombotext":
             CkAlbumIsChecked = true;
             break;
           case "year":
@@ -1230,17 +1357,17 @@ namespace MPTagThat.TagEdit.ViewModels
 
         if (CkArtistIsChecked)
         {
-          song.Artist = songEdit.Artist.Trim();
+          song.Artist = MultiArtist ? ArtistComboText : songEdit.Artist.Trim();
         }
 
         if (CkAlbumArtistIsChecked)
         {
-          song.AlbumArtist = songEdit.AlbumArtist.Trim();
+          song.AlbumArtist = MultiAlbumArtist ? AlbumArtistComboText : songEdit.AlbumArtist.Trim();
         }
 
         if (CkAlbumIsChecked)
         {
-          song.Album = songEdit.Album;
+          song.Album = MultiAlbum ? AlbumComboText : songEdit.Album.Trim();
         }
 
         song.Compilation = CkPartOfCompilationIsChecked;
@@ -1472,6 +1599,12 @@ namespace MPTagThat.TagEdit.ViewModels
       log.Trace(">>>");
       ClearForm();
       _isInitializing = true;
+      MultiAlbum = false;
+      Albums.Clear();
+      MultiArtist = false;
+      Artists.Clear();
+      MultiAlbumArtist = false;
+      AlbumArtists.Clear();
 
       if (songs.Count == 1)
       {
@@ -1553,16 +1686,45 @@ namespace MPTagThat.TagEdit.ViewModels
         if (SongEdit.Artist != song.Artist)
         {
           SongEdit.Artist = i == 0 ? song.Artist : "";
+          if (!Artists.Contains(song.Artist))
+          {
+            Artists.Add(song.Artist);
+          }
+
+          if (i > 0)
+          {
+            MultiArtist = true;
+            SelectedArtistsIndex = 0;
+          }
         }
 
         if (SongEdit.AlbumArtist != song.AlbumArtist)
         {
           SongEdit.AlbumArtist = i == 0 ? song.AlbumArtist : "";
+          if (!AlbumArtists.Contains(song.AlbumArtist))
+          {
+            AlbumArtists.Add(song.AlbumArtist);
+          }
+
+          if (i > 0)
+          {
+            MultiAlbumArtist = true;
+            SelectedAlbumArtistsIndex = 0;
+          }
         }
 
         if (SongEdit.Album != song.Album)
         {
           SongEdit.Album = i == 0 ? song.Album : "";
+          if (!Albums.Contains(song.Album))
+          {
+            Albums.Add(song.Album);
+          }
+          if (i > 0)
+          {
+            MultiAlbum = true;
+            SelectedAlbumsIndex = 0;
+          }
         }
 
         if (CkPartOfCompilationIsChecked != song.Compilation)

@@ -241,6 +241,20 @@
                       </i:EventTrigger>
                     </i:Interaction.Triggers>
                   </TextBox>
+                  <ComboBox Grid.Column="1" Name="ArtistCombo" 
+                            ItemsSource="{Binding Artists}" 
+                            IsEditable="True"
+                            Text="{Binding ArtistComboText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                            SelectedIndex="{Binding SelectedArtistIndex, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                            Visibility="{Binding MultiArtist, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+                  <!-- Invisible Textbox bound to the combo to enable the Textchanged trigger as workaround -->
+                  <TextBox Grid.Column="1" Name="ArtistComboText" Text="{Binding ElementName=ArtistCombo, Path=Text, UpdateSourceTrigger=PropertyChanged}" Visibility="Collapsed">
+                    <i:Interaction.Triggers>
+                      <i:EventTrigger EventName="TextChanged">
+                        <prism:InvokeCommandAction Command="{Binding TextChangedCommand}"/>
+                      </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                  </TextBox>
                   <syncfusion:ButtonAdv  Grid.Column="2" Label="" Width="20" Height="30" Margin="0"  VerticalAlignment="Top" HorizontalAlignment="Stretch" 
                                      SmallIcon="pack://application:,,,/MPTagThat.TagEdit;component/Resources/Images/CopyToAlbumArtist_10x.png" IconWidth="9" 
                                      Command="{Binding ApplyArtistToAlbumArtistCommand}" />
@@ -262,6 +276,20 @@
                       </i:EventTrigger>
                     </i:Interaction.Triggers>
                   </TextBox>
+                  <ComboBox Grid.Column="1" Name="AlbumArtistCombo" 
+                            ItemsSource="{Binding AlbumArtists}" 
+                            IsEditable="True"
+                            Text="{Binding AlbumArtistComboText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                            SelectedIndex="{Binding SelectedAlbumArtistIndex, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                            Visibility="{Binding MultiAlbumArtist, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+                  <!-- Invisible Textbox bound to the combo to enable the Textchanged trigger as workaround -->
+                  <TextBox Grid.Column="1" Name="AlbumArtistComboText" Text="{Binding ElementName=AlbumArtistCombo, Path=Text, UpdateSourceTrigger=PropertyChanged}" Visibility="Collapsed">
+                    <i:Interaction.Triggers>
+                      <i:EventTrigger EventName="TextChanged">
+                        <prism:InvokeCommandAction Command="{Binding TextChangedCommand}"/>
+                      </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                  </TextBox>
                   <CheckBox Grid.Column="2" VerticalAlignment="Center" Margin="2,0,0,0" IsChecked="{Binding CkAlbumArtistIsChecked, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Visibility="{Binding MultiCheckBoxVisibility, Converter={StaticResource BooleanToVisibilityConverter}}" />
                 </Grid>
 
@@ -274,6 +302,20 @@
                   </Grid.ColumnDefinitions>
                   <Label Grid.Column="0" Content="{lex:Loc tagEdit_Album}" />
                   <TextBox Grid.Column="1" Name="Album" Text="{Binding SongEdit.Album, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" >
+                    <i:Interaction.Triggers>
+                      <i:EventTrigger EventName="TextChanged">
+                        <prism:InvokeCommandAction Command="{Binding TextChangedCommand}"/>
+                      </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                  </TextBox>
+                  <ComboBox Grid.Column="1" Name="AlbumCombo" 
+                            ItemsSource="{Binding Albums}" 
+                            IsEditable="True"
+                            Text="{Binding AlbumComboText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                            SelectedIndex="{Binding SelectedAlbumsIndex, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                            Visibility="{Binding MultiAlbum, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+                  <!-- Invisible Textbox bound to the combo to enable the Textchanged trigger as workaround -->
+                  <TextBox Grid.Column="1" Name="AlbumComboText" Text="{Binding ElementName=AlbumCombo, Path=Text, UpdateSourceTrigger=PropertyChanged}" Visibility="Collapsed">
                     <i:Interaction.Triggers>
                       <i:EventTrigger EventName="TextChanged">
                         <prism:InvokeCommandAction Command="{Binding TextChangedCommand}"/>
