@@ -134,11 +134,15 @@ namespace MPTagThat.Treeview.ViewModels
 
       //Animation starts for expander to show progressing of load on demand
       node.ShowExpanderAnimation = true;
-      TreeView.Dispatcher.BeginInvoke(DispatcherPriority.ApplicationIdle, new System.Action(() =>
+      // Skip the population of child items on loading. 
+      if (TreeView.IsLoaded)
       {
-        _currentNode = node;
-        _loadOnDemandTimer.Start();
-      }));
+        TreeView.Dispatcher.BeginInvoke(DispatcherPriority.ApplicationIdle, new System.Action(() =>
+        {
+          _currentNode = node;
+          _loadOnDemandTimer.Start();
+        }));
+      }
     }
 
     /// <summary>
