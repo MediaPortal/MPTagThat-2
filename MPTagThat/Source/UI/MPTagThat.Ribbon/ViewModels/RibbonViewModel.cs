@@ -973,6 +973,10 @@ namespace MPTagThat.Ribbon.ViewModels
           type = Action.ActionType.GETLYRICS;
           break;
 
+        case "ButtonGetMusicBrainz":
+          type = Action.ActionType.MusicBrainzInfo;
+          break;
+
         case "ButtonRenameFiles":
           type = Action.ActionType.TAG2FILENAME;
           break;

@@ -202,6 +202,21 @@
             </syncfusion:RibbonButton.ToolTip>
           </syncfusion:RibbonButton>
 
+          <syncfusion:RibbonButton x:Name="ButtonGetMusicBrainz" SizeForm="Large" 
+                                   Label="{lex:Loc ribbon_MusicBrainz}" 
+                                   LargeIcon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_MusicBrainz_32x.png" 
+                                   SmallIcon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_MusicBrainz_16x.png" 
+                                   Command="{Binding ExecuteRibbonCommand}" 
+                                   CommandParameter="{Binding Name ,RelativeSource={RelativeSource Self}}">
+            <syncfusion:RibbonButton.ToolTip>
+              <syncfusion:ScreenTip MinWidth="150" MaxWidth="400" Description="{lex:Loc ribbon_MusicBrainz}" VerticalOffset="10" ImageSource="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_MusicBrainz_32x.png">
+                <StackPanel Orientation="Vertical" Width="300">
+                  <TextBlock Text="{lex:Loc screentip_MusicBrainzInfo}" TextWrapping="Wrap" />
+                </StackPanel>
+              </syncfusion:ScreenTip>
+            </syncfusion:RibbonButton.ToolTip>
+          </syncfusion:RibbonButton>
+
           <syncfusion:SplitButton x:Name="ButtonCaseConversion" SizeForm="Large" 
                                   Label="{lex:Loc ribbon_CaseConversionMenu}" 
                                   LargeIcon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_CaseConversion_32x.png" 

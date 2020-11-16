@@ -1843,6 +1843,15 @@ namespace MPTagThat.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to MusicBrainz Info.
+        /// </summary>
+        public static string ribbon_MusicBrainz {
+            get {
+                return ResourceManager.GetString("ribbon_MusicBrainz", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Number on Click.
         /// </summary>
         public static string ribbon_NumberOnClick {
@@ -2289,6 +2298,15 @@ namespace MPTagThat.Resources.Localization {
         public static string screentip_IdentifyFileText {
             get {
                 return ResourceManager.GetString("screentip_IdentifyFileText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Retrieve MusicBrainz information for the selected song(s).
+        /// </summary>
+        public static string screentip_MusicBrainzInfo {
+            get {
+                return ResourceManager.GetString("screentip_MusicBrainzInfo", resourceCulture);
             }
         }
         

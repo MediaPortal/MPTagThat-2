@@ -87,7 +87,7 @@ namespace MPTagThat.SongGrid.Commands
       song.MusicBrainzReleaseId = release.Id;
       song.MusicBrainzReleaseStatus = release.Status;
 
-      if (release.Credits.Count > 0)
+      if (release.Credits?.Count > 0)
       {
         song.MusicBrainzReleaseArtistId = release.Credits[0].Artist.Id;
       }

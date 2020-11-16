@@ -1843,4 +1843,10 @@ To change the order of the ratings drag the rows.</value>
     <value>Cancel All</value>
     <comment>Abort all actions</comment>
   </data>
+  <data name="ribbon_MusicBrainz" xml:space="preserve">
+    <value>MusicBrainz Info</value>
+  </data>
+  <data name="screentip_MusicBrainzInfo" xml:space="preserve">
+    <value>Retrieve MusicBrainz information for the selected song(s)</value>
+  </data>
 </root>
