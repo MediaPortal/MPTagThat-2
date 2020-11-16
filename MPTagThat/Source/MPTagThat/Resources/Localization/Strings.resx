@@ -1849,4 +1849,28 @@ To change the order of the ratings drag the rows.</value>
   <data name="screentip_MusicBrainzInfo" xml:space="preserve">
     <value>Retrieve MusicBrainz information for the selected song(s)</value>
   </data>
+  <data name="songHeader_MusicBrainzArtistId" xml:space="preserve">
+    <value>MB Artist</value>
+  </data>
+  <data name="songHeader_MusicBrainzReleaseArtistId" xml:space="preserve">
+    <value>MB Release Artist</value>
+  </data>
+  <data name="songHeader_MusicBrainzReleaseCountry" xml:space="preserve">
+    <value>MB Release Country</value>
+  </data>
+  <data name="songHeader_MusicBrainzReleaseGroupId" xml:space="preserve">
+    <value>MB Release Group</value>
+  </data>
+  <data name="songHeader_MusicBrainzReleaseId" xml:space="preserve">
+    <value>MB Release</value>
+  </data>
+  <data name="songHeader_MusicBrainzReleaseStatus" xml:space="preserve">
+    <value>MB Release Status</value>
+  </data>
+  <data name="songHeader_MusicBrainzReleaseType" xml:space="preserve">
+    <value>MB Release Type</value>
+  </data>
+  <data name="songHeader_MusicBrainzTrackId" xml:space="preserve">
+    <value>MB Release Track</value>
+  </data>
 </root>

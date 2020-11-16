@@ -59,6 +59,14 @@ namespace MPTagThat.SongGrid.ViewModels
     private readonly GridViewColumn _lastwritetime;
     private readonly GridViewColumn _lyrics;
     private readonly GridViewColumn _mediaType;
+    private readonly GridViewColumn _musicBrainzArtistId;
+    private readonly GridViewColumn _musicBrainzReleaseArtistId;
+    private readonly GridViewColumn _musicBrainzReleaseId;
+    private readonly GridViewColumn _musicBrainzReleaseGroupId;
+    private readonly GridViewColumn _musicBrainzReleaseCountry;
+    private readonly GridViewColumn _musicBrainzReleaseStatus;
+    private readonly GridViewColumn _musicBrainzReleaseType;
+    private readonly GridViewColumn _musicBrainzReleaseTrackId;
     private readonly GridViewColumn _numpics;
     private readonly GridViewColumn _officialArtistInformation;
     private readonly GridViewColumn _officialAudioFileInformation;
@@ -117,15 +125,15 @@ namespace MPTagThat.SongGrid.ViewModels
       _composer = new GridViewColumn("Composer", "text", 150, true, false, true, 14);
       _conductor = new GridViewColumn("Conductor", "text", 150, true, false, true, 15);
       _numpics = new GridViewColumn("NumPics", "number", 40, true, false, false, 16);
-      _tagtype = new GridViewColumn("TagType", "text", 100, true, true, true, 47);
-      _duration = new GridViewColumn("Duration", "text", 100, true, true, false, 48);
-      _filesize = new GridViewColumn("FileSize", "text", 80, true, true, true, 49);
-      _bitrate = new GridViewColumn("BitRate", "text", 50, true, true, true, 50);
-      _samplerate = new GridViewColumn("SampleRate", "text", 70, true, true, true, 51);
-      _channels = new GridViewColumn("Channels", "text", 40, true, true, true, 52);
-      _version = new GridViewColumn("Version", "text", 100, true, true, true, 53);
-      _creationtime = new GridViewColumn("CreationTime", "text", 100, true, true, true, 54);
-      _lastwritetime = new GridViewColumn("LastWriteTime", "text", 100, true, true, true, 55);
+      _tagtype = new GridViewColumn("TagType", "text", 100, true, true, true, 55);
+      _duration = new GridViewColumn("Duration", "text", 100, true, true, false, 56);
+      _filesize = new GridViewColumn("FileSize", "text", 80, true, true, true, 57);
+      _bitrate = new GridViewColumn("BitRate", "text", 50, true, true, true, 58);
+      _samplerate = new GridViewColumn("SampleRate", "text", 70, true, true, true, 59);
+      _channels = new GridViewColumn("Channels", "text", 40, true, true, true, 60);
+      _version = new GridViewColumn("Version", "text", 100, true, true, true, 61);
+      _creationtime = new GridViewColumn("CreationTime", "text", 100, true, true, true, 62);
+      _lastwritetime = new GridViewColumn("LastWriteTime", "text", 100, true, true, true, 63);
 
       // Initially Hidden Columns
       _artistSortName = new GridViewColumn("ArtistSortName", "text", 100, false, false, true, 21);
@@ -154,6 +162,14 @@ namespace MPTagThat.SongGrid.ViewModels
       _subTitle = new GridViewColumn("SubTitle", "text", 100, false, false, true, 44);
       _textWriter = new GridViewColumn("TextWriter", "text", 100, false, false, true,45);
       _titleSortName = new GridViewColumn("TitleSortName", "text", 100, false, false, true,46);
+      _musicBrainzArtistId = new GridViewColumn("MusicBrainzArtistId", "text", 100, false, false, true,47);
+      _musicBrainzReleaseArtistId = new GridViewColumn("MusicBrainzReleaseArtistId", "text", 100, false, false, true,48);
+      _musicBrainzReleaseId = new GridViewColumn("MusicBrainzReleaseId", "text", 100, false, false, true,49);
+      _musicBrainzReleaseGroupId = new GridViewColumn("MusicBrainzReleaseGroupId", "text", 100, false, false, true,50);
+      _musicBrainzReleaseCountry = new GridViewColumn("MusicBrainzReleaseCountry", "text", 100, false, false, true,51);
+      _musicBrainzReleaseStatus = new GridViewColumn("MusicBrainzReleaseStatus", "text", 100, false, false, true,52);
+      _musicBrainzReleaseType = new GridViewColumn("MusicBrainzReleaseType", "text", 100, false, false, true,53);
+      _musicBrainzReleaseTrackId = new GridViewColumn("MusicBrainzTrackId", "text", 100, false, false, true,54);
 
       LoadSettings();
     }
@@ -245,6 +261,14 @@ namespace MPTagThat.SongGrid.ViewModels
       columnList.Add(_subTitle);
       columnList.Add(_textWriter);
       columnList.Add(_titleSortName);
+      columnList.Add(_musicBrainzArtistId);
+      columnList.Add(_musicBrainzReleaseArtistId);
+      columnList.Add(_musicBrainzReleaseId);
+      columnList.Add(_musicBrainzReleaseGroupId);
+      columnList.Add(_musicBrainzReleaseCountry);
+      columnList.Add(_musicBrainzReleaseStatus);
+      columnList.Add(_musicBrainzReleaseType);
+      columnList.Add(_musicBrainzReleaseTrackId);
       // end of initially hidden columns
       columnList.Add(_tagtype);
       columnList.Add(_duration);

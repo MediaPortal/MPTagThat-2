@@ -3112,6 +3112,78 @@ namespace MPTagThat.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to MB Artist.
+        /// </summary>
+        public static string songHeader_MusicBrainzArtistId {
+            get {
+                return ResourceManager.GetString("songHeader_MusicBrainzArtistId", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to MB Release Artist.
+        /// </summary>
+        public static string songHeader_MusicBrainzReleaseArtistId {
+            get {
+                return ResourceManager.GetString("songHeader_MusicBrainzReleaseArtistId", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to MB Release Country.
+        /// </summary>
+        public static string songHeader_MusicBrainzReleaseCountry {
+            get {
+                return ResourceManager.GetString("songHeader_MusicBrainzReleaseCountry", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to MB Release Group.
+        /// </summary>
+        public static string songHeader_MusicBrainzReleaseGroupId {
+            get {
+                return ResourceManager.GetString("songHeader_MusicBrainzReleaseGroupId", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to MB Release.
+        /// </summary>
+        public static string songHeader_MusicBrainzReleaseId {
+            get {
+                return ResourceManager.GetString("songHeader_MusicBrainzReleaseId", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to MB Release Status.
+        /// </summary>
+        public static string songHeader_MusicBrainzReleaseStatus {
+            get {
+                return ResourceManager.GetString("songHeader_MusicBrainzReleaseStatus", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to MB Release Type.
+        /// </summary>
+        public static string songHeader_MusicBrainzReleaseType {
+            get {
+                return ResourceManager.GetString("songHeader_MusicBrainzReleaseType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to MB Release Track.
+        /// </summary>
+        public static string songHeader_MusicBrainzTrackId {
+            get {
+                return ResourceManager.GetString("songHeader_MusicBrainzTrackId", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to New File Name.
         /// </summary>
         public static string songHeader_NewFileName {
