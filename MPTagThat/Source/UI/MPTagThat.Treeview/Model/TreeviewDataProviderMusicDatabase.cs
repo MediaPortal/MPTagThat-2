@@ -65,8 +65,6 @@ namespace MPTagThat.Treeview.Model
     /// </summary>
     private RootFolder _rootFolder = RootFolder.None;
 
-    private NotificationView _notificationView;
-
     #endregion
 
     #region ITreeViewFolderBrowserDataProvider Members

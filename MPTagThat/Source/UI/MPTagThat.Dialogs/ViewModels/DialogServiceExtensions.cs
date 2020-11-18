@@ -27,9 +27,9 @@ namespace MPTagThat.Dialogs.ViewModels
 {
   public static class DialogServiceExtensions
   {
-    public static void ShowNotification(this IDialogService dialogService, string message, Action<IDialogResult> callBack)
+    public static void ShowInAnotherWindow(this IDialogService dialogService, string dialogName, string windowName, DialogParameters parameters, Action<IDialogResult> callBack)
     {
-      dialogService.ShowDialog("NotificationDialog", new DialogParameters($"message={message}"), callBack);
+      dialogService.Show(dialogName, parameters , callBack, windowName);
     }
 
     public static void ShowDialogInAnotherWindow(this IDialogService dialogService, string dialogName, string windowName, DialogParameters parameters, Action<IDialogResult> callBack)

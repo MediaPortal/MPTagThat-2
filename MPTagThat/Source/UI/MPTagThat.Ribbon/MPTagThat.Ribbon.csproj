@@ -135,6 +135,10 @@
       <Project>{D66C1D7A-A9D8-4F02-9FA4-891A673D2C68}</Project>
       <Name>MPTagThat.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\MPTagThat.Dialogs\MPTagThat.Dialogs.csproj">
+      <Project>{a4d5a1cc-39cf-4ebb-8c2a-494b34eb0989}</Project>
+      <Name>MPTagThat.Dialogs</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Images\ribbon_DeleteLayout_16x.png" />

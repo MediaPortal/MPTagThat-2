@@ -64,6 +64,7 @@
     <Compile Include="ViewModels\LyricsSearchViewModel.cs" />
     <Compile Include="ViewModels\OrganiseFilesViewModel.cs" />
     <Compile Include="ViewModels\ParameterPart.cs" />
+    <Compile Include="ViewModels\ProgressViewModel.cs" />
     <Compile Include="ViewModels\Tag2FileNameViewModel.cs" />
     <Compile Include="ViewModels\TagFormat.cs" />
     <Compile Include="ViewModels\TagFromInternetViewModel.cs" />
@@ -91,8 +92,8 @@
     <Compile Include="Views\LyricsSearchView.xaml.cs">
       <DependentUpon>LyricsSearchView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\NotificationView.xaml.cs">
-      <DependentUpon>NotificationView.xaml</DependentUpon>
+    <Compile Include="Views\ProgressView.xaml.cs">
+      <DependentUpon>ProgressView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\OrganiseFilesView.xaml.cs">
       <DependentUpon>OrganiseFilesView.xaml</DependentUpon>
@@ -138,7 +139,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\NotificationView.xaml">
+    <Page Include="Views\ProgressView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -175,6 +176,9 @@
       <Version>8.0.0.1740-pre</Version>
     </PackageReference>
     <PackageReference Include="Syncfusion.SfGrid.WPF">
+      <Version>18.3.0.35</Version>
+    </PackageReference>
+    <PackageReference Include="Syncfusion.SfProgressBar.WPF">
       <Version>18.3.0.35</Version>
     </PackageReference>
     <PackageReference Include="Syncfusion.SfSkinManager.WPF">

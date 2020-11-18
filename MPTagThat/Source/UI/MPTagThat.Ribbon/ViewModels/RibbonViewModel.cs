@@ -24,8 +24,10 @@ using System.Collections.ObjectModel;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Net.Http;
 using System.Text;
-using System.Windows.Forms;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using MPTagThat.Core;
 using MPTagThat.Core.Common;
@@ -35,16 +37,19 @@ using MPTagThat.Core.Services.MusicDatabase;
 using MPTagThat.Core.Services.ScriptManager;
 using MPTagThat.Core.Services.Settings;
 using MPTagThat.Core.Services.Settings.Setting;
+using MPTagThat.Dialogs.ViewModels;
 using Newtonsoft.Json;
 using Prism.Events;
 using Prism.Ioc;
 using Prism.Mvvm;
 using Prism.Regions;
+using Prism.Services.Dialogs;
 using Syncfusion.SfSkinManager;
 using Syncfusion.Windows.Shared;
 using Syncfusion.Windows.Tools.Controls;
 using Action = MPTagThat.Core.Common.Action;
 using Application = System.Windows.Application;
+using DialogResult = System.Windows.Forms.DialogResult;
 
 #endregion
 
@@ -55,6 +60,7 @@ namespace MPTagThat.Ribbon.ViewModels
     #region Variables
 
     private IRegionManager _regionManager;
+    private IDialogService _dialogService;
     private readonly NLogLogger log;
     private Options _options;
 
@@ -62,9 +68,10 @@ namespace MPTagThat.Ribbon.ViewModels
 
     #region ctor
 
-    public RibbonViewModel(IRegionManager regionManager)
+    public RibbonViewModel(IRegionManager regionManager, IDialogService dialogService)
     {
       _regionManager = regionManager;
+      _dialogService = dialogService;
       log = ContainerLocator.Current.Resolve<ILogger>()?.GetLogger;
       _options = ContainerLocator.Current.Resolve<ISettingsManager>()?.GetOptions;
 
@@ -76,6 +83,7 @@ namespace MPTagThat.Ribbon.ViewModels
       AddGenreCommand = new BaseCommand(AddGenre);
       DeleteGenreCommand = new BaseCommand(DeleteGenre);
       SaveGenreCommand = new BaseCommand(SaveGenre);
+      DownloadMusicBrainzDatabaseCommand = new BaseCommand(DownloadMusicBrainzDatabase);
 
       EventSystem.Subscribe<GenericEvent>(OnMessageReceived, ThreadOption.UIThread);
 
@@ -231,6 +239,23 @@ namespace MPTagThat.Ribbon.ViewModels
       set => SetProperty(ref _queriesSelectedItem, value);
     }
 
+    private int _downloadMusicBrainzDatabaseProgress;
+
+    public int DownloadMusicBrainzDatabaseProgress
+    {
+      get => _downloadMusicBrainzDatabaseProgress;
+      set
+      {
+        SetProperty(ref _downloadMusicBrainzDatabaseProgress, value);
+        GenericEvent evt = new GenericEvent
+        {
+          Action = "progressnotification"
+        };
+        evt.MessageData["progress"] = value;
+        EventSystem.Publish(evt);
+      }
+    }
+
     #region Settings related Properties in the Backstage
 
     #region General Settings
@@ -295,7 +320,7 @@ namespace MPTagThat.Ribbon.ViewModels
         // TODO: Activate once the fix from Syncfusion arrives
         //SfSkinManager.SetVisualStyle(Application.Current.MainWindow,
         //  (VisualStyles)Enum.Parse(typeof(VisualStyles), value));
-        
+
         // Set the preferred Row Colors for the Grid
         switch (_selectedTheme)
         {
@@ -897,6 +922,83 @@ namespace MPTagThat.Ribbon.ViewModels
       catch (Exception)
       {
         log.Error("Settings: Error saving keymap file");
+      }
+    }
+
+    public ICommand DownloadMusicBrainzDatabaseCommand { get; }
+    private void DownloadMusicBrainzDatabase(object param)
+    {
+      DoDownloadMusicBrainzDatabase();
+    }
+
+    /// <summary>
+    /// Download the MusicBrainz database from the Mediaportal site
+    /// </summary>
+    private async void DoDownloadMusicBrainzDatabase()
+    {
+      try
+      {
+        Progress<double> progress = new Progress<double>();
+        var url = "http://install.team-mediaportal.com/MPTagThat/MusicBrainzArtists.db3";
+        var database = $"{_options.StartupSettings.DatabaseFolder}\\MusicBrainzArtists.db3";
+
+        progress.ProgressChanged += (sender, value) => DownloadMusicBrainzDatabaseProgress = (int)value;
+
+        _dialogService.ShowInAnotherWindow("ProgressView", "DialogWindowView", new DialogParameters(), null);
+
+        var cancellationToken = new CancellationTokenSource();
+        await DownloadFileAsync(url, progress, cancellationToken.Token, database);
+        GenericEvent evt = new GenericEvent
+        {
+          Action = "closedialogrequested"
+        };
+        EventSystem.Publish(evt);
+      }
+      catch (Exception ex)
+      {
+        log.Error($"Error Downloading MusicBrainz Database: {ex.Message}");
+      }
+    }
+
+    private async Task DownloadFileAsync(string url, IProgress<double> progress, CancellationToken token, string fileName)
+    {
+      using (var response = new HttpClient().GetAsync(url, HttpCompletionOption.ResponseHeadersRead, token).Result)
+      {
+        response.EnsureSuccessStatusCode();
+
+        //Get total content length
+        var total = response.Content.Headers.ContentLength.HasValue ? response.Content.Headers.ContentLength.Value : -1L;
+        var canReportProgress = total != -1 && progress != null;
+        using (Stream contentStream = await response.Content.ReadAsStreamAsync(), fileStream = new FileStream(fileName, FileMode.Create, FileAccess.Write, FileShare.ReadWrite, 8192, true))
+        {
+          var totalRead = 0L;
+          var totalReads = 0L;
+          var buffer = new byte[8192];
+          var isMoreToRead = true;
+
+          do
+          {
+            var read = await contentStream.ReadAsync(buffer, 0, buffer.Length, token);
+            if (read == 0)
+            {
+              isMoreToRead = false;
+            }
+            else
+            {
+              await fileStream.WriteAsync(buffer, 0, read, token);
+
+              totalRead += read;
+              totalReads += 1;
+
+              if (totalReads % 2000 == 0 || canReportProgress)
+              {
+                //Check if operation is cancelled by user
+                progress.Report((totalRead * 1d) / (total * 1d) * 100);
+              }
+            }
+          }
+          while (isMoreToRead);
+        }
       }
     }
 

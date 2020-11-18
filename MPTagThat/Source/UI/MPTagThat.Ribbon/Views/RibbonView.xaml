@@ -872,6 +872,9 @@
                         <Label Content="{lex:Loc settings_Tags_PreferredCountries}"/>
                         <TextBox Text="{Binding PreferredMusicBrainzCountries, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="200" Margin="10,0,0,0"/>
                       </StackPanel>
+                      <syncfusion:ButtonAdv Label="{lex:Loc settings_Tags_DownloadMusicBrainzDatabase}" HorizontalAlignment="Left"  Width="Auto" 
+                                            SmallIcon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_MusicBrainz_32x.png" 
+                                            Command="{Binding DownloadMusicBrainzDatabaseCommand}"/>
                     </StackPanel>
                   </GroupBox>
 

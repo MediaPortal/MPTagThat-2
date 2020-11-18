@@ -1873,4 +1873,13 @@ To change the order of the ratings drag the rows.</value>
   <data name="songHeader_MusicBrainzTrackId" xml:space="preserve">
     <value>MB Release Track</value>
   </data>
+  <data name="settings_Tags_DownloadMusicBrainzDatabase" xml:space="preserve">
+    <value>Update Artist Auto Completion Database</value>
+  </data>
+  <data name="settings_Tags_DownloadMusicBrainzDatabase_Current" xml:space="preserve">
+    <value>Auto Completion database is already at current version</value>
+  </data>
+  <data name="settings_Tags_DownloadMusicBrainzDatabase_Downloading" xml:space="preserve">
+    <value>Downloading Auto Completion Database</value>
+  </data>
 </root>

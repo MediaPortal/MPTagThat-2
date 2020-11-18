@@ -2815,6 +2815,33 @@ namespace MPTagThat.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Update Artist Auto Completion Database.
+        /// </summary>
+        public static string settings_Tags_DownloadMusicBrainzDatabase {
+            get {
+                return ResourceManager.GetString("settings_Tags_DownloadMusicBrainzDatabase", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Auto Completion database is already at current version.
+        /// </summary>
+        public static string settings_Tags_DownloadMusicBrainzDatabase_Current {
+            get {
+                return ResourceManager.GetString("settings_Tags_DownloadMusicBrainzDatabase_Current", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Downloading Auto Completion Database.
+        /// </summary>
+        public static string settings_Tags_DownloadMusicBrainzDatabase_Downloading {
+            get {
+                return ResourceManager.GetString("settings_Tags_DownloadMusicBrainzDatabase_Downloading", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Tags General.
         /// </summary>
         public static string settings_Tags_General {

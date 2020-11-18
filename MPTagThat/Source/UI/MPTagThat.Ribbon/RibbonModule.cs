@@ -18,6 +18,8 @@
 
 #region
 
+using MPTagThat.Dialogs.ViewModels;
+using MPTagThat.Dialogs.Views;
 using Prism.Modularity;
 using Prism.Regions;
 using MPTagThat.Ribbon.Views;
@@ -34,6 +36,8 @@ namespace MPTagThat.Ribbon
   {
     public void RegisterTypes(IContainerRegistry containerRegistry)
     {
+      containerRegistry.RegisterDialog<ProgressView, ProgressViewModel>();
+      containerRegistry.RegisterDialogWindow<DialogWindowView>(nameof(DialogWindowView));
     }
 
     public void OnInitialized(IContainerProvider containerProvider)

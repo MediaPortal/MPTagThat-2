@@ -33,11 +33,11 @@ using System.Windows.Shapes;
 namespace MPTagThat.Dialogs.Views
 {
   /// <summary>
-  /// Interaction logic for NotificationView.xaml
+  /// Interaction logic for ProgressView.xaml
   /// </summary>
-  public partial class NotificationView : Window
+  public partial class ProgressView : UserControl
   {
-    public NotificationView()
+    public ProgressView()
     {
       InitializeComponent();
     }
