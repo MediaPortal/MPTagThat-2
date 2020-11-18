@@ -33,6 +33,7 @@ using MPTagThat.Core.Common;
 using MPTagThat.Core.Common.Song;
 using MPTagThat.Core.Events;
 using MPTagThat.Core.Services.Logging;
+using MPTagThat.Core.Services.MusicDatabase;
 using MPTagThat.Core.Services.Settings;
 using MPTagThat.Core.Services.Settings.Setting;
 using MPTagThat.Core.Utils;
@@ -267,6 +268,16 @@ namespace MPTagThat.TagEdit.ViewModels
     {
       get => _selectedUserFrames;
       set => SetProperty(ref _selectedUserFrames, value);
+    }
+
+    /// <summary>
+    /// The Binding for the Artist Auto Complete
+    /// </summary>
+    private ObservableCollection<string> _autoCompleteArtists = new ObservableCollection<string>();
+    public ObservableCollection<string> AutoCompleteArtists
+    {
+      get => _autoCompleteArtists;
+      set => SetProperty(ref _autoCompleteArtists, value);
     }
 
     #region Multi Album, Artist, AlbumArtist
@@ -642,12 +653,28 @@ namespace MPTagThat.TagEdit.ViewModels
     {
       IsApplyButtonEnabled = true;
 
+      var tb = (TextBox)(param as TextChangedEventArgs)?.Source;
+
+      // Auto Complete Support for Artist / AlbumArtist
+      if (tb != null)
+      {
+        switch (tb.Name.ToLower())
+        {
+          case "artist":
+          case "albumartist":
+            if (tb.Text.Length > 3)
+            {
+              AutoCompleteArtists.Clear();
+              AutoCompleteArtists.AddRange(ContainerLocator.Current.Resolve<IMusicDatabase>()?.SearchAutocompleteArtists(tb.Text));
+            }
+            break;
+        }
+      }
+
       if (!MultiCheckBoxVisibility)
       {
         return;
       }
-
-      var tb = (TextBox)(param as TextChangedEventArgs)?.Source;
 
       if (tb != null)
       {

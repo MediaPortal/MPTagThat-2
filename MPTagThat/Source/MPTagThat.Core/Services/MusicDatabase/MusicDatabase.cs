@@ -73,10 +73,11 @@ namespace MPTagThat.Core.Services.MusicDatabase
 
       // Open Connection to the SQLite Database with the MusicBrainz artists
       MusicBrainzDatabaseActive = false;
-      if (File.Exists(@"bin\\MusicBrainzArtists.db3"))
+      var database = $"{_options.StartupSettings.DatabaseFolder}\\MusicBrainzArtists.db3";
+      if (File.Exists(database))
       {
         log.Info("Opening MusicBrainz Artist Database");
-        _sqLiteConnection = new SQLiteConnection("Data Source=bin\\MusicBrainzArtists.db3");
+        _sqLiteConnection = new SQLiteConnection($"Data Source={database}");
         _sqLiteConnection?.Open();
         MusicBrainzDatabaseActive = true;
       }
@@ -508,9 +509,9 @@ namespace MPTagThat.Core.Services.MusicDatabase
     /// </summary>
     /// <param name="artist"></param>
     /// <returns></returns>
-    public List<object> SearchAutocompleteArtists(string artist)
+    public List<string> SearchAutocompleteArtists(string artist)
     {
-      var artists = new List<object>();
+      var artists = new List<string>();
 
       if (!MusicBrainzDatabaseActive)
         return artists;
@@ -523,10 +524,10 @@ namespace MPTagThat.Core.Services.MusicDatabase
         var reader = command.ExecuteReader();
         while (reader.Read())
         {
-          artists.Add(reader["Artist"]);
+          artists.Add(reader["Artist"].ToString());
           if (!reader["Artist"].Equals(reader["SortArtist"]))
           {
-            artists.Add(reader["SortArtist"]);
+            artists.Add(reader["SortArtist"].ToString());
           }
         }
       }

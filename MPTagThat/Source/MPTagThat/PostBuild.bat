@@ -47,6 +47,8 @@ xcopy /y %1\MPTagThat.Core\bin\%2\RateLimiter.dll %TARGETPATH%\Bin\
 xcopy /y %1\MPTagThat.Core\bin\%2\RestSharp.dll %TARGETPATH%\Bin\
 xcopy /y %1\MPTagThat.Core\bin\%2\RestSharpHelper.dll %TARGETPATH%\Bin\
 xcopy /y %1\MPTagThat.Core\bin\%2\System.Reactive.dll %TARGETPATH%\Bin\
+xcopy /y %1\MPTagThat.Core\bin\%2\System.Data.SQLite.dll %TARGETPATH%\Bin\
+xcopy /y %1\MPTagThat.Core\bin\%2\x64\SQLite.Interop.dll %TARGETPATH%\Bin\x64\
 xcopy /y %1\MPTagThat.Core\bin\%2\Prism.* %TARGETPATH%\Bin\
 xcopy /y %1\MPTagThat.Core\bin\%2\Syncfusion.* %TARGETPATH%\Bin\
 xcopy /y %1\MPTagThat.Core\bin\%2\WPFLocalizeExtension.* %TARGETPATH%\Bin\
