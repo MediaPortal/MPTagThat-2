@@ -340,6 +340,7 @@ namespace MPTagThat.Ribbon.ViewModels
             break;
 
           case "Office2019Colorful":
+          case "Office2019White":
             RowColor = "#FFFFFFFF";
             AlternateRowColor = "#FFD0DEF2";
             break;
@@ -347,6 +348,16 @@ namespace MPTagThat.Ribbon.ViewModels
           case "Office2019Black":
             RowColor = "#FF323130";
             AlternateRowColor = "#FFA0A0A0";
+            break;
+
+          case "Office2019DarkGray":
+            RowColor = "#FFFFFFFF";
+            AlternateRowColor = "#FFC6C6C6";
+            break;
+
+          case "Office2019HighContrast":
+            RowColor = "#FF000000";
+            AlternateRowColor = "#FFFAD95A";
             break;
         }
 
@@ -1307,6 +1318,9 @@ namespace MPTagThat.Ribbon.ViewModels
       _themes.Add("MaterialLightBlue");
       _themes.Add("Office2019Colorful");
       _themes.Add("Office2019Black");
+      _themes.Add("Office2019DarkGray");
+      _themes.Add("Office2019HighContrast");
+      _themes.Add("Office2019White");
       SelectedTheme = _options.MainSettings.Theme;
 
       ChangedRowColor = _options.MainSettings.ChangedRowColor;
