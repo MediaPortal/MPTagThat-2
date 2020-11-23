@@ -950,15 +950,21 @@ namespace MPTagThat.Ribbon.ViewModels
       try
       {
         Progress<double> progress = new Progress<double>();
-        var url = "http://install.team-mediaportal.com/MPTagThat/MusicBrainzArtists.db3";
-        var database = $"{_options.StartupSettings.DatabaseFolder}\\MusicBrainzArtists.db3";
+        var url = "http://install.team-mediaportal.com/MPTagThat/MusicBrainzArtists.zip";
+        var zipfile = $"{_options.StartupSettings.DatabaseFolder}\\MusicBrainzArtists.zip";
 
         progress.ProgressChanged += (sender, value) => DownloadMusicBrainzDatabaseProgress = (int)value;
 
         _dialogService.ShowInAnotherWindow("ProgressView", "DialogWindowView", new DialogParameters(), null);
 
         var cancellationToken = new CancellationTokenSource();
-        await DownloadFileAsync(url, progress, cancellationToken.Token, database);
+        await DownloadFileAsync(url, progress, cancellationToken.Token, zipfile);
+        if (System.IO.File.Exists(zipfile))
+        {
+          System.IO.Compression.ZipFile.ExtractToDirectory(zipfile, _options.StartupSettings.DatabaseFolder);
+          File.Delete(zipfile);
+        }
+
         GenericEvent evt = new GenericEvent
         {
           Action = "closedialogrequested"

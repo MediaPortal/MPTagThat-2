@@ -73,6 +73,14 @@ namespace MPTagThat.Core.Services.MusicDatabase
 
       // Open Connection to the SQLite Database with the MusicBrainz artists
       MusicBrainzDatabaseActive = false;
+      var zipfile = $"{_options.StartupSettings.DatabaseFolder}\\MusicBrainzArtists.zip";
+      if (File.Exists(zipfile))
+      {
+        log.Info("Found a zipped MusicBrainz Artist Database");
+        System.IO.Compression.ZipFile.ExtractToDirectory(zipfile, _options.StartupSettings.DatabaseFolder);
+        File.Delete(zipfile);
+      }
+
       var database = $"{_options.StartupSettings.DatabaseFolder}\\MusicBrainzArtists.db3";
       if (File.Exists(database))
       {

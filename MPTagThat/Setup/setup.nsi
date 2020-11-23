@@ -147,7 +147,7 @@ Section -Main SEC0000
 
     # Download MusicBrainz
     ${IF} $DownloadMusicbrainz == 1
-       NSISdl::download "http://install.team-mediaportal.com/MPTagThat/MusicBrainzArtists.db3" "${ROAMINGDATA}\Databases\MusicBrainzArtists.db3" 
+       NSISdl::download "http://install.team-mediaportal.com/MPTagThat/MusicBrainzArtists.zip" "${ROAMINGDATA}\Databases\MusicBrainzArtists.zip" 
     ${ENDIF}
 SectionEnd
 
