@@ -83,6 +83,7 @@ namespace MPTagThat.SongGrid.ViewModels
     private bool _folderScanInProgress;
     private bool _actionCopy;
     private bool _selectAll;
+    private bool _commandProcessing;
 
     private readonly System.Windows.Input.Cursor _numberOnClickCursor = new System.Windows.Input.Cursor(System.Windows.Application.GetResourceStream(new Uri("pack://application:,,,/MPTagThat;component/Resources/Images/CursorNumbering.cur")).Stream);
 
@@ -231,7 +232,7 @@ namespace MPTagThat.SongGrid.ViewModels
           EventSystem.Publish(evt);
         }
 
-        if (!_selectAll)
+        if (!_selectAll && !_commandProcessing)
         {
           NavigateToTagEdit();
         }
@@ -626,19 +627,16 @@ namespace MPTagThat.SongGrid.ViewModels
 
               song.Status = -1;
               script?.Invoke(song);
-
-              // Remove and re-add song to Selected Items, so that changes in tags
-              // are reflected in the TagEdit Panel for multiple selections
-              SelectedItems.Remove(song);
-              SelectedItems.Add(song);
             }
             catch (Exception ex)
             {
               song.Status = 2;
               song.StatusMsg = ex.Message;
             }
-
           }
+
+          // Update the TagEdit View
+          SelectionChanged(SelectedItems);
         }
       }
       catch (Exception ex)
@@ -1012,6 +1010,9 @@ namespace MPTagThat.SongGrid.ViewModels
         }
       }
 
+      // Prevent updating Tageditview on every loop as this causes big delays
+      _commandProcessing = true;   
+
       // Iterate in a for loop, since we are passing
       // the song as reference, which is not allowed in a foreach
       for (var i = 0; i < Songs.Count; i++)
@@ -1087,6 +1088,9 @@ namespace MPTagThat.SongGrid.ViewModels
           song.StatusMsg = ex.Message;
         }
       }
+
+      // Allow Updating of the TageditView after processing files
+      _commandProcessing = false;
 
       // Do Command Post Processing
       if (commandObj.NeedsPostprocessing)
