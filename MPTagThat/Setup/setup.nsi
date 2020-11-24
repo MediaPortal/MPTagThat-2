@@ -284,7 +284,7 @@ Function OptionsValidate
   ReadINIStr $CreateStartMenu "$PLUGINSDIR\options.ini" "Field 1" "State"
   ReadINIStr $CreateDeskTopShortCut "$PLUGINSDIR\options.ini" "Field 2" "State"
   ReadINIStr $CreateExplorerMenu "$PLUGINSDIR\options.ini" "Field 3" "State"
-  #ReadINIStr $DownloadMusicbrainz "$PLUGINSDIR\options.ini" "Field 4" "State"
+  ReadINIStr $DownloadMusicbrainz "$PLUGINSDIR\options.ini" "Field 4" "State"
  
 FunctionEnd
 
