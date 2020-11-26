@@ -33,6 +33,29 @@
       <Setter Property="Background" Value="{Binding Path=Changed,UpdateSourceTrigger=PropertyChanged,Converter={StaticResource ChangedRowStyleSelector}}"/>
       <Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource Self}, Path=Background,Converter={StaticResource ForegroundStyleSelector}}"/>
     </Style>
+
+    <!-- The Style of the Context Menu. Needed to prevent crash -->
+    <Style TargetType="{x:Type ContextMenu}">
+      <Setter Property="OverridesDefaultStyle" Value="True" />
+      <Setter Property="Template">
+        <Setter.Value>
+          <ControlTemplate TargetType="{x:Type ContextMenu}">
+            <Border x:Name="Border" >
+              <StackPanel IsItemsHost="True" KeyboardNavigation.DirectionalNavigation="Cycle" />
+            </Border>
+          </ControlTemplate>
+        </Setter.Value>
+      </Setter>
+    </Style>
+    <Style x:Key="{x:Static MenuItem.SeparatorStyleKey}" TargetType="{x:Type Separator}">
+      <Setter Property="Template">
+        <Setter.Value>
+          <ControlTemplate TargetType="{x:Type Separator}">
+            <Border x:Name="Border"  Background="LightGray"  Height="2" Margin="0" SnapsToDevicePixels="true" />
+          </ControlTemplate>
+        </Setter.Value>
+      </Setter>
+    </Style>
   </UserControl.Resources>
 
   <UserControl.Cursor>
