@@ -308,10 +308,10 @@ namespace MPTagThat.Core.Services.Settings.Setting
         }
         else
         {
-          _configDir = $@"{Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)}\MPTagThat2\Config";
+          _configDir = $@"{Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData)}\MPTagThat2\Config";
           if (settings.StartupSettings.DatabaseFolder == null)
           {
-            settings.StartupSettings.DatabaseFolder = $@"{Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)}\MPTagThat2\Databases";
+            settings.StartupSettings.DatabaseFolder = $@"{Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData)}\MPTagThat2\Databases";
           }
         }
 

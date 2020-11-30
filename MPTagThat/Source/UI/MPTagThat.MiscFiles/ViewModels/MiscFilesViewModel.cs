@@ -300,7 +300,7 @@ namespace MPTagThat.MiscFiles.ViewModels
           {
             try
             {
-              defaultName = $@"{Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)}\MPTagThat2\Fileicons\{extension}.png";
+              defaultName = $@"{Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData)}\MPTagThat2\Fileicons\{extension}.png";
             }
             catch (Exception) {}
           }
@@ -316,7 +316,7 @@ namespace MPTagThat.MiscFiles.ViewModels
           }
           else
           {
-            var bmi = GetImageFromFile( $@"{Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)}\MPTagThat2\Fileicons\unknown.png", out var size);
+            var bmi = GetImageFromFile( $@"{Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData)}\MPTagThat2\Fileicons\unknown.png", out var size);
             if (bmi != null)
             {
               f.ImageData = bmi;

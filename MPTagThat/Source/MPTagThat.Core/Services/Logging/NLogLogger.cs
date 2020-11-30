@@ -55,7 +55,7 @@ namespace MPTagThat.Core.Services.Logging
 
     public NLogLogger(string fileName, LogLevel level, int portable)
     {
-      var logPath = $@"{Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)}\MPTagThat2\Log";
+      var logPath = $@"{Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData)}\MPTagThat2\Log";
       if (portable == 1)
       {
         logPath = $@"{AppDomain.CurrentDomain.BaseDirectory}\Log";

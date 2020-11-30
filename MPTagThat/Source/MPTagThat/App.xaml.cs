@@ -195,30 +195,6 @@ namespace MPTagThat
         // The Memorymap does not exist, so MPTagThat is not yet running
       }
 
-      try
-      {
-        // We need to set the app.config file programmatically to point to the users APPDATA Folder
-        var configFile = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
-        var appSettingssettings = configFile.AppSettings.Settings;
-        var key = "Raven/WorkingDir";
-        var value = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) +
-                    "\\MPTagthat2\\Databases";
-        if (appSettingssettings[key] == null)
-        {
-          appSettingssettings.Add(key, value);
-        }
-        else
-        {
-          appSettingssettings[key].Value = value;
-        }
-
-        configFile.Save(ConfigurationSaveMode.Modified);
-        ConfigurationManager.RefreshSection(configFile.AppSettings.SectionInformation.Name);
-      }
-      catch (ConfigurationErrorsException)
-      {
-      }
-
       // Need to reset the Working directory, since when we called via the Explorer Context menu, it'll be different
       Directory.SetCurrentDirectory(AppDomain.CurrentDomain.BaseDirectory);
 
@@ -320,13 +296,13 @@ namespace MPTagThat
     private static void ReadConfig()
     {
       _startupSettings = new StartupSettings();
-      string configFile = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "MPTagThat2\\Config.xml");
+      string configFile = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData), "MPTagThat2\\Config.xml");
       if (!File.Exists(configFile))
       {
         _startupSettings.MaxSongs = 1000;
-        var dbPath = "%APPDATA%\\MPTagThat2\\Databases";
+        var dbPath = "%PROGRAMDATA%\\MPTagThat2\\Databases";
         _startupSettings.DatabaseFolder = CheckPath(dbPath);
-        var coverArtPath = "%APPDATA%\\MPTagThat2\\CoverArt";
+        var coverArtPath = "%PROGRAMDATA%\\MPTagThat2\\CoverArt";
         _startupSettings.CoverArtFolder = CheckPath(coverArtPath);
         return;
       }
@@ -356,12 +332,12 @@ namespace MPTagThat
         _startupSettings.MaxSongs = maxSongsNode != null ? Convert.ToInt32(maxSongsNode.InnerText) : 1000;
 
         XmlNode ravenDatabaseNode = doc.DocumentElement.SelectSingleNode("/config/MusicDatabaseFolder");
-        var dbPath = ravenDatabaseNode?.InnerText ?? "%APPDATA%\\MPTagThat2\\Databases";
+        var dbPath = ravenDatabaseNode?.InnerText ?? "%PROGRAMDATA%\\MPTagThat2\\Databases";
         dbPath = CheckPath(dbPath);
         _startupSettings.DatabaseFolder = dbPath;
 
         XmlNode coverArtNode = doc.DocumentElement.SelectSingleNode("/config/CoverArtFolder");
-        var coverArtPath = coverArtNode?.InnerText ?? "%APPDATA%\\MPTagThat2\\CoverArt";
+        var coverArtPath = coverArtNode?.InnerText ?? "%PROGRAMDATA%\\MPTagThat2\\CoverArt";
         coverArtPath = CheckPath(coverArtPath);
         _startupSettings.CoverArtFolder = coverArtPath;
       }

@@ -125,17 +125,17 @@ Section -Main SEC0000
 
     # Scripts
     # Get AppData Folder first
-    SetShellVarContext current
-    !define ROAMINGDATA "$APPDATA\MPTagThat2"
-    SetOutPath ${ROAMINGDATA}\Scripts
+    SetShellVarContext all
+    !define PROGRAMDATA "$LOCALAPPDATA\MPTagThat2"
+    SetOutPath ${PROGRAMDATA}\Scripts
     File /r ${BASEFOLDER}\MPTagThat.Base\Scripts\*
 
     # File Icons
-    SetOutPath ${ROAMINGDATA}\Fileicons
+    SetOutPath ${PROGRAMDATA}\Fileicons
     File /r ${BASEFOLDER}\MPTagThat.Base\Fileicons\*
 
     # Default Config like e.g. the Docking Manager Layout
-    SetOutPath ${ROAMINGDATA}\Config
+    SetOutPath ${PROGRAMDATA}\Config
     File /r ${BASEFOLDER}\MPTagThat.Base\Config\*
 
     # Base Files
@@ -147,7 +147,7 @@ Section -Main SEC0000
 
     # Download MusicBrainz
     ${IF} $DownloadMusicbrainz == 1
-       NSISdl::download "http://install.team-mediaportal.com/MPTagThat/MusicBrainzArtists.zip" "${ROAMINGDATA}\Databases\MusicBrainzArtists.zip" 
+       NSISdl::download "http://install.team-mediaportal.com/MPTagThat/MusicBrainzArtists.zip" "${PROGRAMDATA}\Databases\MusicBrainzArtists.zip" 
     ${ENDIF}
 SectionEnd
 
