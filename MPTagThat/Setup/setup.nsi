@@ -167,7 +167,7 @@ Section -post SEC0001
 		CreateShortCut "$SMPROGRAMS\$StartMenuGroup\$(^Name).lnk" "$INSTDIR\MpTagThat.exe" "" "$INSTDIR\MpTagThat.exe" 0 "" "" "MPTagThat2" 
 		CreateShortCut "$SMPROGRAMS\$StartMenuGroup\User Files.lnk" "$LocalAppData\$(^Name)" "" "$LocalAppData\$(^Name)" 0 "" "" "Browse your config files, logs, ..."
 		CreateShortCut "$SMPROGRAMS\$StartMenuGroup\Uninstall $(^Name).lnk" "$INSTDIR\uninstall.exe"
-		!insertmacro MUI_STARTMENU_WRITE_END
+		!insertmacro MUI_STARTMENU_WRITE_ENDf
 	${ENDIF}
 	
     WriteRegStr HKLM "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\$(^Name)" DisplayName "$(^Name)"
