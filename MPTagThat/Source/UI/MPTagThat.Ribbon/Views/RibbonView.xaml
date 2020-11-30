@@ -874,7 +874,7 @@
                       </StackPanel>
                       <syncfusion:ButtonAdv Label="{lex:Loc settings_Tags_DownloadMusicBrainzDatabase}" HorizontalAlignment="Left"  Width="Auto" 
                                             SmallIcon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_MusicBrainz_32x.png" 
-                                            Command="{Binding DownloadMusicBrainzDatabaseCommand}"/>
+                                            Command="{Binding DownloadMusicBrainzDatabaseCommand}" Margin="0,10,0,0"/>
                     </StackPanel>
                   </GroupBox>
 

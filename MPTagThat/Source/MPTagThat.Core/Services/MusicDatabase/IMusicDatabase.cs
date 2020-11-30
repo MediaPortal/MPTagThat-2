@@ -156,5 +156,15 @@ namespace MPTagThat.Core.Services.MusicDatabase
     /// <param name="sql"></param>
     /// <returns></returns>
     List<string> GetAutoCorrectArtists(string sql);
+
+    /// <summary>
+    /// Close the SQLite database to allow updates
+    /// </summary>
+    void CloseAutoCorrectDatabase();
+
+    /// <summary>
+    /// Open the SQLite database after an update
+    /// </summary>
+    void OpenAutoCorrectDatabase(string database);
   }
 }

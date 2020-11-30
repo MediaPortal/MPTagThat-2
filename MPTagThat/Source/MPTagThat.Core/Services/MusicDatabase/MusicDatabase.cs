@@ -25,6 +25,7 @@ using System.Data.SQLite;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
+using System.IO.Compression;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text.RegularExpressions;
@@ -53,6 +54,7 @@ namespace MPTagThat.Core.Services.MusicDatabase
     private readonly Options _options = ContainerLocator.Current.Resolve<ISettingsManager>()?.GetOptions;
     private readonly string _defaultMusicDatabaseName = "MusicDatabase";
     private LiteDatabase _store;
+    private SQLiteConnection _sqLiteConnection;
 
     private BackgroundWorker _bgwScanShare;
     private int _audioFiles;
@@ -60,7 +62,6 @@ namespace MPTagThat.Core.Services.MusicDatabase
 
     private readonly Dictionary<string, LiteDatabase> _stores = new Dictionary<string, LiteDatabase>();
     private readonly StatusBarEvent _progressEvent = new StatusBarEvent { Type = StatusBarEvent.StatusTypes.CurrentFile };
-    private readonly SQLiteConnection _sqLiteConnection;
 
     private string[] _indexedTags = { "Artist:", "AlbumArtist:", "Album:", "Composer:", "Genre:", "Title:", "Type:", "FullFileName:" };
     #endregion
@@ -77,18 +78,16 @@ namespace MPTagThat.Core.Services.MusicDatabase
       if (File.Exists(zipfile))
       {
         log.Info("Found a zipped MusicBrainz Artist Database");
+        if (File.Exists($"{_options.StartupSettings.DatabaseFolder}\\MusicBrainzArtists.db3"))
+        {
+          File.Delete($"{_options.StartupSettings.DatabaseFolder}\\MusicBrainzArtists.db3");
+        }
         System.IO.Compression.ZipFile.ExtractToDirectory(zipfile, _options.StartupSettings.DatabaseFolder);
         File.Delete(zipfile);
       }
 
       var database = $"{_options.StartupSettings.DatabaseFolder}\\MusicBrainzArtists.db3";
-      if (File.Exists(database))
-      {
-        log.Info("Opening MusicBrainz Artist Database");
-        _sqLiteConnection = new SQLiteConnection($"Data Source={database}");
-        _sqLiteConnection?.Open();
-        MusicBrainzDatabaseActive = true;
-      }
+      OpenAutoCorrectDatabase(database);
     }
 
     #endregion
@@ -564,6 +563,31 @@ namespace MPTagThat.Core.Services.MusicDatabase
         }
       }
       return artists;
+    }
+
+    /// <summary>
+    /// Close the AutoCorrect Database
+    /// </summary>
+    public void CloseAutoCorrectDatabase()
+    {
+      if (_sqLiteConnection != null)
+      {
+        _sqLiteConnection.Close();
+        _sqLiteConnection.Dispose();
+        _sqLiteConnection = null;
+      }
+    }
+
+    public void OpenAutoCorrectDatabase(string database)
+    {
+      CloseAutoCorrectDatabase();
+      if (File.Exists(database))
+      {
+        log.Info("Opening MusicBrainz Artist Database");
+        _sqLiteConnection = new SQLiteConnection($"Data Source={database}");
+        _sqLiteConnection?.Open();
+        MusicBrainzDatabaseActive = true;
+      }
     }
 
     #endregion

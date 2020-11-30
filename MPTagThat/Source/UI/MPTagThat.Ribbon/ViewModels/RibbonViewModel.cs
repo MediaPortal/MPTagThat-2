@@ -961,20 +961,27 @@ namespace MPTagThat.Ribbon.ViewModels
         await DownloadFileAsync(url, progress, cancellationToken.Token, zipfile);
         if (System.IO.File.Exists(zipfile))
         {
+          var dbFile = $"{_options.StartupSettings.DatabaseFolder}\\MusicBrainzArtists.db3";
+          if (File.Exists(dbFile))
+          {
+            ContainerLocator.Current.Resolve<IMusicDatabase>()?.CloseAutoCorrectDatabase();
+            File.Delete(dbFile);
+          }
           System.IO.Compression.ZipFile.ExtractToDirectory(zipfile, _options.StartupSettings.DatabaseFolder);
           File.Delete(zipfile);
+          ContainerLocator.Current.Resolve<IMusicDatabase>()?.OpenAutoCorrectDatabase(dbFile);
         }
-
-        GenericEvent evt = new GenericEvent
-        {
-          Action = "closedialogrequested"
-        };
-        EventSystem.Publish(evt);
       }
       catch (Exception ex)
       {
         log.Error($"Error Downloading MusicBrainz Database: {ex.Message}");
       }
+
+      GenericEvent evt = new GenericEvent
+      {
+        Action = "closedialogrequested"
+      };
+      EventSystem.Publish(evt);
     }
 
     private async Task DownloadFileAsync(string url, IProgress<double> progress, CancellationToken token, string fileName)
