@@ -152,7 +152,7 @@ Section -Main SEC0000
 SectionEnd
 
 Section -post SEC0001
-    SetShellVarContext all
+    SetShellVarContext current
     WriteRegStr HKLM "${REGKEY}" Path $INSTDIR
     SetOutPath $INSTDIR
     WriteUninstaller $INSTDIR\uninstall.exe
