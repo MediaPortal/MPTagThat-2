@@ -55,7 +55,7 @@ namespace MPTagThat.Core.Services.ScriptManager
       log = ContainerLocator.Current.Resolve<ILogger>()?.GetLogger;
       _options = ContainerLocator.Current.Resolve<ISettingsManager>()?.GetOptions;
 
-      _sharedAsemblyDir = $@"{Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData)}\MPTagThat2\Scripts";
+      _sharedAsemblyDir = $@"{Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)}\MPTagThat2\Scripts";
       if (!Directory.Exists(_sharedAsemblyDir))
       {
         try
