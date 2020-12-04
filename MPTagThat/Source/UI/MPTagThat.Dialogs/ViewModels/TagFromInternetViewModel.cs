@@ -332,7 +332,13 @@ namespace MPTagThat.Dialogs.ViewModels
         var songFound = false;
         foreach (var song in _songs)
         {
-          if (Util.LongestCommonSubstring(albumSong.Title, song.FileName) > 0.75)
+          var strCompare = song.FileName;
+          if (!string.IsNullOrWhiteSpace(song.Title))
+          {
+            strCompare = song.Title;
+          }
+
+          if (Util.LongestCommonSubstring(albumSong.Title, strCompare) > 0.70)
           {
             if (albumTrackPos > list.Length - 1)
             {
@@ -429,7 +435,19 @@ namespace MPTagThat.Dialogs.ViewModels
       _nrOfSitesSearched++;
       StatusMsg = string.Format(_statusMsgTmp, _options.MainSettings.AlbumInfoSites.Count, _options.MainSettings.AlbumInfoSites.Count - _nrOfSitesSearched);
 
-      Albums.AddRange(albums);
+      // Only add Albums that have really Songs in the list
+      foreach (var album in albums)
+      {
+        var songCount = 0;
+        foreach (var songs in album.Discs)
+        {
+          songCount += songs.Count;
+        }
+        if (songCount > 0)
+        {
+          Albums.Add(album);
+        }
+      }
     }
 
     private void SearchFinishedMethod()
