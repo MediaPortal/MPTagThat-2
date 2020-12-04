@@ -1181,7 +1181,7 @@
     <value>Songs on Album</value>
   </data>
   <data name="lookup_SearchFinished" xml:space="preserve">
-    <value>Multiple Albums found. Please select:</value>
+    <value>Please select Site:</value>
   </data>
   <data name="lookup_NoAlbumFound" xml:space="preserve">
     <value>No album found, please choose another selection criteria.</value>

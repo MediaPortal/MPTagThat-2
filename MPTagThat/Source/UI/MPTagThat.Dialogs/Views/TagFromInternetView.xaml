@@ -148,8 +148,7 @@
                                ShowRowHeader="False"
                                ColumnSizer="AutoWithLastColumnFill">
           <syncfusion:SfDataGrid.Columns>
-            <syncfusion:GridTextColumn HeaderText="{lex:Loc songHeader_FileName}" MappingName="FileName" />
-            <syncfusion:GridTextColumn HeaderText="{lex:Loc songHeader_Track}" MappingName="TrackNumber" Width="80" />
+            <syncfusion:GridTextColumn HeaderText="{lex:Loc songHeader_FileName}" MappingName="FileName" Width="200" />
             <syncfusion:GridTextColumn HeaderText="{lex:Loc songHeader_Title}" MappingName="Title" />
           </syncfusion:SfDataGrid.Columns>
         </syncfusion:SfDataGrid>

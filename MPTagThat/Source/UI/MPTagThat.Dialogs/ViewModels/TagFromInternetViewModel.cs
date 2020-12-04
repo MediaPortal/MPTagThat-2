@@ -325,12 +325,13 @@ namespace MPTagThat.Dialogs.ViewModels
         SelectedAlbumSongs.AddRange(discs);
       }
 
-      var albumTrackPos = 0;
+      var songsNotFound = new List<SongData>();
       var list = new SongData[_songs.Count];
-      foreach (var albumSong in SelectedAlbumSongs)
+      foreach (var song in _songs)
       {
+        var songsPos = 0;
         var songFound = false;
-        foreach (var song in _songs)
+        foreach (var albumSong in SelectedAlbumSongs)
         {
           var strCompare = song.FileName;
           if (!string.IsNullOrWhiteSpace(song.Title))
@@ -340,26 +341,35 @@ namespace MPTagThat.Dialogs.ViewModels
 
           if (Util.LongestCommonSubstring(albumSong.Title, strCompare) > 0.70)
           {
-            if (albumTrackPos > list.Length - 1)
+            if (songsPos > list.Length - 1)
             {
               break;
             }
-            list[albumTrackPos] = song;
+            list[songsPos] = song;
             songFound = true;
             break;
           }
+          songsPos++;
         }
 
-        if (!songFound && albumTrackPos < _songs.Count)
+        if (!songFound)
         {
-          list[albumTrackPos] = _songs[albumTrackPos];
+          songsNotFound.Add(song);
         }
-        albumTrackPos++;
       }
 
+      var i = 0;
       foreach (var s in list)
       {
-        _matchedSongs.Add(s);
+        if (s == null && i < songsNotFound.Count)
+        {
+          _matchedSongs.Add(songsNotFound[i]);
+          i++;
+        }
+        else
+        {
+          _matchedSongs.Add(s);
+        }
       }
     }
 
@@ -373,7 +383,7 @@ namespace MPTagThat.Dialogs.ViewModels
       if (albumSong.Number < _matchedSongs.Count)
       {
         var song = MatchedSongs[albumSong.Number - 1];
-        song.TrackNumber = (uint) albumSong.Number;
+        song.TrackNumber = (uint)albumSong.Number;
         song.Title = albumSong.Title;
         //MatchedSongs[albumSong.Number - 1] = song;
       }

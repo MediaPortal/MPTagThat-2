@@ -1132,7 +1132,7 @@ namespace MPTagThat.Resources.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Multiple Albums found. Please select:.
+        ///   Looks up a localized string similar to Please select Site:.
         /// </summary>
         public static string lookup_SearchFinished {
             get {
