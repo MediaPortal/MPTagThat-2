@@ -28,6 +28,15 @@
   <UserControl.Resources>
     <core:BusyToCursorConverter x:Key="busyToCursorConverter" />
     <core:InvertBoolConverter x:Key="invertBoolConverter" />
+    <core:RowChangedColorConverter x:Key="ChangedRowStyleSelector" />
+    <core:AlternateRowChangedColorConverter x:Key="AlternateRowStyleSelector" />
+    <core:ColorContrastConverter x:Key="ForegroundStyleSelector" />
+
+    <!-- The Row Styles in the Grid -->
+    <Style TargetType="syncfusion:VirtualizingCellsControl" x:Key="ChangedRowStyle">
+      <Setter Property="Background" Value="{Binding Path=Matched,UpdateSourceTrigger=PropertyChanged,Converter={StaticResource ChangedRowStyleSelector}}"/>
+      <Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource Self}, Path=Background,Converter={StaticResource ForegroundStyleSelector}}"/>
+    </Style>
   </UserControl.Resources>
 
   <UserControl.Cursor>
@@ -121,6 +130,7 @@
                                AllowSorting="False"
                                AllowResizingColumns="True" 
                                AllowDraggingColumns="False" 
+                               AllowDraggingRows="True" 
                                AutoGenerateColumns="False"
                                ShowRowHeader="False"
                                ColumnSizer="AutoWithLastColumnFill">
@@ -146,9 +156,12 @@
                                AllowDrop="True"
                                AutoGenerateColumns="False"
                                ShowRowHeader="False"
-                               ColumnSizer="AutoWithLastColumnFill">
+                               ColumnSizer="AutoWithLastColumnFill"
+                               RowStyle="{StaticResource ChangedRowStyle}">
+
           <syncfusion:SfDataGrid.Columns>
             <syncfusion:GridTextColumn HeaderText="{lex:Loc songHeader_FileName}" MappingName="FileName" Width="200" />
+            <syncfusion:GridTextColumn HeaderText="{lex:Loc songHeader_Track}" MappingName="TrackNumber" Width="80" />
             <syncfusion:GridTextColumn HeaderText="{lex:Loc songHeader_Title}" MappingName="Title" />
           </syncfusion:SfDataGrid.Columns>
         </syncfusion:SfDataGrid>

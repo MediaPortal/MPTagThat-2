@@ -50,6 +50,7 @@
     <Compile Include="DialogModule.cs" />
     <Compile Include="Models\LyricsModel.cs" />
     <Compile Include="Models\MusicBrainzRecording.cs" />
+    <Compile Include="Models\SongMatch.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>

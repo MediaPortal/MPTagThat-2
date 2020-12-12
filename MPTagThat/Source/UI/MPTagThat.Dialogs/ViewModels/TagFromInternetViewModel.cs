@@ -33,6 +33,7 @@ using MPTagThat.Core.Annotations;
 using MPTagThat.Core.Common;
 using MPTagThat.Core.Common.Song;
 using MPTagThat.Core.Utils;
+using MPTagThat.Dialogs.Models;
 using Syncfusion.UI.Xaml.Grid;
 using Syncfusion.Windows.Shared;
 using TagLib;
@@ -79,9 +80,9 @@ namespace MPTagThat.Dialogs.ViewModels
     /// <summary>
     /// Matched Songs with Selected Site
     /// </summary>
-    private ObservableCollection<SongData> _matchedSongs = new ObservableCollection<SongData>();
+    private ObservableCollection<SongMatch> _matchedSongs = new ObservableCollection<SongMatch>();
 
-    public ObservableCollection<SongData> MatchedSongs
+    public ObservableCollection<SongMatch> MatchedSongs
     {
       get => _matchedSongs;
       set => SetProperty(ref _matchedSongs, value);
@@ -257,14 +258,14 @@ namespace MPTagThat.Dialogs.ViewModels
         pic.Data = vector.Data;
       }
 
-      int i = 0;
-      foreach (var song in MatchedSongs)
+      foreach (var songMatch in MatchedSongs)
       {
-        if (song == null)
+        if (songMatch == null)
         {
-          i++;
           continue;
         }
+
+        var song = _songs[songMatch.PositionInSongList];
         song.Artist = Artist;
         song.Album = Album;
         var strYear = Year;
@@ -280,11 +281,9 @@ namespace MPTagThat.Dialogs.ViewModels
         }
         catch (Exception) { }
 
-        var albumSong = SelectedAlbumSongs[i];
-        song.TrackNumber = (uint)albumSong.Number;
-        song.Title = albumSong.Title;
+        song.TrackNumber =songMatch.TrackNumber;
+        song.Title = songMatch.Title;
         song.Pictures.Add(pic);
-        i++;
       }
       CloseDialog("true");
     }
@@ -325,11 +324,12 @@ namespace MPTagThat.Dialogs.ViewModels
         SelectedAlbumSongs.AddRange(discs);
       }
 
-      var songsNotFound = new List<SongData>();
-      var list = new SongData[_songs.Count];
+      var songsNotFound = new List<SongMatch>();
+      var list = new SongMatch[_songs.Count];
+      var songPos = 0;
       foreach (var song in _songs)
       {
-        var songsPos = 0;
+        var albumSongsPos = 0;
         var songFound = false;
         foreach (var albumSong in SelectedAlbumSongs)
         {
@@ -339,23 +339,28 @@ namespace MPTagThat.Dialogs.ViewModels
             strCompare = song.Title;
           }
 
-          if (Util.LongestCommonSubstring(albumSong.Title, strCompare) > 0.70)
+          if (Util.LongestCommonSubstring(albumSong.Title, strCompare) > 0.75)
           {
-            if (songsPos > list.Length - 1)
+            if (albumSongsPos > list.Length - 1)
             {
               break;
             }
-            list[songsPos] = song;
+
+            var match = new SongMatch() {FileName = song.FileName, Title = albumSong.Title, PositionInSongList = songPos, TrackNumber = (uint)albumSong.Number, Matched = true};
+            list[albumSongsPos] = match;
             songFound = true;
             break;
           }
-          songsPos++;
+          albumSongsPos++;
         }
 
         if (!songFound)
         {
-          songsNotFound.Add(song);
+          var match = new SongMatch() {FileName = song.FileName, Title = song.Title, PositionInSongList = songPos, TrackNumber = song.TrackNumber, Matched = false};
+          songsNotFound.Add(match);
         }
+
+        songPos++;
       }
 
       var i = 0;
@@ -385,7 +390,7 @@ namespace MPTagThat.Dialogs.ViewModels
         var song = MatchedSongs[albumSong.Number - 1];
         song.TrackNumber = (uint)albumSong.Number;
         song.Title = albumSong.Title;
-        //MatchedSongs[albumSong.Number - 1] = song;
+        song.Matched = true;
       }
     }
 
@@ -485,8 +490,10 @@ namespace MPTagThat.Dialogs.ViewModels
     /// <param name="e"></param>
     private void OnRowDropped(object sender, GridRowDroppedEventArgs e)
     {
-      if (e.DropPosition != DropPosition.None)
+      if (!e.IsFromOutSideSource && e.DropPosition != DropPosition.None)
       {
+        // The Drag & Drop operation was inside the Matched Songs
+
         // Get Dragging records
         ObservableCollection<object> draggingRecords = e.Data.GetData("Records") as ObservableCollection<object>;
 
@@ -499,7 +506,7 @@ namespace MPTagThat.Dialogs.ViewModels
         // Removes the dragging records from the underlying collection
         foreach (var item in draggingRecords)
         {
-          MatchedSongs.Remove(item as SongData);
+          MatchedSongs.Remove(item as SongMatch);
         }
 
         // Find the target record index after removing the records
@@ -510,10 +517,29 @@ namespace MPTagThat.Dialogs.ViewModels
         // Insert dragging records to the target position
         for (int i = draggingRecords.Count - 1; i >= 0; i--)
         {
-          MatchedSongs.Insert(insertionIndex, draggingRecords[i] as SongData);
+          MatchedSongs.Insert(insertionIndex, draggingRecords[i] as SongMatch);
         }
         MatchedSongsGrid.EndInit();
       }
+      else if (e.IsFromOutSideSource)
+      {
+        // The Drag and Drop happened from the Songs Looked up from the Internet Source
+
+        // Get Dragging records
+        ObservableCollection<object> draggingRecords = e.Data.GetData("Records") as ObservableCollection<object>;
+
+        // Gets the TargetRecord from the underlying collection using record index of the TargetRecord (e.TargetRecord)
+        var targetRecord = MatchedSongs[(int)e.TargetRecord];
+        targetRecord.Title = (draggingRecords[0] as AlbumSong).Title;
+        targetRecord.TrackNumber = (uint)(draggingRecords[0] as AlbumSong).Number;
+        targetRecord.Matched = true;
+      }
+    }
+
+
+    private void OnDragOver(object sender, GridRowDragOverEventArgs e)
+    {
+      e.ShowDragUI = false;
     }
 
 
@@ -524,6 +550,7 @@ namespace MPTagThat.Dialogs.ViewModels
     public override void OnDialogOpened(IDialogParameters parameters)
     {
       MatchedSongsGrid.RowDragDropController.Dropped += OnRowDropped;
+      MatchedSongsGrid.RowDragDropController.DragOver += OnDragOver;
 
       // Add the Album Search Sites to the Combobox
       AlbumSearchSites.AddRange(_options.MainSettings.AlbumInfoSites);

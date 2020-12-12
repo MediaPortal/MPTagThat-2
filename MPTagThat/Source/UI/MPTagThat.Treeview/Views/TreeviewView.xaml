@@ -45,6 +45,7 @@
                            ItemsSource="{Binding Nodes}"
                            SelectedItem="{Binding SelectedNode, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                            LoadOnDemandCommand="{Binding LoadFolderOnDemandCommand}"
+                           ScrollViewer.HorizontalScrollBarVisibility="Auto" 
                            ShowLines="False"
                            BorderThickness="0 0 1 0" >
 

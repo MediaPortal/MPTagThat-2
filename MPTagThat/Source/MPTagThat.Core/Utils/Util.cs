@@ -610,8 +610,11 @@ namespace MPTagThat.Core.Utils
         {
           Image img = Common.Song.Picture.ImageFromData(pic.Data);
           // Need to make a copy, otherwise we have a GDI+ Error
-          Bitmap bCopy = new Bitmap(img);
-          bCopy.Save(name, ImageFormat.Jpeg);
+          if (img != null)
+          {
+            Bitmap bCopy = new Bitmap(img);
+            bCopy.Save(name, ImageFormat.Jpeg);
+          }
         }
         catch (Exception ex)
         {
