@@ -387,7 +387,14 @@ namespace MPTagThat.Dialogs.ViewModels
       _nrOfSitesSearched++;
       StatusMsg = string.Format(_statusMsgTmp, _options.MainSettings.AlbumInfoSites.Count, _options.MainSettings.AlbumInfoSites.Count - _nrOfSitesSearched);
 
-      Albums.AddRange(albums);
+      // Only add Albums that have really Images in the list
+      foreach (var album in albums)
+      {
+        if (album.ImageData != null)
+        {
+          Albums.Add(album);
+        }
+      }
     }
 
     private void SearchFinishedMethod()
