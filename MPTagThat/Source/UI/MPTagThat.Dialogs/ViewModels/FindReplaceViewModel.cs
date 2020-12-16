@@ -22,6 +22,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Input;
+using MPTagThat.Core.Common.Song;
 using Prism.Services.Dialogs;
 using Syncfusion.UI.Xaml.Grid;
 using Syncfusion.UI.Xaml.Utility;
@@ -39,7 +40,8 @@ namespace MPTagThat.Dialogs.ViewModels
     private SfDataGrid _songGrid;
     private bool _stringFoundOnce;
     private bool _replaceAll;
-    
+    private bool _findExecuted;
+
     #endregion
 
     #region Properties
@@ -142,6 +144,7 @@ namespace MPTagThat.Dialogs.ViewModels
     {
       Find();
       MaintainFindReplaceBuffer();
+      _findExecuted = true;
     }
 
     private bool Find()
@@ -176,11 +179,14 @@ namespace MPTagThat.Dialogs.ViewModels
 
     private void Replace(object param)
     {
-      if (Find())
+      if (!_findExecuted)
       {
-        ReplaceValue();
+        if (Find())
+        {
+          ReplaceValue();
+        }
       }
-
+      _findExecuted = false;
       MaintainFindReplaceBuffer();
     }
 
@@ -190,6 +196,10 @@ namespace MPTagThat.Dialogs.ViewModels
     {
       _replaceAll = true;
 
+      if (_findExecuted)
+      {
+        _songGrid.SearchHelper.Search(SelectedTextFindBuffer);
+      }
       while (Find())
       {
         ReplaceValue();
@@ -207,13 +217,14 @@ namespace MPTagThat.Dialogs.ViewModels
         if (!_songGrid.Columns[index.ColumnIndex].IsReadOnly)
         {
           var mappingName = _songGrid.Columns[index.ColumnIndex].MappingName;
-          var record = _songGrid.View.Records.GetItemAt(index.RowIndex - 1);
+          var record = _songGrid.View.Records.GetItemAt(index.RowIndex - 2);   // Because we have the header and filter row
           var cellValue = _songGrid.View.GetPropertyAccessProvider().GetValue(record, mappingName);
           if (cellValue != null)
           {
             var replacedString = (cellValue as string)?.Replace(SelectedTextFindBuffer, SelectedTextReplaceBuffer);
             _songGrid.View.GetPropertyAccessProvider().SetValue(record, mappingName, replacedString);
             _songGrid.View.Refresh();
+            (record as SongData).Changed = true;
           }
         }
       }
