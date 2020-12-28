@@ -1055,7 +1055,7 @@
     <comment>The Header of the Auto Tagging</comment>
   </data>
   <data name="settings_DebugLevel" xml:space="preserve">
-    <value>Debug Level:</value>
+    <value>Logging Level:</value>
   </data>
   <data name="settings_General" xml:space="preserve">
     <value>General Settings</value>

@@ -2464,7 +2464,7 @@ namespace MPTagThat.Resources.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Debug Level:.
+        ///   Looks up a localized string similar to Logging Level:.
         /// </summary>
         public static string settings_DebugLevel {
             get {
