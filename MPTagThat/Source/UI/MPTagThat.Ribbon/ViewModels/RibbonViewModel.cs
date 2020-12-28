@@ -1297,7 +1297,6 @@ namespace MPTagThat.Ribbon.ViewModels
           if (item[0] == _options.MainSettings.ActiveScript)
           {
             ScriptsSelectedIndex = i;
-            break;
           }
           i++;
         }
