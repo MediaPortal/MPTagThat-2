@@ -551,7 +551,7 @@ namespace MPTagThat.TagEdit.ViewModels
 
     private bool _ckPicturesIsChecked;
     public bool CkPicturesIsChecked { get => _ckPicturesIsChecked; set => SetProperty(ref _ckPicturesIsChecked, value); }
-    
+
     private bool _ckMbArtistIdIsChecked;
     public bool CkMbArtistIdIsChecked { get => _ckMbArtistIdIsChecked; set => SetProperty(ref _ckMbArtistIdIsChecked, value); }
 
@@ -925,7 +925,7 @@ namespace MPTagThat.TagEdit.ViewModels
       {
         Filter = "Pictures (Bmp, Jpg, Gif, Png)|*.jpg;*.jpeg;*.bmp;*.Gif;*.png|All Files|*.*",
         InitialDirectory = SongEdit.FullFileName != null ? SongEdit.FilePath : _songs[0].FilePath
-        
+
       };
       if (oFd.ShowDialog() == true)
       {
@@ -942,7 +942,7 @@ namespace MPTagThat.TagEdit.ViewModels
           SongEdit.Pictures.Add(pic);
           FrontCover = SongEdit.FrontCover;
           SongEdit.Changed = true;
-          
+
           if (MultiCheckBoxVisibility)
           {
             CkPicturesIsChecked = true;
@@ -956,7 +956,7 @@ namespace MPTagThat.TagEdit.ViewModels
       }
       log.Trace("<<<");
     }
-    
+
     /// <summary>
     /// Remove All covers
     /// </summary>
@@ -1016,7 +1016,7 @@ namespace MPTagThat.TagEdit.ViewModels
       }
       var fileName = Path.Combine(Path.GetDirectoryName(song.FullFileName), "folder.jpg");
       int indexFrontCover = song.Pictures
-        .Select((pic, i) => new { Pic = pic, Position = i}).First(m => m.Pic.Type == PictureType.FrontCover).Position;
+        .Select((pic, i) => new { Pic = pic, Position = i }).First(m => m.Pic.Type == PictureType.FrontCover).Position;
       if (indexFrontCover < 0)
       {
         indexFrontCover = 0;
@@ -1046,7 +1046,7 @@ namespace MPTagThat.TagEdit.ViewModels
         {
           Filter = "Pictures (Bmp, Jpg, Gif, Png)|*.jpg;*.jpeg;*.bmp;*.Gif;*.png|All Files|*.*",
           InitialDirectory = SongEdit.FullFileName != null ? SongEdit.FilePath : _songs[0].FilePath
-        
+
         };
         if (sFd.ShowDialog() == true)
         {
@@ -1070,7 +1070,7 @@ namespace MPTagThat.TagEdit.ViewModels
     {
       if (SelectedPicture.Count > 0)
       {
-        var pic = (Picture) SelectedPicture[0];
+        var pic = (Picture)SelectedPicture[0];
         try
         {
           var bitmapImage = new BitmapImage();
@@ -1183,8 +1183,8 @@ namespace MPTagThat.TagEdit.ViewModels
     {
       log.Trace(">>>");
       var mptagthatUser = SongEdit.Ratings.FirstOrDefault(r => r.User.ToLowerInvariant() == "mptagthat");
-      var user = mptagthatUser?.User.ToLowerInvariant() == "mptagthat" ? "" : "MPTagThat"; 
-      SongEdit.Ratings.Add(new PopmFrame(user,0,0));
+      var user = mptagthatUser?.User.ToLowerInvariant() == "mptagthat" ? "" : "MPTagThat";
+      SongEdit.Ratings.Add(new PopmFrame(user, 0, 0));
       SongEdit.Changed = true;
       IsApplyButtonEnabled = true;
       log.Trace("<<<");
@@ -1218,7 +1218,7 @@ namespace MPTagThat.TagEdit.ViewModels
 
     private void AddPerson(Object param)
     {
-      InvolvedPersons.Add(new Person {Function = "", Name = ""});
+      InvolvedPersons.Add(new Person { Function = "", Name = "" });
       UpdateInvolvedPersons(SongEdit);
       IsApplyButtonEnabled = true;
     }
@@ -1232,12 +1232,12 @@ namespace MPTagThat.TagEdit.ViewModels
     {
       if (SelectedPerson.Count > 0)
       {
-        InvolvedPersons.Remove((Person) SelectedPerson[0]);
+        InvolvedPersons.Remove((Person)SelectedPerson[0]);
         UpdateInvolvedPersons(SongEdit);
         IsApplyButtonEnabled = true;
       }
     }
-  
+
     /// <summary>
     /// Add a Musician
     /// </summary>
@@ -1245,11 +1245,11 @@ namespace MPTagThat.TagEdit.ViewModels
 
     private void AddMusician(Object param)
     {
-      InvolvedMusicians.Add(new Person {Function = "", Name = ""});
+      InvolvedMusicians.Add(new Person { Function = "", Name = "" });
       UpdateMusicians(SongEdit);
       IsApplyButtonEnabled = true;
     }
-    
+
     /// <summary>
     /// Delete a Musician
     /// </summary>
@@ -1259,7 +1259,7 @@ namespace MPTagThat.TagEdit.ViewModels
     {
       if (SelectedMusician.Count > 0)
       {
-        InvolvedMusicians.Remove((Person) SelectedMusician[0]);
+        InvolvedMusicians.Remove((Person)SelectedMusician[0]);
         UpdateMusicians(SongEdit);
         IsApplyButtonEnabled = true;
       }
@@ -1286,7 +1286,7 @@ namespace MPTagThat.TagEdit.ViewModels
     {
       log.Trace(">>>");
       // Can't use a foreach here, since it modifies the collection
-      while(SelectedUserFrames.Count > 0)
+      while (SelectedUserFrames.Count > 0)
       {
         SongEdit.UserFrames.Remove((Frame)SelectedUserFrames[0]);
       }
@@ -1646,30 +1646,43 @@ namespace MPTagThat.TagEdit.ViewModels
 
       if (songs.Count == 1)
       {
-        log.Trace("Single song selected");
-        UncheckCheckboxes();
-        SongEdit = songs[0];
-        _songBackup = SongEdit.Clone();
-        UpdateGenres(SongEdit);
-        SongEdit.UpdateChangedProperty = true;
-        SelectedGenres?.AddRange(SongEdit.Genre.Split(';'));
-        var j = 0;
-        foreach (var mediatype in MediaTypes)
+        try
         {
-          if (mediatype.Value.ToString() == SongEdit.MediaType)
+
+          log.Trace("Single song selected");
+          UncheckCheckboxes();
+          SongEdit = songs[0];
+          _songBackup = SongEdit.Clone();
+          UpdateGenres(SongEdit);
+          SongEdit.UpdateChangedProperty = true;
+
+          // Prevent a Collection Changed Exception
+          SelectedGenres.CollectionChanged -= SelectedGenres_CollectionChanged;
+          SelectedGenres?.AddRange(SongEdit.Genre.Split(';'));
+          SelectedGenres.CollectionChanged += SelectedGenres_CollectionChanged;
+
+          var j = 0;
+          foreach (var mediatype in MediaTypes)
           {
-            SelectedIndexMediaType = j;
-            break;
+            if (mediatype.Value.ToString() == SongEdit.MediaType)
+            {
+              SelectedIndexMediaType = j;
+              break;
+            }
+            j++;
           }
-          j++;
+          FillInvolvedPersonsGrid(SongEdit);
+          FillMusicianGrid(SongEdit);
+          FrontCover = SongEdit.FrontCover;
+          _isInitializing = false;
+          IsApplyButtonEnabled = false;
+          log.Trace("<<<");
+          return;
         }
-        FillInvolvedPersonsGrid(SongEdit);
-        FillMusicianGrid(SongEdit);
-        FrontCover = SongEdit.FrontCover;
-        _isInitializing = false;
-        IsApplyButtonEnabled = false;
-        log.Trace("<<<");
-        return;
+        catch (Exception e)
+        {
+          log.Error($"Exception in TagEdit: {e.Message}. Trace: {e.StackTrace}");
+        }
       }
 
       log.Trace($"{songs.Count} songs selected");
@@ -1677,367 +1690,375 @@ namespace MPTagThat.TagEdit.ViewModels
       byte[] picData = new byte[] { };
       var strGenreTemp = "";
       SelectedGenres?.Clear();
-      foreach (var song in songs)
+
+      try
       {
-        // Don't handle single track for Multitag Edit
-        if (SongEdit.TrackCount != song.TrackCount)
+        foreach (var song in songs)
         {
-          if (i == 0 && song.TrackCount != 0)
+          // Don't handle single track for Multitag Edit
+          if (SongEdit.TrackCount != song.TrackCount)
           {
-            SongEdit.TrackCount = song.TrackCount;
-          }
-          else
-          {
-            SongEdit.TrackCount = 0;
-          }
-        }
-
-        if (SongEdit.DiscNumber != song.DiscNumber)
-        {
-          if (i == 0 && song.DiscNumber != 0)
-          {
-            SongEdit.DiscNumber = song.DiscNumber;
-          }
-          else
-          {
-            SongEdit.DiscNumber = 0;
-          }
-        }
-
-        if (SongEdit.DiscCount != song.DiscCount)
-        {
-          if (i == 0 && song.DiscCount != 0)
-          {
-            SongEdit.DiscCount = song.DiscCount;
-          }
-          else
-          {
-            SongEdit.DiscCount = 0;
-          }
-        }
-
-        if (SongEdit.Title != song.Title)
-        {
-          SongEdit.Title = i == 0 ? song.Title : "";
-        }
-
-        if (SongEdit.Artist != song.Artist)
-        {
-          SongEdit.Artist = i == 0 ? song.Artist : "";
-          if (!Artists.Contains(song.Artist))
-          {
-            Artists.Add(song.Artist);
-          }
-
-          if (i > 0)
-          {
-            MultiArtist = true;
-            SelectedArtistsIndex = 0;
-            ArtistComboText = Artists[0];
-          }
-        }
-
-        if (SongEdit.AlbumArtist != song.AlbumArtist)
-        {
-          SongEdit.AlbumArtist = i == 0 ? song.AlbumArtist : "";
-          if (!AlbumArtists.Contains(song.AlbumArtist))
-          {
-            AlbumArtists.Add(song.AlbumArtist);
-          }
-
-          if (i > 0)
-          {
-            MultiAlbumArtist = true;
-            SelectedAlbumArtistsIndex = 0;
-            AlbumArtistComboText = AlbumArtists[0];
-          }
-        }
-
-        if (SongEdit.Album != song.Album)
-        {
-          SongEdit.Album = i == 0 ? song.Album : "";
-          if (!Albums.Contains(song.Album))
-          {
-            Albums.Add(song.Album);
-          }
-          if (i > 0)
-          {
-            MultiAlbum = true;
-            SelectedAlbumsIndex = 0;
-          }
-        }
-
-        if (CkPartOfCompilationIsChecked != song.Compilation)
-        {
-          SongEdit.Compilation = CkPartOfCompilationIsChecked = i == 0 && song.Compilation;
-        }
-
-        if (SongEdit.Year != song.Year)
-        {
-          SongEdit.Year = i == 0 ? song.Year : 0;
-        }
-
-        UpdateGenres(song);
-        if (strGenreTemp != song.Genre)
-        {
-          if (i == 0)
-          {
-            SelectedGenres.AddRange(song.Genre.Split(';'));
-            strGenreTemp = song.Genre;
-          }
-          else
-          {
-            SelectedGenres.Clear();
-          }
-        }
-
-        if (SongEdit.Comment != song.Comment)
-        {
-          SongEdit.Comment = i == 0 ? song.Comment : "";
-        }
-        
-        if (song.Pictures.Count > 0)
-        {
-          if (!song.Pictures[0].Data.SequenceEqual(picData))
-          {
-            if (i == 0)
+            if (i == 0 && song.TrackCount != 0)
             {
-              FrontCover = song.FrontCover;
-              picData = song.Pictures[0].Data;
+              SongEdit.TrackCount = song.TrackCount;
             }
             else
             {
-              FrontCover = null;
+              SongEdit.TrackCount = 0;
             }
           }
-        }
 
-        if (SongEdit.Composer != song.Composer)
-        {
-          SongEdit.Composer = i == 0 ? song.Composer : "";
-        }
-
-        if (SongEdit.Conductor != song.Conductor)
-        {
-          SongEdit.Conductor = i == 0 ? song.Conductor : "";
-        }
-
-        if (SongEdit.Interpreter != song.Interpreter)
-        {
-          SongEdit.Interpreter = i == 0 ? song.Interpreter : "";
-        }
-
-        if (SongEdit.TextWriter != song.TextWriter)
-        {
-          SongEdit.TextWriter = i == 0 ? song.TextWriter : "";
-        }
-
-        if (SongEdit.Publisher != song.Publisher)
-        {
-          SongEdit.Publisher = i == 0 ? song.Publisher : "";
-        }
-
-        if (SongEdit.EncodedBy != song.EncodedBy)
-        {
-          SongEdit.EncodedBy = i == 0 ? song.EncodedBy : "";
-        }
-
-        if (SongEdit.Copyright != song.Copyright)
-        {
-          SongEdit.Copyright = i == 0 ? song.Copyright : "";
-        }
-
-        if (SongEdit.Grouping != song.Grouping)
-        {
-          SongEdit.Grouping = i == 0 ? song.Grouping : "";
-        }
-
-        if (SongEdit.SubTitle != song.SubTitle)
-        {
-          SongEdit.SubTitle = i == 0 ? song.SubTitle : "";
-        }
-
-        if (SongEdit.ArtistSortName != song.ArtistSortName)
-        {
-          SongEdit.ArtistSortName = i == 0 ? song.ArtistSortName : "";
-        }
-
-        if (SongEdit.AlbumArtistSortName != song.AlbumArtistSortName)
-        {
-          SongEdit.AlbumArtistSortName = i == 0 ? song.AlbumArtistSortName : "";
-        }
-
-        if (SongEdit.AlbumSortName != song.AlbumSortName)
-        {
-          SongEdit.AlbumSortName = i == 0 ? song.AlbumSortName : "";
-        }
-
-        if (SongEdit.TitleSortName != song.TitleSortName)
-        {
-          SongEdit.TitleSortName = i == 0 ? song.TitleSortName : "";
-        }
-
-        if (SongEdit.MediaType != song.MediaType)
-        {
-          if (i == 0)
+          if (SongEdit.DiscNumber != song.DiscNumber)
           {
-            var j = 0;
-            foreach (var mediatype in MediaTypes)
+            if (i == 0 && song.DiscNumber != 0)
             {
-              if (mediatype.Value.ToString() == song.MediaType)
+              SongEdit.DiscNumber = song.DiscNumber;
+            }
+            else
+            {
+              SongEdit.DiscNumber = 0;
+            }
+          }
+
+          if (SongEdit.DiscCount != song.DiscCount)
+          {
+            if (i == 0 && song.DiscCount != 0)
+            {
+              SongEdit.DiscCount = song.DiscCount;
+            }
+            else
+            {
+              SongEdit.DiscCount = 0;
+            }
+          }
+
+          if (SongEdit.Title != song.Title)
+          {
+            SongEdit.Title = i == 0 ? song.Title : "";
+          }
+
+          if (SongEdit.Artist != song.Artist)
+          {
+            SongEdit.Artist = i == 0 ? song.Artist : "";
+            if (!Artists.Contains(song.Artist))
+            {
+              Artists.Add(song.Artist);
+            }
+
+            if (i > 0)
+            {
+              MultiArtist = true;
+              SelectedArtistsIndex = 0;
+              ArtistComboText = Artists[0];
+            }
+          }
+
+          if (SongEdit.AlbumArtist != song.AlbumArtist)
+          {
+            SongEdit.AlbumArtist = i == 0 ? song.AlbumArtist : "";
+            if (!AlbumArtists.Contains(song.AlbumArtist))
+            {
+              AlbumArtists.Add(song.AlbumArtist);
+            }
+
+            if (i > 0)
+            {
+              MultiAlbumArtist = true;
+              SelectedAlbumArtistsIndex = 0;
+              AlbumArtistComboText = AlbumArtists[0];
+            }
+          }
+
+          if (SongEdit.Album != song.Album)
+          {
+            SongEdit.Album = i == 0 ? song.Album : "";
+            if (!Albums.Contains(song.Album))
+            {
+              Albums.Add(song.Album);
+            }
+            if (i > 0)
+            {
+              MultiAlbum = true;
+              SelectedAlbumsIndex = 0;
+            }
+          }
+
+          if (CkPartOfCompilationIsChecked != song.Compilation)
+          {
+            SongEdit.Compilation = CkPartOfCompilationIsChecked = i == 0 && song.Compilation;
+          }
+
+          if (SongEdit.Year != song.Year)
+          {
+            SongEdit.Year = i == 0 ? song.Year : 0;
+          }
+
+          UpdateGenres(song);
+          if (strGenreTemp != song.Genre)
+          {
+            if (i == 0)
+            {
+              SelectedGenres.AddRange(song.Genre.Split(';'));
+              strGenreTemp = song.Genre;
+            }
+            else
+            {
+              SelectedGenres.Clear();
+            }
+          }
+
+          if (SongEdit.Comment != song.Comment)
+          {
+            SongEdit.Comment = i == 0 ? song.Comment : "";
+          }
+
+          if (song.Pictures.Count > 0)
+          {
+            if (!song.Pictures[0].Data.SequenceEqual(picData))
+            {
+              if (i == 0)
               {
-                SelectedIndexMediaType = j;
-                break;
+                FrontCover = song.FrontCover;
+                picData = song.Pictures[0].Data;
+              }
+              else
+              {
+                FrontCover = null;
               }
             }
-
-            j++;
           }
-          else
+
+          if (SongEdit.Composer != song.Composer)
           {
-            SelectedIndexMediaType = 0;
+            SongEdit.Composer = i == 0 ? song.Composer : "";
           }
+
+          if (SongEdit.Conductor != song.Conductor)
+          {
+            SongEdit.Conductor = i == 0 ? song.Conductor : "";
+          }
+
+          if (SongEdit.Interpreter != song.Interpreter)
+          {
+            SongEdit.Interpreter = i == 0 ? song.Interpreter : "";
+          }
+
+          if (SongEdit.TextWriter != song.TextWriter)
+          {
+            SongEdit.TextWriter = i == 0 ? song.TextWriter : "";
+          }
+
+          if (SongEdit.Publisher != song.Publisher)
+          {
+            SongEdit.Publisher = i == 0 ? song.Publisher : "";
+          }
+
+          if (SongEdit.EncodedBy != song.EncodedBy)
+          {
+            SongEdit.EncodedBy = i == 0 ? song.EncodedBy : "";
+          }
+
+          if (SongEdit.Copyright != song.Copyright)
+          {
+            SongEdit.Copyright = i == 0 ? song.Copyright : "";
+          }
+
+          if (SongEdit.Grouping != song.Grouping)
+          {
+            SongEdit.Grouping = i == 0 ? song.Grouping : "";
+          }
+
+          if (SongEdit.SubTitle != song.SubTitle)
+          {
+            SongEdit.SubTitle = i == 0 ? song.SubTitle : "";
+          }
+
+          if (SongEdit.ArtistSortName != song.ArtistSortName)
+          {
+            SongEdit.ArtistSortName = i == 0 ? song.ArtistSortName : "";
+          }
+
+          if (SongEdit.AlbumArtistSortName != song.AlbumArtistSortName)
+          {
+            SongEdit.AlbumArtistSortName = i == 0 ? song.AlbumArtistSortName : "";
+          }
+
+          if (SongEdit.AlbumSortName != song.AlbumSortName)
+          {
+            SongEdit.AlbumSortName = i == 0 ? song.AlbumSortName : "";
+          }
+
+          if (SongEdit.TitleSortName != song.TitleSortName)
+          {
+            SongEdit.TitleSortName = i == 0 ? song.TitleSortName : "";
+          }
+
+          if (SongEdit.MediaType != song.MediaType)
+          {
+            if (i == 0)
+            {
+              var j = 0;
+              foreach (var mediatype in MediaTypes)
+              {
+                if (mediatype.Value.ToString() == song.MediaType)
+                {
+                  SelectedIndexMediaType = j;
+                  break;
+                }
+              }
+
+              j++;
+            }
+            else
+            {
+              SelectedIndexMediaType = 0;
+            }
+          }
+
+          if (SongEdit.TrackLength != song.TrackLength)
+          {
+            SongEdit.TrackLength = i == 0 ? song.TrackLength : "";
+          }
+
+          if (SongEdit.OriginalAlbum != song.OriginalAlbum)
+          {
+            SongEdit.OriginalAlbum = i == 0 ? song.OriginalAlbum : "";
+          }
+
+          if (SongEdit.OriginalFileName != song.OriginalFileName)
+          {
+            SongEdit.OriginalFileName = i == 0 ? song.OriginalFileName : "";
+          }
+
+          if (SongEdit.OriginalLyricsWriter != song.OriginalLyricsWriter)
+          {
+            SongEdit.OriginalLyricsWriter = i == 0 ? song.OriginalLyricsWriter : "";
+          }
+
+          if (SongEdit.OriginalArtist != song.OriginalArtist)
+          {
+            SongEdit.OriginalArtist = i == 0 ? song.OriginalArtist : "";
+          }
+
+          if (SongEdit.OriginalOwner != song.OriginalOwner)
+          {
+            SongEdit.OriginalOwner = i == 0 ? song.OriginalOwner : "";
+          }
+
+          if (SongEdit.OriginalRelease != song.OriginalRelease)
+          {
+            SongEdit.OriginalRelease = i == 0 ? song.OriginalRelease : "";
+          }
+
+          if (SongEdit.CopyrightInformation != song.CopyrightInformation)
+          {
+            SongEdit.CopyrightInformation = i == 0 ? song.CopyrightInformation : "";
+          }
+
+          if (SongEdit.OfficialAudioFileInformation != song.OfficialAudioFileInformation)
+          {
+            SongEdit.OfficialAudioFileInformation = i == 0 ? song.OfficialAudioFileInformation : "";
+          }
+
+          if (SongEdit.OfficialArtistInformation != song.OfficialArtistInformation)
+          {
+            SongEdit.OfficialArtistInformation = i == 0 ? song.OfficialArtistInformation : "";
+          }
+
+          if (SongEdit.OfficialAudioSourceInformation != song.OfficialAudioSourceInformation)
+          {
+            SongEdit.OfficialAudioSourceInformation = i == 0 ? song.OfficialAudioSourceInformation : "";
+          }
+
+          if (SongEdit.OfficialInternetRadioInformation != song.OfficialInternetRadioInformation)
+          {
+            SongEdit.OfficialInternetRadioInformation = i == 0 ? song.OfficialInternetRadioInformation : "";
+          }
+
+          if (SongEdit.OfficialPaymentInformation != song.OfficialPaymentInformation)
+          {
+            SongEdit.OfficialPaymentInformation = i == 0 ? song.OfficialPaymentInformation : "";
+          }
+
+          if (SongEdit.OfficialPublisherInformation != song.OfficialPublisherInformation)
+          {
+            SongEdit.OfficialPublisherInformation = i == 0 ? song.OfficialPublisherInformation : "";
+          }
+
+          if (SongEdit.CommercialInformation != song.CommercialInformation)
+          {
+            SongEdit.CommercialInformation = i == 0 ? song.CommercialInformation : "";
+          }
+
+          if (SongEdit.MusicBrainzArtistId != song.MusicBrainzArtistId)
+          {
+            SongEdit.MusicBrainzArtistId = i == 0 ? song.MusicBrainzArtistId : "";
+          }
+
+          if (SongEdit.MusicBrainzReleaseArtistId != song.MusicBrainzReleaseArtistId)
+          {
+            SongEdit.MusicBrainzReleaseArtistId = i == 0 ? song.MusicBrainzReleaseArtistId : "";
+          }
+
+          if (SongEdit.MusicBrainzDiscId != song.MusicBrainzDiscId)
+          {
+            SongEdit.MusicBrainzDiscId = i == 0 ? song.MusicBrainzDiscId : "";
+          }
+
+          if (SongEdit.MusicBrainzReleaseCountry != song.MusicBrainzReleaseCountry)
+          {
+            SongEdit.MusicBrainzReleaseCountry = i == 0 ? song.MusicBrainzReleaseCountry : "";
+          }
+
+          if (SongEdit.MusicBrainzReleaseId != song.MusicBrainzReleaseId)
+          {
+            SongEdit.MusicBrainzReleaseId = i == 0 ? song.MusicBrainzReleaseId : "";
+          }
+
+          if (SongEdit.MusicBrainzReleaseStatus != song.MusicBrainzReleaseStatus)
+          {
+            SongEdit.MusicBrainzReleaseStatus = i == 0 ? song.MusicBrainzReleaseStatus : "";
+          }
+
+          if (SongEdit.MusicBrainzTrackId != song.MusicBrainzTrackId)
+          {
+            SongEdit.MusicBrainzTrackId = i == 0 ? song.MusicBrainzTrackId : "";
+          }
+
+          if (SongEdit.MusicBrainzReleaseType != song.MusicBrainzReleaseType)
+          {
+            SongEdit.MusicBrainzReleaseType = i == 0 ? song.MusicBrainzReleaseType : "";
+          }
+
+          if (SongEdit.MusicBrainzReleaseGroupId != song.MusicBrainzReleaseGroupId)
+          {
+            SongEdit.MusicBrainzReleaseGroupId = i == 0 ? song.MusicBrainzReleaseGroupId : "";
+          }
+
+          // Enable Update mode for Song
+          song.UpdateChangedProperty = true;
+          i++;
         }
 
-        if (SongEdit.TrackLength != song.TrackLength)
+        if (SongEdit.TrackCount == 0 && _options.MainSettings.AutoFillNumberOfTracks)
         {
-          SongEdit.TrackLength = i == 0 ? song.TrackLength : "";
+          SongEdit.TrackCount = (uint)songs.Count;
+          CkTrackIsChecked = true;
+          IsApplyButtonEnabled = true;
         }
 
-        if (SongEdit.OriginalAlbum != song.OriginalAlbum)
-        {
-          SongEdit.OriginalAlbum = i == 0 ? song.OriginalAlbum : "";
-        }
+        _isInitializing = false;
+        SongEdit.UpdateChangedProperty = true;
+        IsApplyButtonEnabled = false;
 
-        if (SongEdit.OriginalFileName != song.OriginalFileName)
-        {
-          SongEdit.OriginalFileName = i == 0 ? song.OriginalFileName : "";
-        }
-
-        if (SongEdit.OriginalLyricsWriter != song.OriginalLyricsWriter)
-        {
-          SongEdit.OriginalLyricsWriter = i == 0 ? song.OriginalLyricsWriter : "";
-        }
-
-        if (SongEdit.OriginalArtist != song.OriginalArtist)
-        {
-          SongEdit.OriginalArtist = i == 0 ? song.OriginalArtist : "";
-        }
-
-        if (SongEdit.OriginalOwner != song.OriginalOwner)
-        {
-          SongEdit.OriginalOwner = i == 0 ? song.OriginalOwner : "";
-        }
-
-        if (SongEdit.OriginalRelease != song.OriginalRelease)
-        {
-          SongEdit.OriginalRelease = i == 0 ? song.OriginalRelease : "";
-        }
-
-        if (SongEdit.CopyrightInformation != song.CopyrightInformation)
-        {
-          SongEdit.CopyrightInformation = i == 0 ? song.CopyrightInformation : "";
-        }
-
-        if (SongEdit.OfficialAudioFileInformation != song.OfficialAudioFileInformation)
-        {
-          SongEdit.OfficialAudioFileInformation = i == 0 ? song.OfficialAudioFileInformation : "";
-        }
-
-        if (SongEdit.OfficialArtistInformation != song.OfficialArtistInformation)
-        {
-          SongEdit.OfficialArtistInformation = i == 0 ? song.OfficialArtistInformation : "";
-        }
-
-        if (SongEdit.OfficialAudioSourceInformation != song.OfficialAudioSourceInformation)
-        {
-          SongEdit.OfficialAudioSourceInformation = i == 0 ? song.OfficialAudioSourceInformation : "";
-        }
-
-        if (SongEdit.OfficialInternetRadioInformation != song.OfficialInternetRadioInformation)
-        {
-          SongEdit.OfficialInternetRadioInformation = i == 0 ? song.OfficialInternetRadioInformation : "";
-        }
-
-        if (SongEdit.OfficialPaymentInformation != song.OfficialPaymentInformation)
-        {
-          SongEdit.OfficialPaymentInformation = i == 0 ? song.OfficialPaymentInformation : "";
-        }
-
-        if (SongEdit.OfficialPublisherInformation != song.OfficialPublisherInformation)
-        {
-          SongEdit.OfficialPublisherInformation = i == 0 ? song.OfficialPublisherInformation : "";
-        }
-
-        if (SongEdit.CommercialInformation != song.CommercialInformation)
-        {
-          SongEdit.CommercialInformation = i == 0 ? song.CommercialInformation : "";
-        }
-        
-        if (SongEdit.MusicBrainzArtistId != song.MusicBrainzArtistId)
-        {
-          SongEdit.MusicBrainzArtistId = i == 0 ? song.MusicBrainzArtistId : "";
-        }
-
-        if (SongEdit.MusicBrainzReleaseArtistId != song.MusicBrainzReleaseArtistId)
-        {
-          SongEdit.MusicBrainzReleaseArtistId = i == 0 ? song.MusicBrainzReleaseArtistId : "";
-        }
-
-        if (SongEdit.MusicBrainzDiscId != song.MusicBrainzDiscId)
-        {
-          SongEdit.MusicBrainzDiscId = i == 0 ? song.MusicBrainzDiscId : "";
-        }
-
-        if (SongEdit.MusicBrainzReleaseCountry != song.MusicBrainzReleaseCountry)
-        {
-          SongEdit.MusicBrainzReleaseCountry = i == 0 ? song.MusicBrainzReleaseCountry : "";
-        }
-
-        if (SongEdit.MusicBrainzReleaseId != song.MusicBrainzReleaseId)
-        {
-          SongEdit.MusicBrainzReleaseId = i == 0 ? song.MusicBrainzReleaseId : "";
-        }
-
-        if (SongEdit.MusicBrainzReleaseStatus != song.MusicBrainzReleaseStatus)
-        {
-          SongEdit.MusicBrainzReleaseStatus = i == 0 ? song.MusicBrainzReleaseStatus : "";
-        }
-
-        if (SongEdit.MusicBrainzTrackId != song.MusicBrainzTrackId)
-        {
-          SongEdit.MusicBrainzTrackId = i == 0 ? song.MusicBrainzTrackId : "";
-        }
-
-        if (SongEdit.MusicBrainzReleaseType != song.MusicBrainzReleaseType)
-        {
-          SongEdit.MusicBrainzReleaseType = i == 0 ? song.MusicBrainzReleaseType : "";
-        }
-
-        if (SongEdit.MusicBrainzReleaseGroupId != song.MusicBrainzReleaseGroupId)
-        {
-          SongEdit.MusicBrainzReleaseGroupId = i == 0 ? song.MusicBrainzReleaseGroupId : "";
-        }
-
-        // Enable Update mode for Song
-        song.UpdateChangedProperty = true;
-        i++;
+        // We have multiple Songs selected, so show the Checkboxes and
+        // decide if they should be checked.
+        MultiCheckBoxVisibility = true;
       }
-
-      if (SongEdit.TrackCount == 0 && _options.MainSettings.AutoFillNumberOfTracks)
+      catch (Exception e)
       {
-        SongEdit.TrackCount = (uint)songs.Count;
-        CkTrackIsChecked = true;
-        IsApplyButtonEnabled = true;
+        log.Error($"Exception in TagEdit: {e.Message}. Trace: {e.StackTrace}");
       }
-
-      _isInitializing = false;
-      SongEdit.UpdateChangedProperty = true;
-      IsApplyButtonEnabled = false;
-
-      // We have multiple Songs selected, so show the Checkboxes and
-      // decide if they should be checked.
-      MultiCheckBoxVisibility = true;
       log.Trace("<<<");
     }
 
@@ -2080,7 +2101,7 @@ namespace MPTagThat.TagEdit.ViewModels
       var delimiter = ";";
       if (song.ID3Version == 3)
       {
-        delimiter = new string(new char[1]{'\0'});
+        delimiter = new string(new char[1] { '\0' });
       }
 
       var involvedpersons = "";
@@ -2089,7 +2110,7 @@ namespace MPTagThat.TagEdit.ViewModels
         involvedpersons += $"{person.Name}{delimiter}{person.Function}{delimiter}";
       }
 
-      involvedpersons = involvedpersons.Trim(new[] {';', '\0'});
+      involvedpersons = involvedpersons.Trim(new[] { ';', '\0' });
       song.InvolvedPeople = involvedpersons;
     }
 
@@ -2124,7 +2145,7 @@ namespace MPTagThat.TagEdit.ViewModels
         musicians += $"{person.Function}{delimiter}{person.Name}{delimiter}";
       }
 
-      musicians = musicians.Trim(new[] {';'});
+      musicians = musicians.Trim(new[] { ';' });
       song.InvolvedPeople = musicians;
     }
 
@@ -2372,7 +2393,7 @@ namespace MPTagThat.TagEdit.ViewModels
       log.Trace(">>>");
       if (filepaths.Length > 0)
       {
-        var pic = new Picture(filepaths[0]) {Type = PictureType.FrontCover};
+        var pic = new Picture(filepaths[0]) { Type = PictureType.FrontCover };
         UpdatePictures(pic);
       }
       log.Trace("<<<");
@@ -2381,7 +2402,7 @@ namespace MPTagThat.TagEdit.ViewModels
     public void OnHtmlDrop(object html)
     {
       log.Trace(">>>");
-      var fragment = Util.ExtractHtmlFragmentFromClipboardData((string) html);
+      var fragment = Util.ExtractHtmlFragmentFromClipboardData((string)html);
       if (fragment.StartsWith("<img"))
       {
         var start = fragment.IndexOf("src=\"", StringComparison.Ordinal);
@@ -2389,7 +2410,7 @@ namespace MPTagThat.TagEdit.ViewModels
         {
           start = start + "src=\"".Length;
           var url = fragment.Substring(start, fragment.IndexOf('"', start) - start);
-          var pic = new Picture {Type = PictureType.FrontCover};
+          var pic = new Picture { Type = PictureType.FrontCover };
           if (pic.ImageFromUrl(url))
           {
             UpdatePictures(pic);
@@ -2398,7 +2419,7 @@ namespace MPTagThat.TagEdit.ViewModels
       }
       log.Trace("<<<");
     }
-    
+
     private void UpdatePictures(Picture pic)
     {
       log.Trace(">>>");
