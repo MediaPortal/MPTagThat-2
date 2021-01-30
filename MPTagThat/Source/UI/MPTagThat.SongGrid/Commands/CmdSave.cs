@@ -139,9 +139,18 @@ namespace MPTagThat.SongGrid.Commands
             {
               if (song.Pictures.Count > 0)
               {
-                int indexFrontCover = song.Pictures
-                  .Select((pic, i) => new { Pic = pic, Position = i }).First(m => m.Pic.Type == PictureType.FrontCover)
-                  .Position;
+                var indexFrontCover = -1;
+                try
+                {
+                  indexFrontCover = song.Pictures
+                    .Select((pic, i) => new { Pic = pic, Position = i }).First(m => m.Pic.Type == PictureType.FrontCover)
+                    .Position;
+                }
+                catch (Exception)
+                {
+                  // ignored
+                }
+
                 if (indexFrontCover < 0)
                 {
                   indexFrontCover = 0;
