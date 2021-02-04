@@ -203,7 +203,7 @@ namespace MPTagThat.SongGrid.Commands
         var ext = Path.GetExtension(song.FileName);
         var filename = Path.GetFileNameWithoutExtension(song.FileName);
         var path = Path.GetDirectoryName(song.FullFileName);
-        newFileName = Path.Combine(path, $"{filename}{ext}");
+        newFileName = Path.Combine(path, $"{Util.MakeValidFileName(filename)}{ext}");
 
         // Check, if the New file name already exists
         // Don't change the newfilename, when only the Case change happened in filename
