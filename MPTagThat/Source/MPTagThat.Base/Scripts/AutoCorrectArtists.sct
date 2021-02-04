@@ -4,12 +4,14 @@
 // ------------ Don't change anything in the following block -------
 //css_ref bin\taglibsharp.dll; 
 //css_ref bin\MPTagThat.Core.dll; 
+//css_ref bin\Prism.dll; 
 using System;
 using System.Collections.Generic;
-using MPTagThat.Core;
+using MPTagThat.Core.Utils;
 using MPTagThat.Core.Common.Song;
 using MPTagThat.Core.Services.ScriptManager;
 using MPTagThat.Core.Services.MusicDatabase;
+using Prism.Ioc;
 using TagLib;
 // ----------------------------------------------------------------
 // Insert any using here that your script might need
@@ -63,7 +65,7 @@ public class Script : IScript
     {
       var tmpArtist = Util.RemoveInvalidChars(searchArtist);
       var sql = string.Format(sqlStmt, artistType, tmpArtist);
-      var returnedArtists = ServiceScope.Get<IMusicDatabase>().GetAutoCorrectArtists(sql);
+      var returnedArtists = ContainerLocator.Current.Resolve<IMusicDatabase>().GetAutoCorrectArtists(sql);
       if (returnedArtists.Count > 0)
       {
         foundArtists.Add(returnedArtists[0]);
