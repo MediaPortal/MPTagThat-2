@@ -22,6 +22,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
+using System.Linq;
 using System.Windows.Input;
 using MPTagThat.Core.Services.Logging;
 using MPTagThat.Treeview.Model.Win32;
@@ -221,20 +222,8 @@ namespace MPTagThat.Treeview.Model
       TreeViewHelper helper)
     {
       log.Trace(">>>");
-      var allDrives = DriveInfo.GetDrives();
-      List<DriveInfo> selectedDrives = new List<DriveInfo>();
-      foreach (var drive in allDrives)
-      {
-        switch (drive.DriveType)
-        {
-          case DriveType.Fixed:
-          case DriveType.Network:
-          case DriveType.Removable:
-          case DriveType.Ram:
-            selectedDrives.Add(drive);
-            break;
-        }
-      }
+      var selectedDrives = DriveInfo.GetDrives()
+        .Where(drive => drive.DriveType == DriveType.Fixed || drive.DriveType == DriveType.Removable || drive.DriveType == DriveType.Network);
 
       var items = new List<TreeItem>();
       foreach (FolderItem fi in ((Folder)folderItem.GetFolder).Items())
@@ -247,7 +236,7 @@ namespace MPTagThat.Treeview.Model
         }
 
         // check drive type 
-        if (fi.IsFileSystem && selectedDrives.Count > 0)
+        if (fi.IsFileSystem && selectedDrives.Count() > 0)
         {
           bool skipDrive = true;
           foreach (var drive in selectedDrives)
