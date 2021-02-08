@@ -230,8 +230,7 @@ namespace MPTagThat.ViewModels
       CancelFolderScanCommand = new BaseCommand(CancelFolderScan);
 
       _options = ContainerLocator.Current.Resolve<ISettingsManager>().GetOptions;
-      //ContainerLocator.Current.Resolve<IMediaChangeMonitor>().StartListening();
-
+     
       LoadKeyMap();
 
       _options.IsTagsTabActive = true;

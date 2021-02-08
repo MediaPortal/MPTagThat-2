@@ -287,10 +287,13 @@ namespace MPTagThat
         container.Resolve<ILogger>().GetLogger.Error("Error Init Bass: {0}", Enum.GetName(typeof(BASSError), error));
       }
 
+      //container.Resolve<IMediaChangeMonitor>().StartListening();
+
       byte[] buffer = new byte[2048];
       var messageWaitHandle = new EventWaitHandle(false, EventResetMode.AutoReset, "MPTagThat_IPC");
 
       container.Resolve<ILogger>().GetLogger.Debug("Registering MemoryMappedFile");
+      
       // Create named MMF
       using (var mmf = MemoryMappedFile.CreateOrOpen("MPTagThat", 2048))
       {
