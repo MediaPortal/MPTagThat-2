@@ -21,6 +21,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Windows.Input;
 using MPTagThat.Core.Services.Logging;
 using MPTagThat.Treeview.Model.Win32;
@@ -84,7 +85,7 @@ namespace MPTagThat.Treeview.Model
       switch (helper.Model.RootFolder)
       {
         case Environment.SpecialFolder.Desktop:
-          Folder2 desktopFolder = (Folder2) _shell.GetDesktop();
+          Folder2 desktopFolder = (Folder2)_shell.GetDesktop();
           // create root node <Desktop>
           var desktopNode = CreateTreeNode(helper, desktopFolder.Title, desktopFolder.Self.Path,
             true, desktopFolder.Self);
@@ -116,7 +117,7 @@ namespace MPTagThat.Treeview.Model
       else
       {
         var nodes = new List<TreeItem>();
-        foreach (FolderItem2 fi in ((Folder2) folderItem.GetFolder).Items())
+        foreach (FolderItem2 fi in ((Folder2)folderItem.GetFolder).Items())
         {
           if (!_showAllShellObjects && !fi.IsFileSystem || !fi.IsFolder)
           {
@@ -190,9 +191,9 @@ namespace MPTagThat.Treeview.Model
           break;
 
         //case Environment.SpecialFolder.MyComputer:
-          //FillMyComputer(((Folder2)_shell.Shell.NameSpace(ShellSpecialFolderConstants.ssfDRIVES)).Self,
-          //  helper.Model.Nodes, helper);
-          //break;
+        //FillMyComputer(((Folder2)_shell.Shell.NameSpace(ShellSpecialFolderConstants.ssfDRIVES)).Self,
+        //  helper.Model.Nodes, helper);
+        //break;
 
         default:
           // create root node with specified SpecialFolder
@@ -220,12 +221,19 @@ namespace MPTagThat.Treeview.Model
       TreeViewHelper helper)
     {
       log.Trace(">>>");
-      Logicaldisk.LogicaldiskCollection logicalDisks = null;
-      
-      // get wmi logical disk's if we have to 			
-      if (helper.Model.DriveTypes != Enums.DriveTypes.All)
+      var allDrives = DriveInfo.GetDrives();
+      List<DriveInfo> selectedDrives = new List<DriveInfo>();
+      foreach (var drive in allDrives)
       {
-        logicalDisks = Logicaldisk.GetInstances(null, GetWmiQueryStatement(helper.Model));
+        switch (drive.DriveType)
+        {
+          case DriveType.Fixed:
+          case DriveType.Network:
+          case DriveType.Removable:
+          case DriveType.Ram:
+            selectedDrives.Add(drive);
+            break;
+        }
       }
 
       var items = new List<TreeItem>();
@@ -237,14 +245,14 @@ namespace MPTagThat.Treeview.Model
         {
           continue;
         }
-        
+
         // check drive type 
-        if (fi.IsFileSystem && logicalDisks != null)
+        if (fi.IsFileSystem && selectedDrives.Count > 0)
         {
           bool skipDrive = true;
-          foreach (Logicaldisk lg in logicalDisks)
+          foreach (var drive in selectedDrives)
           {
-            if (lg.Name + "\\" == fi.Path)
+            if (drive.Name == fi.Path)
             {
               skipDrive = false;
               break;
@@ -277,42 +285,7 @@ namespace MPTagThat.Treeview.Model
     protected virtual TreeItem CreateTreeNode(TreeViewHelper helper, string text, string path,
                                                   bool isSpecialFolder, object item)
     {
-      return new TreeItem(text, isSpecialFolder) { Path = path, Item = item, HasChildNodes = true};
-    }
-
-    /// <summary>
-    ///   Gets the WMI query string based on the current drive types.
-    /// </summary>
-    /// <returns></returns>
-    protected virtual string GetWmiQueryStatement(TreeviewViewModel treeView)
-    {
-      if ((treeView.DriveTypes & Enums.DriveTypes.All) == Enums.DriveTypes.All)
-      {
-        return string.Empty;
-      }
-
-      var where = string.Empty;
-      var array = Enum.GetValues(typeof(Enums.DriveTypes));
-      foreach (Enums.DriveTypes type in array)
-      {
-        if ((treeView.DriveTypes & type) == type)
-        {
-          if (where == string.Empty)
-          {
-            where += "drivetype = " +
-                     Enum.Format(typeof(Enums.Win32_LogicalDiskDriveTypes),
-                                 Enum.Parse(typeof(Enums.Win32_LogicalDiskDriveTypes), type.ToString(), true), "d");
-          }
-          else
-          {
-            where += " OR drivetype = " +
-                     Enum.Format(typeof(Enums.Win32_LogicalDiskDriveTypes),
-                                 Enum.Parse(typeof(Enums.Win32_LogicalDiskDriveTypes), type.ToString(), true), "d");
-          }
-        }
-      }
-      
-      return where;
+      return new TreeItem(text, isSpecialFolder) { Path = path, Item = item, HasChildNodes = true };
     }
 
     #endregion

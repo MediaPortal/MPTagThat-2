@@ -193,16 +193,6 @@ namespace MPTagThat.Treeview.ViewModels
       set { SetProperty(ref _nodes, value); }
     }
 
-    private Enums.DriveTypes _driveTypes;
-    /// <summary>
-    /// Available Drive Types to be shown
-    /// </summary>
-    public Enums.DriveTypes DriveTypes
-    {
-      get => _driveTypes;
-      set { SetProperty(ref _driveTypes, value); }
-    }
-
     private Cursor _cursor = Cursors.Arrow;
     /// <summary>
     /// The State of the cursor
@@ -313,7 +303,6 @@ namespace MPTagThat.Treeview.ViewModels
       EventSystem.Subscribe<GenericEvent>(OnMessageReceived, ThreadOption.UIThread);
 
       _helper = new TreeViewHelper(this);
-      DriveTypes = Enums.DriveTypes.LocalDisk | Enums.DriveTypes.NetworkDrive | Enums.DriveTypes.RemovableDisk;
       RootFolder = Environment.SpecialFolder.Desktop;
       _dataProvider = new TreeViewDataProvider();
 

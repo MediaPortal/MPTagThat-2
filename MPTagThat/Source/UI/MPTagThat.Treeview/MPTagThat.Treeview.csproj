@@ -50,10 +50,6 @@
     <Compile Include="Model\TreeviewDataProvider.cs" />
     <Compile Include="Model\TreeviewDataProviderMusicDatabase.cs" />
     <Compile Include="Model\TreeviewHelper.cs" />
-    <Compile Include="Model\Win32\Enums.cs" />
-    <Compile Include="Model\Win32\Logicaldisk.cs">
-      <SubType>Component</SubType>
-    </Compile>
     <Compile Include="Model\Win32\Shell32Namespaces.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TreeviewModule.cs" />
@@ -92,11 +88,6 @@
       <Isolated>False</Isolated>
       <EmbedInteropTypes>False</EmbedInteropTypes>
     </COMReference>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Model\Win32\Logicaldisk.resx">
-      <DependentUpon>Logicaldisk.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf">
