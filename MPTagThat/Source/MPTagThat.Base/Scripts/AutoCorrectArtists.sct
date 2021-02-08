@@ -38,6 +38,14 @@ public class Script : IScript
     {
       artistSplit.AddRange(artist.Split(';'));
     }
+    else  if (artist.IndexOf("&", StringComparison.InvariantCulture) > 1)
+    {
+      // Do we have Artists separated with an ampersand?
+      // In this case add the original string to match something like "Sony & Cher"
+      // And then also split it to get individual names
+      artistSplit.Add(artist);
+      artistSplit.AddRange(artist.Split('&'));
+    }
     else
     {
       // Does the artist contain a string specified in the searchList above?
@@ -63,6 +71,11 @@ public class Script : IScript
     bool foundSomeArtists = false;
     foreach (var searchArtist in artistSplit)
     {
+      bool multiArtists = false;
+      if (searchArtist.Contains("&"))
+      {
+        multiArtists = true;
+      }
       var tmpArtist = Util.RemoveInvalidChars(searchArtist);
       var sql = string.Format(sqlStmt, artistType, tmpArtist);
       var returnedArtists = ContainerLocator.Current.Resolve<IMusicDatabase>().GetAutoCorrectArtists(sql);
@@ -70,10 +83,19 @@ public class Script : IScript
       {
         foundArtists.Add(returnedArtists[0]);
         foundSomeArtists = true;
+        // Don't search any further on the splitted values, if we have a multi artist search
+        if (multiArtists)
+        {
+          break;
+        }
       }
       else
       {
-        foundArtists.Add(searchArtist);
+        // Only add non multi artists here
+        if (!multiArtists)
+        {
+          foundArtists.Add(searchArtist);
+        }
       }
     }
 
