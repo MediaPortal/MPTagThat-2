@@ -638,7 +638,6 @@ namespace MPTagThat.Core.Services.MusicDatabase
         //col.EnsureIndex("AlbumArtistAlbum", "[$.AlbumArtist, $.Album]", false);
 
         var songList = new List<SongData>();
-
         foreach (FileInfo fi in GetFiles(di, true))
         {
           if (_bgwScanShare.CancellationPending)
@@ -671,6 +670,7 @@ namespace MPTagThat.Core.Services.MusicDatabase
           }
           catch (PathTooLongException)
           {
+            log.Error("Path too long for {0}", fi.FullName);
             continue;
           }
           catch (System.UnauthorizedAccessException)
@@ -679,7 +679,7 @@ namespace MPTagThat.Core.Services.MusicDatabase
           }
           catch (Exception ex)
           {
-            log.Error("Error during Database BulkInsert {0}", ex.Message);
+            log.Error("Error during Database BulkInsert {1} {0}", ex.Message, fi.FullName);
           }
         }
         col.InsertBulk(songList, 1000);
@@ -746,6 +746,7 @@ namespace MPTagThat.Core.Services.MusicDatabase
 
             if (recursive)
             {
+              log.Debug(dir.FullName);
               DirectoryInfo[] newDirectories = dir.GetDirectories();
               foreach (DirectoryInfo di in newDirectories)
               {
@@ -760,9 +761,14 @@ namespace MPTagThat.Core.Services.MusicDatabase
             }
           }
         }
+        catch (PathTooLongException exPath)
+        {
+          log.Error("Path too long: {0} {1}", exPath.Message, exPath.StackTrace);
+          continue;
+        }
         catch (UnauthorizedAccessException ex)
         {
-          Console.WriteLine(ex.Message, ex);
+          log.Error("Unauthorised access {0}", ex.Message);
         }
       }
     }
