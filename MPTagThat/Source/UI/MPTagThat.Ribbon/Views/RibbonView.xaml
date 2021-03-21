@@ -8,6 +8,7 @@
              xmlns:syncfusion="http://schemas.syncfusion.com/wpf"
              xmlns:lex="http://wpflocalizeextension.codeplex.com"
              xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
+             xmlns:system="clr-namespace:System;assembly=mscorlib"
              lex:LocalizeDictionary.DesignCulture="en"
              lex:ResxLocalizationProvider.DefaultAssembly="MPTagThat"
              lex:ResxLocalizationProvider.DefaultDictionary="Strings"
@@ -487,6 +488,25 @@
               </syncfusion:ScreenTip>
             </syncfusion:RibbonButton.ToolTip>
           </syncfusion:RibbonButton>
+
+          <syncfusion:RibbonButton x:Name="ButtonSettings" SizeForm="Large"
+                                   Label="{lex:Loc ribbon_Settings}"
+                                   LargeIcon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_Settings_32x.png" 
+                                   SmallIcon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_Settings_16x.png" 
+                                   Command="{x:Static syncfusion:RibbonCommands.OpenBackStage}" 
+                                   CommandTarget="{Binding ElementName=Ribbon}">
+            <syncfusion:RibbonButton.CommandParameter>
+              <!--If we passes false it will hide the backstage otherwise it will show the backstage-->
+              <system:Boolean>true</system:Boolean>
+            </syncfusion:RibbonButton.CommandParameter>
+            <syncfusion:RibbonButton.ToolTip>
+              <syncfusion:ScreenTip MinWidth="150" MaxWidth="400" Description="{lex:Loc ribbon_Settings}" VerticalOffset="10" ImageSource="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_Settings_32x.png">
+                <StackPanel Orientation="Vertical" Width="300">
+                  <TextBlock Text="{lex:Loc screentip_SettingsText}" TextWrapping="Wrap" />
+                </StackPanel>
+              </syncfusion:ScreenTip>
+            </syncfusion:RibbonButton.ToolTip>
+          </syncfusion:RibbonButton>
         </syncfusion:RibbonBar>
 
         <syncfusion:RibbonBar Header="{lex:Loc ribbon_Bar_About}" >
@@ -718,6 +738,23 @@
               <syncfusion:ScreenTip MinWidth="150" MaxWidth="400" Description="{lex:Loc ribbon_Refresh}" VerticalOffset="10" ImageSource="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_Refresh_16x.png">
                 <StackPanel Orientation="Vertical" Width="300">
                   <TextBlock Text="{lex:Loc screentip_RefreshText}" TextWrapping="Wrap" />
+                </StackPanel>
+              </syncfusion:ScreenTip>
+            </syncfusion:RibbonButton.ToolTip>
+          </syncfusion:RibbonButton>
+
+          <syncfusion:RibbonButton x:Name="ButtonSettingsQAT" SizeForm="ExtraSmall"
+                                   SmallIcon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_Settings_16x.png" 
+                                   Command="{x:Static syncfusion:RibbonCommands.OpenBackStage}" 
+                                   CommandTarget="{Binding ElementName=Ribbon}">
+            <syncfusion:RibbonButton.CommandParameter>
+              <!--If we passes false it will hide the backstage otherwise it will show the backstage-->
+              <system:Boolean>true</system:Boolean>
+            </syncfusion:RibbonButton.CommandParameter>
+            <syncfusion:RibbonButton.ToolTip>
+              <syncfusion:ScreenTip MinWidth="150" MaxWidth="400" Description="{lex:Loc ribbon_Settings}" VerticalOffset="10" ImageSource="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_Settings_32x.png">
+                <StackPanel Orientation="Vertical" Width="300">
+                  <TextBlock Text="{lex:Loc screentip_SettingsText}" TextWrapping="Wrap" />
                 </StackPanel>
               </syncfusion:ScreenTip>
             </syncfusion:RibbonButton.ToolTip>

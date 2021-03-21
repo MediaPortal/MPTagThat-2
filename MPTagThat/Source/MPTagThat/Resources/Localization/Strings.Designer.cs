@@ -2050,6 +2050,15 @@ namespace MPTagThat.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Settings.
+        /// </summary>
+        public static string ribbon_Settings {
+            get {
+                return ResourceManager.GetString("ribbon_Settings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Single Tag Edit.
         /// </summary>
         public static string ribbon_SingleTagEdit {
@@ -2415,6 +2424,15 @@ namespace MPTagThat.Resources.Localization {
         public static string screentip_SaveText {
             get {
                 return ResourceManager.GetString("screentip_SaveText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Open the Settings Dialog.
+        /// </summary>
+        public static string screentip_SettingsText {
+            get {
+                return ResourceManager.GetString("screentip_SettingsText", resourceCulture);
             }
         }
         
