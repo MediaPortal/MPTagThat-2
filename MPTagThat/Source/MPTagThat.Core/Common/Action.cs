@@ -61,6 +61,7 @@ namespace MPTagThat.Core.Common
       RIP = 71,
       RIPCANCEL = 72,
       GNUDBQUERY = 73,
+      SWITCHDATABASE = 74,
     }
 
     #endregion

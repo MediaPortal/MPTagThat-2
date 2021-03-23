@@ -1434,6 +1434,12 @@ namespace MPTagThat.SongGrid.ViewModels
             return;
           }
 
+          if (command == Action.ActionType.SWITCHDATABASE)
+          {
+            _dialogService.ShowDialogInAnotherWindow("SwitchDatabaseView", "DialogWindowView", parameters, null);
+            return;
+          }
+
           break;
 
         case "clearsonglist":

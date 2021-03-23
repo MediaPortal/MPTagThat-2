@@ -1492,6 +1492,15 @@ namespace MPTagThat.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Active Database:.
+        /// </summary>
+        public static string ribbon_Active_Database {
+            get {
+                return ResourceManager.GetString("ribbon_Active_Database", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Add to Burner.
         /// </summary>
         public static string ribbon_AddBurner {
@@ -3558,6 +3567,33 @@ namespace MPTagThat.Resources.Localization {
         public static string statusBar_NumberOfSelectedFiles {
             get {
                 return ResourceManager.GetString("statusBar_NumberOfSelectedFiles", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add Database.
+        /// </summary>
+        public static string switchDatabase_Add {
+            get {
+                return ResourceManager.GetString("switchDatabase_Add", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Switch Database.
+        /// </summary>
+        public static string switchDatabase_Header {
+            get {
+                return ResourceManager.GetString("switchDatabase_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Database Name:.
+        /// </summary>
+        public static string switchDatabase_Name {
+            get {
+                return ResourceManager.GetString("switchDatabase_Name", resourceCulture);
             }
         }
         

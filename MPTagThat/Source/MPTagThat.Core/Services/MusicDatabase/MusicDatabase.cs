@@ -228,6 +228,28 @@ namespace MPTagThat.Core.Services.MusicDatabase
       if (_store != null)
       {
         log.Info($"Database has been switched to {CurrentDatabase}");
+
+        // Notify the treeview about database change to refresh
+
+        GenericEvent evt = new GenericEvent
+        {
+          Action = "toggledatabaseview"
+        };
+        EventSystem.Publish(evt);
+
+        evt = new GenericEvent
+        {
+          Action = "currentfolderchanged"
+        };
+        EventSystem.Publish(evt);
+
+        evt = new GenericEvent
+        {
+          Action = "activedatabasechanged"
+        };
+        evt.MessageData.Add("database", CurrentDatabase);
+        EventSystem.Publish(evt);
+
         return true;
       }
       return false;

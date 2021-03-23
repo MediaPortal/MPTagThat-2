@@ -1889,4 +1889,16 @@ To change the order of the ratings drag the rows.</value>
   <data name="screentip_SettingsText" xml:space="preserve">
     <value>Open the Settings Dialog</value>
   </data>
+  <data name="switchDatabase_Header" xml:space="preserve">
+    <value>Switch Database</value>
+  </data>
+  <data name="switchDatabase_Add" xml:space="preserve">
+    <value>Add Database</value>
+  </data>
+  <data name="switchDatabase_Name" xml:space="preserve">
+    <value>Database Name:</value>
+  </data>
+  <data name="ribbon_Active_Database" xml:space="preserve">
+    <value>Active Database:</value>
+  </data>
 </root>

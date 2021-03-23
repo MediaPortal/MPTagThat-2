@@ -47,6 +47,7 @@ using Prism.Services.Dialogs;
 using Syncfusion.SfSkinManager;
 using Syncfusion.Windows.Shared;
 using Syncfusion.Windows.Tools.Controls;
+using WPFLocalizeExtension.Engine;
 using Action = MPTagThat.Core.Common.Action;
 using Application = System.Windows.Application;
 using DialogResult = System.Windows.Forms.DialogResult;
@@ -449,6 +450,16 @@ namespace MPTagThat.Ribbon.ViewModels
         log.Level = (LogLevel)Enum.Parse(typeof(LogLevel), value);
         _options.MainSettings.DebugLevel = value;
       }
+    }
+
+    private string _activeDatabase = "MusicDatabase";
+
+    public string ActiveDatabase
+    {
+      get =>
+        LocalizeDictionary.Instance.GetLocalizedObject("MPTagThat", "Strings", "ribbon_Active_Database",
+          LocalizeDictionary.Instance.Culture).ToString() + " " + _activeDatabase;
+      set => SetProperty(ref _activeDatabase, value);
     }
 
     #endregion
@@ -1190,6 +1201,10 @@ namespace MPTagThat.Ribbon.ViewModels
           runAsync = false;
           break;
 
+        case "ButtonDatabaseSwitch":
+          type = Action.ActionType.SWITCHDATABASE;
+          break;
+
         case "ButtonDatabaseScanStart":
           ContainerLocator.Current.Resolve<IMusicDatabase>()?.BuildDatabase(DatabaseMusicFolders[SelectedMusicFolder], DatabaseClearChecked);
           break;
@@ -1416,6 +1431,10 @@ namespace MPTagThat.Ribbon.ViewModels
         case "activatetargetfolder":
           // Switch to Tags Tab
           SelectedTabIndex = 0;
+          break;
+
+        case "activedatabasechanged":
+          ActiveDatabase = (string)msg.MessageData["database"];
           break;
       }
     }

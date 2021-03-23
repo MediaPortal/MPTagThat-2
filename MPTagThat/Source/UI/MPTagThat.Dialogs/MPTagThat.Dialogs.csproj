@@ -66,6 +66,7 @@
     <Compile Include="ViewModels\OrganiseFilesViewModel.cs" />
     <Compile Include="ViewModels\ParameterPart.cs" />
     <Compile Include="ViewModels\ProgressViewModel.cs" />
+    <Compile Include="ViewModels\SwitchDatabaseViewModel.cs" />
     <Compile Include="ViewModels\Tag2FileNameViewModel.cs" />
     <Compile Include="ViewModels\TagFormat.cs" />
     <Compile Include="ViewModels\TagFromInternetViewModel.cs" />
@@ -98,6 +99,9 @@
     </Compile>
     <Compile Include="Views\OrganiseFilesView.xaml.cs">
       <DependentUpon>OrganiseFilesView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SwitchDatabaseView.xaml.cs">
+      <DependentUpon>SwitchDatabaseView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Tag2FileNameView.xaml.cs">
       <DependentUpon>Tag2FileNameView.xaml</DependentUpon>
@@ -145,6 +149,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\OrganiseFilesView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\SwitchDatabaseView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

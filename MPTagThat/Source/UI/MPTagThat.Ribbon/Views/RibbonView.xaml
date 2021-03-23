@@ -523,7 +523,7 @@
 
       <!-- Database -->
       <syncfusion:RibbonTab x:Name="TabDatabase" Caption="{lex:Loc ribbon_DatabaseTab}"  IsChecked="False">
-        <syncfusion:RibbonBar Header="{lex:Loc ribbon_Database_QueryGroup}" >
+        <syncfusion:RibbonBar Header="{Binding ActiveDatabase}" >
           <syncfusion:RibbonComboBox x:Name="ComboBoxDatabaseQuery" MaxDropDownHeight="150" Width="300"  
                                      ItemsSource="{Binding Queries}" 
                                      SelectedItem="{Binding QueriesSelectedItem, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
