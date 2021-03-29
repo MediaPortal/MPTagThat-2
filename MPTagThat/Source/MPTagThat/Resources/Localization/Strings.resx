@@ -1901,4 +1901,10 @@ To change the order of the ratings drag the rows.</value>
   <data name="ribbon_Active_Database" xml:space="preserve">
     <value>Active Database:</value>
   </data>
+  <data name="ribbon_Database_Status" xml:space="preserve">
+    <value>Database Status</value>
+  </data>
+  <data name="screentip_Database_Status" xml:space="preserve">
+    <value>Displays Status Information for the active Database</value>
+  </data>
 </root>

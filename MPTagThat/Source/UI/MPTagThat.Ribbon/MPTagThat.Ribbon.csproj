@@ -237,6 +237,12 @@
     <Resource Include="Resources\Images\ribbon_Settings_16x.png" />
     <Resource Include="Resources\Images\ribbon_Settings_32x.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\ribbon_DatabaseStatus_16x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\ribbon_DatabaseStatus_32x.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>

@@ -1699,6 +1699,15 @@ namespace MPTagThat.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Database Status.
+        /// </summary>
+        public static string ribbon_Database_Status {
+            get {
+                return ResourceManager.GetString("ribbon_Database_Status", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Switch Database.
         /// </summary>
         public static string ribbon_Database_Switch {
@@ -2235,6 +2244,15 @@ namespace MPTagThat.Resources.Localization {
         public static string screentip_Database_ScanStart {
             get {
                 return ResourceManager.GetString("screentip_Database_ScanStart", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Displays Status Information for the active Database.
+        /// </summary>
+        public static string screentip_Database_Status {
+            get {
+                return ResourceManager.GetString("screentip_Database_Status", resourceCulture);
             }
         }
         
