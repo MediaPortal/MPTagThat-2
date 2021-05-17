@@ -3616,6 +3616,24 @@ namespace MPTagThat.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Delete Database.
+        /// </summary>
+        public static string switchDatabase_ToolTip_Delete {
+            get {
+                return ResourceManager.GetString("switchDatabase_ToolTip_Delete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Switch Database.
+        /// </summary>
+        public static string switchDatabase_ToolTip_Switch {
+            get {
+                return ResourceManager.GetString("switchDatabase_ToolTip_Switch", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Add Format To List.
         /// </summary>
         public static string tagAndRename_AddFormat {

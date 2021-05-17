@@ -65,6 +65,7 @@
                 <syncfusion:ButtonAdv Label="" 
                                       Command="{Binding  Path=DataContext.SwitchDatabaseCommand, RelativeSource={RelativeSource AncestorLevel=1, AncestorType=syncfusion:SfDataGrid}}" 
                                       SmallIcon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_DatabaseSwitch_16x.png" 
+                                      ToolTip="{lex:Loc switchDatabase_ToolTip_Switch}"
                                       syncfusion:VisualContainer.WantsMouseInput="True"
                                       syncfusion:FocusManagerHelper.FocusedElement="True"/>
               </DataTemplate>
@@ -77,6 +78,7 @@
                 <syncfusion:ButtonAdv Label="" 
                                       Command="{Binding  Path=DataContext.DeleteDatabaseCommand, RelativeSource={RelativeSource AncestorLevel=1, AncestorType=syncfusion:SfDataGrid}}" 
                                       SmallIcon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_DatabaseDelete_16x.png" 
+                                      ToolTip="{lex:Loc switchDatabase_ToolTip_Delete}"
                                       syncfusion:VisualContainer.WantsMouseInput="True"
                                       syncfusion:FocusManagerHelper.FocusedElement="True"/>
               </DataTemplate>
