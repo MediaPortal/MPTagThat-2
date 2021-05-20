@@ -934,6 +934,51 @@ namespace MPTagThat.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Counters.
+        /// </summary>
+        public static string databaseScan_GroupBox_Counts {
+            get {
+                return ResourceManager.GetString("databaseScan_GroupBox_Counts", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Scan Status.
+        /// </summary>
+        public static string databaseScan_GroupBox_Status {
+            get {
+                return ResourceManager.GetString("databaseScan_GroupBox_Status", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Number of Files scanned:.
+        /// </summary>
+        public static string databaseScan_NumberOfFiles {
+            get {
+                return ResourceManager.GetString("databaseScan_NumberOfFiles", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Songs:.
+        /// </summary>
+        public static string databaseScan_NumberofSongs {
+            get {
+                return ResourceManager.GetString("databaseScan_NumberofSongs", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Database Status.
+        /// </summary>
+        public static string databaseStatus_Header {
+            get {
+                return ResourceManager.GetString("databaseStatus_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Apply.
         /// </summary>
         public static string dialog_Apply {

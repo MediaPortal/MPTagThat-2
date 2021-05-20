@@ -9,6 +9,7 @@
              xmlns:lex="http://wpflocalizeextension.codeplex.com"
              xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
              xmlns:system="clr-namespace:System;assembly=mscorlib"
+             xmlns:core="clr-namespace:MPTagThat.Core.Common.Converter;assembly=MPTagThat.Core"
              lex:LocalizeDictionary.DesignCulture="en"
              lex:ResxLocalizationProvider.DefaultAssembly="MPTagThat"
              lex:ResxLocalizationProvider.DefaultDictionary="Strings"
@@ -16,6 +17,9 @@
              >
 
   <UserControl.Resources>
+
+    <core:InvertBoolConverter x:Key="InvertBoolConverter" />
+
     <!--  AccordionButton Style -->
     <Style TargetType="{x:Type syncfusion:AccordionButton}" x:Key="expanderButtonStyle">
       <Setter Property="Template">
@@ -550,7 +554,8 @@
                                    LargeIcon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_DatabaseSwitch_32x.png" 
                                    SmallIcon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_DatabaseSwitch_16x.png" 
                                    Command="{Binding ExecuteRibbonCommand}" 
-                                   CommandParameter="{Binding Name ,RelativeSource={RelativeSource Self}}"  >
+                                   CommandParameter="{Binding Name ,RelativeSource={RelativeSource Self}}" 
+                                   IsEnabled="{Binding IsDatabaseScanActive, Converter={StaticResource InvertBoolConverter}}" >
             <syncfusion:RibbonButton.ToolTip>
               <syncfusion:ScreenTip MinWidth="150" MaxWidth="400" Description="{lex:Loc ribbon_Database_Switch}" VerticalOffset="10" ImageSource="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_DatabaseSwitch_32x.png">
                 <StackPanel Orientation="Vertical" Width="300">
@@ -581,7 +586,9 @@
                                    LargeIcon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_DatabaseAdd_32x.png" 
                                    SmallIcon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_DatabaseAdd_16x.png" 
                                    Command="{Binding ExecuteRibbonCommand}" 
-                                   CommandParameter="{Binding Name ,RelativeSource={RelativeSource Self}}" Margin="10,0,0,0" >
+                                   CommandParameter="{Binding Name ,RelativeSource={RelativeSource Self}}" 
+                                   IsEnabled="{Binding IsDatabaseScanActive, Converter={StaticResource InvertBoolConverter}}"
+                                   Margin="10,0,0,0" >
             <syncfusion:RibbonButton.ToolTip>
               <syncfusion:ScreenTip MinWidth="150" MaxWidth="400" Description="{lex:Loc ribbon_Database_ScanStart}" VerticalOffset="10" ImageSource="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_DatabaseAdd_32x.png">
                 <StackPanel Orientation="Vertical" Width="300">
@@ -595,7 +602,8 @@
                                    LargeIcon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_DatabaseAddCancel_32x.png" 
                                    SmallIcon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_DatabaseAddCancel_16x.png" 
                                    Command="{Binding ExecuteRibbonCommand}" 
-                                   CommandParameter="{Binding Name ,RelativeSource={RelativeSource Self}}" >
+                                   CommandParameter="{Binding Name ,RelativeSource={RelativeSource Self}}" 
+                                   IsEnabled="{Binding IsDatabaseScanActive}" >
             <syncfusion:RibbonButton.ToolTip>
               <syncfusion:ScreenTip MinWidth="150" MaxWidth="400" Description="{lex:Loc ribbon_Database_ScanAbort}" VerticalOffset="10" ImageSource="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_DatabaseAddCancel_32x.png">
                 <StackPanel Orientation="Vertical" Width="300">
@@ -609,7 +617,8 @@
                                    LargeIcon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_DatabaseDelete_32x.png" 
                                    SmallIcon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_DatabaseDelete_16x.png" 
                                    Command="{Binding ExecuteRibbonCommand}" 
-                                   CommandParameter="{Binding Name ,RelativeSource={RelativeSource Self}}" >
+                                   CommandParameter="{Binding Name ,RelativeSource={RelativeSource Self}}" 
+                                   IsEnabled="{Binding IsDatabaseScanActive, Converter={StaticResource InvertBoolConverter}}" >
             <syncfusion:RibbonButton.ToolTip>
               <syncfusion:ScreenTip MinWidth="150" MaxWidth="400" Description="{lex:Loc ribbon_Database_Delete}" VerticalOffset="10" ImageSource="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_DatabaseDelete_32x.png">
                 <StackPanel Orientation="Vertical" Width="300">

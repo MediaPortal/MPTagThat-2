@@ -1907,6 +1907,10 @@ To change the order of the ratings drag the rows.</value>
   <data name="screentip_Database_Status" xml:space="preserve">
     <value>Displays Status Information for the active Database</value>
   </data>
+  <data name="databaseStatus_Header" xml:space="preserve">
+    <value>Database Status</value>
+    <comment>The Title for the Database Status Dialog</comment>
+  </data>
   <data name="switchDatabase_ToolTip_Delete" xml:space="preserve">
     <value>Delete Database</value>
     <comment>The Tooltip for the Delete Database Button</comment>
@@ -1914,5 +1918,17 @@ To change the order of the ratings drag the rows.</value>
   <data name="switchDatabase_ToolTip_Switch" xml:space="preserve">
     <value>Switch Database</value>
     <comment>The Tooltip for the Switch Database Button</comment>
+  </data>
+  <data name="databaseScan_NumberOfFiles" xml:space="preserve">
+    <value>Number of Files scanned:</value>
+  </data>
+  <data name="databaseScan_NumberofSongs" xml:space="preserve">
+    <value>Songs:</value>
+  </data>
+  <data name="databaseScan_GroupBox_Counts" xml:space="preserve">
+    <value>Counters</value>
+  </data>
+  <data name="databaseScan_GroupBox_Status" xml:space="preserve">
+    <value>Scan Status</value>
   </data>
 </root>

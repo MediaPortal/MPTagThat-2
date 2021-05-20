@@ -129,6 +129,12 @@ namespace MPTagThat.Core.Services.MusicDatabase
     List<string> GetGenres();
 
     /// <summary>
+    /// Retrieves Distinct Genres
+    /// </summary>
+    /// <returns></returns>
+    int GetCount(string key);
+
+    /// <summary>
     /// Retrieves Distinct Genres and their Distinct Artists
     /// </summary>
     /// <param name="query"></param>

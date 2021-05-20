@@ -29,6 +29,7 @@ using System.IO.Compression;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text.RegularExpressions;
+using CSScriptLibrary;
 using LiteDB;
 using MPTagThat.Core.Common.Song;
 using MPTagThat.Core.Events;
@@ -62,6 +63,7 @@ namespace MPTagThat.Core.Services.MusicDatabase
 
     private readonly Dictionary<string, LiteDatabase> _stores = new Dictionary<string, LiteDatabase>();
     private readonly StatusBarEvent _progressEvent = new StatusBarEvent { Type = StatusBarEvent.StatusTypes.CurrentFile };
+    private readonly DatabaseScanEvent _databaseScanEvent = new DatabaseScanEvent();
 
     private string[] _indexedTags = { "Artist:", "AlbumArtist:", "Album:", "Composer:", "Genre:", "Title:", "Type:", "FullFileName:" };
     #endregion
@@ -533,6 +535,56 @@ namespace MPTagThat.Core.Services.MusicDatabase
       return genreArtistAlbums;
     }
 
+
+    public int GetCount(string key)
+    {
+      if (_store == null)
+      {
+        _store = GetDocumentStoreFor(CurrentDatabase);
+        if (_store == null)
+        {
+          log.Error("Could not establish a session.");
+          return 0;
+        }
+      }
+
+      log.Trace($"Getting count of {key}");
+
+      var meta = "Songs";
+      switch (key.ToLower())
+      {
+        case "albumartist":
+          meta = "AlbumArtist";
+          break;
+
+        case "artist":
+          meta = "Artist";
+          break;
+
+        case "album":
+          meta = "Album";
+          break;
+
+        case "genre":
+          meta = "Genre";
+          break;
+      }
+
+
+      var genres = new List<string>();
+      var query = $"select count(distinct(*.{meta})) as Counter  from songs";
+      if (meta == "Songs")
+      {
+        query = $"select count(*) as Counter  from songs";
+      }
+
+      var reader = _store.Execute(query);
+      reader.Read();
+      var result = reader.Current;
+      return result["Counter"].AsInt32;
+    }
+
+
     /// <summary>
     /// Search for Artists to put into Autocompletion Combo
     /// </summary>
@@ -623,6 +675,10 @@ namespace MPTagThat.Core.Services.MusicDatabase
       {
         _progressEvent.CurrentFile = LocalizeDictionary.Instance.GetLocalizedObject("MPTagThat", "Strings", "database_ScanAborted", LocalizeDictionary.Instance.Culture).ToString();
         EventSystem.Publish(_progressEvent);
+        _databaseScanEvent.CurrentFolder = LocalizeDictionary.Instance.GetLocalizedObject("MPTagThat", "Strings", "database_ScanAborted", LocalizeDictionary.Instance.Culture).ToString();
+        _databaseScanEvent.CurrentFile = "";
+        _databaseScanEvent.NumberOfFiles = _audioFiles;
+        EventSystem.Publish(_databaseScanEvent);
         log.Info("Database Scan cancelled");
       }
       else if (e.Error != null)
@@ -632,16 +688,23 @@ namespace MPTagThat.Core.Services.MusicDatabase
       else
       {
         TimeSpan ts = DateTime.Now - _scanStartTime;
-        _progressEvent.CurrentFile = string.Format(LocalizeDictionary.Instance.GetLocalizedObject("MPTagThat", "Strings", "database_ScanFinished", LocalizeDictionary.Instance.Culture).ToString()
-                , _audioFiles, ts.Hours, ts.Minutes, ts.Seconds);
+        var msg = string.Format(LocalizeDictionary.Instance.GetLocalizedObject("MPTagThat", "Strings", "database_ScanFinished", LocalizeDictionary.Instance.Culture).ToString()
+          , _audioFiles, ts.Hours, ts.Minutes, ts.Seconds);
+        _progressEvent.CurrentFile = msg;
         EventSystem.Publish(_progressEvent);
+        _databaseScanEvent.CurrentFolder = msg;
+        _databaseScanEvent.CurrentFile = "";
+        _databaseScanEvent.NumberOfFiles = _audioFiles;
+        EventSystem.Publish(_databaseScanEvent);
         log.Info("Database Scan finished");
       }
       bgw.Dispose();
+      _options.IsDatabaseScanActive = false;
     }
 
     private void ScanShare_DoWork(object sender, DoWorkEventArgs e)
     {
+      _options.IsDatabaseScanActive = true;
       _audioFiles = 0;
       _scanStartTime = DateTime.Now;
       var di = new DirectoryInfo((string)e.Argument);
@@ -674,8 +737,10 @@ namespace MPTagThat.Core.Services.MusicDatabase
             {
               continue;
             }
-            _progressEvent.CurrentFile = $"Reading file {fi.FullName}";
-            EventSystem.Publish(_progressEvent);
+            _databaseScanEvent.CurrentFolder = fi.DirectoryName;
+            _databaseScanEvent.CurrentFile = fi.Name;
+            _databaseScanEvent.NumberOfFiles = _audioFiles;
+            EventSystem.Publish(_databaseScanEvent);
             var track = Song.Create(fi.FullName);
             if (track != null)
             {

@@ -861,7 +861,7 @@ namespace MPTagThat.SongGrid.ViewModels
              };
              EventSystem.Publish(evt);
 
-             StatusBarEvent msg = new StatusBarEvent { CurrentFolder = query, CurrentProgress = -1 };
+             var msg = new StatusBarEvent { CurrentFolder = query, CurrentProgress = -1 };
 
              var dbQuery = CreateQuery(searchString);
              var result = ContainerLocator.Current.Resolve<IMusicDatabase>().ExecuteQuery(dbQuery);
@@ -1437,6 +1437,12 @@ namespace MPTagThat.SongGrid.ViewModels
           if (command == Action.ActionType.SWITCHDATABASE)
           {
             _dialogService.ShowDialogInAnotherWindow("SwitchDatabaseView", "DialogWindowView", parameters, null);
+            return;
+          }
+
+          if (command == Action.ActionType.DATABASESTATUS)
+          {
+            _dialogService.ShowDialogInAnotherWindow("DatabaseStatusView", "DialogWindowView", parameters, null);
             return;
           }
 

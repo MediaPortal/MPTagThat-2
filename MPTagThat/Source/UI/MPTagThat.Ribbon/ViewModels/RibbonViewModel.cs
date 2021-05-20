@@ -462,6 +462,16 @@ namespace MPTagThat.Ribbon.ViewModels
       set => SetProperty(ref _activeDatabase, value);
     }
 
+    /// <summary>
+    /// Indicates if database Scan is active
+    /// </summary>
+    private bool _isDatabaseScanStarted = false;
+    public bool IsDatabaseScanActive
+    {
+      get => _isDatabaseScanStarted;
+      set => SetProperty(ref _isDatabaseScanStarted, value);
+    }
+
     #endregion
 
     #region Key Mapping
@@ -1205,6 +1215,10 @@ namespace MPTagThat.Ribbon.ViewModels
           type = Action.ActionType.SWITCHDATABASE;
           break;
 
+        case "ButtonDatabaseStatus":
+          type = Action.ActionType.DATABASESTATUS;
+          break;
+
         case "ButtonDatabaseScanStart":
           ContainerLocator.Current.Resolve<IMusicDatabase>()?.BuildDatabase(DatabaseMusicFolders[SelectedMusicFolder], DatabaseClearChecked);
           break;
@@ -1435,6 +1449,10 @@ namespace MPTagThat.Ribbon.ViewModels
 
         case "activedatabasechanged":
           ActiveDatabase = (string)msg.MessageData["database"];
+          break;
+
+        case "databasescanstatus":
+          IsDatabaseScanActive = (bool) msg.MessageData["status"];
           break;
       }
     }

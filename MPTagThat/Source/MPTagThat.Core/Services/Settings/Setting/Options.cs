@@ -26,6 +26,7 @@ using System.Windows.Forms;
 using System.Windows.Media;
 using MPTagThat.Core.Common;
 using MPTagThat.Core.Common.Song;
+using MPTagThat.Core.Events;
 using Prism.Ioc;
 
 #endregion
@@ -285,6 +286,22 @@ namespace MPTagThat.Core.Services.Settings.Setting
     public Brush BackGround { get; set; }
 
     public bool IsDatabaseMode { get; set; }
+
+    private bool _isDatabaseScanActive;
+    public bool IsDatabaseScanActive
+    {
+      get => _isDatabaseScanActive;
+      set
+      {
+        _isDatabaseScanActive = value;
+        var evt = new GenericEvent
+        {
+          Action = "DatabaseScanStatus"
+        };
+        evt.MessageData.Add("status", value);
+        EventSystem.Publish(evt);
+      }
+    }
 
     #endregion
 

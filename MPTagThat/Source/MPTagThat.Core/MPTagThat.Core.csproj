@@ -86,6 +86,7 @@
     <Compile Include="Events\EventSystem.cs" />
     <Compile Include="Events\GenericEvent.cs" />
     <Compile Include="Events\ProgressBarEvent.cs" />
+    <Compile Include="Events\DatabaseScanEvent.cs" />
     <Compile Include="Events\StatusBarEvent.cs" />
     <Compile Include="GnuDB\CDInfo.cs" />
     <Compile Include="GnuDB\CDInfoDetail.cs" />
