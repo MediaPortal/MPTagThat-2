@@ -23,13 +23,13 @@ public class Script : IScript
 {
   public string Invoke(SongData song)
   {
-    // Use "Artist" or "SortArtist" as the result of the Auto Correction
-    var artistType = "SortArtist";
+    // Use "Artist" or "SortName" as the result of the Auto Correction
+    var artistType = "SortName";
 
     var searchList = new List<string>() {" feat ", " feat. ", " ft ", " ft. ", " vs ", " vs. "};
     var foundArtists = new List<string>();
     var artistSplit = new List<string>();
-    var sqlStmt = "select {0} from artist where artist like '{1}'";
+    var sqlStmt = "select {0} from artist where name like '{1}'";
 
     var artist = song.Artist.Trim();
 

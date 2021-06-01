@@ -600,15 +600,15 @@ namespace MPTagThat.Core.Services.MusicDatabase
       artist = Util.RemoveInvalidChars(artist);
       if (_sqLiteConnection != null)
       {
-        var sql = $"select artist,sortartist from artist where artist like '{artist}%' or artist like '% {artist}%'";
+        var sql = $"select name,sortname from artist where name like '{artist}%' or name like '% {artist}%'";
         var command = new SQLiteCommand(sql, _sqLiteConnection);
         var reader = command.ExecuteReader();
         while (reader.Read())
         {
-          artists.Add(reader["Artist"].ToString());
-          if (!reader["Artist"].Equals(reader["SortArtist"]))
+          artists.Add(reader["Name"].ToString());
+          if (!reader["Name"].Equals(reader["SortName"]))
           {
-            artists.Add(reader["SortArtist"].ToString());
+            artists.Add(reader["SortName"].ToString());
           }
         }
       }
