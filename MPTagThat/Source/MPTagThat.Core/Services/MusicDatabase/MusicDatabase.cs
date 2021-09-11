@@ -750,7 +750,7 @@ namespace MPTagThat.Core.Services.MusicDatabase
               if (_audioFiles % 1000 == 0)
               {
                 log.Info($"Number of processed files: {_audioFiles}");
-                col.InsertBulk(songList, 1000);
+                col.InsertBulk(songList, 500);
                 songList.Clear();
               }
             }
