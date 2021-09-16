@@ -182,7 +182,7 @@
       <Version>4.7.5</Version>
     </PackageReference>
     <PackageReference Include="Prism.Core">
-      <Version>8.0.0.1909</Version>
+      <Version>8.1.97</Version>
     </PackageReference>
     <PackageReference Include="Syncfusion.SfGrid.WPF">
       <Version>18.3.0.52</Version>

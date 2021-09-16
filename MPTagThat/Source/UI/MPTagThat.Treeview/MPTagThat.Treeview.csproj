@@ -94,7 +94,7 @@
       <Version>1.1.19</Version>
     </PackageReference>
     <PackageReference Include="Prism.Wpf">
-      <Version>8.0.0.1909</Version>
+      <Version>8.1.97</Version>
     </PackageReference>
     <PackageReference Include="Syncfusion.SfTreeView.WPF">
       <Version>18.3.0.52</Version>
