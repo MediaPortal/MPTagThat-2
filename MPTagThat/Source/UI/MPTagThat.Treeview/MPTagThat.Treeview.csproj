@@ -97,10 +97,10 @@
       <Version>8.1.97</Version>
     </PackageReference>
     <PackageReference Include="Syncfusion.SfTreeView.WPF">
-      <Version>18.3.0.52</Version>
+      <Version>19.2.0.62</Version>
     </PackageReference>
     <PackageReference Include="Syncfusion.Tools.WPF">
-      <Version>18.3.0.52</Version>
+      <Version>19.2.0.62</Version>
     </PackageReference>
     <PackageReference Include="WPFLocalizeExtension">
       <Version>3.9.0</Version>
