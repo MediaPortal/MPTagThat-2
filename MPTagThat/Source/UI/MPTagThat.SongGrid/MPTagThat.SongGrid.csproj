@@ -118,16 +118,16 @@
       <Version>2.3.0</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf">
-      <Version>1.1.19</Version>
+      <Version>1.1.31</Version>
     </PackageReference>
     <PackageReference Include="MPTagThat.Mp3Val">
       <Version>0.1.8</Version>
     </PackageReference>
     <PackageReference Include="MusicBrainzAPI">
-      <Version>2.1.0</Version>
+      <Version>2.4.0</Version>
     </PackageReference>
     <PackageReference Include="NReplayGain">
-      <Version>1.0.0</Version>
+      <Version>1.0.2</Version>
     </PackageReference>
     <PackageReference Include="Prism.Wpf">
       <Version>8.1.97</Version>
@@ -145,7 +145,7 @@
       <Version>18.3.0.52</Version>
     </PackageReference>
     <PackageReference Include="WPFLocalizeExtension">
-      <Version>3.8.0</Version>
+      <Version>3.9.0</Version>
     </PackageReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
