@@ -296,6 +296,12 @@
     <PackageReference Include="Syncfusion.Licensing">
       <Version>19.2.0.62</Version>
     </PackageReference>
+    <PackageReference Include="Syncfusion.Themes.FluentDark.WPF">
+      <Version>19.2.0.62</Version>
+    </PackageReference>
+    <PackageReference Include="Syncfusion.Themes.FluentLight.WPF">
+      <Version>19.2.0.62</Version>
+    </PackageReference>
     <PackageReference Include="Syncfusion.Themes.MaterialDark.WPF">
       <Version>19.2.0.62</Version>
     </PackageReference>

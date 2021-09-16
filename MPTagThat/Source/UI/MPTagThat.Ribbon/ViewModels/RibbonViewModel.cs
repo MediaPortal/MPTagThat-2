@@ -325,6 +325,16 @@ namespace MPTagThat.Ribbon.ViewModels
         // Set the preferred Row Colors for the Grid
         switch (_selectedTheme)
         {
+          case "FluentLight":
+            RowColor = "#FF99C9EE";
+            AlternateRowColor = "#FFFFFFFF";
+            break;
+
+          case "FluentDark":
+            RowColor = "#FF121212";
+            AlternateRowColor = "#FF3A3A3A";
+            break;
+
           case "MaterialLight":
             RowColor = "#FFFFFFFF";
             AlternateRowColor = "#FFA0A0A0";
@@ -1354,6 +1364,8 @@ namespace MPTagThat.Ribbon.ViewModels
       SelectedLanguage = _languages.First(item => item.Name == _options.MainSettings.Language);
 
       // Themes
+      _themes.Add("FluentLight");
+      _themes.Add("FluentDark");
       _themes.Add("MaterialLight");
       _themes.Add("MaterialDark");
       _themes.Add("MaterialLightBlue");
