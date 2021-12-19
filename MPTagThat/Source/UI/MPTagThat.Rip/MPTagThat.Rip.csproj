@@ -95,7 +95,7 @@
       <Version>8.1.97</Version>
     </PackageReference>
     <PackageReference Include="Syncfusion.Tools.WPF">
-      <Version>19.2.0.62</Version>
+      <Version>19.3.0.47</Version>
     </PackageReference>
     <PackageReference Include="WPFLocalizeExtension">
       <Version>3.9.0</Version>

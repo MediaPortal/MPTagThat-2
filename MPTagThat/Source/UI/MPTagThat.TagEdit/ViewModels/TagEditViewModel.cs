@@ -44,6 +44,7 @@ using Prism.Ioc;
 using Prism.Mvvm;
 using Prism.Regions;
 using Syncfusion.UI.Xaml.Grid;
+using Syncfusion.Windows.Tools.Controls;
 using TagLib;
 using Action = MPTagThat.Core.Common.Action;
 using File = System.IO.File;
@@ -66,6 +67,8 @@ namespace MPTagThat.TagEdit.ViewModels
     private List<SongData> _songs;
     private SongData _songBackup;
     private bool _isInitializing;
+
+    private ObservableCollection<object> _savedGenres = new ObservableCollection<object>();
 
     #endregion
 
@@ -613,6 +616,7 @@ namespace MPTagThat.TagEdit.ViewModels
       AddUserFrameCommand = new BaseCommand(AddUserFrame);
       DeleteUserFrameCommand = new BaseCommand(DeleteUserFrame);
       DeleteAllUserFramesCommand = new BaseCommand(DeleteAllUserFrames);
+      TabSelectionChangingCommand = new BaseCommand(TabSelectionChanging);
 
       SelectedGenres.CollectionChanged += SelectedGenres_CollectionChanged;
       MediaTypes.AddRange(_options.MediaTypes);
@@ -841,6 +845,26 @@ namespace MPTagThat.TagEdit.ViewModels
       if (SongEdit != null && (_songs != null && _songs.Count > 0) && !_isInitializing)
       {
         SongEdit.Genre = string.Join(";", SelectedGenres);
+      }
+    }
+
+    /// <summary>
+    /// SyncFusion initializes the TabControl completely new, while navigating.
+    /// Thus we need to keep track of Genres, which had been already selected and refill them.
+    /// </summary>
+    public ICommand TabSelectionChangingCommand { get; }
+
+    private void TabSelectionChanging(object param)
+    {
+      if ((int) param == 0)
+      {
+        _savedGenres.Clear();
+        _savedGenres.AddRange(SelectedGenres);
+      }
+      else
+      {
+        SelectedGenres.Clear();
+        SelectedGenres.AddRange(_savedGenres);
       }
     }
 
