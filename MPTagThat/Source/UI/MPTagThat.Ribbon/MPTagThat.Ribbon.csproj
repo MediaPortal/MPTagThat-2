@@ -194,7 +194,7 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf">
-      <Version>1.1.37</Version>
+      <Version>1.1.39</Version>
     </PackageReference>
     <PackageReference Include="Newtonsoft.Json">
       <Version>13.0.1</Version>
@@ -215,7 +215,7 @@
       <Version>19.3.0.47</Version>
     </PackageReference>
     <PackageReference Include="WPFLocalizeExtension">
-      <Version>3.9.0</Version>
+      <Version>3.9.1</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
