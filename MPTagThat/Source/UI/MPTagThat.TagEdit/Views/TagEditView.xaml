@@ -137,7 +137,14 @@
                             Command="{Binding CancelEditCommand}" />
       </StackPanel>
     </Grid>
-    <syncfusion:TabNavigationControl TabStripVisibility="Visible" SelectedIndex="0" >
+    <syncfusion:TabNavigationControl x:Name="TabNavControl"  TabStripVisibility="Visible" SelectedIndex="0" >
+      
+      <i:Interaction.Triggers>
+        <i:EventTrigger EventName="SelectionChanged">
+          <i:InvokeCommandAction Command="{Binding TabSelectionChangingCommand}" CommandParameter="{Binding ElementName=TabNavControl, Path=SelectedIndex}" />
+        </i:EventTrigger>
+      </i:Interaction.Triggers>
+
       <syncfusion:TabNavigationItem Header="{lex:Loc tagEdit_TabHeader_Main}" >
         <syncfusion:TabNavigationItem.Content>
           <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
