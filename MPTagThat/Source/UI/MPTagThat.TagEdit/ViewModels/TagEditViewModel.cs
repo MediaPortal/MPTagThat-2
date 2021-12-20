@@ -67,6 +67,7 @@ namespace MPTagThat.TagEdit.ViewModels
     private List<SongData> _songs;
     private SongData _songBackup;
     private bool _isInitializing;
+    private bool _changingTabs;
 
     private ObservableCollection<object> _savedGenres = new ObservableCollection<object>();
 
@@ -832,7 +833,7 @@ namespace MPTagThat.TagEdit.ViewModels
     {
       IsApplyButtonEnabled = true;
 
-      if (!_isInitializing)
+      if (!_isInitializing && !_changingTabs)
       {
         SongEdit.Changed = true;
       }
@@ -856,6 +857,7 @@ namespace MPTagThat.TagEdit.ViewModels
 
     private void TabSelectionChanging(object param)
     {
+      _changingTabs = true;
       if ((int) param == 0)
       {
         _savedGenres.Clear();
@@ -865,6 +867,7 @@ namespace MPTagThat.TagEdit.ViewModels
       {
         SelectedGenres.Clear();
         SelectedGenres.AddRange(_savedGenres);
+        _changingTabs = false;
       }
     }
 
