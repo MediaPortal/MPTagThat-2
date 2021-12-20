@@ -512,17 +512,6 @@
             </syncfusion:RibbonButton.ToolTip>
           </syncfusion:RibbonButton>
         </syncfusion:RibbonBar>
-
-        <syncfusion:RibbonBar Header="{lex:Loc ribbon_Bar_About}" >
-          <syncfusion:RibbonButton x:Name="ButtonAbout" SizeForm="Large" 
-                                   Label="{lex:Loc ribbon_About}" 
-                                   LargeIcon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_About_32x.png" 
-                                   SmallIcon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_About_32x.png" 
-                                   Command="{Binding ExecuteRibbonCommand}" 
-                                   CommandParameter="{Binding Name ,RelativeSource={RelativeSource Self}}" >
-          </syncfusion:RibbonButton>
-        </syncfusion:RibbonBar>
-
       </syncfusion:RibbonTab>
 
       <!-- Database -->
@@ -530,26 +519,26 @@
         <syncfusion:RibbonBar Header="{Binding ActiveDatabase}" >
           <Label Content=" " />
           <StackPanel Orientation="Horizontal">
-            <syncfusion:RibbonComboBox x:Name="ComboBoxDatabaseQuery" MaxDropDownHeight="150" Width="300" Height="20" 
+          <syncfusion:RibbonComboBox x:Name="ComboBoxDatabaseQuery" MaxDropDownHeight="150" Width="300" Height="20" 
                                      ItemsSource="{Binding Queries}" 
                                      SelectedItem="{Binding QueriesSelectedItem, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                      Text="{Binding QueriesSelectedText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                      IsEditable="True" >
-            </syncfusion:RibbonComboBox>
-            <syncfusion:RibbonButton x:Name="ButtonDatabaseQuery" SizeForm="Large" 
+          </syncfusion:RibbonComboBox>
+          <syncfusion:RibbonButton x:Name="ButtonDatabaseQuery" SizeForm="Large" 
                                    Label="{lex:Loc ribbon_Database_Query}" 
                                    LargeIcon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_Lens_32x.png" 
                                    SmallIcon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_Lens_32x.png" 
                                    Command="{Binding ExecuteRibbonCommand}" 
                                    CommandParameter="{Binding Name ,RelativeSource={RelativeSource Self}}" >
-              <syncfusion:RibbonButton.ToolTip>
-                <syncfusion:ScreenTip MinWidth="150" MaxWidth="400" Description="{lex:Loc ribbon_Database_Query}" VerticalOffset="10" ImageSource="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_Lens_32x.png">
-                  <StackPanel Orientation="Vertical" Width="300">
-                    <TextBlock Text="{lex:Loc screentip_Database_Query}" TextWrapping="Wrap" />
-                  </StackPanel>
-                </syncfusion:ScreenTip>
-              </syncfusion:RibbonButton.ToolTip>
-            </syncfusion:RibbonButton>
+            <syncfusion:RibbonButton.ToolTip>
+              <syncfusion:ScreenTip MinWidth="150" MaxWidth="400" Description="{lex:Loc ribbon_Database_Query}" VerticalOffset="10" ImageSource="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_Lens_32x.png">
+                <StackPanel Orientation="Vertical" Width="300">
+                  <TextBlock Text="{lex:Loc screentip_Database_Query}" TextWrapping="Wrap" />
+                </StackPanel>
+              </syncfusion:ScreenTip>
+            </syncfusion:RibbonButton.ToolTip>
+          </syncfusion:RibbonButton>
           </StackPanel>
           <syncfusion:RibbonSeparator/>
           <syncfusion:RibbonButton x:Name="ButtonDatabaseSwitch" SizeForm="Large" 
@@ -736,6 +725,16 @@
       <syncfusion:RibbonTab x:Name="TabBurn" Caption="{lex:Loc ribbon_BurnTab}"  IsChecked="False"/>
       
       -->
+
+      <syncfusion:Ribbon.TabPanelItem >
+        <syncfusion:RibbonButton x:Name="ButtonAbout" SizeForm="Small" 
+                                 Label="{lex:Loc ribbon_About}" 
+                                 LargeIcon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_About_32x.png" 
+                                 SmallIcon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_About_32x.png" 
+                                 Command="{Binding ExecuteRibbonCommand}" 
+                                 CommandParameter="{Binding Name ,RelativeSource={RelativeSource Self}}" >
+        </syncfusion:RibbonButton>
+      </syncfusion:Ribbon.TabPanelItem>
 
       <!-- 
       /*   
