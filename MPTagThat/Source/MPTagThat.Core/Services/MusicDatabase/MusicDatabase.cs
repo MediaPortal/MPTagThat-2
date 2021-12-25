@@ -25,11 +25,9 @@ using System.Data.SQLite;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
-using System.IO.Compression;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text.RegularExpressions;
-using CSScriptLibrary;
 using LiteDB;
 using MPTagThat.Core.Common.Song;
 using MPTagThat.Core.Events;
@@ -65,7 +63,9 @@ namespace MPTagThat.Core.Services.MusicDatabase
     private readonly StatusBarEvent _progressEvent = new StatusBarEvent { Type = StatusBarEvent.StatusTypes.CurrentFile };
     private readonly DatabaseScanEvent _databaseScanEvent = new DatabaseScanEvent();
 
-    private string[] _indexedTags = { "Artist:", "AlbumArtist:", "Album:", "Composer:", "Genre:", "Title:", "Type:", "FullFileName:" };
+    private readonly string[] _indexedTags = { "artist", "albumartist", "album", "composer", "genre", "title", "type", "fullfilename" };
+    private readonly Regex _queryRegex = new Regex("\\w+?(\\s?\\:|\\s?=|\\s?!=)\\\"?.+?\\\"?(?=(\\sAND|\\sOR|\\s&|\\s\\||$))");
+
     #endregion
 
     #region ctor / dtor
@@ -286,6 +286,10 @@ namespace MPTagThat.Core.Services.MusicDatabase
       {
         sql = "select $ from songs where " + query.Substring(7);
       }
+      else if (_indexedTags.Any(query.ToLower().StartsWith))
+      {
+        sql = BuildWhere(query);
+      }
       else
       {
         sql = "select $ from songs " +
@@ -308,6 +312,58 @@ namespace MPTagThat.Core.Services.MusicDatabase
 
       return result;
     }
+
+
+    /// <summary>
+    /// Build a valid select statement
+    /// </summary>
+    /// <param name="query"></param>
+    /// <returns></returns>
+    public string BuildWhere(string query)
+    {
+      var sql = "select $ from songs where ";
+
+      var matches = _queryRegex.Matches(query);
+      foreach (Match match in matches)
+      {
+        var fullString = match.Groups[0].Value;
+        var comparator = match.Groups[1].Value.Trim();
+        var op = match.Groups[2].Value.Trim();
+        var token = new string[2];
+        if ((comparator.Length > 1))
+        {
+          token[0] = fullString.Substring(0, fullString.IndexOf(comparator, StringComparison.Ordinal) - 1);
+          token[1] = fullString.Substring(fullString.IndexOf(comparator, StringComparison.Ordinal) + 2).Trim();
+        }
+        else
+        {
+          token = fullString.Split(Convert.ToChar(comparator));
+        }
+
+        if (!_indexedTags.Any(token[0].ToLower().Contains))
+        {
+          log.Info($"Invalid Token {token} used. Query not executed");
+          break;
+        }
+
+        sql += token[0];
+        if (comparator == ":")
+        {
+          sql += " like " + "'%" +  token[1] + "%'";
+        }
+        else
+        {
+          sql += " " + comparator + " " + "'" +  token[1] + "'";
+        }
+
+        if (op != "")
+        {
+          sql += " " + op + " ";
+        }
+      }
+      return sql;
+    }
+
 
     /// <summary>
     /// Update a song in the database
