@@ -1244,6 +1244,11 @@ namespace MPTagThat.Ribbon.ViewModels
         case "ButtonDatabaseQuery":
           type = Action.ActionType.DATABASEQUERY;
           eventParameter = QueriesSelectedText;
+          if (eventParameter.IsNullOrWhiteSpace())
+          {
+            log.Error("No Database query selected. Ribbon command not executed.");
+            return;
+          }
 
           var evt = new GenericEvent
           {
