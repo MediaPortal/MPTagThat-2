@@ -123,15 +123,17 @@
                        AutoPersist="True" 
                        BackStageHeader="" 
                        RibbonState="Normal"
+                       EnableSimplifiedLayoutMode="True"
                        SelectedIndex="{Binding SelectedTabIndex, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                        SelectedItem="{Binding SelectedRibbonTab}" >
 
       <syncfusion:RibbonTab x:Name="TabTag" Caption="{lex:Loc ribbon_TagTab}"  IsChecked="True">
 
         <syncfusion:RibbonBar Name="RibbonBarRetrieveTags" Header="{lex:Loc ribbon_RetrieveTags}">
-          <syncfusion:RibbonButton x:Name="ButtonTagFromFile" SizeForm="Large" 
+          <syncfusion:RibbonButton x:Name="ButtonTagFromFile" SizeForm="Large" syncfusion:SimplifiedLayoutSettings.DisplayMode="Normal,Simplified"
                                    Label="{lex:Loc ribbon_TagFromFile}" 
                                    LargeIcon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_TagFromFile_32x.png" 
+                                   MediumIcon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_TagFromFile_32x.png" 
                                    SmallIcon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_TagFromFile_16x.png" 
                                    Command="{Binding ExecuteRibbonCommand}" 
                                    CommandParameter="{Binding Name ,RelativeSource={RelativeSource Self}}" >
@@ -144,9 +146,10 @@
             </syncfusion:RibbonButton.ToolTip>
           </syncfusion:RibbonButton>
 
-          <syncfusion:RibbonButton x:Name="ButtonIdentifySong" SizeForm="Large" 
+          <syncfusion:RibbonButton x:Name="ButtonIdentifySong" SizeForm="Large" syncfusion:SimplifiedLayoutSettings.DisplayMode="Normal,Simplified"
                                    Label="{lex:Loc ribbon_IdentifyFile}" 
                                    LargeIcon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_IdentifyFile_32x.png" 
+                                   MediumIcon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_IdentifyFile_32x.png" 
                                    SmallIcon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_IdentifyFile_16x.png" 
                                    Command="{Binding ExecuteRibbonCommand}" 
                                    CommandParameter="{Binding Name ,RelativeSource={RelativeSource Self}}">
@@ -159,9 +162,10 @@
             </syncfusion:RibbonButton.ToolTip>
           </syncfusion:RibbonButton>
 
-          <syncfusion:RibbonButton x:Name="ButtonTagFromInternet" SizeForm="Large" 
+          <syncfusion:RibbonButton x:Name="ButtonTagFromInternet" SizeForm="Large" syncfusion:SimplifiedLayoutSettings.DisplayMode="Normal,Simplified"
                                    Label="{lex:Loc ribbon_TagFromInternet}" 
-                                   LargeIcon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_TagFromInternet_32x.png" 
+                                   LargeIcon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_TagFromInternet_32x.png"
+                                   MediumIcon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_TagFromInternet_32x.png"
                                    SmallIcon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_TagFromInternet_16x.png" 
                                    Command="{Binding ExecuteRibbonCommand}" 
                                    CommandParameter="{Binding Name ,RelativeSource={RelativeSource Self}}">
@@ -177,9 +181,10 @@
 
         <syncfusion:RibbonBar Name="RibbonBarEditTags" Header="{lex:Loc ribbon_EditTags}">
 
-          <syncfusion:RibbonButton x:Name="ButtonGetCoverArt" SizeForm="Large" 
+          <syncfusion:RibbonButton x:Name="ButtonGetCoverArt" SizeForm="Large" syncfusion:SimplifiedLayoutSettings.DisplayMode="Normal,Simplified"
                                    Label="{lex:Loc ribbon_GetCoverArt}" 
                                    LargeIcon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_CoverArt_32x.png" 
+                                   MediumIcon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_CoverArt_32x.png" 
                                    SmallIcon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_CoverArt_16x.png" 
                                    Command="{Binding ExecuteRibbonCommand}" 
                                    CommandParameter="{Binding Name ,RelativeSource={RelativeSource Self}}">
@@ -192,9 +197,10 @@
             </syncfusion:RibbonButton.ToolTip>
           </syncfusion:RibbonButton>
 
-          <syncfusion:RibbonButton x:Name="ButtonGetLyrics" SizeForm="Large" 
+          <syncfusion:RibbonButton x:Name="ButtonGetLyrics" SizeForm="Large" syncfusion:SimplifiedLayoutSettings.DisplayMode="Normal,Simplified"
                                    Label="{lex:Loc ribbon_GetLyrics}" 
                                    LargeIcon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_Lyrics_32x.png" 
+                                   MediumIcon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_Lyrics_32x.png" 
                                    SmallIcon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_Lyrics_16x.png" 
                                    Command="{Binding ExecuteRibbonCommand}" 
                                    CommandParameter="{Binding Name ,RelativeSource={RelativeSource Self}}">
@@ -207,9 +213,10 @@
             </syncfusion:RibbonButton.ToolTip>
           </syncfusion:RibbonButton>
 
-          <syncfusion:RibbonButton x:Name="ButtonGetMusicBrainz" SizeForm="Large" 
+          <syncfusion:RibbonButton x:Name="ButtonGetMusicBrainz" SizeForm="Large" syncfusion:SimplifiedLayoutSettings.DisplayMode="Normal,Simplified"
                                    Label="{lex:Loc ribbon_MusicBrainz}" 
                                    LargeIcon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_MusicBrainz_32x.png" 
+                                   MediumIcon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_MusicBrainz_32x.png" 
                                    SmallIcon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_MusicBrainz_16x.png" 
                                    Command="{Binding ExecuteRibbonCommand}" 
                                    CommandParameter="{Binding Name ,RelativeSource={RelativeSource Self}}">
@@ -222,9 +229,10 @@
             </syncfusion:RibbonButton.ToolTip>
           </syncfusion:RibbonButton>
 
-          <syncfusion:SplitButton x:Name="ButtonCaseConversion" SizeForm="Large" 
+          <syncfusion:SplitButton x:Name="ButtonCaseConversion" SizeForm="Large" syncfusion:SimplifiedLayoutSettings.DisplayMode="Normal,Simplified"
                                   Label="{lex:Loc ribbon_CaseConversionMenu}" 
                                   LargeIcon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_CaseConversion_32x.png" 
+                                  MediumIcon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_CaseConversion_32x.png" 
                                   SmallIcon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_CaseConversion_16x.png"
                                   Command="{Binding ExecuteRibbonCommand}" 
                                   CommandParameter="{Binding Name ,RelativeSource={RelativeSource Self}}" >
@@ -242,7 +250,7 @@
 
           <syncfusion:RibbonSeparator/>
 
-          <syncfusion:SplitButton x:Name="ButtonFind" SizeForm="Large" 
+          <syncfusion:SplitButton x:Name="ButtonFind" SizeForm="Large" syncfusion:SimplifiedLayoutSettings.DisplayMode="Normal"
                                   Label="{lex:Loc ribbon_Find}" 
                                   LargeIcon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_Find_32x.png" 
                                   SmallIcon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_Find_16x.png"
@@ -272,7 +280,7 @@
             </syncfusion:SplitButton.ToggleButtonToolTip>
           </syncfusion:SplitButton>
 
-          <syncfusion:SplitButton x:Name="ButtonValidateSong" SizeForm="Large" 
+          <syncfusion:SplitButton x:Name="ButtonValidateSong" SizeForm="Large" syncfusion:SimplifiedLayoutSettings.DisplayMode="Normal"
                                   Label="{lex:Loc ribbon_ValidateSong}" 
                                   LargeIcon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_BrokenSong_32x.png" 
                                   SmallIcon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_BrokenSong_16x.png"
@@ -301,10 +309,11 @@
             </syncfusion:SplitButton.ToggleButtonToolTip>
           </syncfusion:SplitButton>
 
-          <syncfusion:RibbonSeparator/>
-          <syncfusion:SplitButton x:Name="ButtonDeleteTags" SizeForm="Large" 
+          <syncfusion:RibbonSeparator syncfusion:SimplifiedLayoutSettings.DisplayMode="Normal"/>
+          <syncfusion:SplitButton x:Name="ButtonDeleteTags" SizeForm="Large" syncfusion:SimplifiedLayoutSettings.DisplayMode="Normal,Simplified"
                                   Label="{lex:Loc ribbon_DeleteTags}" 
                                   LargeIcon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_DeleteTags_32x.png" 
+                                  MediumIcon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_DeleteTags_32x.png" 
                                   SmallIcon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_DeleteTags_16x.png"
                                   Command="{Binding ExecuteRibbonCommand}" 
                                   CommandParameter="{Binding Name ,RelativeSource={RelativeSource Self}}" >
@@ -338,7 +347,7 @@
             </syncfusion:SplitButton.ToolTip>
           </syncfusion:SplitButton>
 
-          <syncfusion:RibbonButton x:Name="ButtonRemoveComments" SizeForm="Large" 
+          <syncfusion:RibbonButton x:Name="ButtonRemoveComments" SizeForm="Large" syncfusion:SimplifiedLayoutSettings.DisplayMode="Normal"
                                    Label="{lex:Loc ribbon_RemoveComments}" 
                                    LargeIcon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_RemoveComments_32x.png" 
                                    SmallIcon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_RemoveComments_16x.png" 
@@ -353,8 +362,8 @@
             </syncfusion:RibbonButton.ToolTip>
           </syncfusion:RibbonButton>
 
-          <syncfusion:RibbonSeparator/>
-          <syncfusion:RibbonButton x:Name="ButtonGain" SizeForm="Large" 
+          <syncfusion:RibbonSeparator syncfusion:SimplifiedLayoutSettings.DisplayMode="Normal" />
+          <syncfusion:RibbonButton x:Name="ButtonGain" SizeForm="Large" syncfusion:SimplifiedLayoutSettings.DisplayMode="Normal"
                                    Label="{lex:Loc ribbon_ReplayGain}" 
                                    LargeIcon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_Gain_32x.png" 
                                    SmallIcon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_Gain_16x.png" 
@@ -369,7 +378,7 @@
             </syncfusion:RibbonButton.ToolTip>
           </syncfusion:RibbonButton>
 
-          <syncfusion:RibbonButton x:Name="ButtonBpm" SizeForm="Large" 
+          <syncfusion:RibbonButton x:Name="ButtonBpm" SizeForm="Large" syncfusion:SimplifiedLayoutSettings.DisplayMode="Normal"
                                    Label="{lex:Loc ribbon_BPM}" 
                                    LargeIcon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_Bpm_32x.png"
                                    SmallIcon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_Bpm_16x.png" 
@@ -384,10 +393,10 @@
             </syncfusion:RibbonButton.ToolTip>
           </syncfusion:RibbonButton>
 
-          <syncfusion:RibbonSeparator/>
+          <syncfusion:RibbonSeparator syncfusion:SimplifiedLayoutSettings.DisplayMode="Normal"/>
 
           <!-- Scripts -->
-          <syncfusion:ButtonPanel SeparatorVisibility="Hidden" Height="25" Margin="0,5,0,5" >
+          <syncfusion:ButtonPanel SeparatorVisibility="Hidden" Height="25" Margin="0,5,0,5" syncfusion:SimplifiedLayoutSettings.DisplayMode="Normal">
             <syncfusion:RibbonComboBox x:Name="RibbonComboBoxScript" MaxDropDownHeight="150" Width="100"  
                                        ItemsSource="{Binding Scripts}" 
                                        SelectedIndex="{Binding ScriptsSelectedIndex, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" >
@@ -413,7 +422,7 @@
             </syncfusion:RibbonButton>
           </syncfusion:ButtonPanel>
 
-          <syncfusion:ButtonPanel SeparatorVisibility="Hidden" Height="25">
+          <syncfusion:ButtonPanel SeparatorVisibility="Hidden" Height="25" syncfusion:SimplifiedLayoutSettings.DisplayMode="Normal">
             <syncfusion:RibbonButton x:Name="ButtonNumberOnClick" SizeForm="Small" Label="" IsToggle="True" IsSelected="{Binding ToggleNumberOnClick, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                      SmallIcon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_NumberOnClick_32x.png"  
                                      Command="{Binding ExecuteRibbonCommand}" 
@@ -445,7 +454,7 @@
         </syncfusion:RibbonBar>
 
         <syncfusion:RibbonBar Name="RibbonBarOrganise" Header="{lex:Loc ribbon_OrganiseFiles}">
-          <syncfusion:RibbonButton x:Name="ButtonRenameFiles" SizeForm="Large" 
+          <syncfusion:RibbonButton x:Name="ButtonRenameFiles" SizeForm="Large" syncfusion:SimplifiedLayoutSettings.DisplayMode="Normal"
                                    Label="{lex:Loc ribbon_RenameFile}" 
                                    LargeIcon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_Rename_32x.png" 
                                    SmallIcon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_Rename_16x.png" 
@@ -460,9 +469,10 @@
             </syncfusion:RibbonButton.ToolTip>
           </syncfusion:RibbonButton>
 
-          <syncfusion:RibbonButton x:Name="ButtonOrganiseFiles" SizeForm="Large" 
+          <syncfusion:RibbonButton x:Name="ButtonOrganiseFiles" SizeForm="Large" syncfusion:SimplifiedLayoutSettings.DisplayMode="Normal,Simplified"
                                    Label="{lex:Loc ribbon_Organise}" 
                                    LargeIcon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_Organise_32x.png" 
+                                   MediumIcon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_Organise_32x.png" 
                                    SmallIcon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_Organise_16x.png" 
                                    Command="{Binding ExecuteRibbonCommand}" 
                                    CommandParameter="{Binding Name ,RelativeSource={RelativeSource Self}}" >
@@ -477,7 +487,7 @@
         </syncfusion:RibbonBar>
 
 
-        <syncfusion:RibbonBar Header="{lex:Loc ribbon_Other}" >
+        <syncfusion:RibbonBar Header="{lex:Loc ribbon_Other}" syncfusion:SimplifiedLayoutSettings.DisplayMode="Normal">
           <syncfusion:RibbonButton x:Name="ButtonAddConversion" SizeForm="Large" 
                                    Label="{lex:Loc ribbon_AddConvert}" 
                                    LargeIcon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_AddConversionList_32x.png" 
@@ -493,9 +503,10 @@
             </syncfusion:RibbonButton.ToolTip>
           </syncfusion:RibbonButton>
 
-          <syncfusion:RibbonButton x:Name="ButtonSettings" SizeForm="Large"
+          <syncfusion:RibbonButton x:Name="ButtonSettings" SizeForm="Large" syncfusion:SimplifiedLayoutSettings.DisplayMode="Normal,Simplified"
                                    Label="{lex:Loc ribbon_Settings}"
                                    LargeIcon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_Settings_32x.png" 
+                                   MediumIcon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_Settings_32x.png" 
                                    SmallIcon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_Settings_16x.png" 
                                    Command="{x:Static syncfusion:RibbonCommands.OpenBackStage}" 
                                    CommandTarget="{Binding ElementName=Ribbon}">
