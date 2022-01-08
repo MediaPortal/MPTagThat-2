@@ -89,10 +89,10 @@ namespace MPTagThat.Treeview.Model
     {
       log.Trace(">>>");
       var items = new List<TreeItem>();
-      var artistNode = CreateTreeNode(helper, "Artist", "Artist", true, "Artist");
-      items.Add(artistNode);
       var albumArtistNode = CreateTreeNode(helper, "Album Artist", "AlbumArtist", true, "Artist");
       items.Add(albumArtistNode);
+      var artistNode = CreateTreeNode(helper, "Artist", "Artist", true, "Artist");
+      items.Add(artistNode);
       var genreNode = CreateTreeNode(helper, "Genre", "Genre", true, "Genre");
       items.Add(genreNode);
       parent.PopulateChildNodes(items);
