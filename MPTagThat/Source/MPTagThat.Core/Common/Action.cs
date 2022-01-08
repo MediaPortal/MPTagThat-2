@@ -63,6 +63,7 @@ namespace MPTagThat.Core.Common
       GNUDBQUERY = 73,
       SWITCHDATABASE = 74,
       DATABASESTATUS = 75,
+      DATABASETREEVIEWREFRESH = 76,
     }
 
     #endregion

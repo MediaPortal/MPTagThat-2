@@ -1106,6 +1106,18 @@ namespace MPTagThat.SongGrid.ViewModels
         commandObj.CmdCallback();
       }
 
+      // When a Save has been performed, do a Refresh of the Treeview when in database mode
+      if (command.StartsWith("Save"))
+      {
+        GenericEvent evt = new GenericEvent()
+        {
+          Action = "Command"
+        };
+        evt.MessageData.Add("command", Action.ActionType.DATABASETREEVIEWREFRESH);
+        EventSystem.Publish(evt);
+      }
+
+
       msg.MinValue = 0;
       msg.MaxValue = 0;
       msg.CurrentProgress = 0;

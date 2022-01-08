@@ -511,6 +511,10 @@ namespace MPTagThat.Treeview.ViewModels
           {
             RefreshTreeview();
           }
+          else if (command == Action.ActionType.DATABASETREEVIEWREFRESH && SelectedViewMode == 1)
+          {
+            RefreshTreeview();
+          }
           break;
 
         case "toggledatabaseview":
