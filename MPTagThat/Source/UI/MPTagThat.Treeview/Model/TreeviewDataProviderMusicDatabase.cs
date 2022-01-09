@@ -25,6 +25,7 @@ using System.Windows.Input;
 using MPTagThat.Core.Services.Logging;
 using MPTagThat.Core.Services.MusicDatabase;
 using Prism.Ioc;
+using Syncfusion.UI.Xaml.TreeView;
 using Syncfusion.UI.Xaml.TreeView.Engine;
 using Syncfusion.Windows.Shared;
 
@@ -268,6 +269,7 @@ namespace MPTagThat.Treeview.Model
 
           childNode.PopulateChildNodes(nodesArray);
           childNode.IsExpanded = true;
+          helper.Model.TreeView.BringIntoView(childNode,false,true,ScrollToPosition.MakeVisible);
         }
       }
 
