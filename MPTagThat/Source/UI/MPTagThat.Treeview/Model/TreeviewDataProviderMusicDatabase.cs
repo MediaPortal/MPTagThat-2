@@ -249,6 +249,7 @@ namespace MPTagThat.Treeview.Model
           _savedSelectedNode = musicItem.Path;
         }
 
+        var genreLevel = 1;
         if (_rootFolder == RootFolder.Artist)
         {
           result = ContainerLocator.Current.Resolve<IMusicDatabase>().GetArtistAlbums(searchString[1]);
@@ -262,10 +263,12 @@ namespace MPTagThat.Treeview.Model
           if (searchString.GetLength(0) == 2)
           {
             result = ContainerLocator.Current.Resolve<IMusicDatabase>().GetGenreArtists(searchString[1]);
+            genreLevel = 2;
           }
           else
           {
             result = ContainerLocator.Current.Resolve<IMusicDatabase>().GetGenreArtistAlbums(searchString[1], searchString[2]);
+            genreLevel = 3;
           }
         }
 
@@ -283,7 +286,19 @@ namespace MPTagThat.Treeview.Model
             }
             else
             {
-              type = "Genre";
+              switch (genreLevel)
+              {
+                case 1:
+                  type = "Genre";
+                  break;
+                case 2:
+                  type = "Artist";
+                  break;
+                case 3:
+                  type = "Album";
+                  break;
+
+              }
               value = item;
             }
 
