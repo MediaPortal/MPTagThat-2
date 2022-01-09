@@ -49,5 +49,10 @@ namespace MPTagThat.Treeview.Model
         /// </summary>
         /// <param name = "helper">The helper instance which provides method's and properties related to create and get nodes.</param>
         void CreateRootNode(TreeViewHelper helper);
+
+        /// <summary>
+        /// Clears the selceted Database Node
+        /// </summary>
+        void ClearSelectedDatabaseNode();
     }
 }

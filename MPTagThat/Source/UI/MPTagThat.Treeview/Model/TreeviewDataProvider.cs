@@ -98,6 +98,11 @@ namespace MPTagThat.Treeview.Model
     }
 
     /// <summary>
+    /// Only valid in Database Provider
+    /// </summary>
+    public void ClearSelectedDatabaseNode() {}
+
+    /// <summary>
     /// Read Sub Folders of the selected Parent Node
     /// </summary>
     /// <param name="helper"></param>

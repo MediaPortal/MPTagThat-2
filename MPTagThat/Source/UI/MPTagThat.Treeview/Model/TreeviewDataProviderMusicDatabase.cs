@@ -67,7 +67,7 @@ namespace MPTagThat.Treeview.Model
     /// <summary>
     /// The string to hold the current selected Item
     /// </summary>
-    private string _savedSearchString = null;
+    private string _savedSelectedNode = null;
 
     #endregion
 
@@ -87,6 +87,14 @@ namespace MPTagThat.Treeview.Model
       musicDBNode.IsRoot = true;
       helper.Model.Nodes.Add(musicDBNode);
       log.Trace("<<<");
+    }
+
+    /// <summary>
+    /// Clear the Selected node
+    /// </summary>
+    public void ClearSelectedDatabaseNode()
+    {
+      _savedSelectedNode = null;
     }
 
     public void RequestRoot(TreeViewHelper helper, TreeViewNode parent)
@@ -136,9 +144,32 @@ namespace MPTagThat.Treeview.Model
       List<string> result = null;
       if (musicItem.IsSpecialFolder)
       {
-        init = _savedSearchString == null;
+        init = _savedSelectedNode == null;
 
-        switch (musicItem.Path.ToLower())
+        // In case of Refreshing the Database Treeview, open the right Node
+        var rootPath = musicItem.Path.ToLower();
+        if (_savedSelectedNode != null)
+        {
+          if (_savedSelectedNode.Split('\\')[0].ToLower() != rootPath)
+          {
+            rootPath = _savedSelectedNode.Split('\\')[0].ToLower();
+            var rootNode = helper.Model.TreeView.Nodes[0];
+            foreach (var treeNode in rootNode.ChildNodes)
+            {
+              if ((treeNode.Content as TreeItem).Name == _savedSelectedNode.Split('\\')[0])
+              {
+                treeNode.IsExpanded = true;
+                node = treeNode;
+              }
+              else
+              {
+                treeNode.IsExpanded = false;
+              }
+            }
+          }
+        }
+
+        switch (rootPath)
         {
           case "artist":
             _rootFolder = RootFolder.Artist;
@@ -203,20 +234,19 @@ namespace MPTagThat.Treeview.Model
 
         var childNode = node;
         var searchString = musicItem.Path.Split('\\');
-        if (_savedSearchString != null && searchString.Length == 1)
+        if (_savedSelectedNode != null && searchString.Length == 1)
         {
-          if (_savedSearchString == musicItem.Path || _savedSearchString.Split('\\')[0] != searchString[0])
+          if (_savedSelectedNode == musicItem.Path)
           {
-            _savedSearchString = null;
+            _savedSelectedNode = null;
             return;
           }
-
-          searchString = _savedSearchString.Split('\\');
-          childNode = FindChildNode(node, _savedSearchString);
+          searchString = _savedSelectedNode.Split('\\');
+          childNode = FindChildNode(node, _savedSelectedNode);
         }
         else if (searchString.Length > 1)
         {
-          _savedSearchString = musicItem.Path;
+          _savedSelectedNode = musicItem.Path;
         }
 
         if (_rootFolder == RootFolder.Artist)

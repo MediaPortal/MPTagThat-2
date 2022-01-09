@@ -132,6 +132,12 @@ namespace MPTagThat.Treeview.ViewModels
         return;
       }
 
+      // Clear the Selected Nodes fo Database search, when selecting a Top Level
+      if (node != null && node.Level == 1 && _dataProvider is TreeviewDataProviderMusicDatabase)
+      {
+        _dataProvider.ClearSelectedDatabaseNode();
+      }
+
       //Animation starts for expander to show progressing of load on demand
       node.ShowExpanderAnimation = true;
       // Skip the population of child items on loading. 
