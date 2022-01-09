@@ -205,7 +205,7 @@ namespace MPTagThat.Treeview.Model
         var searchString = musicItem.Path.Split('\\');
         if (_savedSearchString != null && searchString.Length == 1)
         {
-          if (_savedSearchString == musicItem.Path)
+          if (_savedSearchString == musicItem.Path || _savedSearchString.Split('\\')[0] != searchString[0])
           {
             _savedSearchString = null;
             return;
