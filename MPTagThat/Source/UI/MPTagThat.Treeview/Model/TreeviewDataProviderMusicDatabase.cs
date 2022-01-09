@@ -19,13 +19,11 @@
 #region
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
 using MPTagThat.Core.Services.Logging;
 using MPTagThat.Core.Services.MusicDatabase;
-using MPTagThat.Dialogs.Views;
 using Prism.Ioc;
 using Syncfusion.UI.Xaml.TreeView.Engine;
 using Syncfusion.Windows.Shared;
@@ -64,6 +62,11 @@ namespace MPTagThat.Treeview.Model
     /// The Current Root Folder
     /// </summary>
     private RootFolder _rootFolder = RootFolder.None;
+
+    /// <summary>
+    /// The string to hold the current selected Item
+    /// </summary>
+    private string _savedSearchString = null;
 
     #endregion
 
@@ -127,10 +130,13 @@ namespace MPTagThat.Treeview.Model
       }
 
       helper.Model.Cursor = Cursors.Wait;
+      var init = false;
 
       List<string> result = null;
       if (musicItem.IsSpecialFolder)
       {
+        init = _savedSearchString == null;
+
         switch (musicItem.Path.ToLower())
         {
           case "artist":
@@ -185,7 +191,8 @@ namespace MPTagThat.Treeview.Model
           node.PopulateChildNodes(nodesArray);
         }
       }
-      else
+      
+      if (!init)
       {
         if (musicItem.Item == null)
         {
@@ -193,7 +200,23 @@ namespace MPTagThat.Treeview.Model
           return;
         }
 
+        var childNode = node;
         var searchString = musicItem.Path.Split('\\');
+        if (_savedSearchString != null && searchString.Length == 1)
+        {
+          if (_savedSearchString == musicItem.Path)
+          {
+            _savedSearchString = null;
+            return;
+          }
+
+          searchString = _savedSearchString.Split('\\');
+          childNode = FindChildNode(node, _savedSearchString);
+        }
+        else if (searchString.Length > 1)
+        {
+          _savedSearchString = musicItem.Path;
+        }
 
         if (_rootFolder == RootFolder.Artist)
         {
@@ -233,7 +256,7 @@ namespace MPTagThat.Treeview.Model
               value = item;
             }
 
-            var path = $@"{musicItem.Path}\{value}";
+            var path = $@"{(childNode.Content as TreeItem).Path}\{value}";
             var newNode = CreateTreeNode(helper, value, path, false, type);
             items.Add(newNode);
           }
@@ -243,12 +266,41 @@ namespace MPTagThat.Treeview.Model
           Array.Sort(nodesArray,
             (p1, p2) => string.Compare(p1.Name, p2.Name));
 
-          node.PopulateChildNodes(nodesArray);
+          childNode.PopulateChildNodes(nodesArray);
+          childNode.IsExpanded = true;
         }
       }
 
       helper.Model.Cursor = Cursors.Arrow;
       log.Trace("<<<");
+    }
+
+
+    /// <summary>
+    /// Find a Child Node in a Node Collection
+    /// </summary>
+    /// <param name="node"></param>
+    /// <param name="Path"></param>
+    /// <returns></returns>
+    private TreeViewNode FindChildNode(TreeViewNode node, string Path)
+    {
+      TreeViewNode childNode = null;
+
+      foreach (var child in node.ChildNodes)
+      {
+        if ((child.Content as TreeItem).Path == Path)
+        {
+          childNode = child;
+          break;
+        }
+      }
+
+      if (childNode == null)
+      {
+        childNode = node;
+      }
+
+      return childNode;
     }
 
     #endregion
