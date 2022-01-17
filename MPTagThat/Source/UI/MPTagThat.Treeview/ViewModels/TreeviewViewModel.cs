@@ -69,6 +69,16 @@ namespace MPTagThat.Treeview.ViewModels
     public string Theme => _options.MainSettings.Theme;
 
     /// <summary>
+    /// The Hieght of the Jump To Folder Row. Should be 0 when in Database View
+    /// </summary>
+    private int _jumpFolderRowHeight;
+    public int JumpFolderRowHeight
+    {
+      get => _jumpFolderRowHeight;
+      set => SetProperty(ref _jumpFolderRowHeight, value);
+    }
+
+    /// <summary>
     /// A new Item has been selected. Send a notification to list the content of the folder
     /// </summary>
     private object _selectedNode;
@@ -266,12 +276,14 @@ namespace MPTagThat.Treeview.ViewModels
           log.Trace("Changing to Folder View");
           _dataProvider = new TreeViewDataProvider();
           _options.IsDatabaseMode = false;
+          JumpFolderRowHeight = 60;
         }
         else
         {
           log.Trace("Changing to Database View");
           _dataProvider = new TreeviewDataProviderMusicDatabase();
           _options.IsDatabaseMode = true;
+          JumpFolderRowHeight = 0;
         }
         RefreshTreeview();
       }

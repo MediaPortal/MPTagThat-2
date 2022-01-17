@@ -24,12 +24,12 @@
 
   <Grid>
     <Grid.RowDefinitions>
-      <RowDefinition Height="60"/>
+      <RowDefinition Height="Auto"/>
       <RowDefinition Height="*"/>
       <RowDefinition Height="100"/>
     </Grid.RowDefinitions>
 
-    <syncfusion:GroupBar Grid.Row="0" ItemHeaderHeight="20" >
+    <syncfusion:GroupBar Grid.Row="0" ItemHeaderHeight="20" Height="{Binding JumpFolderRowHeight, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
       <syncfusion:GroupBarItem Header="{lex:Loc treeView_JumpToFolder}" FontSize="12" FontWeight="Bold" IsExpanded="True" >
         <StackPanel Orientation="Horizontal" Margin="5,0,0,0">
           <ComboBox Height="25" MinWidth="250"
