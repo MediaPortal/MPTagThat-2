@@ -403,7 +403,10 @@ namespace MPTagThat.Core.Services.MusicDatabase
       }
     }
 
-
+    /// <summary>
+    /// Get Distinct Artists to be shown in TreeView
+    /// </summary>
+    /// <returns></returns>
     public List<string> GetArtists()
     {
       if (_store == null)
@@ -431,6 +434,10 @@ namespace MPTagThat.Core.Services.MusicDatabase
       return artists;
     }
 
+    /// <summary>
+    /// Get Albums for selected Artist to be shown in TreeView
+    /// </summary>
+    /// <returns></returns>
     public List<string> GetArtistAlbums(string query)
     {
       if (_store == null)
@@ -458,6 +465,10 @@ namespace MPTagThat.Core.Services.MusicDatabase
       return artistalbums;
     }
 
+    /// <summary>
+    /// Get Distinct AlbumArtists to be shown in TreeView
+    /// </summary>
+    /// <returns></returns>
     public List<string> GetAlbumArtists()
     {
       if (_store == null)
@@ -485,6 +496,10 @@ namespace MPTagThat.Core.Services.MusicDatabase
       return albumartists;
     }
 
+    /// <summary>
+    /// Get Albums for selected AlbumArtist to be shown in TreeView
+    /// </summary>
+    /// <returns></returns>
     public List<string> GetAlbumArtistAlbums(string query)
     {
       if (_store == null)
@@ -512,6 +527,41 @@ namespace MPTagThat.Core.Services.MusicDatabase
       return artistalbums;
     }
 
+    /// <summary>
+    /// Get Distinct Albums to be shown in TreeView
+    /// </summary>
+    /// <returns></returns>
+    public List<string> GetAlbums()
+    {
+      if (_store == null)
+      {
+        _store = GetDocumentStoreFor(CurrentDatabase);
+        if (_store == null)
+        {
+          log.Error("Could not establish a session.");
+          return null;
+        }
+      }
+
+      log.Trace("Getting distinct albums");
+
+      var albums = new List<string>();
+      var reader = _store.Execute("select distinct(*.Album)  from songs");
+      reader.Read();
+      var result = reader.Current;
+      foreach (var album in result["Album"].AsArray)
+      {
+        albums.Add(album.ToString().Trim('"'));
+      }
+
+      log.Debug($"Found {albums.Count} distinct albums");
+      return albums;
+    }
+
+    /// <summary>
+    /// Get Distinct Genres to be shown in TreeView
+    /// </summary>
+    /// <returns></returns>
     public List<string> GetGenres()
     {
       if (_store == null)
@@ -539,6 +589,10 @@ namespace MPTagThat.Core.Services.MusicDatabase
       return genres;
     }
 
+    /// <summary>
+    /// Get Artists for selected Genre to be shown in TreeView
+    /// </summary>
+    /// <returns></returns>
     public List<string> GetGenreArtists(string query)
     {
       if (_store == null)
@@ -565,6 +619,10 @@ namespace MPTagThat.Core.Services.MusicDatabase
       return genreartists;
     }
 
+    /// <summary>
+    /// Get Albums for selected Genre and Artist to be shown in TreeView
+    /// </summary>
+    /// <returns></returns>
     public List<string> GetGenreArtistAlbums(string genre, string artist)
     {
       if (_store == null)

@@ -45,6 +45,7 @@ namespace MPTagThat.Treeview.Model
       None,
       Artist,
       AlbumArtist,
+      Album,
       Genre
     }
 
@@ -105,6 +106,8 @@ namespace MPTagThat.Treeview.Model
       items.Add(albumArtistNode);
       var artistNode = CreateTreeNode(helper, "Artist", "Artist", true, "Artist");
       items.Add(artistNode);
+      var albumNode = CreateTreeNode(helper, "Album", "Album", true, "Album");
+      items.Add(albumNode);
       var genreNode = CreateTreeNode(helper, "Genre", "Genre", true, "Genre");
       items.Add(genreNode);
       parent.PopulateChildNodes(items);
@@ -127,6 +130,11 @@ namespace MPTagThat.Treeview.Model
       }
 
       // Check on the Level of the node, so that we don't allow infinite expansions
+      if ((musicItem.Path == "Album") && node.Level == 2)
+      {
+        node.HasChildNodes = false;
+        return;
+      } 
       if ((musicItem.Path.StartsWith("Artist") || musicItem.Path.StartsWith("AlbumArtist")) && node.Level == 3)
       {
         node.HasChildNodes = false;
@@ -181,6 +189,11 @@ namespace MPTagThat.Treeview.Model
             result = ContainerLocator.Current.Resolve<IMusicDatabase>().GetAlbumArtists();
             break;
 
+          case "album":
+            _rootFolder = RootFolder.Album;
+            result = ContainerLocator.Current.Resolve<IMusicDatabase>().GetAlbums();
+            break;
+
           case "genre":
             _rootFolder = RootFolder.Genre;
             result = ContainerLocator.Current.Resolve<IMusicDatabase>().GetGenres();
@@ -203,6 +216,11 @@ namespace MPTagThat.Treeview.Model
             else if (_rootFolder == RootFolder.AlbumArtist)
             {
               type = "AlbumArtist";
+              value = item;
+            }
+            else if (_rootFolder == RootFolder.Album)
+            {
+              type = "Album";
               value = item;
             }
             else

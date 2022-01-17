@@ -123,6 +123,12 @@ namespace MPTagThat.Core.Services.MusicDatabase
     List<string> GetAlbumArtistAlbums(string query);
 
     /// <summary>
+    /// Retrieves Distinct Albums 
+    /// </summary>
+    /// <returns></returns>
+    List<string> GetAlbums();
+
+ /// <summary>
     /// Retrieves Distinct Genres
     /// </summary>
     /// <returns></returns>

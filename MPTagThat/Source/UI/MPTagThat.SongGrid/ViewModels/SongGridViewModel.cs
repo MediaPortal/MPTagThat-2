@@ -924,6 +924,10 @@ namespace MPTagThat.SongGrid.ViewModels
           }
           break;
 
+        case "album":
+          query += $"Album = \"{Util.EscapeDatabaseQuery(searchString[1])}\"";
+          break;
+
         case "genre":
           query += $"Genre = \"{Util.EscapeDatabaseQuery(searchString[1])}\"";
           if (searchString.GetLength(0) > 2)
