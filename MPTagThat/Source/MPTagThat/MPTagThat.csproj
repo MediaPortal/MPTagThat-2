@@ -66,6 +66,11 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="DockingManagerRegionAdapter.cs" />
+    <Compile Include="Resources\Localization\Strings.de.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Strings.de.resx</DependentUpon>
+    </Compile>
     <Compile Include="Resources\Localization\Strings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

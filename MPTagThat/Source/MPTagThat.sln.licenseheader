@@ -1,7 +1,7 @@
 ﻿extensions: designer.cs generated.cs
 extensions: .cs
-#region Copyright (C) 2020 Team MediaPortal
-// Copyright (C) 2020 Team MediaPortal
+#region Copyright (C) 2022 Team MediaPortal
+// Copyright (C) 2022 Team MediaPortal
 // http://www.team-mediaportal.com
 // 
 // MPTagThat is free software: you can redistribute it and/or modify
@@ -20,7 +20,7 @@ extensions: .cs
 
 extensions:  .xml .xsd
 <!--
-// Copyright (C) 2020 Team MediaPortal
+// Copyright (C) 2022 Team MediaPortal
 // http://www.team-mediaportal.com
 // 
 // MPTagThat is free software: you can redistribute it and/or modify
