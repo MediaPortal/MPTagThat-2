@@ -68,7 +68,7 @@
                     Margin="1,0,0,0"
                     VerticalAlignment="Center">
                 <Label Content="{Binding Name}"
-                       FontSize="12"
+                       FontSize="11"
                        VerticalContentAlignment="Center" />
               </Grid>
             </Grid>
