@@ -142,7 +142,11 @@ namespace MPTagThat.TagEdit.ViewModels
     public BitmapImage FrontCover
     {
       get => _frontCover;
-      set => SetProperty(ref _frontCover, value);
+      set
+      {
+        SetProperty(ref _frontCover, value);
+        PictureDetail = value;
+      }
     }
 
     /// <summary>
