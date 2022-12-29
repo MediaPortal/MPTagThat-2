@@ -9,11 +9,12 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>MPTagThat.TagEdit</RootNamespace>
     <AssemblyName>MPTagThat.TagEdit</AssemblyName>
-    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -99,16 +100,16 @@
       <Version>8.1.97</Version>
     </PackageReference>
     <PackageReference Include="Syncfusion.SfAccordion.WPF">
-      <Version>19.4.0.38</Version>
+      <Version>20.4.0.38</Version>
     </PackageReference>
     <PackageReference Include="Syncfusion.SfGrid.WPF">
-      <Version>19.4.0.38</Version>
+      <Version>20.4.0.38</Version>
     </PackageReference>
     <PackageReference Include="Syncfusion.Tools.WPF">
-      <Version>19.4.0.38</Version>
+      <Version>20.4.0.38</Version>
     </PackageReference>
     <PackageReference Include="WPFLocalizeExtension">
-      <Version>3.9.1</Version>
+      <Version>3.9.4</Version>
     </PackageReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
