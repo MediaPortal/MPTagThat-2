@@ -31,7 +31,6 @@ namespace MPTagThat.Core.Services.Settings.Setting
   {
     #region Variables
 
-    private string _lastRipEncoderUsed;
     private int _numTrackDigits = 2;
 
     #endregion

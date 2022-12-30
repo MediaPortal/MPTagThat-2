@@ -980,7 +980,7 @@ namespace MPTagThat.Converter.ViewModels
           }
         });
       }
-      catch (OperationCanceledException e)
+      catch (OperationCanceledException)
       {
         log.Info("Parallel Tasks aborted");
       }

@@ -44,14 +44,14 @@ namespace MPTagThat.SongGrid.Commands
 
     #region Command Implementation
 
-    public override async Task<(bool Changed, SongData song)> Execute(SongData song)
+    public override Task<(bool Changed, SongData song)> Execute(SongData song)
     {
       if (song.NumPics > 0)
       {
         song.Pictures.Clear();
-        return (true, song);
+        return Task.FromResult((true, song));
       }
-      return (false, song);
+      return Task.FromResult((false, song));
     }
 
     #endregion

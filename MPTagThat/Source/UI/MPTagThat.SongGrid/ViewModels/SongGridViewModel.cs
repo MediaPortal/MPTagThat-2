@@ -69,11 +69,11 @@ namespace MPTagThat.SongGrid.ViewModels
   {
     #region Variables
 
-    private object _lock = new object();
-    private IRegionManager _regionManager;
-    private IDialogService _dialogService;
+    private readonly object _lock = new object();
+    private readonly IRegionManager _regionManager;
+    private readonly IDialogService _dialogService;
     private readonly NLogLogger log;
-    private Options _options;
+    private readonly Options _options;
     private readonly SongGridViewColumns _gridColumns;
 
     private string _selectedFolder;
@@ -484,8 +484,10 @@ namespace MPTagThat.SongGrid.ViewModels
         var visibleColumns = grid.Columns;
         var totalColumns = GetColumnsDetails(visibleColumns);
         var chooserViewModel = new CustomColumnChooserViewModel(totalColumns);
-        var columnChooserView = new CustomColumnChooser(chooserViewModel);
-        columnChooserView.Owner = System.Windows.Application.Current.MainWindow;
+        var columnChooserView = new CustomColumnChooser(chooserViewModel)
+        {
+          Owner = System.Windows.Application.Current.MainWindow
+        };
         if ((bool)columnChooserView.ShowDialog())
         {
           ClickOKButton(chooserViewModel.ColumnCollection, grid);

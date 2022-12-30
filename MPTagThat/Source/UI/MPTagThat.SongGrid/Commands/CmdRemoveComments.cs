@@ -37,15 +37,15 @@ namespace MPTagThat.SongGrid.Commands
 
     #region Command Implementation
 
-    public override async Task<(bool Changed, SongData song)> Execute(SongData song)
+    public override Task<(bool Changed, SongData song)> Execute(SongData song)
     {
       if (song.Comment != "")
       {
         song.Comment = "";
         song.ID3Comments.Clear();
-        return (true, song);
+        return Task.FromResult((true, song));
       }
-      return (false, song);
+      return Task.FromResult((false, song));
     }
 
     #endregion

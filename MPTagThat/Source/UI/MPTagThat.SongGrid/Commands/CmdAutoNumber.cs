@@ -39,11 +39,11 @@ namespace MPTagThat.SongGrid.Commands
 
     #region Command Implementation
 
-    public override async Task<(bool Changed, SongData song)> Execute(SongData song)
+    public override Task<(bool Changed, SongData song)> Execute(SongData song)
     {
       song.TrackNumber = (uint) options.AutoNumber;
       options.AutoNumber++;
-      return (true, song);
+      return Task.FromResult((true, song));
     }
 
     public override void CmdCallback()

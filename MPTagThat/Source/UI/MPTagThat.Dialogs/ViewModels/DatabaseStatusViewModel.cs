@@ -34,7 +34,6 @@ namespace MPTagThat.Dialogs.ViewModels
     #region Variables
 
     private readonly IMusicDatabase _musicDb = ContainerLocator.Current.Resolve<IMusicDatabase>();
-    private readonly Options _options = ContainerLocator.Current.Resolve<ISettingsManager>()?.GetOptions;
 
     #endregion
 

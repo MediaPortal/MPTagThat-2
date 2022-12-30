@@ -49,13 +49,13 @@ namespace MPTagThat.SongGrid.Commands
 
     #region Command Implementation
 
-    public override async Task<(bool Changed, SongData song)> Execute(SongData song)
+    public override Task<(bool Changed, SongData song)> Execute(SongData song)
     {
       int stream = Bass.BASS_StreamCreateFile(song.FullFileName, 0, 0, BASSFlag.BASS_STREAM_DECODE);
       if (stream == 0)
       {
         log.Error("BPM: Could not create stream for {0}. {1}", song.FullFileName, Bass.BASS_ErrorGetCode().ToString());
-        return (false, song);
+        return Task.FromResult((false, song));
       }
 
       _bpmProc = BpmProgressProc;
@@ -66,7 +66,7 @@ namespace MPTagThat.SongGrid.Commands
 
       song.BPM = Convert.ToInt32(bpm);
       BassFx.BASS_FX_BPM_Free(stream);
-      return (true, song);
+      return Task.FromResult((true, song));
     }
 
     private void BpmProgressProc(int channel, float percent, IntPtr userData)

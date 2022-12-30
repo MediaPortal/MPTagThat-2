@@ -54,9 +54,9 @@ namespace MPTagThat.SongGrid.Commands
     /// </summary>
     /// <param name="song"></param>
     /// <returns></returns>
-    public virtual async Task<(bool Changed, SongData song)> Execute(SongData song)
+    public virtual Task<(bool Changed, SongData song)> Execute(SongData song)
     {
-      return (false, song);
+      return Task.FromResult((false, song));
     }
 
     /// <summary>

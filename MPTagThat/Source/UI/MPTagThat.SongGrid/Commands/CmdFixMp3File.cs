@@ -40,7 +40,7 @@ namespace MPTagThat.SongGrid.Commands
 
     #region Command Implementation
 
-    public override async Task<(bool Changed, SongData song)> Execute(SongData song)
+    public override Task<(bool Changed, SongData song)> Execute(SongData song)
     {
       if (song.IsMp3)
       {
@@ -53,7 +53,7 @@ namespace MPTagThat.SongGrid.Commands
         song.Status =  song.MP3ValidationError == Util.MP3Error.Fixed ? 4 : 3;
       }
 
-      return (false, song);
+      return Task.FromResult((false, song));
     }
 
     #endregion

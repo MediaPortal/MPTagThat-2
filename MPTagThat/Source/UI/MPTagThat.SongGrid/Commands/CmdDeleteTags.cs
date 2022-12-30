@@ -65,11 +65,11 @@ namespace MPTagThat.SongGrid.Commands
 
     #region Command Implementation
 
-    public override async Task<(bool Changed, SongData song)> Execute(SongData song)
+    public override Task<(bool Changed, SongData song)> Execute(SongData song)
     {
       song.TagsRemoved.Add(_tagType);
       song = Song.ClearTag(song);
-      return (true, song);
+      return Task.FromResult((true, song));
     }
 
     #endregion
