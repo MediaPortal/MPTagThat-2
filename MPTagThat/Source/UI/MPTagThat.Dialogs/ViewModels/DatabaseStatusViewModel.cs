@@ -17,12 +17,9 @@
 #endregion
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Threading;
+using System.Windows.Input;
 using MPTagThat.Core;
+using MPTagThat.Core.Common;
 using MPTagThat.Core.Events;
 using MPTagThat.Core.Services.MusicDatabase;
 using MPTagThat.Core.Services.Settings;
@@ -38,7 +35,6 @@ namespace MPTagThat.Dialogs.ViewModels
 
     private readonly IMusicDatabase _musicDb = ContainerLocator.Current.Resolve<IMusicDatabase>();
     private readonly Options _options = ContainerLocator.Current.Resolve<ISettingsManager>()?.GetOptions;
-    private DispatcherTimer _timer;
 
     #endregion
 
@@ -148,39 +144,26 @@ namespace MPTagThat.Dialogs.ViewModels
       NumGenres = _musicDb.GetCount("Genre");
       NumSongs = _musicDb.GetCount("Songs");
 
-      if (IsDatabaseScanActive)
-      {
-        _timer = new DispatcherTimer();
-        _timer.Interval = new TimeSpan(0, 0, 0, 10, 0);
-        _timer.Tick += GetDatabaseCounts;
-        _timer.Start();
-      }
+      UpdateStatsCommand = new BaseCommand(GetDatabaseCounts);
     }
 
     #endregion
 
     #region Private Methods
 
+    public ICommand UpdateStatsCommand { get; }
+
     /// <summary>
     /// Get the Database counts
     /// </summary>
-    /// <param name="sender"></param>
-    /// <param name="e"></param>
-    private void GetDatabaseCounts(object sender, EventArgs e)
+    /// <param name="parms"></param>
+    private void GetDatabaseCounts(object parns)
     {
       NumAlbumArtists = _musicDb.GetCount("AlbumArtist");
       NumArtists = _musicDb.GetCount("Artist");
       NumAlbums = _musicDb.GetCount("Album");
       NumGenres = _musicDb.GetCount("Genre");
       NumSongs = _musicDb.GetCount("Songs");
-
-      if (!IsDatabaseScanActive)
-      {
-        if (_timer != null && _timer.IsEnabled)
-        {
-          _timer.Stop();
-        }
-      }
     }
     
     #endregion

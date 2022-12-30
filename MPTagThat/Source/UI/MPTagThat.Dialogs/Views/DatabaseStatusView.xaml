@@ -85,6 +85,10 @@
       </GroupBox>
 
       <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Right" >
+        <syncfusion:ButtonAdv Label="{lex:Loc dataBaseStatus_UpdateStats}" 
+                              Command="{Binding UpdateStatsCommand}" 
+                              Width="Auto" Height="25" 
+                              HorizontalAlignment="Right" Margin="20,10,0,0" />
         <syncfusion:ButtonAdv Label="{lex:Loc dialog_Close}" 
                               SmallIcon="pack://application:,,,/MPTagThat;component/Resources/Images/Status_Ok.png" 
                               Command="{Binding CancelChangesCommand}" 

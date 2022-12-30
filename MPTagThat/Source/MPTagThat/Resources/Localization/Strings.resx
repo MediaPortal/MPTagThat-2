@@ -1931,4 +1931,8 @@ To change the order of the ratings drag the rows.</value>
   <data name="databaseScan_GroupBox_Status" xml:space="preserve">
     <value>Scan Status</value>
   </data>
+  <data name="dataBaseStatus_UpdateStats" xml:space="preserve">
+    <value>Update Statistics</value>
+    <comment>Update the Database Statistics</comment>
+  </data>
 </root>

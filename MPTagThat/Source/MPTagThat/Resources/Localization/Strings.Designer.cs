@@ -979,6 +979,15 @@ namespace MPTagThat.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Update Statistics.
+        /// </summary>
+        public static string dataBaseStatus_UpdateStats {
+            get {
+                return ResourceManager.GetString("dataBaseStatus_UpdateStats", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Apply.
         /// </summary>
         public static string dialog_Apply {
