@@ -405,7 +405,7 @@ namespace MPTagThat.Core.Utils
       sourceString = sourceString.ToLower().Replace(",", "").Replace(" ", "").Replace(";", "").Replace("_", "");
       targetString = targetString.ToLower().Replace(",", "").Replace(" ", "").Replace(";", "").Replace("_", "");
 
-      int[,] num = new int[sourceString.Length,targetString.Length];
+      int[,] num = new int[sourceString.Length, targetString.Length];
       int maxlen = 0;
 
       for (int i = 0; i < sourceString.Length; i++)
@@ -1200,128 +1200,57 @@ namespace MPTagThat.Core.Utils
     {
       string replacedString = parameter.Trim(new[] { '\\' });
 
-      try
+      // First search for conditional parameters
+      while (replacedString.IndexOf("{{") > -1 && replacedString.IndexOf("}}") > -1)
       {
-        if (replacedString.IndexOf("%artist%") > -1)
-          replacedString = replacedString.Replace("%artist%", song.Artist.Replace(';', '_').Trim());
+        var parmStart = replacedString.IndexOf("{{");
+        var parmEnd = replacedString.IndexOf("}}");
 
-        if (replacedString.IndexOf("%title%") > -1)
-          replacedString = replacedString.Replace("%title%", song.Title.Trim());
+        var parm = replacedString.Substring(parmStart + 2, parmEnd - parmStart - 2);
 
-        if (replacedString.IndexOf("%album%") > -1)
-          replacedString = replacedString.Replace("%album%", song.Album.Trim());
-
-        if (replacedString.IndexOf("%year%") > -1)
-          replacedString = replacedString.Replace("%year%", song.Year.ToString().Trim());
-
-        if (replacedString.IndexOf("%track%") > -1)
+        if (ReplaceConditionalParameters(ref parm, ref song))
         {
-          replacedString = replacedString.Replace("%track%", song.TrackNumber.ToString().PadLeft(2, '0'));
+          // insert the replaced value
+          var newReplacedString = replacedString.Substring(0, parmStart);
+          newReplacedString = newReplacedString + parm + replacedString.Substring(parmEnd + 2);
+          replacedString = newReplacedString;
         }
-
-        if (replacedString.IndexOf("%tracktotal%") > -1)
+        else
         {
-          replacedString = replacedString.Replace("%tracktotal%", song.TrackCount.ToString().PadLeft(2, '0'));
+          // We got an empty match, so remove it
+          var newReplacedString = replacedString.Substring(0, parmStart);
+          newReplacedString = newReplacedString + replacedString.Substring(parmEnd + 2);
+          replacedString = newReplacedString;
         }
-
-        if (replacedString.IndexOf("%disc%") > -1)
-        {
-          replacedString = replacedString.Replace("%disc%", song.DiscNumber.ToString().PadLeft(2, '0'));
-        }
-
-        if (replacedString.IndexOf("%disctotal%") > -1)
-        {
-          replacedString = replacedString.Replace("%disctotal%", song.DiscCount.ToString().PadLeft(2, '0'));
-        }
-
-        if (replacedString.IndexOf("%genre%") > -1)
-        {
-          var strGenre = song.Genre.Replace(';', '_');
-          replacedString = replacedString.Replace("<G>", strGenre.Trim());
-        }
-
-        if (replacedString.IndexOf("%albumartist%") > -1)
-          replacedString = replacedString.Replace("%albumartist%", song.AlbumArtist.Replace(';', '_').Trim());
-
-        if (replacedString.IndexOf("%comment%") > -1)
-          replacedString = replacedString.Replace("%comment%", song.Comment.Trim());
-
-        if (replacedString.IndexOf("%group%") > -1)
-          replacedString = replacedString.Replace("%group%", song.Grouping.Trim());
-
-        if (replacedString.IndexOf("%conductor%") > -1)
-          replacedString = replacedString.Replace("%conductor%", song.Conductor.Trim());
-
-        if (replacedString.IndexOf("%composer%") > -1)
-          replacedString = replacedString.Replace("%composer%", song.Composer.Replace(';', '_').Trim());
-
-        if (replacedString.IndexOf("%subtitle%") > -1)
-          replacedString = replacedString.Replace("%subtitle%", song.SubTitle.Trim());
-
-        if (replacedString.IndexOf("%bpm%") > -1)
-          replacedString = replacedString.Replace("%bpm%", song.BPM.ToString());
-
-        if (replacedString.IndexOf("%remixed%") > -1)
-          replacedString = replacedString.Replace("%remixed%", song.Interpreter.Trim());
-
-        if (replacedString.IndexOf("%bitrate%") > -1)
-          replacedString = replacedString.Replace("%bitrate%", song.BitRate);
-
-        int index = replacedString.IndexOf("%artist:");
-        if (index > -1)
-        {
-          replacedString = ReplaceStringWithLengthIndicator(index, replacedString, song.Artist.Replace(';', '_').Trim());
-        }
-
-        index = replacedString.IndexOf("%albumartist:");
-        if (index > -1)
-        {
-          replacedString = ReplaceStringWithLengthIndicator(index, replacedString,
-                                                            song.AlbumArtist.Replace(';', '_').Trim());
-        }
-
-        index = replacedString.IndexOf("%track:");
-        if (index > -1)
-        {
-          replacedString = ReplaceStringWithLengthIndicator(index, replacedString, song.TrackNumber.ToString());
-        }
-
-        index = replacedString.IndexOf("%tracktotal:");
-        if (index > -1)
-        {
-          replacedString = ReplaceStringWithLengthIndicator(index, replacedString, song.TrackCount.ToString());
-        }
-
-        index = replacedString.IndexOf("%disc:");
-        if (index > -1)
-        {
-          replacedString = ReplaceStringWithLengthIndicator(index, replacedString, song.DiscNumber.ToString());
-        }
-
-        index = replacedString.IndexOf("%disctotal:");
-        if (index > -1)
-        {
-          replacedString = ReplaceStringWithLengthIndicator(index, replacedString, song.DiscCount.ToString());
-        }
-
-        // Empty Values would create invalid folders
-        replacedString = replacedString.Replace(@"\\", @"\_\");
-
-        // If the directory name starts with a backslash, we've got an empty value on the beginning
-        if (replacedString.IndexOf("\\") == 0)
-          replacedString = "_" + replacedString;
-
-        // We might have an empty value on the end of the path, which is indicated by a slash. 
-        // replace it with underscore
-        if (replacedString.LastIndexOf("\\") == replacedString.Length - 1)
-          replacedString += "_";
-
-        replacedString = MakeValidFolderName(replacedString);
       }
-      catch (Exception)
+
+      // Now Replace the rest of the values
+      while (replacedString.IndexOf("%") > -1)
       {
-        return "";
+        var parmStart = replacedString.IndexOf("%");
+        var parmEnd = replacedString.IndexOf("%", parmStart + 1);
+
+        var parm = replacedString.Substring(parmStart, parmEnd - parmStart + 1);
+
+        parm = GetSongValues(parm, ref song);
+        var newReplacedString = replacedString.Substring(0, parmStart);
+        newReplacedString = newReplacedString + parm + replacedString.Substring(parmEnd + 1);
+        replacedString = newReplacedString;
       }
+
+      // Empty Values would create invalid folders
+      replacedString = replacedString.Replace(@"\\", @"\_\");
+
+      // If the directory name starts with a backslash, we've got an empty value on the beginning
+      if (replacedString.IndexOf("\\") == 0)
+        replacedString = "_" + replacedString;
+
+      // We might have an empty value on the end of the path, which is indicated by a slash. 
+      // replace it with underscore
+      if (replacedString.LastIndexOf("\\") == replacedString.Length - 1)
+        replacedString += "_";
+
+      replacedString = MakeValidFolderName(replacedString);
       return replacedString;
     }
 
@@ -1347,6 +1276,139 @@ namespace MPTagThat.Core.Utils
       }
 
       return replaceString.Replace(s1, replaceValue);
+    }
+
+    /// <summary>
+    /// Replaces Conditional Parameterss, which need to be enclosed in "{{" and "}}"
+    /// </summary>
+    /// <param name="parm"></param>
+    /// <returns></returns>
+    public static bool ReplaceConditionalParameters(ref string parm, ref SongData song)
+    {
+      var matches = 0;
+      while (parm.IndexOf("%") > -1)
+      {
+        var parmStart = parm.IndexOf("%");
+        var parmEnd = parm.IndexOf("%", parmStart + 1);
+
+        var songParm = parm.Substring(parmStart, parmEnd - parmStart + 1);
+        songParm = GetSongValues(songParm, ref song);
+        if (songParm != "" && songParm != "00")
+        {
+          var newParm = parm.Substring(0, parmStart);
+          newParm = newParm + songParm + parm.Substring(parmEnd + 1);
+          parm = newParm;
+          matches++;
+        }
+        else
+        {
+          var newParm = parm.Substring(0, parmStart);
+          newParm = newParm + parm.Substring(parmEnd + 1);
+          parm = newParm;
+        }
+      }
+
+      if (matches == 0)
+      {
+        parm = "";
+      }
+
+      return matches > 0;
+    }
+
+    /// <summary>
+    /// Get the Song Value for the given parameter
+    /// </summary>
+    /// <param name="parm"></param>
+    /// <param name="song"></param>
+    /// <returns></returns>
+    public static string GetSongValues(string parm, ref SongData song)
+    {
+      try
+      {
+        switch (parm)
+        {
+          case "%artist%":
+            return song.Artist.Replace(';', '_').Trim();
+
+          case "%album%":
+            return song.Album.Trim();
+
+          case "%title%":
+            return song.Title.Trim();
+
+          case "%year%":
+            return song.Year.ToString().Trim();
+
+          case "%track%":
+            return song.TrackNumber.ToString().PadLeft(2, '0');
+
+          case "%tracktotal%":
+            return song.TrackCount.ToString().PadLeft(2, '0');
+
+          case "%disc%":
+            return song.DiscNumber.ToString().PadLeft(2, '0');
+
+          case "%disctotal%":
+            return song.DiscCount.ToString().PadLeft(2, '0');
+
+          case "%genre%":
+            return song.Genre.Replace(';', '_').Trim();
+
+          case "%albumartist%":
+            return song.AlbumArtist.Replace(';', '_').Trim();
+
+          case "%comment%":
+            return song.Comment.Trim();
+
+          case "%group%":
+            return song.Grouping.Trim();
+
+          case "%conductor%":
+            return song.Conductor.Trim();
+
+          case "%composer%":
+            return song.Composer.Replace(';', '_').Trim();
+
+          case "%subtitle%":
+            return song.SubTitle.Trim();
+
+          case "%bpm%":
+            return song.BPM.ToString();
+
+          case "%remixed%":
+            return song.Interpreter.Trim();
+
+          case "%bitrate%":
+            return song.BitRate;
+        }
+
+        if (parm.StartsWith("%artist:"))
+        {
+          return ReplaceStringWithLengthIndicator(0, parm, song.Artist.Replace(';', '_').Trim());
+        }
+        else if (parm.StartsWith("%albumartist:"))
+        {
+          return ReplaceStringWithLengthIndicator(0, parm, song.AlbumArtist.Replace(';', '_').Trim());
+        }
+        else if (parm.StartsWith("%track:"))
+        {
+          return ReplaceStringWithLengthIndicator(0, parm, song.TrackNumber.ToString());
+        }
+        else if (parm.StartsWith("%tracktotal:"))
+        {
+          return ReplaceStringWithLengthIndicator(0, parm, song.TrackCount.ToString());
+        }
+        else if (parm.StartsWith("%disc:"))
+        {
+          return ReplaceStringWithLengthIndicator(0, parm, song.DiscNumber.ToString());
+        }
+      }
+      catch (Exception)
+      {
+        return "";
+      }
+      return "";
     }
 
     /// <summary>
@@ -1474,7 +1536,7 @@ namespace MPTagThat.Core.Utils
     #endregion
 
     #region Database related methods
-    
+
     /// <summary>
     ///   Changes the Quote to a double Quote, to have correct SQL Syntax
     /// </summary>
