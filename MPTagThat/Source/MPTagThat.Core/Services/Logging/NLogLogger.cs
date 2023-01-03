@@ -88,12 +88,6 @@ namespace MPTagThat.Core.Services.Logging
       config.AddTarget("file", fileTarget);
 
       var rule = new LoggingRule("*", ConvertLogLevel(level), fileTarget);
-
-      // Create a filter to disable Raven Database Debugging
-      var filter = new ConditionBasedFilter { Action = FilterResult.Ignore, Condition = "starts-with('${logger}','Raven')" };
-      rule.Filters.Add(filter);
-      filter = new ConditionBasedFilter { Action = FilterResult.Ignore, Condition = "contains('${logger}', 'Rachis')" };
-      rule.Filters.Add(filter);
       config.LoggingRules.Add(rule);
 
       LogManager.Configuration = config;
