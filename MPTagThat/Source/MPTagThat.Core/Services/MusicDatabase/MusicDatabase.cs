@@ -304,7 +304,7 @@ namespace MPTagThat.Core.Services.MusicDatabase
       log.Info($"Query returned {resultSet.Count} results");
 
       // need to do our own ordering
-      result = resultSet.OrderBy(x => x.Artist).ThenBy(x => x.Album).ThenBy(x => x.Track).ToList();
+      result = resultSet.OrderBy(x => x.DiscNumber).ThenBy(x => x.TrackNumber).ThenBy(x => x.Artist).ToList();
 
       msg.CurrentProgress = 0;
       msg.NumberOfFiles = result.Count;
