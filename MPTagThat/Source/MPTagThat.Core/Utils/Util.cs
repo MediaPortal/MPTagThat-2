@@ -1293,7 +1293,7 @@ namespace MPTagThat.Core.Utils
 
         var songParm = parm.Substring(parmStart, parmEnd - parmStart + 1);
         songParm = GetSongValues(songParm, ref song);
-        if (songParm != "" && songParm != "00")
+        if (songParm != "" && songParm != "0" && songParm != "00")
         {
           var newParm = parm.Substring(0, parmStart);
           newParm = newParm + songParm + parm.Substring(parmEnd + 1);
