@@ -1412,7 +1412,7 @@ namespace MPTagThat.TagEdit.ViewModels
 
         if (CkDiscIsChecked)
         {
-          if (SongEdit.DiscNumber != 0 && SongEdit.DiscNumber != song.DiscNumber)
+          if (SongEdit.DiscNumber != song.DiscNumber)
           {
             song.DiscNumber = songEdit.DiscNumber;
           }
