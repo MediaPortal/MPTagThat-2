@@ -213,6 +213,8 @@ namespace MPTagThat
         // The Memorymap does not exist, so MPTagThat is not yet running
       }
 
+      /* This Part i sno longer needed. Just left as a comment, in case the app.config needs to be changed for any reason
+
       try
       {
         // We need to set the app.config file programmatically to point to the users APPDATA Folder
@@ -236,6 +238,8 @@ namespace MPTagThat
       catch (ConfigurationErrorsException)
       {
       }
+
+      */
 
       // Need to reset the Working directory, since when we called via the Explorer Context menu, it'll be different
       Directory.SetCurrentDirectory(AppDomain.CurrentDomain.BaseDirectory);
@@ -341,7 +345,7 @@ namespace MPTagThat
     private static void ReadConfig()
     {
       _startupSettings = new StartupSettings();
-      string configFile = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "MPTagThat2\\Config.xml");
+      var configFile = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "MPTagThat2\\Config.xml");
       if (!File.Exists(configFile))
       {
         _startupSettings.MaxSongs = 1000;
@@ -354,15 +358,15 @@ namespace MPTagThat
 
       try
       {
-        XmlDocument doc = new XmlDocument();
+        var doc = new XmlDocument();
         doc.Load(configFile);
 
         // Check, if we got a config.xml
         if (doc.DocumentElement == null) return;
-        string strRoot = doc.DocumentElement.Name;
+        var strRoot = doc.DocumentElement.Name;
         if (strRoot != "config") return;
 
-        XmlNode portableNode = doc.DocumentElement.SelectSingleNode("/config/portable");
+        var portableNode = doc.DocumentElement.SelectSingleNode("/config/portable");
         if (portableNode != null)
         {
           if (_portable == 0)
@@ -373,15 +377,15 @@ namespace MPTagThat
           _startupSettings.Portable = _portable != 0;
         }
 
-        XmlNode maxSongsNode = doc.DocumentElement.SelectSingleNode("/config/MaximumNumberOfSongsInList");
+        var maxSongsNode = doc.DocumentElement.SelectSingleNode("/config/MaximumNumberOfSongsInList");
         _startupSettings.MaxSongs = maxSongsNode != null ? Convert.ToInt32(maxSongsNode.InnerText) : 1000;
 
-        XmlNode ravenDatabaseNode = doc.DocumentElement.SelectSingleNode("/config/MusicDatabaseFolder");
-        var dbPath = ravenDatabaseNode?.InnerText ?? "%APPDATA%\\MPTagThat2\\Databases";
+        var musicDatabaseNode = doc.DocumentElement.SelectSingleNode("/config/MusicDatabaseFolder");
+        var dbPath = musicDatabaseNode?.InnerText ?? "%APPDATA%\\MPTagThat2\\Databases";
         dbPath = CheckPath(dbPath);
         _startupSettings.DatabaseFolder = dbPath;
 
-        XmlNode coverArtNode = doc.DocumentElement.SelectSingleNode("/config/CoverArtFolder");
+        var coverArtNode = doc.DocumentElement.SelectSingleNode("/config/CoverArtFolder");
         var coverArtPath = coverArtNode?.InnerText ?? "%APPDATA%\\MPTagThat2\\CoverArt";
         coverArtPath = CheckPath(coverArtPath);
         _startupSettings.CoverArtFolder = coverArtPath;
@@ -399,10 +403,10 @@ namespace MPTagThat
     /// <returns></returns>
     private static string CheckPath(string strPath)
     {
-      string appData = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+      var appData = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
       strPath = strPath.Replace("%APPDATA%", appData);
       strPath = strPath.Replace("%AppData%", appData);
-      string commonData = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData);
+      var commonData = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData);
       strPath = strPath.Replace("%PROGRAMDATA%", commonData);
       strPath = strPath.Replace("%ProgramData%", commonData);
 
