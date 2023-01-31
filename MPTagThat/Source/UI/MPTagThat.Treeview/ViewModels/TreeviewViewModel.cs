@@ -22,7 +22,6 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
-using System.Windows;
 using System.Windows.Input;
 using System.Windows.Threading;
 using MPTagThat.Core;
@@ -32,7 +31,6 @@ using MPTagThat.Core.Services.Logging;
 using MPTagThat.Core.Services.Settings;
 using MPTagThat.Core.Services.Settings.Setting;
 using MPTagThat.Treeview.Model;
-using MPTagThat.Treeview.Model.Win32;
 using Prism.Events;
 using Prism.Ioc;
 using Prism.Mvvm;
@@ -60,6 +58,7 @@ namespace MPTagThat.Treeview.ViewModels
     private readonly TreeViewHelper _helper;
     private ITreeviewDataProvider _dataProvider;
     private TreeViewNode _currentNode;
+    private string _currentSelectedDatabaseItem;
     private bool _init;
 
     #endregion
@@ -112,6 +111,7 @@ namespace MPTagThat.Treeview.ViewModels
           else
           {
             // Database View
+            _currentSelectedDatabaseItem = selecteditem;
             GenericEvent evt = new GenericEvent
             {
               Action = "selectedfolderchanged"
@@ -174,7 +174,7 @@ namespace MPTagThat.Treeview.ViewModels
       {
         return true;
       }
-        
+
       return false;
     }
 
@@ -336,7 +336,7 @@ namespace MPTagThat.Treeview.ViewModels
       // Set the Folder Browser as default data provider
       SelectedViewMode = 0;
       _init = false;
-      
+
       // Initialize the Load on Demand Timer
       _loadOnDemandTimer = new DispatcherTimer();
       _loadOnDemandTimer.Interval = new TimeSpan(0, 0, 0, 0, 150);
@@ -413,74 +413,125 @@ namespace MPTagThat.Treeview.ViewModels
         _timer.Stop();
       }
 
-      // Expand the first levels of the Treeview
+      // Expand the first level of the Treeview
       _currentNode = TreeView.Nodes[0];
       LoadOnDemandTimer_Tick(new DispatcherTimer(), new EventArgs());
-      _currentNode = TreeView.Nodes[0].ChildNodes[0];
-      LoadOnDemandTimer_Tick(new DispatcherTimer(), new EventArgs());
-      var currentFolder = _options.MainSettings.LastFolderUsed;
-      if (!Directory.Exists(currentFolder) && !currentFolder.IsNullOrWhiteSpace())
-      {
-        // Try to get 1 level up to find the parent
-        var i = 0;
-        while (i < 10)
-        {
-          if (Directory.Exists(currentFolder))
-            break;
 
-          currentFolder = currentFolder.Substring(0, currentFolder.LastIndexOf("\\"));
-          i++; // Max of 10 levels, to avoid possible infinity loop
+
+      if (_dataProvider is TreeViewDataProvider)
+      {
+        // Expand further levels
+        _currentNode = TreeView.Nodes[0].ChildNodes[0];
+        LoadOnDemandTimer_Tick(new DispatcherTimer(), new EventArgs());
+        var currentFolder = _options.MainSettings.LastFolderUsed;
+        if (!Directory.Exists(currentFolder) && !currentFolder.IsNullOrWhiteSpace())
+        {
+          // Try to get 1 level up to find the parent
+          var i = 0;
+          while (i < 10)
+          {
+            if (Directory.Exists(currentFolder))
+              break;
+
+            currentFolder = currentFolder.Substring(0, currentFolder.LastIndexOf("\\"));
+            i++; // Max of 10 levels, to avoid possible infinity loop
+          }
+
+          if (i == 10)
+          {
+            return;
+          }
         }
 
-        if (i == 10)
+        log.Info($"Set current folder to {currentFolder}");
+
+        Cursor = Cursors.Wait;
+        var requestNetwork = currentFolder.StartsWith(@"\\");
+        var nodes = TreeView.Nodes[0].ChildNodes[0].ChildNodes;
+
+        if (!currentFolder.IsNullOrWhiteSpace())
         {
-          return;
+          var dirInfo = new DirectoryInfo(currentFolder);
+
+          // get path tokens
+          var dirs = new List<string> { dirInfo.FullName };
+
+          while (dirInfo.Parent != null)
+          {
+            dirs.Add(dirInfo.Parent.FullName);
+            dirInfo = dirInfo.Parent;
+          }
+
+          // For network we should add also the server to the dir list
+          if (requestNetwork)
+          {
+            dirs.Add(dirInfo.FullName.Substring(0, dirInfo.FullName.LastIndexOf(@"\", StringComparison.Ordinal)));
+          }
+
+          for (var i = dirs.Count - 1; i >= 0; i--)
+          {
+            foreach (var n in nodes)
+            {
+              var path = (n.Content as TreeItem).Path;
+              if (string.Compare(path.ToLower(), dirs[i].ToLower(), StringComparison.Ordinal) == 0)
+              {
+                if (i == 0)
+                {
+                  // Set the Selected Item, because we will get a null value from the XAML Event
+                  SelectedNode = n.Content;
+                }
+                else
+                {
+                  _currentNode = n;
+                  LoadOnDemandTimer_Tick(new DispatcherTimer(), new EventArgs());
+                  nodes = n.ChildNodes;
+                }
+                break;
+              }
+            }
+          }
         }
       }
-
-      log.Info($"Set current folder to {currentFolder}");
-
-      Cursor = Cursors.Wait;
-      var requestNetwork = currentFolder.StartsWith(@"\\");
-      var nodes = TreeView.Nodes[0].ChildNodes[0].ChildNodes;
-
-      if (!currentFolder.IsNullOrWhiteSpace())
+      else
       {
-        var dirInfo = new DirectoryInfo(currentFolder);
-
-        // get path tokens
-        var dirs = new List<string> { dirInfo.FullName };
-
-        while (dirInfo.Parent != null)
+        // Database specific handling
+        if (_currentSelectedDatabaseItem == null)
         {
-          dirs.Add(dirInfo.Parent.FullName);
-          dirInfo = dirInfo.Parent;
+          // Expand first level
+          _currentNode = TreeView.Nodes[0].ChildNodes[0];
+          LoadOnDemandTimer_Tick(new DispatcherTimer(), new EventArgs());
+          SelectedNode = TreeView.Nodes[0].ChildNodes[0];
         }
-
-        // For network we should add also the server to the dir list
-        if (requestNetwork)
+        else
         {
-          dirs.Add(dirInfo.FullName.Substring(0, dirInfo.FullName.LastIndexOf(@"\", StringComparison.Ordinal)));
-        }
+          var nodeSelect = 0;
+          if (_currentSelectedDatabaseItem.StartsWith("AlbumArtist"))
+          {
+            nodeSelect = 0;
+          }
+          else if (_currentSelectedDatabaseItem.StartsWith("Artist"))
+          {
+            nodeSelect = 1;
+          }
+          else if (_currentSelectedDatabaseItem.StartsWith("Album"))
+          {
+            nodeSelect = 2;
+          }
+          else if (_currentSelectedDatabaseItem.StartsWith("Genre"))
+          {
+            nodeSelect = 3;
+          }
 
-        for (var i = dirs.Count - 1; i >= 0; i--)
-        {
+          // Expand first level
+          _currentNode = TreeView.Nodes[0].ChildNodes[nodeSelect];
+          LoadOnDemandTimer_Tick(new DispatcherTimer(), new EventArgs());
+          var nodes = TreeView.Nodes[0].ChildNodes[nodeSelect].ChildNodes;
           foreach (var n in nodes)
           {
             var path = (n.Content as TreeItem).Path;
-            if (string.Compare(path.ToLower(), dirs[i].ToLower(), StringComparison.Ordinal) == 0)
+            if (string.Compare(path.ToLower(), _currentSelectedDatabaseItem.ToLower(), StringComparison.Ordinal) == 0)
             {
-              if (i == 0)
-              {
-                // Set the Selected Item, because we will get a null value from the XAML Event
-                SelectedNode = n.Content;
-              }
-              else
-              {
-                _currentNode = n;
-                LoadOnDemandTimer_Tick(new DispatcherTimer(), new EventArgs());
-                nodes = n.ChildNodes;
-              }
+              SelectedNode = n.Content;
               break;
             }
           }
