@@ -86,6 +86,7 @@
 
       <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Right" >
         <syncfusion:ButtonAdv Label="{lex:Loc dataBaseStatus_UpdateStats}" 
+                              SmallIcon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_DatabaseStatus_32x.png" 
                               Command="{Binding UpdateStatsCommand}" 
                               Width="Auto" Height="25" 
                               HorizontalAlignment="Right" Margin="20,10,0,0" />
