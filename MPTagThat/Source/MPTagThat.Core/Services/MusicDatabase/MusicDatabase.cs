@@ -36,6 +36,7 @@ using MPTagThat.Core.Services.Settings;
 using MPTagThat.Core.Services.Settings.Setting;
 using MPTagThat.Core.Utils;
 using Prism.Ioc;
+using Syncfusion.Windows.Controls;
 using WPFLocalizeExtension.Engine;
 
 #endregion 
@@ -349,11 +350,11 @@ namespace MPTagThat.Core.Services.MusicDatabase
         sql += token[0];
         if (comparator == ":")
         {
-          sql += " like " + "'%" +  token[1] + "%'";
+          sql += " like " + "'%" + token[1] + "%'";
         }
         else
         {
-          sql += " " + comparator + " " + "'" +  token[1] + "'";
+          sql += " " + comparator + " " + "'" + token[1] + "'";
         }
 
         if (op != "")
@@ -810,7 +811,7 @@ namespace MPTagThat.Core.Services.MusicDatabase
         _databaseScanEvent.CurrentFile = "";
         _databaseScanEvent.NumberOfFiles = _audioFiles;
         EventSystem.Publish(_databaseScanEvent);
-        log.Info("Database Scan finished");
+        log.Info($"Database Scan finished. Processed {_audioFiles} songs in {ts.Hours}:{ts.Minutes}:{ts.Seconds}");
       }
       bgw.Dispose();
       _options.IsDatabaseScanActive = false;
@@ -824,8 +825,17 @@ namespace MPTagThat.Core.Services.MusicDatabase
       var di = new DirectoryInfo((string)e.Argument);
       try
       {
+        var colLastScan = _store.GetCollection("lastScan");
+        var lastUpdate = colLastScan.FindOne("$._id = 1");
+        var lastUpdateTime = DateTime.MinValue;
+        if (lastUpdate != null)
+        {
+          lastUpdateTime = lastUpdate["LastScan"];
+          log.Info($"Scanning share for songs changed after {lastUpdateTime.ToString()}");
+        }
+
         var col = _store.GetCollection<SongData>("songs");
-        col.EnsureIndex("$.FullFileName", true);
+        col.EnsureIndex("$.FullFileName", false);
         col.EnsureIndex("$.Artist", false);
         col.EnsureIndex("$.AlbumArtist", false);
         col.EnsureIndex("$.Album", false);
@@ -836,7 +846,10 @@ namespace MPTagThat.Core.Services.MusicDatabase
         //col.EnsureIndex("ArtistAlbum", "[$.Artist, $.Album]", false);
         //col.EnsureIndex("AlbumArtistAlbum", "[$.AlbumArtist, $.Album]", false);
 
-        var songList = new List<SongData>();
+        var doFullScan = lastUpdateTime == DateTime.MinValue;
+
+        _store.BeginTrans();
+
         foreach (FileInfo fi in GetFiles(di, true))
         {
           if (_bgwScanShare.CancellationPending)
@@ -855,19 +868,35 @@ namespace MPTagThat.Core.Services.MusicDatabase
             _databaseScanEvent.CurrentFile = fi.Name;
             _databaseScanEvent.NumberOfFiles = _audioFiles;
             EventSystem.Publish(_databaseScanEvent);
+
+            if (!doFullScan && !(fi.CreationTime > lastUpdateTime || fi.LastWriteTime > lastUpdateTime))
+            {
+              continue;
+            }
+
             var track = Song.Create(fi.FullName);
             if (track != null)
             {
               track = StoreCoverArt(track);
-              songList.Add(track);
+
+              if (!doFullScan)
+              {
+                // Search, if there is already a file in the database
+                var originalSong = col.FindOne(s => s.FullFileName.Equals(fi.FullName));
+                if (originalSong != null)
+                {
+                  track.Status = -1;
+                  track.Changed = false;
+                  track.Id = originalSong.Id;
+                }
+              }
+              col.Upsert(track);
               _audioFiles++;
               if (_audioFiles % 1000 == 0)
               {
                 log.Info($"Number of processed files: {_audioFiles}");
-                _store.BeginTrans();
-                col.InsertBulk(songList, 500);
                 _store.Commit();
-                songList.Clear();
+                _store.BeginTrans();
               }
             }
           }
@@ -885,8 +914,9 @@ namespace MPTagThat.Core.Services.MusicDatabase
             log.Error("Error during Database BulkInsert {1} {0}", ex.Message, fi.FullName);
           }
         }
-        col.InsertBulk(songList, 1000);
-        songList.Clear();
+
+        colLastScan.Upsert(new BsonDocument { ["_id"] = 1, ["LastScan"] = _scanStartTime.ToDateTime() });
+        _store.Commit();
       }
       catch (System.InvalidOperationException ex)
       {
@@ -949,7 +979,7 @@ namespace MPTagThat.Core.Services.MusicDatabase
 
             if (recursive)
             {
-              log.Debug(dir.FullName);
+              log.Trace(dir.FullName);
               DirectoryInfo[] newDirectories = dir.GetDirectories();
               foreach (DirectoryInfo di in newDirectories)
               {
