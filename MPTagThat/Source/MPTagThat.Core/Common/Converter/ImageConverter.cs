@@ -27,7 +27,7 @@ using Shell32;
 
 #endregion
 
-namespace MPTagThat.Treeview.Views
+namespace MPTagThat.Core.Common.Converter
 {
   public class ImageConverter : IValueConverter
   {

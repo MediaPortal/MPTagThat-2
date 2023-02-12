@@ -13,13 +13,14 @@
              lex:ResxLocalizationProvider.DefaultAssembly="MPTagThat"
              lex:ResxLocalizationProvider.DefaultDictionary="Strings"
              xmlns:local="clr-namespace:MPTagThat.Treeview.Views"
+             xmlns:converter="clr-namespace:MPTagThat.Core.Common.Converter;assembly=MPTagThat.Core"
              xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300"
              Cursor="{Binding Cursor}" >
 
   <UserControl.Resources>
-    <local:ImageConverter x:Key="Converter"/>
+    <converter:ImageConverter x:Key="Converter"/>
   </UserControl.Resources>
 
   <Grid>

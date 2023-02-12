@@ -67,6 +67,7 @@
     <Compile Include="Common\Converter\AlternateRowChangedColorConverter.cs" />
     <Compile Include="Common\Converter\BusyToCursorConverter.cs" />
     <Compile Include="Common\Converter\ColorContrastConverter.cs" />
+    <Compile Include="Common\Converter\ImageConverter.cs" />
     <Compile Include="Common\Converter\InvertBoolConverter.cs" />
     <Compile Include="Common\Converter\InvertVisibilityConverter.cs" />
     <Compile Include="Common\Converter\RowChangedColorConverter.cs" />
@@ -218,7 +219,17 @@
       <Version>3.9.4</Version>
     </PackageReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <COMReference Include="Shell32">
+      <Guid>{50A7E9B0-70EF-11D1-B75A-00A0C90564FE}</Guid>
+      <VersionMajor>1</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>tlbimp</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
