@@ -530,26 +530,26 @@
         <syncfusion:RibbonBar Header="{Binding ActiveDatabase}" >
           <Label Content=" " />
           <StackPanel Orientation="Horizontal">
-          <syncfusion:RibbonComboBox x:Name="ComboBoxDatabaseQuery" MaxDropDownHeight="150" Width="300" Height="20" 
+            <syncfusion:RibbonComboBox x:Name="ComboBoxDatabaseQuery" MaxDropDownHeight="150" Width="300" Height="20" 
                                      ItemsSource="{Binding Queries}" 
                                      SelectedItem="{Binding QueriesSelectedItem, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                      Text="{Binding QueriesSelectedText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                      IsEditable="True" >
-          </syncfusion:RibbonComboBox>
-          <syncfusion:RibbonButton x:Name="ButtonDatabaseQuery" SizeForm="Large" 
+            </syncfusion:RibbonComboBox>
+            <syncfusion:RibbonButton x:Name="ButtonDatabaseQuery" SizeForm="Large" 
                                    Label="{lex:Loc ribbon_Database_Query}" 
                                    LargeIcon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_Lens_32x.png" 
                                    SmallIcon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_Lens_32x.png" 
                                    Command="{Binding ExecuteRibbonCommand}" 
                                    CommandParameter="{Binding Name ,RelativeSource={RelativeSource Self}}" >
-            <syncfusion:RibbonButton.ToolTip>
-              <syncfusion:ScreenTip MinWidth="150" MaxWidth="400" Description="{lex:Loc ribbon_Database_Query}" VerticalOffset="10" ImageSource="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_Lens_32x.png">
-                <StackPanel Orientation="Vertical" Width="300">
-                  <TextBlock Text="{lex:Loc screentip_Database_Query}" TextWrapping="Wrap" />
-                </StackPanel>
-              </syncfusion:ScreenTip>
-            </syncfusion:RibbonButton.ToolTip>
-          </syncfusion:RibbonButton>
+              <syncfusion:RibbonButton.ToolTip>
+                <syncfusion:ScreenTip MinWidth="150" MaxWidth="400" Description="{lex:Loc ribbon_Database_Query}" VerticalOffset="10" ImageSource="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_Lens_32x.png">
+                  <StackPanel Orientation="Vertical" Width="300">
+                    <TextBlock Text="{lex:Loc screentip_Database_Query}" TextWrapping="Wrap" />
+                  </StackPanel>
+                </syncfusion:ScreenTip>
+              </syncfusion:RibbonButton.ToolTip>
+            </syncfusion:RibbonButton>
           </StackPanel>
           <syncfusion:RibbonSeparator/>
           <syncfusion:RibbonButton x:Name="ButtonDatabaseSwitch" SizeForm="Large" 
@@ -567,6 +567,25 @@
               </syncfusion:ScreenTip>
             </syncfusion:RibbonButton.ToolTip>
           </syncfusion:RibbonButton>
+        </syncfusion:RibbonBar>
+
+        <syncfusion:RibbonBar Header="{lex:Loc ribbon_Database_TagChecker}" >
+          <StackPanel Orientation="Horizontal">
+            <syncfusion:RibbonButton x:Name="ButtonTagChecker" SizeForm="Large" 
+                                   Label="{lex:Loc ribbon_Database_TagChecker}" 
+                                   LargeIcon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_Database_TagChecker_32x.png" 
+                                   SmallIcon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_Database_TagChecker_32x.png" 
+                                   Command="{Binding ExecuteRibbonCommand}" 
+                                   CommandParameter="{Binding Name ,RelativeSource={RelativeSource Self}}" >
+              <syncfusion:RibbonButton.ToolTip>
+                <syncfusion:ScreenTip MinWidth="150" MaxWidth="400" Description="{lex:Loc ribbon_Database_TagChecker}" VerticalOffset="10" ImageSource="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_Database_TagChecker_32x.png">
+                  <StackPanel Orientation="Vertical" Width="300">
+                    <TextBlock Text="{lex:Loc screenTip_Database_TagChecker}" TextWrapping="Wrap" />
+                  </StackPanel>
+                </syncfusion:ScreenTip>
+              </syncfusion:RibbonButton.ToolTip>
+            </syncfusion:RibbonButton>
+          </StackPanel>
         </syncfusion:RibbonBar>
 
         <syncfusion:RibbonBar Header="{lex:Loc ribbon_Database_MainGroup}" >
@@ -730,6 +749,74 @@
 
 
       </syncfusion:RibbonTab>
+
+
+      <syncfusion:Ribbon.ContextTabGroups>
+        <syncfusion:ContextTabGroup x:Name="TagCheckerContextTabGroup" IsGroupVisible="{Binding TagCheckerToolsVisible, Mode=TwoWay}" 
+                                        BackColor="Green" 
+                                        Label="{lex:Loc ribbon_Database_TagChecker_Tools}">
+          <syncfusion:RibbonTab x:Name="ChecksTab" Caption="{lex:Loc ribbon_Database_TagChecker_Tools_Checks}" IsChecked="False" >
+            <syncfusion:RibbonBar Header="{lex:Loc ribbon_Database_TagChecker_Tools_Checks}">
+              <syncfusion:RibbonButton x:Name="ButtonTagCheckerArtists" SizeForm="Large" 
+                                   Label="{lex:Loc ribbon_TagChecker_CheckArtists}"
+                                   LargeIcon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_TagChecker_Artist_32x.png" 
+                                   Command="{Binding ExecuteRibbonCommand}" 
+                                   CommandParameter="{Binding Name ,RelativeSource={RelativeSource Self}}">
+                <syncfusion:RibbonButton.ToolTip>
+                  <syncfusion:ScreenTip MinWidth="150" MaxWidth="400" Description="{lex:Loc ribbon_TagChecker_CheckArtists}" VerticalOffset="10" ImageSource="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_TagChecker_Artist_32x.png">
+                    <StackPanel Orientation="Vertical" Width="300">
+                      <TextBlock Text="{lex:Loc screenTip_TagChecker_CheckArtists}" TextWrapping="Wrap" />
+                    </StackPanel>
+                  </syncfusion:ScreenTip>
+                </syncfusion:RibbonButton.ToolTip>
+              </syncfusion:RibbonButton>
+
+
+            </syncfusion:RibbonBar>
+            <syncfusion:RibbonBar Header="{lex:Loc ribbon_Database_TagChecker_Tools_Checks_Actions}">
+              <syncfusion:RibbonButton x:Name="ButtonTagCheckerDatabaseScan" SizeForm="Large" 
+                                   Label="{lex:Loc ribbon_TagChecker_ScanDatabase}"
+                                   LargeIcon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_TagChecker_DatabaseScan_32x.png" 
+                                   Command="{Binding ExecuteRibbonCommand}" 
+                                   CommandParameter="{Binding Name ,RelativeSource={RelativeSource Self}}">
+                <syncfusion:RibbonButton.ToolTip>
+                  <syncfusion:ScreenTip MinWidth="150" MaxWidth="400" Description="{lex:Loc ribbon_TagChecker_ScanDatabase}" VerticalOffset="10" ImageSource="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_TagChecker_DatabaseScan_32x.png">
+                    <StackPanel Orientation="Vertical" Width="300">
+                      <TextBlock Text="{lex:Loc screenTip_TagChecker_ScanDatabase}" TextWrapping="Wrap" />
+                    </StackPanel>
+                  </syncfusion:ScreenTip>
+                </syncfusion:RibbonButton.ToolTip>
+              </syncfusion:RibbonButton>
+              <syncfusion:RibbonButton x:Name="ButtonTagCheckerApplySelected" SizeForm="Large" 
+                                   Label="{lex:Loc ribbon_TagChecker_ApplySelected}"
+                                   LargeIcon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_TagChecker_Apply_32x.png" 
+                                   Command="{Binding ExecuteRibbonCommand}" 
+                                   CommandParameter="{Binding Name ,RelativeSource={RelativeSource Self}}">
+                <syncfusion:RibbonButton.ToolTip>
+                  <syncfusion:ScreenTip MinWidth="150" MaxWidth="400" Description="{lex:Loc ribbon_TagChecker_ApplySelected}" VerticalOffset="10" ImageSource="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_TagChecker_Apply_32x.png">
+                    <StackPanel Orientation="Vertical" Width="300">
+                      <TextBlock Text="{lex:Loc screenTip_TagChecker_ApplySelected}" TextWrapping="Wrap" />
+                    </StackPanel>
+                  </syncfusion:ScreenTip>
+                </syncfusion:RibbonButton.ToolTip>
+              </syncfusion:RibbonButton>
+              <syncfusion:RibbonButton x:Name="ButtonTagCheckerIgnoreSelected" SizeForm="Large" 
+                                   Label="{lex:Loc ribbon_TagChecker_IgnoreSelected}"
+                                   LargeIcon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_TagChecker_Ignore_32x.png" 
+                                   Command="{Binding ExecuteRibbonCommand}" 
+                                   CommandParameter="{Binding Name ,RelativeSource={RelativeSource Self}}">
+                <syncfusion:RibbonButton.ToolTip>
+                  <syncfusion:ScreenTip MinWidth="150" MaxWidth="400" Description="{lex:Loc ribbon_TagChecker_IgnoreSelected}" VerticalOffset="10" ImageSource="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_TagChecker_Ignore_32x.png">
+                    <StackPanel Orientation="Vertical" Width="300">
+                      <TextBlock Text="{lex:Loc screenTip_TagChecker_IgnoreSelected}" TextWrapping="Wrap" />
+                    </StackPanel>
+                  </syncfusion:ScreenTip>
+                </syncfusion:RibbonButton.ToolTip>
+              </syncfusion:RibbonButton>
+            </syncfusion:RibbonBar>
+          </syncfusion:RibbonTab>
+        </syncfusion:ContextTabGroup>
+      </syncfusion:Ribbon.ContextTabGroups>
 
       <!-- Disabled until implemented
       
@@ -1060,6 +1147,7 @@
           <syncfusion:BackStageCommandButton Header="{lex:Loc ribbon_Exit}" Command="{Binding ExitCommand}" Icon="pack://application:,,,/MPTagThat.Ribbon;component/Resources/Images/ribbon_Exit_32x.png" />
         </syncfusion:Backstage>
       </syncfusion:Ribbon.BackStage>
+
     </syncfusion:Ribbon>
   </Grid>
 </UserControl>

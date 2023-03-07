@@ -1,0 +1,81 @@
+﻿<UserControl x:Class="MPTagThat.TagChecker.Views.TagCheckerView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:prism="http://prismlibrary.com/"
+             prism:ViewModelLocator.AutoWireViewModel="True"
+             xmlns:syncfusion="http://schemas.syncfusion.com/wpf"
+             xmlns:syncfusionSkin="clr-namespace:Syncfusion.SfSkinManager;assembly=Syncfusion.SfSkinManager.WPF"
+             syncfusionSkin:SfSkinManager.VisualStyle="{Binding Theme}"
+             xmlns:lex="http://wpflocalizeextension.codeplex.com"
+             lex:LocalizeDictionary.DesignCulture="en"
+             lex:ResxLocalizationProvider.DefaultAssembly="MPTagThat"
+             lex:ResxLocalizationProvider.DefaultDictionary="Strings"
+             xmlns:local="clr-namespace:MPTagThat.TagChecker.Views"
+             xmlns:core="clr-namespace:MPTagThat.Core.Common.Converter;assembly=MPTagThat.Core"
+             xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300"
+             Cursor="{Binding Cursor}" >
+
+  <UserControl.Resources>
+    <!-- The Converts used -->
+    <core:RowChangedColorConverter x:Key="ChangedRowStyleSelector" />
+    <core:AlternateRowChangedColorConverter x:Key="AlternateRowStyleSelector" />
+    <core:ColorContrastConverter x:Key="ForegroundStyleSelector" />
+    <core:ItemStatusEnumConverter x:Key="ItemStatusConverter" />
+
+    <!-- The Row Styles in the Grid -->
+    <Style TargetType="syncfusion:VirtualizingCellsControl" x:Key="AlternatingRowStyle">
+      <Setter Property="Background" Value="{Binding Path=Changed,UpdateSourceTrigger=PropertyChanged,Converter={StaticResource AlternateRowStyleSelector}}"/>
+      <Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource Self}, Path=Background, UpdateSourceTrigger=PropertyChanged,Converter={StaticResource ForegroundStyleSelector}}"/>
+    </Style>
+    <Style TargetType="syncfusion:VirtualizingCellsControl" x:Key="ChangedRowStyle">
+      <Setter Property="Background" Value="{Binding Path=Changed,UpdateSourceTrigger=PropertyChanged,Converter={StaticResource ChangedRowStyleSelector}}"/>
+      <Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource Self}, Path=Background,Converter={StaticResource ForegroundStyleSelector}}"/>
+    </Style>
+  </UserControl.Resources>
+
+  <Grid>
+    <Grid.RowDefinitions>
+      <RowDefinition Height="*"/>
+    </Grid.RowDefinitions>
+    
+    <syncfusion:SfDataGrid x:Name="ItemsGrid" 
+                           Grid.Row="0"
+                           SelectedItems="{Binding SelectedItems,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                           ItemsSource="{Binding Items, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                           FrozenColumnCount="1"
+                           AllowFiltering="True"
+                           FilterRowPosition="FixedTop"
+                           AllowResizingColumns="True" 
+                           AutoGenerateColumns="False"
+                           ShowRowHeader="False" 
+                           AllowEditing="True" 
+                           SelectionMode="Extended" 
+                           EnableDataVirtualization="True" 
+                           ShowBusyIndicator="True" 
+                           ForceCursor="True"
+                           ColumnSizer="Star"
+                           AlternatingRowStyle="{StaticResource AlternatingRowStyle}" 
+                           RowStyle="{StaticResource ChangedRowStyle}">
+
+      <i:Interaction.Triggers>
+        <i:EventTrigger EventName="SelectionChanged">
+          <i:InvokeCommandAction Command="{Binding ItemsSelectionChangedCommand}" CommandParameter="{Binding SelectedItems, ElementName=ItemsGrid}" />
+        </i:EventTrigger>
+      </i:Interaction.Triggers>
+
+      
+      <syncfusion:SfDataGrid.Columns>
+        <syncfusion:GridCheckBoxSelectorColumn MappingName="ItemSelected" Width="50"/>
+        <syncfusion:GridTextColumn HeaderText="{lex:Loc songHeader_Status}" MappingName="Status" DisplayBinding="{Binding Status,Converter={StaticResource ItemStatusConverter}}" Width="150" IsReadOnly="True" />
+        <syncfusion:GridTextColumn HeaderText="{lex:Loc songHeader_FileName}" MappingName="OriginalItem" IsReadOnly="True" />
+        <syncfusion:GridTextColumn HeaderText="{lex:Loc songHeader_NewFileName}" MappingName="ChangedItem" />
+      </syncfusion:SfDataGrid.Columns>
+      
+
+    </syncfusion:SfDataGrid>
+  </Grid>
+</UserControl>

@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.29519.181
+# Visual Studio Version 17
+VisualStudioVersion = 17.4.33213.308
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MPTagThat", "MPTagThat\MPTagThat.csproj", "{A9C5C373-1662-4E1E-BF04-B1007D815D42}"
 EndProject
@@ -24,6 +24,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MPTagThat.Converter", "UI\MPTagThat.Converter\MPTagThat.Converter.csproj", "{19E4D13B-3741-469D-9635-AE1176EE6A0E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MPTagThat.Rip", "UI\MPTagThat.Rip\MPTagThat.Rip.csproj", "{509CD006-36C1-4E36-AF17-CFF7DFFC99B9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MPTagThat.TagChecker", "UI\MPTagThat.TagChecker\MPTagThat.TagChecker.csproj", "{F43A8943-94E6-44D5-AACF-C8DF46C3D168}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -71,6 +73,10 @@ Global
 		{509CD006-36C1-4E36-AF17-CFF7DFFC99B9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{509CD006-36C1-4E36-AF17-CFF7DFFC99B9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{509CD006-36C1-4E36-AF17-CFF7DFFC99B9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F43A8943-94E6-44D5-AACF-C8DF46C3D168}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F43A8943-94E6-44D5-AACF-C8DF46C3D168}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F43A8943-94E6-44D5-AACF-C8DF46C3D168}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F43A8943-94E6-44D5-AACF-C8DF46C3D168}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -84,6 +90,7 @@ Global
 		{A4D5A1CC-39CF-4EBB-8C2A-494B34EB0989} = {DB7C3A80-665F-4B4F-A3EA-36D539C37912}
 		{19E4D13B-3741-469D-9635-AE1176EE6A0E} = {DB7C3A80-665F-4B4F-A3EA-36D539C37912}
 		{509CD006-36C1-4E36-AF17-CFF7DFFC99B9} = {DB7C3A80-665F-4B4F-A3EA-36D539C37912}
+		{F43A8943-94E6-44D5-AACF-C8DF46C3D168} = {DB7C3A80-665F-4B4F-A3EA-36D539C37912}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {A885E3F7-B2DD-4902-B3C3-41326E432708}

@@ -70,6 +70,7 @@
     <Compile Include="Common\Converter\ImageConverter.cs" />
     <Compile Include="Common\Converter\InvertBoolConverter.cs" />
     <Compile Include="Common\Converter\InvertVisibilityConverter.cs" />
+    <Compile Include="Common\Converter\ItemStatusEnumConverter.cs" />
     <Compile Include="Common\Converter\RowChangedColorConverter.cs" />
     <Compile Include="Common\Converter\SongStatusToImageConverter.cs" />
     <Compile Include="Common\GridViewColumn.cs" />
@@ -84,6 +85,7 @@
     <Compile Include="Common\Song\Song.cs" />
     <Compile Include="Common\Song\SongData.cs" />
     <Compile Include="Common\Song\SongList.cs" />
+    <Compile Include="Common\Song\TagCheckerData.cs" />
     <Compile Include="Events\EventSystem.cs" />
     <Compile Include="Events\GenericEvent.cs" />
     <Compile Include="Events\ProgressBarEvent.cs" />

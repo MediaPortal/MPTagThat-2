@@ -108,6 +108,11 @@ namespace MPTagThat.Ribbon.ViewModels
       {
         SetProperty(ref _selectedRibbonTab, value);
         var tab = (value as RibbonTab)?.Name;
+        if (tab != null && tab == "ChecksTab")
+        {
+          return;
+        }
+
         GenericEvent evt = new GenericEvent
         {
           Action = "ribbontabselected"
@@ -480,6 +485,17 @@ namespace MPTagThat.Ribbon.ViewModels
     {
       get => _isDatabaseScanStarted;
       set => SetProperty(ref _isDatabaseScanStarted, value);
+    }
+
+
+    /// <summary>
+    /// Indicates if database Scan is active
+    /// </summary>
+    private bool _tagCheckerToolsVisible = false;
+    public bool TagCheckerToolsVisible
+    {
+      get => _tagCheckerToolsVisible;
+      set => SetProperty(ref _tagCheckerToolsVisible, value);
     }
 
     #endregion
@@ -1273,6 +1289,37 @@ namespace MPTagThat.Ribbon.ViewModels
             }
           }
           break;
+
+        case "ButtonTagChecker":
+          TagCheckerToolsVisible = true;
+          evt = new GenericEvent
+          {
+            Action = "TagCheckerInvoked"
+          };
+          EventSystem.Publish(evt);
+          System.Windows.Forms.Application.DoEvents();
+          return;
+
+
+        case "ButtonTagCheckerArtists":
+          type = Action.ActionType.CHECKARTISTS;
+          runAsync = false;
+          break;
+
+        case "ButtonTagCheckerDatabaseScan":
+          type = Action.ActionType.SCANCHECKDATABASE;
+          runAsync = false;
+          break;
+
+        case "ButtonTagCheckerApplySelected":
+          type = Action.ActionType.APPLYSELECTEDTAGCHECKERITEM;
+          runAsync = false;
+          break;
+
+        case "ButtonTagCheckerIgnoreSelected":
+          type = Action.ActionType.TOGGLEIGNORESELECTEDTAGCHECKERITEM;
+          runAsync = false;
+          break;
       }
 
       if (type != Action.ActionType.INVALID)
@@ -1469,7 +1516,7 @@ namespace MPTagThat.Ribbon.ViewModels
           break;
 
         case "databasescanstatus":
-          IsDatabaseScanActive = (bool) msg.MessageData["status"];
+          IsDatabaseScanActive = (bool)msg.MessageData["status"];
           break;
       }
     }

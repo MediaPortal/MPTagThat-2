@@ -90,3 +90,6 @@ xcopy /y %1\UI\MPTagThat.Converter\bin\%2\x64\*.* %TARGETPATH%\Bin\Encoder\
 
 REM Copy Rip Module
 xcopy /y %1\UI\MPTagThat.Rip\bin\%2\MPTagThat.Rip.* %TARGETPATH%\Bin\
+
+REM Copy TagChecker Module
+xcopy /y %1\UI\MPTagThat.TagChecker\bin\%2\MPTagThat.TagChecker.* %TARGETPATH%\Bin\

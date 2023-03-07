@@ -1771,6 +1771,42 @@ namespace MPTagThat.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Tag Checker.
+        /// </summary>
+        public static string ribbon_Database_TagChecker {
+            get {
+                return ResourceManager.GetString("ribbon_Database_TagChecker", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to TagChecker Tools.
+        /// </summary>
+        public static string ribbon_Database_TagChecker_Tools {
+            get {
+                return ResourceManager.GetString("ribbon_Database_TagChecker_Tools", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Checks.
+        /// </summary>
+        public static string ribbon_Database_TagChecker_Tools_Checks {
+            get {
+                return ResourceManager.GetString("ribbon_Database_TagChecker_Tools_Checks", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Actions.
+        /// </summary>
+        public static string ribbon_Database_TagChecker_Tools_Checks_Actions {
+            get {
+                return ResourceManager.GetString("ribbon_Database_TagChecker_Tools_Checks_Actions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Database.
         /// </summary>
         public static string ribbon_DatabaseContextualTab {
@@ -2140,6 +2176,42 @@ namespace MPTagThat.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Apply Selection.
+        /// </summary>
+        public static string ribbon_TagChecker_ApplySelected {
+            get {
+                return ResourceManager.GetString("ribbon_TagChecker_ApplySelected", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Check Artists Tags.
+        /// </summary>
+        public static string ribbon_TagChecker_CheckArtists {
+            get {
+                return ResourceManager.GetString("ribbon_TagChecker_CheckArtists", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ignore Selection.
+        /// </summary>
+        public static string ribbon_TagChecker_IgnoreSelected {
+            get {
+                return ResourceManager.GetString("ribbon_TagChecker_IgnoreSelected", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Scan Database.
+        /// </summary>
+        public static string ribbon_TagChecker_ScanDatabase {
+            get {
+                return ResourceManager.GetString("ribbon_TagChecker_ScanDatabase", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Tag from Filename.
         /// </summary>
         public static string ribbon_TagFromFile {
@@ -2316,6 +2388,15 @@ namespace MPTagThat.Resources.Localization {
         public static string screentip_Database_Switch {
             get {
                 return ResourceManager.GetString("screentip_Database_Switch", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invokes the Tag Checker function, comparing Album Artists, Artists and Albums of the currently active database against MusicBrainz.
+        /// </summary>
+        public static string screenTip_Database_TagChecker {
+            get {
+                return ResourceManager.GetString("screenTip_Database_TagChecker", resourceCulture);
             }
         }
         
@@ -2514,6 +2595,42 @@ namespace MPTagThat.Resources.Localization {
         public static string screentip_SettingsText {
             get {
                 return ResourceManager.GetString("screentip_SettingsText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Apply the changes in the selected rows.
+        /// </summary>
+        public static string screenTip_TagChecker_ApplySelected {
+            get {
+                return ResourceManager.GetString("screenTip_TagChecker_ApplySelected", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Get Artists and Album Artists from the current database and check them against MusicBrainz.
+        /// </summary>
+        public static string screenTip_TagChecker_CheckArtists {
+            get {
+                return ResourceManager.GetString("screenTip_TagChecker_CheckArtists", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ignore the selected rows from further processing.
+        /// </summary>
+        public static string screenTip_TagChecker_IgnoreSelected {
+            get {
+                return ResourceManager.GetString("screenTip_TagChecker_IgnoreSelected", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Rescan the Database for Artists or Albums. ATTENTION: The content of the TagChecker Database will be cleared..
+        /// </summary>
+        public static string screenTip_TagChecker_ScanDatabase {
+            get {
+                return ResourceManager.GetString("screenTip_TagChecker_ScanDatabase", resourceCulture);
             }
         }
         
@@ -4044,6 +4161,78 @@ namespace MPTagThat.Resources.Localization {
         public static string tagAndRename_Year {
             get {
                 return ResourceManager.GetString("tagAndRename_Year", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Changed Artist.
+        /// </summary>
+        public static string tagChecker_ChangedArtist {
+            get {
+                return ResourceManager.GetString("tagChecker_ChangedArtist", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Original Artist.
+        /// </summary>
+        public static string tagChecker_OriginalArtist {
+            get {
+                return ResourceManager.GetString("tagChecker_OriginalArtist", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Applied.
+        /// </summary>
+        public static string tagChecker_Status_Applied {
+            get {
+                return ResourceManager.GetString("tagChecker_Status_Applied", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Full Match.
+        /// </summary>
+        public static string tagChecker_Status_FullMatch {
+            get {
+                return ResourceManager.GetString("tagChecker_Status_FullMatch", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Full Match Changed.
+        /// </summary>
+        public static string tagChecker_Status_FullMatchChanged {
+            get {
+                return ResourceManager.GetString("tagChecker_Status_FullMatchChanged", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ignored.
+        /// </summary>
+        public static string tagChecker_Status_Ignored {
+            get {
+                return ResourceManager.GetString("tagChecker_Status_Ignored", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No Match.
+        /// </summary>
+        public static string tagChecker_Status_NoMatch {
+            get {
+                return ResourceManager.GetString("tagChecker_Status_NoMatch", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Partial Match.
+        /// </summary>
+        public static string tagChecker_Status_PartialMatch {
+            get {
+                return ResourceManager.GetString("tagChecker_Status_PartialMatch", resourceCulture);
             }
         }
         

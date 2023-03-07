@@ -1935,4 +1935,68 @@ To change the order of the ratings drag the rows.</value>
     <value>Update Statistics</value>
     <comment>Update the Database Statistics</comment>
   </data>
+  <data name="ribbon_Database_TagChecker" xml:space="preserve">
+    <value>Tag Checker</value>
+    <comment>The ribbon Button  to invoke the Tag Checker </comment>
+  </data>
+  <data name="ribbon_Database_TagChecker_Tools" xml:space="preserve">
+    <value>TagChecker Tools</value>
+  </data>
+  <data name="ribbon_Database_TagChecker_Tools_Checks" xml:space="preserve">
+    <value>Checks</value>
+  </data>
+  <data name="ribbon_TagChecker_CheckArtists" xml:space="preserve">
+    <value>Check Artists Tags</value>
+  </data>
+  <data name="screenTip_Database_TagChecker" xml:space="preserve">
+    <value>Invokes the Tag Checker function, comparing Album Artists, Artists and Albums of the currently active database against MusicBrainz</value>
+  </data>
+  <data name="screenTip_TagChecker_CheckArtists" xml:space="preserve">
+    <value>Get Artists and Album Artists from the current database and check them against MusicBrainz</value>
+  </data>
+  <data name="ribbon_Database_TagChecker_Tools_Checks_Actions" xml:space="preserve">
+    <value>Actions</value>
+  </data>
+  <data name="ribbon_TagChecker_ScanDatabase" xml:space="preserve">
+    <value>Scan Database</value>
+  </data>
+  <data name="screenTip_TagChecker_ScanDatabase" xml:space="preserve">
+    <value>Rescan the Database for Artists or Albums. ATTENTION: The content of the TagChecker Database will be cleared.</value>
+  </data>
+  <data name="ribbon_TagChecker_ApplySelected" xml:space="preserve">
+    <value>Apply Selection</value>
+  </data>
+  <data name="ribbon_TagChecker_IgnoreSelected" xml:space="preserve">
+    <value>Ignore Selection</value>
+  </data>
+  <data name="screenTip_TagChecker_ApplySelected" xml:space="preserve">
+    <value>Apply the changes in the selected rows</value>
+  </data>
+  <data name="screenTip_TagChecker_IgnoreSelected" xml:space="preserve">
+    <value>Ignore the selected rows from further processing</value>
+  </data>
+  <data name="tagChecker_ChangedArtist" xml:space="preserve">
+    <value>Changed Artist</value>
+  </data>
+  <data name="tagChecker_OriginalArtist" xml:space="preserve">
+    <value>Original Artist</value>
+  </data>
+  <data name="tagChecker_Status_Applied" xml:space="preserve">
+    <value>Applied</value>
+  </data>
+  <data name="tagChecker_Status_FullMatch" xml:space="preserve">
+    <value>Full Match</value>
+  </data>
+  <data name="tagChecker_Status_Ignored" xml:space="preserve">
+    <value>Ignored</value>
+  </data>
+  <data name="tagChecker_Status_NoMatch" xml:space="preserve">
+    <value>No Match</value>
+  </data>
+  <data name="tagChecker_Status_PartialMatch" xml:space="preserve">
+    <value>Partial Match</value>
+  </data>
+  <data name="tagChecker_Status_FullMatchChanged" xml:space="preserve">
+    <value>Full Match Changed</value>
+  </data>
 </root>

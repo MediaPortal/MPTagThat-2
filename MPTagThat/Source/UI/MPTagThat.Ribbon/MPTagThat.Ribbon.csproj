@@ -243,6 +243,24 @@
   <ItemGroup>
     <Resource Include="Resources\Images\ribbon_DatabaseStatus_32x.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\ribbon_Database_TagChecker_16x.png" />
+    <Resource Include="Resources\Images\ribbon_Database_TagChecker_32x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\ribbon_TagChecker_Artist_16x.png" />
+    <Resource Include="Resources\Images\ribbon_TagChecker_Artist_32x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\ribbon_TagChecker_DatabaseScan_16x.png" />
+    <Resource Include="Resources\Images\ribbon_TagChecker_DatabaseScan_32x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\ribbon_TagChecker_Apply_16x.png" />
+    <Resource Include="Resources\Images\ribbon_TagChecker_Apply_32x.png" />
+    <Resource Include="Resources\Images\ribbon_TagChecker_Ignore_16x.png" />
+    <Resource Include="Resources\Images\ribbon_TagChecker_Ignore_32x.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>

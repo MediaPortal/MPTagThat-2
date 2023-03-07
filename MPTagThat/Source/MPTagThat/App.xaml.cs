@@ -133,6 +133,7 @@ namespace MPTagThat
       moduleCatalog.AddModule(typeof(MiscFiles.MiscFilesModule));
       moduleCatalog.AddModule(typeof(TagEdit.TagEditModule));
       moduleCatalog.AddModule(typeof(Dialogs.DialogModule));
+      moduleCatalog.AddModule(typeof(TagChecker.TagCheckerModule));
 
       // Modules, which should be loaded on Demand go here
       Type converterModuleCType = typeof(Converter.ConverterModule);

@@ -37,6 +37,7 @@ using MPTagThat.Core.Services.Settings;
 using MPTagThat.Core.Services.Settings.Setting;
 using MPTagThat.Rip.Views;
 using MPTagThat.SongGrid.Views;
+using MPTagThat.TagChecker.Views;
 using Newtonsoft.Json;
 using Prism.Ioc;
 using Prism.Modularity;
@@ -58,7 +59,7 @@ namespace MPTagThat.ViewModels
   {
     #region Variables
     IRegionManager _regionManager;
-   
+
     private readonly NLogLogger log;
     private Options _options;
 
@@ -230,7 +231,7 @@ namespace MPTagThat.ViewModels
       CancelFolderScanCommand = new BaseCommand(CancelFolderScan);
 
       _options = ContainerLocator.Current.Resolve<ISettingsManager>().GetOptions;
-     
+
       LoadKeyMap();
 
       _options.IsTagsTabActive = true;
@@ -341,7 +342,7 @@ namespace MPTagThat.ViewModels
     /// <param name = "keyDef">The key definition</param>
     private void MapAction(KeyDef keyDef)
     {
-      var kb = new KeyBinding {Command = KeyPressedCommand, CommandParameter = (Action.ActionType) (keyDef.Id)};
+      var kb = new KeyBinding { Command = KeyPressedCommand, CommandParameter = (Action.ActionType)(keyDef.Id) };
 
       if (keyDef.Key != null)
       {
@@ -454,7 +455,7 @@ namespace MPTagThat.ViewModels
 
             case "TabConvert":
               HideStandardLayout();
-              
+
               // Load Module and Activate View
               var moduleManager = (ModuleManager)ContainerLocator.Current.Resolve<IModuleManager>();
               moduleManager.LoadModule("ConverterModule");
@@ -488,6 +489,35 @@ namespace MPTagThat.ViewModels
                 detailRegion.Activate(ripView);
               }
               break;
+
+            default:
+              var evt = new GenericEvent
+              {
+                Action = "TagCheckerToolsVisible"
+              };
+              evt.MessageData["visible"] = "False";
+              EventSystem.Publish(evt);
+              break;
+          }
+          break;
+
+        case "tagcheckerinvoked":
+          HideStandardLayout();
+
+          // Load Module and Activate View
+          var dtRegion = _regionManager.Regions["DetailRegion"];
+          var mManager = (ModuleManager)ContainerLocator.Current.Resolve<IModuleManager>();
+          mManager.LoadModule("TagCheckerModule");
+          var tagCheckerView = dtRegion.Views.FirstOrDefault(v => v is TagCheckerView);
+          if (tagCheckerView == null)
+          {
+            var view = ContainerLocator.Current.Resolve<TagCheckerView>();
+            dtRegion.Add(view);
+            dtRegion.Activate(view);
+          }
+          else
+          {
+            dtRegion.Activate(tagCheckerView);
           }
           break;
 

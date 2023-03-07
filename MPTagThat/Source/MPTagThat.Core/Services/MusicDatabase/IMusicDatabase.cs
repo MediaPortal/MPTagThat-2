@@ -19,6 +19,7 @@
 #region
 
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using LiteDB;
 using MPTagThat.Core.Common.Song;
 
@@ -72,7 +73,7 @@ namespace MPTagThat.Core.Services.MusicDatabase
     /// Aborts the scanning of the database
     /// </summary>
     void AbortDatabaseScan();
-    
+
     /// <summary>
     /// Deletes the Music Database
     /// </summary>
@@ -128,7 +129,7 @@ namespace MPTagThat.Core.Services.MusicDatabase
     /// <returns></returns>
     List<string> GetAlbums();
 
- /// <summary>
+    /// <summary>
     /// Retrieves Distinct Genres
     /// </summary>
     /// <returns></returns>
@@ -178,5 +179,33 @@ namespace MPTagThat.Core.Services.MusicDatabase
     /// Open the SQLite database after an update
     /// </summary>
     void OpenAutoCorrectDatabase(string database);
+
+    /// <summary>
+    /// Get the Items from the TagChecker Database
+    /// <param name="itemType"></param>2
+    /// </summary>
+    /// <returns></returns>
+    List<TagCheckerData> GetTagCheckerItems(string itemType);
+
+    /// <summary>
+    /// Add the Items found to the TagChecker Database
+    /// </summary>
+    /// <param name="items"></param>
+    /// <param name="itemType"></param>
+    void AddItemsToTagCheckerDatabase(ref ObservableCollection<TagCheckerData> items, string itemType);
+
+    /// <summary>
+    /// Update the Items in the TagChecker Database
+    /// </summary>
+    /// <param name="items"></param>
+    /// <param name="itemType"></param>
+    void UpdateTagCheckerDatabase(ref List<TagCheckerData> items, string itemType);
+
+    /// <summary>
+    /// Update a single Item in the TagChecker Database
+    /// </summary>
+    /// <param name="item"></param>
+    /// <param name="itemType"></param>
+    void UpdateTagCheckerItem(TagCheckerData item, string itemType);
   }
 }

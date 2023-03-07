@@ -161,6 +161,10 @@
       <Project>{2d3154af-53c8-40fa-991a-6ab019078915}</Project>
       <Name>MPTagThat.SongGrid</Name>
     </ProjectReference>
+    <ProjectReference Include="..\UI\MPTagThat.TagChecker\MPTagThat.TagChecker.csproj">
+      <Project>{f43a8943-94e6-44d5-aacf-c8df46c3d168}</Project>
+      <Name>MPTagThat.TagChecker</Name>
+    </ProjectReference>
     <ProjectReference Include="..\UI\MPTagThat.TagEdit\MPTagThat.TagEdit.csproj">
       <Project>{43451793-3565-4c80-91a4-c75dae1b98cd}</Project>
       <Name>MPTagThat.TagEdit</Name>

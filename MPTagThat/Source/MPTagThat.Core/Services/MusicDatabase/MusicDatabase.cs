@@ -20,6 +20,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Data.SQLite;
 using System.Drawing;
@@ -651,6 +652,11 @@ namespace MPTagThat.Core.Services.MusicDatabase
     }
 
 
+    /// <summary>
+    /// Get Database Counts of various Items
+    /// </summary>
+    /// <param name="key"></param>
+    /// <returns></returns>
     public int GetCount(string key)
     {
       if (_store == null)
@@ -699,6 +705,127 @@ namespace MPTagThat.Core.Services.MusicDatabase
       return result["Counter"].AsInt32;
     }
 
+
+    /// <summary>
+    /// Get a list of all Items in the TagChecker Collection
+    /// </summary>
+    /// <returns></returns>
+    public List<TagCheckerData> GetTagCheckerItems(string itemType)
+    {
+      if (_store == null)
+      {
+        _store = GetDocumentStoreFor(CurrentDatabase);
+        if (_store == null)
+        {
+          log.Error("Could not establish a session.");
+          return null;
+        }
+      }
+
+      log.Trace("Getting Items for the TagChecker Collection");
+      var col = _store.GetCollection<TagCheckerData>($"tagchecker_{itemType}");
+      var result = col.FindAll();
+      var items = result.ToList();
+
+      return items;
+    }
+
+    /// <summary>
+    /// Add the Items found to the TagChecker Database
+    /// </summary>
+    /// <param name="items"></param>
+    /// <param name="itemType"></param>
+    public void AddItemsToTagCheckerDatabase(ref ObservableCollection<TagCheckerData> items, string itemType)
+    {
+      if (_store == null)
+      {
+        _store = GetDocumentStoreFor(CurrentDatabase);
+        if (_store == null)
+        {
+          log.Error("Could not establish a session.");
+          return;
+        }
+      }
+
+      log.Trace("Adding Items to the TagChecker Collection");
+      var col = _store.GetCollection<TagCheckerData>($"tagchecker_{itemType}");
+      col.EnsureIndex("$.OriginalItem", false);
+      col.EnsureIndex("$.Status", false);
+
+      // Remove all entries from the collection
+      col.DeleteAll();
+
+      _store.BeginTrans();
+
+      foreach (var item in items)
+      {
+        col.Upsert(item);
+      }
+
+      _store.Commit();
+    }
+
+    /// <summary>
+    /// Add the Items found to the TagChecker Database
+    /// </summary>
+    /// <param name="items"></param>
+    /// <param name="itemType"></param>
+    public void UpdateTagCheckerDatabase(ref List<TagCheckerData> items, string itemType)
+    {
+      if (_store == null)
+      {
+        _store = GetDocumentStoreFor(CurrentDatabase);
+        if (_store == null)
+        {
+          log.Error("Could not establish a session.");
+          return;
+        }
+      }
+
+      log.Trace("Updating Items in the TagChecker Collection");
+      var col = _store.GetCollection<TagCheckerData>($"tagchecker_{itemType}");
+      _store.BeginTrans();
+
+      foreach (var item in items)
+      {
+        var dbItem = col.FindOne(i => i.OriginalItem.Equals(item.OriginalItem));
+        if (dbItem != null)
+        {
+          item.Id = dbItem.Id;
+          item.Changed = false;
+          col.Upsert(item);
+        }
+      }
+
+      _store.Commit();
+    }
+
+    /// <summary>
+    /// Update a single Item in the TagChecker Database
+    /// </summary>
+    /// <param name="item"></param>
+    /// <param name="itemType"></param>
+    public void UpdateTagCheckerItem(TagCheckerData item, string itemType)
+    {
+      if (_store == null)
+      {
+        _store = GetDocumentStoreFor(CurrentDatabase);
+        if (_store == null)
+        {
+          log.Error("Could not establish a session.");
+          return;
+        }
+      }
+
+      var col = _store.GetCollection<TagCheckerData>($"tagchecker_{itemType}");
+      var dbItem = col.FindOne(i => i.OriginalItem.Equals(item.OriginalItem));
+      if (dbItem != null)
+      {
+        item.Id = dbItem.Id;
+        item.Changed = false;
+        col.Upsert(item);
+      }
+    }
 
     /// <summary>
     /// Search for Artists to put into Autocompletion Combo
