@@ -38,9 +38,7 @@ using MPTagThat.Core.Utils;
 using WPFLocalizeExtension.Engine;
 using Syncfusion.Data;
 using LiteDB;
-using MPTagThat.Core.Services.Settings.Setting;
-using System.Windows.Interop;
-using System.Windows.Media;
+using Application = System.Windows.Forms.Application;
 
 #endregion
 
@@ -103,6 +101,15 @@ namespace MPTagThat.TagChecker.ViewModels
       set => SetProperty(ref _selectedItems, value);
     }
 
+    /// <summary>
+    /// Binding for Wait Cursor
+    /// </summary>
+    private bool _isBusy;
+    public bool IsBusy
+    {
+      get => _isBusy;
+      set => SetProperty(ref _isBusy, value);
+    }
 
     #endregion
 
@@ -122,12 +129,14 @@ namespace MPTagThat.TagChecker.ViewModels
         query += $"Album = \"%original%\"";
       }
 
+      IsBusy= true;
+
       var items = SelectedItems.Cast<TagCheckerData>().ToList();
       foreach (var item in items)
       {
+        Application.DoEvents();
         var errors = false;
         var dbQuery = query.Replace("%original%", item.OriginalItem);
-        log.Debug($"Running Query {query}");
         var result = ContainerLocator.Current.Resolve<IMusicDatabase>().ExecuteQuery(dbQuery);
 
         if (result != null)
@@ -148,6 +157,7 @@ namespace MPTagThat.TagChecker.ViewModels
                 {
                   song.AlbumArtist = item.ChangedItem;
                 }
+                song.Changed = true;
               }
               var errormsg = "";
               if (Song.SaveFile(song, ref errormsg))
@@ -173,6 +183,7 @@ namespace MPTagThat.TagChecker.ViewModels
           ContainerLocator.Current.Resolve<IMusicDatabase>().UpdateTagCheckerItem(item, _currentItemType);
         }
       }
+      IsBusy= false;
     }
 
     /// <summary>
@@ -180,12 +191,14 @@ namespace MPTagThat.TagChecker.ViewModels
     /// </summary>
     private void ToggleIgnoreSelectedItems()
     {
+      IsBusy = true;
       // Set the UpdateProperty to false
       _items.Select(p => { p.UpdateChangedProperty = false; return p; }).ToList();
 
       var items = SelectedItems.Cast<TagCheckerData>().ToList();
       foreach (var item in items)
       {
+        Application.DoEvents();
         if (item.Status == ItemStatus.Ignored)
         {
           item.Status = ItemStatus.NoMatch;
@@ -200,6 +213,7 @@ namespace MPTagThat.TagChecker.ViewModels
 
       // Set the UpdateProperty to true
       _items.Select(p => { p.UpdateChangedProperty = true; return p; }).ToList();
+      IsBusy= false;
     }
 
 
@@ -219,6 +233,8 @@ namespace MPTagThat.TagChecker.ViewModels
       ItemsGrid.Columns[1].FilterPredicates.Add(new FilterPredicate() { FilterType = FilterType.NotEquals, FilterValue = "Ignored" });
       ItemsGrid.Columns[1].FilterPredicates.Add(new FilterPredicate() { FilterType = FilterType.NotEquals, FilterValue = "Applied" });
 
+      IsBusy= true;
+      Application.DoEvents();
       _currentItemType = "artists";
       _items.Clear();
       var items = ContainerLocator.Current.Resolve<IMusicDatabase>().GetTagCheckerItems(_currentItemType);
@@ -226,8 +242,7 @@ namespace MPTagThat.TagChecker.ViewModels
 
       // Set the UpdateProperty to true
       _items.Select(p => { p.UpdateChangedProperty = true; return p; }).ToList();
-
-
+      IsBusy= false;
     }
 
     /// <summary>
@@ -235,6 +250,7 @@ namespace MPTagThat.TagChecker.ViewModels
     /// </summary>
     private void ScanDatabase()
     {
+      IsBusy= true;
       _items.Clear();
       var artists = ContainerLocator.Current.Resolve<IMusicDatabase>().GetArtists();
       var albumArtists = ContainerLocator.Current.Resolve<IMusicDatabase>().GetAlbumArtists();
@@ -242,15 +258,21 @@ namespace MPTagThat.TagChecker.ViewModels
       // Union the 2 lists
       var result = artists.Union(albumArtists).ToList();
 
+      var i = 0;
       foreach (var artist in result)
       {
+        i++;
+        if (i % 100 == 0)
+        {
+          Application.DoEvents();
+        }
         var item = new TagCheckerData { OriginalItem = artist };
         CheckArtistInMusicBrainz(ref item);
         _items.Add(item);
       }
 
       ContainerLocator.Current.Resolve<IMusicDatabase>().AddItemsToTagCheckerDatabase(ref _items, _currentItemType);
-
+      IsBusy= false;
     }
 
     /// <summary>
