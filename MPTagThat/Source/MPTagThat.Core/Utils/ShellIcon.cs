@@ -23,9 +23,6 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Runtime.InteropServices;
-using System.Windows;
-using System.Windows.Interop;
-using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
 #endregion
@@ -116,7 +113,7 @@ namespace MPTagThat.Core.Utils
           return null;
         }
       }
-      
+
       Icon icon = (Icon)System.Drawing.Icon.FromHandle(shinfo.hIcon).Clone();
       Win32.DestroyIcon(shinfo.hIcon);
       return icon;

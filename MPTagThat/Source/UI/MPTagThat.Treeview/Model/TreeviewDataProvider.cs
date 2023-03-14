@@ -18,18 +18,17 @@
 
 # region 
 
+using MPTagThat.Core.Services.Logging;
+using MPTagThat.Treeview.Model.Win32;
+using Prism.Ioc;
+using Shell32;
+using Syncfusion.UI.Xaml.TreeView.Engine;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Windows.Input;
-using MPTagThat.Core.Services.Logging;
-using MPTagThat.Treeview.Model.Win32;
-using MPTagThat.Treeview.ViewModels;
-using Prism.Ioc;
-using Shell32;
-using Syncfusion.UI.Xaml.TreeView.Engine;
 
 #endregion
 
@@ -100,7 +99,7 @@ namespace MPTagThat.Treeview.Model
     /// <summary>
     /// Only valid in Database Provider
     /// </summary>
-    public void ClearSelectedDatabaseNode() {}
+    public void ClearSelectedDatabaseNode() { }
 
     /// <summary>
     /// Read Sub Folders of the selected Parent Node

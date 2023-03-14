@@ -18,9 +18,9 @@
 
 #region
 
-using System.Windows;
 using MPTagThat.SongGrid.ViewModels;
 using Syncfusion.Windows.Shared;
+using System.Windows;
 
 #endregion
 

@@ -22,7 +22,7 @@ namespace MPTagThat.Core.Common.Song
   {
     #region Variables
 
-    public Lyric() {}
+    public Lyric() { }
 
     public Lyric(Lyric copyFrom)
     {

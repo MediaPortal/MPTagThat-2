@@ -18,13 +18,13 @@
 
 #region
 
-using System;
-using System.IO;
 using MPTagThat.Core.Events;
 using MPTagThat.Core.Services.Logging;
 using MPTagThat.Core.Services.Settings;
 using MPTagThat.Core.Services.Settings.Setting;
 using Prism.Ioc;
+using System;
+using System.IO;
 using Un4seen.Bass;
 using Un4seen.Bass.Misc;
 

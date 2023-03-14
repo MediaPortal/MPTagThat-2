@@ -16,10 +16,8 @@
 // along with MPTagThat. If not, see <http://www.gnu.org/licenses/>.
 #endregion
 
-using System.IO;
-using System.Windows.Controls;
-using MPTagThat.Core.Services.Settings;
 using MPTagThat.SongGrid.ViewModels;
+using System.Windows.Controls;
 
 namespace MPTagThat.SongGrid.Views
 {
@@ -31,7 +29,7 @@ namespace MPTagThat.SongGrid.Views
     public SongGridView()
     {
       InitializeComponent();
-      var vm = (SongGridViewModel) DataContext;
+      var vm = (SongGridViewModel)DataContext;
       if (vm != null)
       {
         vm.SongGrid = this.SongDataGrid;

@@ -18,13 +18,13 @@
 
 #region
 
+using MPTagThat.Dialogs.Models;
+using Prism.Services.Dialogs;
+using Syncfusion.UI.Xaml.Utility;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows.Input;
-using MPTagThat.Dialogs.Models;
-using Prism.Services.Dialogs;
-using Syncfusion.UI.Xaml.Utility;
 using WPFLocalizeExtension.Engine;
 
 #endregion
@@ -76,7 +76,7 @@ namespace MPTagThat.Dialogs.ViewModels
     private void ApplyRecording(object param)
     {
       log.Trace(">>>");
-      _selectedRecording = (MusicBrainzRecording) param;
+      _selectedRecording = (MusicBrainzRecording)param;
       CloseDialog("true");
       log.Trace("<<<");
     }
@@ -107,7 +107,7 @@ namespace MPTagThat.Dialogs.ViewModels
     public override void CloseDialog(string parameter)
     {
       ButtonResult result = ButtonResult.Cancel;
-      
+
       if (parameter?.ToLower() == "true")
         result = ButtonResult.OK;
       else if (parameter?.ToLower() == "false")

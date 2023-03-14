@@ -18,18 +18,17 @@
 
 using MPTagThat.Core;
 using MPTagThat.Core.Events;
-using MPTagThat.Core.Services.Settings;
-using System.IO;
-using Syncfusion.Windows.Shared;
-using Syncfusion.Windows.Tools.Controls;
-using System.Runtime.Serialization.Formatters.Binary;
-using System.Windows;
-using System.Windows.Media;
 using MPTagThat.Core.Services.Logging;
 using MPTagThat.Core.Services.MediaChangeMonitor;
+using MPTagThat.Core.Services.Settings;
 using MPTagThat.Core.Services.Settings.Setting;
 using MPTagThat.ViewModels;
 using Prism.Ioc;
+using Syncfusion.Windows.Shared;
+using Syncfusion.Windows.Tools.Controls;
+using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
+using System.Windows;
 
 namespace MPTagThat.Views
 {

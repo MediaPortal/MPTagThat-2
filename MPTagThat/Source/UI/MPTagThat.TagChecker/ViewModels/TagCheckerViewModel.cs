@@ -18,26 +18,25 @@
 
 #region
 
+using LiteDB;
+using MPTagThat.Core;
+using MPTagThat.Core.Common.Song;
+using MPTagThat.Core.Events;
 using MPTagThat.Core.Services.Logging;
+using MPTagThat.Core.Services.MusicDatabase;
+using MPTagThat.Core.Utils;
+using Prism.Ioc;
 using Prism.Mvvm;
 using Prism.Regions;
 using Prism.Services.Dialogs;
-using Prism.Ioc;
+using Syncfusion.Data;
+using Syncfusion.UI.Xaml.Grid;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Collections.ObjectModel;
-using MPTagThat.Core.Services.MusicDatabase;
-using MPTagThat.Core.Common;
-using Syncfusion.UI.Xaml.Grid;
-using MPTagThat.Core.Events;
-using MPTagThat.Core;
-using Action = MPTagThat.Core.Common.Action;
-using MPTagThat.Core.Common.Song;
-using MPTagThat.Core.Utils;
+using System.Linq;
 using WPFLocalizeExtension.Engine;
-using Syncfusion.Data;
-using LiteDB;
+using Action = MPTagThat.Core.Common.Action;
 using Application = System.Windows.Forms.Application;
 
 #endregion
@@ -129,7 +128,7 @@ namespace MPTagThat.TagChecker.ViewModels
         query += $"Album = \"%original%\"";
       }
 
-      IsBusy= true;
+      IsBusy = true;
 
       var items = SelectedItems.Cast<TagCheckerData>().ToList();
       foreach (var item in items)
@@ -183,7 +182,7 @@ namespace MPTagThat.TagChecker.ViewModels
           ContainerLocator.Current.Resolve<IMusicDatabase>().UpdateTagCheckerItem(item, _currentItemType);
         }
       }
-      IsBusy= false;
+      IsBusy = false;
     }
 
     /// <summary>
@@ -213,7 +212,7 @@ namespace MPTagThat.TagChecker.ViewModels
 
       // Set the UpdateProperty to true
       _items.Select(p => { p.UpdateChangedProperty = true; return p; }).ToList();
-      IsBusy= false;
+      IsBusy = false;
     }
 
 
@@ -233,7 +232,7 @@ namespace MPTagThat.TagChecker.ViewModels
       ItemsGrid.Columns[1].FilterPredicates.Add(new FilterPredicate() { FilterType = FilterType.NotEquals, FilterValue = "Ignored" });
       ItemsGrid.Columns[1].FilterPredicates.Add(new FilterPredicate() { FilterType = FilterType.NotEquals, FilterValue = "Applied" });
 
-      IsBusy= true;
+      IsBusy = true;
       Application.DoEvents();
       _currentItemType = "artists";
       _items.Clear();
@@ -242,7 +241,7 @@ namespace MPTagThat.TagChecker.ViewModels
 
       // Set the UpdateProperty to true
       _items.Select(p => { p.UpdateChangedProperty = true; return p; }).ToList();
-      IsBusy= false;
+      IsBusy = false;
     }
 
     /// <summary>
@@ -250,7 +249,7 @@ namespace MPTagThat.TagChecker.ViewModels
     /// </summary>
     private void ScanDatabase()
     {
-      IsBusy= true;
+      IsBusy = true;
       _items.Clear();
       var artists = ContainerLocator.Current.Resolve<IMusicDatabase>().GetArtists();
       var albumArtists = ContainerLocator.Current.Resolve<IMusicDatabase>().GetAlbumArtists();
@@ -272,7 +271,7 @@ namespace MPTagThat.TagChecker.ViewModels
       }
 
       ContainerLocator.Current.Resolve<IMusicDatabase>().AddItemsToTagCheckerDatabase(ref _items, _currentItemType);
-      IsBusy= false;
+      IsBusy = false;
     }
 
     /// <summary>

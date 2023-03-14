@@ -45,13 +45,13 @@ namespace MPTagThat.Core.Common.Converter
       if (value is SolidColorBrush)
       {
         var color = (value as SolidColorBrush).Color;
-        const int threshold = 3*255/2;
+        const int threshold = 3 * 255 / 2;
         var sum = color.R + color.G + color.B;
         return new SolidColorBrush(sum > threshold ? Colors.Black : Colors.White);
       }
       return DependencyProperty.UnsetValue;
     }
- 
+
     public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
     {
       return DependencyProperty.UnsetValue;

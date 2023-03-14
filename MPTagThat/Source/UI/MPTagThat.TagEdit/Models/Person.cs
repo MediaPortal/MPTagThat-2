@@ -30,7 +30,7 @@ namespace MPTagThat.TagEdit.Models
 
     public string Name
     {
-      get => _name; 
+      get => _name;
       set => SetProperty(ref _name, value);
     }
 
@@ -38,7 +38,7 @@ namespace MPTagThat.TagEdit.Models
 
     public string Function
     {
-      get => _function; 
+      get => _function;
       set => SetProperty(ref _function, value);
     }
   }

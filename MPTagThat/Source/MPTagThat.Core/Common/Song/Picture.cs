@@ -16,13 +16,12 @@
 // along with MPTagThat. If not, see <http://www.gnu.org/licenses/>.
 #endregion
 
+using FreeImageAPI;
 using System;
 using System.Drawing;
 using System.IO;
-using System.Windows.Forms;
 using System.Windows.Media.Imaging;
 using TagLib;
-using FreeImageAPI;
 
 namespace MPTagThat.Core.Common.Song
 {
@@ -143,7 +142,7 @@ namespace MPTagThat.Core.Common.Song
     public static byte[] ImageToByte(Image img)
     {
       // Need to make a copy, otherwise we have a GDI+ Error
-      
+
       byte[] byteArray = new byte[0];
       using (MemoryStream stream = new MemoryStream())
       {
@@ -173,7 +172,7 @@ namespace MPTagThat.Core.Common.Song
       {
         using (System.Net.WebClient webClient = new System.Net.WebClient())
         {
-          webClient.Headers.Add ("user-agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.132 Safari/537.36");
+          webClient.Headers.Add("user-agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.132 Safari/537.36");
           using (Stream stream = webClient.OpenRead(url))
           {
             Data = ImageToByte((Image.FromStream(stream)));
@@ -212,14 +211,14 @@ namespace MPTagThat.Core.Common.Song
       }
     }
 
-    
-    public void Resize (int width)
+
+    public void Resize(int width)
     {
       FreeImageBitmap bmp = new FreeImageBitmap(ImageFromData(Data));
-      
+
       int ratio = (int)((double)bmp.Height / bmp.Width * width);
       bmp.Rescale(width, ratio, FREE_IMAGE_FILTER.FILTER_BOX);
-      Data = ImageToByte((Image) (bmp.Clone() as FreeImageBitmap));
+      Data = ImageToByte((Image)(bmp.Clone() as FreeImageBitmap));
       bmp.Dispose();
     }
 

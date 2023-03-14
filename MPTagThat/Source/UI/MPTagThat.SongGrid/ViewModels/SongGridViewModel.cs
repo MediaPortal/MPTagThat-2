@@ -18,46 +18,44 @@
 
 #region
 
+using Microsoft.VisualBasic.FileIO;
+using MPTagThat.Core;
+using MPTagThat.Core.Common;
+using MPTagThat.Core.Common.Song;
+using MPTagThat.Core.Events;
+using MPTagThat.Core.Services.Logging;
+using MPTagThat.Core.Services.MusicDatabase;
+using MPTagThat.Core.Services.ScriptManager;
+using MPTagThat.Core.Services.Settings;
+using MPTagThat.Core.Services.Settings.Setting;
+using MPTagThat.Core.Utils;
+using MPTagThat.Dialogs.ViewModels;
+using MPTagThat.SongGrid.Models;
+using MPTagThat.SongGrid.Views;
+using Prism.Events;
+using Prism.Ioc;
+using Prism.Modularity;
+using Prism.Mvvm;
+using Prism.Regions;
+using Prism.Services.Dialogs;
+using Syncfusion.UI.Xaml.Grid;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Threading.Tasks;
-using System.Windows.Input;
-using Microsoft.VisualBasic.FileIO;
-using MPTagThat.Core;
-using MPTagThat.Core.Common;
-using MPTagThat.Core.Common.Song;
-using MPTagThat.Core.Services.Logging;
-using MPTagThat.Core.Services.Settings;
-using MPTagThat.Core.Services.Settings.Setting;
-using MPTagThat.Core.Utils;
-using MPTagThat.Core.Events;
-using Prism.Events;
-using Prism.Mvvm;
-using Prism.Regions;
-using GridViewColumn = MPTagThat.Core.Common.GridViewColumn;
-using Syncfusion.UI.Xaml.Grid;
-using WPFLocalizeExtension.Engine;
-using System.Windows.Threading;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Data;
-using MPTagThat.Core.Services.MusicDatabase;
-using MPTagThat.Core.Services.ScriptManager;
-using MPTagThat.Dialogs.ViewModels;
-using MPTagThat.Dialogs.Views;
-using MPTagThat.SongGrid.Models;
-using MPTagThat.SongGrid.Views;
-using Prism.Commands;
-using Prism.Ioc;
-using Prism.Modularity;
+using System.Windows.Input;
+using System.Windows.Threading;
+using WPFLocalizeExtension.Engine;
 using Action = MPTagThat.Core.Common.Action;
-using Prism.Services.Dialogs;
 using Application = System.Windows.Forms.Application;
 using Cursors = System.Windows.Input.Cursors;
+using GridViewColumn = MPTagThat.Core.Common.GridViewColumn;
 using MessageBox = System.Windows.MessageBox;
 // ReSharper disable ForCanBeConvertedToForeach
 
@@ -1017,7 +1015,7 @@ namespace MPTagThat.SongGrid.ViewModels
       }
 
       // Prevent updating Tageditview on every loop as this causes big delays
-      _commandProcessing = true;   
+      _commandProcessing = true;
 
       // Iterate in a for loop, since we are passing
       // the song as reference, which is not allowed in a foreach

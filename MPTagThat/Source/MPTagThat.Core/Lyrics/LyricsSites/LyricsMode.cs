@@ -175,7 +175,7 @@ namespace MPTagThat.Core.Lyrics.LyricsSites
       LyricText = LyricText.Replace("&amp;", "&");
       LyricText = Regex.Replace(LyricText, ".*(<span class=.*>).*", MatchReplace, RegexOptions.Multiline);
       // Need to execute it twice for some reason the first run didn't clean the first occurence
-      LyricText = Regex.Replace(LyricText, ".*(<span class=.*>).*", MatchReplace, RegexOptions.Multiline); 
+      LyricText = Regex.Replace(LyricText, ".*(<span class=.*>).*", MatchReplace, RegexOptions.Multiline);
       LyricText = LyricText.Trim();
     }
 

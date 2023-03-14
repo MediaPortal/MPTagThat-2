@@ -18,19 +18,19 @@
 
 #region
 
+using MPTagThat.Core.Common;
+using MPTagThat.Core.Common.Song;
+using MPTagThat.Core.Events;
+using MPTagThat.Core.Services.Settings.Setting;
+using MPTagThat.Core.Utils;
+using Prism.Services.Dialogs;
+using Syncfusion.UI.Xaml.Grid;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Windows;
 using System.Windows.Input;
-using Prism.Services.Dialogs;
-using MPTagThat.Core.Common;
-using MPTagThat.Core.Common.Song;
-using MPTagThat.Core.Events;
-using MPTagThat.Core.Services.Settings.Setting;
-using MPTagThat.Core.Utils;
-using Syncfusion.UI.Xaml.Grid;
 using WPFLocalizeExtension.Engine;
 // ReSharper disable IdentifierTypo
 // ReSharper disable StringIndexOfIsCultureSpecific.1
@@ -172,8 +172,8 @@ namespace MPTagThat.Dialogs.ViewModels
 
       if (!Util.CheckParameterFormat(SelectedItemText, Options.ParameterFormat.TagToFileName))
       {
-        MessageBox.Show(LocalizeDictionary.Instance.GetLocalizedObject("MPTagThat", "Strings", "tagAndRename_InvalidParm",LocalizeDictionary.Instance.Culture).ToString(),
-          LocalizeDictionary.Instance.GetLocalizedObject("MPTagThat", "Strings", "message_Error_Title",LocalizeDictionary.Instance.Culture).ToString(), MessageBoxButton.OK);
+        MessageBox.Show(LocalizeDictionary.Instance.GetLocalizedObject("MPTagThat", "Strings", "tagAndRename_InvalidParm", LocalizeDictionary.Instance.Culture).ToString(),
+          LocalizeDictionary.Instance.GetLocalizedObject("MPTagThat", "Strings", "message_Error_Title", LocalizeDictionary.Instance.Culture).ToString(), MessageBoxButton.OK);
         return;
       }
 
@@ -199,7 +199,7 @@ namespace MPTagThat.Dialogs.ViewModels
       log.Trace("<<<");
       CloseDialog("true");
     }
-    
+
     /// <summary>
     /// Rename the Filename either via Command Button or Batch Mode
     /// </summary>

@@ -18,20 +18,20 @@
 
 #region
 
-using Prism.Commands;
-using Prism.Mvvm;
-using Prism.Services.Dialogs;
-using System;
-using System.Windows.Input;
-using System.Windows.Media;
 using MPTagThat.Core;
 using MPTagThat.Core.Common;
 using MPTagThat.Core.Events;
 using MPTagThat.Core.Services.Logging;
 using MPTagThat.Core.Services.Settings;
 using MPTagThat.Core.Services.Settings.Setting;
+using Prism.Commands;
 using Prism.Events;
 using Prism.Ioc;
+using Prism.Mvvm;
+using Prism.Services.Dialogs;
+using System;
+using System.Windows.Input;
+using System.Windows.Media;
 
 #endregion
 
@@ -87,7 +87,7 @@ namespace MPTagThat.Dialogs.ViewModels
 
     private void CancelChanges(object parameters)
     {
-      CloseDialog("false"); 
+      CloseDialog("false");
     }
 
     #endregion

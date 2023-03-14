@@ -43,10 +43,10 @@ namespace MPTagThat.Core.Common.Song
     #endregion
 
     #region ctor
-    public Frame() 
+    public Frame()
     {
     }
-    
+
     public Frame(string id, string description, string value)
     {
       Id = id;

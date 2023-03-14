@@ -67,10 +67,10 @@ namespace MPTagThat.Core.Lyrics
     {
       var request = base.GetWebRequest(address);
 
-      if (request != null && request.GetType() == typeof (HttpWebRequest))
+      if (request != null && request.GetType() == typeof(HttpWebRequest))
       {
-        ((HttpWebRequest) request).CookieContainer = CookieContainer;
-        ((HttpWebRequest) request).UserAgent = UserAgent;
+        ((HttpWebRequest)request).CookieContainer = CookieContainer;
+        ((HttpWebRequest)request).UserAgent = UserAgent;
         if (_referer != null)
         {
           ((HttpWebRequest)request).Referer = _referer;
@@ -84,4 +84,5 @@ namespace MPTagThat.Core.Lyrics
     }
 
     public Uri ResponseUri { get; private set; }
-  }}
+  }
+}

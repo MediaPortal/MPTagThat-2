@@ -18,17 +18,6 @@
 
 #region
 
-using System;
-using System.Collections;
-using System.Collections.ObjectModel;
-using System.Globalization;
-using System.IO;
-using System.Linq;
-using System.Net.Http;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
-using System.Windows.Input;
 using MPTagThat.Core;
 using MPTagThat.Core.Common;
 using MPTagThat.Core.Events;
@@ -44,9 +33,19 @@ using Prism.Ioc;
 using Prism.Mvvm;
 using Prism.Regions;
 using Prism.Services.Dialogs;
-using Syncfusion.SfSkinManager;
 using Syncfusion.Windows.Shared;
 using Syncfusion.Windows.Tools.Controls;
+using System;
+using System.Collections;
+using System.Collections.ObjectModel;
+using System.Globalization;
+using System.IO;
+using System.Linq;
+using System.Net.Http;
+using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
+using System.Windows.Input;
 using WPFLocalizeExtension.Engine;
 using Action = MPTagThat.Core.Common.Action;
 using Application = System.Windows.Application;

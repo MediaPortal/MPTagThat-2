@@ -18,11 +18,7 @@
 
 #region 
 
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 #endregion
 
@@ -53,7 +49,7 @@ namespace MPTagThat.Dialogs.ViewModels
       _parameterParts.Clear();
 
       // Split the given parameters to see, if folders have been specified
-      var parms = parameterFormat.Split(new[] {'\\'});
+      var parms = parameterFormat.Split(new[] { '\\' });
       for (var i = 0; i < parms.Length; i++)
       {
         if (!parms[i].StartsWith("%"))

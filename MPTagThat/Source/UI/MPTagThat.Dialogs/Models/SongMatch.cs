@@ -37,7 +37,7 @@ namespace MPTagThat.Dialogs.Models
 
     public uint TrackNumber
     {
-      get => _trackNumber; 
+      get => _trackNumber;
       set => SetProperty(ref _trackNumber, value);
     }
 

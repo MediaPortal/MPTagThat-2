@@ -18,6 +18,15 @@
 
 #region 
 
+using LiteDB;
+using MPTagThat.Core.Common.Song;
+using MPTagThat.Core.Events;
+using MPTagThat.Core.Services.Logging;
+using MPTagThat.Core.Services.Settings;
+using MPTagThat.Core.Services.Settings.Setting;
+using MPTagThat.Core.Utils;
+using Prism.Ioc;
+using Syncfusion.Windows.Controls;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -29,15 +38,6 @@ using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text.RegularExpressions;
-using LiteDB;
-using MPTagThat.Core.Common.Song;
-using MPTagThat.Core.Events;
-using MPTagThat.Core.Services.Logging;
-using MPTagThat.Core.Services.Settings;
-using MPTagThat.Core.Services.Settings.Setting;
-using MPTagThat.Core.Utils;
-using Prism.Ioc;
-using Syncfusion.Windows.Controls;
 using WPFLocalizeExtension.Engine;
 
 #endregion 

@@ -25,7 +25,7 @@ namespace MPTagThat.Core.GnuDB
   {
     private CDTrackDetail[] _tracks;
 
-    public CDInfoDetail() {}
+    public CDInfoDetail() { }
 
     public CDInfoDetail(string discID, string artist, string title,
                         string genre, int year, int duration, CDTrackDetail[] tracks,

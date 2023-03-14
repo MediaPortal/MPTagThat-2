@@ -18,8 +18,8 @@
 
 #region
 
-using System.Threading.Tasks;
 using MPTagThat.Core.Common.Song;
+using System.Threading.Tasks;
 using TagLib;
 
 #endregion
@@ -44,7 +44,7 @@ namespace MPTagThat.SongGrid.Commands
 
     public CmdDeleteTags(object[] parameters)
     {
-      switch ((string) parameters[0])
+      switch ((string)parameters[0])
       {
         case "DeleteAllTags":
           _tagType = TagTypes.AllTags;

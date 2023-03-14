@@ -18,17 +18,14 @@
 
 #region
 
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.IO;
-using System.Windows.Forms;
-using System.Windows.Media;
 using MPTagThat.Core.Common;
 using MPTagThat.Core.Common.Song;
 using MPTagThat.Core.Events;
 using Prism.Ioc;
+using System;
+using System.Collections.Generic;
+using System.Windows.Forms;
+using System.Windows.Media;
 
 #endregion
 
@@ -283,7 +280,7 @@ namespace MPTagThat.Core.Services.Settings.Setting
     public KeyMaps KeyMap { get; set; }
 
     public bool IsTagsTabActive { get; set; }
-    
+
     public Brush BackGround { get; set; }
 
     public bool IsDatabaseMode { get; set; }

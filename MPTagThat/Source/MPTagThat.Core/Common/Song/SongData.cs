@@ -18,6 +18,11 @@
 
 #region
 
+using LiteDB;
+using MPTagThat.Core.Services.Settings;
+using MPTagThat.Core.Utils;
+using Prism.Ioc;
+using Prism.Mvvm;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -25,13 +30,7 @@ using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Windows.Media.Imaging;
-using LiteDB;
-using MPTagThat.Core.Services.Settings;
-using MPTagThat.Core.Utils;
-using Prism.Ioc;
-using Prism.Mvvm;
 using TagLib;
-using Picture = MPTagThat.Core.Common.Song.Picture;
 
 #endregion
 

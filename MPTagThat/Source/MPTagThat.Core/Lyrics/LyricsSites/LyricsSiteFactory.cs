@@ -151,7 +151,7 @@ namespace MPTagThat.Core.Lyrics.LyricsSites
         ilGenerator.Emit(OpCodes.Newobj, constructorInfo);
         ilGenerator.Emit(OpCodes.Ret);
 
-        del = (ConstructorDelegate) dynamicMethod.CreateDelegate(typeof(ConstructorDelegate));
+        del = (ConstructorDelegate)dynamicMethod.CreateDelegate(typeof(ConstructorDelegate));
 
         // In some occasions we get duplicate keys
         if (!ClassConstructors.ContainsKey(type.Name))
@@ -159,7 +159,7 @@ namespace MPTagThat.Core.Lyrics.LyricsSites
           ClassConstructors.Add(type.Name, del);
 
         }
-        
+
         return del(artist, title, mEventStopSiteSearches, timeLimit);
       }
       catch (NullReferenceException)

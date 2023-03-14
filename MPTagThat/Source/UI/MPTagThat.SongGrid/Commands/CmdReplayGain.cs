@@ -18,16 +18,13 @@
 
 #region
 
+using MPTagThat.Core.Common.Song;
+using NReplayGain;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using MPTagThat.Core.Common.Song;
-using NReplayGain;
 using Un4seen.Bass;
-using Un4seen.Bass.AddOn.Mix;
 
 #endregion
 
@@ -54,7 +51,7 @@ namespace MPTagThat.SongGrid.Commands
       var commandParmObj = (object[])parameters[1];
       if (commandParmObj.Length > 0)
       {
-        if ((string) commandParmObj[0] == "AlbumGain")
+        if ((string)commandParmObj[0] == "AlbumGain")
         {
           _albumGain = new AlbumGain();
         }

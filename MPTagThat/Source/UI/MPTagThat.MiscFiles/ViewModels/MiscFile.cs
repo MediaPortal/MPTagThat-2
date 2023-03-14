@@ -19,7 +19,6 @@
 #region
 
 using Prism.Mvvm;
-using System.ComponentModel;
 using System.Windows.Media.Imaging;
 
 #endregion
@@ -41,9 +40,10 @@ namespace MPTagThat.MiscFiles.ViewModels
       set { SetProperty(ref _filename, value); }
     }
 
-    public bool IsTextBoxEnabled 
-    { get => _isTextBoxEnabled; 
-      set { SetProperty(ref _isTextBoxEnabled, value); } 
+    public bool IsTextBoxEnabled
+    {
+      get => _isTextBoxEnabled;
+      set { SetProperty(ref _isTextBoxEnabled, value); }
     }
   }
 }

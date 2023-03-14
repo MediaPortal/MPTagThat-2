@@ -18,14 +18,14 @@
 
 #region 
 
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Windows;
-using System.Windows.Input;
 using MPTagThat.Core.Common.Song;
 using Prism.Services.Dialogs;
 using Syncfusion.UI.Xaml.Grid;
 using Syncfusion.UI.Xaml.Utility;
+using System.Collections.ObjectModel;
+using System.Linq;
+using System.Windows;
+using System.Windows.Input;
 using WPFLocalizeExtension.Engine;
 
 #endregion
@@ -47,8 +47,8 @@ namespace MPTagThat.Dialogs.ViewModels
     #region Properties
 
     private bool _ckMatchCase;
-    public bool CkMatchCase 
-    { 
+    public bool CkMatchCase
+    {
       get => _ckMatchCase;
       set
       {
@@ -117,9 +117,9 @@ namespace MPTagThat.Dialogs.ViewModels
 
     private bool _isReplace;
 
-    public bool IsReplace 
+    public bool IsReplace
     {
-      get => _isReplace; 
+      get => _isReplace;
       set => SetProperty(ref _isReplace, value);
     }
 

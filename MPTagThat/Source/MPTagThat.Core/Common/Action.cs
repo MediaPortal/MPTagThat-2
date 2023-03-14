@@ -16,11 +16,6 @@
 // along with MPTagThat. If not, see <http://www.gnu.org/licenses/>.
 #endregion
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MPTagThat.Core.Common
 {
@@ -63,7 +58,7 @@ namespace MPTagThat.Core.Common
       REPLACE = 35,
       REPLAYGAIN = 38,
       MusicBrainzInfo = 39,
-      
+
       // Actions which don't have a Key assigned
       CASECONVERSION = 60,
       DELETEALLTAGS = 61,
@@ -105,10 +100,10 @@ namespace MPTagThat.Core.Common
 
     public static string ActionToCommand(ActionType action)
     {
-      var checkSelections = false; 
+      var checkSelections = false;
       return ActionToCommand(action, ref checkSelections);
     }
-    
+
     public static string ActionToCommand(ActionType action, ref bool checkSelections)
     {
       switch (action)

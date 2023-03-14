@@ -18,9 +18,9 @@
 
 #region
 
+using MPTagThat.Core.Common.Song;
 using System;
 using System.Threading.Tasks;
-using MPTagThat.Core.Common.Song;
 using Un4seen.Bass;
 using Un4seen.Bass.AddOn.Fx;
 

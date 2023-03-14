@@ -18,7 +18,6 @@
 
 #region
 
-using System.Windows.Forms;
 using MPTagThat.Core;
 using MPTagThat.Core.Events;
 using Prism.Events;

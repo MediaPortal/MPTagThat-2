@@ -18,22 +18,20 @@
 
 #region
 
-using System;
-using System.CodeDom;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.Remoting.Channels;
-using System.Threading.Tasks;
 using AcoustID;
 using AcoustID.Web;
 using Hqub.MusicBrainz.API.Entities;
 using MPTagThat.Core.Common.Song;
+using MPTagThat.Dialogs.Models;
 using MPTagThat.Dialogs.ViewModels;
 using Prism.Services.Dialogs;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using Un4seen.Bass;
-using Release = Hqub.MusicBrainz.API.Entities.Release;
 using Recording = Hqub.MusicBrainz.API.Entities.Recording;
-using MPTagThat.Dialogs.Models;
+using Release = Hqub.MusicBrainz.API.Entities.Release;
 
 #endregion
 
@@ -92,7 +90,7 @@ namespace MPTagThat.SongGrid.Commands
                 Id = recording.Id,
                 TrackId = release.Media[0].Tracks[0].Id,
                 Title = recording.Title,
-                Duration = $"{TimeSpan.FromMilliseconds((int) recording.Length).Hours:D2}:{TimeSpan.FromMilliseconds((int) recording.Length).Minutes:D2}:{TimeSpan.FromMilliseconds((int) recording.Length).Seconds:D2}",
+                Duration = $"{TimeSpan.FromMilliseconds((int)recording.Length).Hours:D2}:{TimeSpan.FromMilliseconds((int)recording.Length).Minutes:D2}:{TimeSpan.FromMilliseconds((int)recording.Length).Seconds:D2}",
                 AlbumId = release.Id,
                 ArtistId = (recording.Credits != null && recording.Credits.Count > 0) ? recording.Credits[0].Artist.Id : "",
                 AlbumTitle = release.Title,
@@ -125,12 +123,12 @@ namespace MPTagThat.SongGrid.Commands
       {
         // And now we remove duplicate Recordings and Countries
         var condensedRecordings = tmpRecordings
-          .GroupBy(r => new {r.AlbumTitle, r.Country})
+          .GroupBy(r => new { r.AlbumTitle, r.Country })
           .Select(g => g.First())
           .ToList();
 
         var dialogResult = ButtonResult.None;
-        var parameters = new DialogParameters {{"recordings", condensedRecordings}};
+        var parameters = new DialogParameters { { "recordings", condensedRecordings } };
         DialogService.ShowDialogInAnotherWindow("IdentifySongView", "DialogWindowView", parameters, r =>
         {
           dialogResult = r.Result;
@@ -242,9 +240,9 @@ namespace MPTagThat.SongGrid.Commands
         foreach (var rec in trackId.Recordings)
         {
           System.Threading.Thread.Sleep(400);
-          var recording = await Recording.GetAsync(rec.Id, new[] {"releases", "artists", "media", "discids"});
+          var recording = await Recording.GetAsync(rec.Id, new[] { "releases", "artists", "media", "discids" });
           recordings.Add(recording);
-          
+
         }
       }
       return recordings;

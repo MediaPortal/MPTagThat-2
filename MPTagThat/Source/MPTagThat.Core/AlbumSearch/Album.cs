@@ -18,14 +18,12 @@
 
 #region
 
-using System;
 using MPTagThat.Core.AlbumCoverSearch;
 using MPTagThat.Core.Utils;
 using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Windows.Media.Imaging;
-using FreeImageAPI;
 using TagLib;
 
 #endregion
@@ -83,7 +81,7 @@ namespace MPTagThat.Core.AlbumSearch
     public string ListViewText
     {
       get
-      { 
+      {
         var albumSize = (CoverWidth == "0" || CoverWidth == "") ? " " : $" {CoverWidth}x{CoverHeight} ";
         return $"{Title}{albumSize}";
       }

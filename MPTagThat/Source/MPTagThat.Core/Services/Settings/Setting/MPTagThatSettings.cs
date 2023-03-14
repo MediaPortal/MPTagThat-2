@@ -20,8 +20,6 @@
 
 using System.Collections.Generic;
 using System.Drawing;
-using System.Windows.Media;
-using Brush = System.Windows.Media.Brush;
 
 #endregion
 
@@ -38,7 +36,7 @@ namespace MPTagThat.Core.Services.Settings.Setting
     #region Properties
 
     #region Layout
-    
+
     [Setting(SettingScope.User, "")]
     public string LastFolderUsed { get; set; } = "";
 
@@ -157,7 +155,7 @@ namespace MPTagThat.Core.Services.Settings.Setting
     #region Lyrics
 
     [Setting(SettingScope.User, "")]
-    public List<string> LyricSites { get; set; } = new List<string>() { "Lyrics007", "Lyricsmode", "LyricsNet" ,"LyricsOnDemand", "LyricWiki" };
+    public List<string> LyricSites { get; set; } = new List<string>() { "Lyrics007", "Lyricsmode", "LyricsNet", "LyricsOnDemand", "LyricWiki" };
 
     [Setting(SettingScope.User, "")]
     public List<string> SelectedLyricSites { get; set; } = new List<string>();
@@ -259,7 +257,7 @@ namespace MPTagThat.Core.Services.Settings.Setting
 
     [Setting(SettingScope.User, "100")]
     public int RipFAACQuality { get; set; }
-    
+
     [Setting(SettingScope.User, "")]
     public string RipFAACExpert { get; set; }
 

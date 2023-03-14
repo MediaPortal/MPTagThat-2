@@ -18,10 +18,10 @@
 
 #region
 
-using System.Collections.Generic;
 using MPTagThat.Core.Common;
 using MPTagThat.Core.Services.Settings;
 using Prism.Ioc;
+using System.Collections.Generic;
 
 #endregion
 
@@ -158,18 +158,18 @@ namespace MPTagThat.SongGrid.ViewModels
       _originalArtist = new GridViewColumn("OriginalArtist", "text", 100, false, false, true, 40);
       _originalOwner = new GridViewColumn("OriginalOwner", "text", 100, false, false, true, 41);
       _originalRelease = new GridViewColumn("OriginalRelease", "text", 100, false, false, true, 42);
-      _publisher = new GridViewColumn("Publisher", "text", 100, false, false, true,43);
+      _publisher = new GridViewColumn("Publisher", "text", 100, false, false, true, 43);
       _subTitle = new GridViewColumn("SubTitle", "text", 100, false, false, true, 44);
-      _textWriter = new GridViewColumn("TextWriter", "text", 100, false, false, true,45);
-      _titleSortName = new GridViewColumn("TitleSortName", "text", 100, false, false, true,46);
-      _musicBrainzArtistId = new GridViewColumn("MusicBrainzArtistId", "text", 100, false, false, true,47);
-      _musicBrainzReleaseArtistId = new GridViewColumn("MusicBrainzReleaseArtistId", "text", 100, false, false, true,48);
-      _musicBrainzReleaseId = new GridViewColumn("MusicBrainzReleaseId", "text", 100, false, false, true,49);
-      _musicBrainzReleaseGroupId = new GridViewColumn("MusicBrainzReleaseGroupId", "text", 100, false, false, true,50);
-      _musicBrainzReleaseCountry = new GridViewColumn("MusicBrainzReleaseCountry", "text", 100, false, false, true,51);
-      _musicBrainzReleaseStatus = new GridViewColumn("MusicBrainzReleaseStatus", "text", 100, false, false, true,52);
-      _musicBrainzReleaseType = new GridViewColumn("MusicBrainzReleaseType", "text", 100, false, false, true,53);
-      _musicBrainzReleaseTrackId = new GridViewColumn("MusicBrainzTrackId", "text", 100, false, false, true,54);
+      _textWriter = new GridViewColumn("TextWriter", "text", 100, false, false, true, 45);
+      _titleSortName = new GridViewColumn("TitleSortName", "text", 100, false, false, true, 46);
+      _musicBrainzArtistId = new GridViewColumn("MusicBrainzArtistId", "text", 100, false, false, true, 47);
+      _musicBrainzReleaseArtistId = new GridViewColumn("MusicBrainzReleaseArtistId", "text", 100, false, false, true, 48);
+      _musicBrainzReleaseId = new GridViewColumn("MusicBrainzReleaseId", "text", 100, false, false, true, 49);
+      _musicBrainzReleaseGroupId = new GridViewColumn("MusicBrainzReleaseGroupId", "text", 100, false, false, true, 50);
+      _musicBrainzReleaseCountry = new GridViewColumn("MusicBrainzReleaseCountry", "text", 100, false, false, true, 51);
+      _musicBrainzReleaseStatus = new GridViewColumn("MusicBrainzReleaseStatus", "text", 100, false, false, true, 52);
+      _musicBrainzReleaseType = new GridViewColumn("MusicBrainzReleaseType", "text", 100, false, false, true, 53);
+      _musicBrainzReleaseTrackId = new GridViewColumn("MusicBrainzTrackId", "text", 100, false, false, true, 54);
 
       LoadSettings();
     }

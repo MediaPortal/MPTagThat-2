@@ -18,6 +18,12 @@
 
 #region 
 
+using MPTagThat.Core.Common.Song;
+using MPTagThat.Core.Events;
+using MPTagThat.Core.Lyrics;
+using MPTagThat.Dialogs.Models;
+using Prism.Services.Dialogs;
+using Syncfusion.UI.Xaml.Utility;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -28,12 +34,6 @@ using System.Threading;
 using System.Windows;
 using System.Windows.Data;
 using System.Windows.Input;
-using MPTagThat.Core.Common.Song;
-using MPTagThat.Core.Events;
-using MPTagThat.Core.Lyrics;
-using MPTagThat.Dialogs.Models;
-using Prism.Services.Dialogs;
-using Syncfusion.UI.Xaml.Utility;
 using WPFLocalizeExtension.Engine;
 
 #endregion
@@ -71,7 +71,7 @@ namespace MPTagThat.Dialogs.ViewModels
 
     public delegate void DelegateLyricNotFound(string artist, string title, string site, int row, string message);
 
-    public delegate void DelegateStatusUpdate(int nrOfLyricsToSearch, int nrOfLyricsSearched, int nrOfLyricsFound,int nrOfLyricsNotFound);
+    public delegate void DelegateStatusUpdate(int nrOfLyricsToSearch, int nrOfLyricsSearched, int nrOfLyricsFound, int nrOfLyricsNotFound);
 
     public delegate void DelegateThreadException(string exception);
 
@@ -157,7 +157,7 @@ namespace MPTagThat.Dialogs.ViewModels
         LocalizeDictionary.Instance.Culture).ToString();
 
       BindingOperations.EnableCollectionSynchronization(Lyrics, _lock);
-      
+
       // initialize delegates
       _delegateLyricFound = LyricFoundMethod;
       _delegateLyricNotFound = LyricNotFoundMethod;
@@ -234,7 +234,7 @@ namespace MPTagThat.Dialogs.ViewModels
       _statusMsgTmp = LocalizeDictionary.Instance.GetLocalizedObject("MPTagThat", "Strings", "lyricsSearch_Status",
         LocalizeDictionary.Instance.Culture).ToString();
 
-      StatusMsg = string.Format(_statusMsgTmp, _lyricsSearchSites.Count, _songs.Count,  _songs.Count * _lyricsSearchSites.Count, 0,
+      StatusMsg = string.Format(_statusMsgTmp, _lyricsSearchSites.Count, _songs.Count, _songs.Count * _lyricsSearchSites.Count, 0,
         0, _songs.Count * _lyricsSearchSites.Count);
 
       log.Info($"Starting Lyrics Controller for {SelectedLyricsSearchSites.Count} sites");
@@ -246,7 +246,7 @@ namespace MPTagThat.Dialogs.ViewModels
       foreach (var song in _songs)
       {
         var artist = _options.MainSettings.SwitchArtist ? SwitchArtist(song.Artist) : song.Artist;
-        var lyricsModel = new LyricsModel { ArtistAndTitle = $"{row+1:D2}. {artist} - {song.Title}", Site = "", Lyric = "", Row = row };
+        var lyricsModel = new LyricsModel { ArtistAndTitle = $"{row + 1:D2}. {artist} - {song.Title}", Site = "", Lyric = "", Row = row };
         Lyrics.Add(lyricsModel);
         row++;
         string[] lyricId = new string[] { song.Artist, song.Title };
@@ -392,7 +392,7 @@ namespace MPTagThat.Dialogs.ViewModels
 
     private void LyricFoundMethod(string artist, string title, string site, int row, string lyric)
     {
-      var lyricsModel = new LyricsModel { ArtistAndTitle = $"{row+1:D2}. {artist} - {title}", Site = site, Lyric = lyric, Row = row };
+      var lyricsModel = new LyricsModel { ArtistAndTitle = $"{row + 1:D2}. {artist} - {title}", Site = site, Lyric = lyric, Row = row };
 
       log.Info($"{lyricsModel.Site} returned lyrics for {lyricsModel.ArtistAndTitle}");
 
@@ -431,11 +431,11 @@ namespace MPTagThat.Dialogs.ViewModels
 
     private void ThreadExceptionMethod(string s) { }
 
-    private void StatusUpdateMethod(int nrOfLyricsToSearch, int nrOfLyricsSearched, int nrOfLyricsFound,int nrOfLyricsNotFound)
+    private void StatusUpdateMethod(int nrOfLyricsToSearch, int nrOfLyricsSearched, int nrOfLyricsFound, int nrOfLyricsNotFound)
     {
       //Searching for Lyrics ...  {0} Sites  x {1} Songs  = {2} Songs to Search. Found: {3} Not Found: {4} Remaining: {5}
       var remaining = nrOfLyricsToSearch * _lyricsSearchSites.Count - nrOfLyricsSearched;
-      StatusMsg = string.Format(_statusMsgTmp, _lyricsSearchSites.Count, _songs.Count,  nrOfLyricsToSearch * _lyricsSearchSites.Count, nrOfLyricsFound,
+      StatusMsg = string.Format(_statusMsgTmp, _lyricsSearchSites.Count, _songs.Count, nrOfLyricsToSearch * _lyricsSearchSites.Count, nrOfLyricsFound,
         nrOfLyricsNotFound, remaining);
     }
 
@@ -490,7 +490,7 @@ namespace MPTagThat.Dialogs.ViewModels
         catch (InvalidOperationException) { }
       }
     }
-    
+
     public string ThreadException
     {
       set

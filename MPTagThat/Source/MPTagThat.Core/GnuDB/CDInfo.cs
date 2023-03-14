@@ -29,7 +29,7 @@ namespace MPTagThat.Core.GnuDB
   /// </summary>
   public class CDInfo
   {
-    public CDInfo() {}
+    public CDInfo() { }
 
     public CDInfo(string discid, string category, string title)
     {

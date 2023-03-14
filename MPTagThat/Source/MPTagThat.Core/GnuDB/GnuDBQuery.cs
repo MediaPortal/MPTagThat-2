@@ -18,12 +18,12 @@
 
 #region
 
+using MPTagThat.Core.Utils;
 using System;
 using System.Collections;
 using System.IO;
 using System.Net;
 using System.Text;
-using MPTagThat.Core.Utils;
 using Un4seen.Bass.AddOn.Cd;
 
 #endregion
@@ -88,7 +88,7 @@ namespace MPTagThat.Core.GnuDB
       _message = urlRdr.ReadLine();
       int code = GetCode(_message);
       _message = _message.Substring(4); // remove the code...
-      char[] sep = {' '};
+      char[] sep = { ' ' };
 
       switch (code)
       {
@@ -105,7 +105,7 @@ namespace MPTagThat.Core.GnuDB
             retval[index] = new GnuDBSite();
             retval[index].Host = siteInfo[0];
             retval[index].Protocol =
-              (GnuDBSite.GnuDBProtocol)Enum.Parse(typeof (GnuDBSite.GnuDBProtocol), siteInfo[1], true);
+              (GnuDBSite.GnuDBProtocol)Enum.Parse(typeof(GnuDBSite.GnuDBProtocol), siteInfo[1], true);
             retval[index].Port = Convert.ToInt32(siteInfo[2]);
             retval[index].URI = siteInfo[3];
             retval[index].Latitude = siteInfo[4];
@@ -189,7 +189,7 @@ namespace MPTagThat.Core.GnuDB
       int code = GetCode(_message);
       _message = _message.Substring(4); // remove the code...
 
-      char[] sep = {' '};
+      char[] sep = { ' ' };
       string title = "";
       int index = 0;
       string[] match;
@@ -249,7 +249,7 @@ namespace MPTagThat.Core.GnuDB
       int code = GetCode(_message);
       _message = _message.Substring(4); // remove the code...
 
-      char[] sep = {' '};
+      char[] sep = { ' ' };
       string title = "";
       int index = 0;
       string[] match;
@@ -342,7 +342,7 @@ namespace MPTagThat.Core.GnuDB
         // Use the current user in case an NTLM Proxy or similar is used.
         req.Proxy.Credentials = CredentialCache.DefaultCredentials;
       }
-      catch (Exception) {}
+      catch (Exception) { }
       StreamReader urlRdr = new StreamReader(new StreamReader(req.GetResponse().GetResponseStream()).BaseStream,
                                              Encoding.GetEncoding(0));
 
@@ -371,7 +371,7 @@ namespace MPTagThat.Core.GnuDB
         if (curLine.Trim().Length > 0 && !curLine.Trim().Equals("."))
           strarray.Add(curLine);
       }
-      return (string[])strarray.ToArray(typeof (string));
+      return (string[])strarray.ToArray(typeof(string));
     }
 
     public string GetCDDBDiscIDInfo(char driveLetter, char separator)

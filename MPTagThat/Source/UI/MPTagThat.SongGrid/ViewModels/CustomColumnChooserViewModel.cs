@@ -18,10 +18,9 @@
 
 #region 
 
-using System.Collections.ObjectModel;
-using System.Windows.Input;
 using MPTagThat.SongGrid.Models;
 using Prism.Mvvm;
+using System.Collections.ObjectModel;
 
 #endregion
 

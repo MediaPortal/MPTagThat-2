@@ -16,23 +16,9 @@
 // along with MPTagThat. If not, see <http://www.gnu.org/licenses/>.
 #endregion
 
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using MPTagThat.TagEdit.ViewModels;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using MPTagThat.TagEdit.ViewModels;
-using Syncfusion.Windows.Tools.Controls;
 
 namespace MPTagThat.TagEdit.Views
 {
@@ -44,7 +30,7 @@ namespace MPTagThat.TagEdit.Views
     public TagEditView()
     {
       InitializeComponent();
-      var vm = (TagEditViewModel) DataContext;
+      var vm = (TagEditViewModel)DataContext;
       if (vm != null)
       {
         vm.RatingsGrid = this.RatingGrid;

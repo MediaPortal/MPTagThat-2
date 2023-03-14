@@ -18,12 +18,11 @@
 
 #region
 
-using System;
-using System.IO;
 using NLog;
 using NLog.Config;
-using NLog.Filters;
 using NLog.Targets;
+using System;
+using System.IO;
 
 #endregion
 
@@ -116,7 +115,7 @@ namespace MPTagThat.Core.Services.Logging
       {
         _level = value;
         NLog.LogLevel internalLevel = ConvertLogLevel(_level);
-        
+
         LoggingConfiguration config = LogManager.Configuration;
         for (int i = 0; i < 6; ++i)
         {
@@ -236,7 +235,7 @@ namespace MPTagThat.Core.Services.Logging
 
     public void Error(string v, string message)
     {
-      WriteLog(NLog.LogLevel.Error, v, new object[]{ message});
+      WriteLog(NLog.LogLevel.Error, v, new object[] { message });
     }
 
     public void Error(string v, string folderName, string message)

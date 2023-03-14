@@ -18,13 +18,13 @@
 
 #region
 
-using Prism.Modularity;
-using Prism.Regions;
+using MPTagThat.Dialogs.ViewModels;
+using MPTagThat.Dialogs.Views;
 using MPTagThat.SongGrid.Views;
 using MPTagThat.TagEdit.Views;
 using Prism.Ioc;
-using MPTagThat.Dialogs.Views;
-using MPTagThat.Dialogs.ViewModels;
+using Prism.Modularity;
+using Prism.Regions;
 
 #endregion
 

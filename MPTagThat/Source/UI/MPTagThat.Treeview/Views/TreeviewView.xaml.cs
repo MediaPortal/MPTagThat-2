@@ -16,8 +16,8 @@
 // along with MPTagThat. If not, see <http://www.gnu.org/licenses/>.
 #endregion
 
-using System.Windows.Controls;
 using MPTagThat.Treeview.ViewModels;
+using System.Windows.Controls;
 
 namespace MPTagThat.Treeview.Views
 {
@@ -29,7 +29,7 @@ namespace MPTagThat.Treeview.Views
     public TreeviewView()
     {
       InitializeComponent();
-      var vm = (TreeviewViewModel) DataContext;
+      var vm = (TreeviewViewModel)DataContext;
       if (vm != null)
       {
         vm.TreeView = this.TreeView;

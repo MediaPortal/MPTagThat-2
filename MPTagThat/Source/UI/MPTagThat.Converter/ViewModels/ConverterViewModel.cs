@@ -18,16 +18,6 @@
 
 #region
 
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.IO;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Forms;
-using System.Windows.Input;
 using MPTagThat.Converter.Models;
 using MPTagThat.Core;
 using MPTagThat.Core.Common;
@@ -42,6 +32,16 @@ using Prism.Ioc;
 using Prism.Mvvm;
 using Prism.Regions;
 using Syncfusion.Data.Extensions;
+using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.IO;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Forms;
+using System.Windows.Input;
 using Un4seen.Bass;
 using Un4seen.Bass.AddOn.Wma;
 using WPFLocalizeExtension.Engine;
@@ -63,7 +63,7 @@ namespace MPTagThat.Converter.ViewModels
 
     private Thread _threadConvert;
     private bool _conversionActive = false;
-    private CancellationTokenSource  _cts;
+    private CancellationTokenSource _cts;
     private string _encoder = null;
 
     private int _defaultBitRateIndex;
@@ -107,7 +107,7 @@ namespace MPTagThat.Converter.ViewModels
 
       ConvertRootFolder = _options.MainSettings.ConvertRootFolder;
       ConvertFileFormat = _options.MainSettings.ConvertFileNameFormat;
-      
+
       LamePreset.Add("Medium");
       LamePreset.Add("Standard");
       LamePreset.Add("Extreme");
@@ -130,12 +130,12 @@ namespace MPTagThat.Converter.ViewModels
       FAACQuality = _options.MainSettings.RipFAACQuality;
       FAACExpertOptions = _options.MainSettings.RipFAACExpert;
 
-      MusepackPreset.Add(new Item("Low/Medium Quality (~  90 kbps)","thumb",""));
-      MusepackPreset.Add(new Item("Medium Quality     (~ 130 kbps)","radio",""));
-      MusepackPreset.Add(new Item("High Quality       (~ 180 kbps)","standard",""));
-      MusepackPreset.Add(new Item("Excellent Quality  (~ 210 kbps)","xtreme",""));
-      MusepackPreset.Add(new Item("Excellent Quality  (~ 240 kbps)","insane",""));
-      MusepackPreset.Add(new Item("Highest Quality    (~ 270 kbps)","braindead",""));
+      MusepackPreset.Add(new Item("Low/Medium Quality (~  90 kbps)", "thumb", ""));
+      MusepackPreset.Add(new Item("Medium Quality     (~ 130 kbps)", "radio", ""));
+      MusepackPreset.Add(new Item("High Quality       (~ 180 kbps)", "standard", ""));
+      MusepackPreset.Add(new Item("Excellent Quality  (~ 210 kbps)", "xtreme", ""));
+      MusepackPreset.Add(new Item("Excellent Quality  (~ 240 kbps)", "insane", ""));
+      MusepackPreset.Add(new Item("Highest Quality    (~ 270 kbps)", "braindead", ""));
 
       var idx = 0;
       foreach (var item in MusepackPreset)
@@ -149,8 +149,8 @@ namespace MPTagThat.Converter.ViewModels
       }
       MusepackExpertOptions = _options.MainSettings.RipEncoderMPCExpert;
 
-      WavPackPreset.Add(new Item("Fast Mode (fast, but some compromise in compression ratio)","-f",""));
-      WavPackPreset.Add(new Item("High quality (better compression, but slower)","-h",""));
+      WavPackPreset.Add(new Item("Fast Mode (fast, but some compromise in compression ratio)", "-f", ""));
+      WavPackPreset.Add(new Item("High quality (better compression, but slower)", "-h", ""));
 
       idx = 0;
       foreach (var item in WavPackPreset)
@@ -164,9 +164,9 @@ namespace MPTagThat.Converter.ViewModels
       }
       WavPackExpertOptions = _options.MainSettings.RipEncoderWVExpert;
 
-      WmaEncoder.Add(new Item("Windows Media Audio Standard","wma",""));
-      WmaEncoder.Add(new Item("Windows Media Audio Professional","wmapro",""));
-      WmaEncoder.Add(new Item("Windows Media Audio Lossless","wmalossless",""));
+      WmaEncoder.Add(new Item("Windows Media Audio Standard", "wma", ""));
+      WmaEncoder.Add(new Item("Windows Media Audio Professional", "wmapro", ""));
+      WmaEncoder.Add(new Item("Windows Media Audio Lossless", "wmalossless", ""));
 
       idx = 0;
       foreach (var item in WmaEncoder)
@@ -314,27 +314,27 @@ namespace MPTagThat.Converter.ViewModels
         switch (value)
         {
           case 0:
-            LamePresetDescription = LocalizeDictionary.Instance.GetLocalizedObject("MPTagThat", "Strings", "convert_Options_MP3_DescMedium", 
+            LamePresetDescription = LocalizeDictionary.Instance.GetLocalizedObject("MPTagThat", "Strings", "convert_Options_MP3_DescMedium",
               LocalizeDictionary.Instance.Culture).ToString();
             break;
 
           case 1:
-            LamePresetDescription = LocalizeDictionary.Instance.GetLocalizedObject("MPTagThat", "Strings", "convert_Options_MP3_DescStandard", 
+            LamePresetDescription = LocalizeDictionary.Instance.GetLocalizedObject("MPTagThat", "Strings", "convert_Options_MP3_DescStandard",
               LocalizeDictionary.Instance.Culture).ToString();
             break;
 
           case 2:
-            LamePresetDescription = LocalizeDictionary.Instance.GetLocalizedObject("MPTagThat", "Strings", "convert_Options_MP3_DescExtreme", 
+            LamePresetDescription = LocalizeDictionary.Instance.GetLocalizedObject("MPTagThat", "Strings", "convert_Options_MP3_DescExtreme",
               LocalizeDictionary.Instance.Culture).ToString();
             break;
 
           case 3:
-            LamePresetDescription = LocalizeDictionary.Instance.GetLocalizedObject("MPTagThat", "Strings", "convert_Options_MP3_DescInsane", 
+            LamePresetDescription = LocalizeDictionary.Instance.GetLocalizedObject("MPTagThat", "Strings", "convert_Options_MP3_DescInsane",
               LocalizeDictionary.Instance.Culture).ToString();
             break;
 
           case 4:
-            LamePresetDescription = LocalizeDictionary.Instance.GetLocalizedObject("MPTagThat", "Strings", "convert_Options_MP3_DescABR", 
+            LamePresetDescription = LocalizeDictionary.Instance.GetLocalizedObject("MPTagThat", "Strings", "convert_Options_MP3_DescABR",
               LocalizeDictionary.Instance.Culture).ToString();
             break;
         }
@@ -860,7 +860,7 @@ namespace MPTagThat.Converter.ViewModels
         return;
       }
 
-      _threadConvert = new Thread(ConversionThread) {Name = "Conversion", Priority = ThreadPriority.Highest};
+      _threadConvert = new Thread(ConversionThread) { Name = "Conversion", Priority = ThreadPriority.Highest };
       _threadConvert.Start();
     }
 
@@ -870,13 +870,14 @@ namespace MPTagThat.Converter.ViewModels
     private void ConversionThread()
     {
       log.Trace(">>>");
-      
+
       IsBusy = true;
       _cts = new CancellationTokenSource();
 
       var po = new ParallelOptions
       {
-        CancellationToken = _cts.Token, MaxDegreeOfParallelism = System.Environment.ProcessorCount
+        CancellationToken = _cts.Token,
+        MaxDegreeOfParallelism = System.Environment.ProcessorCount
       };
 
       _conversionActive = true;
@@ -1012,7 +1013,7 @@ namespace MPTagThat.Converter.ViewModels
       }
     }
 
-        /// <summary>
+    /// <summary>
     ///   Fills the Sample Format Combo box
     /// </summary>
     private void SetWMASampleCombo()

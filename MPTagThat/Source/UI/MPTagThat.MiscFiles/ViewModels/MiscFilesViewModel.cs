@@ -18,26 +18,26 @@
 
 #region
 
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using FreeImageAPI;
-using System.IO;
-using System.Linq;
-using System.Windows.Data;
-using System.Windows.Input;
-using System.Windows.Media.Imaging;
 using MPTagThat.Core;
 using MPTagThat.Core.Common;
 using MPTagThat.Core.Events;
 using MPTagThat.Core.Services.Logging;
-using MPTagThat.Core.Utils;
-using Prism.Events;
-using Prism.Mvvm;
-using System.Windows.Media;
 using MPTagThat.Core.Services.Settings;
 using MPTagThat.Core.Services.Settings.Setting;
+using MPTagThat.Core.Utils;
+using Prism.Events;
 using Prism.Ioc;
+using Prism.Mvvm;
+using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.IO;
+using System.Linq;
+using System.Windows.Data;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
 
 #endregion
 
@@ -46,7 +46,7 @@ namespace MPTagThat.MiscFiles.ViewModels
   public class MiscFilesViewModel : BindableBase
   {
     #region Variables
-    
+
     private object _lock = new object();
     private MiscFile _currentItem;
     private Options _options = ContainerLocator.Current.Resolve<ISettingsManager>()?.GetOptions;
@@ -96,7 +96,7 @@ namespace MPTagThat.MiscFiles.ViewModels
       DeleteFileCommand = new BaseCommand(DeleteFile);
       SelectionChangedCommand = new BaseCommand(SelectionChanged);
       EnterKeyPressedCommand = new BaseCommand(EnterKeypressed);
-      EventSystem.Subscribe<GenericEvent>(OnMessageReceived,ThreadOption.PublisherThread);
+      EventSystem.Subscribe<GenericEvent>(OnMessageReceived, ThreadOption.PublisherThread);
       BindingOperations.EnableCollectionSynchronization(MiscFiles, _lock);
     }
 
@@ -181,7 +181,7 @@ namespace MPTagThat.MiscFiles.ViewModels
     {
       if (param != null)
       {
-        var item = (MiscFile) param;
+        var item = (MiscFile)param;
         var newFile = $"{Path.GetDirectoryName(item.FullFileName)}\\folder{Path.GetExtension(item.FullFileName)}";
         if (!File.Exists(newFile))
         {
@@ -302,7 +302,7 @@ namespace MPTagThat.MiscFiles.ViewModels
             {
               defaultName = $@"{Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)}\MPTagThat2\Fileicons\{extension}.png";
             }
-            catch (Exception) {}
+            catch (Exception) { }
           }
           if (File.Exists(defaultName))
           {
@@ -316,7 +316,7 @@ namespace MPTagThat.MiscFiles.ViewModels
           }
           else
           {
-            var bmi = GetImageFromFile( $@"{Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)}\MPTagThat2\Fileicons\unknown.png", out var size);
+            var bmi = GetImageFromFile($@"{Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)}\MPTagThat2\Fileicons\unknown.png", out var size);
             if (bmi != null)
             {
               f.ImageData = bmi;
@@ -400,7 +400,7 @@ namespace MPTagThat.MiscFiles.ViewModels
           img.Save(memory, FREE_IMAGE_FORMAT.FIF_PNG);
           memory.Position = 0;
 
-          
+
           bitmapImage.BeginInit();
           bitmapImage.StreamSource = memory;
           bitmapImage.CacheOption = BitmapCacheOption.OnLoad;

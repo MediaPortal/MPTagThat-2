@@ -20,9 +20,9 @@ namespace MPTagThat.Core.Common
 {
   public class PopmFrame
   {
-     #region Variables
+    #region Variables
 
-    public PopmFrame() {}
+    public PopmFrame() { }
 
     public PopmFrame(PopmFrame copyFrom)
     {

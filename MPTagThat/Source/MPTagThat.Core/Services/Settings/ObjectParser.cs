@@ -18,6 +18,8 @@
 
 #region
 
+using MPTagThat.Core.Services.Logging;
+using Prism.Ioc;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -25,8 +27,6 @@ using System.Reflection;
 using System.Text;
 using System.Xml;
 using System.Xml.Serialization;
-using MPTagThat.Core.Services.Logging;
-using Prism.Ioc;
 
 #endregion
 
@@ -53,7 +53,7 @@ namespace MPTagThat.Core.Services.Settings
 
       var options = ContainerLocator.Current.Resolve<ISettingsManager>().GetOptions;
       var log = ContainerLocator.Current.Resolve<ILogger>().GetLogger;
-      log.Trace($"Serialize({ obj},{fileName})");
+      log.Trace($"Serialize({obj},{fileName})");
       var globalSettingsList = new Dictionary<string, string>();
       var userSettingsList = new Dictionary<string, string>();
       var xmlWriter = new XmlSettingsProvider(fileName);

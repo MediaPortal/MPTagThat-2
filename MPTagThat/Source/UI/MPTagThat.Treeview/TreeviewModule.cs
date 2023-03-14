@@ -18,10 +18,10 @@
 
 #region
 
-using Prism.Modularity;
-using Prism.Regions;
 using MPTagThat.Treeview.Views;
 using Prism.Ioc;
+using Prism.Modularity;
+using Prism.Regions;
 
 #endregion
 

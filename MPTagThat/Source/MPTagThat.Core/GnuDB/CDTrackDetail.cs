@@ -26,7 +26,7 @@ namespace MPTagThat.Core.GnuDB
     private int _duration;
     private string _durationString;
 
-    public CDTrackDetail() {}
+    public CDTrackDetail() { }
 
     public CDTrackDetail(string songTitle, string artist, string extt,
                          int trackNumber, int offset, int duration)

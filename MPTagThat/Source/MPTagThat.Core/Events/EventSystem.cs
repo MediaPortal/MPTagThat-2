@@ -16,8 +16,8 @@
 // along with MPTagThat. If not, see <http://www.gnu.org/licenses/>.
 #endregion
 
-using System;
 using Prism.Events;
+using System;
 
 namespace MPTagThat.Core
 {

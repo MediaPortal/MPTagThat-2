@@ -16,8 +16,8 @@
 // along with MPTagThat. If not, see <http://www.gnu.org/licenses/>.
 #endregion
 
-using System.Windows.Controls;
 using MPTagThat.Dialogs.ViewModels;
+using System.Windows.Controls;
 
 namespace MPTagThat.Dialogs.Views
 {
@@ -29,7 +29,7 @@ namespace MPTagThat.Dialogs.Views
     public TagFromInternetView()
     {
       InitializeComponent();
-      var vm = (TagFromInternetViewModel) DataContext;
+      var vm = (TagFromInternetViewModel)DataContext;
       if (vm != null)
       {
         vm.MatchedSongsGrid = this.MatchedSongsGrid;

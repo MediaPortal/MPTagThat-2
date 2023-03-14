@@ -18,15 +18,15 @@
 
 #region
 
+using MPTagThat.Core.Events;
+using MPTagThat.Core.Services.Settings;
+using Prism.Events;
+using Prism.Ioc;
 using System;
 using System.Globalization;
 using System.Windows;
 using System.Windows.Data;
 using System.Windows.Media;
-using MPTagThat.Core.Events;
-using MPTagThat.Core.Services.Settings;
-using Prism.Events;
-using Prism.Ioc;
 
 #endregion
 
@@ -39,8 +39,8 @@ namespace MPTagThat.Core.Common.Converter
   {
     #region Variables
 
-    private Color _changedRowColor = (Color) ColorConverter.ConvertFromString(ContainerLocator.Current.Resolve<ISettingsManager>()?.GetOptions.MainSettings.ChangedRowColor);
-    private Color _rowColor = (Color) ColorConverter.ConvertFromString(ContainerLocator.Current.Resolve<ISettingsManager>()?.GetOptions.MainSettings.RowColor);
+    private Color _changedRowColor = (Color)ColorConverter.ConvertFromString(ContainerLocator.Current.Resolve<ISettingsManager>()?.GetOptions.MainSettings.ChangedRowColor);
+    private Color _rowColor = (Color)ColorConverter.ConvertFromString(ContainerLocator.Current.Resolve<ISettingsManager>()?.GetOptions.MainSettings.RowColor);
 
     #endregion
 
@@ -77,8 +77,8 @@ namespace MPTagThat.Core.Common.Converter
       switch (msg.Action.ToLower())
       {
         case "themecolorchanged":
-          _rowColor = (Color) ColorConverter.ConvertFromString(ContainerLocator.Current.Resolve<ISettingsManager>()?.GetOptions.MainSettings.RowColor);
-          _changedRowColor = (Color) ColorConverter.ConvertFromString(ContainerLocator.Current.Resolve<ISettingsManager>()?.GetOptions.MainSettings.ChangedRowColor);
+          _rowColor = (Color)ColorConverter.ConvertFromString(ContainerLocator.Current.Resolve<ISettingsManager>()?.GetOptions.MainSettings.RowColor);
+          _changedRowColor = (Color)ColorConverter.ConvertFromString(ContainerLocator.Current.Resolve<ISettingsManager>()?.GetOptions.MainSettings.ChangedRowColor);
           break;
       }
     }

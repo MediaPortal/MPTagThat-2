@@ -18,15 +18,15 @@
 
 #region
 
+using MPTagThat.Core.Events;
+using MPTagThat.Core.Services.Settings;
+using Prism.Events;
+using Prism.Ioc;
 using System;
 using System.Globalization;
 using System.Windows;
 using System.Windows.Data;
 using System.Windows.Media;
-using MPTagThat.Core.Events;
-using MPTagThat.Core.Services.Settings;
-using Prism.Events;
-using Prism.Ioc;
 
 #endregion
 
@@ -37,8 +37,8 @@ namespace MPTagThat.Core.Common.Converter
   /// </summary>
   public class AlternateRowChangedColorConverter : IValueConverter
   {
-    private Color _changedRowColor = (Color) ColorConverter.ConvertFromString(ContainerLocator.Current.Resolve<ISettingsManager>()?.GetOptions.MainSettings.ChangedRowColor);
-    private Color _alternateRowColor = (Color) ColorConverter.ConvertFromString(ContainerLocator.Current.Resolve<ISettingsManager>()?.GetOptions.MainSettings.AlternateRowColor);
+    private Color _changedRowColor = (Color)ColorConverter.ConvertFromString(ContainerLocator.Current.Resolve<ISettingsManager>()?.GetOptions.MainSettings.ChangedRowColor);
+    private Color _alternateRowColor = (Color)ColorConverter.ConvertFromString(ContainerLocator.Current.Resolve<ISettingsManager>()?.GetOptions.MainSettings.AlternateRowColor);
 
     public AlternateRowChangedColorConverter()
     {
@@ -65,8 +65,8 @@ namespace MPTagThat.Core.Common.Converter
       switch (msg.Action.ToLower())
       {
         case "themecolorchanged":
-          _alternateRowColor = (Color) ColorConverter.ConvertFromString(ContainerLocator.Current.Resolve<ISettingsManager>()?.GetOptions.MainSettings.AlternateRowColor);
-          _changedRowColor = (Color) ColorConverter.ConvertFromString(ContainerLocator.Current.Resolve<ISettingsManager>()?.GetOptions.MainSettings.ChangedRowColor);
+          _alternateRowColor = (Color)ColorConverter.ConvertFromString(ContainerLocator.Current.Resolve<ISettingsManager>()?.GetOptions.MainSettings.AlternateRowColor);
+          _changedRowColor = (Color)ColorConverter.ConvertFromString(ContainerLocator.Current.Resolve<ISettingsManager>()?.GetOptions.MainSettings.ChangedRowColor);
           break;
       }
     }

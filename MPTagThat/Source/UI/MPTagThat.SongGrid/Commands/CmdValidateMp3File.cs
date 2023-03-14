@@ -18,9 +18,9 @@
 
 #region
 
-using System.Threading.Tasks;
 using MPTagThat.Core.Common.Song;
 using MPTagThat.Core.Utils;
+using System.Threading.Tasks;
 
 #endregion
 

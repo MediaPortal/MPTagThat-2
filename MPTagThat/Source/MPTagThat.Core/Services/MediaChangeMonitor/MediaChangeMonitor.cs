@@ -18,10 +18,10 @@
 
 #region
 
-using System;
-using System.Management;
 using MPTagThat.Core.Services.Logging;
 using Prism.Ioc;
+using System;
+using System.Management;
 
 #endregion
 
@@ -75,7 +75,9 @@ namespace MPTagThat.Core.Services.MediaChangeMonitor
 
         var opt = new ConnectionOptions
         {
-          EnablePrivileges = true, Authority = null, Authentication = AuthenticationLevel.Default
+          EnablePrivileges = true,
+          Authority = null,
+          Authentication = AuthenticationLevel.Default
         };
         var scope = new ManagementScope("\\root\\CIMV2", opt);
 

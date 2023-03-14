@@ -18,8 +18,8 @@
 
 #region
 
-using System.Threading.Tasks;
 using MPTagThat.Core.Common.Song;
+using System.Threading.Tasks;
 
 #endregion
 

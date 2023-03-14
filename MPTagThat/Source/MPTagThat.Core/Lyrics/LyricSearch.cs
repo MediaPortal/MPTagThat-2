@@ -18,9 +18,9 @@
 
 #region
 
+using MPTagThat.Core.Lyrics.LyricsSites;
 using System;
 using System.Threading;
-using MPTagThat.Core.Lyrics.LyricsSites;
 using Timer = System.Timers.Timer;
 
 #endregion

@@ -18,10 +18,9 @@
 
 #region
 
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using MPTagThat.Core.Common;
 using MPTagThat.Core.Services.Settings;
+using System.Collections.Generic;
 
 #endregion
 

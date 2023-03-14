@@ -18,10 +18,10 @@
 
 #region
 
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using LiteDB;
 using MPTagThat.Core.Common.Song;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 #endregion
 

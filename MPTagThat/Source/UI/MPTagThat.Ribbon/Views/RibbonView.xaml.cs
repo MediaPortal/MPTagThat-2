@@ -16,7 +16,6 @@
 // along with MPTagThat. If not, see <http://www.gnu.org/licenses/>.
 #endregion
 
-using System.Windows;
 using System.Windows.Controls;
 
 

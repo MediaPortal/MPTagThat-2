@@ -18,12 +18,12 @@
 
 #region
 
-using System;
-using System.Collections.Generic;
-using System.Threading;
 using MPTagThat.Core.AlbumSearch.AlbumSites;
 using MPTagThat.Core.Services.Logging;
 using Prism.Ioc;
+using System;
+using System.Collections.Generic;
+using System.Threading;
 using Timer = System.Timers.Timer;
 
 #endregion

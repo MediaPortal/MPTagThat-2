@@ -18,21 +18,11 @@
 
 #region
 
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.IO;
-using System.Linq;
-using System.Runtime.Serialization.Formatters.Binary;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Input;
 using MPTagThat.Converter.Views;
 using MPTagThat.Core;
 using MPTagThat.Core.Common;
 using MPTagThat.Core.Events;
 using MPTagThat.Core.Services.Logging;
-using MPTagThat.Core.Services.MediaChangeMonitor;
 using MPTagThat.Core.Services.Settings;
 using MPTagThat.Core.Services.Settings.Setting;
 using MPTagThat.Rip.Views;
@@ -43,9 +33,17 @@ using Prism.Ioc;
 using Prism.Modularity;
 using Prism.Mvvm;
 using Prism.Regions;
-using Syncfusion.SfSkinManager;
 using Syncfusion.Windows.Shared;
 using Syncfusion.Windows.Tools.Controls;
+using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.IO;
+using System.Linq;
+using System.Runtime.Serialization.Formatters.Binary;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Input;
 using WPFLocalizeExtension.Engine;
 using Action = MPTagThat.Core.Common.Action;
 using Point = System.Drawing.Point;

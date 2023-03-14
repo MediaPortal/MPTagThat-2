@@ -18,9 +18,9 @@
 
 #region
 
-using System.Threading.Tasks;
 using MPTagThat.Core.Common.Song;
 using MPTagThat.Core.Utils;
+using System.Threading.Tasks;
 
 #endregion
 
@@ -50,7 +50,7 @@ namespace MPTagThat.SongGrid.Commands
         string strError;
         song.MP3ValidationError = Mp3Val.FixMp3File(song.FullFileName, out strError);
         song.StatusMsg = strError;
-        song.Status =  song.MP3ValidationError == Util.MP3Error.Fixed ? 4 : 3;
+        song.Status = song.MP3ValidationError == Util.MP3Error.Fixed ? 4 : 3;
       }
 
       return Task.FromResult((false, song));

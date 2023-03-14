@@ -18,15 +18,15 @@
 
 #region
 
-using System;
-using System.Collections;
-using System.IO;
-using System.Reflection;
 using CSScriptLibrary;
 using MPTagThat.Core.Services.Logging;
 using MPTagThat.Core.Services.Settings;
 using MPTagThat.Core.Services.Settings.Setting;
 using Prism.Ioc;
+using System;
+using System.Collections;
+using System.IO;
+using System.Reflection;
 
 // ReSharper disable PossibleNullReferenceException
 

@@ -22,10 +22,10 @@ using MPTagThat.Core.Common.Song;
 using MPTagThat.Core.Services.Logging;
 using MPTagThat.Core.Services.Settings;
 using MPTagThat.Core.Services.Settings.Setting;
-using System;
-using System.Threading.Tasks;
 using Prism.Ioc;
 using Prism.Services.Dialogs;
+using System;
+using System.Threading.Tasks;
 
 #endregion
 

@@ -30,7 +30,7 @@ namespace MPTagThat.Core.Common.Converter
   /// <summary>
   /// Converter to set the Image for a given Song Status
   /// </summary>
-   public class SongStatusToImageConverter : IValueConverter
+  public class SongStatusToImageConverter : IValueConverter
   {
     public BitmapImage Ok = new BitmapImage(new Uri("pack://application:,,,/MPTagThat;component/Resources/Images/Status_Ok.png"));
     public BitmapImage Changed = new BitmapImage(new Uri("pack://application:,,,/MPTagThat;component/Resources/Images/Status_Changed.png"));

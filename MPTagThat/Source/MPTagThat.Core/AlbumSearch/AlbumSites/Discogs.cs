@@ -19,17 +19,16 @@
 #region 
 
 using DiscogsClient.Data.Query;
+using DiscogsClient.Data.Result;
 using DiscogsClient.Internal;
+using MPTagThat.Core.AlbumCoverSearch;
 using MPTagThat.Core.Services.Logging;
+using Prism.Ioc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using DiscogsClient.Data.Result;
-using MPTagThat.Core.AlbumCoverSearch;
-using Prism.Ioc;
 
 #endregion
 
@@ -115,7 +114,7 @@ namespace MPTagThat.Core.AlbumSearch.AlbumSites
       }
       var album = new Album();
       album.Site = "Discogs";
-      var discogsImage = release.images.FirstOrDefault(i => i.type == DiscogsImageType.primary);;
+      var discogsImage = release.images.FirstOrDefault(i => i.type == DiscogsImageType.primary); ;
 
       if (discogsImage != null)
       {

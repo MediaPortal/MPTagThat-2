@@ -18,8 +18,6 @@
 
 #region
 
-using System.Windows.Media.Animation;
-using MPTagThat.Core.Common.Song;
 using Prism.Mvvm;
 
 #endregion

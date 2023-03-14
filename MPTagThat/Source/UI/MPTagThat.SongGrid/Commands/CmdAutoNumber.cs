@@ -16,11 +16,10 @@
 // along with MPTagThat. If not, see <http://www.gnu.org/licenses/>.
 #endregion
 
-using System;
-using System.Threading.Tasks;
 using MPTagThat.Core;
 using MPTagThat.Core.Common.Song;
 using MPTagThat.Core.Events;
+using System.Threading.Tasks;
 
 
 namespace MPTagThat.SongGrid.Commands
@@ -41,7 +40,7 @@ namespace MPTagThat.SongGrid.Commands
 
     public override Task<(bool Changed, SongData song)> Execute(SongData song)
     {
-      song.TrackNumber = (uint) options.AutoNumber;
+      song.TrackNumber = (uint)options.AutoNumber;
       options.AutoNumber++;
       return Task.FromResult((true, song));
     }

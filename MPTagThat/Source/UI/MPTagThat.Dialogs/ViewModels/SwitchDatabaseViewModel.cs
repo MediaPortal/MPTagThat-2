@@ -16,21 +16,13 @@
 // along with MPTagThat. If not, see <http://www.gnu.org/licenses/>.
 #endregion
 
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Input;
-using MPTagThat.Core;
 using MPTagThat.Core.Common;
-using MPTagThat.Core.Common.Song;
-using MPTagThat.Core.Events;
 using MPTagThat.Core.Services.MusicDatabase;
 using Prism.Ioc;
 using Prism.Services.Dialogs;
+using System.Collections.ObjectModel;
+using System.IO;
+using System.Windows.Input;
 using WPFLocalizeExtension.Engine;
 
 namespace MPTagThat.Dialogs.ViewModels
@@ -128,7 +120,7 @@ namespace MPTagThat.Dialogs.ViewModels
         var databaseName = DatabaseDescription.Replace(" ", "_");
         ContainerLocator.Current.Resolve<IMusicDatabase>().SwitchDatabase(databaseName);
         var title = DatabaseDescription;
-        Databases.Add(new Database {DatabaseTitle = title, Name = databaseName});  
+        Databases.Add(new Database { DatabaseTitle = title, Name = databaseName });
       }
 
       log.Trace("<<<");
@@ -170,7 +162,7 @@ namespace MPTagThat.Dialogs.ViewModels
           continue;
         }
         var title = dbName.Replace('_', ' ');
-        Databases.Add(new Database {DatabaseTitle = title, Name = dbName});  
+        Databases.Add(new Database { DatabaseTitle = title, Name = dbName });
       }
 
       log.Trace("<<<");

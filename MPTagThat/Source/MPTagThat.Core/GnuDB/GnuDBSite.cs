@@ -29,11 +29,11 @@ namespace MPTagThat.Core.GnuDB
     {
       CDDB,
       HTTP
-    } ;
+    };
 
     #endregion
 
-    public GnuDBSite() {}
+    public GnuDBSite() { }
 
     public GnuDBSite(string host, GnuDBProtocol proto, int port, string uri,
                       string latitude, string longitude, string location)

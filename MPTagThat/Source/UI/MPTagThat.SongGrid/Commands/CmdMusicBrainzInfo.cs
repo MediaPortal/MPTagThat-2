@@ -20,10 +20,10 @@
 
 #endregion
 
+using Hqub.MusicBrainz.API.Entities;
+using MPTagThat.Core.Common.Song;
 using System.Linq;
 using System.Threading.Tasks;
-using MPTagThat.Core.Common.Song;
-using Hqub.MusicBrainz.API.Entities;
 
 namespace MPTagThat.SongGrid.Commands
 {
@@ -77,7 +77,7 @@ namespace MPTagThat.SongGrid.Commands
           break;
         }
       }
-      
+
       if (release == null && recording.Releases.Count > 0)
       {
         release = recording.Releases[0];

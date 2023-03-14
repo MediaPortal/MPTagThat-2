@@ -18,7 +18,12 @@
 
 #region
 
+using MPTagThat.Core;
 using MPTagThat.Core.AlbumSearch;
+using MPTagThat.Core.Annotations;
+using MPTagThat.Core.Common;
+using MPTagThat.Core.Common.Song;
+using MPTagThat.Core.Events;
 using Prism.Services.Dialogs;
 using System;
 using System.Collections.Generic;
@@ -30,11 +35,6 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Data;
 using System.Windows.Input;
-using MPTagThat.Core;
-using MPTagThat.Core.Annotations;
-using MPTagThat.Core.Common;
-using MPTagThat.Core.Common.Song;
-using MPTagThat.Core.Events;
 using WPFLocalizeExtension.Engine;
 
 #endregion
@@ -440,7 +440,7 @@ namespace MPTagThat.Dialogs.ViewModels
 
       if (Artist.Trim() == "" && _songs.GroupBy(s => s.Artist).Count() == 1)
       {
-          Artist = _songs[0].Artist;
+        Artist = _songs[0].Artist;
       }
 
       if (_songs.GroupBy(s => s.Album).Count() == 1)

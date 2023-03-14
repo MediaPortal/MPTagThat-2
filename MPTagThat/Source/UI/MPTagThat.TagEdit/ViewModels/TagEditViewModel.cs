@@ -18,15 +18,6 @@
 
 #region
 
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Windows.Controls;
-using System.Windows.Input;
-using System.Windows.Media.Imaging;
 using Microsoft.Win32;
 using MPTagThat.Core;
 using MPTagThat.Core.Common;
@@ -44,7 +35,15 @@ using Prism.Ioc;
 using Prism.Mvvm;
 using Prism.Regions;
 using Syncfusion.UI.Xaml.Grid;
-using Syncfusion.Windows.Tools.Controls;
+using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.IO;
+using System.Linq;
+using System.Text;
+using System.Windows.Controls;
+using System.Windows.Input;
+using System.Windows.Media.Imaging;
 using TagLib;
 using Action = MPTagThat.Core.Common.Action;
 using File = System.IO.File;
@@ -862,7 +861,7 @@ namespace MPTagThat.TagEdit.ViewModels
     private void TabSelectionChanging(object param)
     {
       _changingTabs = true;
-      if ((int) param == 0)
+      if ((int)param == 0)
       {
         _savedGenres.Clear();
         _savedGenres.AddRange(SelectedGenres);

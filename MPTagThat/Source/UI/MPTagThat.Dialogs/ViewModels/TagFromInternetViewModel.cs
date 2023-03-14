@@ -18,24 +18,22 @@
 
 #region
 
+using MPTagThat.Core.AlbumCoverSearch;
 using MPTagThat.Core.AlbumSearch;
+using MPTagThat.Core.Annotations;
+using MPTagThat.Core.Common;
+using MPTagThat.Core.Common.Song;
+using MPTagThat.Core.Utils;
+using MPTagThat.Dialogs.Models;
 using Prism.Services.Dialogs;
+using Syncfusion.UI.Xaml.Grid;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Data;
 using System.Windows.Input;
-using MPTagThat.Core.AlbumCoverSearch;
-using MPTagThat.Core.Annotations;
-using MPTagThat.Core.Common;
-using MPTagThat.Core.Common.Song;
-using MPTagThat.Core.Utils;
-using MPTagThat.Dialogs.Models;
-using Syncfusion.UI.Xaml.Grid;
-using Syncfusion.Windows.Shared;
 using TagLib;
 using WPFLocalizeExtension.Engine;
 using Picture = MPTagThat.Core.Common.Song.Picture;
@@ -281,7 +279,7 @@ namespace MPTagThat.Dialogs.ViewModels
         }
         catch (Exception) { }
 
-        song.TrackNumber =songMatch.TrackNumber;
+        song.TrackNumber = songMatch.TrackNumber;
         song.Title = songMatch.Title;
         song.Pictures.Add(pic);
       }
@@ -346,7 +344,7 @@ namespace MPTagThat.Dialogs.ViewModels
               break;
             }
 
-            var match = new SongMatch() {FileName = song.FileName, Title = albumSong.Title, PositionInSongList = songPos, TrackNumber = (uint)albumSong.Number, Matched = true};
+            var match = new SongMatch() { FileName = song.FileName, Title = albumSong.Title, PositionInSongList = songPos, TrackNumber = (uint)albumSong.Number, Matched = true };
             list[albumSongsPos] = match;
             songFound = true;
             break;
@@ -356,7 +354,7 @@ namespace MPTagThat.Dialogs.ViewModels
 
         if (!songFound)
         {
-          var match = new SongMatch() {FileName = song.FileName, Title = song.Title, PositionInSongList = songPos, TrackNumber = song.TrackNumber, Matched = false};
+          var match = new SongMatch() { FileName = song.FileName, Title = song.Title, PositionInSongList = songPos, TrackNumber = song.TrackNumber, Matched = false };
           songsNotFound.Add(match);
         }
 

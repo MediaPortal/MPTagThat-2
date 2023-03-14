@@ -16,7 +16,6 @@
 // along with MPTagThat. If not, see <http://www.gnu.org/licenses/>.
 #endregion
 
-using WPFLocalizeExtension.Extensions;
 
 namespace MPTagThat.Core.Common
 {
@@ -26,9 +25,9 @@ namespace MPTagThat.Core.Common
   public class GridViewColumn
   {
     #region Variables
-    
+
     private string _type = "text";
-    
+
     #endregion
 
     #region ctor
@@ -44,7 +43,7 @@ namespace MPTagThat.Core.Common
       DisplayIndex = displayIndex;
     }
 
-    public GridViewColumn() {}
+    public GridViewColumn() { }
 
     #endregion
 

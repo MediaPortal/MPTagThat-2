@@ -18,7 +18,6 @@
 
 #region
 
-using System;
 using MPTagThat.Core.Common.Song;
 using Prism.Mvvm;
 
@@ -44,7 +43,7 @@ namespace MPTagThat.Converter.Models
 
     public string NewFileName
     {
-      get => _newFileName; 
+      get => _newFileName;
       set => SetProperty(ref _newFileName, value);
     }
 

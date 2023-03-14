@@ -16,15 +16,6 @@
 // along with MPTagThat. If not, see <http://www.gnu.org/licenses/>.
 #endregion
 
-using System;
-using System.IO;
-using System.Configuration;
-using System.Globalization;
-using System.IO.MemoryMappedFiles;
-using System.Text;
-using System.Threading;
-using System.Windows;
-using System.Xml;
 using MPTagThat.Core.Services.Logging;
 using MPTagThat.Core.Services.MediaChangeMonitor;
 using MPTagThat.Core.Services.MusicDatabase;
@@ -38,6 +29,14 @@ using Prism.Regions;
 using Prism.Unity;
 using Syncfusion.SfSkinManager;
 using Syncfusion.Windows.Tools.Controls;
+using System;
+using System.Globalization;
+using System.IO;
+using System.IO.MemoryMappedFiles;
+using System.Text;
+using System.Threading;
+using System.Windows;
+using System.Xml;
 using Un4seen.Bass;
 using Unity;
 
@@ -87,19 +86,19 @@ namespace MPTagThat
       logger.GetLogger.Debug("Registering Settings Manager");
       var settings = new SettingsManager();
       containerRegistry.RegisterInstance<ISettingsManager>(settings);
-      
+
 
       // Must be the last thing here, since we are referring to the service 
       settings.StartupSettings = _startupSettings;
       settings.GetOptions.InitOptions();
 
-      logger.Level = (LogLevel)Enum.Parse(typeof(LogLevel),(Container.Resolve(typeof(ISettingsManager)) as ISettingsManager)?.GetOptions
+      logger.Level = (LogLevel)Enum.Parse(typeof(LogLevel), (Container.Resolve(typeof(ISettingsManager)) as ISettingsManager)?.GetOptions
         .MainSettings.DebugLevel);
 
       // All other services, relying on Settings to come here
       logger.GetLogger.Info("Registering Scripting Manager");
       containerRegistry.RegisterInstance<IScriptManager>(new ScriptManager());
-      
+
       logger.GetLogger.Info("Registering Music Database Service");
       containerRegistry.RegisterInstance<IMusicDatabase>(new MusicDatabase());
 
@@ -163,8 +162,8 @@ namespace MPTagThat
       _splashScreen.Show();
 
       SfSkinManager.ApplyStylesOnApplication = false;
-      
-      _commandLineArgs = e.Args;     
+
+      _commandLineArgs = e.Args;
       _portable = 0;
       _startupFolder = "";
       // Process Command line Arguments
@@ -261,14 +260,14 @@ namespace MPTagThat
       var log = Container.Resolve<ILogger>().GetLogger;
       log.Trace(">>>");
       _splashScreen.Status.Content = "Finishing startup ...";
-      
-      
+
+
       SfSkinManager.SetVisualStyle(Application.Current.MainWindow,
         (VisualStyles)Enum.Parse(typeof(VisualStyles), (Container.Resolve(typeof(ISettingsManager)) as ISettingsManager)?.GetOptions
           .MainSettings.Theme));
 
       log.Info("MPTagThat is starting...");
-      
+
       // Move Init of Services, which we don't need immediately to a separate thread to increase startup performance
       Thread initService = new Thread(() => DoInitService(Container.GetContainer()))
       {
@@ -316,7 +315,7 @@ namespace MPTagThat
       var messageWaitHandle = new EventWaitHandle(false, EventResetMode.AutoReset, "MPTagThat_IPC");
 
       container.Resolve<ILogger>().GetLogger.Debug("Registering MemoryMappedFile");
-      
+
       // Create named MMF
       using (var mmf = MemoryMappedFile.CreateOrOpen("MPTagThat", 2048))
       {

@@ -16,15 +16,12 @@
 // along with MPTagThat. If not, see <http://www.gnu.org/licenses/>.
 #endregion
 
-using System;
-using System.Windows.Input;
 using MPTagThat.Core;
 using MPTagThat.Core.Common;
 using MPTagThat.Core.Events;
 using MPTagThat.Core.Services.MusicDatabase;
-using MPTagThat.Core.Services.Settings;
-using MPTagThat.Core.Services.Settings.Setting;
 using Prism.Ioc;
+using System.Windows.Input;
 using WPFLocalizeExtension.Engine;
 
 namespace MPTagThat.Dialogs.ViewModels
@@ -72,7 +69,7 @@ namespace MPTagThat.Dialogs.ViewModels
     /// <summary>
     /// Property to show the number of Artists
     /// </summary>
-    private int _numArtists =0;
+    private int _numArtists = 0;
     public int NumArtists
     {
       get => _numArtists;
@@ -82,7 +79,7 @@ namespace MPTagThat.Dialogs.ViewModels
     /// <summary>
     /// Property to show the number of Album Artists
     /// </summary>
-    private int _numAlbumArtists =0;
+    private int _numAlbumArtists = 0;
     public int NumAlbumArtists
     {
       get => _numAlbumArtists;
@@ -92,7 +89,7 @@ namespace MPTagThat.Dialogs.ViewModels
     /// <summary>
     /// Property to show the number of Albums
     /// </summary>
-    private int _numAlbums =0;
+    private int _numAlbums = 0;
     public int NumAlbums
     {
       get => _numAlbums;
@@ -102,7 +99,7 @@ namespace MPTagThat.Dialogs.ViewModels
     /// <summary>
     /// Property to show the number of Genres
     /// </summary>
-    private int _numGenres =0;
+    private int _numGenres = 0;
     public int NumGenres
     {
       get => _numGenres;
@@ -112,7 +109,7 @@ namespace MPTagThat.Dialogs.ViewModels
     /// <summary>
     /// Property to show the total number of Songs
     /// </summary>
-    private int _numSongss =0;
+    private int _numSongss = 0;
     public int NumSongs
     {
       get => _numSongss;
@@ -136,7 +133,7 @@ namespace MPTagThat.Dialogs.ViewModels
       Title = LocalizeDictionary.Instance.GetLocalizedObject("MPTagThat", "Strings", "databaseStatus_Header",
         LocalizeDictionary.Instance.Culture).ToString();
       EventSystem.Subscribe<DatabaseScanEvent>(UpdateScanStatus);
-      
+
       NumAlbumArtists = _musicDb.GetCount("AlbumArtist");
       NumArtists = _musicDb.GetCount("Artist");
       NumAlbums = _musicDb.GetCount("Album");
@@ -164,7 +161,7 @@ namespace MPTagThat.Dialogs.ViewModels
       NumGenres = _musicDb.GetCount("Genre");
       NumSongs = _musicDb.GetCount("Songs");
     }
-    
+
     #endregion
 
     #region Event Handling
@@ -189,11 +186,11 @@ namespace MPTagThat.Dialogs.ViewModels
       }
       else
       {
-        CurrentFolder = msg.CurrentFolder;  
+        CurrentFolder = msg.CurrentFolder;
       }
 
       NumberOfFiles = msg.NumberOfFiles.ToString();
-      
+
       CurrentFile = msg.CurrentFile;
     }
 

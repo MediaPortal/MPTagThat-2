@@ -18,15 +18,15 @@
 
 #region 
 
-using System.Globalization;
-using System.IO;
-using System.Text.RegularExpressions;
-using System.Threading;
 using MPTagThat.Core.Services.Logging;
 using MPTagThat.Core.Services.Settings;
 using MPTagThat.Core.Services.Settings.Setting;
 using MPTagThat.Core.Utils;
 using Prism.Ioc;
+using System.Globalization;
+using System.IO;
+using System.Text.RegularExpressions;
+using System.Threading;
 using WPFLocalizeExtension.Engine;
 
 #endregion

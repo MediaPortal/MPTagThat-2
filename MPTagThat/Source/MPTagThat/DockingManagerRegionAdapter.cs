@@ -18,10 +18,10 @@
 
 #region
 
-using System.Linq;
-using System.Windows.Controls;
 using Prism.Regions;
 using Syncfusion.Windows.Tools.Controls;
+using System.Linq;
+using System.Windows.Controls;
 
 #endregion
 

@@ -45,4 +45,5 @@ namespace MPTagThat.Core.Services.AudioEncoder
     /// Aborts the current encoding
     /// </summary>
     void AbortEncoding();
-  }}
+  }
+}

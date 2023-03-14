@@ -147,7 +147,7 @@ namespace MPTagThat.Core.AlbumSearch.AlbumSites
         ilGenerator.Emit(OpCodes.Ret);
 
         del = (ConstructorDelegate)dynamicMethod.CreateDelegate(typeof(ConstructorDelegate));
-        
+
         // In some occasions we get duplicate keys
         if (!ClassConstructors.ContainsKey(type.Name))
         {

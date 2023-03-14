@@ -20,9 +20,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 #endregion
 
@@ -43,26 +40,26 @@ namespace MPTagThat.Dialogs.ViewModels
     public ParameterPart(string parm)
     {
       var str = parm;
-      str = str.Replace("%artist%", "\x0001");    
-      str = str.Replace("%title%", "\x0001"); 
-      str = str.Replace("%album%", "\x0001"); 
-      str = str.Replace("%genre%", "\x0001"); 
+      str = str.Replace("%artist%", "\x0001");
+      str = str.Replace("%title%", "\x0001");
+      str = str.Replace("%album%", "\x0001");
+      str = str.Replace("%genre%", "\x0001");
       str = str.Replace("%comment%", "\x0001");
-      str = str.Replace("%year%", "\x0001"); 
-      str = str.Replace("%x%", "\x0001"); 
-      str = str.Replace("%albumartist%", "\x0001"); 
-      str = str.Replace("%disc%", "\x0001"); 
-      str = str.Replace("%disctotal%", "\x0001"); 
-      str = str.Replace("%track%", "\x0001"); 
-      str = str.Replace("%tracktotal%", "\x0001"); 
-      str = str.Replace("%conductor%", "\x0001"); 
-      str = str.Replace("%composer%", "\x0001"); 
-      str = str.Replace("%group%", "\x0001"); 
-      str = str.Replace("%subtitle%", "\x0001"); 
-      str = str.Replace("%remixed%", "\x0001"); 
-      str = str.Replace("%bpm%", "\x0001"); 
+      str = str.Replace("%year%", "\x0001");
+      str = str.Replace("%x%", "\x0001");
+      str = str.Replace("%albumartist%", "\x0001");
+      str = str.Replace("%disc%", "\x0001");
+      str = str.Replace("%disctotal%", "\x0001");
+      str = str.Replace("%track%", "\x0001");
+      str = str.Replace("%tracktotal%", "\x0001");
+      str = str.Replace("%conductor%", "\x0001");
+      str = str.Replace("%composer%", "\x0001");
+      str = str.Replace("%group%", "\x0001");
+      str = str.Replace("%subtitle%", "\x0001");
+      str = str.Replace("%remixed%", "\x0001");
+      str = str.Replace("%bpm%", "\x0001");
 
-      Delimiters = str.Split(new[] {'\x0001'});
+      Delimiters = str.Split(new[] { '\x0001' });
       str = parm;
 
       var upperBound = Delimiters.GetUpperBound(0);

@@ -18,8 +18,8 @@
 
 #region
 
-using System.Collections.Generic;
 using Prism.Ioc;
+using System.Collections.Generic;
 
 #endregion
 

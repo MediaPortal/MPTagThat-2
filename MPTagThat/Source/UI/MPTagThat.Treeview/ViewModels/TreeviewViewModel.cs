@@ -18,12 +18,6 @@
 
 #region
 
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.IO;
-using System.Windows.Input;
-using System.Windows.Threading;
 using MPTagThat.Core;
 using MPTagThat.Core.Common;
 using MPTagThat.Core.Events;
@@ -37,7 +31,12 @@ using Prism.Mvvm;
 using Syncfusion.UI.Xaml.TreeView;
 using Syncfusion.UI.Xaml.TreeView.Engine;
 using Syncfusion.Windows.Shared;
-using Syncfusion.Windows.Tools.Controls;
+using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.IO;
+using System.Windows.Input;
+using System.Windows.Threading;
 using WPFLocalizeExtension.Engine;
 using Action = MPTagThat.Core.Common.Action;
 

@@ -18,17 +18,16 @@
 
 #region 
 
+using MPTagThat.Core;
 using MPTagThat.Core.Common.Song;
+using MPTagThat.Core.Events;
+using MPTagThat.Core.Services.MusicDatabase;
+using MPTagThat.Core.Utils;
+using Prism.Ioc;
 using System;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using MPTagThat.Core;
-using MPTagThat.Core.Events;
-using MPTagThat.Core.Services.MusicDatabase;
-using MPTagThat.Core.Services.Settings;
-using MPTagThat.Core.Utils;
-using Prism.Ioc;
 using TagLib;
 using File = System.IO.File;
 

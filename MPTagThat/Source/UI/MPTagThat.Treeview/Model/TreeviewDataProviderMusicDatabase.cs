@@ -18,16 +18,16 @@
 
 #region
 
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Windows.Input;
 using MPTagThat.Core.Services.Logging;
 using MPTagThat.Core.Services.MusicDatabase;
 using Prism.Ioc;
 using Syncfusion.UI.Xaml.TreeView;
 using Syncfusion.UI.Xaml.TreeView.Engine;
 using Syncfusion.Windows.Shared;
+using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Windows.Input;
 
 #endregion
 
@@ -134,12 +134,12 @@ namespace MPTagThat.Treeview.Model
       {
         node.HasChildNodes = false;
         return;
-      } 
+      }
       if ((musicItem.Path.StartsWith("Artist") || musicItem.Path.StartsWith("AlbumArtist")) && node.Level == 3)
       {
         node.HasChildNodes = false;
         return;
-      } 
+      }
       if (musicItem.Path.StartsWith("Genre") && node.Level == 4)
       {
         node.HasChildNodes = false;
@@ -211,7 +211,7 @@ namespace MPTagThat.Treeview.Model
             {
               type = "Artist";
               value = item;
-              
+
             }
             else if (_rootFolder == RootFolder.AlbumArtist)
             {
@@ -241,7 +241,7 @@ namespace MPTagThat.Treeview.Model
           node.PopulateChildNodes(nodesArray);
         }
       }
-      
+
       if (!init)
       {
         if (musicItem.Item == null)
@@ -332,7 +332,7 @@ namespace MPTagThat.Treeview.Model
 
           childNode.PopulateChildNodes(nodesArray);
           childNode.IsExpanded = true;
-          helper.Model.TreeView.BringIntoView(childNode,false,true,ScrollToPosition.MakeVisible);
+          helper.Model.TreeView.BringIntoView(childNode, false, true, ScrollToPosition.MakeVisible);
         }
       }
 
@@ -384,7 +384,7 @@ namespace MPTagThat.Treeview.Model
     protected virtual TreeItem CreateTreeNode(TreeViewHelper helper, string text, string path,
       bool isSpecialFolder, object item)
     {
-      return new TreeItem(text, isSpecialFolder) { Path = path, Item = item, HasChildNodes = true};
+      return new TreeItem(text, isSpecialFolder) { Path = path, Item = item, HasChildNodes = true };
     }
 
     #endregion

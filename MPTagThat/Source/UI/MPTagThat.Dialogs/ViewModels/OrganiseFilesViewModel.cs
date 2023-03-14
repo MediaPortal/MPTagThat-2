@@ -18,31 +18,29 @@
 
 #region
 
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.IO;
-using System.Windows;
-using System.Windows.Input;
-using Prism.Services.Dialogs;
+using Microsoft.VisualBasic.FileIO;
+using MPTagThat.Core;
 using MPTagThat.Core.Common;
 using MPTagThat.Core.Common.Song;
 using MPTagThat.Core.Events;
+using MPTagThat.Core.Services.MusicDatabase;
+using MPTagThat.Core.Services.ScriptManager;
 using MPTagThat.Core.Services.Settings.Setting;
 using MPTagThat.Core.Utils;
+using Prism.Ioc;
+using Prism.Services.Dialogs;
 using Syncfusion.UI.Xaml.Grid;
-using WPFLocalizeExtension.Engine;
+using System;
 using System.Collections;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
 using System.Reflection;
-using MPTagThat.Core;
-using MPTagThat.Core.Services.ScriptManager;
-using Action = MPTagThat.Core.Common.Action;
+using System.Windows;
+using System.Windows.Input;
+using WPFLocalizeExtension.Engine;
 using DialogResult = System.Windows.Forms.DialogResult;
-using Microsoft.VisualBasic.FileIO;
-using MPTagThat.Core.Services.MusicDatabase;
-using Prism.Ioc;
-using Syncfusion.Data.Extensions;
 
 // ReSharper disable CommentTypo
 
@@ -273,17 +271,17 @@ namespace MPTagThat.Dialogs.ViewModels
         {
           log.Debug("Saving All Pending changes first");
           var method = _instance.GetType()
-            .GetMethod("ExecuteCommand", new[] {typeof(string), typeof(object), typeof(bool)});
-          method?.Invoke(_instance, new object[] {"SaveAll", new object[] {"true"}, false});
+            .GetMethod("ExecuteCommand", new[] { typeof(string), typeof(object), typeof(bool) });
+          method?.Invoke(_instance, new object[] { "SaveAll", new object[] { "true" }, false });
           log.Debug("Finished Saving All Pending changes");
 
           // Update the songs from the instance, since a SavAll might have renamed the file
-          var s = (ObservableCollection<Object>) _instance?.GetType().GetProperty("SelectedItems")?.GetValue(_instance);
+          var s = (ObservableCollection<Object>)_instance?.GetType().GetProperty("SelectedItems")?.GetValue(_instance);
           foreach (var song in s)
           {
             // Can't clear the selection, so we need to remove and insert into collection
             _songs.RemoveAt(i);
-            _songs.Insert(i, (SongData) song);
+            _songs.Insert(i, (SongData)song);
             i++;
           }
         }
@@ -332,7 +330,7 @@ namespace MPTagThat.Dialogs.ViewModels
         // Make sure we have a valid folder name
         directoryName = Util.MakeValidFolderName(directoryName);
         directoryName = Path.Combine(targetFolder, directoryName);
-        
+
 
         try
         {
@@ -508,7 +506,7 @@ namespace MPTagThat.Dialogs.ViewModels
         };
         EventSystem.Publish(evt);
       }
-      
+
       log.Trace("<<<");
     }
 

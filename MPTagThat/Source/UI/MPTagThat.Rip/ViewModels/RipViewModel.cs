@@ -18,20 +18,6 @@
 
 #region
 
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.IO;
-using System.Linq;
-using System.Net;
-using System.Runtime.Serialization.Json;
-using System.Text;
-using System.Threading;
-using System.Windows;
-using System.Windows.Data;
-using System.Windows.Forms;
-using System.Windows.Input;
 using Hqub.MusicBrainz.API.Entities;
 using MPTagThat.Core;
 using MPTagThat.Core.Common;
@@ -48,6 +34,17 @@ using Newtonsoft.Json.Linq;
 using Prism.Ioc;
 using Prism.Mvvm;
 using Prism.Regions;
+using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.IO;
+using System.Linq;
+using System.Net;
+using System.Threading;
+using System.Windows;
+using System.Windows.Data;
+using System.Windows.Forms;
+using System.Windows.Input;
 using Un4seen.Bass;
 using Un4seen.Bass.AddOn.Cd;
 using Un4seen.Bass.AddOn.Wma;
@@ -173,7 +170,7 @@ namespace MPTagThat.Rip.ViewModels
           return;
         }
 
-        var item = (Item) _cdSelectedItem;
+        var item = (Item)_cdSelectedItem;
         var index = Convert.ToInt32(item.Value.Substring(0, item.Value.IndexOf(" -", StringComparison.Ordinal)));
         if (item.Value.ToLower().Contains("gnudb"))
         {
@@ -1309,7 +1306,7 @@ namespace MPTagThat.Rip.ViewModels
         _mbId = BassCd.BASS_CD_GetID(_driveID, BASSCDId.BASS_CDID_MUSICBRAINZ);
         var mbURL = $@"https://musicbrainz.org/ws/2/discid/{_mbId}?fmt=json&inc=artists+recordings+artist-credits";
         var mbResponse = Util.GetWebPage(mbURL);
-       
+
         var json = JObject.Parse(mbResponse);
         _musicBrainzReleases = GetReleases(ref json);
 
@@ -1334,57 +1331,57 @@ namespace MPTagThat.Rip.ViewModels
     private List<Release> GetReleases(ref JObject json)
     {
       var rel = new List<Release>();
-      var releases =  (json["releases"] as JArray)?.Select(r => (object)r).ToList();
+      var releases = (json["releases"] as JArray)?.Select(r => (object)r).ToList();
       if (releases != null)
       {
         foreach (JObject r in releases)
         {
-          var release = new Release {Title = (string) r["title"], Country = (string) r["country"], Date = (string) r["date"]};
+          var release = new Release { Title = (string)r["title"], Country = (string)r["country"], Date = (string)r["date"] };
           var credit = (r["artist-credit"] as JArray)?.Select(c => (object)c).ToList();
           if (credit != null)
           {
             release.Credits = new List<NameCredit>();
             foreach (JObject c in credit)
             {
-              var namecredit = new NameCredit{Name = (string)c["name"]};
+              var namecredit = new NameCredit { Name = (string)c["name"] };
               release.Credits.Add(namecredit);
             }
           }
-          var media = (r["media"] as JArray)?.Select(m => (object) m).ToList();
+          var media = (r["media"] as JArray)?.Select(m => (object)m).ToList();
           if (media != null)
           {
             release.Media = new List<Medium>();
             foreach (JObject m in media)
             {
               var medium = new Medium();
-              var tracks = (m["tracks"]as JArray)?.Select(t => (object)t).ToList();
+              var tracks = (m["tracks"] as JArray)?.Select(t => (object)t).ToList();
               if (tracks != null)
               {
                 medium.Tracks = new List<Track>();
                 foreach (JObject t in tracks)
                 {
                   var track = new Track();
-                  track.Position = (int) t["position"];
+                  track.Position = (int)t["position"];
                   track.Recording = new Recording();
-                  track.Recording.Title = (string) t["title"];
+                  track.Recording.Title = (string)t["title"];
                   track.Recording.Credits = new List<NameCredit>();
-                  track.Length = (int) t["length"];
+                  track.Length = (int)t["length"];
                   foreach (JObject c in t["artist-credit"])
                   {
-                    track.Recording.Credits.Add(new NameCredit { Name = (string) c["name"]});
+                    track.Recording.Credits.Add(new NameCredit { Name = (string)c["name"] });
                   }
                   medium.Tracks.Add(track);
                 }
                 medium.TrackCount = tracks.Count;
               }
 
-              var discs = (m["discs"] as JArray)?.Select(d => (object) d).ToList();
+              var discs = (m["discs"] as JArray)?.Select(d => (object)d).ToList();
               if (discs != null)
               {
                 medium.Discs = new List<Disc>();
                 foreach (JObject d in discs)
                 {
-                  var disc = new Disc {Id = (string) d["id"]};
+                  var disc = new Disc { Id = (string)d["id"] };
                   medium.Discs.Add(disc);
                 }
 
@@ -1421,7 +1418,7 @@ namespace MPTagThat.Rip.ViewModels
             break;
           }
         }
-        
+
         if (foundId)
         {
           foreach (var track in medium.Tracks)

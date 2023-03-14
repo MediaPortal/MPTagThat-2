@@ -74,7 +74,7 @@ namespace MPTagThat.Core.Common.Behaviors
 
     private static void OnTrackCaretIndex(DependencyObject dependency, DependencyPropertyChangedEventArgs e)
     {
-      var textbox = (TextBox) dependency;
+      var textbox = (TextBox)dependency;
 
       if (textbox == null)
         return;
@@ -96,7 +96,7 @@ namespace MPTagThat.Core.Common.Behaviors
       if (sender is TextBox textbox)
       {
         SetCursorPosition(textbox, textbox.CaretIndex);
-      } 
+      }
     }
   }
 

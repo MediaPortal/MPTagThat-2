@@ -29,7 +29,7 @@ namespace MPTagThat.Core.Events
     /// <summary>
     /// The Action of the Event
     /// </summary>
-    public string Action  { get; set; } = "";
+    public string Action { get; set; } = "";
 
     /// <summary>
     /// Individual Parameter needed by the message

@@ -18,11 +18,11 @@
 
 #region
 
+using MPTagThat.Core.Services.Logging;
+using Prism.Ioc;
 using System;
 using System.IO;
 using System.Xml;
-using MPTagThat.Core.Services.Logging;
-using Prism.Ioc;
 
 #endregion
 
@@ -43,7 +43,7 @@ namespace MPTagThat.Core.Services.Settings
       _filename = xmlfilename;
       var options = ContainerLocator.Current.Resolve<ISettingsManager>().GetOptions;
       var fullFileName = $@"{options.ConfigDir}\{xmlfilename}";
-      
+
       _document = new XmlDocument();
       if (File.Exists(fullFileName))
       {

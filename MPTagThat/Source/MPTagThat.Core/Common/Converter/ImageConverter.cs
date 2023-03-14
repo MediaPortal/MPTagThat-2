@@ -18,12 +18,12 @@
 
 #region 
 
+using Shell32;
 using System;
 using System.IO;
 using System.Linq;
 using System.Windows.Data;
 using System.Windows.Media.Imaging;
-using Shell32;
 
 #endregion
 
@@ -44,7 +44,7 @@ namespace MPTagThat.Core.Common.Converter
           try
           {
             var folderIcons = Directory.GetFiles(folderItem.Path, "*.*", SearchOption.TopDirectoryOnly)
-              .Where(s => s.ToLower().EndsWith("folder.jpg") ||  s.ToLower().EndsWith("folder.png") ||  s.ToLower().EndsWith("albumartsmall.jpg")).ToList();
+              .Where(s => s.ToLower().EndsWith("folder.jpg") || s.ToLower().EndsWith("folder.png") || s.ToLower().EndsWith("albumartsmall.jpg")).ToList();
             if (folderIcons.Count > 0)
             {
               var bitmap = new BitmapImage();

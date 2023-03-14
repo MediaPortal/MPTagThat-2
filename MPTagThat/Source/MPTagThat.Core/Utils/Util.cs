@@ -18,19 +18,6 @@
 
 #region
 
-using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Drawing.Imaging;
-using System.Globalization;
-using System.IO;
-using System.Linq;
-using System.Net;
-using System.Text;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Forms;
 using MPTagThat.Core.Common.Converter;
 using MPTagThat.Core.Common.Song;
 using MPTagThat.Core.Events;
@@ -41,13 +28,21 @@ using Prism.Ioc;
 using Syncfusion.UI.Xaml.Grid;
 using Syncfusion.Windows.Controls.Input;
 using Syncfusion.Windows.Primitives;
+using System;
+using System.Drawing;
+using System.Drawing.Imaging;
+using System.IO;
+using System.Net;
+using System.Text;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
 using TagLib;
 using Un4seen.Bass.AddOn.Cd;
 using WPFLocalizeExtension.Engine;
 using Binding = System.Windows.Data.Binding;
 using File = TagLib.File;
 using GridViewColumn = MPTagThat.Core.Common.GridViewColumn;
-using HorizontalAlignment = System.Windows.HorizontalAlignment;
 using Image = System.Drawing.Image;
 using Tag = TagLib.Id3v2.Tag;
 // ReSharper disable StringIndexOfIsCultureSpecific.1

@@ -18,14 +18,14 @@
 
 #region
 
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Windows.Input;
 using MPTagThat.Core.Common;
 using MPTagThat.Core.Common.Song;
 using Prism.Services.Dialogs;
 using Syncfusion.UI.Xaml.Grid;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
+using System.Windows.Input;
 using WPFLocalizeExtension.Engine;
 using SelectionChangedEventArgs = System.Windows.Controls.SelectionChangedEventArgs;
 
@@ -103,7 +103,7 @@ namespace MPTagThat.Dialogs.ViewModels
 
     private bool _ckReplaceUnderScoreBySpace;
     public bool CkReplaceUnderScoreBySpace { get => _ckReplaceUnderScoreBySpace; set => SetProperty(ref _ckReplaceUnderScoreBySpace, value); }
-    
+
     private bool _ckAlwaysUpperCaseFirstLetter;
     public bool CkAlwaysUpperCaseFirstLetter { get => _ckAlwaysUpperCaseFirstLetter; set => SetProperty(ref _ckAlwaysUpperCaseFirstLetter, value); }
 
@@ -159,7 +159,7 @@ namespace MPTagThat.Dialogs.ViewModels
       _options.ConversionSettings.ReplaceSpaceBy20 = CkReplaceSpaceBy20;
       _options.ConversionSettings.ReplaceSpaceByUnderscore = CkReplaceSpaceByUnderscore;
 
-      for (var i=0; i < _songs.Count; i++)
+      for (var i = 0; i < _songs.Count; i++)
       {
         var song = _songs[i];
         CaseConversion.CaseConvert(ref song);
@@ -198,7 +198,7 @@ namespace MPTagThat.Dialogs.ViewModels
 
     private void SelectionChanged(object param)
     {
-      var parm = (SelectionChangedEventArgs) param;
+      var parm = (SelectionChangedEventArgs)param;
       foreach (var added in parm.AddedItems)
       {
         _selectedExceptions.Add((string)added);
@@ -206,7 +206,7 @@ namespace MPTagThat.Dialogs.ViewModels
 
       foreach (var removed in parm.RemovedItems)
       {
-        _selectedExceptions.Remove((string) removed);
+        _selectedExceptions.Remove((string)removed);
       }
     }
 

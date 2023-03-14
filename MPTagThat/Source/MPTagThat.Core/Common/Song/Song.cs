@@ -16,22 +16,19 @@
 // along with MPTagThat. If not, see <http://www.gnu.org/licenses/>.
 #endregion
 
-using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Globalization;
-using System.IO;
-using System.Linq;
 using MPTagThat.Core.Services.Logging;
 using MPTagThat.Core.Services.Settings;
 using MPTagThat.Core.Utils;
 using Prism.Ioc;
+using System;
+using System.Collections.Generic;
+using System.Globalization;
+using System.IO;
+using System.Linq;
 using TagLib;
 using TagLib.Id3v2;
 using TagLib.Ogg;
 using WPFLocalizeExtension.Engine;
-using Frame = MPTagThat.Core.Common.Song.Frame;
-using Picture = MPTagThat.Core.Common.Song.Picture;
 
 namespace MPTagThat.Core.Common.Song
 {
@@ -448,7 +445,7 @@ namespace MPTagThat.Core.Common.Song
       song.TitleSortName = "";
       song.TrackLength = "";
       song.UserFrames.Clear();
-      
+
       return song;
     }
 
@@ -645,7 +642,7 @@ namespace MPTagThat.Core.Common.Song
           file.Tag.Year = (uint)song.Year;
 
           double gain;
-          var replayGainTrack =  string.IsNullOrEmpty(song.ReplayGainTrack) ? "" : song.ReplayGainTrack.Substring(0, song.ReplayGainTrack.IndexOf(" ", StringComparison.Ordinal));
+          var replayGainTrack = string.IsNullOrEmpty(song.ReplayGainTrack) ? "" : song.ReplayGainTrack.Substring(0, song.ReplayGainTrack.IndexOf(" ", StringComparison.Ordinal));
           if (double.TryParse(replayGainTrack, NumberStyles.Any, CultureInfo.InvariantCulture, out gain))
           {
             file.Tag.ReplayGainTrackGain = gain;
@@ -654,7 +651,7 @@ namespace MPTagThat.Core.Common.Song
           {
             file.Tag.ReplayGainTrackPeak = gain;
           }
-          var replayGainAlbum =  string.IsNullOrEmpty(song.ReplayGainAlbum) ? "" : song.ReplayGainAlbum.Substring(0, song.ReplayGainAlbum.IndexOf(" ", StringComparison.Ordinal));
+          var replayGainAlbum = string.IsNullOrEmpty(song.ReplayGainAlbum) ? "" : song.ReplayGainAlbum.Substring(0, song.ReplayGainAlbum.IndexOf(" ", StringComparison.Ordinal));
           if (Double.TryParse(replayGainAlbum, NumberStyles.Any, CultureInfo.InvariantCulture, out gain))
           {
             file.Tag.ReplayGainAlbumGain = gain;

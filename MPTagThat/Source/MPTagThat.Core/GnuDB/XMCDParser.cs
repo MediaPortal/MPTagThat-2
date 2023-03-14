@@ -34,7 +34,7 @@ namespace MPTagThat.Core.GnuDB
   {
     private const string Appname = "MPTagThat";
     private const string Appversion = "1.0";
-    private readonly char[] _seps = {'\r', '\n'};
+    private readonly char[] _seps = { '\r', '\n' };
 
     // store all the data
     private string _artist;
@@ -50,7 +50,7 @@ namespace MPTagThat.Core.GnuDB
     private int[] _trackDurations;
     private int _year;
 
-    public XMCDParser() {}
+    public XMCDParser() { }
 
     public XMCDParser(string xmcdContent)
     {
@@ -107,8 +107,8 @@ namespace MPTagThat.Core.GnuDB
       ArrayList offsets = new ArrayList();
       Hashtable comments = new Hashtable();
       Hashtable fields = new Hashtable();
-      char[] commentSep = {':'};
-      char[] fieldSep = {'='};
+      char[] commentSep = { ':' };
+      char[] fieldSep = { '=' };
       //string[] tokens = _content.Split(_seps);
 
       for (int i = 0; i < content.Length; i++)
@@ -205,7 +205,7 @@ namespace MPTagThat.Core.GnuDB
     private void InitVariables(ArrayList offsets, Hashtable comments, Hashtable fields)
     {
       // all the song offsets
-      _offsets = (int[])offsets.ToArray(typeof (int));
+      _offsets = (int[])offsets.ToArray(typeof(int));
       _cdTrackDetail = new CDTrackDetail[_offsets.Length];
 
       foreach (DictionaryEntry dict in comments)
@@ -215,7 +215,7 @@ namespace MPTagThat.Core.GnuDB
         switch (key)
         {
           case "Disc length":
-            _length = Convert.ToInt32(val.Split(new[] {' '})[0].Trim());
+            _length = Convert.ToInt32(val.Split(new[] { ' ' })[0].Trim());
             _trackDurations = calculateDurations(_offsets, _length);
             break;
           case "Revision":
@@ -289,7 +289,7 @@ namespace MPTagThat.Core.GnuDB
               {
                 // restricting scope...
                 int[] ai;
-                char[] seps = {',', '\n', '\r', '\t'};
+                char[] seps = { ',', '\n', '\r', '\t' };
 
                 string[] tokens = val.Split(seps);
                 if (tokens.Length == 1 && tokens[0].Trim().Length == 0)
@@ -301,7 +301,7 @@ namespace MPTagThat.Core.GnuDB
                   for (int i = 0; i < ai.Length; i++)
                     ai[i] = Convert.ToInt32(tokens[i]);
                 }
-                catch {}
+                catch { }
                 _playorder = ai;
               }
               break;
@@ -386,9 +386,9 @@ namespace MPTagThat.Core.GnuDB
             break;
         }
       }
-      catch {}
+      catch { }
 
-      return (int[])list.ToArray(typeof (int));
+      return (int[])list.ToArray(typeof(int));
     }
 
     private int parseLength()
@@ -399,7 +399,7 @@ namespace MPTagThat.Core.GnuDB
       {
         return Convert.ToInt32(val);
       }
-      catch {}
+      catch { }
       return 0;
     }
 
@@ -411,7 +411,7 @@ namespace MPTagThat.Core.GnuDB
       {
         return Convert.ToInt32(val);
       }
-      catch {}
+      catch { }
       return 0;
     }
 
@@ -467,7 +467,7 @@ namespace MPTagThat.Core.GnuDB
       {
         retval = Convert.ToInt32(parseTag(@"\s*DYEAR\s*=\s*(.*)\s*\n"));
       }
-      catch {}
+      catch { }
 
       return retval;
     }
@@ -491,8 +491,8 @@ namespace MPTagThat.Core.GnuDB
       {
         return title.Substring(j + 3);
       }
-        //If we're sure that the CD is a real compilation then we can use this workaround:
-        //A lot of annotators don't use the standard " / " to split the Artist name from the Title name, instead they rely on the unconventional " - " delimiter
+      //If we're sure that the CD is a real compilation then we can use this workaround:
+      //A lot of annotators don't use the standard " / " to split the Artist name from the Title name, instead they rely on the unconventional " - " delimiter
       else if (isALegitimateCompilation)
       {
         j = title.IndexOf(" - ");
@@ -509,8 +509,8 @@ namespace MPTagThat.Core.GnuDB
       {
         return title.Substring(0, j);
       }
-        //If we're sure that the CD is a real compilation then we can use this workaround:
-        //A lot of annotators don't use the standard " / " to split the Artist name from the Title name, instead they rely on the unconventional " - " delimiter
+      //If we're sure that the CD is a real compilation then we can use this workaround:
+      //A lot of annotators don't use the standard " / " to split the Artist name from the Title name, instead they rely on the unconventional " - " delimiter
       else if (isALegitimateCompilation)
       {
         j = title.IndexOf(" - ");
@@ -558,7 +558,7 @@ namespace MPTagThat.Core.GnuDB
     private int[] parsePlayOrder()
     {
       int[] ai;
-      char[] seps = {',', '\n', '\r', '\t'};
+      char[] seps = { ',', '\n', '\r', '\t' };
 
       string[] tokens = parseTag(@"\s*PLAYORDER\s*=\s*(.*)\s*\n").Split(seps);
       ai = new int[tokens.Length];
@@ -567,7 +567,7 @@ namespace MPTagThat.Core.GnuDB
         for (int i = 0; i < ai.Length; i++)
           ai[i] = Convert.ToInt32(tokens[i]);
       }
-      catch {}
+      catch { }
       return ai;
     }
 
@@ -616,7 +616,7 @@ namespace MPTagThat.Core.GnuDB
         list.Add(m.Groups[1].ToString().Trim());
       }
 
-      return (string[])list.ToArray(typeof (string));
+      return (string[])list.ToArray(typeof(string));
     }
 
     private string parseTag(string pattern)

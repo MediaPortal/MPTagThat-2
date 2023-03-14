@@ -18,15 +18,14 @@
 
 #region MyRegion
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
 using IF.Lastfm.Core.Api;
 using MPTagThat.Core.AlbumCoverSearch;
 using MPTagThat.Core.Services.Logging;
 using Prism.Ioc;
+using System;
+using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
 
 #endregion
 

@@ -18,19 +18,16 @@
 
 #region
 
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Collections.Specialized;
-using System.ComponentModel;
-using System.IO;
-using System.Linq;
 using LiteDB;
 using MPTagThat.Core.Services.Logging;
 using MPTagThat.Core.Services.MusicDatabase;
 using MPTagThat.Core.Services.Settings;
-using MPTagThat.Core.Utils;
 using Prism.Ioc;
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Collections.Specialized;
+using System.Linq;
 
 #endregion
 
@@ -102,7 +99,7 @@ namespace MPTagThat.Core.Common.Song
 
           _lastRetrievedSongIndex = index;
 
-          var result = _collection.FindById(_dbIdList[index]); 
+          var result = _collection.FindById(_dbIdList[index]);
 
           _lastRetrievedSong = (T)(object)result;
           return _lastRetrievedSong;
@@ -194,7 +191,7 @@ namespace MPTagThat.Core.Common.Song
       }
       else
       {
-        _list.Clear();  
+        _list.Clear();
       }
       OnCollectionReset();
     }
@@ -313,7 +310,7 @@ namespace MPTagThat.Core.Common.Song
     {
       try
       {
-        ContainerLocator.Current.Resolve<IMusicDatabase>() ?.DeleteDatabase(_databaseName);
+        ContainerLocator.Current.Resolve<IMusicDatabase>()?.DeleteDatabase(_databaseName);
         _database = ContainerLocator.Current.Resolve<IMusicDatabase>()?.GetDocumentStoreFor(_databaseName);
         if (_database != null)
         {

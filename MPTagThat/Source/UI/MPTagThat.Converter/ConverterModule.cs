@@ -30,7 +30,7 @@ namespace MPTagThat.Converter
   /// <summary>
   /// Module for the Converter 
   /// </summary>
-  public class ConverterModule  : IModule
+  public class ConverterModule : IModule
   {
     public void RegisterTypes(IContainerRegistry containerRegistry)
     {
