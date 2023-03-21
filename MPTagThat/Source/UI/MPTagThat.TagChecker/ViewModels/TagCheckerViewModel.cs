@@ -143,6 +143,7 @@ namespace MPTagThat.TagChecker.ViewModels
           log.Debug($"Query returned {result.Count} songs");
           foreach (var songitem in result)
           {
+            Application.DoEvents();
             var song = Song.Create(songitem.FullFileName);
             if (song != null)
             {
@@ -281,7 +282,9 @@ namespace MPTagThat.TagChecker.ViewModels
     private void CheckArtistInMusicBrainz(ref TagCheckerData item)
     {
 
+      //TODO: Add Selectzion to the UI
       var artistType = "SortName";
+      var ignoreCase = true;
 
       var searchList = new List<string>() { " feat ", " feat. ", " ft ", " ft. ", " vs ", " vs. " };
       var foundArtists = new List<string>();
@@ -387,8 +390,11 @@ namespace MPTagThat.TagChecker.ViewModels
         }
         else
         {
-          item.Status = ItemStatus.FullMatchChanged;
-          item.Changed = true;
+          2if (!ignoreCase && item.OriginalItem.ToLower() != item.ChangedItem.ToLower())
+          {
+            item.Status = ItemStatus.FullMatchChanged;
+            item.Changed = true;
+          }
         }
       }
     }
