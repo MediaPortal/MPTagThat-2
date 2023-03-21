@@ -78,6 +78,9 @@ namespace MPTagThat.Core.Services.Settings.Setting
     [Setting(SettingScope.User, "")]
     public List<string> MusicDatabaseQueries { get; set; } = new List<string>();
 
+    [Setting(SettingScope.User, "")]
+    public string LastUsedMusicDatabase { get; set; }
+
     #region Tags
 
     [Setting(SettingScope.User, "Latin1")]

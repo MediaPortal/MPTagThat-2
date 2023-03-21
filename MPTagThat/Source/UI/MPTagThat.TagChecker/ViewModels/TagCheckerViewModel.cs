@@ -390,7 +390,7 @@ namespace MPTagThat.TagChecker.ViewModels
         }
         else
         {
-          2if (!ignoreCase && item.OriginalItem.ToLower() != item.ChangedItem.ToLower())
+          if (!ignoreCase && item.OriginalItem.ToLower() != item.ChangedItem.ToLower())
           {
             item.Status = ItemStatus.FullMatchChanged;
             item.Changed = true;

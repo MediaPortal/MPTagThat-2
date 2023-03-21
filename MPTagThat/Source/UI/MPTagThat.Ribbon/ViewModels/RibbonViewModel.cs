@@ -1490,6 +1490,11 @@ namespace MPTagThat.Ribbon.ViewModels
         CustomGenres.Add(new Item(genre, ""));
       }
 
+      if (_options.MainSettings.LastUsedMusicDatabase != "")
+      {
+        ActiveDatabase = _options.MainSettings.LastUsedMusicDatabase;
+      }
+
       log.Trace(">>>");
     }
 

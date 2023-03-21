@@ -75,6 +75,10 @@ namespace MPTagThat.Core.Services.MusicDatabase
     public MusicDatabase()
     {
       CurrentDatabase = _defaultMusicDatabaseName;
+      if (_options.MainSettings.LastUsedMusicDatabase != "")
+      {
+        CurrentDatabase = _options.MainSettings.LastUsedMusicDatabase;
+      }
 
       // Open Connection to the SQLite Database with the MusicBrainz artists
       MusicBrainzDatabaseActive = false;
@@ -232,6 +236,7 @@ namespace MPTagThat.Core.Services.MusicDatabase
       if (_store != null)
       {
         log.Info($"Database has been switched to {CurrentDatabase}");
+        _options.MainSettings.LastUsedMusicDatabase = CurrentDatabase;
 
         // Notify the treeview about database change to refresh
 
