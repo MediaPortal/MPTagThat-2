@@ -20,6 +20,7 @@
 
 using LiteDB;
 using MPTagThat.Core;
+using MPTagThat.Core.Common;
 using MPTagThat.Core.Common.Song;
 using MPTagThat.Core.Events;
 using MPTagThat.Core.Services.Logging;
@@ -31,10 +32,13 @@ using Prism.Regions;
 using Prism.Services.Dialogs;
 using Syncfusion.Data;
 using Syncfusion.UI.Xaml.Grid;
+using Syncfusion.Windows.Controls.Input;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Windows.Controls;
+using System.Windows.Input;
 using WPFLocalizeExtension.Engine;
 using Action = MPTagThat.Core.Common.Action;
 using Application = System.Windows.Forms.Application;
@@ -63,8 +67,6 @@ namespace MPTagThat.TagChecker.ViewModels
       log = ContainerLocator.Current.Resolve<ILogger>()?.GetLogger;
       log.Trace(">>>");
       EventSystem.Subscribe<GenericEvent>(OnMessageReceived);
-
-
       log.Trace("<<<");
     }
 
@@ -108,6 +110,16 @@ namespace MPTagThat.TagChecker.ViewModels
     {
       get => _isBusy;
       set => SetProperty(ref _isBusy, value);
+    }
+
+    /// <summary>
+    /// The Binding for the Artist Auto Complete
+    /// </summary>
+    private ObservableCollection<string> _autoCompleteArtists = new ObservableCollection<string>();
+    public ObservableCollection<string> AutoCompleteArtists
+    {
+      get => _autoCompleteArtists;
+      set => SetProperty(ref _autoCompleteArtists, value);
     }
 
     #endregion
@@ -216,6 +228,24 @@ namespace MPTagThat.TagChecker.ViewModels
       IsBusy = false;
     }
 
+    /// <summary>
+    /// Callback from the View when a Text is changed, it should check the database for autocompletion
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    public void TextChanged(object sender, TextCompositionEventArgs e)
+    {
+      // Auto Complete Support for Artist / AlbumArtist
+      var autoComplete = (SfTextBoxExt)sender;
+      if (autoComplete.Text.Length > 1)
+      {
+        var filter = autoComplete.Text + e.Text;
+
+        AutoCompleteArtists.Clear();
+        AutoCompleteArtists.AddRange(ContainerLocator.Current.Resolve<IMusicDatabase>()?.SearchAutocompleteArtists(filter));
+        autoComplete.AutoCompleteSource = AutoCompleteArtists;
+      }
+    }
 
     #endregion
 

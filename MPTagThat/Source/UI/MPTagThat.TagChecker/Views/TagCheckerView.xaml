@@ -1,4 +1,5 @@
 ﻿<UserControl x:Class="MPTagThat.TagChecker.Views.TagCheckerView"
+             x:Name="TagCheckerPage"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -75,7 +76,31 @@
         <syncfusion:GridCheckBoxSelectorColumn MappingName="ItemSelected" Width="50"/>
         <syncfusion:GridTextColumn HeaderText="{lex:Loc songHeader_Status}" MappingName="Status" DisplayBinding="{Binding Status,Converter={StaticResource ItemStatusConverter}}" Width="150" IsReadOnly="True" />
         <syncfusion:GridTextColumn HeaderText="{lex:Loc songHeader_FileName}" MappingName="OriginalItem" IsReadOnly="True" />
-        <syncfusion:GridTextColumn HeaderText="{lex:Loc songHeader_NewFileName}" MappingName="ChangedItem" />
+        <syncfusion:GridTemplateColumn HeaderText="{lex:Loc songHeader_NewFileName}" MappingName="ChangedItem">
+          <syncfusion:GridTemplateColumn.CellTemplate>
+            <DataTemplate>
+              <TextBlock Text="{Binding ChangedItem}" />
+            </DataTemplate>
+          </syncfusion:GridTemplateColumn.CellTemplate>
+          <syncfusion:GridTemplateColumn.EditTemplate>
+            <DataTemplate>
+              <syncfusion:SfTextBoxExt   Name="ChangedItemAutoComplete" 
+                                           Text="{Binding ChangedItem, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                                           AutoCompleteSource="{Binding AutoCompleteArtists, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                                           SuggestionMode="Contains" 
+                                           SuggestionBoxPlacement="Bottom" 
+                                           SelectedItem="{Binding ChangedItem}" 
+                                           MinimumPrefixCharacters="3" 
+                                           AutoCompleteMode="Suggest">
+                <i:Interaction.Triggers>
+                  <i:EventTrigger EventName="PreviewTextInput">
+                    <i:CallMethodAction TargetObject="{Binding Path=DataContext, ElementName=TagCheckerPage, Mode=OneWay}" MethodName="TextChanged"/>
+                  </i:EventTrigger>
+                </i:Interaction.Triggers>
+              </syncfusion:SfTextBoxExt>
+            </DataTemplate>
+          </syncfusion:GridTemplateColumn.EditTemplate>
+        </syncfusion:GridTemplateColumn>
       </syncfusion:SfDataGrid.Columns>
 
 
