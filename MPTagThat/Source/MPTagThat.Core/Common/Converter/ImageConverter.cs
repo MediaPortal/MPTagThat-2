@@ -39,7 +39,7 @@ namespace MPTagThat.Core.Common.Converter
     {
       if (value is FolderItem folderItem)
       {
-        if (folderItem.Type.ToLower() == "file folder")
+        if (folderItem.IsFolder)
         {
           try
           {
