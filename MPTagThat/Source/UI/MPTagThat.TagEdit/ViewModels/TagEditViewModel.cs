@@ -2218,6 +2218,7 @@ namespace MPTagThat.TagEdit.ViewModels
       CkTitleIsChecked = false;
       CkYearIsChecked = false;
       CkBPMIsChecked = false;
+      CkCommentIsChecked = false;
       CkConductorIsChecked = false;
       CkComposerIsChecked = false;
       CkInterpretedByIsChecked = false;
