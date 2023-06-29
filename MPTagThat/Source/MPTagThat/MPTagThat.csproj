@@ -294,49 +294,55 @@
       <Version>1.1.39</Version>
     </PackageReference>
     <PackageReference Include="MPTagThat_License_Manager">
-      <Version>1.0.8</Version>
+      <Version>1.0.9</Version>
     </PackageReference>
     <PackageReference Include="Newtonsoft.Json">
-      <Version>13.0.2</Version>
+      <Version>13.0.3</Version>
     </PackageReference>
     <PackageReference Include="Prism.Unity">
       <Version>8.1.97</Version>
     </PackageReference>
     <PackageReference Include="Syncfusion.Licensing">
-      <Version>20.4.0.38</Version>
+      <Version>22.1.36</Version>
     </PackageReference>
     <PackageReference Include="Syncfusion.Themes.FluentDark.WPF">
-      <Version>20.4.0.38</Version>
+      <Version>22.1.36</Version>
     </PackageReference>
     <PackageReference Include="Syncfusion.Themes.FluentLight.WPF">
-      <Version>20.4.0.38</Version>
+      <Version>22.1.36</Version>
     </PackageReference>
     <PackageReference Include="Syncfusion.Themes.MaterialDark.WPF">
-      <Version>20.4.0.38</Version>
+      <Version>22.1.36</Version>
     </PackageReference>
     <PackageReference Include="Syncfusion.Themes.MaterialLight.WPF">
-      <Version>20.4.0.38</Version>
+      <Version>22.1.36</Version>
     </PackageReference>
     <PackageReference Include="Syncfusion.Themes.MaterialLightBlue.WPF">
-      <Version>20.4.0.38</Version>
+      <Version>22.1.36</Version>
     </PackageReference>
     <PackageReference Include="Syncfusion.Themes.Office2019Black.WPF">
-      <Version>20.4.0.38</Version>
+      <Version>22.1.36</Version>
     </PackageReference>
     <PackageReference Include="Syncfusion.Themes.Office2019Colorful.WPF">
-      <Version>20.4.0.38</Version>
+      <Version>22.1.36</Version>
     </PackageReference>
     <PackageReference Include="Syncfusion.Themes.Office2019DarkGray.WPF">
-      <Version>20.4.0.38</Version>
+      <Version>22.1.36</Version>
     </PackageReference>
     <PackageReference Include="Syncfusion.Themes.Office2019HighContrast.WPF">
-      <Version>20.4.0.38</Version>
+      <Version>22.1.36</Version>
     </PackageReference>
     <PackageReference Include="Syncfusion.Themes.Office2019White.WPF">
-      <Version>20.4.0.38</Version>
+      <Version>22.1.36</Version>
+    </PackageReference>
+    <PackageReference Include="Syncfusion.Themes.Windows11Dark.WPF">
+      <Version>22.1.36</Version>
+    </PackageReference>
+    <PackageReference Include="Syncfusion.Themes.Windows11Light.WPF">
+      <Version>22.1.36</Version>
     </PackageReference>
     <PackageReference Include="Syncfusion.Tools.WPF">
-      <Version>20.4.0.38</Version>
+      <Version>22.1.36</Version>
     </PackageReference>
     <PackageReference Include="System.Runtime.CompilerServices.Unsafe">
       <Version>6.0.0</Version>
@@ -345,7 +351,7 @@
       <Version>4.5.4</Version>
     </PackageReference>
     <PackageReference Include="WPFLocalizeExtension">
-      <Version>3.9.4</Version>
+      <Version>3.10.0</Version>
     </PackageReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

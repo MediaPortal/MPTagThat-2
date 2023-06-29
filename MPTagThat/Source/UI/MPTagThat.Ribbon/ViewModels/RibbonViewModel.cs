@@ -33,6 +33,7 @@ using Prism.Ioc;
 using Prism.Mvvm;
 using Prism.Regions;
 using Prism.Services.Dialogs;
+using Syncfusion.SfSkinManager;
 using Syncfusion.Windows.Shared;
 using Syncfusion.Windows.Tools.Controls;
 using System;
@@ -323,8 +324,8 @@ namespace MPTagThat.Ribbon.ViewModels
       {
         SetProperty(ref _selectedTheme, value);
         // TODO: Activate once the fix from Syncfusion arrives
-        //SfSkinManager.SetVisualStyle(Application.Current.MainWindow,
-        //  (VisualStyles)Enum.Parse(typeof(VisualStyles), value));
+        SfSkinManager.SetVisualStyle(Application.Current.MainWindow,
+          (VisualStyles)Enum.Parse(typeof(VisualStyles), value));
 
         // Set the preferred Row Colors for the Grid
         switch (_selectedTheme)
@@ -373,6 +374,16 @@ namespace MPTagThat.Ribbon.ViewModels
           case "Office2019HighContrast":
             RowColor = "#FF000000";
             AlternateRowColor = "#FFFAD95A";
+            break;
+
+          case "Windows11Light":
+            RowColor = "#FFFFFFFF";
+            AlternateRowColor = "#FFD0DEF2";
+            break;
+
+          case "Windows11Dark":
+            RowColor = "#FF706D6D";
+            AlternateRowColor = "#FF27272A";
             break;
         }
 
@@ -1420,6 +1431,8 @@ namespace MPTagThat.Ribbon.ViewModels
       _themes.Add("MaterialLight");
       _themes.Add("MaterialDark");
       _themes.Add("MaterialLightBlue");
+      _themes.Add("Windows11Light");
+      _themes.Add("Windows11Dark");
       _themes.Add("Office2019Colorful");
       _themes.Add("Office2019Black");
       _themes.Add("Office2019DarkGray");
