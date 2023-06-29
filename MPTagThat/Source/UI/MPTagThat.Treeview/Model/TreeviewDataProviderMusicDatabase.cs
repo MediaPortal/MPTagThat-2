@@ -25,6 +25,7 @@ using Syncfusion.UI.Xaml.TreeView;
 using Syncfusion.UI.Xaml.TreeView.Engine;
 using Syncfusion.Windows.Shared;
 using System;
+using System.Linq;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
@@ -135,7 +136,7 @@ namespace MPTagThat.Treeview.Model
         node.HasChildNodes = false;
         return;
       }
-      if ((musicItem.Path.StartsWith("Artist") || musicItem.Path.StartsWith("AlbumArtist")) && node.Level == 3)
+      if ((musicItem.Path.StartsWith("Artist") || musicItem.Path.StartsWith("AlbumArtist")) && node.Level == 4)
       {
         node.HasChildNodes = false;
         return;
@@ -238,7 +239,31 @@ namespace MPTagThat.Treeview.Model
           Array.Sort(nodesArray,
             (p1, p2) => string.Compare(p1.Name, p2.Name));
 
-          node.PopulateChildNodes(nodesArray);
+          // Artists and Albumrtists should have also shown the first letter in the tree view for easy navigation
+          if (_rootFolder == RootFolder.AlbumArtist || _rootFolder == RootFolder.Artist)
+          {
+            var savedfirstLetter = "";
+            TreeViewNode firstLetterNode = null;
+            foreach (var item in nodesArray)
+            {
+              var firstLetter = item.Name.Substring(0, 1).ToUpperInvariant();
+              if (firstLetter != savedfirstLetter)
+              {
+                savedfirstLetter = firstLetter;
+                firstLetterNode = new TreeViewNode { Content = CreateTreeNode(helper, firstLetter, type, true, type) };
+                firstLetterNode.HasChildNodes = true;
+                node.ChildNodes.Add(firstLetterNode);
+              }
+              //var itemPath = item.Path.Split('\\').ToList();
+              //itemPath.Insert(1, firstLetter);
+              //item.Path = string.Join("\\", itemPath);
+              firstLetterNode.ChildNodes.Add(new TreeViewNode { Content = item });
+            }
+          }
+          else
+          {
+            node.PopulateChildNodes(nodesArray);
+          }
         }
       }
 
