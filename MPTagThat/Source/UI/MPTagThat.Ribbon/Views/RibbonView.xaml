@@ -1035,7 +1035,7 @@
                       </Grid.ColumnDefinitions>
                       <syncfusion:SfDataGrid Grid.Column="0" HeaderRowHeight="0"
                                              ItemsSource="{Binding CustomGenres,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                             SelectedItems="{Binding SelectedGenres}"
+                                             SelectedItems="{Binding SelectedGenres,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                                              SelectionMode="Extended"
                                              ColumnSizer="AutoWithLastColumnFill" 
                                              AllowResizingColumns="False" 

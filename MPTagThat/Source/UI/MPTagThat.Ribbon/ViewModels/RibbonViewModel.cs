@@ -934,7 +934,7 @@ namespace MPTagThat.Ribbon.ViewModels
       // Can't use a foreach here, since it modifies the collection
       while (SelectedGenres.Count > 0)
       {
-        SelectedGenres.Remove((string)SelectedGenres[0]);
+        CustomGenres.Remove((Item)SelectedGenres[0]);
       }
     }
 
