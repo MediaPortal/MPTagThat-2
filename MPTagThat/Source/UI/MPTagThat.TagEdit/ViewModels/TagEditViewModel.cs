@@ -642,6 +642,25 @@ namespace MPTagThat.TagEdit.ViewModels
     {
       if (param.Key == Key.Enter)
       {
+        if (param.OriginalSource is TextBox)
+        {
+          var tb = (TextBox)param.OriginalSource;
+          if (tb.Parent is ItemsControl)
+          {
+            if ((tb.Parent as ItemsControl).TemplatedParent is Syncfusion.Windows.Tools.Controls.ComboBoxAdv)
+            {
+              var name = ((tb.Parent as ItemsControl).TemplatedParent as Syncfusion.Windows.Tools.Controls.ComboBoxAdv).Name;
+              if (name == "Genre")
+              {
+                Genres.Add(tb.Text);
+                _options.MainSettings.CustomGenres.Add(tb.Text);
+                SelectedGenres.Add(tb.Text);
+              }
+            }
+          }
+
+          return;
+        }
         ApplyEdit(SongEdit);
       }
 
@@ -2394,7 +2413,6 @@ namespace MPTagThat.TagEdit.ViewModels
       MultiCheckBoxVisibility = false;
       _songs = navigationContext.Parameters["songs"] as List<SongData>;
 
-      ClearForm();
       if (_songs.Count > 0)
       {
         SetFormBindings(ref _songs); //Set the bindings so that the data is displayed in the View
@@ -2403,6 +2421,7 @@ namespace MPTagThat.TagEdit.ViewModels
       }
       else
       {
+        ClearForm();
         IsEnabled = false;
       }
       log.Trace("<<<");

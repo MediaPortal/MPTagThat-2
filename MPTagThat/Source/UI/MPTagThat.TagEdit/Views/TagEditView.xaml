@@ -413,6 +413,11 @@
                   <syncfusion:ComboBoxAdv Grid.Column="1" Name="Genre" ItemsSource="{Binding Genres, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
                                       DefaultText="{lex:Loc tagEdit_Genre_Watermark}" SelectedValueDelimiter=";" AllowMultiSelect="True"
                                       SelectedItems="{Binding SelectedGenres, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEditable="True" EnableToken="True" AutoCompleteMode="Suggest" >
+                    <i:Interaction.Triggers>
+                      <i:EventTrigger EventName="KeyUp">
+                        <prism:InvokeCommandAction Command="{Binding GenreComboKeyUpCommand}"/>
+                      </i:EventTrigger>
+                    </i:Interaction.Triggers>
                   </syncfusion:ComboBoxAdv>
                   <CheckBox Grid.Column="2" VerticalAlignment="Center" Margin="2,0,0,0" IsChecked="{Binding CkGenreIsChecked, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Visibility="{Binding MultiCheckBoxVisibility, Converter={StaticResource BooleanToVisibilityConverter}}" />
                 </Grid>
