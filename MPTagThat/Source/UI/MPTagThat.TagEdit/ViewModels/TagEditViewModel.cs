@@ -655,11 +655,10 @@ namespace MPTagThat.TagEdit.ViewModels
                 Genres.Add(tb.Text);
                 _options.MainSettings.CustomGenres.Add(tb.Text);
                 SelectedGenres.Add(tb.Text);
+                return;
               }
             }
           }
-
-          return;
         }
         ApplyEdit(SongEdit);
       }
@@ -1416,6 +1415,8 @@ namespace MPTagThat.TagEdit.ViewModels
         log.Trace("<<<");
         return;
       }
+
+      IsApplyButtonEnabled = false;
 
       foreach (var song in _songs)
       {

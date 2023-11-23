@@ -134,7 +134,8 @@
 
       <syncfusion:ButtonAdv Label="{lex:Loc dialog_Cancel}" HorizontalAlignment="Left"  Width="Auto" Margin="10,0,0,0"
                             SmallIcon="pack://application:,,,/MPTagThat;component/Resources/Images/Cancel_Changes_32x.png" 
-                            Command="{Binding CancelEditCommand}" />
+                            Command="{Binding CancelEditCommand}" 
+                            IsEnabled="{Binding IsApplyButtonEnabled, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
       </StackPanel>
     </Grid>
     <syncfusion:TabNavigationControl x:Name="TabNavControl"  TabStripVisibility="Visible" SelectedIndex="0" >
