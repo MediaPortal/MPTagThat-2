@@ -909,18 +909,18 @@ namespace MPTagThat.SongGrid.ViewModels
       switch (searchString[0].ToLower())
       {
         case "artist":
-          query += $"Artist = \"{Util.EscapeDatabaseQuery(searchString[1])}\"";
+          query += $"Artist = \"{Util.EscapeDatabaseQuery(searchString[2])}\"";
           if (searchString.GetLength(0) > 2)
           {
-            query += $" AND Album = \"{Util.EscapeDatabaseQuery(searchString[2])}\"";
+            query += $" AND Album = \"{Util.EscapeDatabaseQuery(searchString[3])}\"";
           }
           break;
 
         case "albumartist":
-          query += $"AlbumArtist = \"{Util.EscapeDatabaseQuery(searchString[1])}\"";
+          query += $"AlbumArtist = \"{Util.EscapeDatabaseQuery(searchString[2])}\"";
           if (searchString.GetLength(0) > 2)
           {
-            query += $" AND Album = \"{Util.EscapeDatabaseQuery(searchString[2])}\"";
+            query += $" AND Album = \"{Util.EscapeDatabaseQuery(searchString[3])}\"";
           }
           break;
 

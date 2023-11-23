@@ -254,9 +254,9 @@ namespace MPTagThat.Treeview.Model
                 firstLetterNode.HasChildNodes = true;
                 node.ChildNodes.Add(firstLetterNode);
               }
-              //var itemPath = item.Path.Split('\\').ToList();
-              //itemPath.Insert(1, firstLetter);
-              //item.Path = string.Join("\\", itemPath);
+              var itemPath = item.Path.Split('\\').ToList();
+              itemPath.Insert(1, firstLetter);
+              item.Path = string.Join("\\", itemPath);
               firstLetterNode.ChildNodes.Add(new TreeViewNode { Content = item });
             }
           }
@@ -285,7 +285,7 @@ namespace MPTagThat.Treeview.Model
             return;
           }
           searchString = _savedSelectedNode.Split('\\');
-          childNode = FindChildNode(node, _savedSelectedNode);
+          childNode = FindChildNode(node, searchString);
         }
         else if (searchString.Length > 1)
         {
@@ -295,11 +295,11 @@ namespace MPTagThat.Treeview.Model
         var genreLevel = 1;
         if (_rootFolder == RootFolder.Artist)
         {
-          result = ContainerLocator.Current.Resolve<IMusicDatabase>().GetArtistAlbums(searchString[1]);
+          result = ContainerLocator.Current.Resolve<IMusicDatabase>().GetArtistAlbums(searchString[2]);
         }
         else if (_rootFolder == RootFolder.AlbumArtist)
         {
-          result = ContainerLocator.Current.Resolve<IMusicDatabase>().GetAlbumArtistAlbums(searchString[1]);
+          result = ContainerLocator.Current.Resolve<IMusicDatabase>().GetAlbumArtistAlbums(searchString[2]);
         }
         else if (_rootFolder == RootFolder.Genre)
         {
@@ -372,15 +372,25 @@ namespace MPTagThat.Treeview.Model
     /// <param name="node"></param>
     /// <param name="Path"></param>
     /// <returns></returns>
-    private TreeViewNode FindChildNode(TreeViewNode node, string Path)
+    private TreeViewNode FindChildNode(TreeViewNode node, string[] searchString)
     {
       TreeViewNode childNode = null;
 
+      if (searchString.Length > 1)
+      {
+        searchString = searchString.Skip(1).ToArray(); // shrink array
+      }
+
       foreach (var child in node.ChildNodes)
       {
-        if ((child.Content as TreeItem).Path == Path)
+        if ((child.Content as TreeItem).Name == searchString[0])
         {
           childNode = child;
+          if (searchString.Length > 1)
+          {
+            searchString = searchString.Skip(1).ToArray(); // shrink array
+            childNode = FindChildNode(childNode, searchString);
+          }
           break;
         }
       }
