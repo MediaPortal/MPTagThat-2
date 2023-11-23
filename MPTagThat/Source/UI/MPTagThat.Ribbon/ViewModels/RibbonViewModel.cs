@@ -936,6 +936,7 @@ namespace MPTagThat.Ribbon.ViewModels
       {
         CustomGenres.Remove((Item)SelectedGenres[0]);
       }
+      SaveGenre(new object { });
     }
 
     public ICommand SaveGenreCommand { get; }

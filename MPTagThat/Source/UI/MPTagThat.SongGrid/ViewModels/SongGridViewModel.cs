@@ -1412,6 +1412,13 @@ namespace MPTagThat.SongGrid.ViewModels
                   }
                 }
               }
+
+              GenericEvent evt = new GenericEvent
+              {
+                Action = "coverschanged"
+              };
+              EventSystem.Publish(evt);
+
               return;
             }
 
