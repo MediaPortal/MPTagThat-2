@@ -114,6 +114,12 @@ namespace MPTagThat.SongGrid.Commands
             song.AlbumArtist = song.Artist;
           }
 
+          if (options.MainSettings.ClearComment)
+          {
+            song.Comment = "";
+            song.ID3Comments.Clear();
+          }
+
           if (options.MainSettings.UseCaseConversion)
           {
             CaseConversion.CaseConvert(ref song);

@@ -972,6 +972,7 @@
                   <GroupBox Background="Transparent" Header="{lex:Loc settings_Tags_General}" >
                     <StackPanel Orientation="Vertical">
                       <CheckBox Content="{lex:Loc settings_Tags_CopyArtist}" IsChecked="{Binding CopyArtist, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="0,5,0,0" Height="15"/>
+                      <CheckBox Content="{lex:Loc settings_Tags_ClearComment}" IsChecked="{Binding ClearComment, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="0,10,0,0" Height="15"/>
                       <CheckBox Content="{lex:Loc settings_Tags_AutoFillNumberTracks}" IsChecked="{Binding AutoFillNumberOfTracks, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="0,10,0,0" Height="15"/>
                       <CheckBox Content="{lex:Loc settings_Tags_CaseConversion}" IsChecked="{Binding UseCaseConversion, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="0,10,0,0" Height="15"/>
                       <CheckBox Content="{lex:Loc settings_Tags_ChangeReadOnly}" IsChecked="{Binding ChangeReadOnlyAttribute, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="0,10,0,0" Height="15"/>

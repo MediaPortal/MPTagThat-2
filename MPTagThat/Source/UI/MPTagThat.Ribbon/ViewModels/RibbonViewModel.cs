@@ -606,6 +606,17 @@ namespace MPTagThat.Ribbon.ViewModels
       }
     }
 
+    private bool _clearComment;
+    public bool ClearComment
+    {
+      get => _clearComment;
+      set
+      {
+        SetProperty(ref _clearComment, value);
+        _options.MainSettings.ClearComment = value;
+      }
+    }
+
     private bool _autoFillNumTracks;
     public bool AutoFillNumberOfTracks
     {

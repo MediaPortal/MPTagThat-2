@@ -1999,4 +1999,7 @@ To change the order of the ratings drag the rows.</value>
   <data name="tagChecker_Status_FullMatchChanged" xml:space="preserve">
     <value>Full Match Changed</value>
   </data>
+  <data name="settings_Tags_ClearComment" xml:space="preserve">
+    <value>Clear Comment Tag on Save</value>
+  </data>
 </root>

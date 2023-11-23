@@ -153,6 +153,9 @@ namespace MPTagThat.Core.Services.Settings.Setting
     [Setting(SettingScope.User, "")]
     public List<string> PreferredMusicBrainzCountries { get; set; } = new List<string>() { "DE", "XE", "US" };
 
+    [Setting(SettingScope.User, "false")]
+    public bool ClearComment { get; set; }
+
     #endregion
 
     #region Lyrics
