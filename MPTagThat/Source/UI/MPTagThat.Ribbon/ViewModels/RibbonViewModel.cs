@@ -1460,6 +1460,7 @@ namespace MPTagThat.Ribbon.ViewModels
 
       // Tags
       CopyArtist = _options.MainSettings.CopyArtist;
+      ClearComment = _options.MainSettings.ClearComment;
       AutoFillNumberOfTracks = _options.MainSettings.AutoFillNumberOfTracks;
       UseCaseConversion = _options.MainSettings.UseCaseConversion;
       ChangeReadOnlyAttribute = _options.MainSettings.ChangeReadOnlyAttribute;
