@@ -969,7 +969,12 @@
 
               <syncfusion:SfAccordionItem Header="{lex:Loc settings_Tags}" AccordionButtonStyle="{StaticResource expanderButtonStyle}" >
                 <StackPanel Width="600" Margin="10,10,0,10" HorizontalAlignment="Left">
-                  <GroupBox Background="Transparent" Header="{lex:Loc settings_Tags_General}" >
+                  <GroupBox Background="Transparent" >
+                    <GroupBox.Header>
+                      <StackPanel Orientation="Horizontal">
+                        <TextBlock FontWeight="Bold" FontSize="12" Text="{lex:Loc settings_Tags_General}"/>
+                      </StackPanel>
+                    </GroupBox.Header>
                     <StackPanel Orientation="Vertical">
                       <CheckBox Content="{lex:Loc settings_Tags_CopyArtist}" IsChecked="{Binding CopyArtist, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="0,5,0,0" Height="15"/>
                       <CheckBox Content="{lex:Loc settings_Tags_ClearComment}" IsChecked="{Binding ClearComment, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="0,10,0,0" Height="15"/>
@@ -986,7 +991,12 @@
                     </StackPanel>
                   </GroupBox>
 
-                  <GroupBox Background="Transparent" Header="{lex:Loc settings_Id3_Header}" Margin="0,10,0,0" >
+                  <GroupBox Background="Transparent" Margin="0,10,0,0" >
+                    <GroupBox.Header>
+                      <StackPanel Orientation="Horizontal">
+                        <TextBlock FontWeight="Bold" FontSize="12" Text="{lex:Loc settings_Id3_Header}"/>
+                      </StackPanel>
+                    </GroupBox.Header>
                     <StackPanel>
                       <StackPanel Orientation="Horizontal">
                         <Label Content="{lex:Loc settings_Id3_Encoding}"/>
@@ -998,7 +1008,12 @@
                         <RadioButton Content="{lex:Loc settings_Id3_UseV4}" IsChecked="{Binding ID3UseV4, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="0,5,0,0"/>
                         <RadioButton Content="{lex:Loc settings_Id3_UseApe}" IsChecked="{Binding ID3UseApe, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="0,5,0,0"/>
 
-                        <GroupBox Background="Transparent" Header="{lex:Loc settings_Id3_Header_Update}"  Margin="5,0,0,0">
+                        <GroupBox Background="Transparent" Margin="5,0,0,0">
+                          <GroupBox.Header>
+                            <StackPanel Orientation="Horizontal">
+                              <TextBlock FontSize="12" Text="{lex:Loc settings_Id3_Header_Update}"/>
+                            </StackPanel>
+                          </GroupBox.Header>
                           <Grid>
                             <Grid.ColumnDefinitions>
                               <ColumnDefinition />
@@ -1016,19 +1031,29 @@
                           </Grid>
                         </GroupBox>
 
-                        <CheckBox Content="{lex:Loc settings_Id3_ClearUserFrames}" IsChecked="{Binding ClearUserFrames, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="0,5,0,0" Height="15"/>
+                        <CheckBox Content="{lex:Loc settings_Id3_ClearUserFrames}" IsChecked="{Binding ClearUserFrames, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="0,5,0,5" Height="15"/>
                       </StackPanel>
                     </StackPanel>
                   </GroupBox>
 
-                  <GroupBox Background="Transparent" Header="{lex:Loc settings_Id3_Header_MP3Validation}" Margin="0,10,0,0" >
+                  <GroupBox Background="Transparent" Margin="0,10,0,0" >
+                    <GroupBox.Header>
+                      <StackPanel Orientation="Horizontal">
+                        <TextBlock FontWeight="Bold" FontSize="12" Text="{lex:Loc settings_Id3_Header_MP3Validation}"/>
+                      </StackPanel>
+                    </GroupBox.Header>
                     <StackPanel>
                       <CheckBox Content="{lex:Loc settings_Id3_ValidateMp3}" IsChecked="{Binding ValidateMp3, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Height="20" Margin="0,5,0,0" />
                       <CheckBox Content="{lex:Loc settings_Id3_FixMp3}" IsChecked="{Binding FixMp3, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Height="20" Margin="0,5,0,0"/>
                     </StackPanel>
                   </GroupBox>
 
-                  <GroupBox Background="Transparent" Header="{lex:Loc settings_Id3_Header_CustomGenres}" Margin="0,10,0,0" >
+                  <GroupBox Background="Transparent" Margin="0,10,0,0" >
+                    <GroupBox.Header>
+                      <StackPanel Orientation="Horizontal">
+                        <TextBlock FontWeight="Bold" FontSize="12" Text="{lex:Loc settings_Id3_Header_CustomGenres}"/>
+                      </StackPanel>
+                    </GroupBox.Header>
                     <Grid>
                       <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="210" />
