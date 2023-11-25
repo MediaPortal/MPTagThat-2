@@ -111,7 +111,7 @@ BrandingText  "$(^Name) ${VERSION} by ${AUTHOR}"
 # Installer sections
 Section -Main SEC0000
 	
-	!insertmacro CheckNetFramework 461
+	!insertmacro CheckNetFrameworkDelayRestart 48 $0 ;
 	
     SetOverwrite on
     
