@@ -19,7 +19,7 @@ set DeployTool="%GIT_ROOT%\MPTagThat\DeployTool\DeployTool\bin\Debug\DeployTool.
 set MPTagThat=%GIT_ROOT%\MPTagThat\Source
 
 REM Find the right version of msbuild on your system, by looking it up from "developer command prompt"
-set MSBuild="C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Current\Bin\msbuild.EXE"
+set MSBuild="C:\Program Files (x86)\Microsoft Visual Studio\2022\Community\MSBuild\Current\Bin\msbuild.EXE"
 
 REM set log file
 set log=%project%.log
