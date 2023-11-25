@@ -20,10 +20,16 @@
 
 #endregion
 
-using Hqub.MusicBrainz.API.Entities;
+using Hqub.MusicBrainz.Entities;
 using MPTagThat.Core.Common.Song;
+using MPTagThat.Core.Services.Settings.Setting;
+using MPTagThat.Core.Services.Settings;
+using Prism.Ioc;
 using System.Linq;
 using System.Threading.Tasks;
+using Hqub.MusicBrainz;
+using MPTagThat.Core.AlbumSearch;
+using System.Net;
 
 namespace MPTagThat.SongGrid.Commands
 {
@@ -36,6 +42,7 @@ namespace MPTagThat.SongGrid.Commands
     #region Variables
 
     public object[] Parameters { get; private set; }
+    private Options _options = ContainerLocator.Current.Resolve<ISettingsManager>().GetOptions;
 
     #endregion
 
@@ -53,8 +60,16 @@ namespace MPTagThat.SongGrid.Commands
     public override async Task<(bool Changed, SongData song)> Execute(SongData song)
     {
       log.Info($"MusicBrainz Info: Processing file: {song.FullFileName}");
+
+      // Create a MusicBrainz client with TLS 1.2
+      ServicePointManager.SecurityProtocol |= SecurityProtocolType.Tls12;
+      var client = new MusicBrainzClient()
+      {
+        Cache = new FileRequestCache(System.IO.Path.Combine(_options.ConfigDir, "cache"))
+      };
+
       var query = $"artist:\"{SwitchArtist(song.Artist)}\" AND release:\"{song.Album}\" AND recording:\"{song.Title}\"";
-      var recordings = await Recording.SearchAsync(query);
+      var recordings = await client.Recordings.SearchAsync(query);
       if (recordings.Count == 0)
       {
         log.Info("MusicBrainz Info: Couldn't find information for song");

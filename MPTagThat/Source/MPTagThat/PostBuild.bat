@@ -36,7 +36,7 @@ xcopy /y %1\MPTagThat.Core\bin\%2\FreeImageNET.dll %TARGETPATH%\Bin\
 xcopy /y %1\MPTagThat.Core\bin\%2\x64\FreeImage.dll %TARGETPATH%\Bin\x64\
 xcopy /y %1\MPTagThat.Core\bin\%2\CommonServiceLocator.dll %TARGETPATH%\Bin\
 xcopy /y %1\MPTagThat.Core\bin\%2\CSScriptLibrary.dll %TARGETPATH%\Bin\
-xcopy /y %1\MPTagThat.Core\bin\%2\Hqub.MusicBrainz.API.dll %TARGETPATH%\Bin\
+xcopy /y %1\MPTagThat.Core\bin\%2\Hqub.MusicBrainz.dll %TARGETPATH%\Bin\
 xcopy /y %1\MPTagThat.Core\bin\%2\DiscogsClient.dll %TARGETPATH%\Bin\
 xcopy /y %1\MPTagThat.Core\bin\%2\IF.Lastfm.Core.dll %TARGETPATH%\Bin\
 xcopy /y %1\MPTagThat.Core\bin\%2\LiteDB.dll %TARGETPATH%\Bin\

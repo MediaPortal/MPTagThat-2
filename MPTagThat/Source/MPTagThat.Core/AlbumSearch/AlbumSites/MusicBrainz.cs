@@ -18,8 +18,8 @@
 
 #region
 
-using Hqub.MusicBrainz.API;
-using Hqub.MusicBrainz.API.Entities;
+using Hqub.MusicBrainz;
+using Hqub.MusicBrainz.Entities;
 using MPTagThat.Core.AlbumCoverSearch;
 using MPTagThat.Core.Services.Logging;
 using MPTagThat.Core.Services.Settings;
@@ -28,6 +28,7 @@ using Prism.Ioc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
@@ -86,6 +87,14 @@ namespace MPTagThat.Core.AlbumSearch.AlbumSites
     private async Task<Album> GetAlbumQuery(string artistName, string albumName)
     {
       log.Debug($"MusicBrainz: Querying {artistName} - {albumName}");
+
+      // Create a MusicBrainz client with TLS 1.2
+      ServicePointManager.SecurityProtocol |= SecurityProtocolType.Tls12;
+      var client = new MusicBrainzClient()
+      {
+        Cache = new FileRequestCache(System.IO.Path.Combine(_options.ConfigDir, "cache"))
+      };
+
       // If we have an artist in form "LastName, FirstName" change it to "FirstName LastName" to have both results
       var artistNameOriginal = _switchedArtist.IsMatch(artistName) ? $" OR {SwitchArtist(artistName)}" : "";
 
@@ -93,7 +102,7 @@ namespace MPTagThat.Core.AlbumSearch.AlbumSites
       {
         {"artist", $"{artistName} {artistNameOriginal}"}, {"release", albumName}
       };
-      var albums = await Release.SearchAsync(query);
+      var albums = await client.Releases.SearchAsync(query);
 
       // First look for Albums from the selected countries
       Release mbAlbum = null;
@@ -115,7 +124,7 @@ namespace MPTagThat.Core.AlbumSearch.AlbumSites
         return null;
       }
 
-      var release = await Release.GetAsync(mbAlbum.Id, new[] { "recordings", "media", "artists", "discids" });
+      var release = await client.Releases.GetAsync(mbAlbum.Id, new[] { "recordings", "media", "artists", "discids" });
 
       var album = new Album() { Site = "MusicBrainz" };
       album.LargeImageUrl = release.CoverArtArchive != null && release.CoverArtArchive.Front

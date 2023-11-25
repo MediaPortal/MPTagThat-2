@@ -126,13 +126,13 @@
       <Version>8.1.97</Version>
     </PackageReference>
     <PackageReference Include="Syncfusion.SfGrid.WPF">
-      <Version>22.1.36</Version>
+      <Version>23.2.5</Version>
     </PackageReference>
     <PackageReference Include="Syncfusion.SfInput.WPF">
-      <Version>22.1.36</Version>
+      <Version>23.2.5</Version>
     </PackageReference>
     <PackageReference Include="Syncfusion.Tools.WPF">
-      <Version>22.1.36</Version>
+      <Version>23.2.5</Version>
     </PackageReference>
     <PackageReference Include="WPFLocalizeExtension">
       <Version>3.10.0</Version>

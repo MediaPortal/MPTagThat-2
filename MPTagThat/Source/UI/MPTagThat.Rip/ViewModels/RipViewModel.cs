@@ -18,7 +18,7 @@
 
 #region
 
-using Hqub.MusicBrainz.API.Entities;
+using Hqub.MusicBrainz.Entities;
 using MPTagThat.Core;
 using MPTagThat.Core.Common;
 using MPTagThat.Core.Events;

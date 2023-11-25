@@ -20,18 +20,24 @@
 
 using AcoustID;
 using AcoustID.Web;
-using Hqub.MusicBrainz.API.Entities;
+using Hqub.MusicBrainz;
+using Hqub.MusicBrainz.Entities;
+using MPTagThat.Core.AlbumSearch;
 using MPTagThat.Core.Common.Song;
+using MPTagThat.Core.Services.Settings;
+using MPTagThat.Core.Services.Settings.Setting;
 using MPTagThat.Dialogs.Models;
 using MPTagThat.Dialogs.ViewModels;
+using Prism.Ioc;
 using Prism.Services.Dialogs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using Un4seen.Bass;
-using Recording = Hqub.MusicBrainz.API.Entities.Recording;
-using Release = Hqub.MusicBrainz.API.Entities.Release;
+using Recording = Hqub.MusicBrainz.Entities.Recording;
+using Release = Hqub.MusicBrainz.Entities.Release;
 
 #endregion
 
@@ -48,6 +54,7 @@ namespace MPTagThat.SongGrid.Commands
     public object[] Parameters { get; private set; }
     private Release _album;
     private Picture _pic;
+    private Options _options = ContainerLocator.Current.Resolve<ISettingsManager>().GetOptions;
 
     #endregion
 
@@ -234,13 +241,20 @@ namespace MPTagThat.SongGrid.Commands
       //var result = await lookupSvc.GetAsync(fingerPrint, Convert.ToInt32(time), new[] { "recordingids", "releases", "artists" });
       var trackIds = await lookupSvc.GetAsync(fingerPrint, Convert.ToInt32(time), new[] { "recordingids" });
 
+      // Create a MusicBrainz client with TLS 1.2
+      ServicePointManager.SecurityProtocol |= SecurityProtocolType.Tls12;
+      var client = new MusicBrainzClient()
+      {
+        Cache = new FileRequestCache(System.IO.Path.Combine(_options.ConfigDir, "cache"))
+      };
+
       var recordings = new List<Recording>();
       foreach (var trackId in trackIds.Results)
       {
         foreach (var rec in trackId.Recordings)
         {
           System.Threading.Thread.Sleep(400);
-          var recording = await Recording.GetAsync(rec.Id, new[] { "releases", "artists", "media", "discids" });
+          var recording = await client.Recordings.GetAsync(rec.Id, new[] { "releases", "artists", "media", "discids" });
           recordings.Add(recording);
 
         }
@@ -250,7 +264,14 @@ namespace MPTagThat.SongGrid.Commands
 
     private async Task<Release> GetAlbum(string releaseID)
     {
-      var release = await Release.GetAsync(releaseID, new[] { "recordings" });
+      // Create a MusicBrainz client with TLS 1.2
+      ServicePointManager.SecurityProtocol |= SecurityProtocolType.Tls12;
+      var client = new MusicBrainzClient()
+      {
+        Cache = new FileRequestCache(System.IO.Path.Combine(_options.ConfigDir, "cache"))
+      };
+
+      var release = await client.Releases.GetAsync(releaseID, new[] { "recordings" });
       return release;
     }
 
