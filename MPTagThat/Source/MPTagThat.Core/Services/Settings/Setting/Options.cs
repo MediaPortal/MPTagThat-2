@@ -407,6 +407,7 @@ namespace MPTagThat.Core.Services.Settings.Setting
           _fileNameToTagSettings.FormatValues.Add(@"%artist%\%album%\%track% - %title%");
           _fileNameToTagSettings.FormatValues.Add(@"%artist%\%album%\%artist% - %track% - %title%");
           _fileNameToTagSettings.FormatValues.Add(@"%artist%\%album%\%track% - %artist% - %title%");
+          _fileNameToTagSettings.FormatValues.Add(@"%artist% - %album% (%year%)\%track% %title%");
         }
 
         _fileNameToTagSettingsTemp = new List<string>(_fileNameToTagSettings.FormatValues);
@@ -437,6 +438,9 @@ namespace MPTagThat.Core.Services.Settings.Setting
           _organiseSettings.FormatValues.Add(@"%artist:1%\%artist%\%album%\%track% - %title%");
           _organiseSettings.FormatValues.Add(@"%albumartist%\%album%\%track% - %artist% - %title%");
           _organiseSettings.FormatValues.Add(@"%albumartist:1%\%artist%\%album%\%track% - %title%");
+          _organiseSettings.FormatValues.Add(@"%albumartist%\%album% (%year%)\%track% - %artist% - %title%");
+          _organiseSettings.FormatValues.Add(@"%albumartist%\%album% (%year%)\%track% - %title%");
+          _organiseSettings.FormatValues.Add(@"%albumartist%\%album%{{ (%year%)}}\{{CD%disc%\}}%track% - %title%");
         }
 
         _organiseSettingsTemp = new List<string>(_organiseSettings.FormatValues);
