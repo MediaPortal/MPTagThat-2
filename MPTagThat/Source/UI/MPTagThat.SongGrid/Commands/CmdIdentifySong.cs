@@ -177,7 +177,7 @@ namespace MPTagThat.SongGrid.Commands
           song.DiscNumber = (uint)_album.Media[0].Position;
           song.TrackCount = (uint)_album.Media[0].TrackCount;
           song.TrackNumber = (uint)_album.Media[0].Tracks.First(t => t.Id == selectedRecording.TrackId).Position;
-          song.MusicBrainzDiscId = _album.Media[0].Discs != null ? _album.Media[0].Discs[0].Id : "";
+          song.MusicBrainzDiscId = (_album.Media[0].Discs != null && _album.Media[0].Discs.Count > 0) ? _album.Media[0].Discs[0].Id : "";
         }
 
         // MusicBrainz Properties
