@@ -918,7 +918,7 @@ namespace MPTagThat.SongGrid.ViewModels
 
         case "albumartist":
           query += $"AlbumArtist = \"{Util.EscapeDatabaseQuery(searchString[2])}\"";
-          if (searchString.GetLength(0) > 2)
+          if (searchString.GetLength(0) > 3)
           {
             query += $" AND Album = \"{Util.EscapeDatabaseQuery(searchString[3])}\"";
           }
