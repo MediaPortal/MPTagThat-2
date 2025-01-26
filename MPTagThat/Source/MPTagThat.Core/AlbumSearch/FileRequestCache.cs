@@ -21,6 +21,7 @@
 using Hqub.MusicBrainz.Cache;
 using System;
 using System.IO;
+using System.Runtime.InteropServices.ComTypes;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
@@ -35,6 +36,7 @@ namespace MPTagThat.Core.AlbumSearch
   public class FileRequestCache : IRequestCache
   {
     private const int HEADER_LENGTH = 512;
+    private const int REQUEST_LENGTH = HEADER_LENGTH - 8; // sizeof(long)
 
     /// <summary>
     /// Gets or sets the timeout for a cache entry to expire.
@@ -109,6 +111,21 @@ namespace MPTagThat.Core.AlbumSearch
       }
     }
 
+    Task<bool> IRequestCache.Contains(string request)
+    {
+      return TryGetCachedItem(request, out Stream stream).ContinueWith(task =>
+      {
+        bool exists = task.Result;
+
+        if (task.IsCompleted && exists)
+        {
+          stream.Dispose();
+        }
+
+        return exists;
+      });
+    }
+
     class CacheEntry
     {
       // Cache file header (512 bytes):
@@ -121,7 +138,6 @@ namespace MPTagThat.Core.AlbumSearch
       public string Request { get; set; }
       public static CacheEntry Read(string path, string request)
       {
-        const int REQUEST_LENGTH = HEADER_LENGTH - 8; // sizeof(long)
         // The byte buffer to hold the request string.
         var buffer = new byte[REQUEST_LENGTH];
         int size = Math.Min(request.Length, REQUEST_LENGTH);
@@ -159,8 +175,6 @@ namespace MPTagThat.Core.AlbumSearch
 
       public static async Task Write(string path, string request, Stream response)
       {
-        const int REQUEST_LENGTH = HEADER_LENGTH - 8; // sizeof(long)
-
         // The byte buffer to hold the request string.
         var buffer = new byte[REQUEST_LENGTH];
         int size = Math.Min(request.Length, REQUEST_LENGTH);
