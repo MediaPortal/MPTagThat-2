@@ -96,7 +96,7 @@ namespace MPTagThat.Dialogs.ViewModels
 
     #region Public Methods
 
-    public event Action<IDialogResult> RequestClose;
+    public DialogCloseListener RequestClose { get; }
 
     public virtual void CloseDialog(string parameter)
     {
@@ -112,7 +112,7 @@ namespace MPTagThat.Dialogs.ViewModels
 
     public void CloseDialogWindow(DialogResult result)
     {
-      RequestClose?.Invoke(result);
+      RequestClose.Invoke(result);
     }
 
 
