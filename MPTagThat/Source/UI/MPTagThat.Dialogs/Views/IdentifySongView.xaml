@@ -34,7 +34,7 @@
         <RowDefinition Height="Auto" />
       </Grid.RowDefinitions>
       <Grid.ColumnDefinitions>
-        <ColumnDefinition Width = "800" />
+        <ColumnDefinition Width = "875" />
       </Grid.ColumnDefinitions>
 
       <!-- Header -->
@@ -66,6 +66,7 @@
             <syncfusion:GridTextColumn MappingName="Country" HeaderText="{lex:Loc identifySong_Country}" AllowSorting="True" Width="80" />
             <syncfusion:GridTextColumn MappingName="Date" HeaderText="{lex:Loc songHeader_Year}" AllowSorting="True" Width="80" />
             <syncfusion:GridTextColumn MappingName="Duration" HeaderText="{lex:Loc songHeader_Duration}" Width="75" />
+            <syncfusion:GridTextColumn MappingName="TrackCount" HeaderText="{lex:Loc songHeader_TrackCount}" Width="75" />
           </syncfusion:SfDataGrid.Columns>
 
           <syncfusion:SfDataGrid.SortColumnDescriptions>

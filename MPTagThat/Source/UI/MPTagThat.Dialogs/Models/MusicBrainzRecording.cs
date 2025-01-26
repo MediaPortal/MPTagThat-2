@@ -35,6 +35,7 @@ namespace MPTagThat.Dialogs.Models
 
     public string Duration { get; set; }
 
+    public int TrackCount { get; set; }
 
     // Release / Album related Properties
 

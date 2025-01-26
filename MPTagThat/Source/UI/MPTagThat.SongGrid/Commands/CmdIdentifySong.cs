@@ -34,6 +34,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Runtime.Remoting.Lifetime;
 using System.Threading.Tasks;
 using Un4seen.Bass;
 using Recording = Hqub.MusicBrainz.Entities.Recording;
@@ -53,6 +54,7 @@ namespace MPTagThat.SongGrid.Commands
 
     public object[] Parameters { get; private set; }
     private Release _album;
+    private MusicBrainzRecording _mbalbum; // The condensed album info from acoustid lookup
     private Picture _pic;
     private Options _options = ContainerLocator.Current.Resolve<ISettingsManager>().GetOptions;
 
@@ -71,57 +73,24 @@ namespace MPTagThat.SongGrid.Commands
     public override async Task<(bool Changed, SongData song)> Execute(SongData song)
     {
       log.Info($"Auto Tag: Processing file: {song.FullFileName}");
-      var recordings = await GetRecordings(song.FullFileName);
-      if (recordings.Count == 0)
+      var releases = await GetRecordings(song.FullFileName);
+      if (releases.Count == 0)
       {
         log.Info("Auto Tag: Couldn't identify song");
         return (false, song);
-      }
-
-      var releases = new List<Release>();
-      // We might get back a lot of Recordings, so condense the list to recordings, which have
-      // the same duration
-      var tmpRecordings = new List<MusicBrainzRecording>();
-      foreach (var recording in recordings)
-      {
-        if (recording.Length != null)
-        {
-          var timeDiff = Math.Abs(song.DurationTimespan.TotalMilliseconds / 1000 - (int)recording.Length / 1000);
-          if (timeDiff <= 5)
-          {
-            foreach (var release in recording.Releases)
-            {
-              releases.Add(release);
-              var mbRecording = new MusicBrainzRecording
-              {
-                Id = recording.Id,
-                TrackId = release.Media[0].Tracks[0].Id,
-                Title = recording.Title,
-                Duration = $"{TimeSpan.FromMilliseconds((int)recording.Length).Hours:D2}:{TimeSpan.FromMilliseconds((int)recording.Length).Minutes:D2}:{TimeSpan.FromMilliseconds((int)recording.Length).Seconds:D2}",
-                AlbumId = release.Id,
-                ArtistId = (recording.Credits != null && recording.Credits.Count > 0) ? recording.Credits[0].Artist.Id : "",
-                AlbumTitle = release.Title,
-                Country = release.Country,
-                Date = release.Date
-              };
-              mbRecording.Artist = JoinArtists(recording.Credits);
-              tmpRecordings.Add(mbRecording);
-            }
-          }
-        }
       }
 
       var selectedRecording = new MusicBrainzRecording();
       var albumFound = false;
       // We have already a Album from a previous search. Check,is this is found in the
       // releases from this song
-      if (_album != null)
+      if (_mbalbum != null)
       {
-        var release = releases.FirstOrDefault(r => r.Id == _album.Id);
+        var release = releases.FirstOrDefault(r => r.AlbumId == _mbalbum.AlbumId);
         if (release != null && release.Id != String.Empty)
         {
-          selectedRecording = tmpRecordings.First(r => r.AlbumId == release.Id);
-          _album = release;
+          selectedRecording = releases.First(r => r.AlbumId == release.AlbumId);
+          _mbalbum = release;
           albumFound = true;
         }
       }
@@ -129,7 +98,7 @@ namespace MPTagThat.SongGrid.Commands
       if (!albumFound)
       {
         // And now we remove duplicate Recordings and Countries
-        var condensedRecordings = tmpRecordings
+        var condensedRecordings = releases
           .GroupBy(r => new { r.AlbumTitle, r.Country })
           .Select(g => g.First())
           .ToList();
@@ -158,6 +127,7 @@ namespace MPTagThat.SongGrid.Commands
 
       if (selectedRecording.Id != string.Empty)
       {
+        _mbalbum = selectedRecording;
         if (!albumFound)
         {
           _album = await GetAlbum(selectedRecording.AlbumId);
@@ -165,7 +135,7 @@ namespace MPTagThat.SongGrid.Commands
 
         song.Title = selectedRecording.Title;
         song.Artist = selectedRecording.Artist;
-        song.AlbumArtist = _album.Credits != null ? JoinArtists(_album.Credits) : "";
+        song.AlbumArtist = _album.Credits != null ? string.Join(";", _album.Credits.Select(n => n.Artist.Name)) : "";
         song.Album = _album.Title;
         if (_album.Date != null && _album.Date.Length >= 4)
         {
@@ -176,7 +146,8 @@ namespace MPTagThat.SongGrid.Commands
         {
           song.DiscNumber = (uint)_album.Media[0].Position;
           song.TrackCount = (uint)_album.Media[0].TrackCount;
-          song.TrackNumber = (uint)_album.Media[0].Tracks.First(t => t.Id == selectedRecording.TrackId).Position;
+          var track = _album.Media[0].Tracks.FirstOrDefault(t => t.Id == selectedRecording.TrackId);
+          song.TrackNumber = track == null ? (uint)0 : (uint)track.Position;
           song.MusicBrainzDiscId = (_album.Media[0].Discs != null && _album.Media[0].Discs.Count > 0) ? _album.Media[0].Discs[0].Id : "";
         }
 
@@ -213,7 +184,7 @@ namespace MPTagThat.SongGrid.Commands
     /// </summary>
     /// <param name="file"></param>
     /// <returns></returns>
-    private async Task<List<Recording>> GetRecordings(string file)
+    private async Task<List<MusicBrainzRecording>> GetRecordings(string file)
     {
       var stream = Bass.BASS_StreamCreateFile(file, 0, 0, BASSFlag.BASS_STREAM_DECODE);
       var chInfo = Bass.BASS_ChannelGetInfo(stream);
@@ -238,28 +209,45 @@ namespace MPTagThat.SongGrid.Commands
       var time = Bass.BASS_ChannelBytes2Seconds(stream, len);
       Bass.BASS_StreamFree(stream);
 
-      //var result = await lookupSvc.GetAsync(fingerPrint, Convert.ToInt32(time), new[] { "recordingids", "releases", "artists" });
-      var trackIds = await lookupSvc.GetAsync(fingerPrint, Convert.ToInt32(time), new[] { "recordingids" });
 
-      // Create a MusicBrainz client with TLS 1.2
-      ServicePointManager.SecurityProtocol |= SecurityProtocolType.Tls12;
-      var client = new MusicBrainzClient()
+      var releases = new List<MusicBrainzRecording>();
+      
+      var lookup = await lookupSvc.GetAsync(fingerPrint, Convert.ToInt32(time), new[] { "recordings", "releases", "tracks", "compress" });
+      if (lookup.StatusCode != HttpStatusCode.OK)
       {
-        Cache = new FileRequestCache(System.IO.Path.Combine(_options.ConfigDir, "cache"))
-      };
+        return releases; // return an empty recording on failure
+      }
 
-      var recordings = new List<Recording>();
-      foreach (var trackId in trackIds.Results)
+      foreach (var trackId in lookup.Results)
       {
-        foreach (var rec in trackId.Recordings)
+        foreach (var recording in trackId.Recordings)
         {
-          System.Threading.Thread.Sleep(400);
-          var recording = await client.Recordings.GetAsync(rec.Id, new[] { "releases", "artists", "media", "discids" });
-          recordings.Add(recording);
+          if (recording.Title == "")
+          {
+            continue; // Ignore empty recordings returned
+          }
 
+          foreach (var release in recording.Releases)
+          {
+            // Create a Recording item and set the default values for the Releases
+            var mbRecording = new MusicBrainzRecording
+            {
+              Id = recording.Id,
+              Title = recording.Title,
+              Duration = recording.Duration.ToString(),
+              ArtistId = (recording.Artists != null && recording.Artists.Count > 0) ? recording.Artists[0].Id : "",
+              Artist = string.Join(";", recording.Artists),
+            };
+            mbRecording.Country = release.Country;
+            mbRecording.Date = release.Date.ToString();
+            mbRecording.AlbumId = release.Id;
+            mbRecording.AlbumTitle = release.Title;
+            mbRecording.TrackCount = release.TrackCount;
+            releases.Add(mbRecording);
+          }
         }
       }
-      return recordings;
+      return releases;
     }
 
     private async Task<Release> GetAlbum(string releaseID)
@@ -273,27 +261,6 @@ namespace MPTagThat.SongGrid.Commands
 
       var release = await client.Releases.GetAsync(releaseID, new[] { "recordings" });
       return release;
-    }
-
-    private string JoinArtists(List<NameCredit> credits)
-    {
-      var joinedArtist = "";
-      var firstElement = true;
-
-      foreach (var credit in credits)
-      {
-        if (!firstElement)
-        {
-          joinedArtist += $"; {credit.Artist.Name}";
-        }
-        else
-        {
-          joinedArtist = credit.Artist.Name;
-          firstElement = false;
-        }
-      }
-
-      return joinedArtist;
     }
 
     #endregion
