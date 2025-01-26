@@ -18,7 +18,7 @@
 
 #region 
 
-using Prism.Services.Dialogs;
+using Prism.Dialogs;
 using System;
 
 #endregion
@@ -34,7 +34,7 @@ namespace MPTagThat.Dialogs.ViewModels
 
     public static void ShowDialogInAnotherWindow(this IDialogService dialogService, string dialogName, string windowName, DialogParameters parameters, Action<IDialogResult> callBack)
     {
-      dialogService.ShowDialog(dialogName, parameters, callBack, windowName);
+      dialogService.ShowDialog(dialogName, parameters, callBack);
     }
   }
 }

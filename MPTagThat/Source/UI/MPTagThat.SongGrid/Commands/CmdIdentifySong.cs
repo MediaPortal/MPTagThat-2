@@ -29,7 +29,7 @@ using MPTagThat.Core.Services.Settings.Setting;
 using MPTagThat.Dialogs.Models;
 using MPTagThat.Dialogs.ViewModels;
 using Prism.Ioc;
-using Prism.Services.Dialogs;
+using Prism.Dialogs;
 using System;
 using System.Collections.Generic;
 using System.Linq;

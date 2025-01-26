@@ -23,9 +23,10 @@ using MPTagThat.Core.Services.ScriptManager;
 using MPTagThat.Core.Services.Settings;
 using MPTagThat.Core.Services.Settings.Setting;
 using MPTagThat.Views;
+using Prism.Container.Unity;
 using Prism.Ioc;
 using Prism.Modularity;
-using Prism.Regions;
+using Prism.Navigation.Regions;
 using Prism.Unity;
 using Syncfusion.SfSkinManager;
 using Syncfusion.Windows.Tools.Controls;
@@ -269,7 +270,7 @@ namespace MPTagThat
       log.Info("MPTagThat is starting...");
 
       // Move Init of Services, which we don't need immediately to a separate thread to increase startup performance
-      Thread initService = new Thread(() => DoInitService(Container.GetContainer()))
+      Thread initService = new Thread(() => DoInitService(ContainerLocator.Container.GetContainer()))
       {
         IsBackground = true,
         Name = "InitService"

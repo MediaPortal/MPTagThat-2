@@ -33,7 +33,7 @@ using MPTagThat.Rip.Models;
 using Newtonsoft.Json.Linq;
 using Prism.Ioc;
 using Prism.Mvvm;
-using Prism.Regions;
+using Prism.Navigation.Regions;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;

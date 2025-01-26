@@ -20,7 +20,7 @@
 
 using MPTagThat.Core.Common;
 using MPTagThat.Core.Common.Song;
-using Prism.Services.Dialogs;
+using Prism.Dialogs;
 using Syncfusion.UI.Xaml.Grid;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;

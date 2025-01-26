@@ -30,7 +30,7 @@ using MPTagThat.Core.Services.Settings.Setting;
 using MPTagThat.Core.Utils;
 using Prism.Ioc;
 using Prism.Mvvm;
-using Prism.Regions;
+using Prism.Navigation.Regions;
 using Syncfusion.Data.Extensions;
 using System;
 using System.Collections.Generic;

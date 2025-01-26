@@ -28,7 +28,7 @@ using MPTagThat.Core.Services.ScriptManager;
 using MPTagThat.Core.Services.Settings.Setting;
 using MPTagThat.Core.Utils;
 using Prism.Ioc;
-using Prism.Services.Dialogs;
+using Prism.Dialogs;
 using Syncfusion.UI.Xaml.Grid;
 using System;
 using System.Collections;

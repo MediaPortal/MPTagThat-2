@@ -18,7 +18,7 @@
 
 #region
 
-using Prism.Regions;
+using Prism.Navigation.Regions;
 using Syncfusion.Windows.Tools.Controls;
 using System.Linq;
 using System.Windows.Controls;

@@ -19,7 +19,7 @@
 #region
 
 using MPTagThat.Dialogs.Models;
-using Prism.Services.Dialogs;
+using Prism.Dialogs;
 using Syncfusion.UI.Xaml.Utility;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -117,7 +117,8 @@ namespace MPTagThat.Dialogs.ViewModels
 
       var parameters = new DialogParameters();
       parameters.Add("selectedrecording", _selectedRecording);
-      var dialogResult = new DialogResult(result, parameters);
+      var dialogResult = new DialogResult(result);
+      dialogResult.Parameters = parameters;
       CloseDialogWindow(dialogResult);
     }
 

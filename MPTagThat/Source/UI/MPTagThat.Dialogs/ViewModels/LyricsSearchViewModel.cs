@@ -22,7 +22,7 @@ using MPTagThat.Core.Common.Song;
 using MPTagThat.Core.Events;
 using MPTagThat.Core.Lyrics;
 using MPTagThat.Dialogs.Models;
-using Prism.Services.Dialogs;
+using Prism.Dialogs;
 using Syncfusion.UI.Xaml.Utility;
 using System;
 using System.Collections;

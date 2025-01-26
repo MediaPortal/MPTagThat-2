@@ -32,7 +32,7 @@ using Newtonsoft.Json;
 using Prism.Ioc;
 using Prism.Modularity;
 using Prism.Mvvm;
-using Prism.Regions;
+using Prism.Navigation.Regions;
 using Syncfusion.Windows.Shared;
 using Syncfusion.Windows.Tools.Controls;
 using System;

@@ -25,7 +25,7 @@ using MPTagThat.Core.Common;
 using MPTagThat.Core.Common.Song;
 using MPTagThat.Core.Utils;
 using MPTagThat.Dialogs.Models;
-using Prism.Services.Dialogs;
+using Prism.Dialogs;
 using Syncfusion.UI.Xaml.Grid;
 using System;
 using System.Collections.Generic;

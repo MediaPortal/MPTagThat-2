@@ -18,7 +18,7 @@
 
 using MPTagThat.Core;
 using MPTagThat.Core.Events;
-using Prism.Services.Dialogs;
+using Prism.Dialogs;
 using System.Windows;
 using System.Windows.Input;
 

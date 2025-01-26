@@ -23,7 +23,7 @@ using MPTagThat.Core.Services.Logging;
 using MPTagThat.Core.Services.Settings;
 using MPTagThat.Core.Services.Settings.Setting;
 using Prism.Ioc;
-using Prism.Services.Dialogs;
+using Prism.Dialogs;
 using System;
 using System.Threading.Tasks;
 

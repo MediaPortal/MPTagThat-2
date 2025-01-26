@@ -19,7 +19,7 @@
 using MPTagThat.Core.Common;
 using MPTagThat.Core.Services.MusicDatabase;
 using Prism.Ioc;
-using Prism.Services.Dialogs;
+using Prism.Dialogs;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Windows.Input;

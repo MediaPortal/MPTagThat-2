@@ -28,7 +28,7 @@ using Prism.Commands;
 using Prism.Events;
 using Prism.Ioc;
 using Prism.Mvvm;
-using Prism.Services.Dialogs;
+using Prism.Dialogs;
 using System;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -84,6 +84,8 @@ namespace MPTagThat.Dialogs.ViewModels
     /// Cancel Button has been clicked
     /// </summary>
     public ICommand CancelChangesCommand { get; }
+
+    DialogCloseListener IDialogAware.RequestClose => throw new NotImplementedException();
 
     private void CancelChanges(object parameters)
     {

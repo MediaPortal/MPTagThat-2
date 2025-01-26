@@ -19,7 +19,7 @@
 #region 
 
 using MPTagThat.Core.Common.Song;
-using Prism.Services.Dialogs;
+using Prism.Dialogs;
 using Syncfusion.UI.Xaml.Grid;
 using Syncfusion.UI.Xaml.Utility;
 using System.Collections.ObjectModel;
