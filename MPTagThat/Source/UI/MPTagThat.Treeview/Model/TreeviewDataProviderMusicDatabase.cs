@@ -246,6 +246,10 @@ namespace MPTagThat.Treeview.Model
             TreeViewNode firstLetterNode = null;
             foreach (var item in nodesArray)
             {
+              if (item.Name == string.Empty)
+              {
+                item.Name = " ";
+              }
               var firstLetter = item.Name.Substring(0, 1).ToUpperInvariant();
               if (firstLetter != savedfirstLetter)
               {
