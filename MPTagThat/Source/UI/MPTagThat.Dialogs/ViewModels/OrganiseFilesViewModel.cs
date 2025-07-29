@@ -27,6 +27,7 @@ using MPTagThat.Core.Services.MusicDatabase;
 using MPTagThat.Core.Services.ScriptManager;
 using MPTagThat.Core.Services.Settings.Setting;
 using MPTagThat.Core.Utils;
+using Prism.Commands;
 using Prism.Ioc;
 using Prism.Dialogs;
 using Syncfusion.UI.Xaml.Grid;
@@ -41,6 +42,7 @@ using System.Windows;
 using System.Windows.Input;
 using WPFLocalizeExtension.Engine;
 using DialogResult = System.Windows.Forms.DialogResult;
+using System.Windows.Controls;
 
 // ReSharper disable CommentTypo
 
@@ -203,6 +205,7 @@ namespace MPTagThat.Dialogs.ViewModels
     {
       Title = LocalizeDictionary.Instance.GetLocalizedObject("MPTagThat", "Strings", "organise_Header",
         LocalizeDictionary.Instance.Culture).ToString();
+      KeyDownCommand = new DelegateCommand<KeyEventArgs>(KeyDown);
       LabelClickedCommand = new BaseCommand(LabelClicked);
       OrganiseFilesCommand = new BaseCommand(OrganiseFilesApply);
       PreviewChangesCommand = new BaseCommand(PreviewChanges);
@@ -215,6 +218,20 @@ namespace MPTagThat.Dialogs.ViewModels
     #endregion
 
     #region Commands
+
+    public ICommand KeyDownCommand { get; }
+
+    /// <summary>
+    /// Handle Enter and Escape Key
+    /// </summary>
+    /// <param name="param"></param>
+    private void KeyDown(KeyEventArgs param)
+    {
+      if (param.Key == Key.Enter)
+      {
+        OrganiseFilesApply("");
+      }
+    }
 
     /// <summary>
     /// The Apply Button has been pressed

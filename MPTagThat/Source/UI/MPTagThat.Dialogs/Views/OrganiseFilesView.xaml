@@ -37,6 +37,13 @@
 
   </UserControl.Resources>
 
+  <!-- Used to capture Enter and Escape as default keys -->
+  <b:Interaction.Triggers>
+    <b:EventTrigger EventName="PreviewKeyDown">
+      <prism:InvokeCommandAction Command="{Binding KeyDownCommand}" />
+    </b:EventTrigger>
+  </b:Interaction.Triggers>
+
   <Border Background="{Binding Background}"  BorderBrush="LightGray" BorderThickness="3" CornerRadius="5" >
     <Grid x:Name="LayoutRoot" Margin="5" >
       <Grid.RowDefinitions>
