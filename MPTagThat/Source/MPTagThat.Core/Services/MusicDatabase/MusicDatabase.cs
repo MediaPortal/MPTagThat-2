@@ -141,7 +141,8 @@ namespace MPTagThat.Core.Services.MusicDatabase
 
       try
       {
-        var db = new LiteDatabase($@"{_options.StartupSettings.DatabaseFolder}\{databaseName}.db");
+        var connectionString = $@"Filename='{_options.StartupSettings.DatabaseFolder}\{databaseName}.db'";
+        var db = new LiteDatabase(connectionString);
         _stores.Add(databaseName, db);
       }
       catch (Exception ex)
@@ -490,14 +491,13 @@ namespace MPTagThat.Core.Services.MusicDatabase
 
       log.Trace("Getting distinct album artists");
 
-      var albumartists = new List<string>();
-      var reader = _store.Execute("select distinct(*.AlbumArtist)  from songs");
-      reader.Read();
-      var result = reader.Current;
-      foreach (var albumartist in result["AlbumArtist"].AsArray)
-      {
-        albumartists.Add(albumartist.ToString().Trim('"'));
-      }
+      var col = _store.GetCollection<SongData>("songs");
+
+      var albumartists = col.FindAll().
+        Select(x => x.AlbumArtist).
+        Distinct().
+        OrderBy(x => x).
+        ToList();
 
       log.Debug($"Found {albumartists.Count} distinct album artists");
       return albumartists;
